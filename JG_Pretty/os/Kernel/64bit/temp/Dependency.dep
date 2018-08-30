@@ -1,0 +1,797 @@
+MPConfigruationTable.o: ../Source/MPConfigruationTable.c \
+ ../Source/MPConfigurationTable.h ../Source/Types.h ../Source/Console.h \
+ ../Source/Synchronization.h ../Source/Queue.h ../Source/Keyboard.h
+Task.o: ../Source/Task.c ../Source/Task.h ../Source/Types.h \
+ ../Source/List.h ../Source/Synchronization.h ../Source/Descriptor.h \
+ ../Source/MultiProcessor.h ../Source/DynamicMemory.h
+WindowManagerTask.o: ../Source/WindowManagerTask.c ../Source/Types.h \
+ ../Source/Window.h ../Source/Synchronization.h ../Source/Graphics.h \
+ ../Source/List.h ../Source/Queue.h ../Source/Keyboard.h \
+ ../Source/WindowManagerTask.h ../Source/VBE.h ../Source/Mouse.h \
+ ../Source/Task.h ../Source/GUITask.h ../Source/Font.h ../Source/Panel.h \
+ ../Source/pci.h ../Source/usb/list2.h ../Source/usb/../types.h \
+ ../Source/types.h ../Source/Cdi/CdiOsDep.h ../Source/Cdi/../pci.h \
+ ../Source/cdi/cdi.h ../Source/cdi/../types.h \
+ ../Source/cdi/../usb/list2.h
+HardDisk.o: ../Source/HardDisk.c ../Source/HardDisk.h ../Source/Types.h \
+ ../Source/Synchronization.h
+List.o: ../Source/List.c ../Source/List.h ../Source/Types.h
+RTC.o: ../Source/RTC.c ../Source/RTC.h ../Source/Types.h
+Graphics.o: ../Source/Graphics.c ../Source/Graphics.h ../Source/Types.h \
+ ../Source/VBE.h ../Source/Font.h ../Source/Utility.h
+PIC.o: ../Source/PIC.c ../Source/PIC.h ../Source/Types.h
+Keyboard.o: ../Source/Keyboard.c ../Source/Types.h \
+ ../Source/AssemblyUtility.h ../Source/Task.h ../Source/List.h \
+ ../Source/Synchronization.h ../Source/Keyboard.h ../Source/Queue.h \
+ ../Source/./HID/keyboard_US.h
+JPEG.o: ../Source/JPEG.c ../Source/JPEG.h ../Source/Types.h \
+ ../Source/Graphics.h
+PCI.o: ../Source/PCI.c ../Source/pci.h ../Source/usb/list2.h \
+ ../Source/usb/../types.h ../Source/types.h ../Source/Cdi/CdiOsDep.h \
+ ../Source/Cdi/../pci.h ../Source/cdi/cdi.h ../Source/cdi/../types.h \
+ ../Source/cdi/../usb/list2.h ../Source/Synchronization.h \
+ ../Source/Types.h ../Source/AssemblyUtility.h ../Source/Task.h \
+ ../Source/List.h ../Source/utility.h
+HangulFont.o: ../Source/HangulFont.c
+Loader.o: ../Source/Loader.c ../Source/Loader.h ../Source/Types.h \
+ ../Source/Task.h ../Source/List.h ../Source/Synchronization.h \
+ ../Source/DynamicMemory.h ../Source/FAT32/fat_filelib.h \
+ ../Source/FAT32/fat_opts.h ../Source/FAT32/fat_access.h \
+ ../Source/FAT32/fat_defs.h ../Source/FAT32/fat_types.h \
+ ../Source/FAT32/fat_list.h
+RAMDisk.o: ../Source/RAMDisk.c ../Source/RAMDisk.h ../Source/Types.h \
+ ../Source/Synchronization.h ../Source/HardDisk.h ../Source/Utility.h \
+ ../Source/DynamicMemory.h
+MultiProcessor.o: ../Source/MultiProcessor.c ../Source/MultiProcessor.h \
+ ../Source/Types.h ../Source/MPConfigurationTable.h \
+ ../Source/AssemblyUtility.h ../Source/Task.h ../Source/List.h \
+ ../Source/Synchronization.h ../Source/LocalAPIC.h ../Source/PIT.h
+Panel.o: ../Source/Panel.c ../Source/Panel.h ../Source/Types.h \
+ ../Source/Window.h ../Source/Synchronization.h ../Source/Graphics.h \
+ ../Source/List.h ../Source/Queue.h ../Source/Keyboard.h ../Source/Font.h \
+ ../Source/RTC.h ../Source/Task.h ../Source/GUITask.h
+SystemCall.o: ../Source/SystemCall.c ../Source/Types.h \
+ ../Source/SystemCall.h ../Source/AssemblyUtility.h ../Source/Task.h \
+ ../Source/List.h ../Source/Synchronization.h ../Source/Descriptor.h \
+ ../Source/SystemCallList.h ../Source/DynamicMemory.h ../Source/RTC.h \
+ ../Source/Utility.h ../Source/Window.h ../Source/Graphics.h \
+ ../Source/Queue.h ../Source/Keyboard.h ../Source/JPEG.h \
+ ../Source/Loader.h ../Source/Fat32/fat_filelib.h \
+ ../Source/Fat32/fat_opts.h ../Source/Fat32/fat_access.h \
+ ../Source/Fat32/fat_defs.h ../Source/Fat32/fat_types.h \
+ ../Source/Fat32/fat_list.h
+Mouse.o: ../Source/Mouse.c ../Source/Mouse.h ../Source/Types.h \
+ ../Source/Synchronization.h ../Source/Keyboard.h ../Source/Queue.h \
+ ../Source/AssemblyUtility.h ../Source/Task.h ../Source/List.h
+VBE.o: ../Source/VBE.c ../Source/VBE.h ../Source/Types.h
+Console.o: ../Source/Console.c ../Source/Console.h ../Source/Types.h \
+ ../Source/Synchronization.h ../Source/Queue.h ../Source/Keyboard.h
+Descriptor.o: ../Source/Descriptor.c ../Source/Descriptor.h \
+ ../Source/Types.h ../Source/Utility.h ../Source/ISR.h \
+ ../Source/MultiProcessor.h
+InterruptHandler.o: ../Source/InterruptHandler.c \
+ ../Source/InterruptHandler.h ../Source/Types.h \
+ ../Source/MultiProcessor.h ../Source/PIC.h ../Source/Keyboard.h \
+ ../Source/Synchronization.h ../Source/Console.h ../Source/Queue.h \
+ ../Source/Utility.h ../Source/Task.h ../Source/List.h \
+ ../Source/Descriptor.h ../Source/AssemblyUtility.h ../Source/HardDisk.h \
+ ../Source/Mouse.h
+CacheManager.o: ../Source/CacheManager.c ../Source/CacheManager.h \
+ ../Source/Types.h ../Source/DynamicMemory.h ../Source/Synchronization.h \
+ ../Source/fat32/fat_defs.h ../Source/fat32/fat_opts.h \
+ ../Source/fat32/fat_types.h
+DynamicMemory.o: ../Source/DynamicMemory.c ../Source/DynamicMemory.h \
+ ../Source/Types.h ../Source/Synchronization.h ../Source/Utility.h \
+ ../Source/Task.h ../Source/List.h
+Utility.o: ../Source/Utility.c ../Source/Utility.h ../Source/Types.h \
+ ../Source/AssemblyUtility.h ../Source/Task.h ../Source/List.h \
+ ../Source/Synchronization.h ../Source/VBE.h \
+ ../Source/../../32bit/source/page.h ../Source/../../32bit/source/Types.h
+SerialPort.o: ../Source/SerialPort.c ../Source/SerialPort.h \
+ ../Source/Types.h ../Source/Queue.h ../Source/Synchronization.h \
+ ../Source/Utility.h
+PIT.o: ../Source/PIT.c ../Source/PIT.h ../Source/Types.h
+Queue.o: ../Source/Queue.c ../Source/Queue.h ../Source/Types.h
+Synchronization.o: ../Source/Synchronization.c \
+ ../Source/Synchronization.h ../Source/Types.h ../Source/Utility.h \
+ ../Source/Task.h ../Source/List.h ../Source/AssemblyUtility.h
+ConsoleShell.o: ../Source/ConsoleShell.c ../Source/ConsoleShell.h \
+ ../Source/Types.h ../Source/Console.h ../Source/Synchronization.h \
+ ../Source/Queue.h ../Source/Keyboard.h ../Source/Utility.h \
+ ../Source/PIT.h ../Source/RTC.h ../Source/AssemblyUtility.h \
+ ../Source/Task.h ../Source/List.h ../Source/DynamicMemory.h \
+ ../Source/HardDisk.h ../Source/SerialPort.h \
+ ../Source/MPConfigurationTable.h ../Source/LocalAPIC.h \
+ ../Source/MultiProcessor.h ../Source/IOAPIC.h \
+ ../Source/InterruptHandler.h ../Source/VBE.h ../Source/SystemCall.h \
+ ../Source/Loader.h ../Source/storage/usb_msd.h \
+ ../Source/storage/../usb/usb.h ../Source/storage/../usb/../types.h \
+ ../Source/storage/../usb/devicemanager.h \
+ ../Source/storage/../usb/list2.h ../Source/storage/../usb/../PIT.h \
+ ../Source/storage/../types.h ../Source/storage/../ConsoleShell.h \
+ ../Source/storage/../harddisk.h ../Source/RAMDisk.h \
+ ../Source/NETWORK/network.h ../Source/NETWORK/../pci.h \
+ ../Source/NETWORK/../usb/list2.h ../Source/NETWORK/../types.h \
+ ../Source/NETWORK/../Cdi/CdiOsDep.h ../Source/NETWORK/../Cdi/../pci.h \
+ ../Source/NETWORK/../cdi/cdi.h ../Source/NETWORK/../cdi/../types.h \
+ ../Source/NETWORK/../cdi/../usb/list2.h \
+ ../Source/NETWORK/../netprotocol/arp.h \
+ ../Source/NETWORK/../netprotocol/../network/netutils.h \
+ ../Source/NETWORK/../netprotocol/../network/../types.h \
+ ../Source/NETWORK/../netprotocol/../usb/list2.h \
+ ../Source/NETWORK/../netprotocol/dhcp.h ../Source/NETWORK/netutils.h \
+ ../Source/NETWORK/../usb/irq.h ../Source/NETWORK/../usb/../types.h \
+ ../Source/NETWORK/../usb/../utility.h ../Source/NETPROTOCOL/tcp.h \
+ ../Source/NETPROTOCOL/../network/network.h \
+ ../Source/NETPROTOCOL/../task.h ../Source/NETPROTOCOL/../window.h \
+ ../Source/NETPROTOCOL/../Types.h \
+ ../Source/NETPROTOCOL/../Synchronization.h \
+ ../Source/NETPROTOCOL/../Graphics.h ../Source/NETPROTOCOL/../List.h \
+ ../Source/NETPROTOCOL/../Queue.h ../Source/NETPROTOCOL/../Keyboard.h \
+ ../Source/NETPROTOCOL/../network/events.h \
+ ../Source/NETPROTOCOL/../network/../task.h \
+ ../Source/NETPROTOCOL/../network/../Synchronization.h \
+ ../Source/NETPROTOCOL/../network/../usb/list2.h \
+ ../Source/NETPROTOCOL/dns_help.h ../Source/NETPROTOCOL/../types.h \
+ ../Source/NETPROTOCOL/../network/netutils.h ../Source/utility.h \
+ ../Source/fat32/fat_defs.h ../Source/fat32/fat_opts.h \
+ ../Source/fat32/fat_types.h ../Source/fat32/fat_filelib.h \
+ ../Source/fat32/fat_access.h ../Source/fat32/fat_defs.h \
+ ../Source/fat32/fat_list.h
+Main.o: ../Source/Main.c ../Source/Types.h ../Source/Keyboard.h \
+ ../Source/Synchronization.h ../Source/Descriptor.h ../Source/PIC.h \
+ ../Source/Console.h ../Source/Queue.h ../Source/ConsoleShell.h \
+ ../Source/Task.h ../Source/List.h ../Source/PIT.h \
+ ../Source/DynamicMemory.h ../Source/HardDisk.h ../Source/SerialPort.h \
+ ../Source/MultiProcessor.h ../Source/VBE.h ../Source/Graphics.h \
+ ../Source/MPConfigurationTable.h ../Source/WindowManagerTask.h \
+ ../Source/SystemCall.h ../Source/PCI.h ../Source/usb/list2.h \
+ ../Source/usb/../types.h ../Source/types.h ../Source/Cdi/CdiOsDep.h \
+ ../Source/Cdi/../pci.h ../Source/cdi/cdi.h ../Source/cdi/../types.h \
+ ../Source/cdi/../usb/list2.h ../Source/usb/usb.h \
+ ../Source/usb/devicemanager.h ../Source/usb/list2.h \
+ ../Source/usb/../PIT.h ../Source/utility.h ../Source/fat32/fat_filelib.h \
+ ../Source/fat32/fat_opts.h ../Source/fat32/fat_access.h \
+ ../Source/fat32/fat_defs.h ../Source/fat32/fat_types.h \
+ ../Source/fat32/fat_list.h
+LocalAPIC.o: ../Source/LocalAPIC.c ../Source/LocalAPIC.h \
+ ../Source/Types.h ../Source/MPConfigurationTable.h
+GUITask.o: ../Source/GUITask.c ../Source/GUITask.h ../Source/Types.h \
+ ../Source/Window.h ../Source/Synchronization.h ../Source/Graphics.h \
+ ../Source/List.h ../Source/Queue.h ../Source/Keyboard.h \
+ ../Source/MultiProcessor.h ../Source/Font.h ../Source/Console.h \
+ ../Source/Task.h ../Source/ConsoleShell.h ../Source/JPEG.h \
+ ../Source/DynamicMemory.h ../Source/fat32/fat_defs.h \
+ ../Source/fat32/fat_opts.h ../Source/fat32/fat_types.h \
+ ../Source/fat32/fat_filelib.h ../Source/fat32/fat_access.h \
+ ../Source/fat32/fat_defs.h ../Source/fat32/fat_list.h
+WallPaper.o: ../Source/WallPaper.c
+Window.o: ../Source/Window.c ../Source/Window.h ../Source/Types.h \
+ ../Source/Synchronization.h ../Source/Graphics.h ../Source/List.h \
+ ../Source/Queue.h ../Source/Keyboard.h ../Source/VBE.h ../Source/Task.h \
+ ../Source/Font.h ../Source/DynamicMemory.h ../Source/Utility.h \
+ ../Source/JPEG.h
+IOAPIC.o: ../Source/IOAPIC.c ../Source/IOAPIC.h ../Source/Types.h \
+ ../Source/MPConfigurationTable.h ../Source/PIC.h
+EnglishFont.o: ../Source/EnglishFont.c
+Cdi.o: ../Source/CDI/Cdi.c ../Source/CDI/cdi.h ../Source/CDI/../types.h \
+ ../Source/CDI/../usb/list2.h ../Source/CDI/../usb/../types.h
+CdiNet.o: ../Source/CDI/CdiNet.c ../Source/CDI/../network/net.h \
+ ../Source/CDI/../network/../types.h \
+ ../Source/CDI/../network/../CDI/cdi.h \
+ ../Source/CDI/../network/../CDI/../types.h \
+ ../Source/CDI/../network/../CDI/../usb/list2.h \
+ ../Source/CDI/../network/../CDI/../usb/../types.h ../Source/CDI/../pci.h \
+ ../Source/CDI/../usb/list2.h ../Source/CDI/../types.h \
+ ../Source/CDI/../Cdi/CdiOsDep.h ../Source/CDI/../Cdi/../pci.h \
+ ../Source/CDI/../cdi/cdi.h ../Source/CDI/../network/network.h \
+ ../Source/CDI/../network/../pci.h \
+ ../Source/CDI/../network/../netprotocol/arp.h \
+ ../Source/CDI/../network/../netprotocol/../network/netutils.h \
+ ../Source/CDI/../network/../netprotocol/../network/../types.h \
+ ../Source/CDI/../network/../netprotocol/../usb/list2.h \
+ ../Source/CDI/../network/../netprotocol/dhcp.h \
+ ../Source/CDI/../network/netutils.h \
+ ../Source/CDI/../network/../usb/irq.h \
+ ../Source/CDI/../network/../usb/../types.h \
+ ../Source/CDI/../network/../usb/../utility.h \
+ ../Source/CDI/../network/../usb/../Types.h
+CdiLists.o: ../Source/CDI/CdiLists.c ../Source/CDI/cdi.h \
+ ../Source/CDI/../types.h ../Source/CDI/../usb/list2.h \
+ ../Source/CDI/../usb/../types.h
+fat_misc.o: ../Source/FAT32/fat_misc.c ../Source/FAT32/fat_misc.h \
+ ../Source/FAT32/fat_defs.h ../Source/FAT32/fat_opts.h \
+ ../Source/FAT32/fat_types.h
+fat_filelib.o: ../Source/FAT32/fat_filelib.c ../Source/FAT32/fat_defs.h \
+ ../Source/FAT32/fat_opts.h ../Source/FAT32/fat_types.h \
+ ../Source/FAT32/fat_access.h ../Source/FAT32/fat_table.h \
+ ../Source/FAT32/fat_misc.h ../Source/FAT32/fat_write.h \
+ ../Source/FAT32/fat_string.h ../Source/FAT32/fat_filelib.h \
+ ../Source/FAT32/fat_list.h ../Source/FAT32/fat_cache.h \
+ ../Source/FAT32/fat_format.h
+fat_format.o: ../Source/FAT32/fat_format.c ../Source/FAT32/fat_defs.h \
+ ../Source/FAT32/fat_opts.h ../Source/FAT32/fat_types.h \
+ ../Source/FAT32/fat_access.h ../Source/FAT32/fat_table.h \
+ ../Source/FAT32/fat_misc.h ../Source/FAT32/fat_write.h \
+ ../Source/FAT32/fat_string.h ../Source/FAT32/fat_format.h
+fat_write.o: ../Source/FAT32/fat_write.c ../Source/FAT32/fat_defs.h \
+ ../Source/FAT32/fat_opts.h ../Source/FAT32/fat_types.h \
+ ../Source/FAT32/fat_access.h ../Source/FAT32/fat_table.h \
+ ../Source/FAT32/fat_misc.h ../Source/FAT32/fat_write.h \
+ ../Source/FAT32/fat_string.h
+fat_string.o: ../Source/FAT32/fat_string.c ../Source/FAT32/fat_string.h
+fat_access.o: ../Source/FAT32/fat_access.c ../Source/FAT32/fat_defs.h \
+ ../Source/FAT32/fat_opts.h ../Source/FAT32/fat_types.h \
+ ../Source/FAT32/fat_access.h ../Source/FAT32/fat_table.h \
+ ../Source/FAT32/fat_misc.h ../Source/FAT32/fat_write.h \
+ ../Source/FAT32/fat_string.h ../Source/FAT32/../utility.h \
+ ../Source/FAT32/../Types.h ../Source/FAT32/../usb/devicemanager.h \
+ ../Source/FAT32/../usb/../types.h
+fat_cache.o: ../Source/FAT32/fat_cache.c ../Source/FAT32/fat_cache.h \
+ ../Source/FAT32/fat_filelib.h ../Source/FAT32/fat_opts.h \
+ ../Source/FAT32/fat_access.h ../Source/FAT32/fat_defs.h \
+ ../Source/FAT32/fat_types.h ../Source/FAT32/fat_list.h
+fat_table.o: ../Source/FAT32/fat_table.c ../Source/FAT32/fat_defs.h \
+ ../Source/FAT32/fat_opts.h ../Source/FAT32/fat_types.h \
+ ../Source/FAT32/fat_access.h ../Source/FAT32/fat_table.h \
+ ../Source/FAT32/fat_misc.h ../Source/FAT32/../types.h
+usb_hid.o: ../Source/HID/usb_hid.c ../Source/HID/usb_hid.h \
+ ../Source/HID/../usb/usb.h ../Source/HID/../usb/../types.h \
+ ../Source/HID/../usb/devicemanager.h ../Source/HID/../usb/list2.h \
+ ../Source/HID/../usb/../PIT.h ../Source/HID/../usb/../Types.h \
+ ../Source/HID/../usb/usb_hc.h ../Source/HID/../usb/usb.h \
+ ../Source/HID/../usb/../pci.h ../Source/HID/../usb/../usb/list2.h \
+ ../Source/HID/../usb/../types.h ../Source/HID/../usb/../Cdi/CdiOsDep.h \
+ ../Source/HID/../usb/../Cdi/../pci.h ../Source/HID/../usb/../cdi/cdi.h \
+ ../Source/HID/../usb/../cdi/../types.h \
+ ../Source/HID/../usb/../cdi/../usb/list2.h ../Source/HID/../usb/array.h \
+ ../Source/HID/../DynamicMemory.h ../Source/HID/../Types.h \
+ ../Source/HID/../Synchronization.h ../Source/HID/../keyboard.h \
+ ../Source/HID/../mouse.h
+udp.o: ../Source/NETPROTOCOL/udp.c ../Source/NETPROTOCOL/udp.h \
+ ../Source/NETPROTOCOL/../network/network.h \
+ ../Source/NETPROTOCOL/../network/../pci.h \
+ ../Source/NETPROTOCOL/../network/../usb/list2.h \
+ ../Source/NETPROTOCOL/../network/../usb/../types.h \
+ ../Source/NETPROTOCOL/../network/../types.h \
+ ../Source/NETPROTOCOL/../network/../Cdi/CdiOsDep.h \
+ ../Source/NETPROTOCOL/../network/../Cdi/../pci.h \
+ ../Source/NETPROTOCOL/../network/../cdi/cdi.h \
+ ../Source/NETPROTOCOL/../network/../cdi/../types.h \
+ ../Source/NETPROTOCOL/../network/../cdi/../usb/list2.h \
+ ../Source/NETPROTOCOL/../network/../netprotocol/arp.h \
+ ../Source/NETPROTOCOL/../network/../netprotocol/../network/netutils.h \
+ ../Source/NETPROTOCOL/../network/../netprotocol/../network/../types.h \
+ ../Source/NETPROTOCOL/../network/../netprotocol/../usb/list2.h \
+ ../Source/NETPROTOCOL/../network/../netprotocol/dhcp.h \
+ ../Source/NETPROTOCOL/../network/netutils.h \
+ ../Source/NETPROTOCOL/../network/../usb/irq.h \
+ ../Source/NETPROTOCOL/../network/../usb/../utility.h \
+ ../Source/NETPROTOCOL/../network/../usb/../Types.h \
+ ../Source/NETPROTOCOL/../task.h ../Source/NETPROTOCOL/../Types.h \
+ ../Source/NETPROTOCOL/../List.h \
+ ../Source/NETPROTOCOL/../Synchronization.h \
+ ../Source/NETPROTOCOL/../network/events.h \
+ ../Source/NETPROTOCOL/../network/../task.h \
+ ../Source/NETPROTOCOL/../network/../Synchronization.h \
+ ../Source/NETPROTOCOL/../network/../usb/list2.h \
+ ../Source/NETPROTOCOL/ipv4.h ../Source/NETPROTOCOL/../DynamicMemory.h \
+ ../Source/NETPROTOCOL/../Utility.h
+icmp.o: ../Source/NETPROTOCOL/icmp.c ../Source/NETPROTOCOL/icmp.h \
+ ../Source/NETPROTOCOL/../network/network.h \
+ ../Source/NETPROTOCOL/../network/../pci.h \
+ ../Source/NETPROTOCOL/../network/../usb/list2.h \
+ ../Source/NETPROTOCOL/../network/../usb/../types.h \
+ ../Source/NETPROTOCOL/../network/../types.h \
+ ../Source/NETPROTOCOL/../network/../Cdi/CdiOsDep.h \
+ ../Source/NETPROTOCOL/../network/../Cdi/../pci.h \
+ ../Source/NETPROTOCOL/../network/../cdi/cdi.h \
+ ../Source/NETPROTOCOL/../network/../cdi/../types.h \
+ ../Source/NETPROTOCOL/../network/../cdi/../usb/list2.h \
+ ../Source/NETPROTOCOL/../network/../netprotocol/arp.h \
+ ../Source/NETPROTOCOL/../network/../netprotocol/../network/netutils.h \
+ ../Source/NETPROTOCOL/../network/../netprotocol/../network/../types.h \
+ ../Source/NETPROTOCOL/../network/../netprotocol/../usb/list2.h \
+ ../Source/NETPROTOCOL/../network/../netprotocol/dhcp.h \
+ ../Source/NETPROTOCOL/../network/netutils.h \
+ ../Source/NETPROTOCOL/../network/../usb/irq.h \
+ ../Source/NETPROTOCOL/../network/../usb/../utility.h \
+ ../Source/NETPROTOCOL/../network/../usb/../Types.h \
+ ../Source/NETPROTOCOL/ipv4.h
+ipv4.o: ../Source/NETPROTOCOL/ipv4.c ../Source/NETPROTOCOL/ipv4.h \
+ ../Source/NETPROTOCOL/../network/network.h \
+ ../Source/NETPROTOCOL/../network/../pci.h \
+ ../Source/NETPROTOCOL/../network/../usb/list2.h \
+ ../Source/NETPROTOCOL/../network/../usb/../types.h \
+ ../Source/NETPROTOCOL/../network/../types.h \
+ ../Source/NETPROTOCOL/../network/../Cdi/CdiOsDep.h \
+ ../Source/NETPROTOCOL/../network/../Cdi/../pci.h \
+ ../Source/NETPROTOCOL/../network/../cdi/cdi.h \
+ ../Source/NETPROTOCOL/../network/../cdi/../types.h \
+ ../Source/NETPROTOCOL/../network/../cdi/../usb/list2.h \
+ ../Source/NETPROTOCOL/../network/../netprotocol/arp.h \
+ ../Source/NETPROTOCOL/../network/../netprotocol/../network/netutils.h \
+ ../Source/NETPROTOCOL/../network/../netprotocol/../network/../types.h \
+ ../Source/NETPROTOCOL/../network/../netprotocol/../usb/list2.h \
+ ../Source/NETPROTOCOL/../network/../netprotocol/dhcp.h \
+ ../Source/NETPROTOCOL/../network/netutils.h \
+ ../Source/NETPROTOCOL/../network/../usb/irq.h \
+ ../Source/NETPROTOCOL/../network/../usb/../utility.h \
+ ../Source/NETPROTOCOL/../network/../usb/../Types.h \
+ ../Source/NETPROTOCOL/tcp.h ../Source/NETPROTOCOL/../task.h \
+ ../Source/NETPROTOCOL/../Types.h ../Source/NETPROTOCOL/../List.h \
+ ../Source/NETPROTOCOL/../Synchronization.h \
+ ../Source/NETPROTOCOL/../window.h ../Source/NETPROTOCOL/../Graphics.h \
+ ../Source/NETPROTOCOL/../Queue.h ../Source/NETPROTOCOL/../Keyboard.h \
+ ../Source/NETPROTOCOL/../network/events.h \
+ ../Source/NETPROTOCOL/../network/../task.h \
+ ../Source/NETPROTOCOL/../network/../Synchronization.h \
+ ../Source/NETPROTOCOL/../network/../usb/list2.h \
+ ../Source/NETPROTOCOL/udp.h ../Source/NETPROTOCOL/icmp.h \
+ ../Source/NETPROTOCOL/arp.h ../Source/NETPROTOCOL/ethernet.h \
+ ../Source/NETPROTOCOL/../DynamicMemory.h
+dns_help.o: ../Source/NETPROTOCOL/dns_help.c \
+ ../Source/NETPROTOCOL/dns_help.h ../Source/NETPROTOCOL/../types.h \
+ ../Source/NETPROTOCOL/../network/netutils.h \
+ ../Source/NETPROTOCOL/../network/../types.h ../Source/NETPROTOCOL/dns.h \
+ ../Source/NETPROTOCOL/udp.h ../Source/NETPROTOCOL/../network/network.h \
+ ../Source/NETPROTOCOL/../network/../pci.h \
+ ../Source/NETPROTOCOL/../network/../usb/list2.h \
+ ../Source/NETPROTOCOL/../network/../usb/../types.h \
+ ../Source/NETPROTOCOL/../network/../types.h \
+ ../Source/NETPROTOCOL/../network/../Cdi/CdiOsDep.h \
+ ../Source/NETPROTOCOL/../network/../Cdi/../pci.h \
+ ../Source/NETPROTOCOL/../network/../cdi/cdi.h \
+ ../Source/NETPROTOCOL/../network/../cdi/../types.h \
+ ../Source/NETPROTOCOL/../network/../cdi/../usb/list2.h \
+ ../Source/NETPROTOCOL/../network/../netprotocol/arp.h \
+ ../Source/NETPROTOCOL/../network/../netprotocol/../network/netutils.h \
+ ../Source/NETPROTOCOL/../network/../netprotocol/../usb/list2.h \
+ ../Source/NETPROTOCOL/../network/../netprotocol/dhcp.h \
+ ../Source/NETPROTOCOL/../network/netutils.h \
+ ../Source/NETPROTOCOL/../network/../usb/irq.h \
+ ../Source/NETPROTOCOL/../network/../usb/../utility.h \
+ ../Source/NETPROTOCOL/../network/../usb/../Types.h \
+ ../Source/NETPROTOCOL/../task.h ../Source/NETPROTOCOL/../Types.h \
+ ../Source/NETPROTOCOL/../List.h \
+ ../Source/NETPROTOCOL/../Synchronization.h \
+ ../Source/NETPROTOCOL/../network/events.h \
+ ../Source/NETPROTOCOL/../network/../task.h \
+ ../Source/NETPROTOCOL/../network/../Synchronization.h \
+ ../Source/NETPROTOCOL/../network/../usb/list2.h \
+ ../Source/NETPROTOCOL/../utility.h
+ipv6.o: ../Source/NETPROTOCOL/ipv6.c ../Source/NETPROTOCOL/ipv6.h \
+ ../Source/NETPROTOCOL/../network/network.h \
+ ../Source/NETPROTOCOL/../network/../pci.h \
+ ../Source/NETPROTOCOL/../network/../usb/list2.h \
+ ../Source/NETPROTOCOL/../network/../usb/../types.h \
+ ../Source/NETPROTOCOL/../network/../types.h \
+ ../Source/NETPROTOCOL/../network/../Cdi/CdiOsDep.h \
+ ../Source/NETPROTOCOL/../network/../Cdi/../pci.h \
+ ../Source/NETPROTOCOL/../network/../cdi/cdi.h \
+ ../Source/NETPROTOCOL/../network/../cdi/../types.h \
+ ../Source/NETPROTOCOL/../network/../cdi/../usb/list2.h \
+ ../Source/NETPROTOCOL/../network/../netprotocol/arp.h \
+ ../Source/NETPROTOCOL/../network/../netprotocol/../network/netutils.h \
+ ../Source/NETPROTOCOL/../network/../netprotocol/../network/../types.h \
+ ../Source/NETPROTOCOL/../network/../netprotocol/../usb/list2.h \
+ ../Source/NETPROTOCOL/../network/../netprotocol/dhcp.h \
+ ../Source/NETPROTOCOL/../network/netutils.h \
+ ../Source/NETPROTOCOL/../network/../usb/irq.h \
+ ../Source/NETPROTOCOL/../network/../usb/../utility.h \
+ ../Source/NETPROTOCOL/../network/../usb/../Types.h \
+ ../Source/NETPROTOCOL/tcp.h ../Source/NETPROTOCOL/../task.h \
+ ../Source/NETPROTOCOL/../Types.h ../Source/NETPROTOCOL/../List.h \
+ ../Source/NETPROTOCOL/../Synchronization.h \
+ ../Source/NETPROTOCOL/../window.h ../Source/NETPROTOCOL/../Graphics.h \
+ ../Source/NETPROTOCOL/../Queue.h ../Source/NETPROTOCOL/../Keyboard.h \
+ ../Source/NETPROTOCOL/../network/events.h \
+ ../Source/NETPROTOCOL/../network/../task.h \
+ ../Source/NETPROTOCOL/../network/../Synchronization.h \
+ ../Source/NETPROTOCOL/../network/../usb/list2.h \
+ ../Source/NETPROTOCOL/udp.h ../Source/NETPROTOCOL/ethernet.h \
+ ../Source/NETPROTOCOL/../DynamicMemory.h
+dns.o: ../Source/NETPROTOCOL/dns.c ../Source/NETPROTOCOL/dns.h \
+ ../Source/NETPROTOCOL/../types.h ../Source/NETPROTOCOL/../utility.h \
+ ../Source/NETPROTOCOL/../Types.h
+ethernet.o: ../Source/NETPROTOCOL/ethernet.c \
+ ../Source/NETPROTOCOL/ethernet.h \
+ ../Source/NETPROTOCOL/../network/network.h \
+ ../Source/NETPROTOCOL/../network/../pci.h \
+ ../Source/NETPROTOCOL/../network/../usb/list2.h \
+ ../Source/NETPROTOCOL/../network/../usb/../types.h \
+ ../Source/NETPROTOCOL/../network/../types.h \
+ ../Source/NETPROTOCOL/../network/../Cdi/CdiOsDep.h \
+ ../Source/NETPROTOCOL/../network/../Cdi/../pci.h \
+ ../Source/NETPROTOCOL/../network/../cdi/cdi.h \
+ ../Source/NETPROTOCOL/../network/../cdi/../types.h \
+ ../Source/NETPROTOCOL/../network/../cdi/../usb/list2.h \
+ ../Source/NETPROTOCOL/../network/../netprotocol/arp.h \
+ ../Source/NETPROTOCOL/../network/../netprotocol/../network/netutils.h \
+ ../Source/NETPROTOCOL/../network/../netprotocol/../network/../types.h \
+ ../Source/NETPROTOCOL/../network/../netprotocol/../usb/list2.h \
+ ../Source/NETPROTOCOL/../network/../netprotocol/dhcp.h \
+ ../Source/NETPROTOCOL/../network/netutils.h \
+ ../Source/NETPROTOCOL/../network/../usb/irq.h \
+ ../Source/NETPROTOCOL/../network/../usb/../utility.h \
+ ../Source/NETPROTOCOL/../network/../usb/../Types.h \
+ ../Source/NETPROTOCOL/arp.h ../Source/NETPROTOCOL/ipv4.h \
+ ../Source/NETPROTOCOL/ipv6.h ../Source/NETPROTOCOL/../DynamicMemory.h \
+ ../Source/NETPROTOCOL/../Types.h \
+ ../Source/NETPROTOCOL/../Synchronization.h \
+ ../Source/NETPROTOCOL/../types.h
+arp.o: ../Source/NETPROTOCOL/arp.c ../Source/NETPROTOCOL/arp.h \
+ ../Source/NETPROTOCOL/../network/netutils.h \
+ ../Source/NETPROTOCOL/../network/../types.h \
+ ../Source/NETPROTOCOL/../usb/list2.h \
+ ../Source/NETPROTOCOL/../usb/../types.h ../Source/NETPROTOCOL/ethernet.h \
+ ../Source/NETPROTOCOL/../network/network.h \
+ ../Source/NETPROTOCOL/../network/../pci.h \
+ ../Source/NETPROTOCOL/../network/../usb/list2.h \
+ ../Source/NETPROTOCOL/../network/../types.h \
+ ../Source/NETPROTOCOL/../network/../Cdi/CdiOsDep.h \
+ ../Source/NETPROTOCOL/../network/../Cdi/../pci.h \
+ ../Source/NETPROTOCOL/../network/../cdi/cdi.h \
+ ../Source/NETPROTOCOL/../network/../cdi/../types.h \
+ ../Source/NETPROTOCOL/../network/../cdi/../usb/list2.h \
+ ../Source/NETPROTOCOL/../network/../netprotocol/arp.h \
+ ../Source/NETPROTOCOL/../network/../netprotocol/dhcp.h \
+ ../Source/NETPROTOCOL/../network/../netprotocol/../network/netutils.h \
+ ../Source/NETPROTOCOL/../network/netutils.h \
+ ../Source/NETPROTOCOL/../network/../usb/irq.h \
+ ../Source/NETPROTOCOL/../network/../usb/../types.h \
+ ../Source/NETPROTOCOL/../network/../usb/../utility.h \
+ ../Source/NETPROTOCOL/../network/../usb/../Types.h \
+ ../Source/NETPROTOCOL/../utility.h
+tcp.o: ../Source/NETPROTOCOL/tcp.c ../Source/NETPROTOCOL/tcp.h \
+ ../Source/NETPROTOCOL/../network/network.h \
+ ../Source/NETPROTOCOL/../network/../pci.h \
+ ../Source/NETPROTOCOL/../network/../usb/list2.h \
+ ../Source/NETPROTOCOL/../network/../usb/../types.h \
+ ../Source/NETPROTOCOL/../network/../types.h \
+ ../Source/NETPROTOCOL/../network/../Cdi/CdiOsDep.h \
+ ../Source/NETPROTOCOL/../network/../Cdi/../pci.h \
+ ../Source/NETPROTOCOL/../network/../cdi/cdi.h \
+ ../Source/NETPROTOCOL/../network/../cdi/../types.h \
+ ../Source/NETPROTOCOL/../network/../cdi/../usb/list2.h \
+ ../Source/NETPROTOCOL/../network/../netprotocol/arp.h \
+ ../Source/NETPROTOCOL/../network/../netprotocol/../network/netutils.h \
+ ../Source/NETPROTOCOL/../network/../netprotocol/../network/../types.h \
+ ../Source/NETPROTOCOL/../network/../netprotocol/../usb/list2.h \
+ ../Source/NETPROTOCOL/../network/../netprotocol/dhcp.h \
+ ../Source/NETPROTOCOL/../network/netutils.h \
+ ../Source/NETPROTOCOL/../network/../usb/irq.h \
+ ../Source/NETPROTOCOL/../network/../usb/../utility.h \
+ ../Source/NETPROTOCOL/../network/../usb/../Types.h \
+ ../Source/NETPROTOCOL/../task.h ../Source/NETPROTOCOL/../Types.h \
+ ../Source/NETPROTOCOL/../List.h \
+ ../Source/NETPROTOCOL/../Synchronization.h \
+ ../Source/NETPROTOCOL/../window.h ../Source/NETPROTOCOL/../Graphics.h \
+ ../Source/NETPROTOCOL/../Queue.h ../Source/NETPROTOCOL/../Keyboard.h \
+ ../Source/NETPROTOCOL/../network/events.h \
+ ../Source/NETPROTOCOL/../network/../task.h \
+ ../Source/NETPROTOCOL/../network/../Synchronization.h \
+ ../Source/NETPROTOCOL/../network/../usb/list2.h \
+ ../Source/NETPROTOCOL/ipv4.h ../Source/NETPROTOCOL/../DynamicMemory.h \
+ ../Source/NETPROTOCOL/../multiprocessor.h \
+ ../Source/NETPROTOCOL/../utility.h
+dhcp.o: ../Source/NETPROTOCOL/dhcp.c ../Source/NETPROTOCOL/dhcp.h \
+ ../Source/NETPROTOCOL/../network/netutils.h \
+ ../Source/NETPROTOCOL/../network/../types.h ../Source/NETPROTOCOL/udp.h \
+ ../Source/NETPROTOCOL/../network/network.h \
+ ../Source/NETPROTOCOL/../network/../pci.h \
+ ../Source/NETPROTOCOL/../network/../usb/list2.h \
+ ../Source/NETPROTOCOL/../network/../usb/../types.h \
+ ../Source/NETPROTOCOL/../network/../types.h \
+ ../Source/NETPROTOCOL/../network/../Cdi/CdiOsDep.h \
+ ../Source/NETPROTOCOL/../network/../Cdi/../pci.h \
+ ../Source/NETPROTOCOL/../network/../cdi/cdi.h \
+ ../Source/NETPROTOCOL/../network/../cdi/../types.h \
+ ../Source/NETPROTOCOL/../network/../cdi/../usb/list2.h \
+ ../Source/NETPROTOCOL/../network/../netprotocol/arp.h \
+ ../Source/NETPROTOCOL/../network/../netprotocol/../network/netutils.h \
+ ../Source/NETPROTOCOL/../network/../netprotocol/../usb/list2.h \
+ ../Source/NETPROTOCOL/../network/../netprotocol/dhcp.h \
+ ../Source/NETPROTOCOL/../network/netutils.h \
+ ../Source/NETPROTOCOL/../network/../usb/irq.h \
+ ../Source/NETPROTOCOL/../network/../usb/../utility.h \
+ ../Source/NETPROTOCOL/../network/../usb/../Types.h \
+ ../Source/NETPROTOCOL/../task.h ../Source/NETPROTOCOL/../Types.h \
+ ../Source/NETPROTOCOL/../List.h \
+ ../Source/NETPROTOCOL/../Synchronization.h \
+ ../Source/NETPROTOCOL/../network/events.h \
+ ../Source/NETPROTOCOL/../network/../task.h \
+ ../Source/NETPROTOCOL/../network/../Synchronization.h \
+ ../Source/NETPROTOCOL/../network/../usb/list2.h
+e1000.o: ../Source/NETWORK/e1000.c ../Source/NETWORK/e1000.h \
+ ../Source/NETWORK/net.h ../Source/NETWORK/../types.h \
+ ../Source/NETWORK/../CDI/cdi.h ../Source/NETWORK/../CDI/../types.h \
+ ../Source/NETWORK/../CDI/../usb/list2.h \
+ ../Source/NETWORK/../CDI/../usb/../types.h ../Source/NETWORK/e1000_io.h \
+ ../Source/NETWORK/../dynamicMemory.h ../Source/NETWORK/../Types.h \
+ ../Source/NETWORK/../Synchronization.h ../Source/NETWORK/../pci.h \
+ ../Source/NETWORK/../usb/list2.h ../Source/NETWORK/../types.h \
+ ../Source/NETWORK/../Cdi/CdiOsDep.h ../Source/NETWORK/../Cdi/../pci.h \
+ ../Source/NETWORK/../cdi/cdi.h
+netutils.o: ../Source/NETWORK/netutils.c ../Source/NETWORK/netutils.h \
+ ../Source/NETWORK/../types.h
+network.o: ../Source/NETWORK/network.c ../Source/NETWORK/network.h \
+ ../Source/NETWORK/../pci.h ../Source/NETWORK/../usb/list2.h \
+ ../Source/NETWORK/../usb/../types.h ../Source/NETWORK/../types.h \
+ ../Source/NETWORK/../Cdi/CdiOsDep.h ../Source/NETWORK/../Cdi/../pci.h \
+ ../Source/NETWORK/../cdi/cdi.h ../Source/NETWORK/../cdi/../types.h \
+ ../Source/NETWORK/../cdi/../usb/list2.h \
+ ../Source/NETWORK/../netprotocol/arp.h \
+ ../Source/NETWORK/../netprotocol/../network/netutils.h \
+ ../Source/NETWORK/../netprotocol/../network/../types.h \
+ ../Source/NETWORK/../netprotocol/../usb/list2.h \
+ ../Source/NETWORK/../netprotocol/dhcp.h ../Source/NETWORK/netutils.h \
+ ../Source/NETWORK/../usb/irq.h ../Source/NETWORK/../usb/../utility.h \
+ ../Source/NETWORK/../usb/../Types.h \
+ ../Source/NETWORK/../netprotocol/ethernet.h \
+ ../Source/NETWORK/../netprotocol/../network/network.h \
+ ../Source/NETWORK/rtl8139.h ../Source/NETWORK/rtl8168.h \
+ ../Source/NETWORK/pcnet.h ../Source/NETWORK/../cdi/cdi.h \
+ ../Source/NETWORK/net.h ../Source/NETWORK/../types.h \
+ ../Source/NETWORK/../CDI/cdi.h ../Source/NETWORK/../DynamicMemory.h \
+ ../Source/NETWORK/../Types.h ../Source/NETWORK/../Synchronization.h \
+ ../Source/NETWORK/../utility.h
+rtl8168.o: ../Source/NETWORK/rtl8168.c ../Source/NETWORK/rtl8168.h \
+ ../Source/NETWORK/network.h ../Source/NETWORK/../pci.h \
+ ../Source/NETWORK/../usb/list2.h ../Source/NETWORK/../usb/../types.h \
+ ../Source/NETWORK/../types.h ../Source/NETWORK/../Cdi/CdiOsDep.h \
+ ../Source/NETWORK/../Cdi/../pci.h ../Source/NETWORK/../cdi/cdi.h \
+ ../Source/NETWORK/../cdi/../types.h \
+ ../Source/NETWORK/../cdi/../usb/list2.h \
+ ../Source/NETWORK/../netprotocol/arp.h \
+ ../Source/NETWORK/../netprotocol/../network/netutils.h \
+ ../Source/NETWORK/../netprotocol/../network/../types.h \
+ ../Source/NETWORK/../netprotocol/../usb/list2.h \
+ ../Source/NETWORK/../netprotocol/dhcp.h ../Source/NETWORK/netutils.h \
+ ../Source/NETWORK/../usb/irq.h ../Source/NETWORK/../usb/../utility.h \
+ ../Source/NETWORK/../usb/../Types.h ../Source/NETWORK/../DynamicMemory.h \
+ ../Source/NETWORK/../Types.h ../Source/NETWORK/../Synchronization.h
+events.o: ../Source/NETWORK/events.c ../Source/NETWORK/events.h \
+ ../Source/NETWORK/../task.h ../Source/NETWORK/../Types.h \
+ ../Source/NETWORK/../List.h ../Source/NETWORK/../Synchronization.h \
+ ../Source/NETWORK/../Synchronization.h ../Source/NETWORK/../usb/list2.h \
+ ../Source/NETWORK/../usb/../types.h ../Source/NETWORK/../DynamicMemory.h \
+ ../Source/NETWORK/../netprotocol/udp.h \
+ ../Source/NETWORK/../netprotocol/../network/network.h \
+ ../Source/NETWORK/../netprotocol/../network/../pci.h \
+ ../Source/NETWORK/../netprotocol/../network/../usb/list2.h \
+ ../Source/NETWORK/../netprotocol/../network/../types.h \
+ ../Source/NETWORK/../netprotocol/../network/../Cdi/CdiOsDep.h \
+ ../Source/NETWORK/../netprotocol/../network/../Cdi/../pci.h \
+ ../Source/NETWORK/../netprotocol/../network/../cdi/cdi.h \
+ ../Source/NETWORK/../netprotocol/../network/../cdi/../types.h \
+ ../Source/NETWORK/../netprotocol/../network/../cdi/../usb/list2.h \
+ ../Source/NETWORK/../netprotocol/../network/../netprotocol/arp.h \
+ ../Source/NETWORK/../netprotocol/../network/../netprotocol/../network/netutils.h \
+ ../Source/NETWORK/../netprotocol/../network/../netprotocol/../network/../types.h \
+ ../Source/NETWORK/../netprotocol/../network/../netprotocol/../usb/list2.h \
+ ../Source/NETWORK/../netprotocol/../network/../netprotocol/dhcp.h \
+ ../Source/NETWORK/../netprotocol/../network/netutils.h \
+ ../Source/NETWORK/../netprotocol/../network/../usb/irq.h \
+ ../Source/NETWORK/../netprotocol/../network/../usb/../types.h \
+ ../Source/NETWORK/../netprotocol/../network/../usb/../utility.h \
+ ../Source/NETWORK/../netprotocol/../network/../usb/../Types.h \
+ ../Source/NETWORK/../netprotocol/../task.h \
+ ../Source/NETWORK/../netprotocol/../network/events.h \
+ ../Source/NETWORK/../netprotocol/tcp.h \
+ ../Source/NETWORK/../netprotocol/../window.h \
+ ../Source/NETWORK/../netprotocol/../Types.h \
+ ../Source/NETWORK/../netprotocol/../Synchronization.h \
+ ../Source/NETWORK/../netprotocol/../Graphics.h \
+ ../Source/NETWORK/../netprotocol/../List.h \
+ ../Source/NETWORK/../netprotocol/../Queue.h \
+ ../Source/NETWORK/../netprotocol/../Keyboard.h \
+ ../Source/NETWORK/../Utility.h ../Source/NETWORK/../network/network.h
+e1000_cdi.o: ../Source/NETWORK/e1000_cdi.c ../Source/NETWORK/net.h \
+ ../Source/NETWORK/../types.h ../Source/NETWORK/../CDI/cdi.h \
+ ../Source/NETWORK/../CDI/../types.h \
+ ../Source/NETWORK/../CDI/../usb/list2.h \
+ ../Source/NETWORK/../CDI/../usb/../types.h ../Source/NETWORK/../pci.h \
+ ../Source/NETWORK/../usb/list2.h ../Source/NETWORK/../types.h \
+ ../Source/NETWORK/../Cdi/CdiOsDep.h ../Source/NETWORK/../Cdi/../pci.h \
+ ../Source/NETWORK/../cdi/cdi.h ../Source/NETWORK/e1000.h
+pcnet.o: ../Source/NETWORK/pcnet.c ../Source/NETWORK/pcnet.h \
+ ../Source/NETWORK/network.h ../Source/NETWORK/../pci.h \
+ ../Source/NETWORK/../usb/list2.h ../Source/NETWORK/../usb/../types.h \
+ ../Source/NETWORK/../types.h ../Source/NETWORK/../Cdi/CdiOsDep.h \
+ ../Source/NETWORK/../Cdi/../pci.h ../Source/NETWORK/../cdi/cdi.h \
+ ../Source/NETWORK/../cdi/../types.h \
+ ../Source/NETWORK/../cdi/../usb/list2.h \
+ ../Source/NETWORK/../netprotocol/arp.h \
+ ../Source/NETWORK/../netprotocol/../network/netutils.h \
+ ../Source/NETWORK/../netprotocol/../network/../types.h \
+ ../Source/NETWORK/../netprotocol/../usb/list2.h \
+ ../Source/NETWORK/../netprotocol/dhcp.h ../Source/NETWORK/netutils.h \
+ ../Source/NETWORK/../usb/irq.h ../Source/NETWORK/../usb/../utility.h \
+ ../Source/NETWORK/../usb/../Types.h ../Source/NETWORK/../DynamicMemory.h \
+ ../Source/NETWORK/../Types.h ../Source/NETWORK/../Synchronization.h \
+ ../Source/NETWORK/../assemblyutility.h ../Source/NETWORK/../Task.h \
+ ../Source/NETWORK/../List.h ../Source/NETWORK/../Utility.h
+rtl8139.o: ../Source/NETWORK/rtl8139.c ../Source/NETWORK/rtl8139.h \
+ ../Source/NETWORK/network.h ../Source/NETWORK/../pci.h \
+ ../Source/NETWORK/../usb/list2.h ../Source/NETWORK/../usb/../types.h \
+ ../Source/NETWORK/../types.h ../Source/NETWORK/../Cdi/CdiOsDep.h \
+ ../Source/NETWORK/../Cdi/../pci.h ../Source/NETWORK/../cdi/cdi.h \
+ ../Source/NETWORK/../cdi/../types.h \
+ ../Source/NETWORK/../cdi/../usb/list2.h \
+ ../Source/NETWORK/../netprotocol/arp.h \
+ ../Source/NETWORK/../netprotocol/../network/netutils.h \
+ ../Source/NETWORK/../netprotocol/../network/../types.h \
+ ../Source/NETWORK/../netprotocol/../usb/list2.h \
+ ../Source/NETWORK/../netprotocol/dhcp.h ../Source/NETWORK/netutils.h \
+ ../Source/NETWORK/../usb/irq.h ../Source/NETWORK/../usb/../utility.h \
+ ../Source/NETWORK/../usb/../Types.h ../Source/NETWORK/../dynamicMemory.h \
+ ../Source/NETWORK/../Types.h ../Source/NETWORK/../Synchronization.h
+usb_msd.o: ../Source/STORAGE/usb_msd.c ../Source/STORAGE/usb_msd.h \
+ ../Source/STORAGE/../usb/usb.h ../Source/STORAGE/../usb/../types.h \
+ ../Source/STORAGE/../usb/devicemanager.h \
+ ../Source/STORAGE/../usb/list2.h ../Source/STORAGE/../usb/../PIT.h \
+ ../Source/STORAGE/../usb/../Types.h ../Source/STORAGE/../types.h \
+ ../Source/STORAGE/../ConsoleShell.h ../Source/STORAGE/../Types.h \
+ ../Source/STORAGE/../harddisk.h ../Source/STORAGE/../Synchronization.h \
+ ../Source/STORAGE/../usb/usb_hc.h ../Source/STORAGE/../usb/usb.h \
+ ../Source/STORAGE/../usb/../pci.h \
+ ../Source/STORAGE/../usb/../usb/list2.h \
+ ../Source/STORAGE/../usb/../types.h \
+ ../Source/STORAGE/../usb/../Cdi/CdiOsDep.h \
+ ../Source/STORAGE/../usb/../Cdi/../pci.h \
+ ../Source/STORAGE/../usb/../cdi/cdi.h \
+ ../Source/STORAGE/../usb/../cdi/../types.h \
+ ../Source/STORAGE/../usb/../cdi/../usb/list2.h \
+ ../Source/STORAGE/../usb/array.h ../Source/STORAGE/../DynamicMemory.h \
+ ../Source/STORAGE/../Utility.h
+array.o: ../Source/USB/array.c ../Source/USB/array.h \
+ ../Source/USB/../types.h ../Source/USB/../DynamicMemory.h \
+ ../Source/USB/../Types.h ../Source/USB/../Synchronization.h
+usb_hc.o: ../Source/USB/usb_hc.c ../Source/USB/usb_hc.h \
+ ../Source/USB/usb.h ../Source/USB/../types.h \
+ ../Source/USB/devicemanager.h ../Source/USB/list2.h \
+ ../Source/USB/../PIT.h ../Source/USB/../Types.h ../Source/USB/../pci.h \
+ ../Source/USB/../usb/list2.h ../Source/USB/../types.h \
+ ../Source/USB/../Cdi/CdiOsDep.h ../Source/USB/../Cdi/../pci.h \
+ ../Source/USB/../cdi/cdi.h ../Source/USB/../cdi/../types.h \
+ ../Source/USB/../cdi/../usb/list2.h ../Source/USB/array.h \
+ ../Source/USB/uhci.h ../Source/USB/ohci.h ../Source/USB/../pit.h \
+ ../Source/USB/../storage/usb_msd.h ../Source/USB/../storage/../usb/usb.h \
+ ../Source/USB/../storage/../types.h \
+ ../Source/USB/../storage/../ConsoleShell.h \
+ ../Source/USB/../storage/../Types.h \
+ ../Source/USB/../storage/../harddisk.h \
+ ../Source/USB/../storage/../Synchronization.h ../Source/USB/ehci.h \
+ ../Source/USB/xhci.h ../Source/USB/../DynamicMemory.h \
+ ../Source/USB/../Synchronization.h ../Source/USB/../Utility.h
+ehci.o: ../Source/USB/ehci.c ../Source/USB/ehci.h ../Source/USB/../pci.h \
+ ../Source/USB/../usb/list2.h ../Source/USB/../usb/../types.h \
+ ../Source/USB/../types.h ../Source/USB/../Cdi/CdiOsDep.h \
+ ../Source/USB/../Cdi/../pci.h ../Source/USB/../cdi/cdi.h \
+ ../Source/USB/../cdi/../types.h ../Source/USB/../cdi/../usb/list2.h \
+ ../Source/USB/usb_hc.h ../Source/USB/usb.h ../Source/USB/../types.h \
+ ../Source/USB/devicemanager.h ../Source/USB/list2.h \
+ ../Source/USB/../PIT.h ../Source/USB/../Types.h ../Source/USB/array.h \
+ ../Source/USB/ehciQHqTD.h ../Source/USB/irq.h ../Source/USB/../utility.h \
+ ../Source/USB/../DynamicMemory.h ../Source/USB/../Synchronization.h
+usb_hub.o: ../Source/USB/usb_hub.c ../Source/USB/usb_hub.h \
+ ../Source/USB/usb.h ../Source/USB/../types.h \
+ ../Source/USB/devicemanager.h ../Source/USB/list2.h \
+ ../Source/USB/../PIT.h ../Source/USB/../Types.h ../Source/USB/usb_hc.h \
+ ../Source/USB/../pci.h ../Source/USB/../usb/list2.h \
+ ../Source/USB/../types.h ../Source/USB/../Cdi/CdiOsDep.h \
+ ../Source/USB/../Cdi/../pci.h ../Source/USB/../cdi/cdi.h \
+ ../Source/USB/../cdi/../types.h ../Source/USB/../cdi/../usb/list2.h \
+ ../Source/USB/array.h ../Source/USB/xhci.h \
+ ../Source/USB/../Synchronization.h ../Source/USB/../DynamicMemory.h \
+ ../Source/USB/../Synchronization.h ../Source/USB/../task.h \
+ ../Source/USB/../List.h
+list2.o: ../Source/USB/list2.c ../Source/USB/list2.h \
+ ../Source/USB/../types.h ../Source/USB/../DynamicMemory.h \
+ ../Source/USB/../Types.h ../Source/USB/../Synchronization.h
+ohci.o: ../Source/USB/ohci.c ../Source/USB/../PCI.h \
+ ../Source/USB/../usb/list2.h ../Source/USB/../usb/../types.h \
+ ../Source/USB/../types.h ../Source/USB/../Cdi/CdiOsDep.h \
+ ../Source/USB/../Cdi/../pci.h ../Source/USB/../cdi/cdi.h \
+ ../Source/USB/../cdi/../types.h ../Source/USB/../cdi/../usb/list2.h \
+ ../Source/USB/ohci.h ../Source/USB/../pci.h ../Source/USB/usb_hc.h \
+ ../Source/USB/usb.h ../Source/USB/../types.h \
+ ../Source/USB/devicemanager.h ../Source/USB/list2.h \
+ ../Source/USB/../PIT.h ../Source/USB/../Types.h ../Source/USB/array.h \
+ ../Source/USB/../pit.h ../Source/USB/../storage/usb_msd.h \
+ ../Source/USB/../storage/../usb/usb.h \
+ ../Source/USB/../storage/../types.h \
+ ../Source/USB/../storage/../ConsoleShell.h \
+ ../Source/USB/../storage/../Types.h \
+ ../Source/USB/../storage/../harddisk.h \
+ ../Source/USB/../storage/../Synchronization.h ../Source/USB/irq.h \
+ ../Source/USB/../utility.h ../Source/USB/../DynamicMemory.h \
+ ../Source/USB/../Synchronization.h
+uhci.o: ../Source/USB/uhci.c ../Source/USB/uhci.h ../Source/USB/../pci.h \
+ ../Source/USB/../usb/list2.h ../Source/USB/../usb/../types.h \
+ ../Source/USB/../types.h ../Source/USB/../Cdi/CdiOsDep.h \
+ ../Source/USB/../Cdi/../pci.h ../Source/USB/../cdi/cdi.h \
+ ../Source/USB/../cdi/../types.h ../Source/USB/../cdi/../usb/list2.h \
+ ../Source/USB/usb_hc.h ../Source/USB/usb.h ../Source/USB/../types.h \
+ ../Source/USB/devicemanager.h ../Source/USB/list2.h \
+ ../Source/USB/../PIT.h ../Source/USB/../Types.h ../Source/USB/array.h \
+ ../Source/USB/irq.h ../Source/USB/../utility.h \
+ ../Source/USB/../DynamicMemory.h ../Source/USB/../Synchronization.h \
+ ../Source/USB/../../../32bit/source/page.h \
+ ../Source/USB/../../../32bit/source/Types.h
+xhci.o: ../Source/USB/xhci.c ../Source/USB/xhci.h ../Source/USB/../pci.h \
+ ../Source/USB/../usb/list2.h ../Source/USB/../usb/../types.h \
+ ../Source/USB/../types.h ../Source/USB/../Cdi/CdiOsDep.h \
+ ../Source/USB/../Cdi/../pci.h ../Source/USB/../cdi/cdi.h \
+ ../Source/USB/../cdi/../types.h ../Source/USB/../cdi/../usb/list2.h \
+ ../Source/USB/usb_hc.h ../Source/USB/usb.h ../Source/USB/../types.h \
+ ../Source/USB/devicemanager.h ../Source/USB/list2.h \
+ ../Source/USB/../PIT.h ../Source/USB/../Types.h ../Source/USB/array.h \
+ ../Source/USB/irq.h ../Source/USB/../utility.h \
+ ../Source/USB/../dynamicmemory.h ../Source/USB/../Synchronization.h
+ehciQHqTD.o: ../Source/USB/ehciQHqTD.c ../Source/USB/ehciQHqTD.h \
+ ../Source/USB/ehci.h ../Source/USB/../pci.h ../Source/USB/../usb/list2.h \
+ ../Source/USB/../usb/../types.h ../Source/USB/../types.h \
+ ../Source/USB/../Cdi/CdiOsDep.h ../Source/USB/../Cdi/../pci.h \
+ ../Source/USB/../cdi/cdi.h ../Source/USB/../cdi/../types.h \
+ ../Source/USB/../cdi/../usb/list2.h ../Source/USB/usb_hc.h \
+ ../Source/USB/usb.h ../Source/USB/../types.h \
+ ../Source/USB/devicemanager.h ../Source/USB/list2.h \
+ ../Source/USB/../PIT.h ../Source/USB/../Types.h ../Source/USB/array.h \
+ ../Source/USB/../utility.h ../Source/USB/../DynamicMemory.h \
+ ../Source/USB/../Synchronization.h
+usb.o: ../Source/USB/usb.c ../Source/USB/usb.h ../Source/USB/../types.h \
+ ../Source/USB/devicemanager.h ../Source/USB/list2.h \
+ ../Source/USB/../PIT.h ../Source/USB/../Types.h ../Source/USB/usb_hc.h \
+ ../Source/USB/../pci.h ../Source/USB/../usb/list2.h \
+ ../Source/USB/../types.h ../Source/USB/../Cdi/CdiOsDep.h \
+ ../Source/USB/../Cdi/../pci.h ../Source/USB/../cdi/cdi.h \
+ ../Source/USB/../cdi/../types.h ../Source/USB/../cdi/../usb/list2.h \
+ ../Source/USB/array.h ../Source/USB/usb_hub.h \
+ ../Source/USB/../DynamicMemory.h ../Source/USB/../Synchronization.h \
+ ../Source/USB/../storage/usb_msd.h ../Source/USB/../storage/../usb/usb.h \
+ ../Source/USB/../storage/../types.h \
+ ../Source/USB/../storage/../ConsoleShell.h \
+ ../Source/USB/../storage/../Types.h \
+ ../Source/USB/../storage/../harddisk.h \
+ ../Source/USB/../storage/../Synchronization.h ../Source/USB/../task.h \
+ ../Source/USB/../List.h ../Source/USB/../fat32/fat_access.h \
+ ../Source/USB/../fat32/fat_defs.h ../Source/USB/../fat32/fat_opts.h \
+ ../Source/USB/../fat32/fat_types.h
+ring.o: ../Source/USB/ring.c ../Source/USB/ring.h \
+ ../Source/USB/../types.h ../Source/USB/../DynamicMemory.h \
+ ../Source/USB/../Types.h ../Source/USB/../Synchronization.h
+irq.o: ../Source/USB/irq.c ../Source/USB/irq.h ../Source/USB/../types.h \
+ ../Source/USB/../utility.h ../Source/USB/../Types.h \
+ ../Source/USB/../pci.h ../Source/USB/../usb/list2.h \
+ ../Source/USB/../usb/../types.h ../Source/USB/../types.h \
+ ../Source/USB/../Cdi/CdiOsDep.h ../Source/USB/../Cdi/../pci.h \
+ ../Source/USB/../cdi/cdi.h ../Source/USB/../cdi/../types.h \
+ ../Source/USB/../cdi/../usb/list2.h ../Source/USB/../task.h \
+ ../Source/USB/../List.h ../Source/USB/../Synchronization.h
+devicemanager.o: ../Source/USB/devicemanager.c \
+ ../Source/USB/devicemanager.h ../Source/USB/../types.h \
+ ../Source/USB/array.h ../Source/USB/../task.h ../Source/USB/../Types.h \
+ ../Source/USB/../List.h ../Source/USB/../Synchronization.h \
+ ../Source/USB/../Synchronization.h ../Source/USB/../storage/usb_msd.h \
+ ../Source/USB/../storage/../usb/usb.h \
+ ../Source/USB/../storage/../usb/../types.h \
+ ../Source/USB/../storage/../usb/devicemanager.h \
+ ../Source/USB/../storage/../usb/list2.h \
+ ../Source/USB/../storage/../usb/../PIT.h \
+ ../Source/USB/../storage/../usb/../Types.h \
+ ../Source/USB/../storage/../types.h \
+ ../Source/USB/../storage/../ConsoleShell.h \
+ ../Source/USB/../storage/../Types.h \
+ ../Source/USB/../storage/../harddisk.h \
+ ../Source/USB/../storage/../Synchronization.h \
+ ../Source/USB/../usb/uhci.h ../Source/USB/../usb/../pci.h \
+ ../Source/USB/../usb/../usb/list2.h ../Source/USB/../usb/../types.h \
+ ../Source/USB/../usb/../Cdi/CdiOsDep.h \
+ ../Source/USB/../usb/../Cdi/../pci.h ../Source/USB/../usb/../cdi/cdi.h \
+ ../Source/USB/../usb/../cdi/../types.h \
+ ../Source/USB/../usb/../cdi/../usb/list2.h ../Source/USB/../usb/usb_hc.h \
+ ../Source/USB/../usb/usb.h ../Source/USB/../usb/array.h \
+ ../Source/USB/../usb/../types.h ../Source/USB/../usb/devicemanager.h \
+ ../Source/USB/../usb/xhci.h

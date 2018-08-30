@@ -1,0 +1,25 @@
+declare @number int = 7
+
+while @number < 100
+begin
+
+INSERT INTO [GS_ACCOUNT].[dbo].[GW_USER]
+           ([szAccountid]
+           ,[szPassword]
+           ,[szName]
+           ,[szNickname]
+           ,[szPhoneNumber]
+           ,[nCP])
+     VALUES
+           ('nhs'+Convert(char,@number)
+           ,'nhs'+Convert(char,@number)
+           ,'nhs'+Convert(char,@number)
+           ,'nhs'+Convert(char,@number)
+           ,0
+           ,0)
+           
+           SET @number = @number + 1
+           
+end           
+           
+GO

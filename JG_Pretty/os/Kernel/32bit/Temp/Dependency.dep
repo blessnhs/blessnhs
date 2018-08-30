@@ -1,0 +1,7 @@
+Util.o: ../Source/Util.c ../Source/Util.h ../Source/Types.h
+Page.o: ../Source/Page.c ../Source/Page.h ../Source/Types.h \
+ ../Source/../../64bit/Source/Task.h ../Source/../../64bit/Source/Types.h \
+ ../Source/../../64bit/Source/List.h \
+ ../Source/../../64bit/Source/Synchronization.h
+Main.o: ../Source/Main.c ../Source/Types.h ../Source/Page.h \
+ ../Source/Change64Mode.h ../Source/Util.h

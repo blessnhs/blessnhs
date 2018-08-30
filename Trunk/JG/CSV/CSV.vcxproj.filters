@@ -1,0 +1,138 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="소스 파일">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="헤더 파일">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="리소스 파일">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="network">
+      <UniqueIdentifier>{4f4ea033-ce89-4f3e-8df7-174c9c175f6e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Char">
+      <UniqueIdentifier>{68089465-6ddb-49d4-82b0-b1af544cc53d}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ReadMe.txt" />
+    <None Include="res\CSV.ico">
+      <Filter>리소스 파일</Filter>
+    </None>
+    <None Include="ClassDiagram1.cd" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="CSV.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="CSVDlg.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="stdafx.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="LOBBY.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="game_room.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="GSClientModule.h">
+      <Filter>network</Filter>
+    </ClInclude>
+    <ClInclude Include="GSEventSelect.h">
+      <Filter>network</Filter>
+    </ClInclude>
+    <ClInclude Include="GSPacket.h">
+      <Filter>network</Filter>
+    </ClInclude>
+    <ClInclude Include="GSPacketTCP.h">
+      <Filter>network</Filter>
+    </ClInclude>
+    <ClInclude Include="GSSocket.h">
+      <Filter>network</Filter>
+    </ClInclude>
+    <ClInclude Include="GSSocketBase.h">
+      <Filter>network</Filter>
+    </ClInclude>
+    <ClInclude Include="GSSocketTCP.h">
+      <Filter>network</Filter>
+    </ClInclude>
+    <ClInclude Include="GSClientSocket.h">
+      <Filter>network</Filter>
+    </ClInclude>
+    <ClInclude Include="ROOM.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Character.h">
+      <Filter>Char</Filter>
+    </ClInclude>
+    <ClInclude Include="UDPSession.h">
+      <Filter>network</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="CSV.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="CSVDlg.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="LOBBY.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="game_room.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="GSClientModule.cpp">
+      <Filter>network</Filter>
+    </ClCompile>
+    <ClCompile Include="GSEventSelect.cpp">
+      <Filter>network</Filter>
+    </ClCompile>
+    <ClCompile Include="GSPacket.cpp">
+      <Filter>network</Filter>
+    </ClCompile>
+    <ClCompile Include="GSPacketTCP.cpp">
+      <Filter>network</Filter>
+    </ClCompile>
+    <ClCompile Include="GSSocket.cpp">
+      <Filter>network</Filter>
+    </ClCompile>
+    <ClCompile Include="GSSocketTCP.cpp">
+      <Filter>network</Filter>
+    </ClCompile>
+    <ClCompile Include="GSClientSocket.cpp">
+      <Filter>network</Filter>
+    </ClCompile>
+    <ClCompile Include="ROOM.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Character.cpp">
+      <Filter>Char</Filter>
+    </ClCompile>
+    <ClCompile Include="UDPSession.cpp">
+      <Filter>network</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="CSV.rc">
+      <Filter>리소스 파일</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+</Project>

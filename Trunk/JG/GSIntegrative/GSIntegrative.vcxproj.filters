@@ -1,0 +1,108 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="소스 파일">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="헤더 파일">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="리소스 파일">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Command">
+      <UniqueIdentifier>{7027cd8e-ac2f-4433-8cc0-423b5693a504}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Constructor">
+      <UniqueIdentifier>{9d513523-b064-4122-9f74-3e0f69dc325f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Log">
+      <UniqueIdentifier>{4f1c828e-d321-4552-8440-d1f2c1899d9d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainProc">
+      <UniqueIdentifier>{daeba527-7530-48c5-a724-3ac6419ab975}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Player">
+      <UniqueIdentifier>{28448bb7-27ee-4606-b77d-d08e7dc264b5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Server">
+      <UniqueIdentifier>{24e7f762-bb25-4db0-ac66-4f0c4a70c743}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainProc\MSG">
+      <UniqueIdentifier>{92565637-1a53-43df-9785-e89f11927fa0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Ini">
+      <UniqueIdentifier>{f326139d-a995-4291-b3e4-8c44127d91b3}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="stdafx.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Command\Command.h">
+      <Filter>Command</Filter>
+    </ClInclude>
+    <ClInclude Include="Constructor\GSConstructor.h">
+      <Filter>Constructor</Filter>
+    </ClInclude>
+    <ClInclude Include="LOG\Log.h">
+      <Filter>Log</Filter>
+    </ClInclude>
+    <ClInclude Include="Player\Player.h">
+      <Filter>Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Player\PlayerManager.h">
+      <Filter>Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Server\GSIntergrativeProcess.h">
+      <Filter>Server</Filter>
+    </ClInclude>
+    <ClInclude Include="Server\GSIntergrativeServer.h">
+      <Filter>Server</Filter>
+    </ClInclude>
+    <ClInclude Include="Ini\GSIniContext.h">
+      <Filter>Ini</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="GSIntegrative.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Command\Command.cpp">
+      <Filter>Command</Filter>
+    </ClCompile>
+    <ClCompile Include="Constructor\GSConstructor.cpp">
+      <Filter>Constructor</Filter>
+    </ClCompile>
+    <ClCompile Include="LOG\Log.cpp">
+      <Filter>Log</Filter>
+    </ClCompile>
+    <ClCompile Include="Player\Player.cpp">
+      <Filter>Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Player\PlayerManager.cpp">
+      <Filter>Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Server\GSIntergrativeProcess.cpp">
+      <Filter>Server</Filter>
+    </ClCompile>
+    <ClCompile Include="Server\GSIntergrativeServer.cpp">
+      <Filter>Server</Filter>
+    </ClCompile>
+    <ClCompile Include="Ini\GSIniContext.cpp">
+      <Filter>Ini</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

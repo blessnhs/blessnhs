@@ -1,0 +1,126 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="소스 파일">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="헤더 파일">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="리소스 파일">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Server">
+      <UniqueIdentifier>{cbc54e73-1947-4cd8-8fed-45f29a7e0389}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Command">
+      <UniqueIdentifier>{bec90e22-7045-4b32-ab41-3b888523c9e1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DB">
+      <UniqueIdentifier>{72346377-2fab-4ba1-aa1e-9decc830317e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DB\DBJob">
+      <UniqueIdentifier>{54b5b2c5-9c48-4353-8321-f0c89a949042}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DB\DBProxy">
+      <UniqueIdentifier>{afdeba70-6373-4336-bcb2-95b39dc5b6d2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainProc">
+      <UniqueIdentifier>{49b09ec6-67f0-4fc4-88eb-c1c8b6c28aa2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainProc\MSG">
+      <UniqueIdentifier>{54501380-2131-46c4-b503-330f23b99c70}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="INI">
+      <UniqueIdentifier>{978b1cba-d7c2-428d-a10a-6ab866a49ab4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Constructor">
+      <UniqueIdentifier>{3ba1acb2-c78c-4a97-81bd-78f084ef35c2}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="stdafx.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Server\CertificationProcess.h">
+      <Filter>Server</Filter>
+    </ClInclude>
+    <ClInclude Include="Server\GSCertification.h">
+      <Filter>Server</Filter>
+    </ClInclude>
+    <ClInclude Include="Command\Command.h">
+      <Filter>Command</Filter>
+    </ClInclude>
+    <ClInclude Include="DB\DBJob\RequestPlayerAuth.h">
+      <Filter>DB\DBJob</Filter>
+    </ClInclude>
+    <ClInclude Include="DB\DBProxy\DBProcess.h">
+      <Filter>DB\DBProxy</Filter>
+    </ClInclude>
+    <ClInclude Include="DB\DBProxy\DBProcessContainer.h">
+      <Filter>DB\DBProxy</Filter>
+    </ClInclude>
+    <ClInclude Include="MainProcess\MSG\MSG_PLAYER_QUERY.h">
+      <Filter>MainProc\MSG</Filter>
+    </ClInclude>
+    <ClInclude Include="MainProcess\MSG\MSG_PLAYER_QUERY.hpp">
+      <Filter>MainProc\MSG</Filter>
+    </ClInclude>
+    <ClInclude Include="MainProcess\MSG\MSG_PLAYER_QUERY_RES.h">
+      <Filter>MainProc\MSG</Filter>
+    </ClInclude>
+    <ClInclude Include="Ini\CertificationINI.h">
+      <Filter>INI</Filter>
+    </ClInclude>
+    <ClInclude Include="Constructor\CertificationConstructor.h">
+      <Filter>Constructor</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="GSCertificationServer.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Server\CertificationProcess.cpp">
+      <Filter>Server</Filter>
+    </ClCompile>
+    <ClCompile Include="Server\GSCertification.cpp">
+      <Filter>Server</Filter>
+    </ClCompile>
+    <ClCompile Include="Command\Command.cpp">
+      <Filter>Command</Filter>
+    </ClCompile>
+    <ClCompile Include="DB\DBJob\RequestPlayerAuth.cpp">
+      <Filter>DB\DBJob</Filter>
+    </ClCompile>
+    <ClCompile Include="DB\DBProxy\DBProcess.cpp">
+      <Filter>DB\DBProxy</Filter>
+    </ClCompile>
+    <ClCompile Include="DB\DBProxy\DBProcessContainer.cpp">
+      <Filter>DB\DBProxy</Filter>
+    </ClCompile>
+    <ClCompile Include="MainProcess\MSG\MSG_PLAYER_QUERY.cpp">
+      <Filter>MainProc\MSG</Filter>
+    </ClCompile>
+    <ClCompile Include="MainProcess\MSG\MSG_PLAYER_QUERY_RES.cpp">
+      <Filter>MainProc\MSG</Filter>
+    </ClCompile>
+    <ClCompile Include="Ini\CertificationINI.cpp">
+      <Filter>INI</Filter>
+    </ClCompile>
+    <ClCompile Include="Constructor\CertificationConstructor.cpp">
+      <Filter>Constructor</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
