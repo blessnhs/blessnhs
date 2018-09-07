@@ -8,13 +8,13 @@
 ################################################################################
 # 컴파일러와 링커, 그리고 라이브러리 정의
 NASM64 = nasm -f elf64
-GCC64 = x86_64-pc-linux-gcc.exe -c -m64 -ffreestanding -mcmodel=large -fno-common
-LD64 = x86_64-pc-linux-ld.exe -melf_x86_64 -T ../elf_x86_64.x -nostdlib -e _START -Ttext 0x0000
+GCC64 = x86_64-elf-gcc.exe -c -m64 -ffreestanding -mcmodel=large -fno-common
+LD64 = x86_64-elf-ld.exe -melf_x86_64 -T ../elf_x86_64.x -nostdlib -e _START -Ttext 0x0000
 LDFLAGS = -lMINT64OS -L../../UserLibrary
 CFLAGS = -I../../UserLibrary/Source
 
 # 응용 프로그램 이미지 생성을 위한 OBJCOPY 옵션 정의
-OBJCOPY64 = x86_64-pc-linux-objcopy -j .text -j .data -j .rodata -j .bss
+OBJCOPY64 = x86_64-elf-objcopy -j .text -j .data -j .rodata -j .bss
 
 # 디렉터리 정의
 OBJECTDIRECTORY = Temp

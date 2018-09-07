@@ -283,21 +283,56 @@ typedef struct kDirectoryHandleStruct
     int iCurrentOffset;
 } DIRECTORYHANDLE;
 
+
+
+
+#define FATFS_MAX_LONG_FILENAME         	260
+#define FAT_SECTOR_SIZE                     512
+
+
+struct cluster_lookup
+{
+	unsigned int ClusterIdx;
+	unsigned int CurrentCluster;
+};
+
+struct fat_node
+{
+    struct fat_node    *previous;
+    struct fat_node    *next;
+};
+
 // 파일과 디렉터리에 대한 정보가 들어있는 자료구조
 typedef struct kFileDirectoryHandleStruct
 {
-    // 자료구조의 타입 설정. 파일 핸들이나 디렉터리 핸들, 또는 빈 핸들 타입 지정 가능
-    BYTE bType;
 
-    // bType의 값에 따라 파일 또는 디렉터리로 사용
-    union
-    {
-        // 파일 핸들
-        FILEHANDLE stFileHandle;
-        // 디렉터리 핸들
-        DIRECTORYHANDLE stDirectoryHandle;
-    };    
-} FILE, DIR;
+	unsigned int                  	parentcluster;
+	unsigned int                  	startcluster;
+	unsigned int                  	bytenum;
+	unsigned int                  	filelength;
+	int                     		filelength_changed;
+	char                    		path[FATFS_MAX_LONG_FILENAME];
+	char                    		filename[FATFS_MAX_LONG_FILENAME];
+	unsigned char                   shortfilename[11];
+
+	#ifdef FAT_CLUSTER_CACHE_ENTRIES
+	//    uint32                  cluster_cache_idx[FAT_CLUSTER_CACHE_ENTRIES];
+	//    uint32                  cluster_cache_data[FAT_CLUSTER_CACHE_ENTRIES];
+	#endif
+
+	    // Cluster Lookup
+	    struct cluster_lookup   last_fat_lookup;
+
+	    // Read/Write sector buffer
+	    unsigned char                   file_data_sector[FAT_SECTOR_SIZE];
+	    unsigned int                  file_data_address;
+	    int                     file_data_dirty;
+
+	    // File fopen flags
+	    unsigned char                   flags;
+
+	    struct fat_node         list_node;
+} FILE;
 
 //==============================================================================
 //  GUI 시스템에 관련된 자료구조

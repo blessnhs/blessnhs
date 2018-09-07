@@ -8,7 +8,7 @@
 ################################################################################
 # 컴파일러 및 AR 프로그램의 옵션 정의
 NASM64 = nasm -f elf64
-GCC64 = x86_64-pc-linux-gcc.exe -c -m64 -ffreestanding -mcmodel=large -fno-common
+GCC64 =  x86_64-elf-gcc.exe -c -m64 -ffreestanding -mcmodel=large -fno-common
 AR64 = x86_64-pc-linux-ar.exe rcs
 
 # 디렉터리 정의

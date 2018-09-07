@@ -71,10 +71,7 @@ DWORD fwrite( const void* pvBuffer, DWORD dwSize, DWORD dwCount, FILE* pstFile )
 int fseek( FILE* pstFile, int iOffset, int iOrigin );
 int fclose( FILE* pstFile );
 int remove( const char* pcFileName );
-DIR* opendir( const char* pcDirectoryName );
-struct dirent* readdir( DIR* pstDirectory );
-BOOL rewinddir( DIR* pstDirectory );
-int closedir( DIR* pstDirectory );
+
 BOOL IsFileOpened( const struct dirent* pstEntry );
 
 //==============================================================================

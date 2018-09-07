@@ -184,51 +184,14 @@ int Main( char* pcArgument )
  */
 BOOL ReadFileToBuffer( const char* pcFileName, TEXTINFO* pstInfo )
 {
-    DIR* pstDirectory;
     struct dirent* pstEntry;
     DWORD dwFileSize;
     FILE* pstFile;
     DWORD dwReadSize;
     
-    //--------------------------------------------------------------------------
-    // 루트 디렉터리를 열어서 파일을 검색
-    //--------------------------------------------------------------------------
-    pstDirectory = opendir( "/" );
-    dwFileSize = 0;
-    
-    // 디렉터리에서 파일을 검색
-    while( 1 )
-    {
-        // 디렉터리에서 엔트리 하나를 읽음
-        pstEntry = readdir( pstDirectory );
-        // 더 이상 파일이 없으면 나감
-        if( pstEntry == NULL )
-        {
-            break;
-        }
-        
-        // 파일 이름의 길이와 내용이 같은 것을 검색
-        if( ( strlen( pstEntry->d_name ) == strlen( pcFileName ) ) &&
-            ( memcmp( pstEntry->d_name, pcFileName, strlen( pcFileName ) ) 
-                    == 0 ) )
-        {
-            dwFileSize = pstEntry->dwFileSize;
-            break;
-        }
-    }
-    // 디렉터리 핸들을 반환, 핸들을 반환하지 않으면 메모리가 해제되지 않고 남으므로
-    // 꼭 해제해야 함
-    closedir( pstDirectory );
-
-    if( dwFileSize == 0 )
-    {
-        printf( "%s file doesn't exist or size is zero\n", 
-                pcFileName );
-        return FALSE;
-    }
     
     // 파일 이름을 저장
-    memcpy( &( pstInfo->vcFileName ), pcFileName, sizeof( pstInfo->vcFileName ) );
+    memcpy( &( pstInfo->vcFileName ), pcFileName, strlen( pstInfo->vcFileName ) );
     pstInfo->vcFileName[ sizeof( pstInfo->vcFileName ) - 1 ] = '\0';
     
     //--------------------------------------------------------------------------
@@ -243,6 +206,17 @@ BOOL ReadFileToBuffer( const char* pcFileName, TEXTINFO* pstInfo )
         return FALSE;
     }
     
+    pstFile = fopen( pcFileName, "r" );
+    if(pstFile == NULL)
+    {
+        printf( "fopen is null\n" );
+      	return FALSE;
+    }
+
+    printf( "%s_%s_%d\n",pcFileName, pstFile->filename,pstFile->filelength);
+
+    dwFileSize = pstFile->filelength;
+
     // 파일의 내용을 저장할 버퍼를 할당
     pstInfo->pbFileBuffer = ( BYTE* ) malloc( dwFileSize );
     if( pstInfo->pbFileBuffer == NULL )
@@ -253,7 +227,6 @@ BOOL ReadFileToBuffer( const char* pcFileName, TEXTINFO* pstInfo )
     }
     
     // 파일을 열어서 모두 메모리에 저장
-    pstFile = fopen( pcFileName, "r" );
     if( ( pstFile != NULL ) && 
         ( fread( pstInfo->pbFileBuffer, 1, dwFileSize, pstFile ) == dwFileSize ) )
     {
