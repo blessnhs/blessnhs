@@ -54,13 +54,13 @@
 #define WINDOW_HEIGHT_MIN           ( WINDOW_TITLEBAR_HEIGHT + 30 )
 
 // 윈도우의 색깔
-#define WINDOW_COLOR_FRAME                      RGB( 109, 218, 22 )
+#define WINDOW_COLOR_FRAME                      RGB( 0, 0, 0 )
 #define WINDOW_COLOR_BACKGROUND                 RGB( 255, 255, 255 )
 #define WINDOW_COLOR_TITLEBARTEXT               RGB( 255, 255, 255 )
-#define WINDOW_COLOR_TITLEBARACTIVEBACKGROUND   RGB( 79, 204, 11 )
-#define WINDOW_COLOR_TITLEBARINACTIVEBACKGROUND RGB( 55, 135, 11 )
-#define WINDOW_COLOR_TITLEBARBRIGHT1            RGB( 183, 249, 171 )
-#define WINDOW_COLOR_TITLEBARBRIGHT2            RGB( 150, 210, 140 )
+#define WINDOW_COLOR_TITLEBARACTIVEBACKGROUND   RGB( 0, 0, 0 )
+#define WINDOW_COLOR_TITLEBARINACTIVEBACKGROUND RGB( 128, 128, 128 )
+#define WINDOW_COLOR_TITLEBARBRIGHT1            RGB( 128, 128, 128 )
+#define WINDOW_COLOR_TITLEBARBRIGHT2            RGB( 128, 128, 128 )
 #define WINDOW_COLOR_TITLEBARUNDERLINE          RGB( 46, 59, 30 )
 #define WINDOW_COLOR_BUTTONBRIGHT               RGB( 229, 229, 229 )
 #define WINDOW_COLOR_BUTTONDARK                 RGB( 86, 86, 86 )
@@ -76,9 +76,9 @@
 #define MOUSE_CURSOR_HEIGHT                 20
 
 // 커서 이미지의 색깔
-#define MOUSE_CURSOR_OUTERLINE              RGB(0, 0, 0 )
-#define MOUSE_CURSOR_OUTER                  RGB( 79, 204, 11 )
-#define MOUSE_CURSOR_INNER                  RGB( 232, 255, 232 )
+#define MOUSE_CURSOR_OUTERLINE              RGB( 128, 0, 255 )
+#define MOUSE_CURSOR_OUTER                  RGB( 128, 0, 255 )
+#define MOUSE_CURSOR_INNER                  RGB( 128, 0, 255 )
 
 // 이벤트 큐의 크기
 #define EVENTQUEUE_WINDOWMAXCOUNT           100

@@ -180,7 +180,7 @@ static void DrawDigitalClock( QWORD qwWindowID )
     
     // 시계를 표시
     DrawText( qwWindowID, stUpdateArea.iX1 + 4, stUpdateArea.iY1 + 3, 
-            RGB( 255, 255, 255 ), APPLICATIONPANEL_COLOR_BACKGROUND, vcBuffer, 
+            RGB( 255, 255, 255 ), APPLICATIONPANEL_COLOR_BACKGROUND, vcBuffer,
             kStrLen( vcBuffer ) );
     
     // 시계가 그려진 영역만 화면에 업데이트

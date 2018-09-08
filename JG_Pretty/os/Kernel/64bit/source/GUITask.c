@@ -887,7 +887,7 @@ static void ProcessConsoleBuffer( QWORD qwWindowID )
                 // 문자를 화면에 출력
                 DrawText( qwWindowID, i * FONT_ENGLISHWIDTH + 2, 
                            j * FONT_ENGLISHHEIGHT + WINDOW_TITLEBAR_HEIGHT, 
-                           RGB( 0, 255, 0 ), RGB( 0, 0, 0 ), 
+                           RGB( 255, 255, 255 ), RGB( 0, 0, 0 ),
                            &( pstScreenBuffer->bCharactor ), 1);
                 
                 // 이전 화면 버퍼로 값을 옮겨 놓고 현재 라인에 이전과
@@ -1308,5 +1308,6 @@ static BOOL CreateImageViewerWindowAndExecute( QWORD qwMainWindowID,
     FreeMemory( pstJpeg );
     FreeMemory( pstOutputBuffer );
     
+    fl_fclose( fp );
     return TRUE;
 }

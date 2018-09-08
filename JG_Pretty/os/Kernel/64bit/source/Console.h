@@ -47,7 +47,7 @@
 #define CONSOLE_FOREGROUND_BRIGHTWHITE      0x0F
 // 기본 문자 색상
 #define CONSOLE_DEFAULTTEXTCOLOR            ( CONSOLE_BACKGROUND_BLACK | \
-        CONSOLE_FOREGROUND_BRIGHTGREEN )
+        CONSOLE_BACKGROUND_WHITE )
 
 // 콘솔의 너비(Width)와 높이(Height),그리고 비디오 메모리의 시작 어드레스 설정
 #define CONSOLE_WIDTH                       80

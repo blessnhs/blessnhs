@@ -12,7 +12,7 @@
 #include "DynamicMemory.h"
 #include "Utility.h"
 #include "JPEG.h"
-
+#include "fat32/fat_filelib.h"
 // GUI 시스템 관련 자료구조
 static WINDOWPOOLMANAGER gs_stWindowPoolManager;
 // 윈도우 매니저 관련 자료구조
@@ -226,6 +226,7 @@ void InitializeGUISystem( void )
     DrawRect( qwBackgroundWindowID, 0, 0, pstModeInfo->wXResolution - 1, 
             pstModeInfo->wYResolution - 1, WINDOW_COLOR_SYSTEMBACKGROUND, TRUE );
     
+    DrawBackgroundImage();
     // 배경 윈도우를 화면에 나타냄
     ShowWindow( qwBackgroundWindowID, TRUE );
 }
@@ -2480,17 +2481,32 @@ void DrawBackgroundImage( void )
     int iMiddleY;
     int iScreenWidth;
     int iScreenHeight;
-        
+    FL_FILE* fp;
+    BYTE* pbFileBuffer;
+
     // 윈도우 매니저를 반환
     pstWindowManager = GetWindowManager();
     
     // JPEG 자료구조를 할당
     pstJpeg = ( JPEG* ) AllocateMemory( sizeof( JPEG ) );
     
-    // JPEG 초기화
-    if( JPEGInit( pstJpeg, g_vbWallPaper, size_g_vbWallPaper ) == FALSE )
+    fp = fl_fopen( "/bgr.jpg", "rb" );
+    if( fp == NULL )
     {
-        return ;
+    	return ;
+    }
+
+    pbFileBuffer = ( BYTE* ) AllocateMemory( fp->filelength );
+
+    // 파일을 읽은 후 JPEG 파일 포맷인지 확인
+    if( ( fl_fread( pbFileBuffer, 1, fp->filelength, fp ) != fp->filelength ) ||
+           ( JPEGInit( pstJpeg, pbFileBuffer, fp->filelength ) == FALSE ) )
+    {
+           Printf( "[ImageViewer] Read fail or file is not JPEG format %d\n" , fp->filelength);
+           FreeMemory( pbFileBuffer );
+           FreeMemory( pstJpeg );
+           fl_fclose( fp );
+           return ;
     }
     
     // 디코딩할 메모리 할당
@@ -2522,9 +2538,13 @@ void DrawBackgroundImage( void )
     BitBlt( pstWindowManager->qwBackgoundWindowID, iMiddleX, iMiddleY, 
             pstOutputBuffer, pstJpeg->width, pstJpeg->height );    
     
+    FreeMemory( pbFileBuffer );
+
     // 할당받았던 버퍼를 모두 반환
     FreeMemory( pstOutputBuffer );
     FreeMemory( pstJpeg );
+
+    fl_fclose( fp );
 }
 
 //==============================================================================
