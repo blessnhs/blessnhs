@@ -19,7 +19,7 @@ void MSG_PLAYER_ACCEPT::Execute(LPVOID Param)
 {
 	if(pClient != NULL)
 	{
-		printf("accept socket %d",pClient->GetId());
+		printf("accept socket %d\n",pClient->GetId());
 
 		GSServer::GSServer *pServer = (GSServer::GSServer *)pClient->m_GSServer;
 

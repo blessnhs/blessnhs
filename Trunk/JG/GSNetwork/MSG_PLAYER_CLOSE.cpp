@@ -25,7 +25,7 @@ void MSG_PLAYER_CLOSE::Execute(LPVOID Param)
 {
 	if(pClient != NULL)
 	{
-		printf("Disconnect socket %d",pClient->GetId());
+		printf("Disconnect socket %d\n",pClient->GetId());
 
 		pClient->ProcDisconnect();
 	}
