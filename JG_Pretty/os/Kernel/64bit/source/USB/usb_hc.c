@@ -67,7 +67,7 @@ void usb_constructTransfer(usb_device_t* usbDevice, usb_transfer_t* transfer, us
 
 uint8_t usb_setupTransaction(usb_transfer_t* transfer, uint8_t type, uint8_t req, uint8_t hiVal, uint8_t loVal, uint16_t index, uint16_t length)
 {
-    dlelement_t* elem = list_alloc_elem(sizeof(usb_transaction_t), "usb_transaction_t");
+    element* elem = list_alloc_elem(sizeof(usb_transaction_t), "usb_transaction_t");
     usb_transaction_t* transaction = elem->data;
     transaction->type = USB_TT_SETUP;
     uint8_t retVal = loVal;
@@ -121,7 +121,7 @@ void usb_inTransaction(usb_transfer_t* transfer, bool controlHandshake, void* bu
             remainingTransactions++;
     }
 
-    dlelement_t* elem = list_alloc_elem(sizeof(usb_transaction_t), "usb_transaction_t");
+    element* elem = list_alloc_elem(sizeof(usb_transaction_t), "usb_transaction_t");
     usb_transaction_t* transaction = elem->data;
     transaction->type = USB_TT_IN;
 
@@ -170,7 +170,7 @@ void usb_outTransaction(usb_transfer_t* transfer, bool controlHandshake, const v
     if (length % transfer->packetSize != 0)
         remainingTransactions++;
 
-    dlelement_t* elem = list_alloc_elem(sizeof(usb_transaction_t), "usb_transaction_t");
+    element* elem = list_alloc_elem(sizeof(usb_transaction_t), "usb_transaction_t");
     usb_transaction_t* transaction = elem->data;
     transaction->type = USB_TT_OUT;
 

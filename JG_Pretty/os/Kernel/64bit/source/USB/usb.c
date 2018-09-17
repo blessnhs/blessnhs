@@ -30,7 +30,7 @@ usb_device_t* usb_createDevice(port_t* port, usb_speed_t speed)
     device->speed = speed;
     list_construct(&device->interfaces);
     list_construct(&device->endpoints);
-    dlelement_t* ep0_elem = list_alloc_elem(sizeof(usb_endpoint_t), "usb_endpoint 0");
+    element* ep0_elem = list_alloc_elem(sizeof(usb_endpoint_t), "usb_endpoint 0");
     usb_endpoint_t* ep0 = ep0_elem->data;
     ep0->address = 0;
     switch (speed)
@@ -62,7 +62,7 @@ void usb_destroyDevice(usb_device_t* device)
     if (device->usbClass == 0x09) // Hub
         usb_destroyHub(device);
 
-    dlelement_t *el;
+    element *el;
     for (el = device->interfaces.head; el; el = el->next)
     {
         usb_interface_t* interface = el->data;
@@ -133,7 +133,7 @@ void usb_setupDevice(usb_device_t* device, uint8_t address)
     else
     {
         bool foundSomething = false;
-        dlelement_t* el;
+        element* el;
         for (el = device->interfaces.head; el; el = el->next)
         {
             usb_interface_t* interface = el->data;
@@ -310,7 +310,7 @@ bool usb_getConfigDescriptor(usb_device_t* device)
                 struct usb_interfaceDescriptor* descriptor = addr;
                 showInterfaceDescriptor(descriptor);
 
-                dlelement_t* elem = list_alloc_elem(sizeof(usb_interface_t), "usb_interface_t");
+                element* elem = list_alloc_elem(sizeof(usb_interface_t), "usb_interface_t");
                 usb_interface_t* interface = elem->data;
                 MemCpy(&interface->descriptor, descriptor, sizeof(struct usb_interfaceDescriptor));
                 interface->device = device;
@@ -322,7 +322,7 @@ bool usb_getConfigDescriptor(usb_device_t* device)
                 struct usb_endpointDescriptor* descriptor = addr;
                 showEndpointDescriptor(descriptor);
 
-                dlelement_t* elem = list_alloc_elem(sizeof(usb_endpoint_t), "usb_endpoint_t");
+                element* elem = list_alloc_elem(sizeof(usb_endpoint_t), "usb_endpoint_t");
                 usb_endpoint_t* ep = elem->data;
 
                 if (descriptor->endpointAddress & 0x80)
@@ -886,7 +886,7 @@ void usb_pollInterruptTransfers()
 {
 	while(1)
 	{
-		dlelement_t* e;
+		element* e;
 
 		for (e = usb_interruptTransfers.head; e; e = e->next)
 		{

@@ -65,7 +65,7 @@ void usb_setupHID(usb_interface_t* interface)
 
     // Get interrupt endpoint (IN)
     usb_endpoint_t* endpointInterrupt = 0;
-    dlelement_t* el;
+    element* el;
     for (el = interface->device->endpoints.head; el; el = el->next)
     {
         usb_endpoint_t* ep = el->data;

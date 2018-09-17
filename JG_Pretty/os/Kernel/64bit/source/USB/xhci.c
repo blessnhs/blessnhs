@@ -47,7 +47,7 @@ static uint8_t calculateDCI(usb_endpoint_t* endpoint);
 
 void xhci_install(pciDev_t* PCIdev)
 {
-    dlelement_t* elem = list_alloc_elem(sizeof(xhci_t), "xhci");
+    element* elem = list_alloc_elem(sizeof(xhci_t), "xhci");
     xhci_t* x             = elem->data;
     x->PCIdevice          = PCIdev;
     x->PCIdevice->data    = x;
@@ -797,7 +797,7 @@ void xhci_updateEndpointInformation(hc_port_t* hc_port)
     usb_device_t* dev = hc_port->device;
     if (dev)
     {
-    	dlelement_t* el;
+    	element* el;
         for (el = dev->endpoints.head; el; el = el->next)
         {
             usb_endpoint_t* ep = el->data;
@@ -1495,7 +1495,7 @@ void xhci_waitForTransfer(usb_transfer_t* transfer)
         Printf("\nevent ring full");
     }
 
-    dlelement_t* elem;
+    element* elem;
     for ( elem = transfer->transactions.head; elem != 0; elem = elem->next)
     {
         xhci_transaction_t* transaction = ((usb_transaction_t*) elem->data)->data;
@@ -1528,7 +1528,7 @@ void xhci_destructTransfer(usb_transfer_t* transfer)
     uint8_t slotNr = x->portSlotLink[portNr - 1].slotNr;
     uint8_t DCI = calculateDCI(transfer->endpoint);
 
-    dlelement_t* elem;
+    element* elem;
     for (elem = transfer->transactions.head; elem != 0; elem = elem->next)
     {
         xhci_transaction_t* transaction = ((usb_transaction_t*)elem->data)->data;
@@ -1857,7 +1857,7 @@ static void xhci_handler(pciDev_t* device)
     // Check if an xHCI controller issued this interrupt
     xhci_t* x = device->data;
     bool found = false;
-    dlelement_t* el;
+    element* el;
     for (el = xhci.head; el != 0; el = el->next)
     {
         if (el->data == x)

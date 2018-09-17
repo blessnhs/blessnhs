@@ -28,7 +28,7 @@ static void ehci_showUSBSTS(ehci_t* e);
 
 void ehci_install(pciDev_t* PCIdev)
 {
-    dlelement_t* elem = list_alloc_elem(sizeof(ehci_t), "ehci");
+    element* elem = list_alloc_elem(sizeof(ehci_t), "ehci");
     ehci_t* e             = elem->data;
     e->PCIdevice          = PCIdev;
     e->PCIdevice->data    = e;
@@ -349,7 +349,7 @@ void ehci_handler(pciDev_t* device)
     // Check if an EHCI controller issued this interrupt
     ehci_t* e = device->data;
     bool found = false;
-    dlelement_t* el = ehci.head;
+    element* el = ehci.head;
     for (el = ehci.head; el != 0; el = el->next)
     {
         if (el->data == e)
@@ -710,7 +710,7 @@ bool ehci_pollTransfer(usb_transfer_t* transfer)
 void ehci_waitForTransfer(usb_transfer_t* transfer)
 {
     transfer->success = true;
-    dlelement_t* elem = transfer->transactions.head;
+    element* elem = transfer->transactions.head;
     for (elem = transfer->transactions.head; elem != 0; elem = elem->next)
     {
         ehci_transaction_t* transaction = ((usb_transaction_t*)elem->data)->data;
@@ -804,7 +804,7 @@ void ehci_destructTransfer(usb_transfer_t* transfer)
             WAIT_FOR_CONDITION(!e->USBasyncIntPending, 25, 10, "\nEHCI: Async Doorbell does not respond.");
         }
         FreeMemory(transfer->data);
-        dlelement_t* elem;
+        element* elem;
         for (elem = transfer->transactions.head; elem != 0; elem = elem->next)
         {
             ehci_transaction_t* transaction = ((usb_transaction_t*)elem->data)->data;

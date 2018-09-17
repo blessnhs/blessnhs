@@ -171,7 +171,7 @@ void network_displayArpTables(void)
 {
     Printf("\n\nARP Cache:");
     uint8_t i = 0;
-    dlelement_t* e;
+    element* e;
     for (e = adapters.head; e != 0; e = e->next, i++)
     {
         Printf("\n\nAdapter %u: %I4", i, ((network_adapter_t*)e->data)->IP);
@@ -182,7 +182,7 @@ void network_displayArpTables(void)
 
 network_adapter_t* network_getAdapter(IP4_t IP)
 {
-	dlelement_t* e;
+	element* e;
 	for (e = adapters.head; e != 0; e = e->next)
     {
         network_adapter_t* adapter = e->data;

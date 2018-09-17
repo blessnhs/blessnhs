@@ -136,7 +136,7 @@ bool pci_deviceSentInterrupt(pciDev_t* dev)
 
 bool pci_getExtendedCapability(pciDev_t* dev, uint8_t id, uint8_t* value)
 {
-	dlelement_t* e;
+	element* e;
     for (e = dev->extendedCapabilities.head; e; e = e->next)
     {
         uint8_t this_id = BYTE1((uintptr_t)e->data);
@@ -245,7 +245,7 @@ void pci_scanBus(uint8_t bus, int64_t* counter)
             uint16_t vendorID = config_read(bus, device, func, PCI_VENDOR_ID, 2);
             if (vendorID != 0xFFFF)
             {
-                dlelement_t* elem = list_alloc_elem(sizeof(pciDev_t), "pciDev_t");
+                element* elem = list_alloc_elem(sizeof(pciDev_t), "pciDev_t");
                 pciDev_t* PCIdev = elem->data;
 
                 PCIdev->bus = bus;
@@ -399,7 +399,7 @@ void pci_scan(void)
 void pci_installDevices(void)
 {
     // Install device drivers
-	dlelement_t* elem;
+	element* elem;
     for (elem = pci_devices.head; elem; elem = elem->next)
     {
         pciDev_t* PCIdev = elem->data;

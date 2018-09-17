@@ -32,7 +32,7 @@ void uhci_install(pciDev_t* PCIdev)
   #endif
 
     static uint8_t numHC = 0;
-    dlelement_t* elem = list_alloc_elem(sizeof(uhci_t), "uhci");
+    element* elem = list_alloc_elem(sizeof(uhci_t), "uhci");
     uhci_t* u = elem->data;
     u->PCIdevice  = PCIdev;
     u->PCIdevice->data = u;
@@ -270,7 +270,7 @@ static void uhci_handler(registers_t* r, pciDev_t* device)
     // Check if an UHCI controller issued this interrupt
     uhci_t* u = device->data;
     bool found = false;
-    dlelement_t* el;
+    element* el;
     for (el = uhci.head; el != 0; el = el->next)
     {
         if (el->data == u)
@@ -543,7 +543,7 @@ bool uhci_pollTransfer(usb_transfer_t* transfer)
     // check completion
     transfer->success = true;
     bool completed = true;
-    dlelement_t* elem;
+    element* elem;
     for (elem = transfer->transactions.head; elem; elem = elem->next)
     {
         uhciTD_t* uTD = ((usb_transaction_t*)elem->data)->data;
@@ -579,7 +579,7 @@ void uhci_waitForTransfer(usb_transfer_t* transfer)
 
     // wait for completion
     uint32_t timeout = 150; // Wait up to 150*10ms = 1.5 seconds
-    dlelement_t* dlE = transfer->transactions.head;
+    element* dlE = transfer->transactions.head;
     while (timeout > 0)
     {
         uhciTD_t* uTD = ((usb_transaction_t*)dlE->data)->data;
@@ -606,7 +606,7 @@ void uhci_waitForTransfer(usb_transfer_t* transfer)
         OutPortWord(u->bar + UHCI_USBCMD, InPortWord(u->bar + UHCI_USBCMD) & ~UHCI_CMD_RS);
 
     // check conditions and save data
-    dlelement_t* elem;
+    element* elem;
     for (elem = transfer->transactions.head; elem != 0; elem = elem->next)
     {
         uhciTD_t* uTD = ((usb_transaction_t*)elem->data)->data;
@@ -646,7 +646,7 @@ void uhci_waitForTransfer(usb_transfer_t* transfer)
 
 void uhci_destructTransfer(usb_transfer_t* transfer)
 {
-	dlelement_t* elem;
+	element* elem;
     for (elem = transfer->transactions.head; elem != 0; elem = elem->next)
     {
         uhciTD_t* uTD = ((usb_transaction_t*)elem->data)->data;

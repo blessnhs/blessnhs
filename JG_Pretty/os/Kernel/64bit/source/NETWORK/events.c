@@ -53,7 +53,7 @@ uint8_t event_issue(event_queue_t* destination, EVENT_t type, const void* data, 
     if (destination->num == MAX_EVENTS)
     {
         // Overflow
-        dlelement_t* elem = list_alloc_elem(sizeof(event_t) + length, "event (overflow)");
+        element* elem = list_alloc_elem(sizeof(event_t) + length, "event (overflow)");
         event_t* ev = elem->data;
         ev->data = 0;
         ev->length = 0;
@@ -73,7 +73,7 @@ uint8_t event_issue(event_queue_t* destination, EVENT_t type, const void* data, 
     else
     {
         // Add event
-        dlelement_t* elem = list_alloc_elem(sizeof(event_t) + length, "event+data");
+        element* elem = list_alloc_elem(sizeof(event_t) + length, "event+data");
         event_t* ev = elem->data;
         ev->data = ev+1;
         MemCpy(ev->data, data, length);
@@ -90,7 +90,7 @@ uint8_t event_issue(event_queue_t* destination, EVENT_t type, const void* data, 
 
 void event_issueToDisplayedTasks(EVENT_t type, const void* data, size_t length)
 {
- //   for (dlelement_t* e = console_displayed->tasks.head; e != 0; e = e->next)
+ //   for (element* e = console_displayed->tasks.head; e != 0; e = e->next)
  //       event_issue(((task_t*)(e->data))->eventQueue, type, data, length);
 }
 
@@ -124,7 +124,7 @@ EVENT_t event_poll(void* destination, size_t maxLength, EVENT_t filter,protocolt
         return (EVENT_NONE);
     }
 
-    dlelement_t* e = 0;
+    element* e = 0;
     event_t* ev = 0;
     Lock(&eventQueue->mutex);
     if (filter == EVENT_NONE)
@@ -180,7 +180,7 @@ EVENT_t event_poll(void* destination, size_t maxLength, EVENT_t filter,protocolt
 event_t* event_peek(event_queue_t* eventQueue, uint32_t i)
 {
     Lock(&eventQueue->mutex);
-    dlelement_t* elem = list_getElement(&eventQueue->list, i);
+    element* elem = list_getElement(&eventQueue->list, i);
     Unlock(&eventQueue->mutex);
 
     if (elem == 0)

@@ -38,7 +38,7 @@ static uint8_t   ohci_showStatusbyteTD(ohciTD_t* TD);
 void ohci_install(pciDev_t* PCIdev)
 {
     static uint8_t numHC = 0;
-    dlelement_t* elem = list_alloc_elem(sizeof(ohci_t), "ohci");
+    element* elem = list_alloc_elem(sizeof(ohci_t), "ohci");
     ohci_t* o = elem->data;
     o->PCIdevice  = PCIdev;
     o->PCIdevice->data = o;
@@ -502,7 +502,7 @@ void ohci_handler(pciDev_t* device)
     // Check if an OHCI controller issued this interrupt
     ohci_t* o = device->data;
     bool found = false;
-    dlelement_t* el;
+    element* el;
 
     for (el = ohci.head; el != 0; el = el->next)
     {
@@ -763,7 +763,7 @@ bool ohci_pollTransfer(usb_transfer_t* transfer)
     // check completion
     transfer->success = true;
     bool completed = true;
-    dlelement_t* elem;
+    element* elem;
     for (elem = transfer->transactions.head; elem; elem = elem->next)
     {
         ohci_transaction_t* transaction = ((usb_transaction_t*)elem->data)->data;
@@ -799,7 +799,7 @@ void ohci_waitForTransfer(usb_transfer_t* transfer)
 
     // wait for completion
     uint32_t timeout = 30000; // Wait up to 1,5 seconds
-    dlelement_t* dlE = transfer->transactions.head;
+    element* dlE = transfer->transactions.head;
     while (timeout > 0)
     {
         ohci_transaction_t* oT = ((usb_transaction_t*)dlE->data)->data;
@@ -823,7 +823,7 @@ void ohci_waitForTransfer(usb_transfer_t* transfer)
 
 
     // check conditions
-    dlelement_t* elem;
+    element* elem;
     for (elem = transfer->transactions.head; elem; elem = elem->next)
     {
         ohci_transaction_t* transaction = ((usb_transaction_t*)elem->data)->data;
@@ -867,7 +867,7 @@ void ohci_destructTransfer(usb_transfer_t* transfer)
             power++;
         size_t index = min(5, power);
         // Take ED out
-        dlelement_t* elem = list_find(&o->interruptEDs[index], transfer->data);
+        element* elem = list_find(&o->interruptEDs[index], transfer->data);
         if (elem->prev)
             ((ohciED_t*)elem->prev->data)->nextED = ((ohciED_t*)elem->data)->nextED;
         else
@@ -875,7 +875,7 @@ void ohci_destructTransfer(usb_transfer_t* transfer)
         list_delete(&o->interruptEDs[index], elem);
     }
 
-    dlelement_t* elem;
+    element* elem;
     for (elem = transfer->transactions.head; elem != 0; elem = elem->next)
     {
         ohci_transaction_t* transaction = ((usb_transaction_t*)elem->data)->data;

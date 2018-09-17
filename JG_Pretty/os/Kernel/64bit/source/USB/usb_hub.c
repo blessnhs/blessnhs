@@ -60,7 +60,7 @@ void usb_setupHub(usb_device_t* device)
 
     // Get interrupt endpoint
     hub->endpointInterrupt = 0;
-    dlelement_t* el;
+    element* el;
 
     for (el = device->endpoints.head; el; el = el->next)
     {
@@ -412,7 +412,7 @@ bool usb_stopTT(usb_device_t* device, uint8_t port) // Restart a TT after a Stop
 void usb_hubWatchdog(void)
 {
     Lock(&mutex);
-    dlelement_t* elem ;
+    element* elem ;
     for (elem = hubs.head; elem; elem = elem->next)
     {
         usb_device_t* device = (usb_device_t*)elem->data;

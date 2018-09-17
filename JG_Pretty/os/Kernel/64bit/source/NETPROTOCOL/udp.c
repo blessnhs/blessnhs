@@ -22,7 +22,7 @@ static void udp_debug(const udpPacket_t* udp);
 
 static udp_port_t* findConnection(uint16_t port)
 {
-	dlelement_t* e;
+	element* e;
     for(e = udpPorts.head; e != 0; e = e->next)
     {
         udp_port_t* connection = e->data;
@@ -41,7 +41,7 @@ bool udp_bind(uint16_t port)
     	return (false);
     }
 
-    dlelement_t* elem = list_alloc_elem(sizeof(udp_port_t), "udp_port_t");
+    element* elem = list_alloc_elem(sizeof(udp_port_t), "udp_port_t");
     udpPort = elem->data;
     udpPort->port = port;
     udpPort->isActivate = false;
@@ -52,7 +52,7 @@ bool udp_bind(uint16_t port)
 
 void udp_unbind(uint16_t port)
 {
-	dlelement_t* e;
+	element* e;
     for(e = udpPorts.head; e != 0; e = e->next)
     {
         udp_port_t* udpPort = e->data;
@@ -66,7 +66,7 @@ void udp_unbind(uint16_t port)
 
 udp_port_t* udp_findport(uint16_t port)
 {
-	dlelement_t* e;
+	element* e;
 	for(e = udpPorts.head; e != 0; e = e->next)
 	{
 	   udp_port_t* connection = e->data;
@@ -78,7 +78,7 @@ udp_port_t* udp_findport(uint16_t port)
 
 void udp_cleanup(uint16_t port)
 {
-	dlelement_t* e;
+	element* e;
     for(e = udpPorts.head; e != 0;)
     {
         udp_port_t* udpPort = e->data;

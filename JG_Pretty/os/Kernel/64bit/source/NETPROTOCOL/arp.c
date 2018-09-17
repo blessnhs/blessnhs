@@ -19,7 +19,7 @@ static void arp_checkTable(arpTable_t* cache)
     if (GetTickCount() > (cache->lastCheck + ARP_TABLE_TIME_TO_CHECK * 60)) // Check only every ... minutes
     {
         cache->lastCheck = GetTickCount();
-        dlelement_t* e;
+        element* e;
         for (e = cache->table.head; e != 0;)
         {
             arpTableEntry_t* entry = e->data;
@@ -39,7 +39,7 @@ void arp_addTableEntry(arpTable_t* cache, const uint8_t MAC[6], IP4_t IP, bool d
    arpTableEntry_t* entry = arp_findEntry(cache, IP); // Check if there is already an entry with the same IP.
     if (entry == 0) // No entry found. Create new one.
     {
-        dlelement_t* elem = list_alloc_elem(sizeof(arpTableEntry_t), "arp entry");
+        element* elem = list_alloc_elem(sizeof(arpTableEntry_t), "arp entry");
         entry = elem->data;
         list_append_elem(&cache->table, elem);
     }
@@ -53,7 +53,7 @@ arpTableEntry_t* arp_findEntry(arpTable_t* cache, IP4_t IP)
 {
     arp_checkTable(cache); // We check the arp cache for obsolete entries.
 
-    dlelement_t* e;
+    element* e;
     for (e = cache->table.head; e != 0; e = e->next)
     {
         arpTableEntry_t* entry = e->data;
@@ -73,7 +73,7 @@ void arp_showTable(arpTable_t* cache)
     Printf("\nIP\t\t  MAC\t\t\tType\t  Time(sec)");
     Printf("\n--------------------------------------------------------------------------------");
 
-    dlelement_t* e;
+    element* e;
     for (e = cache->table.head; e != 0; e = e->next)
     {
         arpTableEntry_t* entry = e->data;

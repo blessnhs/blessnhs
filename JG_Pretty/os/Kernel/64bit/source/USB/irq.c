@@ -67,7 +67,7 @@ static void installHandler(struct irq* irq, void* handler, irq_handlerType_t typ
         if (irq->handlerCount == 1) // One handler installed. We have to create the handlers-List)
         {
             // Save old handler
-            dlelement_t* elem = list_alloc_elem(sizeof(irq_handler_t), "irq handler");
+            element* elem = list_alloc_elem(sizeof(irq_handler_t), "irq handler");
             irq_handler_t* tempHandler = elem->data;
             *tempHandler = irq->handler.handler;
 
@@ -79,7 +79,7 @@ static void installHandler(struct irq* irq, void* handler, irq_handlerType_t typ
         }
 
         // Create new handler. Insert to list.
-        dlelement_t* elem = list_alloc_elem(sizeof(irq_handler_t), "irq handler");
+        element* elem = list_alloc_elem(sizeof(irq_handler_t), "irq handler");
         irq_handler_t* tempHandler = elem->data;
         tempHandler->func.def = handler;
         tempHandler->type = type;
@@ -121,7 +121,7 @@ void irq_uninstallHandler(IRQ_NUM_t irq, void* handler)
     }
     else
     {
-    	dlelement_t* e;
+    	element* e;
         for (e = interrupts[irq].handler.handlers.head; e != 0; e = e->next)
         {
             irq_handler_t* ihandler = e->data;
@@ -401,7 +401,7 @@ uint32_t irq_handler(uintptr_t esp)
     }
     else if (interrupts[r->int_no].handlerCount > 1) // More than one handler registered
     {
-        for (dlelement_t* e = interrupts[r->int_no].handler.handlers.head; e != 0; e = e->next) // First loop: Try to find a PCI handler to call
+        for (element* e = interrupts[r->int_no].handler.handlers.head; e != 0; e = e->next) // First loop: Try to find a PCI handler to call
         {
             irq_handler_t* handler = e->data;
             if (handler->type == IHT_PCI) // TODO: Why does it not work? Bit 3 of the PCI status register is not set at interrupt on VBox and real hardware
@@ -410,7 +410,7 @@ uint32_t irq_handler(uintptr_t esp)
                 //goto HANDLED; // Disabled, because pci_deviceSentInterrupt is disabled, too.
             }
         }
-        for (dlelement_t* e = interrupts[r->int_no].handler.handlers.head; e != 0; e = e->next) // Second loop: Also accept default and CDI handlers. TODO: Move CDI handlers to first loop (check pci device for interrupt)
+        for (element* e = interrupts[r->int_no].handler.handlers.head; e != 0; e = e->next) // Second loop: Also accept default and CDI handlers. TODO: Move CDI handlers to first loop (check pci device for interrupt)
         {
             irq_handler_t* handler = e->data;
             if (handler->type == IHT_DEFAULT)

@@ -27,7 +27,7 @@ void usb_setupMSD(usb_interface_t* interface)
     msd->interface = interface;
 
     // Get endpoints
-    dlelement_t* el = interface->device->endpoints.head;
+    element* el = interface->device->endpoints.head;
     for (el = interface->device->endpoints.head; el; el = el->next)
     {
         usb_endpoint_t* ep = el->data;

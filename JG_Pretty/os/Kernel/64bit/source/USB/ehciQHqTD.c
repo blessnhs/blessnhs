@@ -179,7 +179,7 @@ void ehci_addToAsyncScheduler(ehci_t* e, usb_transfer_t* transfer, uint8_t veloc
     oldTailQH->horizontalPointer = paging_getPhysAddr(e->tailQH) | BIT(1); // Insert qh to Queue as element behind old queue head
 
     uint32_t timeout = 10 * velocity + 25; // Wait up to 250+100*velocity milliseconds for all transfers to be finished
-    dlelement_t* dlE = transfer->transactions.head;
+    element* dlE = transfer->transactions.head;
     while (timeout > 0)
     {
         ehci_transaction_t* eT = ((usb_transaction_t*)dlE->data)->data;
@@ -286,7 +286,7 @@ void ehci_addToPeriodicScheduler(ehci_t* e, usb_transfer_t* transfer)
       #endif
 
         uint32_t timeout = 50;
-        dlelement_t* dlE = transfer->transactions.head;
+        element* dlE = transfer->transactions.head;
         while (timeout > 0)
         {
             ehci_transaction_t* eT = ((usb_transaction_t*)dlE->data)->data;

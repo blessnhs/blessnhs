@@ -6,34 +6,23 @@
 #include "list2.h"
 #include "../DynamicMemory.h"
 
-list_t* list_create(void)
-{
-    list_t* list = AllocateMemory(sizeof(list_t));
-    if (list)
-    {
-        list->head = 0;
-        list->tail = 0;
-    }
-    return (list);
-}
-
 void list_construct(list_t* list)
 {
     list->head = 0;
     list->tail = 0;
 }
 
-dlelement_t* list_alloc_elem(size_t size, const char* description)
+element* list_alloc_elem(size_t size, const char* description)
 {
-    dlelement_t* newElement = AllocateMemory(sizeof(dlelement_t) + size);
+    element* newElement = AllocateMemory(sizeof(element) + size);
     if (newElement)
         newElement->data = newElement + 1;
     return newElement;
 }
 
-dlelement_t* list_append(list_t* list, void* data)
+element* list_append(list_t* list, void* data)
 {
-    dlelement_t* newElement = AllocateMemory(sizeof(dlelement_t));
+    element* newElement = AllocateMemory(sizeof(element));
     if (newElement)
     {
         newElement->data = data;
@@ -42,7 +31,7 @@ dlelement_t* list_append(list_t* list, void* data)
     return newElement;
 }
 
-void list_append_elem(list_t* list, dlelement_t* elem)
+void list_append_elem(list_t* list, element* elem)
 {
     elem->next = 0;
     elem->prev = list->tail;
@@ -58,14 +47,14 @@ void list_append_elem(list_t* list, dlelement_t* elem)
     list->tail = elem;
 }
 
-dlelement_t* list_insert(list_t* list, dlelement_t* next, void* data)
+element* list_insert(list_t* list, element* next, void* data)
 {
     if (next == 0)
     {
         return (list_append(list, data));
     }
 
-    dlelement_t* newElement = AllocateMemory(sizeof(dlelement_t));
+    element* newElement = AllocateMemory(sizeof(element));
     if (newElement)
     {
         newElement->data = data;
@@ -91,7 +80,7 @@ dlelement_t* list_insert(list_t* list, dlelement_t* next, void* data)
     return (0);
 }
 
-dlelement_t* list_delete(list_t* list, dlelement_t* elem)
+element* list_delete(list_t* list, element* elem)
 {
     if (list->head == 0)
     {
@@ -105,7 +94,7 @@ dlelement_t* list_delete(list_t* list, dlelement_t* elem)
         return (0);
     }
 
-    dlelement_t* temp = elem->next;
+    element* temp = elem->next;
 
     if (elem == list->head)
     {
@@ -130,11 +119,11 @@ dlelement_t* list_delete(list_t* list, dlelement_t* elem)
 
 void list_destruct(list_t* list)
 {
-    dlelement_t* cur = list->head;
+    element* cur = list->head;
 
     while (cur)
     {
-        dlelement_t* nex = cur->next;
+        element* nex = cur->next;
         FreeMemory(cur);
         cur = nex;
     }
@@ -153,9 +142,9 @@ void list_free(list_t* list)
     FreeMemory(list);
 }
 
-dlelement_t* list_getElement(list_t* list, uint32_t number)
+element* list_getElement(list_t* list, uint32_t number)
 {
-    dlelement_t* cur = list->head;
+    element* cur = list->head;
     while (true)
     {
         if (number == 0 || cur == 0)
@@ -168,9 +157,9 @@ dlelement_t* list_getElement(list_t* list, uint32_t number)
     }
 }
 
-dlelement_t* list_find(const list_t* list, void* data)
+element* list_find(const list_t* list, void* data)
 {
-    dlelement_t* cur = list->head;
+    element* cur = list->head;
     while (cur && cur->data != data)
     {
         cur = cur->next;
@@ -182,7 +171,7 @@ dlelement_t* list_find(const list_t* list, void* data)
 size_t list_getCount(const list_t* list)
 {
     size_t count = 0;
-    dlelement_t* e;
+    element* e;
     for (e = list->head; e; e = e->next)
     {
         count++;
@@ -198,7 +187,7 @@ bool list_isEmpty(const list_t* list)
 void list_show(const list_t* list)
 {
     Printf("\nlist element->data: ");
-    dlelement_t* e;
+    element* e;
     for (e = list->head; e; e = e->next)
     {
         Printf("\ndata: %X", e->data);

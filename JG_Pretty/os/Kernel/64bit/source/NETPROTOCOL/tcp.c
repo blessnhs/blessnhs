@@ -62,7 +62,7 @@ static void     tcp_RemoveAckedPacketsFromOutBuffer(tcpConnection_t* connection,
 
 tcpConnection_t* tcp_findConnectionID(uint32_t ID)
 {
-	dlelement_t* e;
+	element* e;
     for (e = tcpConnections.head; e != 0; e = e->next)
     {
         tcpConnection_t* connection = e->data;
@@ -77,7 +77,7 @@ tcpConnection_t* tcp_findConnectionID(uint32_t ID)
 
 tcpConnection_t* tcp_findConnection(IP4_t IP, uint16_t port, network_adapter_t* adapter, TCP_state state)
 {
-	dlelement_t* e;
+	element* e;
     for (e = tcpConnections.head; e != 0; e = e->next)
     {
         tcpConnection_t* connection = e->data;
@@ -148,7 +148,7 @@ void tcp_deleteConnection(tcpConnection_t* connection)
 
         uint32_t countOUT = tcp_deleteOutBuffers(connection); // FreeMemory
 
-        dlelement_t* e;
+        element* e;
         for (e = connection->outBuffer.head; e != 0; e = e->next)
         {
             tcpSendBufferPacket* packet = e->data;
@@ -848,7 +848,7 @@ static uint32_t tcp_deleteInBuffers(tcpConnection_t* connection, list_t* list)
     {
         tcp_logBuffers(connection, false, list); // --> COM1
 
-        dlelement_t* e;
+        element* e;
         for (e = list->head; e != 0; e = e->next)
         {
             count++;
@@ -867,7 +867,7 @@ static uint32_t tcp_deleteOutBuffers(tcpConnection_t* connection)
     {
  //       serial_log(SER_LOG_TCP,"\nOutBuffers not acked: ");
 
-        dlelement_t* e;
+        element* e;
         for (e = connection->outBuffer.head; e != 0; e = e->next)
         {
             count++;
@@ -882,7 +882,7 @@ static uint32_t tcp_deleteOutBuffers(tcpConnection_t* connection)
 
 static bool tcp_retransOutBuffer(tcpConnection_t* connection, uint32_t seq)
 {
-	dlelement_t* e;
+	element* e;
     for (e = connection->outBuffer.head; e != 0; e = e->next)
     {
         tcpOut_t* outPacket = e->data;
@@ -920,7 +920,7 @@ static uint32_t tcp_checkOutBuffers(tcpConnection_t* connection, bool showData)
   #endif
 
     uint32_t count = 0;
-    dlelement_t* e;
+    element* e;
     for (e = connection->outBuffer.head; e != 0; e = e->next)
     {
         count++;
@@ -963,7 +963,7 @@ static uint32_t tcp_checkOutBuffers(tcpConnection_t* connection, bool showData)
 
 static void tcp_RemoveAckedPacketsFromOutBuffer(tcpConnection_t* connection, const tcpPacket_t* tcp)
 {
-	dlelement_t* e;
+	element* e;
     for (e = connection->outBuffer.head; e != 0;)
     {
         tcpOut_t* outPacket = e->data;
@@ -1065,7 +1065,7 @@ void tcp_showConnections(void)
     Printf("\nTCP connections:");
     Printf("\nID\tIP\t\tSrc\tDest\tAddr\t\tState");
     Printf("\n--------------------------------------------------------------------------------");
-    dlelement_t* e;
+    element* e;
     for (e = tcpConnections.head; e != 0; e = e->next)
     {
         tcpConnection_t* connection = e->data;
@@ -1109,7 +1109,7 @@ static uint32_t tcp_logBuffers(tcpConnection_t* connection, bool showData, list_
 {
 //    serial_log(SER_LOG_TCP,"\n------------------------------------");
     uint32_t count = 0;
-    dlelement_t* e;
+    element* e;
     for (e = list->head; e != 0; e = e->next)
     {
         count++;
