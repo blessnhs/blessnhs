@@ -517,6 +517,14 @@ static BOOL ProcessApplicationListWindowEvent( void )
     return bProcessResult;
 }
 
+
+RECT GetPannelButtonRect()
+{
+	return gs_stApplicationPanelData.stButtonArea;
+}
+
+
+
 /**
  *  마우스 커서가 위치한 애플리케이션 리스트 윈도우의 아이템 인덱스를 반환
  */
@@ -538,3 +546,11 @@ static int GetMouseOverItemIndex( int iMouseY )
     
     return iItemIndex;
 }
+
+
+QWORD GetPannelButtondWindowId()
+{
+	return gs_stApplicationPanelData.qwApplicationPanelID;
+}
+
+

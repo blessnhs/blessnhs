@@ -7,6 +7,7 @@
  */
  
 #include "Types.h"
+#include "graphics.h"
 #include "Window.h"
 #include "WindowManagerTask.h"
 #include "VBE.h"
@@ -156,7 +157,20 @@ BOOL ProcessMouseData( void )
     //--------------------------------------------------------------------------
     // 현재 마우스 커서 아래에 있는 윈도우를 검색
     qwWindowIDUnderMouse = FindWindowByPoint( iMouseX, iMouseY );
-    
+
+    if(bButtonStatus & MOUSE_RBUTTONDOWN)
+    {
+    	RECT rct = GetPannelButtonRect();
+
+    	static EVENT evt;
+    	evt.qwType = EVENT_MOUSE_LBUTTONDOWN;
+    	evt.stMouseEvent.stPoint.iX = rct.iX1 + 1;
+		evt.stMouseEvent.stPoint.iY = rct.iY1 + 1;
+		evt.stMouseEvent.bButtonStatus = 1;
+
+    	SendEventToWindow(GetPannelButtondWindowId(),&evt);
+    }
+
     //--------------------------------------------------------------------------
     // 버튼 상태가 변했는지 확인하고 버튼 상태에 따라 마우스 메시지와 윈도우 메시지를
     // 전송

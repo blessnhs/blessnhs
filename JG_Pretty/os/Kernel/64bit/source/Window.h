@@ -64,7 +64,7 @@
 #define WINDOW_COLOR_TITLEBARUNDERLINE          RGB( 46, 59, 30 )
 #define WINDOW_COLOR_BUTTONBRIGHT               RGB( 229, 229, 229 )
 #define WINDOW_COLOR_BUTTONDARK                 RGB( 86, 86, 86 )
-#define WINDOW_COLOR_SYSTEMBACKGROUND           RGB( 232, 255, 232 )
+#define WINDOW_COLOR_SYSTEMBACKGROUND           RGB( 111, 73, 130)
 #define WINDOW_COLOR_XBUTTONLINECOLOR           RGB( 0, 0, 0 )
 
 // 배경 윈도우의 제목
@@ -308,6 +308,7 @@ BOOL RedrawWindowByArea( const RECT* pstArea, QWORD qwDrawWindowID );
 static void CopyWindowBufferToFrameBuffer( const WINDOW* pstWindow,
         DRAWBITMAP* pstDrawBitmap );
 QWORD FindWindowByPoint( int iX, int iY );
+QWORD GetPannelButtondWindowId();
 QWORD FindWindowByTitle( const char* pcTitle );
 BOOL IsWindowExist( QWORD qwWindowID );
 QWORD GetTopWindowID( void );

@@ -83,5 +83,5 @@ static void DrawApplicationListItem( int iIndex, BOOL bSelected );
 static BOOL ProcessApplicationPanelWindowEvent( void );
 static BOOL ProcessApplicationListWindowEvent( void );
 static int GetMouseOverItemIndex( int iMouseY );
-
+RECT GetPannelButtonRect();
 #endif /*__APPLICATIONPANELTASK_H__*/

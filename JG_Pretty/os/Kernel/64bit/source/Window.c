@@ -958,6 +958,12 @@ QWORD FindWindowByPoint( int iX, int iY )
     return qwWindowID;
 }
 
+
+QWORD GetBackgroundWindowId()
+{
+	return gs_stWindowManager.qwBackgoundWindowID;
+}
+
 /**
  *  윈도우 제목이 일치하는 윈도우를 반환
  */
