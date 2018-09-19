@@ -35,9 +35,6 @@
 
 static struct cdi_net_driver driver;
 
-/**
- * Initialisiert die Datenstrukturen fuer den e1000-Treiber
- */
 static int e1000_driver_init(void)
 {
     // Konstruktor der Vaterklasse
@@ -46,14 +43,9 @@ static int e1000_driver_init(void)
     return (0);
 }
 
-/**
- * Deinitialisiert die Datenstrukturen fuer den e1000-Treiber
- */
 static int e1000_driver_destroy(void)
 {
     cdi_net_driver_destroy(&driver);
-
-    // TODO Alle Karten deinitialisieren
 
     return (0);
 }

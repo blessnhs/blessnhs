@@ -1,7 +1,3 @@
-/*
-*  license and disclaimer for the use of this source code as per statement below
-*  Lizenz und Haftungsausschluss f�r die Verwendung dieses Sourcecodes siehe unten
-*/
 
 #include "pcnet.h"
 #include "../usb/irq.h"

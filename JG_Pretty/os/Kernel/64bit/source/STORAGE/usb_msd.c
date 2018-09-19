@@ -1,8 +1,3 @@
-/*
-*  license and disclaimer for the use of this source code as per statement below
-*  Lizenz und Haftungsausschluss f? die Verwendung dieses Sourcecodes siehe unten
-*/
-
 #include "usb_msd.h"
 #include "../usb/usb_hc.h"
 #include "../DynamicMemory.h"

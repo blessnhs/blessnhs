@@ -65,7 +65,7 @@
 #define WINDOW_COLOR_BUTTONBRIGHT               RGB( 229, 229, 229 )
 #define WINDOW_COLOR_BUTTONDARK                 RGB( 86, 86, 86 )
 #define WINDOW_COLOR_SYSTEMBACKGROUND           RGB( 232, 255, 232 )
-#define WINDOW_COLOR_XBUTTONLINECOLOR           RGB( 71, 199, 21 )
+#define WINDOW_COLOR_XBUTTONLINECOLOR           RGB( 0, 0, 0 )
 
 // 배경 윈도우의 제목
 #define WINDOW_BACKGROUNDWINDOWTITLE            "SYS_BACKGROUND"

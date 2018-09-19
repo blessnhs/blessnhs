@@ -4,12 +4,13 @@
 #include "RTC.h"
 #include "Task.h"
 #include "GUITask.h"
+#include "vbe.h"
 
 // 애플리케이션 테이블
 APPLICATIONENTRY gs_vstApplicationTable[] =
 {
-        { "Base GUI Task", BaseGUITask },
-        { "Hello World GUI Task",  HelloWorldGUITask },
+//        { "Base GUI Task", BaseGUITask },
+//        { "Hello World GUI Task",  HelloWorldGUITask },
         { "System Monitor Task", SystemMonitorTask },
         { "Console Shell for GUI", GUIConsoleShellTask },
         { "Image Viewer Task", ImageViewerTask },
@@ -77,8 +78,14 @@ static BOOL CreateApplicationPanelWindow( void )
     // 윈도우 매니저를 반환
     pstWindowManager = GetWindowManager();
     
+    VBEMODEINFOBLOCK* pstModeInfo = GetVBEModeInfoBlock();;
+    if(pstModeInfo == NULL)
+    {
+    	return FALSE;
+    }
+
     // 화면 위쪽에 애플리케이션 패널 윈도우를 생성, 가로로 가득 차도록 생성
-    qwWindowID = CreateWindow( 0, 0, pstWindowManager->stScreenArea.iX2 + 1,
+    qwWindowID = CreateWindow( 0, pstModeInfo->wYResolution - APPLICATIONPANEL_HEIGHT, pstWindowManager->stScreenArea.iX2 + 1,
         APPLICATIONPANEL_HEIGHT, NULL, APPLICATIONPANEL_TITLE );
     // 윈도우를 생성하지 못했으면 실패
     if( qwWindowID == WINDOW_INVALIDID )
@@ -86,18 +93,20 @@ static BOOL CreateApplicationPanelWindow( void )
         return FALSE;
     }
     
+    int baseY = pstModeInfo->wYResolution - APPLICATIONPANEL_HEIGHT;
+
     // 애플리케이션 패널 윈도우의 테두리와 내부를 표시
-    DrawRect( qwWindowID, 0, 0, pstWindowManager->stScreenArea.iX2, 
+    DrawRect( qwWindowID, 0, baseY , pstWindowManager->stScreenArea.iX2,
             APPLICATIONPANEL_HEIGHT - 1, APPLICATIONPANEL_COLOR_OUTERLINE, FALSE );   
-    DrawRect( qwWindowID, 1, 1, pstWindowManager->stScreenArea.iX2 - 1, 
+    DrawRect( qwWindowID, 1, baseY+1, pstWindowManager->stScreenArea.iX2 - 1,
             APPLICATIONPANEL_HEIGHT - 2, APPLICATIONPANEL_COLOR_MIDDLELINE, FALSE );   
-    DrawRect( qwWindowID, 2, 2, pstWindowManager->stScreenArea.iX2 - 2, 
+    DrawRect( qwWindowID, 2, baseY+2, pstWindowManager->stScreenArea.iX2 - 2,
             APPLICATIONPANEL_HEIGHT - 3, APPLICATIONPANEL_COLOR_INNERLINE, FALSE );  
-    DrawRect( qwWindowID, 3, 3, pstWindowManager->stScreenArea.iX2 - 3, 
+    DrawRect( qwWindowID, 3, baseY+3, pstWindowManager->stScreenArea.iX2 - 3,
             APPLICATIONPANEL_HEIGHT - 4, APPLICATIONPANEL_COLOR_BACKGROUND, TRUE );
     
     // 애플리케이션 패널의 왼쪽에 GUI 태스크의 리스트를 보여주는 버튼을 표시
-    SetRectangleData( 5, 5, 120, 25, &( gs_stApplicationPanelData.stButtonArea ) );
+    SetRectangleData( 5, 5, 120,  25, &( gs_stApplicationPanelData.stButtonArea ) );
     DrawButton( qwWindowID, &( gs_stApplicationPanelData.stButtonArea ), 
                  APPLICATIONPANEL_COLOR_ACTIVE, "Application", RGB( 255, 255, 255 ) );
     
@@ -236,11 +245,11 @@ static BOOL ProcessApplicationPanelWindowEvent( void )
             if( gs_stApplicationPanelData.bApplicationWindowVisible == FALSE )
             {
                 // 버튼을 눌린 상태로 표시
-                DrawButton( qwApplicationPanelID, &( gs_stApplicationPanelData.stButtonArea ), 
-                             APPLICATIONPANEL_COLOR_BACKGROUND, "Application", 
+                DrawButton( qwApplicationPanelID, &( gs_stApplicationPanelData.stButtonArea ),
+                             APPLICATIONPANEL_COLOR_BACKGROUND, "Application",
                              RGB( 255, 255, 255 ) );
                 // 버튼이 있는 영역만 화면 업데이트
-                UpdateScreenByWindowArea( qwApplicationPanelID, 
+                UpdateScreenByWindowArea( qwApplicationPanelID,
                         &( gs_stApplicationPanelData.stButtonArea ) );
         
                 // 애플리케이션 리스트 윈도우에 아무것도 선택되지 않은 것으로 초기화하고 
@@ -317,9 +326,18 @@ static BOOL CreateApplicationListWindow( void )
     iX = gs_stApplicationPanelData.stButtonArea.iX1;
     iY = gs_stApplicationPanelData.stButtonArea.iY2 + 5;
     
+
+    VBEMODEINFOBLOCK* pstModeInfo = GetVBEModeInfoBlock();;
+    if(pstModeInfo == NULL)
+    {
+    	return FALSE;
+    }
+
+    int baseY = pstModeInfo->wYResolution - APPLICATIONPANEL_HEIGHT - iCount * APPLICATIONPANEL_LISTITEMHEIGHT + 1;
+
     // 아이템의 개수와 최대 길이로 애플리케이션 리스트 윈도우를 생성
     // 애플리케이션 윈도우는 윈도우 제목 표시줄이 필요 없으므로 속성은 NULL로 전달
-    qwWindowID = CreateWindow( iX, iY, iWindowWidth, 
+    qwWindowID = CreateWindow( iX, baseY, iWindowWidth,
         iCount * APPLICATIONPANEL_LISTITEMHEIGHT + 1, NULL, 
         APPLICATIONPANEL_LISTTITLE );
     // 윈도우를 생성하지 못했으면 실패
@@ -346,7 +364,7 @@ static BOOL CreateApplicationListWindow( void )
     }
     
     MoveWindow( qwWindowID, gs_stApplicationPanelData.stButtonArea.iX1, 
-            gs_stApplicationPanelData.stButtonArea.iY2 + 5 );
+            /*gs_stApplicationPanelData.stButtonArea.iY2*/baseY - 5 );
     return TRUE;
 }
 
@@ -374,10 +392,20 @@ static void DrawApplicationListItem( int iIndex, BOOL bMouseOver )
         stColor = APPLICATIONPANEL_COLOR_BACKGROUND;        
     }
     
+    VBEMODEINFOBLOCK* pstModeInfo = GetVBEModeInfoBlock();;
+    if(pstModeInfo == NULL)
+    {
+        return FALSE;
+    }
+
     // 리스트 아이템에 테두리를 표시
-    SetRectangleData( 0, iIndex * APPLICATIONPANEL_LISTITEMHEIGHT,
-        iWindowWidth - 1, ( iIndex + 1 ) * APPLICATIONPANEL_LISTITEMHEIGHT,
-        &stItemArea );
+    SetRectangleData( 0,
+					(iIndex * APPLICATIONPANEL_LISTITEMHEIGHT),
+					iWindowWidth - 1,
+					( iIndex + 1 ) * APPLICATIONPANEL_LISTITEMHEIGHT,
+					&stItemArea );
+
+
     DrawRect( qwWindowID, stItemArea.iX1, stItemArea.iY1, stItemArea.iX2, 
             stItemArea.iY2, APPLICATIONPANEL_COLOR_INNERLINE, FALSE );
     

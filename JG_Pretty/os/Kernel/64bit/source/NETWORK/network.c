@@ -10,7 +10,6 @@
 #include "rtl8139.h"
 #include "rtl8168.h"
 #include "pcnet.h"
-#include "../cdi/cdi.h"
 #include "net.h"
 #include "../DynamicMemory.h"
 #include "../utility.h"
