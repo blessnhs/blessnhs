@@ -72,6 +72,9 @@ int fseek( FILE* pstFile, int iOffset, int iOrigin );
 int fclose( FILE* pstFile );
 int remove( const char* pcFileName );
 
+DIRECTORY* dir(const char* path);
+int dirinfilecount(const char* path);
+
 BOOL IsFileOpened( const struct dirent* pstEntry );
 
 //==============================================================================

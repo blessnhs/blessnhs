@@ -26,6 +26,7 @@ QWORD ExecuteProgram( const char* pcFileName, const char* pcArgumentString,
     FL_FILE *pstFile = fl_fopen(pcFileName,"r");
     if(pstFile == 0)
     {
+    	Printf("fl_fopen fail %s \n",pcFileName);
     	fl_fclose(pstFile);
     	return 0;
     }
@@ -93,6 +94,7 @@ QWORD ExecuteProgram( const char* pcFileName, const char* pcArgumentString,
         bAffinity );
     if( pstTask == NULL )
     {
+    	Printf( "CreateTask fail %d\n", pstTask->stLink.qwID );
         FreeMemory( ( void* ) qwApplicationMemory );
         return TASK_INVALIDID;
     }

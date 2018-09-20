@@ -102,6 +102,7 @@
 #define SYSCALL_GETTICKCOUNT                71
 #define SYSCALL_SLEEP                       72
 #define SYSCALL_ISGRAPHICMODE               73
+#define SYSCALL_DIR_IN_FILECOUNT			74
 #define SYSCALL_TEST                        0xFFFFFFFF
 
 #endif /*__SYSTEMCALLLIST_H_*/

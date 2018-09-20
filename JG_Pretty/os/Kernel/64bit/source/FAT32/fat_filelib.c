@@ -1461,10 +1461,11 @@ int fl_createdirectory(const char *path)
 // fl_listdirectory: List a directory based on a path
 //-----------------------------------------------------------------------------
 #if FATFS_DIR_LIST_SUPPORT
-void fl_listdirectory(const char *path)
+struct fs_dir_ent* fl_listdirectory(const char *path)
 {
+	struct fs_dir_ent list[100];
     FL_DIR dirstat;
-
+    int index = 0;
     // If first call to library, initialise
     CHECK_FL_INIT();
 
@@ -1493,13 +1494,48 @@ void fl_listdirectory(const char *path)
             {
                 FAT_PRINTF(("%s [%d bytes]\r\n", dirent.filename, dirent.size));
             }
+
+            if(index < 100)
+            	list[index++] = dirent;
         }
 
         fl_closedir(&dirstat);
     }
 
     FL_UNLOCK(&_fs);
+
+    return list;
 }
+
+int	fl_directoryfilecount(const char *path)
+{
+		int count = 0;
+	    FL_DIR dirstat;
+	    int index = 0;
+	    // If first call to library, initialise
+	    CHECK_FL_INIT();
+
+	    FL_LOCK(&_fs);
+
+	    FAT_PRINTF(("\nDirectory %s\n", path));
+
+	    if (fl_opendir(path, &dirstat))
+	    {
+	        struct fs_dir_ent dirent;
+
+	        while (fl_readdir(&dirstat, &dirent) == 0)
+	        {
+	            count++;
+	        }
+
+	        fl_closedir(&dirstat);
+	    }
+
+	    FL_UNLOCK(&_fs);
+
+	    return count;
+}
+
 #endif
 //-----------------------------------------------------------------------------
 // fl_opendir: Opens a directory for listing

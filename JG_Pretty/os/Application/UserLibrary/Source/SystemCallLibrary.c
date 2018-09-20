@@ -126,6 +126,20 @@ FILE* fopen( const char* pcFileName, const char* pcMode )
     return ( FILE* ) ExecuteSystemCall( SYSCALL_FOPEN, &stParameter );      
 }
 
+DIRECTORY* dir(const char* path)
+{
+	 PARAMETERTABLE stParameter;
+	 PARAM( 0 ) = ( QWORD ) path;
+	 return ( DIRECTORY* ) ExecuteSystemCall( SYSCALL_READDIR, &stParameter );
+}
+
+int dirinfilecount(const char* path)
+{
+	 PARAMETERTABLE stParameter;
+	 PARAM( 0 ) = ( QWORD ) path;
+	 return ( DIRECTORY* ) ExecuteSystemCall( SYSCALL_DIR_IN_FILECOUNT, &stParameter );
+}
+
 /**
  *  파일을 읽어 버퍼로 복사
  */
@@ -159,6 +173,8 @@ DWORD fwrite( const void* pvBuffer, DWORD dwSize, DWORD dwCount, FILE* pstFile )
     // 시스템 콜 호출
     return ExecuteSystemCall( SYSCALL_FWRITE, &stParameter );    
 }
+
+
 
 /**
  *  파일 포인터의 위치를 이동

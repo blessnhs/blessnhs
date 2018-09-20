@@ -97,8 +97,11 @@ QWORD ProcessSystemCall( QWORD qwServiceNumber, PARAMETERTABLE* pstParameter )
 
 //    case SYSCALL_OPENDIR:
 //        return ( QWORD ) opendir( ( char* ) PARAM( 0 ) );
- //   case SYSCALL_READDIR:
- //       return ( QWORD ) readdir( ( DIR* ) PARAM( 0 ) );
+    case SYSCALL_READDIR:
+        return ( QWORD ) fl_listdirectory(( char* ) PARAM( 0 ));
+
+    case SYSCALL_DIR_IN_FILECOUNT:
+    	return ( int ) fl_directoryfilecount(( char* ) PARAM( 0 ));
 //    case SYSCALL_REWINDDIR:
 //        rewinddir( ( DIR* ) PARAM( 0 ) );
 //        return TRUE;

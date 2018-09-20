@@ -334,6 +334,22 @@ typedef struct kFileDirectoryHandleStruct
 	    struct fat_node         list_node;
 } FILE;
 
+typedef struct fs_dir_ent
+{
+    char                    filename[FATFS_MAX_LONG_FILENAME];
+    unsigned char           is_dir;
+    unsigned int            cluster;
+    unsigned int            size;
+
+#if FATFS_INC_TIME_DATE_SUPPORT
+    uint16                  access_date;
+    uint16                  write_time;
+    uint16                  write_date;
+    uint16                  create_date;
+    uint16                  create_time;
+#endif
+}DIRECTORY;
+
 //==============================================================================
 //  GUI 시스템에 관련된 자료구조
 //==============================================================================

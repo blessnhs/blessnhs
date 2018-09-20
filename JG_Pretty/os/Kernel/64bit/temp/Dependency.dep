@@ -5,13 +5,13 @@ Task.o: ../Source/Task.c ../Source/Task.h ../Source/Types.h \
  ../Source/List.h ../Source/Synchronization.h ../Source/Descriptor.h \
  ../Source/MultiProcessor.h ../Source/DynamicMemory.h
 WindowManagerTask.o: ../Source/WindowManagerTask.c ../Source/Types.h \
- ../Source/Window.h ../Source/Synchronization.h ../Source/Graphics.h \
- ../Source/List.h ../Source/Queue.h ../Source/Keyboard.h \
- ../Source/WindowManagerTask.h ../Source/VBE.h ../Source/Mouse.h \
- ../Source/Task.h ../Source/GUITask.h ../Source/Font.h ../Source/Panel.h \
- ../Source/pci.h ../Source/usb/list2.h ../Source/usb/../types.h \
- ../Source/types.h ../Source/Cdi/CdiOsDep.h ../Source/Cdi/../pci.h \
- ../Source/cdi/cdi.h ../Source/cdi/../types.h \
+ ../Source/graphics.h ../Source/Window.h ../Source/Synchronization.h \
+ ../Source/Graphics.h ../Source/List.h ../Source/Queue.h \
+ ../Source/Keyboard.h ../Source/WindowManagerTask.h ../Source/VBE.h \
+ ../Source/Mouse.h ../Source/Task.h ../Source/GUITask.h ../Source/Font.h \
+ ../Source/Panel.h ../Source/pci.h ../Source/usb/list2.h \
+ ../Source/usb/../types.h ../Source/types.h ../Source/Cdi/CdiOsDep.h \
+ ../Source/Cdi/../pci.h ../Source/cdi/cdi.h ../Source/cdi/../types.h \
  ../Source/cdi/../usb/list2.h
 HardDisk.o: ../Source/HardDisk.c ../Source/HardDisk.h ../Source/Types.h \
  ../Source/Synchronization.h
@@ -19,11 +19,12 @@ List.o: ../Source/List.c ../Source/List.h ../Source/Types.h
 RTC.o: ../Source/RTC.c ../Source/RTC.h ../Source/Types.h
 Graphics.o: ../Source/Graphics.c ../Source/Graphics.h ../Source/Types.h \
  ../Source/VBE.h ../Source/Font.h ../Source/Utility.h
-PIC.o: ../Source/PIC.c ../Source/PIC.h ../Source/Types.h
+VBE.o: ../Source/VBE.c ../Source/VBE.h ../Source/Types.h
 Keyboard.o: ../Source/Keyboard.c ../Source/Types.h \
  ../Source/AssemblyUtility.h ../Source/Task.h ../Source/List.h \
  ../Source/Synchronization.h ../Source/Keyboard.h ../Source/Queue.h \
  ../Source/./HID/keyboard_US.h
+PIC.o: ../Source/PIC.c ../Source/PIC.h ../Source/Types.h
 JPEG.o: ../Source/JPEG.c ../Source/JPEG.h ../Source/Types.h \
  ../Source/Graphics.h
 PCI.o: ../Source/PCI.c ../Source/pci.h ../Source/usb/list2.h \
@@ -49,7 +50,7 @@ MultiProcessor.o: ../Source/MultiProcessor.c ../Source/MultiProcessor.h \
 Panel.o: ../Source/Panel.c ../Source/Panel.h ../Source/Types.h \
  ../Source/Window.h ../Source/Synchronization.h ../Source/Graphics.h \
  ../Source/List.h ../Source/Queue.h ../Source/Keyboard.h ../Source/Font.h \
- ../Source/RTC.h ../Source/Task.h ../Source/GUITask.h
+ ../Source/RTC.h ../Source/Task.h ../Source/GUITask.h ../Source/vbe.h
 SystemCall.o: ../Source/SystemCall.c ../Source/Types.h \
  ../Source/SystemCall.h ../Source/AssemblyUtility.h ../Source/Task.h \
  ../Source/List.h ../Source/Synchronization.h ../Source/Descriptor.h \
@@ -63,7 +64,6 @@ SystemCall.o: ../Source/SystemCall.c ../Source/Types.h \
 Mouse.o: ../Source/Mouse.c ../Source/Mouse.h ../Source/Types.h \
  ../Source/Synchronization.h ../Source/Keyboard.h ../Source/Queue.h \
  ../Source/AssemblyUtility.h ../Source/Task.h ../Source/List.h
-VBE.o: ../Source/VBE.c ../Source/VBE.h ../Source/Types.h
 Console.o: ../Source/Console.c ../Source/Console.h ../Source/Types.h \
  ../Source/Synchronization.h ../Source/Queue.h ../Source/Keyboard.h
 Descriptor.o: ../Source/Descriptor.c ../Source/Descriptor.h \
@@ -170,7 +170,10 @@ Window.o: ../Source/Window.c ../Source/Window.h ../Source/Types.h \
  ../Source/Synchronization.h ../Source/Graphics.h ../Source/List.h \
  ../Source/Queue.h ../Source/Keyboard.h ../Source/VBE.h ../Source/Task.h \
  ../Source/Font.h ../Source/DynamicMemory.h ../Source/Utility.h \
- ../Source/JPEG.h
+ ../Source/JPEG.h ../Source/fat32/fat_filelib.h \
+ ../Source/fat32/fat_opts.h ../Source/fat32/fat_access.h \
+ ../Source/fat32/fat_defs.h ../Source/fat32/fat_types.h \
+ ../Source/fat32/fat_list.h
 IOAPIC.o: ../Source/IOAPIC.c ../Source/IOAPIC.h ../Source/Types.h \
  ../Source/MPConfigurationTable.h ../Source/PIC.h
 EnglishFont.o: ../Source/EnglishFont.c
@@ -196,9 +199,6 @@ CdiNet.o: ../Source/CDI/CdiNet.c ../Source/CDI/../network/net.h \
  ../Source/CDI/../network/../usb/../types.h \
  ../Source/CDI/../network/../usb/../utility.h \
  ../Source/CDI/../network/../usb/../Types.h
-CdiLists.o: ../Source/CDI/CdiLists.c ../Source/CDI/cdi.h \
- ../Source/CDI/../types.h ../Source/CDI/../usb/list2.h \
- ../Source/CDI/../usb/../types.h
 fat_misc.o: ../Source/FAT32/fat_misc.c ../Source/FAT32/fat_misc.h \
  ../Source/FAT32/fat_defs.h ../Source/FAT32/fat_opts.h \
  ../Source/FAT32/fat_types.h
@@ -531,11 +531,10 @@ network.o: ../Source/NETWORK/network.c ../Source/NETWORK/network.h \
  ../Source/NETWORK/../netprotocol/ethernet.h \
  ../Source/NETWORK/../netprotocol/../network/network.h \
  ../Source/NETWORK/rtl8139.h ../Source/NETWORK/rtl8168.h \
- ../Source/NETWORK/pcnet.h ../Source/NETWORK/../cdi/cdi.h \
- ../Source/NETWORK/net.h ../Source/NETWORK/../types.h \
- ../Source/NETWORK/../CDI/cdi.h ../Source/NETWORK/../DynamicMemory.h \
- ../Source/NETWORK/../Types.h ../Source/NETWORK/../Synchronization.h \
- ../Source/NETWORK/../utility.h
+ ../Source/NETWORK/pcnet.h ../Source/NETWORK/net.h \
+ ../Source/NETWORK/../types.h ../Source/NETWORK/../CDI/cdi.h \
+ ../Source/NETWORK/../DynamicMemory.h ../Source/NETWORK/../Types.h \
+ ../Source/NETWORK/../Synchronization.h ../Source/NETWORK/../utility.h
 rtl8168.o: ../Source/NETWORK/rtl8168.c ../Source/NETWORK/rtl8168.h \
  ../Source/NETWORK/network.h ../Source/NETWORK/../pci.h \
  ../Source/NETWORK/../usb/list2.h ../Source/NETWORK/../usb/../types.h \

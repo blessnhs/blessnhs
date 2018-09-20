@@ -106,7 +106,8 @@ int                 fl_readdir(FL_DIR *dirls, fl_dirent *entry);
 int                 fl_closedir(FL_DIR* dir);
 
 // Extensions
-void                fl_listdirectory(const char *path);
+struct fs_dir_ent*  fl_listdirectory(const char *path);
+int					fl_directoryfilecount(const char *path);
 int                 fl_createdirectory(const char *path);
 int                 fl_is_dir(const char *path);
 
