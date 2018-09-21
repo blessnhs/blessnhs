@@ -97,7 +97,7 @@ struct fs_dir_list_status
     uint8                   offset;
 };
 
-struct fs_dir_ent
+typedef struct fs_dir_ent
 {
     char                    filename[FATFS_MAX_LONG_FILENAME];
     uint8                   is_dir;
@@ -111,7 +111,7 @@ struct fs_dir_ent
     uint16                  create_date;
     uint16                  create_time;
 #endif
-};
+}DIRECTORY;
 
 //-----------------------------------------------------------------------------
 // Prototypes

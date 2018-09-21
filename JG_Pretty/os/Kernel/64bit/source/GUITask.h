@@ -40,7 +40,7 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 // 기본 GUI 태스크와 Hello World GUI 태스크
-void BaseGUITask( void );
+void WindowManagerGUITask( void );
 void HelloWorldGUITask( void );
 
 // 시스템 모니터 태스크 함수

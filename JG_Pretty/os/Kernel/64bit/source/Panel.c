@@ -9,7 +9,7 @@
 // 애플리케이션 테이블
 APPLICATIONENTRY gs_vstApplicationTable[] =
 {
-//        { "Base GUI Task", BaseGUITask },
+        { "WindowManager GUITask", WindowManagerGUITask },
 //        { "Hello World GUI Task",  HelloWorldGUITask },
         { "System Monitor Task", SystemMonitorTask },
         { "Console Shell for GUI", GUIConsoleShellTask },

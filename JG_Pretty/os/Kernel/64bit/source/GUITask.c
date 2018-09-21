@@ -16,53 +16,119 @@
 #include "DynamicMemory.h"
 #include "fat32/fat_defs.h"
 #include "fat32/fat_filelib.h"
-//------------------------------------------------------------------------------
-//  기본 GUI 태스크
-//------------------------------------------------------------------------------
-/**
- *  기본 GUI 태스크의 코드
- *      GUI 태스크를 만들 때 복사하여 기본 코드로 사용
- */
-void BaseGUITask( void )
+#include "fat32/fat_access.h"
+
+
+void UpdateWindowManger(QWORD qwWindowID,int count,DIRECTORY *dirlist,RECT *stButtonAreaArray)
 {
+    DrawRect( qwWindowID, 0, 0, 800, 600, RGB( 0, 0, 0 ),  FALSE );
+
+	char vcTempBuffer[1024];
+
+    int idx,StartY;
+    RECT stButtonArea;
+    //DIRECTORY *dirlist = (DIRECTORY* )fl_listdirectory("/");
+    //int count = fl_directoryfilecount("/");
+
+    MemCpy(dirlist[0].filename,"arp list1",strlen("arp list1"));
+    dirlist[0].is_dir = 0;
+    MemCpy(dirlist[1].filename , "arp list2",strlen("arp list1"));;
+    dirlist[1].is_dir = 0;
+    MemCpy(dirlist[2].filename , "arp list3",strlen("arp list1"));;
+    dirlist[2].is_dir = 0;
+    MemCpy(dirlist[3].filename , "arp list4",strlen("arp list1"));;
+    dirlist[3].is_dir = 0;
+    MemCpy(dirlist[4].filename , "arp list5",strlen("arp list1"));;
+    dirlist[4].is_dir = 0;
+    MemCpy(dirlist[5].filename , "arp list6",strlen("arp list1"));;
+    dirlist[5].is_dir = 0;
+    MemCpy(dirlist[6].filename , "arp list7",strlen("arp list1"));;
+    dirlist[6].is_dir = 0;
+    MemCpy(dirlist[7].filename , "arp list8",strlen("arp list1"));;
+    dirlist[7].is_dir = 0;
+    MemCpy(dirlist[8].filename , "dir1",strlen("dir1"));;
+    dirlist[8].is_dir = 1;
+
+    //Display Current Path
+    DrawText( qwWindowID, 20, WINDOW_TITLEBAR_HEIGHT, RGB( 0, 0, 0 ), RGB( 255, 255, 255 ),	vcTempBuffer, strlen(vcTempBuffer ) );
+
+    StartY = WINDOW_TITLEBAR_HEIGHT + 50;
+
+    int fileinfowidth = 160;
+    int fileinfoheight = 33;
+
+    //One Line Max Count
+    int LineCount = 12;
+
+    for(idx = 0;idx<count;idx++)
+    {
+     	// 이벤트 정보를 표시하는 영역의 테두리와 윈도우 ID를 표시
+        DrawRect( qwWindowID,
+        		10 + ((idx/LineCount) * fileinfowidth), StartY + (idx * fileinfoheight),
+        		160 + ((idx/LineCount) * fileinfowidth), StartY + fileinfoheight + (idx * fileinfoheight),
+				RGB( 0, 0, 0 ),  FALSE );
+
+        SetRectangleData(10 + ((idx/LineCount) * fileinfowidth), StartY + (idx * fileinfoheight),
+        				160 + ((idx/LineCount) * fileinfowidth), StartY + fileinfoheight + (idx * fileinfoheight),
+						&stButtonAreaArray[idx] );
+
+        if(dirlist[idx].is_dir == 1)
+        	SPrintf( vcTempBuffer, "[%s]", dirlist[idx].filename );
+        else
+        	SPrintf( vcTempBuffer, "%s", dirlist[idx].filename );
+
+        DrawText( qwWindowID, 20 + ((idx/LineCount) * fileinfowidth), StartY + 8 + (idx * fileinfoheight), RGB( 0, 0, 0 ), RGB( 255, 255, 255 ),vcTempBuffer, strlen( vcTempBuffer ) );
+    }
+}
+
+void WindowManagerGUITask( void )
+{
+    if( IsGraphicMode() == FALSE )
+    {
+        Printf( "This task can run only GUI mode~!!!\n" );
+        return ;
+    }
+
     QWORD qwWindowID;
-    int iMouseX, iMouseY;
     int iWindowWidth, iWindowHeight;
     EVENT stReceivedEvent;
     MOUSEEVENT* pstMouseEvent;
     KEYEVENT* pstKeyEvent;
     WINDOWEVENT* pstWindowEvent;
 
-    //--------------------------------------------------------------------------
-    // 그래픽 모드 판단
-    //--------------------------------------------------------------------------
-    // MINT64 OS가 그래픽 모드로 시작했는지 확인
+    char vcTempBuffer[1024];
+
     if( IsGraphicMode() == FALSE )
-    {        
+    {
         // MINT64 OS가 그래픽 모드로 시작하지 않았다면 실패
-        Printf( "This task can run only GUI mode~!!!\n" );
-        return ;
+     	Printf( "This task can run only GUI mode~!!!\n" );
+        return -1;
     }
-    
-    //--------------------------------------------------------------------------
-    // 윈도우를 생성
-    //--------------------------------------------------------------------------
-    // 마우스의 현재 위치를 반환
-    GetCursorPosition( &iMouseX, &iMouseY );
+
+    //current path
+    MemCpy(vcTempBuffer,"/",strlen("/"));
 
     // 윈도우의 크기와 제목 설정
-    iWindowWidth = 500;
-    iWindowHeight = 200;
-    
-    // 윈도우 생성 함수 호출, 마우스가 있던 위치를 기준으로 생성
-    qwWindowID = CreateWindow( iMouseX - 10, iMouseY - WINDOW_TITLEBAR_HEIGHT / 2,
-        iWindowWidth, iWindowHeight, WINDOW_FLAGS_DEFAULT | WINDOW_FLAGS_RESIZABLE,
-         "Hello World Window" );
+    iWindowWidth = 800;
+    iWindowHeight = 600;
+
+    qwWindowID = CreateWindow( 100, 100,
+    iWindowWidth, iWindowHeight, WINDOW_FLAGS_DEFAULT, vcTempBuffer );
     // 윈도우를 생성하지 못했으면 실패
     if( qwWindowID == WINDOW_INVALIDID )
     {
-        return ;
+      	Printf( "CreateWindow Failed\n" );
+        return -1;
     }
+
+    int count = 10;
+    DIRECTORY *dirlist = NEW(sizeof(DIRECTORY) * count);
+    RECT *stButtonAreaArray = NEW(sizeof(RECT) * count);
+
+    UpdateWindowManger(qwWindowID,count,dirlist,stButtonAreaArray);
+
+    ShowWindow( qwWindowID, TRUE );
+
     
     //--------------------------------------------------------------------------
     // GUI 태스크의 이벤트 처리 루프
@@ -80,7 +146,7 @@ void BaseGUITask( void )
         switch( stReceivedEvent.qwType )
         {
             // 마우스 이벤트 처리
-        case EVENT_MOUSE_MOVE:
+        //case EVENT_MOUSE_MOVE:
         case EVENT_MOUSE_LBUTTONDOWN:
         case EVENT_MOUSE_LBUTTONUP:            
         case EVENT_MOUSE_RBUTTONDOWN:
@@ -89,6 +155,24 @@ void BaseGUITask( void )
         case EVENT_MOUSE_MBUTTONUP:
             // 여기에 마우스 이벤트 처리 코드 넣기
             pstMouseEvent = &( stReceivedEvent.stMouseEvent );
+
+            int idx;
+            for(idx = 0;idx<count;idx++)
+            {
+				if( IsInRectangle( &stButtonAreaArray[idx], pstMouseEvent->stPoint.iX,
+													pstMouseEvent->stPoint.iY ) == TRUE )
+				{
+					DrawText( qwWindowID, 20, WINDOW_TITLEBAR_HEIGHT, RGB( 0, 0, 0 ), RGB( 255, 255, 255 ),
+							"                                                         ",
+							strlen("                                                         ") );
+
+					DrawText( qwWindowID, 20, WINDOW_TITLEBAR_HEIGHT, RGB( 0, 0, 0 ), RGB( 255, 255, 255 ),
+							dirlist[idx].filename, strlen(dirlist[idx].filename ) );
+					UpdateScreenByID( qwWindowID );
+
+					ExecuteCommand("cls");
+				}
+			}
             break;
 
             // 키 이벤트 처리
