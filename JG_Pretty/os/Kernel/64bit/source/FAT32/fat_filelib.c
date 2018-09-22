@@ -38,6 +38,7 @@
 #include "fat_filelib.h"
 #include "fat_cache.h"
 #include "fat_format.h"
+#include "../DynamicMemory.h"
 //-----------------------------------------------------------------------------
 // Locals
 //-----------------------------------------------------------------------------
@@ -1463,7 +1464,9 @@ int fl_createdirectory(const char *path)
 #if FATFS_DIR_LIST_SUPPORT
 struct fs_dir_ent* fl_listdirectory(const char *path)
 {
-	struct fs_dir_ent list[100];
+	int count = fl_directoryfilecount(path);
+	struct fs_dir_ent *list = NEW(sizeof(struct fs_dir_ent) * count);
+
     FL_DIR dirstat;
     int index = 0;
     // If first call to library, initialise
@@ -1476,6 +1479,7 @@ struct fs_dir_ent* fl_listdirectory(const char *path)
     if (fl_opendir(path, &dirstat))
     {
         struct fs_dir_ent dirent;
+        MemSet(&dirent,0,sizeof(struct fs_dir_ent));
 
         while (fl_readdir(&dirstat, &dirent) == 0)
         {
@@ -1495,8 +1499,7 @@ struct fs_dir_ent* fl_listdirectory(const char *path)
                 FAT_PRINTF(("%s [%d bytes]\r\n", dirent.filename, dirent.size));
             }
 
-            if(index < 100)
-            	list[index++] = dirent;
+           	list[index++] = dirent;
         }
 
         fl_closedir(&dirstat);
@@ -1517,7 +1520,7 @@ int	fl_directoryfilecount(const char *path)
 
 	    FL_LOCK(&_fs);
 
-	    FAT_PRINTF(("\nDirectory %s\n", path));
+	    //FAT_PRINTF(("\nDirectory %s\n", path));
 
 	    if (fl_opendir(path, &dirstat))
 	    {

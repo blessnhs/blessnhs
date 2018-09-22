@@ -19,38 +19,15 @@
 #include "fat32/fat_access.h"
 
 
-void UpdateWindowManger(QWORD qwWindowID,int count,DIRECTORY *dirlist,RECT *stButtonAreaArray)
+void UpdateWindowManger(QWORD qwWindowID,int count,DIRECTORY *dirlist,RECT *stButtonAreaArray,char *path)
 {
-    DrawRect( qwWindowID, 0, 0, 800, 600, RGB( 0, 0, 0 ),  FALSE );
-
-	char vcTempBuffer[1024];
+    DrawRect( qwWindowID, 0, WINDOW_TITLEBAR_HEIGHT, 800, 600, RGB( 255, 255, 255 ),  TRUE );
 
     int idx,StartY;
     RECT stButtonArea;
-    //DIRECTORY *dirlist = (DIRECTORY* )fl_listdirectory("/");
-    //int count = fl_directoryfilecount("/");
-
-    MemCpy(dirlist[0].filename,"arp list1",strlen("arp list1"));
-    dirlist[0].is_dir = 0;
-    MemCpy(dirlist[1].filename , "arp list2",strlen("arp list1"));;
-    dirlist[1].is_dir = 0;
-    MemCpy(dirlist[2].filename , "arp list3",strlen("arp list1"));;
-    dirlist[2].is_dir = 0;
-    MemCpy(dirlist[3].filename , "arp list4",strlen("arp list1"));;
-    dirlist[3].is_dir = 0;
-    MemCpy(dirlist[4].filename , "arp list5",strlen("arp list1"));;
-    dirlist[4].is_dir = 0;
-    MemCpy(dirlist[5].filename , "arp list6",strlen("arp list1"));;
-    dirlist[5].is_dir = 0;
-    MemCpy(dirlist[6].filename , "arp list7",strlen("arp list1"));;
-    dirlist[6].is_dir = 0;
-    MemCpy(dirlist[7].filename , "arp list8",strlen("arp list1"));;
-    dirlist[7].is_dir = 0;
-    MemCpy(dirlist[8].filename , "dir1",strlen("dir1"));;
-    dirlist[8].is_dir = 1;
 
     //Display Current Path
-    DrawText( qwWindowID, 20, WINDOW_TITLEBAR_HEIGHT, RGB( 0, 0, 0 ), RGB( 255, 255, 255 ),	vcTempBuffer, strlen(vcTempBuffer ) );
+    DrawText( qwWindowID, 20, WINDOW_TITLEBAR_HEIGHT, RGB( 0, 0, 0 ), RGB( 255, 255, 255 ),	path, strlen(path ) );
 
     StartY = WINDOW_TITLEBAR_HEIGHT + 50;
 
@@ -62,22 +39,26 @@ void UpdateWindowManger(QWORD qwWindowID,int count,DIRECTORY *dirlist,RECT *stBu
 
     for(idx = 0;idx<count;idx++)
     {
+    	int yIdx = idx % LineCount;
+
      	// 이벤트 정보를 표시하는 영역의 테두리와 윈도우 ID를 표시
         DrawRect( qwWindowID,
-        		10 + ((idx/LineCount) * fileinfowidth), StartY + (idx * fileinfoheight),
-        		160 + ((idx/LineCount) * fileinfowidth), StartY + fileinfoheight + (idx * fileinfoheight),
+        		10 + ((idx/LineCount) * fileinfowidth), StartY + (yIdx * fileinfoheight),
+        		160 + ((idx/LineCount) * fileinfowidth), StartY + fileinfoheight + (yIdx * fileinfoheight),
 				RGB( 0, 0, 0 ),  FALSE );
 
-        SetRectangleData(10 + ((idx/LineCount) * fileinfowidth), StartY + (idx * fileinfoheight),
-        				160 + ((idx/LineCount) * fileinfowidth), StartY + fileinfoheight + (idx * fileinfoheight),
+        SetRectangleData(10 + ((idx/LineCount) * fileinfowidth), StartY + (yIdx * fileinfoheight),
+        				160 + ((idx/LineCount) * fileinfowidth), StartY + fileinfoheight + (yIdx * fileinfoheight),
 						&stButtonAreaArray[idx] );
+
+    	char vcTempBuffer[1024];
 
         if(dirlist[idx].is_dir == 1)
         	SPrintf( vcTempBuffer, "[%s]", dirlist[idx].filename );
         else
         	SPrintf( vcTempBuffer, "%s", dirlist[idx].filename );
 
-        DrawText( qwWindowID, 20 + ((idx/LineCount) * fileinfowidth), StartY + 8 + (idx * fileinfoheight), RGB( 0, 0, 0 ), RGB( 255, 255, 255 ),vcTempBuffer, strlen( vcTempBuffer ) );
+        DrawText( qwWindowID, 20 + ((idx/LineCount) * fileinfowidth), StartY + 8 + (yIdx * fileinfoheight), RGB( 0, 0, 0 ), RGB( 255, 255, 255 ),vcTempBuffer, strlen( vcTempBuffer ) );
     }
 }
 
@@ -96,65 +77,55 @@ void WindowManagerGUITask( void )
     KEYEVENT* pstKeyEvent;
     WINDOWEVENT* pstWindowEvent;
 
-    char vcTempBuffer[1024];
+    char pathBuffer[1024];
+    MemSet(pathBuffer,0,1024);
 
     if( IsGraphicMode() == FALSE )
     {
         // MINT64 OS가 그래픽 모드로 시작하지 않았다면 실패
      	Printf( "This task can run only GUI mode~!!!\n" );
-        return -1;
+        return ;
     }
 
     //current path
-    MemCpy(vcTempBuffer,"/",strlen("/"));
+    MemCpy(pathBuffer,"/",strlen("/"));
 
     // 윈도우의 크기와 제목 설정
     iWindowWidth = 800;
     iWindowHeight = 600;
 
     qwWindowID = CreateWindow( 100, 100,
-    iWindowWidth, iWindowHeight, WINDOW_FLAGS_DEFAULT, vcTempBuffer );
+    iWindowWidth, iWindowHeight, WINDOW_FLAGS_DEFAULT, pathBuffer );
     // 윈도우를 생성하지 못했으면 실패
     if( qwWindowID == WINDOW_INVALIDID )
     {
       	Printf( "CreateWindow Failed\n" );
-        return -1;
+        return ;
     }
 
-    int count = 10;
-    DIRECTORY *dirlist = NEW(sizeof(DIRECTORY) * count);
+    Printf( "Start\n" );
+
+    int count = fl_directoryfilecount(pathBuffer);
+    DIRECTORY *dirlist = (DIRECTORY* )fl_listdirectory(pathBuffer);;
     RECT *stButtonAreaArray = NEW(sizeof(RECT) * count);
 
-    UpdateWindowManger(qwWindowID,count,dirlist,stButtonAreaArray);
+    UpdateWindowManger(qwWindowID,count,dirlist,stButtonAreaArray,pathBuffer);
 
     ShowWindow( qwWindowID, TRUE );
 
-    
-    //--------------------------------------------------------------------------
-    // GUI 태스크의 이벤트 처리 루프
-    //--------------------------------------------------------------------------
     while( 1 )
     {
-        // 이벤트 큐에서 이벤트를 수신
         if( ReceiveEventFromWindowQueue( qwWindowID, &stReceivedEvent ) == FALSE )
         {
             Sleep( 0 );
             continue;
         }
         
-        // 수신된 이벤트를 타입에 따라 나누어 처리
         switch( stReceivedEvent.qwType )
         {
-            // 마우스 이벤트 처리
-        //case EVENT_MOUSE_MOVE:
-        case EVENT_MOUSE_LBUTTONDOWN:
         case EVENT_MOUSE_LBUTTONUP:            
-        case EVENT_MOUSE_RBUTTONDOWN:
-        case EVENT_MOUSE_RBUTTONUP:
-        case EVENT_MOUSE_MBUTTONDOWN:
-        case EVENT_MOUSE_MBUTTONUP:
-            // 여기에 마우스 이벤트 처리 코드 넣기
-            pstMouseEvent = &( stReceivedEvent.stMouseEvent );
+
+        	pstMouseEvent = &( stReceivedEvent.stMouseEvent );
 
             int idx;
             for(idx = 0;idx<count;idx++)
@@ -168,9 +139,67 @@ void WindowManagerGUITask( void )
 
 					DrawText( qwWindowID, 20, WINDOW_TITLEBAR_HEIGHT, RGB( 0, 0, 0 ), RGB( 255, 255, 255 ),
 							dirlist[idx].filename, strlen(dirlist[idx].filename ) );
+
+					if(pathBuffer,dirlist[idx].is_dir == 0)
+					{
+						char exebuf[1024];
+						MemSet(exebuf,0,1024);
+
+						if(strcmp(pathBuffer,"/") == 0)
+							SPrintf(exebuf,"exec %s%s",pathBuffer,dirlist[idx].filename);
+						else
+							SPrintf(exebuf,"exec %s/%s",pathBuffer,dirlist[idx].filename);
+
+						ExecuteCommand(exebuf);
+					}
+					else
+					{
+						if(strcmp(dirlist[idx].filename,"..") == 0)
+						{
+							int count = strlen(pathBuffer);
+
+							int i;
+							for(i = count - 1;i>=0 ;i--)
+							{
+								if(pathBuffer[i] == '/')
+								{
+									if(i > 0)
+										pathBuffer[i] = 0;
+
+									break;
+								}
+								else
+									pathBuffer[i] = 0;
+							}
+						}
+						else
+						{
+							if(strcmp(pathBuffer,"/") == 0)
+								SPrintf(pathBuffer,"%s%s",pathBuffer,dirlist[idx].filename);
+							else
+							{
+								SPrintf(pathBuffer,"%s/%s",pathBuffer,dirlist[idx].filename);
+							}
+						}
+
+						Printf("pathBuffer %s\n",pathBuffer);
+
+						count = fl_directoryfilecount(pathBuffer);
+
+						if(dirlist != 0)
+							FreeMemory(dirlist);
+
+						if(stButtonAreaArray != 0)
+							FreeMemory(stButtonAreaArray);
+
+						dirlist = (DIRECTORY* )fl_listdirectory(pathBuffer);;
+						stButtonAreaArray = NEW(sizeof(RECT) * count);
+
+						UpdateWindowManger(qwWindowID,count,dirlist,stButtonAreaArray,pathBuffer);
+					}
+
 					UpdateScreenByID( qwWindowID );
 
-					ExecuteCommand("cls");
 				}
 			}
             break;

@@ -86,5 +86,5 @@ static BOOL FreeBuddyBlock( int iBlockListIndex, int iBlockOffset );
 static BYTE GetFlagInBitmap( int iBlockListIndex, int iOffset );
 
 #define NEW AllocateMemory
-
+#define DEL FreeMemory
 #endif /*__DYNAMICMEMORY_H__*/
