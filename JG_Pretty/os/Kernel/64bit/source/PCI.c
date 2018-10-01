@@ -8,6 +8,7 @@
 #include "Synchronization.h"
 #include "AssemblyUtility.h"
 #include "utility.h"
+#include "storage/ahci.h"
 
 list_t pci_devices = list_init();
 static  MUTEX pci_mutex;
@@ -414,7 +415,7 @@ void pci_installDevices(void)
         }
         else if (PCIdev->classID == 0x01 && PCIdev->subclassID == 0x06) // SATA
         {
-        	Printf("\n   => Find AHCI SATA\n");
+        	ahca_installDevice(PCIdev);
         }
  /*       else if (PCIdev->classID == 0x03)  // Graphics Adapter
             vga_installPCIDevice(PCIdev);

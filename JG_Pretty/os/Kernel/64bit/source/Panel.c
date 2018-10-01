@@ -310,6 +310,7 @@ static BOOL CreateApplicationListWindow( void )
     // 애플리케이션 테이블에 정의된 이름 중에서 가장 긴 것을 검색
     iMaxNameLength = 0;
     iCount = sizeof( gs_vstApplicationTable ) / sizeof( APPLICATIONENTRY );
+
     for( i = 0 ; i < iCount ; i++ )
     {
         iNameLength = kStrLen( gs_vstApplicationTable[ i ].pcApplicationName );
