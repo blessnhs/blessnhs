@@ -44,26 +44,6 @@ QWORD ahca_installDevice(pciDev_t* device)
 	probe_port((HBA_MEM *)(QWORD)bar);
 }
 
-#define	AHCI_BASE	0x400000	// 4M
-
-#define HBA_PxCMD_ST    0x0001
-#define HBA_PxCMD_FRE   0x0010
-#define HBA_PxCMD_FR    0x4000
-#define HBA_PxCMD_CR    0x8000
-#define	SATA_SIG_ATA	0x00000101	// SATA drive
-#define	SATA_SIG_ATAPI	0xEB140101	// SATAPI drive
-#define	SATA_SIG_SEMB	0xC33C0101	// Enclosure management bridge
-#define	SATA_SIG_PM	0x96690101	// Port multiplier
-
-#define AHCI_DEV_NULL 0
-#define AHCI_DEV_SATA 1
-#define AHCI_DEV_SEMB 2
-#define AHCI_DEV_PM 3
-#define AHCI_DEV_SATAPI 4
-
-#define HBA_PORT_IPM_ACTIVE 1
-#define HBA_PORT_DET_PRESENT 3
-
 // Check device type
 int check_type(HBA_PORT *port)
 {
@@ -92,18 +72,6 @@ int check_type(HBA_PORT *port)
 
 void probe_port(HBA_MEM *abar)
 {
-	Printf("HBA_MEM->cap %d\n", abar->cap);
-	Printf("HBA_MEM->ghc %d\n", abar->ghc);
-	Printf("HBA_MEM->is %d\n", abar->is);
-	Printf("HBA_MEM->pi %d\n", abar->pi);
-	Printf("HBA_MEM->vs %d\n", abar->vs);
-	Printf("HBA_MEM->ccc_ctl %d\n", abar->ccc_ctl);
-	Printf("HBA_MEM->ccc_pts %d\n", abar->ccc_pts);
-	Printf("HBA_MEM->em_loc %d\n", abar->em_loc);
-	Printf("HBA_MEM->em_ctl %d\n", abar->em_ctl);
-	Printf("HBA_MEM->cap2 %d\n", abar->cap2);
-	Printf("HBA_MEM->bohc %d\n", abar->bohc);
-
 	// Search disk in impelemented ports
 	uint32_t pi = abar->pi;
 	int i = 0;
@@ -119,18 +87,19 @@ void probe_port(HBA_MEM *abar)
 				Printf("SATA drive found at port %d\n", i);
 				port_rebase(abar->ports, i);
 
+				identify();
+
 				char buf[1024 * 160];
 
-				memcpy(buf,"999999999",10);
+		//		memcpy(buf,"999999999",10);
 
-				ahci_write(&abar->ports[i],0,0,10,buf);
+		//		ahci_write(&abar->ports[i],0,0,10,buf);
 
 				memset(buf,sizeof(buf),0);
 
 				ahci_read(&abar->ports[i],0,0,10,buf);
 
 				Printf("\n\n\n%s\n", buf);
-
 				return ;
 
 			}
@@ -223,38 +192,71 @@ void stop_cmd(HBA_PORT *port)
 	port->cmd &= ~HBA_PxCMD_FRE;
 }
 
-#define ATA_DEV_BUSY 0x80
-#define ATA_DEV_DRQ 0x08
-#define HBA_PxIS_TFES   (1 << 30)       /* TFES - Task File Error Status */
-#define ATA_CMD_READ_DMA_EX     0x25
-#define ATA_CMD_WRITE_DMA_EX     0x35
-
 // Find a free command list slot
 int find_cmdslot(HBA_PORT *port)
 {
     DWORD slots = (port->sact | port->ci);
     int num_of_slots= (gabar->cap & 0x0f00)>>8 ; // Bit 8-12
 
-    Printf("\n[command slot is : %d num_of_slots: %d ]", slots,num_of_slots);
-
     int i;
     for (i=0; i<num_of_slots; i++)
     {
 
-               if ((slots&1) == 0)
-               {
-                      Printf("\n[command slot is : %d]", i);
-                       return i;
+       if ((slots&1) == 0)
+       {
+            Printf("\n[command slot is : %d]", i);
+            return i;
+       }
 
-               }
-               slots >>= 1;
+       slots >>= 1;
     }
 
-    Printf("Cannot find free command list entry\n");
     return -1;
 
 }
 
+#define ATA_IDENT_MAX_LBA_EXT 200
+
+void identify(HBA_PORT *port)
+{
+	char buf[1024 * 16];
+	memset(buf,0,sizeof(buf));
+
+	HBA_CMD_HEADER *cmdhead = (HBA_CMD_HEADER*)(port->clb);
+	cmdhead-> cfl = sizeof (FIS_REG_H2D) / 4;
+	cmdhead-> w = 0;
+	cmdhead-> prdtl = 1;
+	cmdhead-> p = 1;
+
+	HBA_CMD_TBL * cmdtbl = (HBA_CMD_TBL*)(cmdhead->ctba);
+	memset (cmdtbl, 0, sizeof (HBA_CMD_TBL));
+
+	cmdtbl-> prdt_entry [0] .dba = buf;
+	cmdtbl-> prdt_entry [0] .dbc = 511;
+	cmdtbl-> prdt_entry [0] .i = 1;
+
+	FIS_REG_H2D * cmdfis = (FIS_REG_H2D *) cmdtbl-> cfis;
+	cmdfis-> fis_type = FIS_TYPE_REG_H2D;
+	cmdfis-> c = 1;
+	cmdfis-> command = ATA_CMD_IDENTIFY;
+
+	port->ci = 1;
+
+	while (1)
+	{
+	     if ((port-> ci & 1) == 0)
+	     {
+	            break;
+	     };
+
+	};
+
+	int size = * ((int *) ((char *) buf + ATA_IDENT_MAX_LBA_EXT));
+
+	Printf("\n[Total Size : %d (%X MegaByte)]", size, (int)( size * 512 / 1024 / 1024));
+
+
+}
 
 bool ahci_read(HBA_PORT *port, uint32_t startl, uint32_t starth, uint32_t count, uint16_t *buf)
 {
@@ -418,13 +420,7 @@ number of words specified in the PRD table, ignoring any additional padding.**/
         cmdfis->countl = count & 0xff;
         cmdfis->counth = count>>8;
 
-    //    print("[slot]{%d}", slot);
         port->ci = 1;    // Issue command
-    //    print("\n[Port ci ][%d]", port->ci);
-   //     print("\nafter issue : %d" , port->tfd);
-    //    print("\nafter issue : %d" , port->tfd);
-
-    //    print("\nbefore while 1--> %d", slot);
         // Wait for completion
         while (1)
         {
@@ -438,8 +434,7 @@ number of words specified in the PRD table, ignoring any additional padding.**/
                         return 0;
                 }
         }
-     //   print("\n after while 1");
-     //   print("\nafter issue : %d" , port->tfd);
+
         // Check again
         if (port->is & HBA_PxIS_TFES)
         {
@@ -447,8 +442,6 @@ number of words specified in the PRD table, ignoring any additional padding.**/
             return 0;
         }
 
-     //   print("\n[Port ci ][%d]", port->ci);
-       // int k = 0;
         while(port->ci != 0)
         {
 
