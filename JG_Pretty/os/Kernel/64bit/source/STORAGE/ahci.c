@@ -3,7 +3,9 @@
 #include "ahci.h"
 #include "../console.h"
 #include "../pci.h"
-
+#include "../fat32/fat_access.h"
+#include "../usb/devicemanager.h"
+#include "../dynamicmemory.h"
 
 static inline void sysOutLong( unsigned short port, uint32_t val ){
     __asm__ volatile( "outl %0, %1"
@@ -89,17 +91,17 @@ void probe_port(HBA_MEM *abar)
 
 				identify();
 
-				char buf[1024 * 160];
+				char buf[512];
 
-		//		memcpy(buf,"999999999",10);
+				memcpy(buf,"999999999",10);
 
-		//		ahci_write(&abar->ports[i],0,0,10,buf);
+				ahci_write(&abar->ports[i],0,0,1,buf);
 
 				memset(buf,sizeof(buf),0);
 
-				ahci_read(&abar->ports[i],0,0,10,buf);
+				ahci_read(&abar->ports[i],0,0,1,buf);
 
-				Printf("\n\n\n%s\n", buf);
+				Printf("\n\n\n%s %d %X %X\n", buf,i,abar,&abar->ports[i]);
 				return ;
 
 			}
@@ -204,7 +206,6 @@ int find_cmdslot(HBA_PORT *port)
 
        if ((slots&1) == 0)
        {
-            Printf("\n[command slot is : %d]", i);
             return i;
        }
 
@@ -216,6 +217,22 @@ int find_cmdslot(HBA_PORT *port)
 }
 
 #define ATA_IDENT_MAX_LBA_EXT 200
+
+void attach_ahci_disk(int size)
+{
+
+	disk_t *disk = NEW (sizeof(disk_t));
+	disk->type            = &HDDDISK;
+	disk->sectorSize      = 512;
+	disk->data            = 0;
+	disk->accessRemaining = 0;
+	disk->BIOS_driveNum   = 0;
+	disk->headCount       = 0;
+	disk->size 			  = size;
+
+	deviceManager_attachDisk(disk);
+
+}
 
 void identify(HBA_PORT *port)
 {
@@ -253,7 +270,12 @@ void identify(HBA_PORT *port)
 
 	int size = * ((int *) ((char *) buf + ATA_IDENT_MAX_LBA_EXT));
 
-	Printf("\n[Total Size : %d (%X MegaByte)]", size, (int)( size * 512 / 1024 / 1024));
+	Printf("\n[Total Sector Count : %d  %d MegaByte]\n", size, (int)( size * 512 / 1024 / 1024));
+
+	attach_ahci_disk(size);
+
+    fl_init();
+    fl_attach_media(ahci_diskio_read,ahci_diskio_write);
 
 
 }
@@ -350,11 +372,14 @@ bool ahci_read(HBA_PORT *port, uint32_t startl, uint32_t starth, uint32_t count,
 
 int ahci_write(HBA_PORT *port, DWORD startl, DWORD starth, DWORD count, QWORD buf)
 {
-       port->is = 0xffff;              // Clear pending interrupt bits
+		port->is = 0xffff;              // Clear pending interrupt bits
      // int spin = 0;           // Spin lock timeout counter
         int slot = find_cmdslot(port);
         if (slot == -1)
-                return 0;
+        {
+        	Printf(" cant found cmdslot %d\n",port);
+        	return 0;
+        }
         uint64_t addr = 0;
      //   print("\n clb %x clbu %x", port->clb, port->clbu);
         addr = (((addr | port->clbu) << 32) | port->clb);

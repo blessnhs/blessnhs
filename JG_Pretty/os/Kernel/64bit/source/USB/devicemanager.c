@@ -104,7 +104,6 @@ void deviceManager_checkDrives(void)
 
 void deviceManager_attachDisk(disk_t* disk)
 {
-	Printf("1.deviceManager_attachDisk disks.size %d\n",disks.size);
 	Lock(&mutex);
     // Later: Searching correct ID in device-File
 	size_t i=0;
@@ -112,15 +111,13 @@ void deviceManager_attachDisk(disk_t* disk)
     {
         if (disks.data[i] == 0)
         {
-        	Printf("deviceManager_attachDisk insert disk %d %d\n",disk->sectorSize,i);
-            disks.data[i] = disk;
+             disks.data[i] = disk;
             Unlock(&mutex);
             return;
         }
     }
     array_resize(&disks, disks.size + 1);
 
-	Printf("2.deviceManager_attachDisk disks.size %d\n",disks.size);
     disks.data[disks.size - 1] = disk;
 
     Unlock(&mutex);

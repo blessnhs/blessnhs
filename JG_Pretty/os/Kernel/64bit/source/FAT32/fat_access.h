@@ -27,6 +27,9 @@ typedef int (*fn_diskio_write)(uint32 sector, uint8 *buffer, uint32 sector_count
 int usb_diskio_read (uint32 sector, uint8 *buffer, uint32 sector_count);
 int usb_diskio_write(uint32 sector, uint8 *buffer, uint32 sector_count);
 
+int ahci_diskio_read (uint32 sector, uint8 *buffer, uint32 sector_count);
+int ahci_diskio_write(uint32 sector, uint8 *buffer, uint32 sector_count);
+
 //-----------------------------------------------------------------------------
 // Structures
 //-----------------------------------------------------------------------------

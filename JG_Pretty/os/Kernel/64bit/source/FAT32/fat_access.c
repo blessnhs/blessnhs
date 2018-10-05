@@ -37,6 +37,7 @@
 #include "fat_misc.h"
 #include "../utility.h"
 #include "../usb/devicemanager.h"
+#include "../storage/ahci.h"
 
 int usb_diskio_read (uint32 sector, uint8 *buffer, uint32 sector_count)
 {
@@ -67,6 +68,30 @@ int usb_diskio_write(uint32 sector, uint8 *buffer, uint32 sector_count)
    }
 
    return 0;
+}
+
+int ahci_diskio_read (uint32 sector, uint8 *buffer, uint32 sector_count)
+{
+   disk_t *disk = GetDisk(0);
+   if(disk == 0)
+   {
+	   Printf("cant found ahci_disk_read \n");
+	   return -1;
+   }
+
+   return ahci_read(&gabar->ports[0],sector,0,sector_count,buffer);
+}
+
+int ahci_diskio_write(uint32 sector, uint8 *buffer, uint32 sector_count)
+{
+   disk_t *disk = GetDisk(0);
+   if(disk == 0)
+   {
+	   Printf("cant found ahci_disk_write \n");
+	   return -1;
+   }
+
+   return ahci_write(&gabar->ports[0], sector, 0, sector_count, (QWORD)buffer);
 }
 
 

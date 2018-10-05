@@ -312,5 +312,7 @@ QWORD ahca_installDevice(pciDev_t* device);
 int ahci_write(HBA_PORT *port, DWORD startl, DWORD starth, DWORD count, QWORD buf);
 bool ahci_read(HBA_PORT *port, uint32_t startl, uint32_t starth, uint32_t count, uint16_t *buf);
 
+extern HBA_MEM *gabar;
+
 #endif
 

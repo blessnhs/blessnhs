@@ -78,6 +78,7 @@ SHELLCOMMANDENTRY gs_vstCommandTable[] =
         { "exec", "Execute Application Program, ex)exec a.elf argument", 
                 ExecuteApplicationProgram },
         { "installpackage", "Install Package To HDD", InstallPackage },
+		{"mkdir","make directory",CreateDirectory},
 };
 
 //==============================================================================
@@ -1487,14 +1488,25 @@ static void FormatHDD( const char* pcParameterBuffer )
 	if(disk == 0)
 	   	return;
 
+	Printf("2.TotalSize %q \n",disk->size/512);
+			fl_format(disk->size, "JG");
+
+			return ;
+
 	usb_msd_t* msd = disk->data;
+	if(msd != 0)
+	{
+		testMSD(msd);
 
-	testMSD(msd);
+		Printf("1.TotalSize %q \n",msd->disk.size/512);
 
-	Printf("TotalSize %q \n",msd->disk.size/512);
-
-	fl_format(msd->disk.size/512, "JG");
-
+		fl_format(msd->disk.size/512, "JG");
+	}
+	else
+	{
+		Printf("2.TotalSize %q \n",disk->size/512);
+		fl_format(disk->size, "JG");
+	}
 }
 
 /**
@@ -1522,6 +1534,20 @@ static void ShowFileSystemInformation( const char* pcParameterBuffer )
 static void CreateFileInRootDirectory( const char* pcParameterBuffer )
 {
 	fl_createdirectory(pcParameterBuffer);
+}
+
+static void CreateDirectory( const char* pcParameterBuffer )
+{
+	char name[256];
+	PARAMETERLIST stList;
+
+	// 파라미터를 추출
+	InitializeParameter( &stList, pcParameterBuffer );
+	GetNextParameter( &stList, name );
+
+	Printf( "mkdir %s\n",name);
+
+	fl_createdirectory(name);
 }
 
 /**

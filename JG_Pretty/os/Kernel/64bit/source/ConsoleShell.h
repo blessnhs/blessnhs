@@ -131,4 +131,6 @@ static void InstallPackage( const char* pcParameterBuffer );
 static void UsbReadSector( const char* pcParameterBuffer );
 static void UsbWriteSector( const char* pcParameterBuffer );
 static void TestNetwork( const char* pcParameterBuffer );
+static void CreateDirectory( const char* pcParameterBuffer );
+
 #endif /*__CONSOLESHELL_H__*/
