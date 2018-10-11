@@ -91,17 +91,6 @@ void probe_port(HBA_MEM *abar)
 
 				identify();
 
-				char buf[512];
-
-				memcpy(buf,"999999999",10);
-
-				ahci_write(&abar->ports[i],0,0,1,buf);
-
-				memset(buf,sizeof(buf),0);
-
-				ahci_read(&abar->ports[i],0,0,1,buf);
-
-				Printf("\n\n\n%s %d %X %X\n", buf,i,abar,&abar->ports[i]);
 				return ;
 
 			}
@@ -387,7 +376,7 @@ int ahci_write(HBA_PORT *port, DWORD startl, DWORD starth, DWORD count, QWORD bu
 
         //HBA_CMD_HEADER *cmdheader = (HBA_CMD_HEADER*)(port->clb);
         cmdheader += slot;
-       cmdheader->cfl = sizeof(FIS_REG_H2D)/sizeof(DWORD);     // Command FIS size
+        cmdheader->cfl = sizeof(FIS_REG_H2D)/sizeof(DWORD);     // Command FIS size
         cmdheader->w = 1;               // Read from device
         cmdheader->c = 1;               // Read from device
         cmdheader->p = 1;               // Read from device
@@ -405,11 +394,11 @@ int ahci_write(HBA_PORT *port, DWORD startl, DWORD starth, DWORD count, QWORD bu
         for (i=0; i<cmdheader->prdtl-1; i++)
         {
                cmdtbl->prdt_entry[i].dba = (DWORD)(buf & 0xFFFFFFFF);
-                cmdtbl->prdt_entry[i].dbau = (DWORD)((buf << 32) & 0xFFFFFFFF);
-                cmdtbl->prdt_entry[i].dbc = 8*1024-1;     // 8K bytes
-                cmdtbl->prdt_entry[i].i = 0;
-                buf += 4*1024;  // 4K words
-                count -= 16;    // 16 sectors
+               cmdtbl->prdt_entry[i].dbau = (DWORD)((buf << 32) & 0xFFFFFFFF);
+               cmdtbl->prdt_entry[i].dbc = 8*1024-1;     // 8K bytes
+               cmdtbl->prdt_entry[i].i = 0;
+               buf += 4*1024;  // 4K words
+               count -= 16;    // 16 sectors
        }
         /**If the final Data FIS transfer in a command is for an odd number of 16-bit words, the transmitter占퐏
 Transport layer is responsible for padding the final Dword of a FIS with zeros. If the HBA receives one
