@@ -3,7 +3,7 @@
  *  date    2009/01/31
  *  author  kkamagui 
  *          Copyright(c)2008 All rights reserved by kkamagui
- *  brief   콘솔 셸에 관련된 소스 파일
+ *  brief   肄섏넄 �끂�뿉 愿��젴�맂 �냼�뒪 �뙆�씪
  */
 
 #include "ConsoleShell.h"
@@ -34,7 +34,7 @@
 #include "NETPROTOCOL/socket.h"
 #include "NETPROTOCOL/if.h"
 
-// 커맨드 테이블 정의
+// 而ㅻ㎤�뱶 �뀒�씠釉� �젙�쓽
 SHELLCOMMANDENTRY gs_vstCommandTable[] =
 {
         { "help", "Show Help", Help },
@@ -83,10 +83,10 @@ SHELLCOMMANDENTRY gs_vstCommandTable[] =
 };
 
 //==============================================================================
-//  실제 셸을 구성하는 코드
+//  �떎�젣 �끂�쓣 援ъ꽦�븯�뒗 肄붾뱶
 //==============================================================================
 /**
- *  셸의 메인 루프
+ *  �끂�쓽 硫붿씤 猷⑦봽
  */
 void StartConsoleShell( void )
 {
@@ -96,19 +96,19 @@ void StartConsoleShell( void )
     int iCursorX, iCursorY;
     CONSOLEMANAGER* pstConsoleManager;
     
-    // 콘솔을 관리하는 자료구조를 반환
+    // 肄섏넄�쓣 愿�由ы븯�뒗 �옄猷뚭뎄議곕�� 諛섑솚
     pstConsoleManager = GetConsoleManager();
     
-    // 프롬프트 출력
+    // �봽濡ы봽�듃 異쒕젰
     Printf( CONSOLESHELL_PROMPTMESSAGE );
     
-    // 콘솔 셸 종료 플래그가 TRUE가 될 때까지 반복
+    // 肄섏넄 �끂 醫낅즺 �뵆�옒洹멸� TRUE媛� �맆 �븣源뚯� 諛섎났
     while( pstConsoleManager->bExit == FALSE )
     {
 
         bKey = GetCh();
 
-        // 콘솔 셸 종료 플래그가 설정된 경우 루프를 종료
+        // 肄섏넄 �끂 醫낅즺 �뵆�옒洹멸� �꽕�젙�맂 寃쎌슦 猷⑦봽瑜� 醫낅즺
         if( pstConsoleManager->bExit == TRUE )
         {
             break;
@@ -122,8 +122,8 @@ void StartConsoleShell( void )
         {
             if( iCommandBufferIndex > 0 )
             {
-                // 현재 커서 위치를 얻어서 한 문자 앞으로 이동한 다음 공백을 출력하고
-                // 커맨드 버퍼에서 마지막 문자 삭제
+                // �쁽�옱 而ㅼ꽌 �쐞移섎�� �뼸�뼱�꽌 �븳 臾몄옄 �븵�쑝濡� �씠�룞�븳 �떎�쓬 怨듬갚�쓣 異쒕젰�븯怨�
+                // 而ㅻ㎤�뱶 踰꾪띁�뿉�꽌 留덉�留� 臾몄옄 �궘�젣
                 GetCursor( &iCursorX, &iCursorY );
                 PrintStringXY( iCursorX - 1, iCursorY, " " );
                 SetCursor( iCursorX - 1, iCursorY );
@@ -136,17 +136,17 @@ void StartConsoleShell( void )
             
             if( iCommandBufferIndex > 0 )
             {
-                // 커맨드 버퍼에 있는 명령을 실행
+                // 而ㅻ㎤�뱶 踰꾪띁�뿉 �엳�뒗 紐낅졊�쓣 �떎�뻾
                 vcCommandBuffer[ iCommandBufferIndex ] = '\0';
                 ExecuteCommand( vcCommandBuffer );
             }
             
-            // 프롬프트 출력 및 커맨드 버퍼 초기화
+            // �봽濡ы봽�듃 異쒕젰 諛� 而ㅻ㎤�뱶 踰꾪띁 珥덇린�솕
             Printf( "%s", CONSOLESHELL_PROMPTMESSAGE );            
             MemSet( vcCommandBuffer, '\0', CONSOLESHELL_MAXCOMMANDBUFFERCOUNT );
             iCommandBufferIndex = 0;
         }
-        // 시프트 키, CAPS Lock, NUM Lock, Scroll Lock은 무시
+        // �떆�봽�듃 �궎, CAPS Lock, NUM Lock, Scroll Lock�� 臾댁떆
         else if( ( bKey == KEY_LSHIFT ) || ( bKey == KEY_RSHIFT ) ||
                  ( bKey == KEY_CAPSLOCK ) || ( bKey == KEY_NUMLOCK ) ||
                  ( bKey == KEY_SCROLLLOCK ) )
@@ -155,13 +155,13 @@ void StartConsoleShell( void )
         }
         else if( bKey < 128 )
         {
-            // TAB은 공백으로 전환
+            // TAB�� 怨듬갚�쑝濡� �쟾�솚
             if( bKey == KEY_TAB )
             {
                 bKey = ' ';
             }
             
-            // 버퍼가 남아있을 때만 가능
+            // 踰꾪띁媛� �궓�븘�엳�쓣 �븣留� 媛��뒫
             if( iCommandBufferIndex < CONSOLESHELL_MAXCOMMANDBUFFERCOUNT )
             {
                 vcCommandBuffer[ iCommandBufferIndex++ ] = bKey;
@@ -181,7 +181,7 @@ void StartConsoleShell( void )
 }
 
 /*
- *  커맨드 버퍼에 있는 커맨드를 비교하여 해당 커맨드를 처리하는 함수를 수행
+ *  而ㅻ㎤�뱶 踰꾪띁�뿉 �엳�뒗 而ㅻ㎤�뱶瑜� 鍮꾧탳�븯�뿬 �빐�떦 而ㅻ㎤�뱶瑜� 泥섎━�븯�뒗 �븿�닔瑜� �닔�뻾
  */
 void ExecuteCommand( const char* pcCommandBuffer )
 {
@@ -189,7 +189,7 @@ void ExecuteCommand( const char* pcCommandBuffer )
     int iCommandBufferLength, iCommandLength;
     int iCount;
     
-    // 공백으로 구분된 커맨드를 추출
+    // 怨듬갚�쑝濡� 援щ텇�맂 而ㅻ㎤�뱶瑜� 異붿텧
     iCommandBufferLength = kStrLen( pcCommandBuffer );
     for( iSpaceIndex = 0 ; iSpaceIndex < iCommandBufferLength ; iSpaceIndex++ )
     {
@@ -199,12 +199,12 @@ void ExecuteCommand( const char* pcCommandBuffer )
         }
     }
     
-    // 커맨드 테이블을 검사해서 동일한 이름의 커맨드가 있는지 확인
+    // 而ㅻ㎤�뱶 �뀒�씠釉붿쓣 寃��궗�빐�꽌 �룞�씪�븳 �씠由꾩쓽 而ㅻ㎤�뱶媛� �엳�뒗吏� �솗�씤
     iCount = sizeof( gs_vstCommandTable ) / sizeof( SHELLCOMMANDENTRY );
     for( i = 0 ; i < iCount ; i++ )
     {
         iCommandLength = kStrLen( gs_vstCommandTable[ i ].pcCommand );
-        // 커맨드의 길이와 내용이 완전히 일치하는지 검사
+        // 而ㅻ㎤�뱶�쓽 湲몄씠�� �궡�슜�씠 �셿�쟾�엳 �씪移섑븯�뒗吏� 寃��궗
         if( ( iCommandLength == iSpaceIndex ) &&
             ( MemCmp( gs_vstCommandTable[ i ].pcCommand, pcCommandBuffer,
                        iSpaceIndex ) == 0 ) )
@@ -214,7 +214,7 @@ void ExecuteCommand( const char* pcCommandBuffer )
         }
     }
 
-    // 리스트에서 찾을 수 없다면 에러 출력
+    // 由ъ뒪�듃�뿉�꽌 李얠쓣 �닔 �뾾�떎硫� �뿉�윭 異쒕젰
     if( i >= iCount )
     {
         Printf( "'%s' is not found.\n", pcCommandBuffer );
@@ -222,7 +222,7 @@ void ExecuteCommand( const char* pcCommandBuffer )
 }
 
 /**
- *  파라미터 자료구조를 초기화
+ *  �뙆�씪誘명꽣 �옄猷뚭뎄議곕�� 珥덇린�솕
  */
 void InitializeParameter( PARAMETERLIST* pstList, const char* pcParameter )
 {
@@ -232,20 +232,20 @@ void InitializeParameter( PARAMETERLIST* pstList, const char* pcParameter )
 }
 
 /**
- *  공백으로 구분된 파라미터의 내용과 길이를 반환
+ *  怨듬갚�쑝濡� 援щ텇�맂 �뙆�씪誘명꽣�쓽 �궡�슜怨� 湲몄씠瑜� 諛섑솚
  */
 int GetNextParameter( PARAMETERLIST* pstList, char* pcParameter )
 {
     int i;
     int iLength;
 
-    // 더 이상 파라미터가 없으면 나감
+    // �뜑 �씠�긽 �뙆�씪誘명꽣媛� �뾾�쑝硫� �굹媛�
     if( pstList->iLength <= pstList->iCurrentPosition )
     {
         return 0;
     }
     
-    // 버퍼의 길이만큼 이동하면서 공백을 검색
+    // 踰꾪띁�쓽 湲몄씠留뚰겮 �씠�룞�븯硫댁꽌 怨듬갚�쓣 寃��깋
     for( i = pstList->iCurrentPosition ; i < pstList->iLength ; i++ )
     {
         if( pstList->pcBuffer[ i ] == ' ' )
@@ -254,21 +254,21 @@ int GetNextParameter( PARAMETERLIST* pstList, char* pcParameter )
         }
     }
     
-    // 파라미터를 복사하고 길이를 반환
+    // �뙆�씪誘명꽣瑜� 蹂듭궗�븯怨� 湲몄씠瑜� 諛섑솚
     MemCpy( pcParameter, pstList->pcBuffer + pstList->iCurrentPosition, i );
     iLength = i - pstList->iCurrentPosition;
     pcParameter[ iLength ] = '\0';
 
-    // 파라미터의 위치 업데이트
+    // �뙆�씪誘명꽣�쓽 �쐞移� �뾽�뜲�씠�듃
     pstList->iCurrentPosition += iLength + 1;
     return iLength;
 }
     
 //==============================================================================
-//  커맨드를 처리하는 코드
+//  而ㅻ㎤�뱶瑜� 泥섎━�븯�뒗 肄붾뱶
 //==============================================================================
 /**
- *  셸 도움말을 출력
+ *  �끂 �룄��留먯쓣 異쒕젰
  */
 static void Help( const char* pcCommandBuffer )
 {
@@ -284,7 +284,7 @@ static void Help( const char* pcCommandBuffer )
     
     iCount = sizeof( gs_vstCommandTable ) / sizeof( SHELLCOMMANDENTRY );
 
-    // 가장 긴 커맨드의 길이를 계산
+    // 媛��옣 湲� 而ㅻ㎤�뱶�쓽 湲몄씠瑜� 怨꾩궛
     for( i = 0 ; i < iCount ; i++ )
     {
         iLength = kStrLen( gs_vstCommandTable[ i ].pcCommand );
@@ -294,7 +294,7 @@ static void Help( const char* pcCommandBuffer )
         }
     }
     
-    // 도움말 출력
+    // �룄��留� 異쒕젰
     for( i = 0 ; i < iCount ; i++ )
     {
         Printf( "%s", gs_vstCommandTable[ i ].pcCommand );
@@ -302,7 +302,7 @@ static void Help( const char* pcCommandBuffer )
         SetCursor( iMaxCommandLength, iCursorY );
         Printf( "  - %s\n", gs_vstCommandTable[ i ].pcHelp );
 
-        // 목록이 많을 경우 나눠서 보여줌
+        // 紐⑸줉�씠 留롮쓣 寃쎌슦 �굹�닠�꽌 蹂댁뿬以�
         if( ( i != 0 ) && ( ( i % 20 ) == 0 ) )
         {
             Printf( "Press any key to continue... ('q' is exit) : " );
@@ -317,19 +317,19 @@ static void Help( const char* pcCommandBuffer )
 }
 
 /**
- *  화면을 지움
+ *  �솕硫댁쓣 吏���
  */
 static void Cls( const char* pcParameterBuffer )
 {
 
-    // 맨 윗줄은 디버깅 용으로 사용하므로 화면을 지운 후, 라인 1로 커서 이동
+    // 留� �쐵以꾩� �뵒踰꾧퉭 �슜�쑝濡� �궗�슜�븯誘�濡� �솕硫댁쓣 吏��슫 �썑, �씪�씤 1濡� 而ㅼ꽌 �씠�룞
     ClearScreen();
     SetCursor( 0, 1 );
 }
 
 static void UsbReadSector( const char* pcParameterBuffer )
 {
-    // 맨 윗줄은 디버깅 용으로 사용하므로 화면을 지운 후, 라인 1로 커서 이동
+    // 留� �쐵以꾩� �뵒踰꾧퉭 �슜�쑝濡� �궗�슜�븯誘�濡� �솕硫댁쓣 吏��슫 �썑, �씪�씤 1濡� 而ㅼ꽌 �씠�룞
     //ClearScreen();
 
 	int idx = 1;
@@ -367,15 +367,25 @@ static void UsbReadSector( const char* pcParameterBuffer )
 
 static void TestNetwork( const char* pcParameterBuffer )
 {
+	char hostName[ 30 ];
+	memset(hostName,0,sizeof(hostName));
+	PARAMETERLIST stList;
+
+	InitializeParameter( &stList, pcParameterBuffer );
+    GetNextParameter( &stList, hostName );
+
 	hostent *host;
 	sockaddr_in serverSock;
 	int sock = 0;
 
+	Printf("hostName %s\n",hostName);
+
 	// Check info about remote computer
-	if ((host = gethostbyname ((char *) "ftp.sunet.se")) == NULL) {
+	if ((host = gethostbyname ((char *) hostName)) == NULL) {
 		Printf ("tftp -> wrong address\n");
 		return ;
 	}
+
 	int ncsock;
 	// Create socket
 	if ((ncsock = socket (AF_INET, SOCK_STREAM, IPPROTO_TCP)) == -1) {
@@ -398,16 +408,52 @@ static void TestNetwork( const char* pcParameterBuffer )
 	}
 
 	char buf[2048];
+	memset(buf,0,2048);
 	int ret = recv (ncsock, buf, 499, 0);
-
 	Printf ("recv %s\n",buf);
+	memset(buf,0,2048);
+
+	char id[100];
+	char pass[100];
+	gets_s(id,100);
+
+	char pStr[200];
+	SPrintf(pStr, "USER %s\r\n", id);
+    send(ncsock, pStr, strlen(pStr),0);
+
+	ret = recv (ncsock, buf, 499, 0);
+	Printf ("recv %s\n",buf);
+	memset(buf,0,2048);
+
+	gets_s(pass,100);
+
+	SPrintf(pStr, "PASS %s\r\n", pass);
+	send(ncsock, pStr, strlen(pStr),0);
+
+	ret = recv (ncsock, buf, 499, 0);
+	Printf ("recv %s\n",buf);
+	memset(buf,0,2048);
+
+	send(ncsock, "PWD\r\n", 5,0);
+
+	ret = recv (ncsock, buf, 499, 0);
+	Printf ("recv %s\n",buf);
+	memset(buf,0,2048);
+
+
+	SPrintf(pStr, "LIST -a\r\n");
+	send(ncsock, pStr, strlen(pStr),0);
+
+	ret = recv (ncsock, buf, 499, 0);
+	Printf ("recv %s\n",buf);
+	memset(buf,0,2048);
 }
 
 
 
 static void UsbWriteSector( const char* pcParameterBuffer )
 {
-	// 맨 윗줄은 디버깅 용으로 사용하므로 화면을 지운 후, 라인 1로 커서 이동
+	// 留� �쐵以꾩� �뵒踰꾧퉭 �슜�쑝濡� �궗�슜�븯誘�濡� �솕硫댁쓣 吏��슫 �썑, �씪�씤 1濡� 而ㅼ꽌 �씠�룞
 	    //ClearScreen();
 
 
@@ -438,7 +484,7 @@ static void UsbWriteSector( const char* pcParameterBuffer )
 }
 
 /**
- *  총 메모리 크기를 출력
+ *  珥� 硫붾え由� �겕湲곕�� 異쒕젰
  */
 static void ShowTotalRAMSize( const char* pcParameterBuffer )
 {
@@ -446,13 +492,13 @@ static void ShowTotalRAMSize( const char* pcParameterBuffer )
 }
 
 /**
- *  PC를 재시작(Reboot)
+ *  PC瑜� �옱�떆�옉(Reboot)
  */
 static void Shutdown( const char* pcParamegerBuffer )
 {
     Printf( "System Shutdown Start...\n" );
     
-    // 파일 시스템 캐시에 들어있는 내용을 하드 디스크로 옮김
+    // �뙆�씪 �떆�뒪�뀥 罹먯떆�뿉 �뱾�뼱�엳�뒗 �궡�슜�쓣 �븯�뱶 �뵒�뒪�겕濡� �삷源�
     Printf( "Cache Flush... ");
 /*    if( FlushFileSystemCache() == TRUE )
     {
@@ -463,14 +509,14 @@ static void Shutdown( const char* pcParamegerBuffer )
         Printf( "Fail\n" );
     }
     */
-    // 키보드 컨트롤러를 통해 PC를 재시작
+    // �궎蹂대뱶 而⑦듃濡ㅻ윭瑜� �넻�빐 PC瑜� �옱�떆�옉
     Printf( "Press Any Key To Reboot PC..." );
     GetCh();
     Reboot();
 }
 
 /**
- *  프로세서의 속도를 측정
+ *  �봽濡쒖꽭�꽌�쓽 �냽�룄瑜� 痢≪젙
  */
 static void MeasureProcessorSpeed( const char* pcParameterBuffer )
 {
@@ -479,7 +525,7 @@ static void MeasureProcessorSpeed( const char* pcParameterBuffer )
         
     Printf( "Now Measuring." );
     
-    // 10초 동안 변화한 타임 스탬프 카운터를 이용하여 프로세서의 속도를 간접적으로 측정
+    // 10珥� �룞�븞 蹂��솕�븳 ���엫 �뒪�꺃�봽 移댁슫�꽣瑜� �씠�슜�븯�뿬 �봽濡쒖꽭�꽌�쓽 �냽�룄瑜� 媛꾩젒�쟻�쑝濡� 痢≪젙
     DisableInterrupt();    
     for( i = 0 ; i < 200 ; i++ )
     {
@@ -489,7 +535,7 @@ static void MeasureProcessorSpeed( const char* pcParameterBuffer )
 
         Printf( "." );
     }
-    // 타이머 복원
+    // ���씠癒� 蹂듭썝
     InitializePIT( MSTOCOUNT( 1 ), TRUE );
     EnableInterrupt();
     
@@ -497,7 +543,7 @@ static void MeasureProcessorSpeed( const char* pcParameterBuffer )
 }
 
 /**
- *  RTC 컨트롤러에 저장된 일자 및 시간 정보를 표시
+ *  RTC 而⑦듃濡ㅻ윭�뿉 ���옣�맂 �씪�옄 諛� �떆媛� �젙蹂대�� �몴�떆
  */
 static void ShowDateAndTime( const char* pcParameterBuffer )
 {
@@ -505,7 +551,7 @@ static void ShowDateAndTime( const char* pcParameterBuffer )
     BYTE bDayOfWeek, bDayOfMonth, bMonth;
     WORD wYear;
 
-    // RTC 컨트롤러에서 시간 및 일자를 읽음
+    // RTC 而⑦듃濡ㅻ윭�뿉�꽌 �떆媛� 諛� �씪�옄瑜� �씫�쓬
     ReadRTCTime( &bHour, &bMinute, &bSecond );
     ReadRTCDate( &wYear, &bMonth, &bDayOfMonth, &bDayOfWeek );
     
@@ -515,7 +561,7 @@ static void ShowDateAndTime( const char* pcParameterBuffer )
 }
 
 /**
- *  태스크의 우선 순위를 변경
+ *  �깭�뒪�겕�쓽 �슦�꽑 �닚�쐞瑜� 蹂�寃�
  */
 static void ChangeTaskPriority( const char* pcParameterBuffer )
 {
@@ -525,12 +571,12 @@ static void ChangeTaskPriority( const char* pcParameterBuffer )
     QWORD qwID;
     BYTE bPriority;
     
-    // 파라미터를 추출
+    // �뙆�씪誘명꽣瑜� 異붿텧
     InitializeParameter( &stList, pcParameterBuffer );
     GetNextParameter( &stList, vcID );
     GetNextParameter( &stList, vcPriority );
     
-    // 태스크의 우선 순위를 변경
+    // �깭�뒪�겕�쓽 �슦�꽑 �닚�쐞瑜� 蹂�寃�
     if( MemCmp( vcID, "0x", 2 ) == 0 )
     {
         qwID = AToI( vcID + 2, 16 );
@@ -554,7 +600,7 @@ static void ChangeTaskPriority( const char* pcParameterBuffer )
 }
 
 /**
- *  현재 생성된 모든 태스크의 정보를 출력
+ *  �쁽�옱 �깮�꽦�맂 紐⑤뱺 �깭�뒪�겕�쓽 �젙蹂대�� 異쒕젰
  */
 static void ShowTaskList( const char* pcParameterBuffer )
 {
@@ -566,7 +612,7 @@ static void ShowTaskList( const char* pcParameterBuffer )
     int iRemainLength;
     int iProcessorCount;
     
-    // 코어 수만큼 루프를 돌면서 각 스케줄러에 있는 태스크의 수를 더함
+    // 肄붿뼱 �닔留뚰겮 猷⑦봽瑜� �룎硫댁꽌 媛� �뒪耳�以꾨윭�뿉 �엳�뒗 �깭�뒪�겕�쓽 �닔瑜� �뜑�븿
     iProcessorCount = GetProcessorCount(); 
     
     for( i = 0 ; i < iProcessorCount ; i++ )
@@ -577,10 +623,10 @@ static void ShowTaskList( const char* pcParameterBuffer )
     Printf( "================= Task Total Count [%d] =================\n", 
              iTotalTaskCount );
     
-    // 코어가 2개 이상이면 각 스케줄러 별로 개수를 출력
+    // 肄붿뼱媛� 2媛� �씠�긽�씠硫� 媛� �뒪耳�以꾨윭 蹂꾨줈 媛쒖닔瑜� 異쒕젰
     if( iProcessorCount > 1 )
     {
-        // 각 스케줄러 별로 태스크의 개수를 출력
+        // 媛� �뒪耳�以꾨윭 蹂꾨줈 �깭�뒪�겕�쓽 媛쒖닔瑜� 異쒕젰
         for( i = 0 ; i < iProcessorCount ; i++ )
         {
             if( ( i != 0 ) && ( ( i % 4 ) == 0 ) )
@@ -591,7 +637,7 @@ static void ShowTaskList( const char* pcParameterBuffer )
             SPrintf( vcBuffer, "Core %d : %d", i, GetTaskCount( i ) );
             Printf( vcBuffer );
             
-            // 출력하고 남은 공간을 모두 스페이스바로 채움
+            // 異쒕젰�븯怨� �궓�� 怨듦컙�쓣 紐⑤몢 �뒪�럹�씠�뒪諛붾줈 梨꾩�
             iRemainLength = 19 - kStrLen( vcBuffer );
             MemSet( vcBuffer, ' ', iRemainLength );
             vcBuffer[ iRemainLength ] = '\0';
@@ -609,11 +655,11 @@ static void ShowTaskList( const char* pcParameterBuffer )
     
     for( i = 0 ; i < TASK_MAXCOUNT ; i++ )
     {
-        // TCB를 구해서 TCB가 사용 중이면 ID를 출력
+        // TCB瑜� 援ы빐�꽌 TCB媛� �궗�슜 以묒씠硫� ID瑜� 異쒕젰
         pstTCB = GetTCBInTCBPool( i );
         if( ( pstTCB->stLink.qwID >> 32 ) != 0 )
         {
-            // 태스크가 6개 출력될 때마다, 계속 태스크 정보를 표시할지 여부를 확인
+            // �깭�뒪�겕媛� 6媛� 異쒕젰�맆 �븣留덈떎, 怨꾩냽 �깭�뒪�겕 �젙蹂대�� �몴�떆�븷吏� �뿬遺�瑜� �솗�씤
             if( ( iCount != 0 ) && ( ( iCount % 6 ) == 0 ) )
             {
                 Printf( "Press any key to continue... ('q' is exit) : " );
@@ -637,7 +683,7 @@ static void ShowTaskList( const char* pcParameterBuffer )
 }
 
 /**
- *  태스크를 종료
+ *  �깭�뒪�겕瑜� 醫낅즺
  */
 static void KillTask( const char* pcParameterBuffer )
 {
@@ -647,11 +693,11 @@ static void KillTask( const char* pcParameterBuffer )
     TCB* pstTCB;
     int i;
     
-    // 파라미터를 추출
+    // �뙆�씪誘명꽣瑜� 異붿텧
     InitializeParameter( &stList, pcParameterBuffer );
     GetNextParameter( &stList, vcID );
     
-    // 태스크를 종료
+    // �깭�뒪�겕瑜� 醫낅즺
     if( MemCmp( vcID, "0x", 2 ) == 0 )
     {
         qwID = AToI( vcID + 2, 16 );
@@ -661,13 +707,13 @@ static void KillTask( const char* pcParameterBuffer )
         qwID = AToI( vcID, 10 );
     }
     
-    // 특정 ID만 종료하는 경우
+    // �듅�젙 ID留� 醫낅즺�븯�뒗 寃쎌슦
     if( qwID != 0xFFFFFFFF )
     {
         pstTCB = GetTCBInTCBPool( GETTCBOFFSET( qwID ) );
         qwID = pstTCB->stLink.qwID;
 
-        // 시스템 테스트는 제외
+        // �떆�뒪�뀥 �뀒�뒪�듃�뒗 �젣�쇅
         if( ( ( qwID >> 32 ) != 0 ) && ( ( pstTCB->qwFlags & TASK_FLAGS_SYSTEM ) == 0x00 ) )
         {
             Printf( "Kill Task ID [0x%q] ", qwID );
@@ -685,7 +731,7 @@ static void KillTask( const char* pcParameterBuffer )
             Printf( "Task does not exist or task is system task\n" );
         }
     }
-    // 콘솔 셸과 유휴 태스크를 제외하고 모든 태스크 종료
+    // 肄섏넄 �끂怨� �쑀�쑕 �깭�뒪�겕瑜� �젣�쇅�븯怨� 紐⑤뱺 �깭�뒪�겕 醫낅즺
     else
     {
         for( i = 0 ; i < TASK_MAXCOUNT ; i++ )
@@ -693,7 +739,7 @@ static void KillTask( const char* pcParameterBuffer )
             pstTCB = GetTCBInTCBPool( i );
             qwID = pstTCB->stLink.qwID;
 
-            // 시스템 테스트는 삭제 목록에서 제외
+            // �떆�뒪�뀥 �뀒�뒪�듃�뒗 �궘�젣 紐⑸줉�뿉�꽌 �젣�쇅
             if( ( ( qwID >> 32 ) != 0 ) && ( ( pstTCB->qwFlags & TASK_FLAGS_SYSTEM ) == 0x00 ) )
             {
                 Printf( "Kill Task ID [0x%q] ", qwID );
@@ -711,7 +757,7 @@ static void KillTask( const char* pcParameterBuffer )
 }
 
 /**
- *  프로세서의 사용률을 표시
+ *  �봽濡쒖꽭�꽌�쓽 �궗�슜瑜좎쓣 �몴�떆
  */
 static void CPULoad( const char* pcParameterBuffer )
 {
@@ -721,7 +767,7 @@ static void CPULoad( const char* pcParameterBuffer )
     
     Printf( "================= Processor Load =================\n" ); 
     
-    // 각 코어 별로 부하를 출력
+    // 媛� 肄붿뼱 蹂꾨줈 遺��븯瑜� 異쒕젰
     for( i = 0 ; i < GetProcessorCount() ; i++ )
     {
         if( ( i != 0 ) && ( ( i % 4 ) == 0 ) )
@@ -732,7 +778,7 @@ static void CPULoad( const char* pcParameterBuffer )
         SPrintf( vcBuffer, "Core %d : %d%%", i, GetProcessorLoad( i ) );
         Printf( "%s", vcBuffer );
         
-        // 출력하고 남은 공간을 모두 스페이스바로 채움
+        // 異쒕젰�븯怨� �궓�� 怨듦컙�쓣 紐⑤몢 �뒪�럹�씠�뒪諛붾줈 梨꾩�
         iRemainLength = 19 - kStrLen( vcBuffer );
         MemSet( vcBuffer, ' ', iRemainLength );
         vcBuffer[ iRemainLength ] = '\0';
@@ -741,11 +787,11 @@ static void CPULoad( const char* pcParameterBuffer )
     Printf( "\n" );
 }
 
-// 난수를 발생시키기 위한 변수
+// �궃�닔瑜� 諛쒖깮�떆�궎湲� �쐞�븳 蹂��닔
 static volatile QWORD gs_qwRandomValue = 0;
 
 /**
- *  임의의 난수를 반환
+ *  �엫�쓽�쓽 �궃�닔瑜� 諛섑솚
  */
 QWORD kRandom( void )
 {
@@ -754,7 +800,7 @@ QWORD kRandom( void )
 }
 
 /**
- *  철자를 흘러내리게 하는 스레드
+ *  泥좎옄瑜� �쓽�윭�궡由ш쾶 �븯�뒗 �뒪�젅�뱶
  */
 static void DropCharactorThread( void )
 {
@@ -766,7 +812,7 @@ static void DropCharactorThread( void )
     
     while( 1 )
     {
-        // 잠시 대기함
+        // �옞�떆 ��湲고븿
         Sleep( kRandom() % 20 );
         
         if( ( kRandom() % 20 ) < 16 )
@@ -791,7 +837,7 @@ static void DropCharactorThread( void )
 }
 
 /**
- *  스레드를 생성하여 매트릭스 화면처럼 보여주는 프로세스
+ *  �뒪�젅�뱶瑜� �깮�꽦�븯�뿬 留ㅽ듃由��뒪 �솕硫댁쿂�읆 蹂댁뿬二쇰뒗 �봽濡쒖꽭�뒪
  */
 static void MatrixProcess( void )
 {
@@ -810,12 +856,12 @@ static void MatrixProcess( void )
     
     Printf( "%d Thread is created\n", i );
 
-    // 키가 입력되면 프로세스 종료
+    // �궎媛� �엯�젰�릺硫� �봽濡쒖꽭�뒪 醫낅즺
     GetCh();
 }
 
 /**
- *  매트릭스 화면을 보여줌
+ *  留ㅽ듃由��뒪 �솕硫댁쓣 蹂댁뿬以�
  */
 static void ShowMatrix( const char* pcParameterBuffer )
 {
@@ -827,7 +873,7 @@ static void ShowMatrix( const char* pcParameterBuffer )
     {
         Printf( "Matrix Process [0x%Q] Create Success\n" );
 
-        // 태스크가 종료 될 때까지 대기
+        // �깭�뒪�겕媛� 醫낅즺 �맆 �븣源뚯� ��湲�
         while( ( pstProcess->stLink.qwID >> 32 ) != 0 )
         {
             Sleep( 100 );
@@ -840,7 +886,7 @@ static void ShowMatrix( const char* pcParameterBuffer )
 }
 
 /**
- *  동적 메모리 정보를 표시
+ *  �룞�쟻 硫붾え由� �젙蹂대�� �몴�떆
  */
 static void ShowDyanmicMemoryInformation( const char* pcParameterBuffer )
 {
@@ -859,14 +905,14 @@ static void ShowDyanmicMemoryInformation( const char* pcParameterBuffer )
 }
 
 /**
- *  하드 디스크의 정보를 표시
+ *  �븯�뱶 �뵒�뒪�겕�쓽 �젙蹂대�� �몴�떆
  */
 static void ShowHDDInformation( const char* pcParameterBuffer )
 {
 /*    HDDINFORMATION stHDD;
     char vcBuffer[ 100 ];
     
-    // 하드 디스크의 정보를 읽음
+    // �븯�뱶 �뵒�뒪�겕�쓽 �젙蹂대�� �씫�쓬
     if( GetHDDInformation( &stHDD ) == FALSE )
     {
         Printf( "HDD Information Read Fail\n" );
@@ -875,28 +921,28 @@ static void ShowHDDInformation( const char* pcParameterBuffer )
     
     Printf( "============ Primary Master HDD Information ============\n" );
     
-    // 모델 번호 출력
+    // 紐⑤뜽 踰덊샇 異쒕젰
     MemCpy( vcBuffer, stHDD.vwModelNumber, sizeof( stHDD.vwModelNumber ) );
     vcBuffer[ sizeof( stHDD.vwModelNumber ) - 1 ] = '\0';
     Printf( "Model Number:\t %s\n", vcBuffer );
     
-    // 시리얼 번호 출력
+    // �떆由ъ뼹 踰덊샇 異쒕젰
     MemCpy( vcBuffer, stHDD.vwSerialNumber, sizeof( stHDD.vwSerialNumber ) );
     vcBuffer[ sizeof( stHDD.vwSerialNumber ) - 1 ] = '\0';
     Printf( "Serial Number:\t %s\n", vcBuffer );
 
-    // 헤드, 실린더, 실린더 당 섹터 수를 출력
+    // �뿤�뱶, �떎由곕뜑, �떎由곕뜑 �떦 �꽮�꽣 �닔瑜� 異쒕젰
     Printf( "Head Count:\t %d\n", stHDD.wNumberOfHead );
     Printf( "Cylinder Count:\t %d\n", stHDD.wNumberOfCylinder );
     Printf( "Sector Count:\t %d\n", stHDD.wNumberOfSectorPerCylinder );
     
-    // 총 섹터 수 출력
+    // 珥� �꽮�꽣 �닔 異쒕젰
     Printf( "Total Sector:\t %d Sector, %dMB\n", stHDD.dwTotalSectors, 
             stHDD.dwTotalSectors / 2 / 1024 );*/
 }
 
 /**
- *  하드 디스크에 파라미터로 넘어온 LBA 어드레스에서 섹터 수 만큼 읽음
+ *  �븯�뱶 �뵒�뒪�겕�뿉 �뙆�씪誘명꽣濡� �꽆�뼱�삩 LBA �뼱�뱶�젅�뒪�뿉�꽌 �꽮�꽣 �닔 留뚰겮 �씫�쓬
  */
 static void ReadSector( const char* pcParameterBuffer )
 {
@@ -909,7 +955,7 @@ static void ReadSector( const char* pcParameterBuffer )
     BYTE bData;
     BOOL bExit = FALSE;
     
-    // 파라미터 리스트를 초기화하여 LBA 어드레스와 섹터 수 추출
+    // �뙆�씪誘명꽣 由ъ뒪�듃瑜� 珥덇린�솕�븯�뿬 LBA �뼱�뱶�젅�뒪�� �꽮�꽣 �닔 異붿텧
     InitializeParameter( &stList, pcParameterBuffer );
     if( ( GetNextParameter( &stList, vcLBA ) == 0 ) ||
         ( GetNextParameter( &stList, vcSectorCount ) == 0 ) )
@@ -920,12 +966,12 @@ static void ReadSector( const char* pcParameterBuffer )
     dwLBA = AToI( vcLBA, 10 );
     iSectorCount = AToI( vcSectorCount, 10 );
     
-    // 섹터 수만큼 메모리를 할당 받아 읽기 수행
+    // �꽮�꽣 �닔留뚰겮 硫붾え由щ�� �븷�떦 諛쏆븘 �씫湲� �닔�뻾
     pcBuffer = AllocateMemory( iSectorCount * 512 );
     if( ReadHDDSector( TRUE, TRUE, dwLBA, iSectorCount, pcBuffer ) == iSectorCount )
     {
         Printf( "LBA [%d], [%d] Sector Read Success~!!", dwLBA, iSectorCount );
-        // 데이터 버퍼의 내용을 출력
+        // �뜲�씠�꽣 踰꾪띁�쓽 �궡�슜�쓣 異쒕젰
         for( j = 0 ; j < iSectorCount ; j++ )
         {
             for( i = 0 ; i < 512 ; i++ )
@@ -945,7 +991,7 @@ static void ReadSector( const char* pcParameterBuffer )
                     Printf( "\n[LBA:%d, Offset:%d]\t| ", dwLBA + j, i ); 
                 }
 
-                // 모두 두 자리로 표시하려고 16보다 작은 경우 0을 추가해줌
+                // 紐⑤몢 �몢 �옄由щ줈 �몴�떆�븯�젮怨� 16蹂대떎 �옉�� 寃쎌슦 0�쓣 異붽��빐以�
                 bData = pcBuffer[ j * 512 + i ] & 0xFF;
                 if( bData < 16 )
                 {
@@ -970,7 +1016,7 @@ static void ReadSector( const char* pcParameterBuffer )
 }
 
 /**
- *  하드 디스크에 파라미터로 넘어온 LBA 어드레스에서 섹터 수 만큼 씀
+ *  �븯�뱶 �뵒�뒪�겕�뿉 �뙆�씪誘명꽣濡� �꽆�뼱�삩 LBA �뼱�뱶�젅�뒪�뿉�꽌 �꽮�꽣 �닔 留뚰겮 ��
  */
 static void WriteSector( const char* pcParameterBuffer )
 {
@@ -984,7 +1030,7 @@ static void WriteSector( const char* pcParameterBuffer )
     BYTE bData;
     static DWORD s_dwWriteCount = 0;
 
-    // 파라미터 리스트를 초기화하여 LBA 어드레스와 섹터 수 추출
+    // �뙆�씪誘명꽣 由ъ뒪�듃瑜� 珥덇린�솕�븯�뿬 LBA �뼱�뱶�젅�뒪�� �꽮�꽣 �닔 異붿텧
     InitializeParameter( &stList, pcParameterBuffer );
     if( ( GetNextParameter( &stList, vcLBA ) == 0 ) ||
         ( GetNextParameter( &stList, vcSectorCount ) == 0 ) )
@@ -997,8 +1043,8 @@ static void WriteSector( const char* pcParameterBuffer )
 
     s_dwWriteCount++;
     
-    // 버퍼를 할당 받아 데이터를 채움.
-    // 패턴은 4 바이트의 LBA 어드레스와 4 바이트의 쓰기가 수행된 횟수로 생성
+    // 踰꾪띁瑜� �븷�떦 諛쏆븘 �뜲�씠�꽣瑜� 梨꾩�.
+    // �뙣�꽩�� 4 諛붿씠�듃�쓽 LBA �뼱�뱶�젅�뒪�� 4 諛붿씠�듃�쓽 �벐湲곌� �닔�뻾�맂 �슏�닔濡� �깮�꽦
     pcBuffer = AllocateMemory( iSectorCount * 512 );
     for( j = 0 ; j < iSectorCount ; j++ )
     {
@@ -1009,7 +1055,7 @@ static void WriteSector( const char* pcParameterBuffer )
         }
     }
     
-    // 쓰기 수행
+    // �벐湲� �닔�뻾
     if( WriteHDDSector( TRUE, TRUE, dwLBA, iSectorCount, pcBuffer ) != iSectorCount )
     {
         Printf( "Write Fail\n" );
@@ -1017,7 +1063,7 @@ static void WriteSector( const char* pcParameterBuffer )
     }
     Printf( "LBA [%d], [%d] Sector Write Success~!!", dwLBA, iSectorCount );
 
-    // 데이터 버퍼의 내용을 출력
+    // �뜲�씠�꽣 踰꾪띁�쓽 �궡�슜�쓣 異쒕젰
     for( j = 0 ; j < iSectorCount ; j++ )
     {
         for( i = 0 ; i < 512 ; i++ )
@@ -1037,7 +1083,7 @@ static void WriteSector( const char* pcParameterBuffer )
                 Printf( "\n[LBA:%d, Offset:%d]\t| ", dwLBA + j, i ); 
             }
 
-            // 모두 두 자리로 표시하려고 16보다 작은 경우 0을 추가해줌
+            // 紐⑤몢 �몢 �옄由щ줈 �몴�떆�븯�젮怨� 16蹂대떎 �옉�� 寃쎌슦 0�쓣 異붽��빐以�
             bData = pcBuffer[ j * 512 + i ] & 0xFF;
             if( bData < 16 )
             {
@@ -1056,7 +1102,7 @@ static void WriteSector( const char* pcParameterBuffer )
 }
 
 /**
- *  하드 디스크를 연결
+ *  �븯�뱶 �뵒�뒪�겕瑜� �뿰寃�
  */
 static void MountHDD( const char* pcParameterBuffer )
 {
@@ -1069,7 +1115,7 @@ static void MountHDD( const char* pcParameterBuffer )
 }
 
 /**
- *  하드 디스크에 파일 시스템을 생성(포맷)
+ *  �븯�뱶 �뵒�뒪�겕�뿉 �뙆�씪 �떆�뒪�뀥�쓣 �깮�꽦(�룷留�)
  */
 static void FormatHDD( const char* pcParameterBuffer )
 {
@@ -1100,7 +1146,7 @@ static void FormatHDD( const char* pcParameterBuffer )
 }
 
 /**
- *  파일 시스템 정보를 표시
+ *  �뙆�씪 �떆�뒪�뀥 �젙蹂대�� �몴�떆
  */
 static void ShowFileSystemInformation( const char* pcParameterBuffer )
 {
@@ -1119,7 +1165,7 @@ static void ShowFileSystemInformation( const char* pcParameterBuffer )
 }
 
 /**
- *  루트 디렉터리에 빈 파일을 생성
+ *  猷⑦듃 �뵒�젆�꽣由ъ뿉 鍮� �뙆�씪�쓣 �깮�꽦
  */
 static void CreateFileInRootDirectory( const char* pcParameterBuffer )
 {
@@ -1131,7 +1177,7 @@ static void CreateDirectory( const char* pcParameterBuffer )
 	char name[256];
 	PARAMETERLIST stList;
 
-	// 파라미터를 추출
+	// �뙆�씪誘명꽣瑜� 異붿텧
 	InitializeParameter( &stList, pcParameterBuffer );
 	GetNextParameter( &stList, name );
 
@@ -1141,14 +1187,14 @@ static void CreateDirectory( const char* pcParameterBuffer )
 }
 
 /**
- *  루트 디렉터리에서 파일을 삭제
+ *  猷⑦듃 �뵒�젆�꽣由ъ뿉�꽌 �뙆�씪�쓣 �궘�젣
  */
 static void DeleteFileInRootDirectory( const char* pcParameterBuffer )
 {
 	fl_remove(pcParameterBuffer);
 }
 /**
- *  루트 디렉터리의 파일 목록을 표시
+ *  猷⑦듃 �뵒�젆�꽣由ъ쓽 �뙆�씪 紐⑸줉�쓣 �몴�떆
  */
 static void ShowRootDirectory( const char* pcParameterBuffer )
 {
@@ -1156,7 +1202,7 @@ static void ShowRootDirectory( const char* pcParameterBuffer )
 }
 
 /**
- *  파일을 생성하여 키보드로 입력된 데이터를 씀
+ *  �뙆�씪�쓣 �깮�꽦�븯�뿬 �궎蹂대뱶濡� �엯�젰�맂 �뜲�씠�꽣瑜� ��
  */
 static void WriteDataToFile( const char* pcParameterBuffer )
 {
@@ -1167,7 +1213,7 @@ static void WriteDataToFile( const char* pcParameterBuffer )
     int iEnterCount;
     BYTE bKey;
     
-    // 파라미터 리스트를 초기화하여 파일 이름을 추출
+    // �뙆�씪誘명꽣 由ъ뒪�듃瑜� 珥덇린�솕�븯�뿬 �뙆�씪 �씠由꾩쓣 異붿텧
     InitializeParameter( &stList, pcParameterBuffer );
     iLength = GetNextParameter( &stList, vcFileName );
     vcFileName[ iLength ] = '\0';
@@ -1177,7 +1223,7 @@ static void WriteDataToFile( const char* pcParameterBuffer )
         return ;
     }
     
-    // 파일 생성
+    // �뙆�씪 �깮�꽦
     fp = fl_fopen( vcFileName, "w" );
     if( fp == NULL )
     {
@@ -1185,12 +1231,12 @@ static void WriteDataToFile( const char* pcParameterBuffer )
         return ;
     }
     
-    // 엔터 키가 연속으로 3번 눌러질 때까지 내용을 파일에 씀
+    // �뿏�꽣 �궎媛� �뿰�냽�쑝濡� 3踰� �닃�윭吏� �븣源뚯� �궡�슜�쓣 �뙆�씪�뿉 ��
     iEnterCount = 0;
     while( 1 )
     {
         bKey = GetCh();
-        // 엔터 키이면 연속 3번 눌러졌는가 확인하여 루프를 빠져 나감
+        // �뿏�꽣 �궎�씠硫� �뿰�냽 3踰� �닃�윭議뚮뒗媛� �솗�씤�븯�뿬 猷⑦봽瑜� 鍮좎졇 �굹媛�
         if( bKey == KEY_ENTER )
         {
             iEnterCount++;
@@ -1199,7 +1245,7 @@ static void WriteDataToFile( const char* pcParameterBuffer )
                 break;
             }
         }
-        // 엔터 키가 아니라면 엔터 키 입력 횟수를 초기화
+        // �뿏�꽣 �궎媛� �븘�땲�씪硫� �뿏�꽣 �궎 �엯�젰 �슏�닔瑜� 珥덇린�솕
         else
         {
             iEnterCount = 0;
@@ -1218,7 +1264,7 @@ static void WriteDataToFile( const char* pcParameterBuffer )
 }
 
 /**
- *  파일을 열어서 데이터를 읽음
+ *  �뙆�씪�쓣 �뿴�뼱�꽌 �뜲�씠�꽣瑜� �씫�쓬
  */
 static void ReadDataFromFile( const char* pcParameterBuffer )
 {
@@ -1229,7 +1275,7 @@ static void ReadDataFromFile( const char* pcParameterBuffer )
     int iEnterCount;
     BYTE bKey;
     
-    // 파라미터 리스트를 초기화하여 파일 이름을 추출
+    // �뙆�씪誘명꽣 由ъ뒪�듃瑜� 珥덇린�솕�븯�뿬 �뙆�씪 �씠由꾩쓣 異붿텧
     InitializeParameter( &stList, pcParameterBuffer );
     iLength = GetNextParameter( &stList, vcFileName );
     vcFileName[ iLength ] = '\0';
@@ -1239,7 +1285,7 @@ static void ReadDataFromFile( const char* pcParameterBuffer )
         return ;
     }
     
-    // 파일 생성
+    // �뙆�씪 �깮�꽦
     fp = fl_fopen( vcFileName, "r" );
     if( fp == NULL )
     {
@@ -1247,7 +1293,7 @@ static void ReadDataFromFile( const char* pcParameterBuffer )
         return ;
     }
     
-    // 파일의 끝까지 출력하는 것을 반복
+    // �뙆�씪�쓽 �걹源뚯� 異쒕젰�븯�뒗 寃껋쓣 諛섎났
     iEnterCount = 0;
     while( 1 )
     {
@@ -1257,8 +1303,8 @@ static void ReadDataFromFile( const char* pcParameterBuffer )
         }
         Printf( "%c", bKey );
         
-        // 만약 엔터 키이면 엔터 키 횟수를 증가시키고 20라인까지 출력했다면
-        // 더 출력할지 여부를 물어봄
+        // 留뚯빟 �뿏�꽣 �궎�씠硫� �뿏�꽣 �궎 �슏�닔瑜� 利앷��떆�궎怨� 20�씪�씤源뚯� 異쒕젰�뻽�떎硫�
+        // �뜑 異쒕젰�븷吏� �뿬遺�瑜� 臾쇱뼱遊�
         if( bKey == KEY_ENTER )
         {
             iEnterCount++;
@@ -1280,7 +1326,7 @@ static void ReadDataFromFile( const char* pcParameterBuffer )
 }
 
 /**
- *  파일 시스템의 캐시 버퍼에 있는 데이터를 모두 하드 디스크에 씀
+ *  �뙆�씪 �떆�뒪�뀥�쓽 罹먯떆 踰꾪띁�뿉 �엳�뒗 �뜲�씠�꽣瑜� 紐⑤몢 �븯�뱶 �뵒�뒪�겕�뿉 ��
  */
 static void FlushCache( const char* pcParameterBuffer )
 {
@@ -1300,7 +1346,7 @@ static void FlushCache( const char* pcParameterBuffer )
 }
 
 /**
- *  시리얼 포트로부터 데이터를 수신하여 파일로 저장
+ *  �떆由ъ뼹 �룷�듃濡쒕��꽣 �뜲�씠�꽣瑜� �닔�떊�븯�뿬 �뙆�씪濡� ���옣
  */
 static void DownloadFile( const char* pcParameterBuffer )
 {
@@ -1314,7 +1360,7 @@ static void DownloadFile( const char* pcParameterBuffer )
     BYTE vbDataBuffer[ SERIAL_FIFOMAXSIZE ];
     QWORD qwLastReceivedTickCount;
     
-    // 파라미터 리스트를 초기화하여 파일 이름을 추출
+    // �뙆�씪誘명꽣 由ъ뒪�듃瑜� 珥덇린�솕�븯�뿬 �뙆�씪 �씠由꾩쓣 異붿텧
     InitializeParameter( &stList, pcParameterBuffer );
     iFileNameLength = GetNextParameter( &stList, vcFileName );
     vcFileName[ iFileNameLength ] = '\0';
@@ -1326,29 +1372,29 @@ static void DownloadFile( const char* pcParameterBuffer )
         return ;
     }
     
-    // 시리얼 포트의 FIFO를 모두 비움
+    // �떆由ъ뼹 �룷�듃�쓽 FIFO瑜� 紐⑤몢 鍮꾩�
     ClearSerialFIFO();
     
     //==========================================================================
-    // 데이터 길이가 수신될 때까지 기다린다는 메시지를 출력하고, 4 바이트를 수신한 뒤
-    // Ack를 전송
+    // �뜲�씠�꽣 湲몄씠媛� �닔�떊�맆 �븣源뚯� 湲곕떎由곕떎�뒗 硫붿떆吏�瑜� 異쒕젰�븯怨�, 4 諛붿씠�듃瑜� �닔�떊�븳 �뮘
+    // Ack瑜� �쟾�넚
     //==========================================================================
     Printf( "Waiting For Data Length....." );
     dwReceivedSize = 0;
     qwLastReceivedTickCount = GetTickCount();
     while( dwReceivedSize < 4 )
     {
-        // 남은 수만큼 데이터 수신
+        // �궓�� �닔留뚰겮 �뜲�씠�꽣 �닔�떊
         dwTempSize = ReceiveSerialData( ( ( BYTE* ) &dwDataLength ) +
             dwReceivedSize, 4 - dwReceivedSize );
         dwReceivedSize += dwTempSize;
         
-        // 수신된 데이터가 없다면 잠시 대기
+        // �닔�떊�맂 �뜲�씠�꽣媛� �뾾�떎硫� �옞�떆 ��湲�
         if( dwTempSize == 0 )
         {
             Sleep( 0 );
             
-            // 대기한 시간이 30초 이상이라면 Time Out으로 중지
+            // ��湲고븳 �떆媛꾩씠 30珥� �씠�긽�씠�씪硫� Time Out�쑝濡� 以묒�
             if( ( GetTickCount() - qwLastReceivedTickCount ) > 30000 )
             {
                 Printf( "Time Out Occur~!!\n" );
@@ -1357,19 +1403,19 @@ static void DownloadFile( const char* pcParameterBuffer )
         }
         else
         {
-            // 마지막으로 데이터를 수신한 시간을 갱신
+            // 留덉�留됱쑝濡� �뜲�씠�꽣瑜� �닔�떊�븳 �떆媛꾩쓣 媛깆떊
             qwLastReceivedTickCount = GetTickCount();
         }
     }
     Printf( "[%d] Byte\n", dwDataLength );
 
-    // 정상적으로 데이터 길이를 수신했으므로, Ack를 송신
+    // �젙�긽�쟻�쑝濡� �뜲�씠�꽣 湲몄씠瑜� �닔�떊�뻽�쑝誘�濡�, Ack瑜� �넚�떊
     SendSerialData( "A", 1 );
 
     //==========================================================================
-    // 파일을 생성하고 시리얼로부터 데이터를 수신하여 파일에 저장
+    // �뙆�씪�쓣 �깮�꽦�븯怨� �떆由ъ뼹濡쒕��꽣 �뜲�씠�꽣瑜� �닔�떊�븯�뿬 �뙆�씪�뿉 ���옣
     //==========================================================================
-    // 파일 생성
+    // �뙆�씪 �깮�꽦
     fp = fopen( vcFileName, "w" );
     if( fp == NULL )
     {
@@ -1377,21 +1423,21 @@ static void DownloadFile( const char* pcParameterBuffer )
         return ;
     }
     
-    // 데이터 수신
+    // �뜲�씠�꽣 �닔�떊
     Printf( "Data Receive Start: " );
     dwReceivedSize = 0;
     qwLastReceivedTickCount = GetTickCount();
     while( dwReceivedSize < dwDataLength )
     {
-        // 버퍼에 담아서 데이터를 씀
+        // 踰꾪띁�뿉 �떞�븘�꽌 �뜲�씠�꽣瑜� ��
         dwTempSize = ReceiveSerialData( vbDataBuffer, SERIAL_FIFOMAXSIZE );
         dwReceivedSize += dwTempSize;
 
-        // 이번에 데이터가 수신된 것이 있다면 ACK 또는 파일 쓰기 수행
+        // �씠踰덉뿉 �뜲�씠�꽣媛� �닔�떊�맂 寃껋씠 �엳�떎硫� ACK �삉�뒗 �뙆�씪 �벐湲� �닔�뻾
         if( dwTempSize != 0 ) 
         {
-            // 수신하는 쪽은 데이터의 마지막까지 수신했거나 FIFO의 크기인
-            // 16 바이트마다 한번씩 Ack를 전송
+            // �닔�떊�븯�뒗 履쎌� �뜲�씠�꽣�쓽 留덉�留됯퉴吏� �닔�떊�뻽嫄곕굹 FIFO�쓽 �겕湲곗씤
+            // 16 諛붿씠�듃留덈떎 �븳踰덉뵫 Ack瑜� �쟾�넚
             if( ( ( dwReceivedSize % SERIAL_FIFOMAXSIZE ) == 0 ) ||
                 ( ( dwReceivedSize == dwDataLength ) ) )
             {
@@ -1400,22 +1446,22 @@ static void DownloadFile( const char* pcParameterBuffer )
 
             }
             
-            // 쓰기 중에 문제가 생기면 바로 종료
+            // �벐湲� 以묒뿉 臾몄젣媛� �깮湲곕㈃ 諛붾줈 醫낅즺
             if( fwrite( vbDataBuffer, 1, dwTempSize, fp ) != dwTempSize )
             {
                 Printf( "File Write Error Occur\n" );
                 break;
             }
             
-            // 마지막으로 데이터를 수신한 시간을 갱신
+            // 留덉�留됱쑝濡� �뜲�씠�꽣瑜� �닔�떊�븳 �떆媛꾩쓣 媛깆떊
             qwLastReceivedTickCount = GetTickCount();
         }
-        // 이번에 수신된 데이터가 없다면 잠시 대기
+        // �씠踰덉뿉 �닔�떊�맂 �뜲�씠�꽣媛� �뾾�떎硫� �옞�떆 ��湲�
         else
         {
             Sleep( 0 );
             
-            // 대기한 시간이 10초 이상이라면 Time Out으로 중지
+            // ��湲고븳 �떆媛꾩씠 10珥� �씠�긽�씠�씪硫� Time Out�쑝濡� 以묒�
             if( ( GetTickCount() - qwLastReceivedTickCount ) > 10000 )
             {
                 Printf( "Time Out Occur~!!\n" );
@@ -1425,10 +1471,10 @@ static void DownloadFile( const char* pcParameterBuffer )
     }   
 
     //==========================================================================
-    // 전체 데이터의 크기와 실제로 수신 받은 데이터의 크기를 비교하여 성공 여부를
-    // 출력한 뒤, 파일을 닫고 파일 시스템 캐시를 모두 비움
+    // �쟾泥� �뜲�씠�꽣�쓽 �겕湲곗� �떎�젣濡� �닔�떊 諛쏆� �뜲�씠�꽣�쓽 �겕湲곕�� 鍮꾧탳�븯�뿬 �꽦怨� �뿬遺�瑜�
+    // 異쒕젰�븳 �뮘, �뙆�씪�쓣 �떕怨� �뙆�씪 �떆�뒪�뀥 罹먯떆瑜� 紐⑤몢 鍮꾩�
     //==========================================================================
-    // 수신된 길이를 비교해서 문제가 발생했는지를 표시
+    // �닔�떊�맂 湲몄씠瑜� 鍮꾧탳�빐�꽌 臾몄젣媛� 諛쒖깮�뻽�뒗吏�瑜� �몴�떆
     if( dwReceivedSize != dwDataLength )
     {
         Printf( "\nError Occur. Total Size [%d] Received Size [%d]\n", 
@@ -1439,13 +1485,13 @@ static void DownloadFile( const char* pcParameterBuffer )
         Printf( "\nReceive Complete. Total Size [%d] Byte\n", dwReceivedSize );
     }
     
-    // 파일을 닫고 파일 시스템 캐시를 내보냄
+    // �뙆�씪�쓣 �떕怨� �뙆�씪 �떆�뒪�뀥 罹먯떆瑜� �궡蹂대깂
     fclose( fp );
     FlushFileSystemCache();*/
 }
 
 /**
- *  MP 설정 테이블 정보를 출력
+ *  MP �꽕�젙 �뀒�씠釉� �젙蹂대�� 異쒕젰
  */
 static void ShowMPConfigurationTable( const char* pcParameterBuffer )
 {
@@ -1453,16 +1499,16 @@ static void ShowMPConfigurationTable( const char* pcParameterBuffer )
 }
 
 /**
- *  IRQ와 I/O APIC의 인터럽트 입력 핀(INTIN)의 관계를 저장한 테이블을 표시
+ *  IRQ�� I/O APIC�쓽 �씤�꽣�읇�듃 �엯�젰 ��(INTIN)�쓽 愿�怨꾨�� ���옣�븳 �뀒�씠釉붿쓣 �몴�떆
  */
 static void ShowIRQINTINMappingTable( const char* pcParameterBuffer )
 {
-    // I/O APIC를 관리하는 자료구조에 있는 출력 함수를 호출
+    // I/O APIC瑜� 愿�由ы븯�뒗 �옄猷뚭뎄議곗뿉 �엳�뒗 異쒕젰 �븿�닔瑜� �샇異�
     PrintIRQToINTINMap();
 }
 
 /**
- *  코어 별로 인터럽트를 처리한 횟수를 출력
+ *  肄붿뼱 蹂꾨줈 �씤�꽣�읇�듃瑜� 泥섎━�븳 �슏�닔瑜� 異쒕젰
  */
 static void ShowInterruptProcessingCount( const char* pcParameterBuffer )
 {
@@ -1476,14 +1522,14 @@ static void ShowInterruptProcessingCount( const char* pcParameterBuffer )
     
     Printf( "========================== Interrupt Count ==========================\n" );
     
-    // MP 설정 테이블에 저장된 코어의 개수를 읽음
+    // MP �꽕�젙 �뀒�씠釉붿뿉 ���옣�맂 肄붿뼱�쓽 媛쒖닔瑜� �씫�쓬
     iProcessCount = GetProcessorCount();
     
     //==========================================================================
-    //  Column 출력
+    //  Column 異쒕젰
     //==========================================================================
-    // 프로세서의 수만큼 Column을 출력
-    // 한 줄에 코어 4개씩 출력하고 한 Column당 15칸을 할당함
+    // �봽濡쒖꽭�꽌�쓽 �닔留뚰겮 Column�쓣 異쒕젰
+    // �븳 以꾩뿉 肄붿뼱 4媛쒖뵫 異쒕젰�븯怨� �븳 Column�떦 15移몄쓣 �븷�떦�븿
     for( i = 0 ; i < iProcessCount ; i++ )
     {
         if( i == 0 )
@@ -1497,7 +1543,7 @@ static void ShowInterruptProcessingCount( const char* pcParameterBuffer )
         SPrintf( vcBuffer, "Core %d", i );
         Printf( vcBuffer );
         
-        // 출력하고 남은 공간을 모두 스페이스로 채움
+        // 異쒕젰�븯怨� �궓�� 怨듦컙�쓣 紐⑤몢 �뒪�럹�씠�뒪濡� 梨꾩�
         iRemainLength = 15 - kStrLen( vcBuffer );
         MemSet( vcBuffer, ' ', iRemainLength );
         vcBuffer[ iRemainLength ] = '\0';
@@ -1506,19 +1552,19 @@ static void ShowInterruptProcessingCount( const char* pcParameterBuffer )
     Printf( "\n" );
 
     //==========================================================================
-    //  Row와 인터럽트 처리 횟수 출력
+    //  Row�� �씤�꽣�읇�듃 泥섎━ �슏�닔 異쒕젰
     //==========================================================================
-    // 총 인터럽트 횟수와 코어 별 인터럽트 처리 횟수를 출력
+    // 珥� �씤�꽣�읇�듃 �슏�닔�� 肄붿뼱 蹂� �씤�꽣�읇�듃 泥섎━ �슏�닔瑜� 異쒕젰
     iLineCount = 0;
     pstInterruptManager = kGetInterruptManager();
     for( i = 0 ; i < INTERRUPT_MAXVECTORCOUNT ; i++ )
     {
         for( j = 0 ; j < iProcessCount ; j++ )
         {
-            // Row를 출력, 한 줄에 코어 4개씩 출력하고 한 Column당 15칸을 할당
+            // Row瑜� 異쒕젰, �븳 以꾩뿉 肄붿뼱 4媛쒖뵫 異쒕젰�븯怨� �븳 Column�떦 15移몄쓣 �븷�떦
             if( j == 0 )
             {
-                // 20 라인마다 화면 정지
+                // 20 �씪�씤留덈떎 �솕硫� �젙吏�
                 if( ( iLineCount != 0 ) && ( iLineCount > 10 ) )
                 {
                     Printf( "\nPress any key to continue... ('q' is exit) : " );
@@ -1541,7 +1587,7 @@ static void ShowInterruptProcessingCount( const char* pcParameterBuffer )
             }
             
             SPrintf( vcBuffer, "0x%Q", pstInterruptManager->vvqwCoreInterruptCount[ j ][ i ] );
-            // 출력하고 남은 영역을 모두 스페이스로 채움
+            // 異쒕젰�븯怨� �궓�� �쁺�뿭�쓣 紐⑤몢 �뒪�럹�씠�뒪濡� 梨꾩�
             Printf( vcBuffer );
             iRemainLength = 15 - kStrLen( vcBuffer );
             MemSet( vcBuffer, ' ', iRemainLength );
@@ -1553,7 +1599,7 @@ static void ShowInterruptProcessingCount( const char* pcParameterBuffer )
 }
 
 /**
- *  태스크의 프로세서 친화도를 변경
+ *  �깭�뒪�겕�쓽 �봽濡쒖꽭�꽌 移쒗솕�룄瑜� 蹂�寃�
  */
 static void ChangeTaskAffinity( const char* pcParameterBuffer )
 {
@@ -1563,12 +1609,12 @@ static void ChangeTaskAffinity( const char* pcParameterBuffer )
     QWORD qwID;
     BYTE bAffinity;
     
-    // 파라미터를 추출
+    // �뙆�씪誘명꽣瑜� 異붿텧
     InitializeParameter( &stList, pcParameterBuffer );
     GetNextParameter( &stList, vcID );
     GetNextParameter( &stList, vcAffinity );
     
-    // 태스크 ID 필드 추출
+    // �깭�뒪�겕 ID �븘�뱶 異붿텧
     if( MemCmp( vcID, "0x", 2 ) == 0 )
     {
         qwID = AToI( vcID + 2, 16 );
@@ -1578,7 +1624,7 @@ static void ChangeTaskAffinity( const char* pcParameterBuffer )
         qwID = AToI( vcID, 10 );
     }
     
-    // 프로세서 친화도(Affinity) 추출
+    // �봽濡쒖꽭�꽌 移쒗솕�룄(Affinity) 異붿텧
     if( MemCmp( vcID, "0x", 2 ) == 0 )
     {
         bAffinity = AToI( vcAffinity + 2, 16 );
@@ -1600,16 +1646,16 @@ static void ChangeTaskAffinity( const char* pcParameterBuffer )
 }
 
 /**
- *  VBE 모드 정보 블록을 출력
+ *  VBE 紐⑤뱶 �젙蹂� 釉붾줉�쓣 異쒕젰
  */
 static void ShowVBEModeInfo( const char* pcParameterBuffer )
 {
     VBEMODEINFOBLOCK* pstModeInfo;
     
-    // VBE 모드 정보 블록을 반환
+    // VBE 紐⑤뱶 �젙蹂� 釉붾줉�쓣 諛섑솚
     pstModeInfo = GetVBEModeInfoBlock();
     
-    // 해상도와 색 정보를 위주로 출력
+    // �빐�긽�룄�� �깋 �젙蹂대�� �쐞二쇰줈 異쒕젰
     Printf( "VESA %x\n", pstModeInfo->wWinGranulity );
     Printf( "X Resolution: %d\n", pstModeInfo->wXResolution );
     Printf( "Y Resolution: %d\n", pstModeInfo->wYResolution );
@@ -1632,23 +1678,23 @@ static void ShowVBEModeInfo( const char* pcParameterBuffer )
 }
 
 /**
- *  시스템 콜을 테스트하는 유저 레벨 태스크를 생성
+ *  �떆�뒪�뀥 肄쒖쓣 �뀒�뒪�듃�븯�뒗 �쑀�� �젅踰� �깭�뒪�겕瑜� �깮�꽦
  */
 static void TestSystemCall( const char* pcParameterBuffer )
 {
     BYTE* pbUserMemory;
     
-    // 동적 할당 영역에 4Kbyte 메모리를 할당 받아 유저 레벨 태스크를 생성할 준비를 함
+    // �룞�쟻 �븷�떦 �쁺�뿭�뿉 4Kbyte 硫붾え由щ�� �븷�떦 諛쏆븘 �쑀�� �젅踰� �깭�뒪�겕瑜� �깮�꽦�븷 以�鍮꾨�� �븿
     pbUserMemory = AllocateMemory( 0x1000 );
     if( pbUserMemory == NULL )
     {
         return ;
     }
     
-    // 유저 레벨 태스크로 사용할 SystemCallTestTask() 함수의 코드를 할당 받은 메모리에 복사
+    // �쑀�� �젅踰� �깭�뒪�겕濡� �궗�슜�븷 SystemCallTestTask() �븿�닔�쓽 肄붾뱶瑜� �븷�떦 諛쏆� 硫붾え由ъ뿉 蹂듭궗
     MemCpy( pbUserMemory, SystemCallTestTask, 0x1000 );
     
-    // 유저 레벨 태스크로 생성
+    // �쑀�� �젅踰� �깭�뒪�겕濡� �깮�꽦
     CreateTask( TASK_FLAGS_USERLEVEL | TASK_FLAGS_PROCESS,
             pbUserMemory, 0x1000, ( QWORD ) pbUserMemory, TASK_LOADBALANCINGID );
 }
@@ -1659,7 +1705,7 @@ static void Ping(const char* pcParameterBuffer )
 
 	PARAMETERLIST stList;
 	char ip[30];
- // 파라미터를 추출
+ // �뙆�씪誘명꽣瑜� 異붿텧
     InitializeParameter( &stList, pcParameterBuffer );
     GetNextParameter( &stList, ip );
 
@@ -1736,7 +1782,7 @@ static void Ping(const char* pcParameterBuffer )
 }
 
 /**
- *  응용프로그램을 실행
+ *  �쓳�슜�봽濡쒓렇�옩�쓣 �떎�뻾
  */
 static void ExecuteApplicationProgram( const char* pcParameterBuffer )
 {
@@ -1745,16 +1791,16 @@ static void ExecuteApplicationProgram( const char* pcParameterBuffer )
     char vcArgumentString[ 1024 ];
     QWORD qwID;
     
-    // 파라미터를 추출
+    // �뙆�씪誘명꽣瑜� 異붿텧
     InitializeParameter( &stList, pcParameterBuffer );
-    // 형식에 맞지 않으면 도움말을 출력하고 종료
+    // �삎�떇�뿉 留욎� �븡�쑝硫� �룄��留먯쓣 異쒕젰�븯怨� 醫낅즺
     if( GetNextParameter( &stList, vcFileName ) == 0 )
     {
         Printf( "ex)exec a.elf argument\n" );
         return ;
     }  
 
-    // 두 번째 인자 문자열은 옵션으로 처리
+    // �몢 踰덉㎏ �씤�옄 臾몄옄�뿴�� �샃�뀡�쑝濡� 泥섎━
     if( GetNextParameter( &stList, vcArgumentString ) == 0 )
     {
         vcArgumentString[ 0 ] = '\0';
@@ -1763,13 +1809,13 @@ static void ExecuteApplicationProgram( const char* pcParameterBuffer )
     Printf( "Execute Program... File [%s], Argument [%s]\n", vcFileName, 
             vcArgumentString );
     
-    // 태스크 생성
+    // �깭�뒪�겕 �깮�꽦
     qwID = ExecuteProgram( vcFileName, vcArgumentString, TASK_LOADBALANCINGID );
     Printf( "Task ID = 0x%Q\n", qwID );
 }
 
 /**
- *  패키지에 들어있는 데이터를 하드 디스크에 복사
+ *  �뙣�궎吏��뿉 �뱾�뼱�엳�뒗 �뜲�씠�꽣瑜� �븯�뱶 �뵒�뒪�겕�뿉 蹂듭궗
  */
 static void InstallPackage( const char* pcParameterBuffer )
 {
@@ -1782,15 +1828,15 @@ static void InstallPackage( const char* pcParameterBuffer )
 
     Printf( "Package Install Start...\n" );
 
-    // 부트 로더가 로딩된 0x7C05 어드레스에서 보호 모드 커널과 IA-32e 모드 커널을
-    // 합한 섹터 수를 읽음
+    // 遺��듃 濡쒕뜑媛� 濡쒕뵫�맂 0x7C05 �뼱�뱶�젅�뒪�뿉�꽌 蹂댄샇 紐⑤뱶 而ㅻ꼸怨� IA-32e 紐⑤뱶 而ㅻ꼸�쓣
+    // �빀�븳 �꽮�꽣 �닔瑜� �씫�쓬
     wKernelTotalSectorCount = *( ( WORD* ) 0x7C05 );
 
-    // 디스크 이미지는 0x10000 어드레스에 로딩되므로 이를 기준으로
-    // 커널 섹터 수만큼 떨어진 곳에 패키지 헤더가 있음
+    // �뵒�뒪�겕 �씠誘몄��뒗 0x10000 �뼱�뱶�젅�뒪�뿉 濡쒕뵫�릺誘�濡� �씠瑜� 湲곗��쑝濡�
+    // 而ㅻ꼸 �꽮�꽣 �닔留뚰겮 �뼥�뼱吏� 怨녹뿉 �뙣�궎吏� �뿤�뜑媛� �엳�쓬
     pstHeader = ( PACKAGEHEADER* ) ( ( QWORD ) 0x10000 + wKernelTotalSectorCount * 512 );
 
-    // 시그너처를 확인
+    // �떆洹몃꼫泥섎�� �솗�씤
     if( MemCmp( pstHeader->vcSignature, PACKAGESIGNATURE,
                  sizeof( pstHeader->vcSignature ) ) != 0 )
     {
@@ -1799,20 +1845,20 @@ static void InstallPackage( const char* pcParameterBuffer )
     }
 
     //--------------------------------------------------------------------------
-    // 패키지 내의 모든 파일을 찾아서 하드 디스크에 복사
+    // �뙣�궎吏� �궡�쓽 紐⑤뱺 �뙆�씪�쓣 李얠븘�꽌 �븯�뱶 �뵒�뒪�겕�뿉 蹂듭궗
     //--------------------------------------------------------------------------
-    // 패키지 데이터가 시작하는 어드레스
+    // �뙣�궎吏� �뜲�씠�꽣媛� �떆�옉�븯�뒗 �뼱�뱶�젅�뒪
     qwDataAddress = ( QWORD ) pstHeader + pstHeader->dwHeaderSize;
-    // 패키지 헤더의 첫 번째 파일 데이터
+    // �뙣�궎吏� �뿤�뜑�쓽 泥� 踰덉㎏ �뙆�씪 �뜲�씠�꽣
     pstItem = pstHeader->vstItem;
 
-    // 패키지에 포함된 모든 파일을 찾아서 복사
+    // �뙣�궎吏��뿉 �룷�븿�맂 紐⑤뱺 �뙆�씪�쓣 李얠븘�꽌 蹂듭궗
     for( i = 0 ; i < pstHeader->dwHeaderSize / sizeof( PACKAGEITEM ) ; i++ )
     {
         Printf( "[%d] file: %s, size: %d Byte\n", i + 1, pstItem[ i ].vcFileName,
                  pstItem[ i ].dwFileLength );
 
-        // 패키지에 포함된 파일 이름으로 파일을 생성
+        // �뙣�궎吏��뿉 �룷�븿�맂 �뙆�씪 �씠由꾩쑝濡� �뙆�씪�쓣 �깮�꽦
         fp = fl_fopen( pstItem[ i ].vcFileName, "w" );
         if( fp == NULL )
         {
@@ -1820,29 +1866,29 @@ static void InstallPackage( const char* pcParameterBuffer )
             return ;
         }
 
-        // 패키지 데이터 부분에 포함된 파일 내용을 하드 디스크로 복사
+        // �뙣�궎吏� �뜲�씠�꽣 遺�遺꾩뿉 �룷�븿�맂 �뙆�씪 �궡�슜�쓣 �븯�뱶 �뵒�뒪�겕濡� 蹂듭궗
         if( fl_fwrite( ( BYTE* ) qwDataAddress, 1, pstItem[ i ].dwFileLength, fp ) !=
                 pstItem[ i ].dwFileLength )
         {
             Printf( "Write Fail\n" );
 
-            // 파일을 닫고 파일 시스템 캐시를 내보냄
+            // �뙆�씪�쓣 �떕怨� �뙆�씪 �떆�뒪�뀥 罹먯떆瑜� �궡蹂대깂
             fl_fclose( fp );
            // FlushFileSystemCache();
 
             return ;
         }
 
-        // 파일을 닫음
+        // �뙆�씪�쓣 �떕�쓬
         fl_fclose( fp );
 
-        // 다음 파일이 저장된 위치로 이동
+        // �떎�쓬 �뙆�씪�씠 ���옣�맂 �쐞移섎줈 �씠�룞
         qwDataAddress += pstItem[ i ].dwFileLength;
     }
 
     Printf( "Package Install Complete\n" );
 
-    // 파일 시스템 캐시를 내보냄
+    // �뙆�씪 �떆�뒪�뀥 罹먯떆瑜� �궡蹂대깂
    // FlushFileSystemCache();
 }
 

@@ -31,7 +31,7 @@ arp_cache_t arp_cache_list;
 
 unsigned net_proto_arp_handler (packet_t *packet, char *buf, unsigned len)
 {
-	Printf("net_proto_arp_handler receive \n");
+//	Printf("net_proto_arp_handler receive \n");
 
 	proto_arp_t *arp = (proto_arp_t *) buf;
 

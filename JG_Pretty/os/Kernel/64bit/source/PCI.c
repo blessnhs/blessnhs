@@ -408,7 +408,7 @@ void pci_installDevices(void)
         Printf("   => PCI devices:\n");
         if (PCIdev->classID == 0x0C && PCIdev->subclassID == 0x03)      // USB Host Controller
         {
-        	//usb_hc_install(PCIdev);
+        	usb_hc_install(PCIdev);
         }
         else if (PCIdev->classID == 0x02 && PCIdev->subclassID == 0x00) // Network Adapters
         {
@@ -416,7 +416,7 @@ void pci_installDevices(void)
         }
         else if (PCIdev->classID == 0x01 && PCIdev->subclassID == 0x06) // SATA
         {
-        //	ahca_installDevice(PCIdev);
+        	ahca_installDevice(PCIdev);
         }
  /*       else if (PCIdev->classID == 0x03)  // Graphics Adapter
             vga_installPCIDevice(PCIdev);

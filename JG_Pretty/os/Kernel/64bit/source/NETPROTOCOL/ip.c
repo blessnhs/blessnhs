@@ -152,8 +152,6 @@ unsigned net_proto_ip_handler (packet_t *packet, char *buf, unsigned len)
 	/* calculate real length of header */
 	unsigned head_len = ip->head_len * 4;
 
-	Printf("net_proto_ip_handler proto %d\n",ip->proto);
-
 	switch (ip->proto) {
 		case NET_PROTO_IP_TYPE_TCP:
 			return net_proto_tcp_handler (packet, ip, buf+head_len, len-head_len);

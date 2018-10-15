@@ -250,7 +250,7 @@ int send (int fd, char *msg, size_t size, int flags)
 	if (!sock)
 		return -1;
 
-	Printf("send (%d) -> %s", fd, msg);
+//	Printf("send (%d) -> %s", fd, msg);
 
 	switch (sock->family) {
 		case AF_UNSPEC:
@@ -287,7 +287,7 @@ int sendto (int fd, const void *msg, size_t len, int flags, sockaddr *to, sockle
 	if (!sock)
 		return -1;
 
-	Printf("sendto (%d) -> %s", fd, msg);
+//	Printf("sendto (%d) -> %s", fd, msg);
 
 	switch (sock->protocol) {
 		case IPPROTO_TCP:
@@ -330,7 +330,7 @@ int recv (int fd, char *msg, size_t size, int flags)
 	if (!sock)
 		return -1;
 
-	Printf("recv (%d)", fd);
+//	Printf("recv (%d)", fd);
 
 	switch (sock->family) {
 		case AF_UNSPEC:

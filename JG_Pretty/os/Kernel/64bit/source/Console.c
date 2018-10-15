@@ -271,13 +271,13 @@ char* gets_s(char* str, size_t length)
     do
     {
         c = GetCh();
+
         if (c=='\b')  // Backspace
         {
             if (i>0)
             {
                 //putchar(c);
-            	 Printf("%c",c);
-                if (i < length-2)
+                 if (i < length-2)
                     str[i-1]='\0';
                 --i;
             }
