@@ -90,6 +90,21 @@ uint32_t htonl(uint32_t v);
 // ntoh = Network To Host
 #define ntohs(v) htons(v)
 #define ntohl(v) htonl(v)
+
+#define swap16(x) ({unsigned _x = (x); (((_x)>>8)&0xff) | (((_x)<<8)&0xff00); })
+
+#define swap32(x) ({\
+	unsigned _x = (x); \
+	(((_x)>>24)&0xff)\
+	|\
+	(((_x)>>8)&0xff00)\
+	|\
+	(((_x)<<8)&0xff0000)\
+	|\
+	(((_x)<<24)&0xff000000);\
+})
+
+#define swap64(_v) (((unsigned long)swap32((unsigned)(_v))<<32)|(unsigned long)swap32((unsigned)((_v)>>32)))
 ////////////////////////////////////////////////////////////////////////////////
 //
 //  ±‚≈∏

@@ -1,6 +1,6 @@
 /*
  *  ZeX/OS
- *  Copyright (C) 2008  Tomas 'ZeXx86' Jedrzejek (zexx86@zexos.org)
+ *  Copyright (C) 2009  Tomas 'ZeXx86' Jedrzejek (zexx86@zexos.org)
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -16,26 +16,43 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef _ICMP_H
-#define _ICMP_H
+#ifndef _UNIX_H
+#define _UNIX_H
 
 #include "ip.h"
 
-#define NET_ICMP_TYPE_PING_REQUEST	0x8
-#define NET_ICMP_TYPE_PING_REPLY	0x0
-#define NET_ICMP6_TYPE_PING_REQUEST	0x80
-#define NET_ICMP6_TYPE_PING_REPLY	0x81
+#define PROTO_UNIX_CONN_STATE_ESTABILISHED	0x1
 
-/* ICMP layer structure */
-typedef struct proto_icmp_t {
-	unsigned char type;
-	unsigned char code;
-	unsigned short checksum;
-	unsigned short ident;
-	unsigned short seq;
-} proto_icmp_t;
+/* Unix Domain connection structure */
+typedef struct proto_unix_conn_context {
+	struct proto_unix_conn_context *next, *prev;
 
-extern unsigned net_proto_icmp_ping (netif_t *netif, net_ipv4 ip);
-extern unsigned net_proto_icmp6_ping (netif_t *netif, net_ipv6 ip);
+	char *path;
+
+	unsigned short flags;
+
+	unsigned short state;
+
+	unsigned char bind;
+
+	unsigned short fd;
+
+	unsigned len;
+	char *data;
+
+	void *session;
+} proto_unix_conn_t;
+
+/* backlog for accept */
+typedef struct proto_unix_backlog_context {
+	struct proto_unix_backlog_context *next, *prev;
+
+	proto_unix_conn_t *conn;
+	proto_unix_conn_t *session;
+} proto_unix_backlog_t;
+
+
+/* externs */
+extern unsigned init_net_proto_unix ();
 
 #endif

@@ -1,229 +1,290 @@
 /*
- * License and disclaimer for the use of this source code as per statement below.
- * Lizenz und Haftungsausschluss f? die Verwendung dieses Sourcecodes siehe unten.
+ *  ZeX/OS
+ *  Copyright (C) 2008  Tomas 'ZeXx86' Jedrzejek (zexx86@zexos.org)
+ *  Copyright (C) 2009  Tomas 'ZeXx86' Jedrzejek (zexx86@zexos.org)
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+
+#include "eth.h"
+#include "net.h"
+#include "if.h"
+#include "ip.h"
+#include "packet.h"
 #include "dns.h"
-#include "../utility.h"
+#include "socket.h"
+#include "../DynamicMemory.h"
+#include "../Utility.h"
 
-const uint16_t dns_port = 53;
+dns_cache_t dns_cache_list;
 
-void dns_fillHeaderWithFlags(dns_header* header, const dns_flags* flags)
+net_ipv4 dns_ip;
+
+unsigned short dns_trans = NULL;
+
+#define DEFAULT_DNS_ADDRESS	NET_IPV4_TO_ADDR (208,67,222,222)
+
+/* prototype */
+int dns_cache_add (char *hostname, unsigned char len, void *ip, unsigned char type);
+
+
+unsigned dns_addr (net_ipv4 dns)
 {
-    header->flags = (flags->QR << 15) | (flags->OPCODE << 11) |
-                    (flags->AA << 10) | (flags->TC << 9) |
-                    (flags->RD << 8)  | (flags->RA << 7) |
-                    (flags->Z << 4)   | (flags->RCODE << 0);
+	dns_ip = dns;
+
+	return 1;
 }
 
-size_t dns_writeHeaderToBuffer(char* buf, size_t buf_size, const dns_header* header)
+net_ipv4 dns_addr_get ()
 {
-    if (buf_size >= 12)
-    {
-        *(uint16_t*)(buf + 0)  = htons(header->id);
-        *(uint16_t*)(buf + 2)  = htons(header->flags);
-        *(uint16_t*)(buf + 4)  = htons(header->qdcount);
-        *(uint16_t*)(buf + 6)  = htons(header->ancount);
-        *(uint16_t*)(buf + 8)  = htons(header->nscount);
-        *(uint16_t*)(buf + 10) = htons(header->arcount);
-        return (12);
-    }
-    return (0);
+	return dns_ip;
 }
 
-size_t dns_writeQuestionToBuffer(char* buf, size_t buf_size, const dns_question* question)
+int dns_send_request (char *hostname, void *ip, unsigned char type)
 {
-    size_t need_space = strlen(question->qname) + 6;
+	if (!ip || !hostname)
+			return -1;
 
-    if (buf_size >= need_space && need_space < 256 + 4)
-    {
-        // "www.henkessoft.de" -> "\x03www\x0Ahenkessoft\0x02de"
-        // Ref: 4.1.2. Question section format, -> QNAME
-        //
-        char* p;
-        strcpy(buf + 1, question->qname);
-        while ((p = strchr(buf + 1, '.')))
-        {
-            if (p - buf - 1 < 0x100)
-            {
-                *buf = p - buf - 1;
-                buf = p;
-            }
-            else
-            {
-                return (0);
-            }
-        }
-        uint16_t n = strlen(buf + 1);
-        if (n < 64)
-        {
-            *buf = (char)n;
-            buf += n + 1;
-            *buf++ = '\0';
-            *(uint16_t*)(buf + 0) = htons(question->qtype);
-            *(uint16_t*)(buf + 2) = htons(question->qclass);
-            return need_space;
-        }
-    }
-    return (0);
+		if (!type)
+			return 0;
+
+		int sock = 0;
+		int err = 0;
+
+		/* Create a socket */
+		if ((sock = socket (AF_INET, SOCK_DGRAM, IPPROTO_UDP)) == -1) {
+			Printf("Cant create socket");
+			return -1;
+		}
+
+		sockaddr_in serverSock;
+
+		serverSock.sin_family = AF_INET;
+		serverSock.sin_port = htons (DEFAULT_DNS_PORT);
+		memcpy (&(serverSock.sin_addr), &dns_ip, sizeof (net_ipv4));
+
+		/* Lets connect to dns server */
+		if (connect (sock, (sockaddr *) &serverSock, sizeof (serverSock)) == -1) {
+			Printf("Connection cant be estabilished");
+			return -1;
+		}
+
+		unsigned short len = strlen (hostname);
+
+		proto_dns_t *dns = (proto_dns_t *) NEW (sizeof (proto_dns_t)+len+7);
+
+		if (!dns)
+			return -1;
+
+		/* dns header */
+		dns->trans = swap16 (dns_trans ++);
+		dns->flags = swap16 (0x0100);
+		dns->question = swap16 (1);
+		dns->answer = 0;
+		dns->auth = 0;
+		dns->add = 0;
+
+		char *dns_ = (char *) dns;
+
+		/* dns queries */
+		// correct - dsl.cz 	: 03 64 73 6c 02 63 7a 00
+		// incorrect - dsl.cz	: 06 64 73 6c 2e 63 7a 00
+
+		unsigned short dtype = (type == sizeof (net_ipv6) ? swap16 (0x1c) : swap16 (1));
+		unsigned short class = swap16 (1);
+
+		char *name_coded = (char *) NEW (sizeof (char) * (len + 2));
+
+		if (!name_coded)
+			return -1;
+
+		memcpy (name_coded+1, hostname, len);
+		name_coded[len+1] = '\0';
+
+		unsigned i = 1;
+		unsigned y = 0;
+		unsigned z = 0;
+
+		while (i < len+2) {
+			if (name_coded[i] == '.' || name_coded[i] == '\0') {
+				if (y == 0)
+					name_coded[0] = i-1;
+				else
+					name_coded[y] = z-1;
+
+				y = i;
+				z = 0;
+			}
+
+			i ++;
+			z ++;
+		}
+
+		/* setup dns query */
+		memcpy (dns_+12, name_coded, len+2);
+		memcpy (dns_+14+len, (char *) &dtype, 2);
+		memcpy (dns_+16+len, (char *) &class, 2);
+
+		DEL (name_coded);
+
+		int ret = send (sock, (char *) dns, sizeof (proto_dns_t)+len+6, 0);
+
+		/* it is not done */
+		char buf[512];
+
+		/* receive response from dns server */
+		ret = recv (sock, buf, 512, 0);
+
+		char target[32];
+
+		if (type >= 32)
+			return 0;
+
+		/* dns server send respond */
+		if (ret) {
+			proto_dns_t *dns_res = (proto_dns_t *) buf;
+
+			/* ipv4 and ipv6 capable */
+			if (type == 4 || type == 16) {
+				if (dns_res->flags == 0x8081) {	/* all is ok, no error */
+					proto_dns_answer_t *dns_answer = (proto_dns_answer_t *) ((char *) buf + 18 + len);
+					unsigned next = 0;
+
+					/* walk trough whole answer list */
+					for (;;) {
+						next += sizeof (proto_dns_answer_t) + swap16 (dns_answer->dlen);
+
+						if (!dns_answer->type || !dns_answer->aclass) {
+							err ++;
+							break;
+						}
+
+						if (type == 16 && dns_answer->type == 0x1c00) {	/* is it AAAA answer ? */
+							memcpy (&target, (void *) dns_answer + sizeof (proto_dns_answer_t), type);
+
+							dns_cache_add (hostname, len, (void *) target, type);
+							break;
+						} else if (type == 4 && dns_answer->type == 0x100) {	/* is it A answer ? */
+							memcpy (&target, (void *) dns_answer + sizeof (proto_dns_answer_t), type);
+
+							dns_cache_add (hostname, len, (void *) target, type);
+							break;
+						} else
+							dns_answer = (proto_dns_answer_t *) ((char *) dns_answer + next);
+					}
+				} else
+					err ++;
+			} else
+				err ++;
+		}
+
+		sclose (sock);
+
+		DEL (dns);
+
+		memcpy (ip, target, type);
+		return err ? 0 : 1;
 }
 
-size_t dns_createSimpleQueryBuffer(char* buf, size_t buf_size, const dns_header* header, const dns_question* question)
-{
-    size_t w = dns_writeHeaderToBuffer(buf, buf_size, header);
 
-    if (w)
-    {
-        int v = dns_writeQuestionToBuffer(buf + w, buf_size - w, question);
-        if (v)
-        {
-            return w + v;
-        }
-    }
-    return (0);
+/* DNS Cache */
+int dns_cache_add (char *hostname, unsigned char len, void *ip, unsigned char type)
+{
+	if (!ip || !hostname)
+		return -1;
+
+	if (!type)
+		return 0;
+
+	dns_cache_t *cache;
+	for (cache = dns_cache_list.next; cache != &dns_cache_list; cache = cache->next) {
+		if (!strcmp (cache->hostname, hostname))
+			return 0;
+	}
+
+	/* alloc and init context */
+	cache = (dns_cache_t *) NEW (sizeof (dns_cache_t));
+
+	if (!cache)
+		return 0;
+
+	cache->type = type;
+
+	cache->ip = NEW (type);
+
+	if (!cache->ip) {
+		DEL (cache);
+		return 0;
+	}
+
+	memcpy (cache->ip, ip, type);
+
+	cache->len = len;
+
+	cache->hostname = (char *) NEW (sizeof (char) * (len + 1));
+
+	if (!cache->hostname) {
+		DEL (cache->ip);
+		DEL (cache);
+		return 0;
+	}
+
+	memcpy (cache->hostname, hostname, len);
+	cache->hostname[len] = '\0';
+
+	/* add into list */
+	cache->next = &dns_cache_list;
+	cache->prev = dns_cache_list.prev;
+	cache->prev->next = cache;
+	cache->next->prev = cache;
+	return 1;
 }
 
-size_t dns_createSimpleQuery(char* buf, size_t buf_size, const char* url, uint16_t id)
+int dns_cache_get (char *hostname, void *ip, unsigned char type)
 {
-    if (strlen(url) < 256)
-    {
-        dns_flags flags;
-        dns_header header;
-        dns_question question;
-        flags.AA = 0;
-        flags.OPCODE = 0; // standard query
-        flags.QR = 0;
-        flags.RA = 0;
-        flags.RCODE = 0;
-        flags.RD = 1; // recursion desired
-        flags.TC = 0;
-        flags.Z = 0;
-        header.ancount = 0;
-        header.arcount = 0;
-        dns_fillHeaderWithFlags(&header, &flags);
-        header.id = id;
-        header.nscount = 0;
-        header.qdcount = 1; // one query
-        question.qclass = dns_class_IN; // internet
-        strcpy(question.qname, url);
-        question.qtype = dns_type_A; // IPv4 addr
-        return dns_createSimpleQueryBuffer(buf, buf_size, &header, &question);
-    }
-    return (0);
+	if (!ip || !hostname)
+	{
+		Printf("dns_cache_get return %s %s\n",ip,hostname);
+		return -1;
+	}
+
+	dns_cache_t *cache;
+
+	for (cache = dns_cache_list.next; cache != &dns_cache_list; cache = cache->next)
+	{
+		if (cache->type == type)
+		{
+			if (!strcmp (cache->hostname, hostname))
+			{
+				memcpy (ip, cache->ip, cache->type);
+				return 1;
+			}
+		}
+	}
+
+	return 0;
 }
 
-const char* dns_parseHeader(dns_header* header, const char* buf, size_t buf_size)
+unsigned init_net_proto_dns ()
 {
-    if (buf_size >= 12)
-    {
-        header->id      = htons(*(uint16_t*)(buf + 0));
-        header->flags   = htons(*(uint16_t*)(buf + 2));
-        header->qdcount = htons(*(uint16_t*)(buf + 4));
-        header->ancount = htons(*(uint16_t*)(buf + 6));
-        header->nscount = htons(*(uint16_t*)(buf + 8));
-        header->arcount = htons(*(uint16_t*)(buf + 10));
-        return buf + 12;
-    }
-    return (0);
-}
+	dns_cache_list.next = &dns_cache_list;
+	dns_cache_list.prev = &dns_cache_list;
 
-const char* dns_parseName(char* dst, const char* buf, size_t buf_size, const char* pos)
-{
-    size_t size = buf_size - (size_t)(pos - buf);
-    size_t written = 0;
-    const char *p = 0;
-    while (size)
-    {
-        unsigned char i = *pos++;
-        for (; i != 0 && i < size && i < 64 && i + written < 256; i = *pos++)
-        {
-            size -= i + 1;
-            written += i + 1;
-            while (i--)
-                *dst++ = *pos++;
-            *dst++ = '.';
-        }
-        if (i == 0)
-        {
-            *(--dst) = '\0';
-            return p != 0 ? p : pos;
-        }
-        if (((i & 192) == 192) && size >= 2 )
-        { // pointer found
-            p = p ? p : pos + 1; // only the first time
-            pos = buf + (((i << 8) | *pos) & 0x3FFF);
-            if (pos < buf + buf_size)
-            {
-                size = buf_size - (pos - buf);
-                continue;
-            }
-        }
-        break;
-    }
-    return (0);
-}
+	dns_trans = 1024;
 
-const char* dns_parseQuestion(dns_question* question, const char* buf, size_t buf_size, const char* pos)
-{
-    if (buf_size)
-    {
-        const char* p = dns_parseName(question->qname, buf, buf_size, pos);
-        if (p && buf_size - (p - buf) >= 4)
-        {
-            question->qtype  = htons(*(uint16_t*)(p + 0));
-            question->qclass = htons(*(uint16_t*)(p + 2));
-            return p + 4;
-        }
-    }
-    return (0);
-}
+	dns_addr (DEFAULT_DNS_ADDRESS);
 
-const char* dns_parseResource(dns_resource* resource, const char* buf, size_t buf_size, const char* pos)
-{
-    if (buf_size)
-    {
-        const char* p = dns_parseName(resource->name, buf, buf_size, pos);
-        if (p && buf_size - (p - buf) >= 10)
-        {
-            resource->type      = htons(*(uint16_t*)(p + 0));
-            resource->dns_class = htons(*(uint16_t*)(p + 2));
-            resource->ttl       = htonl(*(uint32_t*)(p + 4));
-            resource->rdlength  = htons(*(uint16_t*)(p + 8));
-            p += 10;
-            if (buf_size - (p - buf) >= resource->rdlength)
-            {
-                resource->rdata = p;
-                return p + resource->rdlength;
-            }
-        }
-    }
-    return (0);
+	return 1;
 }
-
-/*
- * Copyright (c) 2011-2016 The PrettyOS Project. All rights reserved.
- *
-* http://www.prettyos.de
- *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted provided that the following conditions are met:
- *
- * 1. Redistributions of source code must retain the above copyright notice,
- *    this list of conditions and the following disclaimer.
- *
- * 2. Redistributions in binary form must reproduce the above copyright
- *    notice, this list of conditions and the following disclaimer in the
- *    documentation and/or other materials provided with the distribution.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
- * ``AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
- * TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
- * PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDERS OR
- * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
- * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
- * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
- * OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
- * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
- * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
- * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- */

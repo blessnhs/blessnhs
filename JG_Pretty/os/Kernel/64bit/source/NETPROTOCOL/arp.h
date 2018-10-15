@@ -1,51 +1,64 @@
-#ifndef ARP_H
-#define ARP_H
+/*
+ *  ZeX/OS
+ *  Copyright (C) 2008  Tomas 'ZeXx86' Jedrzejek (zexx86@zexos.org)
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 
-#include "../network/netutils.h"
-#include "../usb/list2.h"
+#ifndef _ARP_H
+#define _ARP_H
 
-#define ARP_TABLE_TIME_TO_CHECK   2    // time in minutes
-#define ARP_TABLE_TIME_TO_DELETE 10    // time in minutes
+#include "net.h"
+#include "ip.h"
 
+#define MIN_ARP_SIZE 28
 
-typedef struct
-{
-    uint16_t hardware_addresstype;
-    uint16_t protocol_addresstype;
-    uint8_t  hardware_addresssize;
-    uint8_t  protocol_addresssize;
-    uint16_t operation;
-    uint8_t  source_mac[6];
-    IP4_t     sourceIP;
-    uint8_t  dest_mac[6];
-    IP4_t     destIP;
-} __attribute__((packed)) arpPacket_t;
-
-typedef struct
-{
-    list_t   table;
-    uint32_t lastCheck;
-} arpTable_t;
-
-typedef struct
-{
-    uint32_t seconds;
-    uint8_t  MAC[6];
-    IP4_t    IP;
-    bool     dynamic;
-} arpTableEntry_t;
+#define	__PACKED__ __attribute__ ((__packed__))
 
 
-struct network_adapter;
+typedef struct arp_cache_context {
+	struct arp_cache_context *next, *prev;
 
-void arp_initTable(arpTable_t* cache);
-void arp_deleteTable(arpTable_t* cache);
-void arp_addTableEntry(arpTable_t* cache, const uint8_t MAC[6], IP4_t IP, bool dynamic);
-arpTableEntry_t* arp_findEntry(arpTable_t* cache, IP4_t IP);
-void arp_showTable(arpTable_t* cache);
-void arp_received(struct network_adapter* adapter, const arpPacket_t* packet);
-bool arp_sendRequest(struct network_adapter* adapter, IP4_t searchedIP); // Pass adapter->IP to it, to issue a gratuitous request
-bool arp_waitForReply(struct network_adapter* adapter, IP4_t searchedIP);
+	net_ipv4 ip;
+	mac_addr_t mac;
+} arp_cache_t;
 
+typedef struct proto_arp_t {
+	unsigned short hard_type;
+	unsigned short prot_type;
+	unsigned char hard_size;
+	unsigned char prot_size;
+	unsigned short op;	
+	mac_addr_t sender_ethernet;
+	net_ipv4 sender_ipv4;
+	mac_addr_t target_ethernet;
+	net_ipv4 target_ipv4;
+} __PACKED__ proto_arp_t;
+
+enum {
+	ARP_OP_REQUEST = 0x100,
+	ARP_OP_REPLY = 0x200,
+	ARP_OP_RARP_REQUEST,
+	ARP_OP_RARP_REPLY
+};
+
+enum {
+	ARP_HARD_TYPE_ETHERNET = 0x100
+};
+
+extern net_ipv4 arp_cache_add (mac_addr_t mac, net_ipv4 ip);
+extern net_ipv4 arp_cache_get (net_ipv4 ip, mac_addr_t *mac);
+extern net_ipv4 init_proto_arp ();
 
 #endif

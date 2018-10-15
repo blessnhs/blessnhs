@@ -9,6 +9,7 @@
 #include "AssemblyUtility.h"
 #include "utility.h"
 #include "storage/ahci.h"
+#include "NETWORK/pcnet32.h"
 
 list_t pci_devices = list_init();
 static  MUTEX pci_mutex;
@@ -407,15 +408,15 @@ void pci_installDevices(void)
         Printf("   => PCI devices:\n");
         if (PCIdev->classID == 0x0C && PCIdev->subclassID == 0x03)      // USB Host Controller
         {
-        	usb_hc_install(PCIdev);
+        	//usb_hc_install(PCIdev);
         }
         else if (PCIdev->classID == 0x02 && PCIdev->subclassID == 0x00) // Network Adapters
         {
-        	network_installDevice(PCIdev);
+        	pcnet32_acthandler(DEV_ACT_INIT,0,0);
         }
         else if (PCIdev->classID == 0x01 && PCIdev->subclassID == 0x06) // SATA
         {
-        	ahca_installDevice(PCIdev);
+        //	ahca_installDevice(PCIdev);
         }
  /*       else if (PCIdev->classID == 0x03)  // Graphics Adapter
             vga_installPCIDevice(PCIdev);
@@ -429,5 +430,22 @@ void CheckPciDriver()
 {
 	 pci_scan();
 	 pci_installDevices();
+}
+
+
+pciDev_t *pcidev_find (unsigned short vendor, unsigned short device)
+{
+	element* elem;
+	for (elem = pci_devices.head; elem; elem = elem->next)
+	{
+	    pciDev_t* PCIdev = elem->data;
+
+	    if(PCIdev->vendorID == vendor &&
+    		PCIdev->deviceID == device)
+
+    	return PCIdev;
+	}
+
+	return 0;
 }
 

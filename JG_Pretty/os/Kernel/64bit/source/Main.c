@@ -27,6 +27,8 @@
 #include "usb/usb.h"
 #include "utility.h"
 #include "fat32/fat_filelib.h"
+#include "NETPROTOCOL/fd.h"
+#include "NETPROTOCOL/if.h"
 
 // Application Processor를 위한 Main 함수
 void MainForApplicationProcessor( void );
@@ -34,6 +36,8 @@ void MainForApplicationProcessor( void );
 BOOL kChangeToMultiCoreMode( void );
 // 그래픽 모드를 테스트하는 함수
 void StartGraphicModeTest( void );
+
+void InitNetwork( void );
 
 /**
  *  Bootstrap Processor용 C 언어 커널 엔트리 포인트
@@ -154,14 +158,24 @@ void Main( void )
         SetCursor( 45, iCursorY++ );
         Printf( "Fail\n" );
     }
-    
     // 시스템 콜에 관련된 MSR을 초기화
     Printf( "System Call MSR Initialize..................[Pass]\n" );
     iCursorY++;
     InitializeSystemCall();
 
-	pci_scan();
+    InitNetwork();
+
+    pci_scan();
 	pci_installDevices();
+
+	//init end
+//	iflist_display();
+
+	netif_t *netif = netif_findbyname ("eth0");
+	if(netif != 0)
+		dhcp_config_if(netif);
+	else
+		Printf( " Fail dhcp_config_if\n");
 
     CreateTask( TASK_FLAGS_LOW | TASK_FLAGS_THREAD , 0, 0,
                      ( QWORD ) usb_pollInterruptTransfers, GetAPICID() );
@@ -295,4 +309,15 @@ BOOL kChangeToMultiCoreMode( void )
     }
     
     return TRUE;
+}
+
+void InitNetwork( void )
+{
+
+	//init network layer
+	init_fd();
+	init_netif();	/* Network interface */
+	init_socket();	/* Network socket API */
+	init_packet();	/* Network handler - traffic parser */
+
 }

@@ -486,3 +486,30 @@ DYNAMICMEMORY* kGetDynamicMemoryManager( void )
 {
     return &gs_stDynamicMemory;
 }
+
+void *krealloc (void *blk, size_t size)
+{
+	void *new_blk;
+
+	/* size == 0: free block */
+	if (size == 0) {
+		if(blk != 0)
+			DEL (blk);
+
+		new_blk = 0;
+	} else {
+		/* allocate new block */
+		new_blk = NEW (size);
+
+		/* if allocation OK, and if old block exists, copy old block to new */
+		if (new_blk != 0 && blk != 0) {
+
+			memcpy (new_blk, blk, size);
+
+			/* free the old block */
+			DEL (blk);
+		}
+	}
+	return new_blk;
+}
+

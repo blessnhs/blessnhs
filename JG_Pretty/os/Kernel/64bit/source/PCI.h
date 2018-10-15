@@ -3,8 +3,6 @@
 
 #include "usb/list2.h"
 #include "types.h"
-#include "Cdi/CdiOsDep.h"
-#include "cdi/cdi.h"
 
 #define PCI_CONFIGURATION_ADDRESS 0x0CF8   // Address I/O Port
 #define PCI_CONFIGURATION_DATA    0x0CFC   // Data    I/O Port
@@ -108,30 +106,6 @@ typedef struct pciDev
     list_t    extendedCapabilities;
 } pciDev_t;
 
-struct cdi_pci_device {
-    struct cdi_bus_data bus_data;
-
-    uint16_t    bus;
-    uint16_t    dev;
-    uint16_t    function;
-
-    uint16_t    vendor_id;
-    uint16_t    device_id;
-
-    uint8_t     class_id;
-    uint8_t     subclass_id;
-    uint8_t     interface_id;
-
-    uint8_t     rev_id;
-
-    uint8_t     irq;
-
-    // List of I/O resources which belong to the device (content of the BARs, struct cdi_pci_ressource*)
-    cdi_list_t resources;
-
-    cdi_pci_device_osdep meta;
-}cdi_pci_device_t;
-
 
 extern list_t pci_devices;
 
@@ -151,5 +125,5 @@ bool     pci_getExtendedCapability(pciDev_t* dev, uint8_t id, uint8_t* value);
 bool     pci_trySetMSIVector(pciDev_t* dev, IRQ_NUM_t irq);
 void     pci_switchToMSI(pciDev_t* dev);
 void*    pci_aquireMemoryForMMIO(pciBar_t* bar); // Calls paging_allocMMIO() with correct alignment and size, allocating the entire BAR
-
+pciDev_t *pcidev_find (unsigned short vendor, unsigned short device);
 #endif

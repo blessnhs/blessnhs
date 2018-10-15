@@ -1,6 +1,7 @@
 /*
  *  ZeX/OS
  *  Copyright (C) 2008  Tomas 'ZeXx86' Jedrzejek (zexx86@zexos.org)
+ *  Copyright (C) 2010  Tomas 'ZeXx86' Jedrzejek (zexx86@zexos.org)
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -16,26 +17,24 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef _ICMP_H
-#define _ICMP_H
 
-#include "ip.h"
+#ifndef _PACKET_H
+#define _PACKET_H
 
-#define NET_ICMP_TYPE_PING_REQUEST	0x8
-#define NET_ICMP_TYPE_PING_REPLY	0x0
-#define NET_ICMP6_TYPE_PING_REQUEST	0x80
-#define NET_ICMP6_TYPE_PING_REPLY	0x81
+#define NET_PACKET_MTU		1500
 
-/* ICMP layer structure */
-typedef struct proto_icmp_t {
-	unsigned char type;
-	unsigned char code;
-	unsigned short checksum;
-	unsigned short ident;
-	unsigned short seq;
-} proto_icmp_t;
+#define NET_PACKET_TYPE_IPV6	0xdd86
+#define NET_PACKET_TYPE_IPV4	0x8
+#define NET_PACKET_TYPE_STP	0x2600
+#define NET_PACKET_TYPE_ARP	0x608
 
-extern unsigned net_proto_icmp_ping (netif_t *netif, net_ipv4 ip);
-extern unsigned net_proto_icmp6_ping (netif_t *netif, net_ipv6 ip);
+typedef struct packet_t {
+	mac_addr_t mac_dest;
+	mac_addr_t mac_source;
+	unsigned short type;
+} packet_t;
+
+extern unsigned net_packet_send (netif_t *netif, packet_t *packet, char *buf, unsigned len);
+extern unsigned init_packet ();
 
 #endif

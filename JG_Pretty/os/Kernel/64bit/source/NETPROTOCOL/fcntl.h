@@ -1,6 +1,6 @@
 /*
  *  ZeX/OS
- *  Copyright (C) 2008  Tomas 'ZeXx86' Jedrzejek (zexx86@zexos.org)
+ *  Copyright (C) 2007  Tomas 'ZeXx86' Jedrzejek (zexx86@zexos.org)
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -16,26 +16,20 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef _ICMP_H
-#define _ICMP_H
 
-#include "ip.h"
+#ifndef _FCNTL_H
+#define	_FCNTL_H
 
-#define NET_ICMP_TYPE_PING_REQUEST	0x8
-#define NET_ICMP_TYPE_PING_REPLY	0x0
-#define NET_ICMP6_TYPE_PING_REQUEST	0x80
-#define NET_ICMP6_TYPE_PING_REPLY	0x81
+/* file modes */
+#define O_RDWR		0x1
+#define O_RDONLY	0x2
+#define O_WRONLY	0x4
+#define O_CREAT		0x200
+#define O_TRUNC		0x400
+#define O_NONBLOCK 	0x800
+#define O_EXCL		0x1000
 
-/* ICMP layer structure */
-typedef struct proto_icmp_t {
-	unsigned char type;
-	unsigned char code;
-	unsigned short checksum;
-	unsigned short ident;
-	unsigned short seq;
-} proto_icmp_t;
+/* externs */
+extern int fcntl (int fd, int cmd, long arg);
 
-extern unsigned net_proto_icmp_ping (netif_t *netif, net_ipv4 ip);
-extern unsigned net_proto_icmp6_ping (netif_t *netif, net_ipv6 ip);
-
-#endif
+#endif 

@@ -1,269 +1,217 @@
 /*
-*  license and disclaimer for the use of this source code as per statement below
-*  Lizenz und Haftungsausschluss f�r die Verwendung dieses Sourcecodes siehe unten
-*/
+ *  ZeX/OS
+ *  Copyright (C) 2008  Tomas 'ZeXx86' Jedrzejek (zexx86@zexos.org)
+ *  Copyright (C) 2010  Tomas 'ZeXx86' Jedrzejek (zexx86@zexos.org)
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 
+
+#include "eth.h"
+#include "net.h"
+#include "if.h"
+#include "packet.h"
+#include "ip.h"
 #include "icmp.h"
-#include "ipv4.h"
+#include "checksum.h"
+#include "../Utility.h"
 
-void icmp_sendEchoRequest(network_adapter_t* adapter, IP4_t destIP)
+static unsigned net_icmp_ping = 0;
+
+static proto_ip_t proto_ip_prealloc;
+static char proto_icmp_prealloc[sizeof (proto_icmp_t)+57];
+static packet_t packet_prealloc;
+static char buf_icmp_prealloc[NET_PACKET_MTU + sizeof (proto_icmp_t) + 1];
+
+/* prototype */
+unsigned net_proto_icmp_reply (netif_t *netif, packet_t *packet, proto_ip_t *ip, proto_icmp_t *icmp, char *buf, unsigned len);
+unsigned net_proto_icmp_request (netif_t *netif, net_ipv4 dest);
+
+unsigned net_proto_icmp_ping (netif_t *netif, net_ipv4 ip)
 {
-    static uint16_t count = 0;
-    count++;
+	if (!netif)
+		return 2;
 
-    static const char data[] = "PrettyOS ist das Betriebssystem der Projektgruppe \"OS-Development\" im deutschsprachigen C++-Forum";
-    size_t packetSize = sizeof(icmpheader_t) + strlen(data) + 1;
-    char icmpPacket[packetSize];
+	unsigned ret = net_proto_icmp_request (netif, ip);
 
-    icmpheader_t* icmp = (void*)icmpPacket;
-    MemCmp((char*)(icmp+1), data,strlen(data));
-    icmp->type         = 8; // echo request
-    icmp->code         = 0;
-    icmp->id           = htons(0xAFFE);
-    icmp->seqnumber    = htons(count);
-    icmp->checksum     = 0;
-    icmp->checksum     = htons(internetChecksum(icmp, packetSize, 0));
+	if (!ret)
+		return 0;
 
-    ipv4_send(adapter, icmp, packetSize, destIP, 1, 0);
+	unsigned long time = GetTickCount();
+
+	while (!net_icmp_ping) {
+		/* timeout 1s - 1000ms */
+		if ((GetTickCount()-time) > 1000)
+			return 0;
+
+		Schedule ();
+	}
+
+	net_icmp_ping = 0;
+
+	return 1;
 }
 
-void icmp_receive(network_adapter_t* adapter, const icmpheader_t* rec, uint32_t length, IP4_t sourceIP)
+unsigned net_proto_icmp_handler (packet_t *packet, proto_ip_t *ip, char *buf, unsigned len)
 {
-    size_t icmp_data_length = length - sizeof(icmpheader_t);
+	proto_icmp_t *icmp = (proto_icmp_t *) buf;
 
-    switch (rec->type)
-    {
-        case ICMP_ECHO_REPLY:
-            Printf("Echo Reply:");
+	if (icmp->type == NET_ICMP_TYPE_PING_REQUEST) {
+		//kPrintf ("ICMP->Request !\n");
+	
+		/* TODO: melo by to projit vsechny rozhrani */
+		netif_t *netif = netif_findbyname ("eth0");
+	
+		if (ip->ip_dest == netif->ip) {
+			//Printf ("ICMP->Request from ");
+			//net_proto_ip_print (ip->ip_source);
+			//Printf (" !\n");
+	
+			return net_proto_icmp_reply (netif, packet, ip, icmp, buf+8, len-12);
+		}
 
-            if (rec->code == 0)
-            {
-                Printf("  ID: %x seq: %u\n", ntohs(rec->id), ntohs(rec->seqnumber));
-               // memshow((const char*)(rec + 1), icmp_data_length, true);
-            }
-            break;
+		return 0;
+	}
 
-      #ifdef _ICMP_DEBUG_
-        case ICMP_DESTINATION_UNREACHABLE:
-            textColor(ERROR);
-            Printf("Destination unreachable - code %u", rec->code);
-            switch (rec->code)
-            {
-                case 0:
-                    Printf(": Destination network unreachable");
-                    break;
-                case 1:
-                    Printf(": Destination host unreachable");
-                    break;
-                case 2:
-                    Printf(": Destination protocol unreachable");
-                    break;
-                case 3:
-                    Printf(": Destination port unreachable");
-                    break;
-                case 4:
-                    Printf(": Fragmentation required, and DF flag set");
-                    break;
-                case 5:
-                    Printf(": Source route failed");
-                    break;
-                case 6:
-                    Printf(": Destination network unknown");
-                    break;
-                case 7:
-                    Printf(": Destination host unknown");
-                    break;
-                case 8:
-                    Printf(": Source host isolated");
-                    break;
-                case 9:
-                    Printf(": Network administratively prohibited");
-                    break;
-                case 10:
-                    Printf(": Host administratively prohibited");
-                    break;
-                case 11:
-                    Printf(": Network unreachable for TOS");
-                    break;
-                case 12:
-                    Printf(": Host unreachable for TOS");
-                    break;
-                case 13:
-                    Printf(": Communication administratively prohibited");
-                    break;
-            }
-            textColor(TEXT);
-            break;
-        case ICMP_SOURCE_QUENCH:
-            Printf("Source quench (congestion control)");
-            break;
-        case ICMP_REDIRECT:
-            Printf("Redirect - code %u", rec->code);
-            switch (rec->code)
-            {
-                case 0:
-                    Printf(": Redirect Datagram for the Network");
-                    break;
-                case 1:
-                    Printf(": Redirect Datagram for the Host");
-                    break;
-                case 2:
-                    Printf(": Redirect Datagram for the TOS & network");
-                    break;
-                case 3:
-                    Printf(": Redirect Datagram for the TOS & host");
-                    break;
-            }
-            break;
-        case 6:
-            Printf("Alternate Host Address");
-            break;
-      #endif
+	if (icmp->type == NET_ICMP_TYPE_PING_REPLY) {
+		/* TODO: make it better :) */
+		net_icmp_ping = 1;
+		return 1;
+	}
 
-        case ICMP_ECHO_REQUEST:
-        {
-            Printf("ICMP_echoRequest:");
-
-            uint8_t pkt[sizeof(icmpheader_t) + icmp_data_length];
-
-            icmpheader_t* icmp = (icmpheader_t*)pkt;
-
-            icmp->type         = ICMP_ECHO_REPLY;
-            icmp->code         = 0;
-            icmp->id           = rec->id;
-            icmp->seqnumber    = rec->seqnumber;
-            icmp->checksum     = 0;
-
-            MemCpy(icmp+1, rec+1, icmp_data_length);
-
-            icmp->checksum = htons(internetChecksum(icmp, sizeof(icmpheader_t) + icmp_data_length, 0));
-
-            Printf(" type: %u  code: %u  checksum %u\n", icmp->type, icmp->code, icmp->checksum);
-
-            ipv4_send(adapter, (void*)icmp, sizeof(icmpheader_t) + icmp_data_length, sourceIP, 1, 0);
-            break;
-        }
-
-      #ifdef _ICMP_DEBUG_
-        case ICMP_ROUTER_ADVERTISEMENT:
-            Printf("Router Advertisement");
-            break;
-        case ICMP_ROUTER_SOLICITATION:
-            Printf("Router discovery/selection/solicitation");
-            break;
-        case ICMP_TIME_EXEEDED:
-            textColor(ERROR);
-            Printf("Time Exceeded - code %u", rec->code);
-            switch (rec->code)
-            {
-                case 0:
-                    Printf(": TTL expired in transit");
-                    break;
-                case 1:
-                    Printf(": Fragment reassembly time exceeded");
-                    break;
-            }
-            textColor(TEXT);
-            break;
-        case ICMP_PARAMETER_PROBLEM:
-            textColor(ERROR);
-            Printf("Parameter Problem: Bad IP header - code %u", rec->code);
-            switch (rec->code)
-            {
-                case 0:
-                    Printf(": Pointer indicates the error");
-                    break;
-                case 1:
-                    Printf(": Missing a required option");
-                    break;
-            }
-            textColor(TEXT);
-            break;
-        case ICMP_TIMESTAMP:
-            Printf("Timestamp");
-            break;
-        case ICMP_TIMESTAMP_REPLY:
-            Printf("Timestamp reply");
-            break;
-        case ICMP_INFORMATION_REQUEST:
-            Printf("Information Request");
-            break;
-        case ICMP_INFORMATION_REPLY:
-            Printf("Information Reply");
-            break;
-        case ICMP_ADDRESS_MASK_REQUEST:
-            Printf("Address Mask Request");
-            break;
-        case ICMP_ADDRESS_MASK_REPLY:
-            Printf("Address Mask Reply");
-            break;
-        case ICMP_TRACEROUTE:
-            Printf("Information Request");
-            break;
-        case ICMP_DATAGRAM_CONVERSION_ERROR:
-            Printf("Datagram Conversion Error");
-            break;
-        case ICMP_MOBILE_HOST_REDIRECT:
-            Printf("Mobile Host Redirect");
-            break;
-        case ICMP_WHERE_ARE_YOU:
-            Printf("Where-Are-You (originally meant for IPv6)");
-            break;
-        case ICMP_I_AM_HERE:
-            Printf("Here-I-Am (originally meant for IPv6)");
-            break;
-        case ICMP_MOBILE_REGISTRATION_REQUEST:
-            Printf("Mobile Registration Request");
-            break;
-        case ICMP_MOBILE_REGISTRATION_REPLY:
-            Printf("Mobile Registration Reply");
-            break;
-        case ICMP_DOMAIN_NAME_REQUEST:
-            Printf("Domain Name Request");
-            break;
-        case ICMP_DOMAIN_NAME_REPLY:
-            Printf("Domain Name Reply");
-            break;
-        case ICMP_SKIP:
-            Printf("SKIP Algorithm Discovery Protocol, Simple Key-Management for Internet Protocol");
-            break;
-        case ICMP_PHOTURIS:
-            Printf("Photuris, Security failures");
-            break;
-        case ICMP_SEAMOBY:
-            Printf("ICMP for experimental mobility protocols such as Seamoby [RFC4065]");
-            break;
-      #endif
-        default:
-            break;
-    }
+	return 0;
 }
 
+unsigned net_proto_icmp_request (netif_t *netif, net_ipv4 dest)
+{
+	//Printf ("ICMP request: (%d) %s\n", len, buf);
 
-/*
-* Copyright (c) 2010-2016 The PrettyOS Project. All rights reserved.
-*
-* http://www.prettyos.de
-*
-* Redistribution and use in source and binary forms, with or without modification,
-* are permitted provided that the following conditions are met:
-*
-* 1. Redistributions of source code must retain the above copyright notice,
-*    this list of conditions and the following disclaimer.
-*
-* 2. Redistributions in binary form must reproduce the above copyright
-*    notice, this list of conditions and the following disclaimer in the
-*    documentation and/or other materials provided with the distribution.
-*
-* THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-* ``AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
-* TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
-* PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDERS OR
-* CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
-* EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
-* PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
-* OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
-* WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
-* OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
-* ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-*/
+	mac_addr_t mac_dest;
+	unsigned get = arp_cache_get (dest, &mac_dest);
+
+	if (!get) {
+		arp_send_request (netif, dest);
+
+		unsigned i = 0;
+		/* 100ms for waiting on ARP reply */
+		while (i < 100) {
+			get = arp_cache_get (dest, &mac_dest);
+
+			if (get)
+				break;
+
+			/* TODO: make better waiting for ARP reply */
+			Sleep(1000);
+
+			Schedule ();
+	
+			i ++;
+		}
+
+		if (!get)
+			return 0;
+	}
+
+	/* packet header */
+	packet_t *packet = (packet_t *) &packet_prealloc;
+
+	if (!packet)
+		return 0;
+
+	memcpy (&packet->mac_source, netif->dev->dev_addr, 6);
+	memcpy (&packet->mac_dest, mac_dest, 6);
+	packet->type = NET_PACKET_TYPE_IPV4;
+
+	/* ip layer */
+	proto_ip_t *ip = (proto_ip_t *) &proto_ip_prealloc;
+
+	if (!ip)
+		return 0;
+
+	/* there are some fixed values - yeah it is horrible */
+	ip->ver = 4;
+	ip->head_len = 5;
+	ip->total_len = swap16 (84);
+	ip->flags = 0;
+	ip->frag = 0;
+	ip->ttl = 64;
+	ip->checksum = 0;
+	ip->proto = NET_PROTO_IP_TYPE_ICMP;
+	ip->ip_source = netif->ip;
+	ip->ip_dest = dest;
+
+	/* icmp layer */
+	proto_icmp_t *icmp = (proto_icmp_t *) &proto_icmp_prealloc;
+
+	if (!icmp)
+		return 0;
+
+	memset ((char *) icmp+8, 0, 56);
+
+	icmp->type = NET_ICMP_TYPE_PING_REQUEST;
+	icmp->code = 0;
+	icmp->seq = 0;
+	icmp->checksum = 0;
+
+	icmp->checksum = checksum16 (icmp, sizeof (proto_icmp_t)+56);
+
+	return net_proto_ip_send (netif, packet, ip, (char *) icmp, sizeof (proto_icmp_t)+56);
+}
+
+unsigned net_proto_icmp_reply (netif_t *netif, packet_t *packet, proto_ip_t *ip, proto_icmp_t *icmp, char *buf, unsigned len)
+{
+	//Printf ("ICMP reply: (%d) %s\n", len, buf);
+
+	mac_addr_t mac_dest;
+	mac_addr_t mac_source;
+
+	/* cross mac and ip address, because this packet have to go back */
+	memcpy (&mac_dest, packet->mac_source, 6);
+	memcpy (&mac_source, packet->mac_dest, 6);
+
+	net_ipv4 ip_dest = ip->ip_source;
+	net_ipv4 ip_source = ip->ip_dest;
+
+	/* assign new values to old structures */
+	memcpy (&packet->mac_source, mac_source, 6);
+	memcpy (&packet->mac_dest, mac_dest, 6);
+
+	/* TODO: identification, flags, etc */
+
+	ip->ip_dest = ip_dest;
+	ip->ip_source = ip_source;
+	ip->checksum = 0;
+
+	icmp->type = NET_ICMP_TYPE_PING_REPLY;
+	icmp->checksum = 0;
+
+	char *buf_icmp = (char *) &buf_icmp_prealloc;
+
+	if (!buf_icmp)
+		return 0;
+
+	unsigned l = sizeof (proto_icmp_t);
+
+	memcpy (buf_icmp, (char *) icmp, l);
+	memcpy (buf_icmp+l, buf, len);
+
+	buf_icmp[l+len] = '\0';
+
+	/* calculate checksum and put it to icmp header */
+	proto_icmp_t *icmp_ = (proto_icmp_t *) buf_icmp;
+	icmp_->checksum = checksum16 (buf_icmp, len+l);
+
+	return net_proto_ip_send (netif, packet, ip, buf_icmp, len+l);
+}
+

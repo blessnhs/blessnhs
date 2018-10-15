@@ -1,266 +1,718 @@
 /*
-*  license and disclaimer for the use of this source code as per statement below
-*  Lizenz und Haftungsausschluss f�r die Verwendung dieses Sourcecodes siehe unten
-*/
+ *  ZeX/OS
+ *  Copyright (C) 2008  Tomas 'ZeXx86' Jedrzejek (zexx86@zexos.org)
+ *  Copyright (C) 2009  Tomas 'ZeXx86' Jedrzejek (zexx86@zexos.org)
+ *  Copyright (C) 2010  Tomas 'ZeXx86' Jedrzejek (zexx86@zexos.org)
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 
-// http://www.rfc-editor.org/rfc/rfc768.txt <---  User Datagram Protocol (UDP)
 
+#include "eth.h"
+#include "net.h"
+#include "if.h"
+#include "ip.h"
+#include "packet.h"
 #include "udp.h"
-#include "ipv4.h"
-#include "../task.h"
+#include "socket.h"
+#include "fd.h"
+#include "../errno.h"
+#include "file.h"
 #include "../DynamicMemory.h"
 #include "../Utility.h"
-#include "../network/events.h"
 
-static list_t udpPorts = list_init();
+extern netif_t netif_list;
 
+proto_udp_conn_t proto_udp_conn_list;
 
-#ifdef _UDP_DEBUG_
-static void udp_debug(const udpPacket_t* udp);
-#endif
+static proto_ip_t proto_ip_prealloc;
+static proto_udp_t proto_udp_prealloc;
+static packet_t packet_prealloc;
+static char buf_udp_prealloc[NET_PACKET_MTU + sizeof (proto_udp_t) + 1];
 
+/* prototypes */
+proto_udp_conn_t *net_proto_udp_conn_check (net_ipv4 ip_source, net_port port_source, net_ipv4 ip_dest, net_port port_dest, unsigned char *ret);
+int net_proto_udp_read_cache (proto_udp_conn_t *conn, char *data, unsigned len);
+int net_proto_udp_write (proto_udp_conn_t *conn, char *data, unsigned len);
+proto_udp_conn_t *net_proto_udp_conn_find (int fd);
+int net_proto_udp_conn_set (proto_udp_conn_t *conn, netif_t *eth, net_port port_source, net_ipv4 ip_dest, net_port port_dest);
+unsigned net_proto_udp_conn_del (proto_udp_conn_t *conn);
+int net_proto_udp_conn_add ();
 
-static udp_port_t* findConnection(uint16_t port)
+/** UDP protocol
+ *  User-friendly socket functions
+ */
+int net_proto_udp_socket (fd_t *fd)
 {
-	element* e;
-    for(e = udpPorts.head; e != 0; e = e->next)
-    {
-        udp_port_t* connection = e->data;
-        if(connection->port == port)
-            return (connection);
-    }
-    return (0);
+	return net_proto_udp_conn_add (fd);
 }
 
-bool udp_bind(uint16_t port)
+int net_proto_udp_connect (int fd, sockaddr_in *addr)
 {
-    udp_port_t* udpPort = findConnection(port);
-    if(udpPort)
-    {
-    	Printf("Cant Found udp_bind port %d\n",port);
-    	return (false);
-    }
+	int ret = -1;
 
-    element* elem = list_alloc_elem(sizeof(udp_port_t), "udp_port_t");
-    udpPort = elem->data;
-    udpPort->port = port;
-    udpPort->isActivate = false;
-    event_createQueue(&udpPort->eventQueue);
-    list_append_elem(&udpPorts, elem);
-    return (true);
-}
+	proto_udp_conn_t *conn = net_proto_udp_conn_find (fd);
 
-void udp_unbind(uint16_t port)
-{
-	element* e;
-    for(e = udpPorts.head; e != 0; e = e->next)
-    {
-        udp_port_t* udpPort = e->data;
-        if(udpPort->port == port)
-        {
-            list_delete(&udpPorts, e);
-            return;
-        }
-    }
-}
+	if (!conn)
+		return -1;
 
-udp_port_t* udp_findport(uint16_t port)
-{
-	element* e;
-	for(e = udpPorts.head; e != 0; e = e->next)
-	{
-	   udp_port_t* connection = e->data;
-	   if(connection->port == port)
-	      return (connection);
+	netif_t *netif;
+	for (netif = netif_list.next; netif != &netif_list; netif = netif->next) {
+		ret = net_proto_udp_conn_set (conn, netif, swap16 (netif_port_get ()), addr->sin_addr, addr->sin_port);
+		
+		/* TODO: connect timeout */
+
+		/* blocking mode */
+		if (!(conn->flags & O_NONBLOCK)) {
+			if (!ret)
+				return -1;
+		} else
+		/* non-blocking mode */
+			return -1;
+
+		ret = 0;
 	}
-	return (0);
+
+	return ret;
 }
 
-void udp_cleanup(uint16_t port)
+int net_proto_udp_send (int fd, char *msg, unsigned size)
 {
-	element* e;
-    for(e = udpPorts.head; e != 0;)
-    {
-        udp_port_t* udpPort = e->data;
-        if(udpPort->port == port)
-        {
-            e = list_delete(&udpPorts, e);
-        }
-        else
-            e = e->next;
-    }
+	proto_udp_conn_t *conn = net_proto_udp_conn_find (fd);
+
+	if (!conn)
+		return -1;
+
+	unsigned len = size;
+	
+	unsigned mtu_udp = NET_PACKET_MTU - sizeof (proto_udp_t) - sizeof (net_ipv4) - 16;
+
+check:
+	if (size > mtu_udp) {
+		int r = net_proto_udp_send (fd, msg, mtu_udp);
+
+		if (r <= 0)
+			return r;
+		
+		msg += mtu_udp;
+		size -= mtu_udp;
+		
+		goto check;
+	}	
+	
+	int ret = net_proto_udp_write (conn, msg, size);
+
+	Printf("net_proto_udp_write ret %d\n",ret);
+
+	if (ret) {
+		/* blocking mode */
+		if (!(conn->flags & O_NONBLOCK)) {
+			
+		} else {
+		/* non-blocking mode */
+		/* TODO: ? */
+			
+		}
+	}
+
+	return len;
 }
 
-void udp_receive(network_adapter_t* adapter, const udpPacket_t* packet, IP4_t sourceIP)
+int net_proto_udp_sendto (int fd, char *msg, unsigned size, sockaddr_in *to)
 {
-  #ifdef _UDP_DEBUG_
-    Printf("\nUDP: ");
-    udp_debug(packet);
-  #endif
+	proto_udp_conn_t *conn = net_proto_udp_conn_find (fd);
 
-    switch (ntohs(packet->destPort))
-    {
-        case 68:
-            DHCP_AnalyzeServerMessage(adapter, (const dhcp_t*)(packet+1), sourceIP);
-            break;
-        default:
-        {
-          #ifdef _UDP_DEBUG_
-            Printf("\nUDP arbitrary port");
-          #endif
+	if (!conn)
+		return -1;
 
-            udpReceivedEventHeader_t* ev = AllocateMemory(sizeof(udpReceivedEventHeader_t) + ntohs(packet->length));
-            MemCpy(ev+1, packet+1, ntohs(packet->length));
-            ev->length   = ntohs(packet->length);
-            ev->srcIP    = sourceIP;
-            ev->srcPort  = ntohs(packet->sourcePort);
-            ev->destPort = ntohs(packet->destPort);
+	unsigned len = size;
+	
+	unsigned mtu_udp = NET_PACKET_MTU - sizeof (proto_udp_t) - sizeof (net_ipv4) - 16;
 
-            udp_port_t* udpPort = findConnection(ntohs(packet->destPort));
-            if(udpPort == 0)
-            {
-            	 Printf("\n udp_receive find port fail \n");
-            	 FreeMemory(ev);
-            	 return;
-            }
+check:
+	if (size > mtu_udp) {
+		int r = net_proto_udp_sendto (fd, msg, mtu_udp, to);
 
+		if (r <= 0)
+			return r;
+		
+		msg += mtu_udp;
+		size -= mtu_udp;
+		
+		goto check;
+	}
 
-          	event_issue(&udpPort->eventQueue, EVENT_UDP_RECEIVED, ev, sizeof(udpReceivedEventHeader_t) + ntohs(packet->length));
+	int ret = net_proto_udp_write (conn, msg, size);
 
-            FreeMemory(ev);
-            break;
-        }
-    }
+	if (ret) {
+		/* blocking mode */
+		if (!(conn->flags & O_NONBLOCK)) {
+
+		} else {
+		/* non-blocking mode */
+		/* TODO: ? */
+			
+		}
+	}
+
+	return len;
 }
 
-void udp_send(network_adapter_t* adapter, const void* data, uint32_t length, uint16_t srcPort, IP4_t srcIP, uint16_t destPort, IP4_t destIP)
+extern unsigned long timer_ticks;
+int net_proto_udp_recv (int fd, char *msg, unsigned size)
 {
-    udpPacket_t* packet = AllocateMemory(sizeof(udpPacket_t)+length);
-    MemCpy(packet+1, data, length);
+	proto_udp_conn_t *conn = net_proto_udp_conn_find (fd);
 
-    packet->sourcePort  = htons(srcPort);
-    packet->destPort    = htons(destPort);
-    packet->length      = htons(length + sizeof(udpPacket_t));
-    packet->checksum    = 0; // 0 necessary for successful DHCP Process
-    // packet->checksum = 0; // for checksum calculation
-    //packet->checksum = htons(udptcpCalculateChecksum((void*)packet, length + sizeof(udpPacket_t), srcIP, destIP, 17));
+	if (!conn)
+		return -3;
 
-    ipv4_send(adapter, packet, length + sizeof(udpPacket_t), destIP, 17, adapter->features & OFFLOAD_UDP);
-    FreeMemory(packet);
+	if (!msg)
+		return -4;
+
+	int ret = 0;
+
+	/* blocking mode */
+	if (!(conn->flags & O_NONBLOCK)) {
+		unsigned long stime = GetTickCount();
+
+		while (!conn->len) {
+			if ((stime+10000) < GetTickCount())
+				return 0;
+
+			Schedule ();
+		}
+	} else {
+		if (!conn->len)
+			return 0;
+	}
+
+	if (!conn->data)
+		return -5;
+
+	if (conn->len >= size)
+		return -2;
+
+	ret = conn->len;
+
+	if (conn->len > 0)
+		memcpy (msg, conn->data, conn->len);
+
+	conn->len = 0;
+
+	DEL (conn->data);
+
+	return ret;
 }
 
-
-// user programs
-bool udp_usend(const void* data, uint32_t length, IP4_t destIP, uint16_t srcPort, uint16_t destPort)
+int net_proto_udp_recvfrom (int fd, char *msg, unsigned size, sockaddr_in *from)
 {
-    network_adapter_t* adapter = network_getFirstAdapter();
+	proto_udp_conn_t *conn = net_proto_udp_conn_find (fd);
 
-    if (adapter)
-    {
-        udp_send(adapter, data, length, srcPort, adapter->IP, destPort, destIP);
-        return true;
-    }
-    return false;
+	if (!conn)
+		return -3;
+
+	if (!msg)
+		return -4;
+
+	int ret = 0;
+
+	//int ip = conn->ip_dest;
+	
+	from->sin_addr = conn->ip_dest;
+	//kPrintf ("recvfrom -> ip: 0x%x\n", from->sin_addr);
+
+	/* blocking mode */
+	if (!(conn->flags & O_NONBLOCK)) {
+		/* TODO: timeout */
+		while (!conn->len)
+			Schedule ();
+	} else {
+		if (!conn->len) {
+			//conn->ip_dest = ip;
+			return 0;
+		}
+	}
+
+	//conn->ip_dest = ip;	// return old ip address back to structure
+
+	if (!conn->data)
+		return -5;
+
+	if (conn->len >= size)
+		return -2;
+
+	ret = conn->len;
+
+	if (conn->len > 0)
+		memcpy (msg, conn->data, conn->len);
+
+	conn->len = 0;
+
+	DEL (conn->data);
+
+	return ret;
 }
 
-#ifdef _UDP_DEBUG_
-static void printUDPPortType(uint16_t port)
+int net_proto_udp_close (int fd)
 {
-    // http://www.iana.org/assignments/port-numbers
-    // http://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers
+	proto_udp_conn_t *conn = net_proto_udp_conn_find (fd);
 
-    switch (port)
-    {
-    case 20:
-        Printf("FTP - data transfer");
-        break;
-    case 21:
-        Printf("FTP - control (command)");
-        break;
-    case 22:
-        Printf("Secure Shell (SSH)");
-        break;
-    case 53:
-        Printf("Domain Name System (DNS)");
-        break;
-    case 67:
-        Printf("DHCPv4 Server");
-        break;
-    case 68:
-        Printf("DHCPv4 Client");
-        break;
-    case 80:
-        Printf("HTTP");
-        break;
-    case 137:
-        Printf("NetBIOS Name Service");
-        break;
-    case 138:
-        Printf("NetBIOS Datagram Service");
-        break;
-    case 139:
-        Printf("NetBIOS Session Service");
-        break;
-    case 143:
-        Printf("IMAP)");
-        break;
-    case 546:
-        Printf("DHCPv6 Client");
-        break;
-    case 547:
-        Printf("DHCPv6 Server");
-        break;
-    case 1257:
-        Printf("shockwave2");
-        break;
-    case 1900:
-        Printf("SSDP");
-        break;
-    case 3544:
-        Printf("Teredo Tunneling");
-        break;
-    case 5355:
-        Printf("LLMNR)");
-        break;
-    default:
-        Printf("Port: %u", port);
-        break;
-    }
+	if (!conn)
+		return -1;
 
+	int ret = net_proto_udp_conn_del (conn);
+
+	return ret;
 }
 
-static void udp_debug(const udpPacket_t* udp)
+int net_proto_udp_fcntl (int fd, int cmd, long arg)
 {
-    Printf("  %u ==> %u   Len: %u\n", ntohs(udp->sourcePort), ntohs(udp->destPort), ntohs(udp->length));
-    printUDPPortType(ntohs(udp->sourcePort)); Printf(" ==> "); printUDPPortType(ntohs(udp->destPort));
+	proto_udp_conn_t *conn = net_proto_udp_conn_find (fd);
+
+	if (!conn)
+		return -1;
+
+	switch (cmd) {
+		case F_GETFL:
+			return conn->flags;
+		case F_SETFL:
+			conn->flags = arg;
+			return 0;
+	}
+
+	return -1;
 }
-#endif
+
+int net_proto_udp_bind (int fd, sockaddr_in *addr, socklen_t len)
+{
+	proto_udp_conn_t *conn = net_proto_udp_conn_find (fd);
+
+	if (!conn)
+		return -1;
+
+	netif_t *netif;
+	for (netif = netif_list.next; netif != &netif_list; netif = netif->next) {
+		net_proto_udp_conn_set (conn, netif, addr->sin_port, 0, 0);
+		conn->bind = 1;
+		return 0;
+	}
+
+	return -1;
+}
+
+/** special functions for kernel purposes **/
+/* set source ip address as anycast */
+int net_proto_udp_anycast (int fd)
+{
+	proto_udp_conn_t *conn = net_proto_udp_conn_find (fd);
+
+	if (!conn)
+		return -1;
+
+	conn->ip_source = INADDR_ANY;
+
+	return 0;
+}
+
+/* set source port to specified one */
+int net_proto_udp_port (int fd, net_port port)
+{
+	proto_udp_conn_t *conn = net_proto_udp_conn_find (fd);
+
+	if (!conn)
+		return -1;
+
+	conn->port_source = port;
+
+	return 0;
+}
+
+int net_proto_udp_select (int readfd, int writefd, int exceptfd)
+{
+	int fd = -1;
+  
+	if (readfd)
+		fd = readfd;
+	else if (writefd)
+		fd = writefd;
+	else if (exceptfd)
+		fd = exceptfd;
+
+	proto_udp_conn_t *conn = net_proto_udp_conn_find (fd);
+
+	if (!conn)
+		return -1;
+
+	/* New incoming connection */
+	if (conn->state == PROTO_UDP_CONN_STATE_NEW) {
+		conn->state = 0;
+		return 1;
+	}
+
+	/* Are some data available ? */
+	if (conn->len > 0)
+		return 1;
+	
+	return 0;
+}
+
+/** UDP protocol
+ *  hardcore code :P
+ */
+
+/* handler for received udp datagrams */
+unsigned net_proto_udp_handler (packet_t *packet, proto_ip_t *ip, char *buf, unsigned len)
+{
+	unsigned char ret;
+	proto_udp_t *udp = (proto_udp_t *) buf;
+
+	/* check ip address and ports first */
+	proto_udp_conn_t *conn = net_proto_udp_conn_check (ip->ip_dest, udp->port_dest, ip->ip_source, udp->port_source, &ret);
 
 
-/*
-* Copyright (c) 2010-2016 The PrettyOS Project. All rights reserved.
-*
-* http://www.prettyos.de
-*
-* Redistribution and use in source and binary forms, with or without modification,
-* are permitted provided that the following conditions are met:
-*
-* 1. Redistributions of source code must retain the above copyright notice,
-*    this list of conditions and the following disclaimer.
-*
-* 2. Redistributions in binary form must reproduce the above copyright
-*    notice, this list of conditions and the following disclaimer in the
-*    documentation and/or other materials provided with the distribution.
-*
-* THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-* ``AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
-* TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
-* PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDERS OR
-* CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
-* EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
-* PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
-* OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
-* WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
-* OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
-* ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-*/
+	Printf("net_proto_udp_conn_check %d %d\n",conn,ret);
+
+	if (!conn || ret == 0)
+		return 1;
+
+	if (ret == 1)
+		conn->ip_dest = ip->ip_source;
+
+	/* HACK: very ugly */
+	conn->port_dest = udp->port_source;
+
+	unsigned short l = htons (udp->len);
+
+	if (l < 1)
+		return 0;
+
+	/* save data to buffer; +8 because udp packet contain 8byte header and than data */
+	int ret2 = net_proto_udp_read_cache (conn, buf+8, l-8);
+
+	if (ret2 < 1)
+		return 0;
+
+	return 1;
+}
+
+/* save received data to buffer */
+int net_proto_udp_read_cache (proto_udp_conn_t *conn, char *data, unsigned len)
+{
+	Printf("net_proto_udp_handler4");
+
+	if (!data || !conn || !len)
+		return 0;
+
+
+	Printf("net_proto_udp_handler5");
+
+	if (!conn->len)
+		conn->data = (char *) NEW (sizeof (char) * (len + 1));
+	else
+		conn->data = (char *) krealloc (conn->data, (sizeof (char) * (conn->len+len)));
+
+	Printf("net_proto_udp_handler6");
+
+	if (!conn->data)
+		return -1;
+
+	Printf("net_proto_udp_handler7");
+
+	memcpy (conn->data+conn->len, data, len);
+
+	conn->len += len;
+
+	//conn->data[conn->len] = '\0';
+
+	return conn->len;
+}
+
+int net_proto_udp_write (proto_udp_conn_t *conn, char *data, unsigned len)
+{
+	if (!conn || !len || !data)
+	{
+		Printf("net_proto_udp_write !conn || !len || !data\n ");
+		return 0;
+	}
+
+	mac_addr_t mac_dest;
+	unsigned get = arp_cache_get (conn->ip_dest, &mac_dest);
+
+	Printf("net_proto_udp_write \n\n\n\n\n");
+	net_proto_ip_print(conn->ip_dest);
+
+	if (!get)
+	{
+		conn->netif = netif_findbyname ("eth0");
+		arp_send_request (conn->netif, conn->ip_dest);
+
+		unsigned i = 0;
+		/* 100ms for waiting on ARP reply */
+		while (i < 100) {
+			get = arp_cache_get (conn->ip_dest, &mac_dest);
+
+			if (get)
+				break;
+
+			/* TODO: make better waiting for ARP reply */
+			Sleep (10);
+
+			Schedule ();
+	
+			i ++;
+		}
+
+		if (!get)
+		{
+			Printf("net_proto_udp_write !get\n ");
+			return 0;
+		}
+	}
+
+	/* packet header */
+	packet_t *packet = (packet_t *) &packet_prealloc;
+
+	if (!packet)
+	{
+		Printf("net_proto_udp_write !packet\n ");
+		return 0;
+	}
+
+	memcpy (&packet->mac_source, conn->netif->dev->dev_addr, 6);
+	memcpy (&packet->mac_dest, mac_dest, 6);
+	packet->type = NET_PACKET_TYPE_IPV4;
+
+	/* ip layer */
+	proto_ip_t *ip = (proto_ip_t *) &proto_ip_prealloc;
+
+	if (!ip)
+	{
+		Printf("net_proto_udp_write !ip\n ");
+		return 0;
+	}
+
+	/* there are some fixed values - yeah it is horrible */
+	ip->ver = 4;
+	ip->head_len = 5;
+
+	ip->flags = 0;
+	ip->frag = 0;
+	ip->ttl = 64;
+	ip->checksum = 0;
+	ip->proto = NET_PROTO_IP_TYPE_UDP;
+	ip->ip_source = conn->ip_source;
+	ip->ip_dest = conn->ip_dest;
+
+
+	proto_udp_t *udp = (proto_udp_t *) &proto_udp_prealloc;
+
+	if (!udp)
+	{
+		Printf("net_proto_udp_write !udp\n ");
+		return 0;
+	}
+
+	udp->port_source = conn->port_source;
+	udp->port_dest = conn->port_dest;
+	udp->len = swap16 (8 + len);
+	udp->checksum = 0;
+
+	unsigned l = (ip->head_len * 4);
+
+	/* calculate total length of packet (udp/ip) */
+	ip->total_len = swap16 (l + 8 + len);
+
+	if ((len + 8) > (NET_PACKET_MTU + sizeof (proto_udp_t) + 1)) {
+		Printf("UDP -> data lenght is exceed: %d/%d bytes", len+8, NET_PACKET_MTU + sizeof (proto_udp_t) + 1);
+		return 0;
+	}
+	
+	char *buf_udp = (char *) &buf_udp_prealloc;
+
+	if (!buf_udp)
+		return 0;
+
+	memcpy (buf_udp, (char *) udp, 8);
+	memcpy (buf_udp+8, data, len);
+
+	buf_udp[8 + len] = '\0';
+
+	/* calculate checksum and put it to udp header */
+	// FIXME: wrong checksum
+	proto_udp_t *udp_ = (proto_udp_t *) buf_udp;
+	udp_->checksum = checksum16_udp (conn->ip_source, conn->ip_dest, buf_udp, 8 + len); // checksum16 (buf_udp, 8 + len);
+
+	/* send udp header+data to ip layer */
+	unsigned ret = net_proto_ip_send (conn->netif, packet, ip, (char *) buf_udp, 8 + len);
+
+	Printf("net_proto_udp_write  ret %d\n",ret);
+	return ret;
+}
+
+
+/* Create new UDP connection */
+int net_proto_udp_conn_add (fd_t *fd)
+{
+	proto_udp_conn_t *conn;
+
+	/* alloc and init context */
+	conn = (proto_udp_conn_t *) NEW (sizeof (proto_udp_conn_t));
+
+	if (!conn) {
+		errno_set (ENOMEM);
+		return -1;
+	}
+
+	memset (conn, 0, sizeof (proto_udp_conn_t));
+
+	conn->flags = 0;
+
+	conn->fd = fd->id;
+
+	/* add into list */
+	conn->next = &proto_udp_conn_list;
+	conn->prev = proto_udp_conn_list.prev;
+	conn->prev->next = conn;
+	conn->next->prev = conn;
+
+	return 0;
+}
+
+/* Setup new connection */
+int net_proto_udp_conn_set (proto_udp_conn_t *conn, netif_t *eth, net_port port_source, net_ipv4 ip_dest, net_port port_dest)
+{
+	if (!conn || !eth)
+		return 0;
+
+	conn->ip_source = eth->ip;
+	conn->ip_dest = ip_dest;
+
+	conn->port_source = port_source;
+	conn->port_dest = port_dest;
+
+	conn->netif = eth;
+
+	conn->bind = 0;
+	conn->state = 0;
+
+	conn->len = 0;
+	conn->data = 0;
+
+	return 1;
+}
+
+/* Delete existing connection from list */
+unsigned net_proto_udp_conn_del (proto_udp_conn_t *conn)
+{
+	if (!conn)
+		return 0;
+
+	if (conn->len)
+		DEL (conn->data);
+
+	conn->len = 0;
+
+	conn->next->prev = conn->prev;
+	conn->prev->next = conn->next;
+
+	DEL (conn);
+
+	return 1;
+}
+
+proto_udp_conn_t *net_proto_udp_conn_check (net_ipv4 ip_source, net_port port_source, net_ipv4 ip_dest, net_port port_dest, unsigned char *ret)
+{
+	*ret = 0;
+	proto_udp_conn_t *conn = NULL;
+	proto_udp_conn_t *conn_ret = NULL;
+	
+	for (conn = proto_udp_conn_list.next; conn != &proto_udp_conn_list; conn = conn->next)
+	{
+		if(conn->ip_dest == INADDR_BROADCAST)
+		{
+			if( conn->port_source == port_source)
+			{
+				*ret = 2;
+				return conn;
+			}
+		}
+	}
+
+	if (ip_source != INADDR_BROADCAST) {
+		for (conn = proto_udp_conn_list.next; conn != &proto_udp_conn_list; conn = conn->next) {
+			if (conn->ip_source == ip_source && conn->port_source == port_source) {
+				if (conn->ip_dest == ip_dest) {
+					*ret = 2;
+
+					/*if (conn->bind) {
+						*ret = 1;Printf ("OO11122\n");
+						conn->state = PROTO_UDP_CONN_STATE_NEW;
+					}*/
+
+					return conn;
+				}
+
+				*ret = 1;
+
+				conn_ret = conn;
+			}
+		}
+	} else {	/* broadcast packet */
+		for (conn = proto_udp_conn_list.next; conn != &proto_udp_conn_list; conn = conn->next) {
+			if (conn->port_source == port_source && conn->port_dest == port_dest) {
+				conn->ip_source = ip_dest;
+				conn->ip_dest = ip_source;
+
+				*ret = 2;
+				return conn;
+			}
+		}
+	}
+
+	if (*ret == 1) {
+		//if (!conn_ret->bind) {
+			conn_ret = 0;
+
+			for (conn = proto_udp_conn_list.next; conn != &proto_udp_conn_list; conn = conn->next) {
+				if (conn->bind) {
+					if (conn->ip_source == ip_source && conn->port_source == port_source) {
+						conn_ret = conn;
+						conn->state = PROTO_UDP_CONN_STATE_NEW;
+					}
+				}
+			}
+		}
+
+	return conn_ret;
+}
+
+proto_udp_conn_t *net_proto_udp_conn_find (int fd)
+{
+	proto_udp_conn_t *conn = NULL;
+	for (conn = proto_udp_conn_list.next; conn != &proto_udp_conn_list; conn = conn->next) {
+		if (conn->fd == fd)
+			return conn;
+	}
+	
+	return 0;
+}
+
+/* init of udp protocol */
+unsigned init_net_proto_udp ()
+{
+	proto_udp_conn_list.next = &proto_udp_conn_list;
+	proto_udp_conn_list.prev = &proto_udp_conn_list;
+
+	return 1;
+}

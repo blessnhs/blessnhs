@@ -16,26 +16,9 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef _ICMP_H
-#define _ICMP_H
+#ifndef _CHECKSUM_H
+#define _CHECKSUM_H
 
-#include "ip.h"
-
-#define NET_ICMP_TYPE_PING_REQUEST	0x8
-#define NET_ICMP_TYPE_PING_REPLY	0x0
-#define NET_ICMP6_TYPE_PING_REQUEST	0x80
-#define NET_ICMP6_TYPE_PING_REPLY	0x81
-
-/* ICMP layer structure */
-typedef struct proto_icmp_t {
-	unsigned char type;
-	unsigned char code;
-	unsigned short checksum;
-	unsigned short ident;
-	unsigned short seq;
-} proto_icmp_t;
-
-extern unsigned net_proto_icmp_ping (netif_t *netif, net_ipv4 ip);
-extern unsigned net_proto_icmp6_ping (netif_t *netif, net_ipv6 ip);
+extern unsigned short checksum16 (void *_buf, int len);
 
 #endif

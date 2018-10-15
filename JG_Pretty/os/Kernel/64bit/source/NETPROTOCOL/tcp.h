@@ -1,152 +1,142 @@
-#ifndef TCP_H
-#define TCP_H
+/*
+ *  ZeX/OS
+ *  Copyright (C) 2008  Tomas 'ZeXx86' Jedrzejek (zexx86@zexos.org)
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 
-#include "../network/network.h"
-#include "../task.h"
-#include "../window.h"
-#include "../network/events.h"
+#ifndef _TCP_H
+#define _TCP_H
 
-// http://tools.ietf.org/html/rfc793
-// http://www.medianet.kent.edu/techreports/TR2005-07-22-tcp-EFSM.pdf
+#include "ip.h"
 
-typedef enum {CLOSED, LISTEN, SYN_SENT, SYN_RECEIVED, ESTABLISHED, FIN_WAIT_1, FIN_WAIT_2, CLOSING, CLOSE_WAIT, LAST_ACK, TIME_WAIT, TCP_ANY} TCP_state;
-typedef enum {SYN_FLAG, SYN_ACK_FLAG, ACK_FLAG, FIN_FLAG, FIN_ACK_FLAG, RST_FLAG, RST_ACK_FLAG} tcpFlags;
+#define PROTO_TCP_CONN_STATE_ESTABILISH		0x1
+#define PROTO_TCP_CONN_STATE_ESTABILISHED	0x2
+#define PROTO_TCP_CONN_STATE_DISCONNECTED	0x4
+#define PROTO_TCP_CONN_STATE_WAIT		0x8
+#define PROTO_TCP_CONN_STATE_READY		0x10
+#define PROTO_TCP_CONN_STATE_CLOSE		0x20
+#define PROTO_TCP_CONN_STATE_ESTABILISHERROR	0x40
 
-typedef struct
-{
-    uint16_t sourcePort;
-    uint16_t destPort;
-    uint32_t sequenceNumber;
-    uint32_t acknowledgmentNumber;
-    uint8_t  reserved   : 4;
-    uint8_t  dataOffset : 4;                    // The number of 32 bit words in the TCP Header
+/* TCP connection structure */
+typedef struct proto_tcp_conn_context {
+	struct proto_tcp_conn_context *next, *prev;
 
-    // Flags (6 Bit)
-    uint8_t  FIN : 1;                           // No more data from sender
-    uint8_t  SYN : 1;                           // Synchronize sequence numbers
-    uint8_t  RST : 1;                           // Reset
-    uint8_t  PSH : 1;                           // Push
-    uint8_t  ACK : 1;                           // Acknowledgment
-    uint8_t  URG : 1;                           // Urgent
-    // only shown in wireshark
-    uint8_t  ECN : 1;                           // ECN (reserved)
-    uint8_t  CWR : 1;                           // CWR (reserved)
+	net_ipv4 ip_source;
+	net_ipv4 ip_dest;
 
-    uint16_t window;
-    uint16_t checksum;
-    uint16_t urgentPointer;
-} __attribute__((packed)) tcpPacket_t;
+	net_port port_source;
+	net_port port_dest;
 
-typedef struct
-{
-    uint32_t SEQ; // Sequence number
-    uint32_t ACK; // Acknoledgement number
-    uint32_t LEN; // segment length
-    uint32_t WND; // segment windows
-    tcpFlags CTL; // control bits
-} tcpSegment_t;
+	unsigned seq;
+	unsigned ack;
 
-typedef struct
-{
-    uint32_t UNA;   // Send Unacknowledged
-    uint32_t NXT;   // Send Next
-    uint32_t ISS;   // Initial send sequence number
-    uint16_t WND;   // Send Window
-} tcpSend_t;
+	unsigned short flags;
 
-typedef struct
-{
-    uint32_t NXT;   // Sequence number of next received set
-    uint32_t IRS;   // Initial receive sequence number
-    uint32_t dACK;  // duplicated ACK counter
-    uint32_t ACKforDupACK;
-    uint16_t WND;   // Receive Window
-} tcpRcv_t;
+	unsigned char state;
 
-typedef struct
-{
-    tcpSend_t    SND;
-    tcpRcv_t     RCV;
-    tcpSegment_t SEG;    // information about segment to be sent next
-    uint32_t     srtt;   // (milliseconds)
-    uint32_t     rttvar; // (milliseconds)
-    uint32_t     rto;    // retransmission timeout (milliseconds)
-    uint32_t     msl;    // maximum segment lifetime (milliseconds)
-    bool         retrans;
-} tcpTransmissionControlBlock_t;
+	unsigned char bind;
 
-typedef struct
-{
-    IP4_t    IP;
-    uint16_t port;
-} tcpSocket_t;
+	unsigned short fd;
 
-typedef struct
-{
-    uint32_t                      ID;
-    tcpSocket_t                   localSocket;
-    tcpSocket_t                   remoteSocket;
-    network_adapter_t*            adapter;
-    tcpTransmissionControlBlock_t tcb;
-    TCP_state                     TCP_PrevState;
-    TCP_state                     TCP_CurrState;
-    event_queue_t   			  eventQueue;
-    list_t                        inBuffer;
-    list_t                        OutofOrderinBuffer;
-    list_t                        outBuffer;
-    list_t                        sendBuffer;
-    bool                          passive; // Used to enable output of incoming packets in the kernel console
-} tcpConnection_t;
+	unsigned char cross;
 
-typedef struct
-{
-    uint32_t connectionID;
-    size_t   length;
-} __attribute__((packed)) tcpReceivedEventHeader_t;
+	netif_t *netif;
 
-typedef struct
-{
-    uint32_t connectionID;
-    IP4_t     sourceIP;
-    uint16_t sourcePort;
-} __attribute__((packed)) tcpConnectedEventHeader_t;
+	unsigned short offset;
+	unsigned short len;
+	char *data;
+} proto_tcp_conn_t;
 
-typedef struct
-{
-    uint32_t  seq;
-    tcpReceivedEventHeader_t ev;
-} tcpIn_t;
+/* TCPv6 connection structure */
+typedef struct proto_tcp6_conn_context {
+	struct proto_tcp6_conn_context *next, *prev;
 
-typedef struct
-{
-    void*        data;
-    tcpSegment_t segment;
-    uint32_t     time_ms_transmitted;
-} tcpOut_t;
+	net_ipv6 ip_source;
+	net_ipv6 ip_dest;
 
-typedef struct
-{
-    void*  data;
-    size_t length;
-} tcpSendBufferPacket;
+	net_port port_source;
+	net_port port_dest;
+
+	unsigned seq;
+	unsigned ack;
+
+	unsigned short flags;
+
+	unsigned char state;
+
+	unsigned char bind;
+
+	unsigned short fd;
+
+	unsigned char cross;
+
+	netif_t *netif;
+
+	unsigned short offset;
+	unsigned short len;
+	char *data;
+} proto_tcp6_conn_t;
+
+/* TCP server backlog structure */
+typedef struct proto_tcp_backlog_context {
+	struct proto_tcp_backlog_context *next, *prev;
+
+	net_ipv4 ip;
+
+	net_port port;
+
+	unsigned seq;
+
+	proto_tcp_conn_t *conn;
+} proto_tcp_backlog_t;
+
+/* TCPv6 server backlog structure */
+typedef struct proto_tcp6_backlog_context {
+	struct proto_tcp6_backlog_context *next, *prev;
+
+	net_ipv6 ip;
+
+	net_port port;
+
+	unsigned seq;
+
+	proto_tcp6_conn_t *conn;
+} proto_tcp6_backlog_t;
+
+/* TCP layer structure */
+typedef struct proto_tcp_t {
+	net_port port_source;		// 2
+	net_port port_dest;		// 4
+
+	unsigned seq;			// 8
+	unsigned ack;			// 12
+
+	unsigned char res:4;		// 13
+	unsigned char data_offset:4;	
+
+	unsigned char flags;		// 14
+
+	unsigned short window;		// 16
+
+	unsigned short checksum;	// 18
+
+//	unsigned char *options;
+} proto_tcp_t;
 
 
-tcpConnection_t* tcp_findConnectionID(uint32_t ID);
-tcpConnection_t* tcp_createConnection(void);
-void tcp_deleteConnection(tcpConnection_t* connection);
-void tcp_cleanup(tcpConnection_t* connection);
-void tcp_bind(tcpConnection_t* connection, network_adapter_t* adapter);
-void tcp_connect(tcpConnection_t* connection);
-void tcp_close(tcpConnection_t* connection);
-void tcp_receive(network_adapter_t* adapter, const tcpPacket_t* tcp, int length, IP4_t transmittingIP);
-void tcp_send(tcpConnection_t* connection, const void* data, uint32_t length);
-void tcp_showConnections(void);
-tcpConnection_t* tcp_findConnection(IP4_t IP, uint16_t port, network_adapter_t* adapter, TCP_state state);
-void scheduledDeleteConnection(void* data, size_t length);
-// User functions
-uint32_t tcp_uconnect(IP4_t IP, uint16_t port);
-bool     tcp_usend(uint32_t ID, const void* data, size_t length);
-bool     tcp_uclose(uint32_t ID);
-
+extern unsigned init_net_proto_tcp ();
+extern unsigned init_net_proto_tcp6 ();
 
 #endif

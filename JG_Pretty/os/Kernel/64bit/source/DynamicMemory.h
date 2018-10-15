@@ -84,6 +84,7 @@ static int FindFreeBlockInBitmap( int iBlockListIndex );
 static void SetFlagInBitmap( int iBlockListIndex, int iOffset, BYTE bFlag );
 static BOOL FreeBuddyBlock( int iBlockListIndex, int iBlockOffset );
 static BYTE GetFlagInBitmap( int iBlockListIndex, int iOffset );
+void *krealloc (void *blk, size_t size);
 
 #define NEW AllocateMemory
 #define DEL FreeMemory

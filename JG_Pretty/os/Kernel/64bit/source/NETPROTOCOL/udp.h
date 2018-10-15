@@ -1,40 +1,91 @@
-#ifndef UDP_H
-#define UDP_H
+/*
+ *  ZeX/OS
+ *  Copyright (C) 2008  Tomas 'ZeXx86' Jedrzejek (zexx86@zexos.org)
+ *  Copyright (C) 2009  Tomas 'ZeXx86' Jedrzejek (zexx86@zexos.org)
+ *  Copyright (C) 2010  Tomas 'ZeXx86' Jedrzejek (zexx86@zexos.org)
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 
-#include "../network/network.h"
-#include "../task.h"
-#include "../network/events.h"
+#ifndef _UDP_H
+#define _UDP_H
 
-typedef struct
-{
-    IP4_t     srcIP;
-    uint16_t srcPort;
-    uint16_t destPort;
-    size_t   length;
-} __attribute__((packed)) udpReceivedEventHeader_t;
+#include "ip.h"
 
-typedef struct
-{
-    uint16_t sourcePort;
-    uint16_t destPort;
-    uint16_t length;
-    uint16_t checksum;
-} __attribute__((packed)) udpPacket_t;
+#define PROTO_UDP_CONN_STATE_NEW	0x1
+
+/* UDP connection structure */
+typedef struct proto_udp_conn_context {
+	struct proto_udp_conn_context *next, *prev;
+
+	net_ipv4 ip_source;
+	net_ipv4 ip_dest;
+
+	net_port port_source;
+	net_port port_dest;
+
+	unsigned short flags;
+
+	unsigned char bind;
+
+	unsigned char state;
+	
+	unsigned short fd;
+
+	netif_t *netif;
+
+	unsigned len;
+	char *data;
+} proto_udp_conn_t;
+
+/* UDP connection structure */
+typedef struct proto_udp6_conn_context {
+	struct proto_udp6_conn_context *next, *prev;
+
+	net_ipv6 ip_source;
+	net_ipv6 ip_dest;
+
+	net_port port_source;
+	net_port port_dest;
+
+	unsigned short flags;
+
+	unsigned char bind;
+
+	unsigned short fd;
+
+	netif_t *netif;
+
+	unsigned len;
+	char *data;
+} proto_udp6_conn_t;
+
+/* UDP layer structure */
+typedef struct proto_udp_t {
+	net_port port_source;		// 2
+	net_port port_dest;		// 4
+
+	unsigned short len;		// 6
+
+	unsigned short checksum;	// 8
+} proto_udp_t;
 
 
-typedef struct
-{
-	event_queue_t   eventQueue;
-    uint16_t port;
-    bool isActivate;
-} udp_port_t;
-
-bool udp_bind(uint16_t port);
-void udp_unbind(uint16_t port);
-void udp_receive(network_adapter_t* adapter, const udpPacket_t* packet, IP4_t sourceIP);
-void udp_send(network_adapter_t* adapter, const void* data, uint32_t length, uint16_t srcPort, IP4_t srcIP, uint16_t destPort, IP4_t destIP);
-bool udp_usend(const void* data, uint32_t length, IP4_t destIP, uint16_t srcPort, uint16_t destPort);
-void udp_cleanup(uint16_t port);
-udp_port_t* udp_findport(uint16_t port);
+/* externs */
+extern int net_proto_udp_anycast (int fd);
+extern int net_proto_udp_port (int fd, net_port port);
+extern unsigned init_net_proto_udp ();
+extern unsigned init_net_proto_udp6 ();
 
 #endif

@@ -70,4 +70,6 @@ void InitializeMutex( MUTEX* pstMutex );
 void Lock( MUTEX* pstMutex );
 void Unlock( MUTEX* pstMutex );
 
+#define MUTEX_CREATE(name) MUTEX name = { .bLockFlag = 0,.dwLockCount = 0,.qwTaskID = 0xFFFFFFFFFFFFFFFF }
+
 #endif /*__SYNCHRONIZATION_H__*/
