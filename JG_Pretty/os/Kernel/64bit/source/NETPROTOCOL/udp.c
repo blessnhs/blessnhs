@@ -380,9 +380,6 @@ unsigned net_proto_udp_handler (packet_t *packet, proto_ip_t *ip, char *buf, uns
 	/* check ip address and ports first */
 	proto_udp_conn_t *conn = net_proto_udp_conn_check (ip->ip_dest, udp->port_dest, ip->ip_source, udp->port_source, &ret);
 
-
-	Printf("net_proto_udp_conn_check %d %d\n",conn,ret);
-
 	if (!conn || ret == 0)
 		return 1;
 
@@ -409,25 +406,16 @@ unsigned net_proto_udp_handler (packet_t *packet, proto_ip_t *ip, char *buf, uns
 /* save received data to buffer */
 int net_proto_udp_read_cache (proto_udp_conn_t *conn, char *data, unsigned len)
 {
-	Printf("net_proto_udp_handler4");
-
 	if (!data || !conn || !len)
 		return 0;
-
-
-	Printf("net_proto_udp_handler5");
 
 	if (!conn->len)
 		conn->data = (char *) NEW (sizeof (char) * (len + 1));
 	else
 		conn->data = (char *) krealloc (conn->data, (sizeof (char) * (conn->len+len)));
 
-	Printf("net_proto_udp_handler6");
-
 	if (!conn->data)
 		return -1;
-
-	Printf("net_proto_udp_handler7");
 
 	memcpy (conn->data+conn->len, data, len);
 
@@ -448,9 +436,6 @@ int net_proto_udp_write (proto_udp_conn_t *conn, char *data, unsigned len)
 
 	mac_addr_t mac_dest;
 	unsigned get = arp_cache_get (conn->ip_dest, &mac_dest);
-
-	Printf("net_proto_udp_write \n\n\n\n\n");
-	net_proto_ip_print(conn->ip_dest);
 
 	if (!get)
 	{
@@ -555,8 +540,6 @@ int net_proto_udp_write (proto_udp_conn_t *conn, char *data, unsigned len)
 
 	/* send udp header+data to ip layer */
 	unsigned ret = net_proto_ip_send (conn->netif, packet, ip, (char *) buf_udp, 8 + len);
-
-	Printf("net_proto_udp_write  ret %d\n",ret);
 	return ret;
 }
 
