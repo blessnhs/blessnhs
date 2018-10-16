@@ -134,4 +134,9 @@ static void TestNetwork( const char* pcParameterBuffer );
 static void CreateDirectory( const char* pcParameterBuffer );
 static void Ping(const char* pcParameterBuffer );
 
+
+
+
+
+
 #endif /*__CONSOLESHELL_H__*/

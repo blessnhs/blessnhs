@@ -248,7 +248,10 @@ int send (int fd, char *msg, size_t size, int flags)
 	socket_t *sock = socket_getbyfd (fd);
 
 	if (!sock)
+	{
+		Printf("send %d fail\n", fd);
 		return -1;
+	}
 
 //	Printf("send (%d) -> %s", fd, msg);
 

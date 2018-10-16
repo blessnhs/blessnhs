@@ -25,6 +25,7 @@ NETPROTOCOL_SOURCEDIRECTORY	= Source/NETPROTOCOL
 CDI_SOURCEDIRECTORY	= Source/CDI
 FAT32_SOURCEDIRECTORY	= Source/FAT32
 SATA_SOURCEDIRECTORY	= Source/SATA
+MODULE_SOURCEDIRECTORY	= Source/MODULE
 
 ################################################################################
 # 빌드 항목 및 빌드 방법 설정
@@ -106,6 +107,9 @@ $(ENTRYPOINTOBJECTFILE): $(ENTRYPOINTSOURCEFILE)
 	$(GCC64) -c $<	
 	
 %.o: ../$(SATA_SOURCEDIRECTORY)/%.c
+	$(GCC64) -c $<	
+
+%.o: ../$(MODULE_SOURCEDIRECTORY)/%.c
 	$(GCC64) -c $<	
 
 # .asm 파일을 .o 파일로 바꾸는 규칙 정의

@@ -367,6 +367,10 @@ static void UsbReadSector( const char* pcParameterBuffer )
 
 static void TestNetwork( const char* pcParameterBuffer )
 {
+
+	ftpmain();
+	return;
+
 	char hostName[ 30 ];
 	memset(hostName,0,sizeof(hostName));
 	PARAMETERLIST stList;
@@ -410,7 +414,7 @@ static void TestNetwork( const char* pcParameterBuffer )
 	char buf[2048];
 	memset(buf,0,2048);
 	int ret = recv (ncsock, buf, 499, 0);
-	Printf ("recv %s\n",buf);
+	Printf ("%s\n",buf);
 	memset(buf,0,2048);
 
 	char id[100];
