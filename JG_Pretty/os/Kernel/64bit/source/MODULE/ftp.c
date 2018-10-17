@@ -2,7 +2,7 @@
 #include "../NETPROTOCOL/socket.h"
 #include "../console.h"
 #include "../dynamicMemory.h"
-
+#include "../fat32/fat_filelib.h"
 //////////////////////////////////////////////begin ftp
 
 // Map Ftp Command to Handler
@@ -116,31 +116,34 @@ static void recvProtocol(int sock, char *recvBuffer, int bufferSize) {
 
 unsigned int downloadFile(int sock, char *filePath, unsigned int fileSize,
 		int hashFlag) {
-	/*	char readBuffer[TEMP_BUFFER_SIZE];
-	 unsigned int readBytes, totalBytes, numHash;
+	char readBuffer[TEMP_BUFFER_SIZE];
+	unsigned int readBytes, totalBytes, numHash;
 
-	 int fd = open(filePath, O_WRONLY | O_CREAT, 0744);
+
+	 FL_FILE *fd = fl_fopen(filePath, "w");
+	 if(fd == 0)
+		 return 0;
 
 	 totalBytes = numHash = 0;
 	 while (totalBytes < fileSize) {
-	 if ((readBytes = read(sock, readBuffer, TEMP_BUFFER_SIZE)) <= 0) {
-	 close(fd);
+	 if ((readBytes = recv(sock, readBuffer, TEMP_BUFFER_SIZE, 0)) <= 0) {
+		 fl_fclose(fd);
 	 return totalBytes;
 	 }
-	 write(fd, readBuffer, readBytes);
+
+	 int cnt = fl_fwrite(readBuffer, 1,readBytes,fd);
 	 totalBytes += readBytes;
 
 	 if (hashFlag) {
 	 if ((totalBytes/TEMP_BUFFER_SIZE) > numHash) {
 	 numHash++;
-	 printf("#");
+	 Printf("#");
 	 }
 	 }
 	 }
-	 close(fd);
-	 printf("\n");
+	 fl_fclose(fd);
 
-	 return totalBytes;*/
+	 return totalBytes;
 }
 
 unsigned int uploadFile(int sock, char *filePath, int hashFlag) {
@@ -215,6 +218,9 @@ void startFtpClient(char *ip, char *port) {
 		 }
 		 // call handler
 		 commandHandle(cmd);
+
+		 if(strcmp(cmd,"quit") == 0)
+			 break;
 	 }
 
 }
@@ -381,7 +387,7 @@ void list(char *listCmd) {
 
 // file download
 void get(char *getCmd) {
-	/*	int port;
+	 int port;
 	 unsigned int fileSize;
 	 char ip[16], filePath[FILENAME_SIZE], fileName[50];
 	 char sendBuffer[BUFFER_SIZE];
@@ -393,7 +399,9 @@ void get(char *getCmd) {
 
 	 memcpy(filePath,"/",2);
 
-	 sscanf(getCmd, "%*s %s%*c", fileName);
+
+	 gets_s(fileName, 50);
+	 SPrintf(getCmd, "%*s %s%*c", fileName);
 	 SPrintf(filePath, "%s/%s", filePath, fileName);
 
 	 debug("get");
@@ -412,8 +420,34 @@ void get(char *getCmd) {
 	 printMessage(recvBuffer);
 
 	 // extract fileSize
-	 sscanf(strchr(recvBuffer, '(')+1, "%u", &fileSize);
-	 Printf("fileSize: %u\n", fileSize);
+
+	 int i=0;
+	 int pos = 0;
+	 char size[10];
+	 char begin = 0;
+	 while(1)
+	 {
+		 if(begin == 1 )
+			 size[pos++] = recvBuffer[i];
+
+		 if(recvBuffer[i] == '(')
+		 {
+			 begin = 1;
+		 }
+
+		 if(recvBuffer[i] == ')')
+		 {
+			 size[pos] = 0;
+			 break;
+		 }
+
+		 i++;
+	 }
+
+	 fileSize = atoi(size);
+	 //
+	 // sscanf(strchr(recvBuffer, '(')+1, "%u", &fileSize);
+	 Printf("fileSize: %d\n", fileSize);
 
 	 // download file from DTP
 	 downloadFile(dtpSock, filePath, fileSize, hashFlag);
@@ -422,7 +456,7 @@ void get(char *getCmd) {
 	 recvProtocol(sock, recvBuffer, BUFFER_SIZE);
 	 printMessage(recvBuffer);
 
-	 sclose(dtpSock);*/
+	 sclose(dtpSock);
 }
 
 // file upload
