@@ -57,6 +57,7 @@ void memshow(const void* start, size_t count, bool alpha);
 unsigned long long *GetPhysAddr(void *virtualaddr);
 unsigned long long *GetEntryLevel(unsigned long long address, int level);
 int32_t strcmp(const char* s1, const char* s2);
+int strncmp (const char *cs, const char *ct, size_t count);
 unsigned int alignUp(unsigned int val, unsigned int alignment);
 unsigned int alignDown(unsigned int val, unsigned int alignment);
 size_t strlen(const char* str);

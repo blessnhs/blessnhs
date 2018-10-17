@@ -711,7 +711,7 @@ int fatfs_update_file_length(struct fatfs *fs, uint32 Cluster, char *shortname, 
 #endif
                 if (fatfs_entry_sfn_only(directoryEntry) )
                 {
-                    if (strcmp((const char*)directoryEntry->Name, shortname)==0)
+                    if (strncmp((const char*)directoryEntry->Name, shortname,11)==0)
                     {
                         directoryEntry->FileSize = FAT_HTONL(fileLength);
 

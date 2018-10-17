@@ -144,6 +144,20 @@ int32_t strcmp(const char* s1, const char* s2)
     return (*s1 - *s2);
 }
 
+int strncmp (const char *cs, const char *ct, size_t count)
+{
+	signed char res = 0;
+
+	while (count) {
+		if ((res = *cs - *ct ++) || !*cs ++)
+			break;
+
+		count --;
+	}
+
+	return res;
+}
+
 int memcpy( void* pvDestination, const void* pvSource, int iSize )
 {
 	MemCpy(pvDestination,pvSource,iSize);
