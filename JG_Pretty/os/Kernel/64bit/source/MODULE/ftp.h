@@ -25,7 +25,7 @@
 extern int mode;
 
 #define COMMAND_MAX_SIZE 1024
-#define BUFFER_SIZE 156
+#define BUFFER_SIZE 2048
 #define FILENAME_SIZE 256
 #define END_OF_PROTOCOL "\r\n"
 
@@ -68,7 +68,7 @@ void debug(char *msg);
 
 static int connectServer(char *hostname, short port);
 static void sendProtocol(int sock, char *protocol);
-static void recvProtocol(int sock, char *recvBuffer, int bufferSize);
+static int recvProtocol(int sock, char *recvBuffer, int bufferSize);
 unsigned int downloadFile(int sock, char *filePath, unsigned int fileSize, int hashFlag);
 unsigned int uploadFile(int sock, char *filePath, int hashFlag);
 ////////////////////////////////////////////////////////////////////////////////////////////////

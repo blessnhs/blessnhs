@@ -9,6 +9,7 @@
 #include <stdarg.h>
 #include "Console.h"
 #include "Keyboard.h"
+#include "ConsoleShell.h"
 
 // 콘솔의 정보를 관리하는 자료구조
 CONSOLEMANAGER gs_stConsoleManager = { 0, };
@@ -119,7 +120,7 @@ void GetCursor( int *piX, int *piY )
 void Printf( const char* pcFormatString, ... )
 {
     va_list ap;
-    char vcBuffer[ 1024 ];
+    char vcBuffer[ 1024 * 10 ];
     int iNextPrintOffset;
 
     // 가변 인자 리스트를 사용해서 vsPrintf()로 처리
@@ -254,6 +255,10 @@ BYTE GetCh( void )
                 }
                 Schedule();
             }
+
+            if( stData.bASCIICode == KEY_BACKSPACE )
+            {
+	        }
         }
         
         // 키가 눌렸다는 데이터가 수신되면 ASCII 코드를 반환
@@ -293,6 +298,8 @@ char* gets_s(char* str, size_t length)
             Printf("%c",c);
           //  putchar(c);
         }
+
+        Schedule();
     }
     while (c != '\n'); // Linefeed
 

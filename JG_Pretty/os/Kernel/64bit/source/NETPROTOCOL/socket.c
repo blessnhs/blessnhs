@@ -370,7 +370,7 @@ int recvfrom (int fd, char *msg, size_t size, int flags, sockaddr *from, socklen
 	if (!sock)
 		return -1;
 
-	Printf("recvfrom (%d)", fd);
+//	Printf("recvfrom (%d)", fd);
 
 	switch (sock->protocol) {
 		case IPPROTO_TCP:
@@ -413,7 +413,7 @@ int bind (int fd, sockaddr *addr, socklen_t len)
 	if (!sock)
 		return -1;
 
-	Printf("bind (%d)", fd);
+//	Printf("bind (%d)", fd);
 
 	switch (sock->family) {
 		case AF_UNSPEC:
@@ -450,7 +450,7 @@ int listen (int fd, int backlog)
 	if (!sock)
 		return -1;
 
-	Printf("listen (%d)", fd);
+//	Printf("listen (%d)", fd);
 
 	switch (sock->family) {
 		case AF_UNSPEC:
@@ -576,7 +576,7 @@ int sfcntl (int fd, int cmd, long arg)
 	if (!sock)
 		return -1;
 
-	Printf("fcntl (%d)", fd);
+//	Printf("fcntl (%d)", fd);
 
 	switch (sock->family) {
 		case AF_UNSPEC:

@@ -89,10 +89,11 @@ SHELLCOMMANDENTRY gs_vstCommandTable[] =
 /**
  *  占쎈걗占쎌벥 筌롫뗄�뵥 �뙴�뫂遊�
  */
+
 void StartConsoleShell( void )
 {
     char vcCommandBuffer[ CONSOLESHELL_MAXCOMMANDBUFFERCOUNT ];
-    int iCommandBufferIndex = 0;
+    iCommandBufferIndex = 0;
     BYTE bKey;
     int iCursorX, iCursorY;
     CONSOLEMANAGER* pstConsoleManager;
@@ -169,9 +170,6 @@ void StartConsoleShell( void )
                 Printf( "%c", bKey );
             }
         }
-
-
-
     }
 
 
@@ -366,9 +364,18 @@ static void UsbReadSector( const char* pcParameterBuffer )
 	}
 }
 
+static int ftpmain()
+{
+	startFtpClient("", "");
+
+	return 0;
+}
+
 static void Ftp( const char* pcParameterBuffer )
 {
-	ftpmain();
+
+	  CreateTask( TASK_FLAGS_LOW | TASK_FLAGS_THREAD , 0, 0,
+	                     ( QWORD ) ftpmain, GetAPICID() );
 }
 
 

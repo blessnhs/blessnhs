@@ -28,6 +28,8 @@ typedef void ( * CommandFunction ) ( const char* pcParameter );
 // 파일 이름의 최대 길이, 커널의 FILESYSTEM_MAXFILENAMELENGTH와 같음
 #define MAXFILENAMELENGTH   24
 
+
+int iCommandBufferIndex ;
 ////////////////////////////////////////////////////////////////////////////////
 //
 // 구조체

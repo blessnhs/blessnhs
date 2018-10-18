@@ -22,8 +22,6 @@ static int connectServer(char *hostName, short port) {
 	hostent *host;
 	sockaddr_in serverSock;
 
-	Printf("hostName %s\n", hostName);
-
 	// Check info about remote computer
 	if ((host = gethostbyname((char *) hostName)) == NULL) {
 		Printf("tftp -> wrong address\n");
@@ -99,19 +97,20 @@ static void sendProtocol(int sock, char *protocol) {
 	}
 }
 
-static void recvProtocol(int sock, char *recvBuffer, int bufferSize) {
+static int recvProtocol(int sock, char *recvBuffer, int bufferSize) {
 	int recvLen;
 
 	if ((recvLen = recv(sock, recvBuffer, bufferSize - 1, 0)) <= 0) {
 		Printf("recv failed");
-		return;
+		return 0;
 	}
 
 	recvBuffer[recvLen] = '\0';
 
 	if (MODE_DEBUG == mode) {
-		Printf("recv: %s", recvBuffer);
+		Printf("recv len: %d\n", recvLen);
 	}
+	return recvLen;
 }
 
 unsigned int downloadFile(int sock, char *filePath, unsigned int fileSize,
@@ -175,11 +174,6 @@ int sock, dtpSock;
 int mode = 1;
 int hashFlag;
 
-int ftpmain() {
-	startFtpClient("", "");
-
-	return 0;
-}
 
 int modeCheck(const char *option) {
 	if (!strcmp(option, "-d")) {
@@ -251,7 +245,7 @@ void openCon(char *openCmd) {
 	char recvBuffer[BUFFER_SIZE];
 	;
 
-	Printf("hostname: ");
+	Printf("\nhostname: ");
 	gets_s(hostname, 25);
 
 	Printf("serverPort: ");
@@ -262,7 +256,7 @@ void openCon(char *openCmd) {
 	recvProtocol(sock, recvBuffer, BUFFER_SIZE - 1);
 
 	// send user name
-	Printf("Name: ");
+	Printf("\nName: ");
 	gets_s(cmd, COMMAND_MAX_SIZE);
 
 	SPrintf(sendBuffer, "User %s\r\n", cmd);
@@ -272,7 +266,7 @@ void openCon(char *openCmd) {
 	printMessage(recvBuffer);
 
 	// send password
-	Printf("Password: ");
+	Printf("\nPassword: ");
 	gets_s(cmd, COMMAND_MAX_SIZE);
 
 	SPrintf(sendBuffer, "PASS %s\r\n", cmd);
@@ -299,11 +293,37 @@ void passiveMode(char *ip, int *port) {
 
 	 SPrintf(sendBuffer, "PASV%s", END_OF_PROTOCOL);
 	 sendProtocol(sock, sendBuffer);
-	 recvProtocol(sock, recvBuffer, BUFFER_SIZE-1);
-	 printMessage(recvBuffer);
+
+	 int passiveLen = 0;
+	 passiveLen = recvProtocol(sock, recvBuffer, BUFFER_SIZE-1);
 
 
-	 int array[6] = {0,};
+	 while(1)
+	 {
+		 if(passiveLen < 4)
+		 {
+			 passiveLen = recvProtocol(sock, recvBuffer, BUFFER_SIZE-1);
+			 continue;
+		 }
+
+		 //227
+		 char number[5];
+		 memcpy(number,recvBuffer,3);
+		 number[4] = 0;
+
+		 Printf("%s cmd",number);
+
+		 if(atoi(number) !=  227 )
+		 {
+			 passiveLen = recvProtocol(sock, recvBuffer, BUFFER_SIZE-1);
+		 }
+		 else
+		 {
+			 break;
+		 }
+	 }
+
+	 int array[10] = {0,};
 
 	 int k=0;
 	 int pos = 0;
@@ -318,8 +338,8 @@ void passiveMode(char *ip, int *port) {
 	 k=0;
 	 pos++;
 
-	 Printf("passiveMode %d\n",pos);
-	 char word[10];
+	 Printf("passiveMode total %d %d\n",passiveLen,pos);
+	 char word[20];
 	 int wordindex = 0;
 	 while(1)
 	 {
@@ -344,6 +364,9 @@ void passiveMode(char *ip, int *port) {
 		 }
 
 		 pos++;
+
+		 if(pos >= passiveLen)
+			 break;
 	 }
 
 	 SPrintf(ip, "%d.%d.%d.%d", array[0], array[1], array[2], array[3]);
@@ -359,8 +382,6 @@ void list(char *listCmd) {
 	char ip[16];
 	char sendBuffer[BUFFER_SIZE];
 	char recvBuffer[BUFFER_SIZE * 8];
-
-	debug("list");
 
 	// recv server response and parsing
 	passiveMode(ip, &port);
@@ -567,7 +588,7 @@ void shellEscape(char *shellCmd) {
 }
 
 void printMessage(char *msg) {
-	Printf("\n[%s]\n", msg);
+	Printf("%s", msg);
 }
 
 //////////////////////////////////////////////end ftp
