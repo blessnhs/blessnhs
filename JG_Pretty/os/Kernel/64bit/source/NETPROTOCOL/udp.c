@@ -113,7 +113,7 @@ check:
 	
 	int ret = net_proto_udp_write (conn, msg, size);
 
-	Printf("net_proto_udp_write ret %d\n",ret);
+//	Printf("net_proto_udp_write ret %d\n",ret);
 
 	if (ret) {
 		/* blocking mode */

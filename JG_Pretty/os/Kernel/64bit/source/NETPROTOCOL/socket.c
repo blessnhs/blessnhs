@@ -124,7 +124,7 @@ int socket (int family, int type, int protocol)
 		fd->proc = 0;
 	}
 */
-	Printf("socket () -> socket: %d", sock->fd);
+//	Printf("socket () -> socket: %d", sock->fd);
 
 	return sock->fd;
 }
@@ -209,7 +209,7 @@ hostent *gethostbyname (char *hostname)
 
 int connect (int fd, sockaddr *addr, socklen_t len)
 {
-	Printf("connect () -> socket: %d", fd);
+//	Printf("connect () -> socket: %d", fd);
 	socket_t *sock = socket_getbyfd (fd);
 
 	if (!sock)
@@ -530,7 +530,7 @@ int sclose (int fd)
 	if (!sock)
 		return -1;
 
-	Printf("close (%d)", fd);
+//	Printf("close (%d)", fd);
 
 	/* delete old socket from socket_list */
 	sock->next->prev = sock->prev;

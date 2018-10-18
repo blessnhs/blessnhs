@@ -191,10 +191,10 @@ int net_proto_tcp_recv (int fd, char *msg, unsigned size)
 
 	/* blocking mode */
 	if (!(conn->flags & O_NONBLOCK)) {
-		unsigned long stime = GetTickCount();
+		QWORD stime = GetTickCount();
 
 		while (!conn->len/* || conn->state != PROTO_TCP_CONN_STATE_READY*/) {
-			if ((stime+10000) < GetTickCount())
+			if ((stime+3000) < GetTickCount())
 				return -1;
 
 			if (conn->state == PROTO_TCP_CONN_STATE_CLOSE) {
