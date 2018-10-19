@@ -396,3 +396,73 @@ void SetConsoleShellExitFlag( BOOL bFlag )
 {
     gs_stConsoleManager.bExit = bFlag;
 }
+
+
+
+char* GUICommandShell(char *vcCommandBuffer)
+{
+	const int COMMAND_MAX_SIZE =  1024;
+	int iCommandBufferIndex = 0;
+    BYTE bKey;
+    int iCursorX, iCursorY;
+    GetCursor( &iCursorX, &iCursorY );
+
+    bool Exit = FALSE;
+    while(Exit == FALSE )
+    {
+
+        bKey = GetCh();
+
+        if( Exit == TRUE )
+        {
+            break;
+        }
+
+        if(  bKey == '`' )
+        {
+            break;
+        }
+        else if( bKey == KEY_BACKSPACE )
+        {
+            if( iCommandBufferIndex > 0 )
+            {
+                GetCursor( &iCursorX, &iCursorY );
+                PrintStringXY( iCursorX - 1, iCursorY, " " );
+                SetCursor( iCursorX - 1, iCursorY );
+                iCommandBufferIndex--;
+            }
+        }
+        else if( bKey == KEY_ENTER )
+        {
+            Printf( "\n" );
+
+            if( iCommandBufferIndex > 0 )
+            {
+                vcCommandBuffer[ iCommandBufferIndex ] = '\0';
+                return vcCommandBuffer;
+            }
+
+            MemSet( vcCommandBuffer, '\0', COMMAND_MAX_SIZE );
+            iCommandBufferIndex = 0;
+        }
+         else if( ( bKey == KEY_LSHIFT ) || ( bKey == KEY_RSHIFT ) ||
+                 ( bKey == KEY_CAPSLOCK ) || ( bKey == KEY_NUMLOCK ) ||
+                 ( bKey == KEY_SCROLLLOCK ) )
+        {
+            ;
+        }
+        else if( bKey < 128 )
+        {
+             if( bKey == KEY_TAB )
+            {
+                bKey = ' ';
+            }
+
+            if( iCommandBufferIndex < COMMAND_MAX_SIZE )
+            {
+                vcCommandBuffer[ iCommandBufferIndex++ ] = bKey;
+                Printf( "%c", bKey );
+            }
+        }
+    }
+}

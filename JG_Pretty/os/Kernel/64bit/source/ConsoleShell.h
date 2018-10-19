@@ -29,7 +29,7 @@ typedef void ( * CommandFunction ) ( const char* pcParameter );
 #define MAXFILENAMELENGTH   24
 
 
-int iCommandBufferIndex ;
+
 ////////////////////////////////////////////////////////////////////////////////
 //
 // ±¸Á¶Ã¼

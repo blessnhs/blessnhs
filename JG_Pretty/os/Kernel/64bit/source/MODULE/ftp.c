@@ -17,6 +17,8 @@ void debug(char *msg) {
 	}
 }
 
+static int connectServer2(char *ip, short port);
+
 static int connectServer(char *hostName, short port) {
 
 	hostent *host;
@@ -24,7 +26,7 @@ static int connectServer(char *hostName, short port) {
 
 	// Check info about remote computer
 	if ((host = gethostbyname((char *) hostName)) == NULL) {
-		Printf("tftp -> wrong address\n");
+
 		return -1;
 	}
 
@@ -108,7 +110,7 @@ static int recvProtocol(int sock, char *recvBuffer, int bufferSize) {
 	recvBuffer[recvLen] = '\0';
 
 	if (MODE_DEBUG == mode) {
-		Printf("recv len: %d\n", recvLen);
+		//Printf("recv len: %d\n", recvLen);
 	}
 	return recvLen;
 }
@@ -189,8 +191,10 @@ int modeCheck(const char *option) {
 void initializeFtpClient() {
 	hashFlag = 1;
 	debug("initialized");
-}
 
+	 ClearScreen();
+	 SetCursor( 0, 1 );
+}
 // ftp client start
 void startFtpClient(char *ip, char *port) {
 	char cmd[COMMAND_MAX_SIZE];
@@ -203,7 +207,7 @@ void startFtpClient(char *ip, char *port) {
 		 if (ip == 0 && port == 0)
 		 {
 			 printMessage("ftp>");
-			 gets_s(cmd, COMMAND_MAX_SIZE);
+			 GUICommandShell(cmd);
 		 }
 		 else
 		 {
@@ -246,10 +250,10 @@ void openCon(char *openCmd) {
 	;
 
 	Printf("\nhostname: ");
-	gets_s(hostname, 25);
+	GUICommandShell(hostname);
 
 	Printf("serverPort: ");
-	gets_s(serverPort, 15);
+	GUICommandShell(serverPort);
 
 	sock = connectServer(hostname, atoi(serverPort));
 
@@ -257,7 +261,7 @@ void openCon(char *openCmd) {
 
 	// send user name
 	Printf("\nName: ");
-	gets_s(cmd, COMMAND_MAX_SIZE);
+	GUICommandShell(cmd);
 
 	SPrintf(sendBuffer, "User %s\r\n", cmd);
 	send(sock, sendBuffer, strlen(sendBuffer), 0);
@@ -267,7 +271,7 @@ void openCon(char *openCmd) {
 
 	// send password
 	Printf("\nPassword: ");
-	gets_s(cmd, COMMAND_MAX_SIZE);
+	GUICommandShell(cmd);
 
 	SPrintf(sendBuffer, "PASS %s\r\n", cmd);
 
@@ -311,7 +315,7 @@ void passiveMode(char *ip, int *port) {
 		 memcpy(number,recvBuffer,3);
 		 number[4] = 0;
 
-		 Printf("%s cmd",number);
+//		 Printf("%s cmd",number);
 
 		 if(atoi(number) !=  227 )
 		 {
@@ -338,7 +342,7 @@ void passiveMode(char *ip, int *port) {
 	 k=0;
 	 pos++;
 
-	 Printf("passiveMode total %d %d\n",passiveLen,pos);
+//	 Printf("passiveMode total %d %d\n",passiveLen,pos);
 	 char word[20];
 	 int wordindex = 0;
 	 while(1)
@@ -350,7 +354,7 @@ void passiveMode(char *ip, int *port) {
 			 char check = word[k];
 
 			 word[k] = 0;
-			 Printf("%d\n",atoi(word));
+//			 Printf("%d\n",atoi(word));
 			 array[wordindex] = atoi(word);
 			 wordindex++;
 			 k = 0;
@@ -372,7 +376,7 @@ void passiveMode(char *ip, int *port) {
 	 SPrintf(ip, "%d.%d.%d.%d", array[0], array[1], array[2], array[3]);
 	 *port = array[4]*256 + array[5];
 
-	 Printf("dtp port : %d ip %s\n", *port,ip);
+	 Printf("\ndtp port : %d ip %s\n", *port,ip);
 
 }
 
@@ -421,7 +425,7 @@ void get(char *getCmd) {
 	 memcpy(filePath,"/",2);
 
 
-	 gets_s(fileName, 50);
+	 GUICommandShell(fileName);
 	 SPrintf(getCmd, "%*s %s%*c", fileName);
 	 SPrintf(filePath, "%s/%s", filePath, fileName);
 
@@ -528,7 +532,7 @@ void cd(char *cdCmd) {
 	char recvBuffer[BUFFER_SIZE];
 	debug("cd");
 
-	gets_s(recvBuffer, BUFFER_SIZE);
+	GUICommandShell(recvBuffer);
 	SPrintf(cdCmd, "%*s %s%*c", recvBuffer);
 	debug(recvBuffer);
 

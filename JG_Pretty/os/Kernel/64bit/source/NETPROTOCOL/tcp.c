@@ -194,7 +194,7 @@ int net_proto_tcp_recv (int fd, char *msg, unsigned size)
 		QWORD stime = GetTickCount();
 
 		while (!conn->len/* || conn->state != PROTO_TCP_CONN_STATE_READY*/) {
-			if ((stime+3000) < GetTickCount())
+			if ((stime+6000) < GetTickCount())
 				return -1;
 
 			if (conn->state == PROTO_TCP_CONN_STATE_CLOSE) {
@@ -508,13 +508,13 @@ unsigned net_proto_tcp_handler (packet_t *packet, proto_ip_t *ip, char *buf, uns
 
 	/* another side close connection */
 	if (tcp->flags & 0x01) {
-		Printf("TCP -> fd %d connection closed by remote host", conn->fd);
+		Printf("TCP -> fd %d connection closed by remote host\n", conn->fd);
 		net_proto_tcp_conn_disconnected (conn, ip, tcp);			// FIXME: problem in server with hangind the whole program
 	}
 
 	/* another side close connection */
 	if (tcp->flags & 0x04) {
-		Printf("TCP -> fd %d connection reseted by peer", conn->fd);
+		Printf("TCP -> fd %d connection reseted by peer\n", conn->fd);
 		net_proto_tcp_conn_disconnected (conn, ip, tcp);
 	}
 
@@ -836,7 +836,7 @@ int net_proto_tcp_conn_estabilish_reply (proto_tcp_conn_t *conn, proto_ip_t *ip_
 		conn->ack = tcp->ack;
 		conn->state = PROTO_TCP_CONN_STATE_ESTABILISHED;
 		
-		Printf("TCP -> fd %d connected to server succefully\n", conn->fd);
+		//Printf("TCP -> fd %d connected to server succefully\n", conn->fd);
 	}
 
 	DEL (tcp);

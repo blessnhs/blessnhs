@@ -108,5 +108,5 @@ CONSOLEMANAGER* GetConsoleManager( void );
 BOOL GetKeyFromGUIKeyQueue( KEY_DATA* pstData );
 BOOL PutKeyToGUIKeyQueue( KEY_DATA* pstData );
 void SetConsoleShellExitFlag( BOOL bFlag );
-
+char* GUICommandShell(char *vcCommandBuffer);
 #endif /*__CONSOLE_H__*/

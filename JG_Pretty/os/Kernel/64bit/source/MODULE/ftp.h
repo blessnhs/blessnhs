@@ -20,7 +20,7 @@
 
 #define FTP_PORT 21
 
-#define TEMP_BUFFER_SIZE 1024
+#define TEMP_BUFFER_SIZE 2048
 
 extern int mode;
 

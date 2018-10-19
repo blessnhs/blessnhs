@@ -872,7 +872,7 @@ int net_proto_tcp6_conn_estabilish_reply (proto_tcp6_conn_t *conn, proto_ipv6_t 
 		conn->state = PROTO_TCP_CONN_STATE_ESTABILISHED;
 	}
 
-	Printf( "TCP -> fd %d connected to server succefully\n", conn->fd);
+	//Printf( "TCP -> fd %d connected to server succefully\n", conn->fd);
 
 	DEL (tcp);
 
