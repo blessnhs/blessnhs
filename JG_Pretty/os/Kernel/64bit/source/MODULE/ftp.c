@@ -83,6 +83,9 @@ static int connectServer2(char *ip, short port) {
 		Printf("Connection cant be estabilished ->\n");
 		return -1;
 	}
+
+	Sleep(1000);
+
 	return ncsock;
 }
 
@@ -115,10 +118,12 @@ static int recvProtocol(int sock, char *recvBuffer, int bufferSize) {
 	return recvLen;
 }
 
-unsigned int downloadFile(int sock, char *filePath, unsigned int fileSize,
-		int hashFlag) {
+unsigned int downloadFile(int dptsock, char *filePath, unsigned int fileSize,int hashFlag)
+{
 	char readBuffer[TEMP_BUFFER_SIZE];
 	unsigned int readBytes, totalBytes, numHash;
+
+	Printf("downloadFile %s\n",filePath);
 
 
 	 FL_FILE *fd = fl_fopen(filePath, "w");
@@ -126,23 +131,52 @@ unsigned int downloadFile(int sock, char *filePath, unsigned int fileSize,
 		 return 0;
 
 	 totalBytes = numHash = 0;
-	 while (totalBytes < fileSize) {
-	 if ((readBytes = recv(sock, readBuffer, TEMP_BUFFER_SIZE, 0)) <= 0) {
-		 fl_fclose(fd);
-	 return totalBytes;
-	 }
+	 while (1)
+	 {
+		 if ((readBytes = recv(dptsock, readBuffer, TEMP_BUFFER_SIZE, 0)) <= 0)
+		 {
+			 Printf("downloadFile recv fail \n");
+			 fl_fclose(fd);
+			 return totalBytes;
+		 }
 
-	 int cnt = fl_fwrite(readBuffer, 1,readBytes,fd);
-	 totalBytes += readBytes;
 
-	 if (hashFlag) {
-	 if ((totalBytes/TEMP_BUFFER_SIZE) > numHash) {
-	 numHash++;
-	 Printf("#");
+		 int cnt = fl_fwrite(readBuffer, 1,readBytes,fd);
+		 totalBytes += cnt;
+
+		 Printf("readBytes %d cnt %d fileSize %d\n",readBytes,totalBytes,fileSize);
+
+		 if(totalBytes >= (fileSize-1))
+			 break;
 	 }
-	 }
-	 }
+/*
+	while (1)
+	{
+		if ((readBytes = recv(dptsock, readBuffer, TEMP_BUFFER_SIZE, 0)) <= 0)
+		{
+			fl_fclose(fd);
+			Printf("downloadFile end\n");
+			return totalBytes;
+		}
+
+		int cnt = fl_fwrite(readBuffer, 1,readBytes,fd);
+		totalBytes += readBytes;
+
+		Printf("totalBytes %d fileSize %d\n",totalBytes,fileSize);
+
+		if (hashFlag)
+		{
+			if ((totalBytes/TEMP_BUFFER_SIZE) > numHash)
+			{
+				numHash++;
+					 Printf("#");
+			}
+		}
+	}
+*/
 	 fl_fclose(fd);
+
+	 Printf("downloadFile end\n");
 
 	 return totalBytes;
 }
@@ -399,6 +433,9 @@ void list(char *listCmd) {
 	recvProtocol(sock, recvBuffer, BUFFER_SIZE);
 	printMessage(recvBuffer);
 
+	recvBuffer[10] = 0;
+	Printf("%d",atoi(recvBuffer));
+
 	// recv file list from DTP
 	recvProtocol(dtpSock, recvBuffer, BUFFER_SIZE * 8);
 	printMessage(recvBuffer);
@@ -422,7 +459,7 @@ void get(char *getCmd) {
 	 //getcwd(filePath, FILENAME_SIZE);
 
 
-	 memcpy(filePath,"/",2);
+	 memcpy(filePath,"",2);
 
 
 	 GUICommandShell(fileName);
@@ -439,40 +476,22 @@ void get(char *getCmd) {
 	 dtpSock = connectServer(ip, port);
 
 	 // request server for transfer start - RETR fileName
+	 SPrintf(sendBuffer, "SIZE %s%s", fileName, END_OF_PROTOCOL);
+	 sendProtocol(sock, sendBuffer);
+	 int sizelen = recvProtocol(sock, recvBuffer, BUFFER_SIZE);
+	 printMessage(recvBuffer);
+
+	 char sizebuff[10];
+	 memcpy(sizebuff,recvBuffer+3,sizelen-3);
+
+	 fileSize = atoi(sizebuff);
+	 //
+	 // sscanf(strchr(recvBuffer, '(')+1, "%u", &fileSize);
+	 Printf("fileSize: %d\n", atoi(sizebuff));
+
 	 SPrintf(sendBuffer, "RETR %s%s", fileName, END_OF_PROTOCOL);
 	 sendProtocol(sock, sendBuffer);
 	 recvProtocol(sock, recvBuffer, BUFFER_SIZE);
-	 printMessage(recvBuffer);
-
-	 // extract fileSize
-
-	 int i=0;
-	 int pos = 0;
-	 char size[10];
-	 char begin = 0;
-	 while(1)
-	 {
-		 if(begin == 1 )
-			 size[pos++] = recvBuffer[i];
-
-		 if(recvBuffer[i] == '(')
-		 {
-			 begin = 1;
-		 }
-
-		 if(recvBuffer[i] == ')')
-		 {
-			 size[pos] = 0;
-			 break;
-		 }
-
-		 i++;
-	 }
-
-	 fileSize = atoi(size);
-	 //
-	 // sscanf(strchr(recvBuffer, '(')+1, "%u", &fileSize);
-	 Printf("fileSize: %d\n", fileSize);
 
 	 // download file from DTP
 	 downloadFile(dtpSock, filePath, fileSize, hashFlag);
@@ -591,8 +610,17 @@ void shellEscape(char *shellCmd) {
 	printMessage("not implemented");
 }
 
-void printMessage(char *msg) {
-	Printf("%s", msg);
+void printMessage(char *msg)
+{
+	int i=0;
+	while(1)
+	{
+		if(msg[i] == 0)
+			break;
+
+		Printf("%c", msg[i]);
+		i++;
+	}
 }
 
 //////////////////////////////////////////////end ftp

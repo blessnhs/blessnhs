@@ -61,8 +61,8 @@ SHELLCOMMANDENTRY gs_vstCommandTable[] =
         { "mounthdd", "Mount HDD", MountHDD },
         { "formathdd", "Format HDD", FormatHDD },
         { "filesysteminfo", "Show File System Information", ShowFileSystemInformation },
-        { "createfile", "Create File, ex)createfile a.txt", CreateFileInRootDirectory },
-        { "deletefile", "Delete File, ex)deletefile a.txt", DeleteFileInRootDirectory },
+        { "createfile", "Create File, ex)createfile a.txt", CreateFile },
+        { "del", "Delete File, ex)deletefile a.txt", DeleteFile },
         { "dir", "Show Directory", ShowRootDirectory },
         { "writefile", "Write Data To File, ex) writefile a.txt", WriteDataToFile },
         { "readfile", "Read Data From File, ex) readfile a.txt", ReadDataFromFile },
@@ -1096,9 +1096,27 @@ static void ShowFileSystemInformation( const char* pcParameterBuffer )
 /**
  *  占쎈쇀占쎈쳜占쎈콦 �뜝�럥�꺏�뜝�럩�쟼�뜝�럡�댉占쎈뎨占쎈봾�뱺 占쎈쑏�뜝占� �뜝�럥�냱�뜝�럩逾у뜝�럩諭� �뜝�럡臾멨뜝�럡�뎽
  */
-static void CreateFileInRootDirectory( const char* pcParameterBuffer )
+static void CreateFile( const char* pcParameterBuffer )
 {
-	fl_createdirectory(pcParameterBuffer);
+	char name[256];
+	char buffer[1024];
+	PARAMETERLIST stList;
+
+	InitializeParameter( &stList, pcParameterBuffer );
+	GetNextParameter( &stList, name );
+	GetNextParameter( &stList, buffer );
+
+
+	void *fd = fl_fopen(name,"w");
+	if(fd == 0)
+	{
+		Printf("%s open fail\n");
+		return ;
+	}
+
+	fl_fputs(buffer,fd);
+
+	fl_fclose(fd);
 }
 
 static void CreateDirectory( const char* pcParameterBuffer )
@@ -1118,7 +1136,7 @@ static void CreateDirectory( const char* pcParameterBuffer )
 /**
  *  占쎈쇀占쎈쳜占쎈콦 �뜝�럥�꺏�뜝�럩�쟼�뜝�럡�댉占쎈뎨占쎈봾�뱺�뜝�럡�맋 �뜝�럥�냱�뜝�럩逾у뜝�럩諭� �뜝�럡�뀭�뜝�럩�젷
  */
-static void DeleteFileInRootDirectory( const char* pcParameterBuffer )
+static void DeleteFile( const char* pcParameterBuffer )
 {
 	fl_remove(pcParameterBuffer);
 }
@@ -1643,7 +1661,7 @@ static void Cat(const char* pcParameterBuffer )
 		 return ;
 	 }
 
-	 Printf("[%s] size %d %d\n",fd->filelength,fd->bytenum);
+	 Printf("size %d %d\n",fd->filelength,fd->bytenum);
 
 	 int i;
 	 for(i=0;i<fd->filelength;i++)

@@ -194,7 +194,7 @@ int net_proto_tcp_recv (int fd, char *msg, unsigned size)
 		QWORD stime = GetTickCount();
 
 		while (!conn->len/* || conn->state != PROTO_TCP_CONN_STATE_READY*/) {
-			if ((stime+6000) < GetTickCount())
+			if ((stime+10000) < GetTickCount())
 				return -1;
 
 			if (conn->state == PROTO_TCP_CONN_STATE_CLOSE) {

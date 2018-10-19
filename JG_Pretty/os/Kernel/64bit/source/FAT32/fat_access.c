@@ -79,7 +79,7 @@ int ahci_diskio_read (uint32 sector, uint8 *buffer, uint32 sector_count)
 	   return -1;
    }
 
-   return ahci_read(&gabar->ports[0],sector,0,sector_count,buffer);
+   return ahci_read(&gabar->ports[0],sector,sector_count,buffer);
 }
 
 int ahci_diskio_write(uint32 sector, uint8 *buffer, uint32 sector_count)
@@ -91,7 +91,7 @@ int ahci_diskio_write(uint32 sector, uint8 *buffer, uint32 sector_count)
 	   return -1;
    }
 
-   return ahci_write(&gabar->ports[0], sector, 0, sector_count, (QWORD)buffer);
+   return ahci_write(&gabar->ports[0], sector,  sector_count, (QWORD)buffer);
 }
 
 

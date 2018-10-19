@@ -261,7 +261,7 @@ void identify(HBA_PORT *port)
 
 	Printf("\n[Total Sector Count : %d  %d MegaByte]\n", size, (int)( size * 512 / 1024 / 1024));
 
-	attach_ahci_disk(size);
+	attach_ahci_disk(size * 512);
 
     fl_init();
     fl_attach_media(ahci_diskio_read,ahci_diskio_write);
@@ -269,7 +269,7 @@ void identify(HBA_PORT *port)
 
 }
 
-bool ahci_read(HBA_PORT *port, uint32_t startl, uint32_t starth, uint32_t count, uint16_t *buf)
+bool ahci_read(HBA_PORT *port, QWORD startl, QWORD count, QWORD *buf)
 {
 	port->is = (uint32_t) -1;		// Clear pending interrupt bits
 	int spin = 0; // Spin lock timeout counter
@@ -309,14 +309,14 @@ bool ahci_read(HBA_PORT *port, uint32_t startl, uint32_t starth, uint32_t count,
 	cmdfis->c = 1;	// Command
 	cmdfis->command = ATA_CMD_READ_DMA_EX;
 
-	cmdfis->lba0 = (uint8_t)startl;
-	cmdfis->lba1 = (uint8_t)(startl>>8);
-	cmdfis->lba2 = (uint8_t)(startl>>16);
+	cmdfis->lba0 = (BYTE)startl & 0xff;
+	cmdfis->lba1 = (BYTE)(startl>>8);
+	cmdfis->lba2 = (BYTE)(startl>>16);
 	cmdfis->device = 1<<6;	// LBA mode
 
-	cmdfis->lba3 = (uint8_t)(startl>>24);
-	cmdfis->lba4 = (uint8_t)starth;
-	cmdfis->lba5 = (uint8_t)(starth>>8);
+	cmdfis->lba3 = (BYTE)(startl>>24);
+	cmdfis->lba4 = (BYTE)(startl>>32);
+	cmdfis->lba5 = (BYTE)(startl>>40);
 
 	cmdfis->countl = count & 0xFF;
 	cmdfis->counth = (count >> 8) & 0xFF;
@@ -359,7 +359,7 @@ bool ahci_read(HBA_PORT *port, uint32_t startl, uint32_t starth, uint32_t count,
 }
 
 
-int ahci_write(HBA_PORT *port, DWORD startl, DWORD starth, DWORD count, QWORD buf)
+int ahci_write(HBA_PORT *port, QWORD startl, QWORD count, QWORD buf)
 {
 		port->is = 0xffff;              // Clear pending interrupt bits
      // int spin = 0;           // Spin lock timeout counter
@@ -400,7 +400,7 @@ int ahci_write(HBA_PORT *port, DWORD startl, DWORD starth, DWORD count, QWORD bu
                buf += 4*1024;  // 4K words
                count -= 16;    // 16 sectors
        }
-        /**If the final Data FIS transfer in a command is for an odd number of 16-bit words, the transmitter占퐏
+        /**If the final Data FIS transfer in a command is for an odd number of 16-bit words, the transmitter�뜝�릯
 Transport layer is responsible for padding the final Dword of a FIS with zeros. If the HBA receives one
 more word than is indicated in the PRD table due to this padding requirement, the HBA shall not signal
 this as an overflow condition. In addition, if the HBA inserts padding as required in a FIS it is transmitting,
@@ -422,14 +422,14 @@ number of words specified in the PRD table, ignoring any additional padding.**/
         cmdfis->c = 1;  // Command
         cmdfis->command = ATA_CMD_WRITE_DMA_EX;
 
-        cmdfis->lba0 = (BYTE)startl;
+        cmdfis->lba0 = (BYTE)startl & 0xff;
         cmdfis->lba1 = (BYTE)(startl>>8);
         cmdfis->lba2 = (BYTE)(startl>>16);
         cmdfis->device = 1<<6;  // LBA mode
 
         cmdfis->lba3 = (BYTE)(startl>>24);
-        cmdfis->lba4 = (BYTE)starth;
-        cmdfis->lba5 = (BYTE)(starth>>8);
+        cmdfis->lba4 = (BYTE)(startl>>32);
+        cmdfis->lba5 = (BYTE)(startl>>40);
 
         cmdfis->countl = count & 0xff;
         cmdfis->counth = count>>8;
@@ -444,7 +444,7 @@ number of words specified in the PRD table, ignoring any additional padding.**/
                         break;
                 if (port->is & HBA_PxIS_TFES)   // Task file error
                 {
-                        Printf("Read disk error\n");
+                        Printf("write disk error %d\n",startl);
                         return 0;
                 }
         }
@@ -452,7 +452,7 @@ number of words specified in the PRD table, ignoring any additional padding.**/
         // Check again
         if (port->is & HBA_PxIS_TFES)
         {
-        	Printf("Read disk error\n");
+        	Printf("write disk error %d\n",startl);
             return 0;
         }
 
