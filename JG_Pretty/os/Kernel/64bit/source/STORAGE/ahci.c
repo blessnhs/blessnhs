@@ -207,7 +207,7 @@ int find_cmdslot(HBA_PORT *port)
 
 #define ATA_IDENT_MAX_LBA_EXT 200
 
-void attach_ahci_disk(int size)
+void attach_ahci_disk(QWORD size)
 {
 
 	disk_t *disk = NEW (sizeof(disk_t));
@@ -257,9 +257,9 @@ void identify(HBA_PORT *port)
 
 	};
 
-	int size = * ((int *) ((char *) buf + ATA_IDENT_MAX_LBA_EXT));
+	QWORD size = * ((int *) ((char *) buf + ATA_IDENT_MAX_LBA_EXT));
 
-	Printf("\n[Total Sector Count : %d  %d MegaByte]\n", size, (int)( size * 512 / 1024 / 1024));
+	Printf("\n[Total Sector Count : %q  %q MegaByte]\n", size, (QWORD)( size * 512 / 1024 / 1024));
 
 	attach_ahci_disk(size * 512);
 
