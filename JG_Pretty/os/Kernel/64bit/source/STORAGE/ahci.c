@@ -257,9 +257,11 @@ void identify(HBA_PORT *port)
 
 	};
 
-	QWORD size = * ((int *) ((char *) buf + ATA_IDENT_MAX_LBA_EXT));
+	QWORD size = * ((QWORD *) ((char *) buf + ATA_IDENT_MAX_LBA_EXT));
 
-	Printf("\n[Total Sector Count : %q  %q MegaByte]\n", size, (QWORD)( size * 512 / 1024 / 1024));
+	QWORD GigaSize = (size * 512) / 1024 / 1024 / 1024;
+
+	Printf("\n[Total Sector Count : %q\t  %d GigaByte]\n", size, GigaSize);
 
 	attach_ahci_disk(size * 512);
 
