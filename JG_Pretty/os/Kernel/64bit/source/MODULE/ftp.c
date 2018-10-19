@@ -240,7 +240,7 @@ void startFtpClient(char *ip, char *port) {
 		// input user command
 		 if (ip == 0 && port == 0)
 		 {
-			 printMessage("ftp>");
+			 Printf("ftp>");
 			 GUICommandShell(cmd);
 		 }
 		 else
@@ -300,8 +300,8 @@ void openCon(char *openCmd) {
 	SPrintf(sendBuffer, "User %s\r\n", cmd);
 	send(sock, sendBuffer, strlen(sendBuffer), 0);
 	//sendProtocol(sock, sendBuffer);
-	recvProtocol(sock, recvBuffer, BUFFER_SIZE - 1);
-	printMessage(recvBuffer);
+	int len = recvProtocol(sock, recvBuffer, BUFFER_SIZE - 1);
+	printMessage(recvBuffer,len);
 
 	// send password
 	Printf("\nPassword: ");
@@ -310,15 +310,15 @@ void openCon(char *openCmd) {
 	SPrintf(sendBuffer, "PASS %s\r\n", cmd);
 
 	sendProtocol(sock, sendBuffer);
-	recvProtocol(sock, recvBuffer, BUFFER_SIZE - 1);
-	printMessage(recvBuffer);
+	len = recvProtocol(sock, recvBuffer, BUFFER_SIZE - 1);
+	printMessage(recvBuffer,len);
 
 	// get server os information
 	memset(sendBuffer, 0, BUFFER_SIZE);
 	SPrintf(sendBuffer, "SYST%s", END_OF_PROTOCOL);
 	sendProtocol(sock, sendBuffer);
-	recvProtocol(sock, recvBuffer, BUFFER_SIZE - 1);
-	printMessage(recvBuffer);
+	len = recvProtocol(sock, recvBuffer, BUFFER_SIZE - 1);
+	printMessage(recvBuffer,len);
 
 }
 
@@ -430,19 +430,19 @@ void list(char *listCmd) {
 	// send LIST command to PI server
 	SPrintf(sendBuffer, "LIST%s", END_OF_PROTOCOL);
 	sendProtocol(sock, sendBuffer);
-	recvProtocol(sock, recvBuffer, BUFFER_SIZE);
-	printMessage(recvBuffer);
+	int len = recvProtocol(sock, recvBuffer, BUFFER_SIZE);
+	printMessage(recvBuffer,len);
 
 	recvBuffer[10] = 0;
-	Printf("%d",atoi(recvBuffer));
+	Printf("%d",atoi(recvBuffer,len));
 
 	// recv file list from DTP
-	recvProtocol(dtpSock, recvBuffer, BUFFER_SIZE * 8);
-	printMessage(recvBuffer);
+	len = recvProtocol(dtpSock, recvBuffer, BUFFER_SIZE * 8);
+	printMessage(recvBuffer,len);
 
 	// recv complete message from PI server
-	recvProtocol(sock, recvBuffer, BUFFER_SIZE);
-	printMessage(recvBuffer);
+	len = recvProtocol(sock, recvBuffer, BUFFER_SIZE);
+	printMessage(recvBuffer,len);
 
 	sclose(dtpSock);
 }
@@ -479,7 +479,7 @@ void get(char *getCmd) {
 	 SPrintf(sendBuffer, "SIZE %s%s", fileName, END_OF_PROTOCOL);
 	 sendProtocol(sock, sendBuffer);
 	 int sizelen = recvProtocol(sock, recvBuffer, BUFFER_SIZE);
-	 printMessage(recvBuffer);
+	 printMessage(recvBuffer,sizelen);
 
 	 char sizebuff[10];
 	 memcpy(sizebuff,recvBuffer+3,sizelen-3);
@@ -497,8 +497,8 @@ void get(char *getCmd) {
 	 downloadFile(dtpSock, filePath, fileSize, hashFlag);
 
 	 // recv complete message from PI server
-	 recvProtocol(sock, recvBuffer, BUFFER_SIZE);
-	 printMessage(recvBuffer);
+	 sizelen = recvProtocol(sock, recvBuffer, BUFFER_SIZE);
+	 printMessage(recvBuffer,sizelen);
 
 	 sclose(dtpSock);
 }
@@ -557,8 +557,8 @@ void cd(char *cdCmd) {
 
 	SPrintf(sendBuffer, "CWD %s%s", recvBuffer, END_OF_PROTOCOL);
 	sendProtocol(sock, sendBuffer);
-	recvProtocol(sock, recvBuffer, BUFFER_SIZE);
-	printMessage(recvBuffer);
+	int len = recvProtocol(sock, recvBuffer, BUFFER_SIZE);
+	printMessage(recvBuffer,len);
 }
 
 // ftp client exit
@@ -569,8 +569,8 @@ void quit(char *quitCmd) {
 
 	SPrintf(sendBuffer, "QUIT%s", END_OF_PROTOCOL);
 	sendProtocol(sock, sendBuffer);
-	recvProtocol(sock, recvBuffer, BUFFER_SIZE);
-	printMessage(recvBuffer);
+	int len = recvProtocol(sock, recvBuffer, BUFFER_SIZE);
+	printMessage(recvBuffer,len);
 
 	sclose(sock);
 
@@ -589,8 +589,8 @@ void pwd(char *pwdCmd) {
 
 	SPrintf(sendBuffer, "PWD%s", END_OF_PROTOCOL);
 	sendProtocol(sock, sendBuffer);
-	recvProtocol(sock, recvBuffer, BUFFER_SIZE);
-	printMessage(recvBuffer);
+	int len = recvProtocol(sock, recvBuffer, BUFFER_SIZE);
+	printMessage(recvBuffer,len);
 }
 
 // hash option on/off
@@ -599,23 +599,23 @@ void hash(char *hashCmd) {
 	hashFlag = !hashFlag;
 
 	if (hashFlag == 0) {
-		printMessage("hash off\n");
+		printMessage("hash off\n",8);
 	} else {
-		printMessage("hash on\n");
+		printMessage("hash on\n",8);
 	}
 }
 
 // shell command - not implemented
 void shellEscape(char *shellCmd) {
-	printMessage("not implemented");
+	printMessage("not implemented",15);
 }
 
-void printMessage(char *msg)
+void printMessage(char *msg,int len)
 {
 	int i=0;
 	while(1)
 	{
-		if(msg[i] == 0)
+		if(i == len)
 			break;
 
 		Printf("%c", msg[i]);

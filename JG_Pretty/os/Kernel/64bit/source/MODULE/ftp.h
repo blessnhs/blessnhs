@@ -44,7 +44,7 @@ void startFtpClient(char *ip, char *port);
 void commandHandle(char *cmd);
 void defaultHandler(char *cmd);
 int modeCheck(const char *option);
-void printMessage(char *msg);
+void printMessage(char *msg,int len);
 
 int ftpmain ();
 void openCon(char *cmd);
