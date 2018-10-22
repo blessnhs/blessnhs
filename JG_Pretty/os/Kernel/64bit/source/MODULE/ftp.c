@@ -135,7 +135,7 @@ unsigned int downloadFile(int sock,int dptsock, char *filePath, unsigned int fil
 	 {
 		 readBytes = recv(dptsock, readBuffer, TEMP_BUFFER_SIZE, 0);
 
-		 if (readBytes <= 0)
+		 if (readBytes == -1)
 		 {
 			 Printf("downloadFile recv fail \n");
 			 break;
