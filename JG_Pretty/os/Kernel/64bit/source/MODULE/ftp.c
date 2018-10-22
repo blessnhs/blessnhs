@@ -118,37 +118,55 @@ static int recvProtocol(int sock, char *recvBuffer, int bufferSize) {
 	return recvLen;
 }
 
-unsigned int downloadFile(int dptsock, char *filePath, unsigned int fileSize,int hashFlag)
+unsigned int downloadFile(int sock,int dptsock, char *filePath, unsigned int fileSize,int hashFlag)
 {
 	char readBuffer[TEMP_BUFFER_SIZE];
-	unsigned int readBytes, totalBytes, numHash;
+	unsigned int readBytes, totalBytes, numHash,cnt;
 
 	Printf("downloadFile %s\n",filePath);
 
 
-	 FL_FILE *fd = fl_fopen(filePath, "w");
+	 FL_FILE *fd = fl_fopen(filePath, "a");
 	 if(fd == 0)
 		 return 0;
 
-	 totalBytes = numHash = 0;
+	 cnt = totalBytes = numHash = 0;
 	 while (1)
 	 {
-		 if ((readBytes = recv(dptsock, readBuffer, TEMP_BUFFER_SIZE, 0)) <= 0)
+		 readBytes = recv(dptsock, readBuffer, TEMP_BUFFER_SIZE, 0);
+
+		 if (readBytes <= 0)
 		 {
 			 Printf("downloadFile recv fail \n");
-			 fl_fclose(fd);
-			 return totalBytes;
+			 break;
 		 }
 
 
-		 int cnt = fl_fwrite(readBuffer, 1,readBytes,fd);
+		 cnt = fl_fwrite(readBuffer, 1,readBytes,fd);
+		 if(cnt <= 0)
+		 {
+			 Printf("fl_fwrite fail %s %d\n",readBuffer,readBytes);
+			 break;
+		 }
+
 		 totalBytes += cnt;
 
-		 Printf("readBytes %d cnt %d fileSize %d\n",readBytes,totalBytes,fileSize);
+		 Printf("readBytes %d cnt %d fileSize %d totalBytes %d\n",readBytes,cnt,fileSize,totalBytes);
 
 		 if(totalBytes >= (fileSize-1))
 			 break;
 	 }
+
+	char sendBuffer[TEMP_BUFFER_SIZE];
+
+	 if(totalBytes < (fileSize-1))
+	 {
+		 SPrintf(sendBuffer, "REST %s%s", totalBytes, END_OF_PROTOCOL);
+		 sendProtocol(sock, sendBuffer);
+		 int sizelen = recvProtocol(sock, readBuffer, BUFFER_SIZE);
+		 printMessage(readBuffer,sizelen);
+	 }
+
 /*
 	while (1)
 	{
@@ -493,8 +511,13 @@ void get(char *getCmd) {
 	 sendProtocol(sock, sendBuffer);
 	 recvProtocol(sock, recvBuffer, BUFFER_SIZE);
 
+	 SPrintf(sendBuffer, "TYPE %s%s", "I", END_OF_PROTOCOL);
+	 sendProtocol(sock, sendBuffer);
+	 sizelen = recvProtocol(sock, recvBuffer, BUFFER_SIZE);
+	 printMessage(recvBuffer,sizelen);
+
 	 // download file from DTP
-	 downloadFile(dtpSock, filePath, fileSize, hashFlag);
+	 downloadFile(sock,dtpSock, filePath, fileSize, hashFlag);
 
 	 // recv complete message from PI server
 	 sizelen = recvProtocol(sock, recvBuffer, BUFFER_SIZE);

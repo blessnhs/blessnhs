@@ -61,7 +61,6 @@ void shellEscape(char *shellCmd);
 
 
 
-unsigned int downloadFile(int sock, char *filePath, unsigned int fileSize, int hashFlag);
 unsigned int uploadFile(int sock, char *filePath, int hashFlag);
 
 void debug(char *msg);
@@ -69,7 +68,7 @@ void debug(char *msg);
 static int connectServer(char *hostname, short port);
 static void sendProtocol(int sock, char *protocol);
 static int recvProtocol(int sock, char *recvBuffer, int bufferSize);
-unsigned int downloadFile(int sock, char *filePath, unsigned int fileSize, int hashFlag);
+unsigned int downloadFile(int socksock,int sock2, char *filePath, unsigned int fileSize, int hashFlag);
 unsigned int uploadFile(int sock, char *filePath, int hashFlag);
 ////////////////////////////////////////////////////////////////////////////////////////////////
 //end ftp
