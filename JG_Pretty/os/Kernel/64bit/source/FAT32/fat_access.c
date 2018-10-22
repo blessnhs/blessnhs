@@ -781,7 +781,7 @@ int fatfs_mark_file_deleted(struct fatfs *fs, uint32 Cluster, char *shortname)
 #endif
                 if (fatfs_entry_sfn_only(directoryEntry) )
                 {
-                    if (strcmp((const char *)directoryEntry->Name, shortname)==0)
+                    if (strncmp((const char *)directoryEntry->Name, shortname,11)==0)
                     {
                         // Mark as deleted
                         directoryEntry->Name[0] = FILE_HEADER_DELETED;
