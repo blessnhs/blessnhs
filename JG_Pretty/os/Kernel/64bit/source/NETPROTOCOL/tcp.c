@@ -198,8 +198,10 @@ int net_proto_tcp_recv (int fd, char *msg, unsigned size)
 				return -1;
 
 			if (conn->state == PROTO_TCP_CONN_STATE_CLOSE) {
-				if (net_proto_tcp_conn_del (conn));
-					return -1;
+				if (net_proto_tcp_conn_del (conn))
+				{
+					//return -1;
+				}
 			}
 
 			Schedule ();
