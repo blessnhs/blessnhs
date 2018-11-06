@@ -54,8 +54,8 @@ typedef struct proto_tcp_conn_context {
 
 	netif_t *netif;
 
-	unsigned short offset;
-	unsigned short len;
+	unsigned int offset;
+	unsigned int len;
 	char *data;
 } proto_tcp_conn_t;
 
