@@ -121,7 +121,7 @@ static int recvProtocol(int sock, char *recvBuffer, int bufferSize) {
 unsigned int downloadFile(int sock,int dptsock, char *filePath, unsigned int fileSize,int hashFlag)
 {
 	char readBuffer[TEMP_BUFFER_SIZE];
-	unsigned int readBytes, totalBytes, numHash,cnt;
+	int readBytes, totalBytes, numHash,cnt;
 
 	Printf("downloadFile %s\n",filePath);
 
@@ -135,7 +135,7 @@ unsigned int downloadFile(int sock,int dptsock, char *filePath, unsigned int fil
 	 {
 		 readBytes = recv(dptsock, readBuffer, TEMP_BUFFER_SIZE, 0);
 
-		 if (readBytes == -1)
+		 if (readBytes <= 0)
 		 {
 			 Printf("downloadFile recv fail \n");
 			 break;
