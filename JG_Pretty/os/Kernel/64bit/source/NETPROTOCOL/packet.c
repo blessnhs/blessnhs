@@ -88,6 +88,7 @@ unsigned task_net_packet ()
 			for (netif = netif_list.next; netif != &netif_list; netif = netif->next)
 			if(netif != 0)
 			{
+				Lock (&mutex_packet);
 				/* check for incoming data */
 				int ret = netdev_rx (netif->dev, netif->buf_rx, 2048);
 
@@ -98,6 +99,8 @@ unsigned task_net_packet ()
 					/* clear buffer */
 					memset (netif->buf_rx, 0, 2048);
 				}
+
+				Unlock (&mutex_packet);
 			}
 
 			Schedule ();

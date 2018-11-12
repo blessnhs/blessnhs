@@ -117,23 +117,23 @@ typedef struct proto_tcp6_backlog_context {
 
 /* TCP layer structure */
 typedef struct proto_tcp_t {
-	net_port port_source;		// 2
-	net_port port_dest;		// 4
+	net_port port_source:16;		// 2
+	net_port port_dest:16;		// 4
 
-	unsigned seq;			// 8
-	unsigned ack;			// 12
+	unsigned seq:32;			// 8
+	unsigned ack:32;			// 12
 
 	unsigned char res:4;		// 13
 	unsigned char data_offset:4;	
 
-	unsigned char flags;		// 14
+	unsigned char flags:8;		// 14
 
-	unsigned short window;		// 16
+	unsigned short window:16;		// 16
 
-	unsigned short checksum;	// 18
-
+	unsigned short checksum:16;	// 18
+	unsigned short urgentPointer:16;
 //	unsigned char *options;
-} proto_tcp_t;
+}  __attribute__((packed)) proto_tcp_t;
 
 
 extern unsigned init_net_proto_tcp ();

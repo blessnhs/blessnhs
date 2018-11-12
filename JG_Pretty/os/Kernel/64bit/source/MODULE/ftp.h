@@ -65,6 +65,7 @@ unsigned int uploadFile(int sock, char *filePath, int hashFlag);
 
 void debug(char *msg);
 
+int connectServer2(char *ip, short port);
 static int connectServer(char *hostname, short port);
 static void sendProtocol(int sock, char *protocol);
 static int recvProtocol(int sock, char *recvBuffer, int bufferSize);

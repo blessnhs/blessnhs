@@ -198,10 +198,8 @@ int net_proto_tcp_recv (int fd, char *msg, unsigned size)
 				return -1;
 
 			if (conn->state == PROTO_TCP_CONN_STATE_CLOSE) {
-				if (net_proto_tcp_conn_del (conn))
-				{
-					//return -1;
-				}
+				if (net_proto_tcp_conn_del (conn));
+						return -1;
 			}
 
 			Schedule ();
@@ -216,9 +214,10 @@ int net_proto_tcp_recv (int fd, char *msg, unsigned size)
 			return 0;
 	}
 
+	Lock (&mutex_tcp_read_cache);
+
 	if ((conn->len-conn->offset) > size) {
 		memcpy (msg, conn->data+conn->offset, size);
-		//Printf ("msg11: %d %d\n", conn->offset, size);
 		conn->offset += size;
 	
 		ret = size;
@@ -226,13 +225,13 @@ int net_proto_tcp_recv (int fd, char *msg, unsigned size)
 		ret = conn->len-conn->offset;
 	
 		memcpy (msg, conn->data+conn->offset, conn->len-conn->offset);
-		//Printf ("msg22: %d %d %d\n", conn->offset, size, conn->len);
 		conn->len = 0;
 		conn->offset = 0;
 	
 		DEL (conn->data);
 	}
 
+	Unlock (&mutex_tcp_read_cache);
 	//kPrintf ("recv () - %d -- DATA: %d : %d\n", fd, ret, size);
 
 	return ret;
@@ -433,7 +432,10 @@ unsigned net_proto_tcp_handler (packet_t *packet, proto_ip_t *ip, char *buf, uns
 	proto_tcp_conn_t *conn = net_proto_tcp_conn_check (ip->ip_dest, tcp->port_dest, ip->ip_source, tcp->port_source, &ret);
 
 	if (!conn && ret == 0)
+	{
+		Printf ("net_proto_tcp_conn_check fail %d\n",ret);
 		return 1;
+	}
 
 	//Printf ("tcp->flags: 0x%x, ret: %d, conn: 0x%x, fd: %d\n", tcp->flags, ret, conn, conn->fd);
 
@@ -457,39 +459,45 @@ unsigned net_proto_tcp_handler (packet_t *packet, proto_ip_t *ip, char *buf, uns
 
 	/* data received */
 	if (tcp->flags & 0x08) {
+		Lock (&mutex_tcp_read_cache);
+
 		/* needed for calculate real offset from 4bit number */
 		unsigned offset = tcp->data_offset * 4;
 
 		/* now calculate accurate length of tcp _data_ */
 		unsigned size = swap16 (ip->total_len) - (offset + (ip->head_len*4));
-		//kPrintf (">>>> %d : %d : %d\n", offset, size, len);
-		//Lock (&mutex_tcp_read_cache);
+
+		//Printf ("2.1>>>>total_len  %d : offset %d ip->head_len  %d\n", swap16 (ip->total_len), offset, (offset + (ip->head_len*4)));
+		//Printf ("2.>>>>offset  %d : size %d len  %d\n", offset, size, len);
+
 		net_proto_tcp_read_cache (conn, buf+offset, size);
-		//Unlock (&mutex_tcp_read_cache);
 		/* send ack */
 		net_proto_tcp_read_ok (conn, ip, tcp, size);
 
 		data_cache = 1;
+		Unlock (&mutex_tcp_read_cache);
 	}
 
 	/* sended data was delivered succefully / ACK */
 	if (tcp->flags & 0x10) {
 		/* HACK: It is interesting, that no push flag, and there could be some data to read */
+		Lock (&mutex_tcp_read_cache);
 
 		/* needed for calculate real offset from 4bit number */
 		unsigned offset = tcp->data_offset * 4;
 
 		/* now calculate accurate length of tcp _data_ */
 		unsigned size = swap16 (ip->total_len) - (offset + (ip->head_len*4));
+
+		//Printf ("2.>>>>offset  %d : size %d len  %d\n", offset, size, len);
+
 
 		/* there are data for read */
 		if (size) {
 			/* data was cached, so no need cache it again */
 			if (!data_cache) {
 				//kPrintf (">>>>2 %d : %d : %d\n", offset, size, len);
-				Lock (&mutex_tcp_read_cache);
 				net_proto_tcp_read_cache (conn, buf+offset, size);
-				Unlock (&mutex_tcp_read_cache);
 				/* send ack */
 				net_proto_tcp_read_ok (conn, ip, tcp, size);
 			}
@@ -501,6 +509,9 @@ unsigned net_proto_tcp_handler (packet_t *packet, proto_ip_t *ip, char *buf, uns
 			} else
 				net_proto_tcp_write_data_ok (conn, ip, tcp);
 		}
+
+		Unlock (&mutex_tcp_read_cache);
+
 	}
 
 	/* connection estabilish respond */
@@ -549,7 +560,7 @@ int net_proto_tcp_read_cache (proto_tcp_conn_t *conn, char *data, unsigned len)
 	if (!conn->data)
 		return -1;
 
-	//kPrintf ("DATA: %d - #'%s'#\n", len, data);
+	//Printf ("\n3.DATA: %d - fd %d\n", len, conn->fd);
 	
 	conn->len += len;
 
