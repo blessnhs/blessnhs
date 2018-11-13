@@ -64,13 +64,22 @@ unsigned net_packet_handler (char *buf, unsigned len)
 	if (!packet)
 		return 0;
 
+	int length  = 0;
+
+	int type = (packet->type>>8) | (packet->type<<8);
+
+	if(type < 1500 )
+		length = 22;
+	else
+		length = sizeof(packet_t);
+
 	switch (packet->type) {
 		case NET_PACKET_TYPE_IPV4:
-			return net_proto_ip_handler (packet, buf+sizeof (packet_t), len-sizeof (packet_t));
+			return net_proto_ip_handler (packet, buf+length, len-length);
 		case NET_PACKET_TYPE_ARP:
-			return net_proto_arp_handler (packet, buf+sizeof (packet_t), len-sizeof (packet_t));
+			return net_proto_arp_handler (packet, buf+length, len-length);
 		case NET_PACKET_TYPE_IPV6:
-			return net_proto_ipv6_handler (packet, buf+sizeof (packet_t), len-sizeof (packet_t));
+			return net_proto_ipv6_handler (packet, buf+length, len-length);
 	}
 
 	return 1;
