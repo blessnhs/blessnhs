@@ -29,10 +29,9 @@
 #include "../NETPROTOCOL/net.h"
 #include "../AssemblyUtility.h"
 #include "../DynamicMemory.h"
-
+#include "../fat32/fat_filelib.h"
 #include "../types.h"
-
-
+#include "../consoleshell.h"
 /* AMD Vendor ID */
 #define AMD_VENDORID				0x1022
 
@@ -450,6 +449,8 @@ unsigned init_pcnet32 ()
 
 	pcnet32_dev = dev;
 
+
+
 	return pcnet32_start (dev);
 }
 
@@ -624,10 +625,10 @@ void pcnet32_int (pciDev_t* device)
 
 }
 
+char buffer[3000];
+
 unsigned pcnet32_int_rx (struct pcnet32_dev_t *dev)
 {
-	Lock (&mutex_queue_pcnet);
-
 	struct pcnet32_ringrx_t *ringrx = /*NEW(sizeof(struct pcnet32_ringrx_t) * pcnet32_ring_xlen[PCNET32_BUF_ENC_RX]);*/PCNET32_RXRING;
 
         unsigned short index = 0;
@@ -653,13 +654,10 @@ unsigned pcnet32_int_rx (struct pcnet32_dev_t *dev)
 		if (ringrx[index].rmd2.mcnt > 120)
 			kPrintf ("len: %d\n", ringrx[index].rmd2.mcnt);*/
 
-		//Printf ("1.pcnet32_int_rx len: %d\n", ringrx[index].rmd2.mcnt);
 
 
 		netdev_rx_add_queue (ifdev, buf, ringrx[index].rmd2.mcnt);
         }
-
-        Unlock (&mutex_queue_pcnet);
 
 	return 1;
 }

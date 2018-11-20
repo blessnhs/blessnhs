@@ -32,6 +32,7 @@
 #include "file.h"
 #include "../DynamicMemory.h"
 #include "../Utility.h"
+#include "../types.h"
 
 /* Mutex for socket function */
 MUTEX_CREATE (mutex_tcp_accept);
@@ -85,37 +86,43 @@ int net_proto_tcp_connect (int fd, sockaddr_in *addr)
 		return -1;
 
 	netif_t *netif;
-	for (netif = netif_list.next; netif != &netif_list; netif = netif->next) {
-		ret = net_proto_tcp_conn_estabilish (conn, netif, addr->sin_addr, addr->sin_port);
+	for (netif = netif_list.next; netif != &netif_list; netif = netif->next)
+	{
+		conn->ip_dest = addr->sin_addr;
+		conn->port_dest = addr->sin_addr;
+		conn->seq = _rand32();
+		conn->port_source = 0xC000 + (_rand14() & ~0xc000);
+		TRACE_PORT("TCPSocket::Connect(): connecting from port %u\n", conn->port_source);
+		conn->ack = 0;
+		conn->fNextSequence = 0;
 
-		unsigned long stime = GetTickCount();
-
-		/* blocking mode */
-		if (!(conn->flags & O_NONBLOCK)) {
-			if (!ret)
-				return -1;
-
-			for (;;) {
-				Schedule ();
-
-				/* timeout for 8s */
-				if ((stime+3000) < GetTickCount())
-					return -1;
-
-				if (conn->state == PROTO_TCP_CONN_STATE_ESTABILISHED)
-					break;
-
-				/* when connection cant be accepted succefully first time, try it again */
-				if (conn->state == PROTO_TCP_CONN_STATE_ESTABILISHERROR) {
-					ret = net_proto_tcp_conn_estabilish (conn, netif, addr->sin_addr, addr->sin_port);
-					conn->state = PROTO_TCP_CONN_STATE_ESTABILISH;
-				}
-			}
-		} else
-		/* non-blocking mode */
+			// send SYN
+		struct TCPPacket* packet = NEW(sizeof(struct TCPPacket));
+		if (packet == NULL)
 			return -1;
+		int	error = SetTo(packet,NULL, 0, conn->ip_source, conn->port_source, conn->ip_dest, conn->port_dest,
+				conn->seq, conn->ack, TCP_SYN);
+			if (error != 0)
+			{
+				DEL( packet );
+				return error;
+			}
+			error = _Send(conn,packet,true);
+			if (error != 0)
+				return error;
+			conn->fState = TCP_SOCKET_STATE_SYN_SENT;
+			conn->seq++;
+			TRACE("SYN sent\n");
 
-		ret = 0;
+			// receive SYN-ACK
+			error = _WaitForState(conn,TCP_SOCKET_STATE_OPEN, 1000000LL);
+			if (error != 0) {
+				TRACE("no SYN-ACK received\n");
+				return error;
+			}
+			TRACE("SYN-ACK received\n");
+
+			break;
 	}
 
 	return ret;
@@ -1147,3 +1154,816 @@ unsigned init_net_proto_tcp ()
 }
 
 
+struct ChainBuffer *DetachNext(struct ChainBuffer *buffer)
+{
+	if (!buffer->fNext)
+		return NULL;
+
+	struct ChainBuffer *next = buffer->fNext;
+
+	buffer->fNext = NULL;
+	next->fFlags |= CHAIN_BUFFER_HEAD;
+	buffer->fTotalSize = buffer->fSize;
+
+	return next;
+}
+
+// Append
+void Append(struct ChainBuffer *buffer,struct ChainBuffer *next)
+{
+	if (!next)
+		return;
+
+	if (buffer->fNext)
+		Append(buffer->fNext,next);
+	else
+		buffer->fNext = next;
+
+	buffer->fTotalSize = buffer->fSize + buffer->fNext->fTotalSize;
+}
+
+// Flatten
+void Flatten(struct ChainBuffer *this,void *_buffer)
+{
+	unsigned char *buffer = (unsigned char*)_buffer;
+	{
+		if (this->fData && this->fSize > 0)
+		{
+			memcpy(buffer, this->fData, this->fSize);
+			buffer += this->fSize;
+		}
+
+		if (this->fNext)
+			Flatten(this->fNext,buffer);
+	}
+}
+
+// _Init
+void Init(struct ChainBuffer *this,void *data, uint32_t size, struct ChainBuffer *next, uint32_t flags)
+{
+	this->fFlags = flags | CHAIN_BUFFER_HEAD;
+	this->fSize = size;
+	this->fTotalSize = this->fSize;
+	this->fData = data;
+	this->fNext = NULL;
+	Append(this,next);
+}
+
+// _Destroy
+void Destroy(struct ChainBuffer *this)
+{
+	struct ChainBuffer *next = this->fNext;
+	this->fNext = NULL;
+	if ((this->fFlags & CHAIN_BUFFER_FREE_DATA) && this->fData) {
+		DEL(this->fData);
+		this->fData = NULL;
+	}
+
+	if (!(this->fFlags & CHAIN_BUFFER_EMBEDDED_DATA))
+		this->fSize = 0;
+	this->fTotalSize = this->fSize;
+
+	if (next) {
+		if (next->fFlags & CHAIN_BUFFER_ON_STACK)
+			Destroy(next);
+		else
+			DEL (next);
+	}
+}
+
+void ChainBuffer(struct ChainBuffer *this,void *data, uint32_t size, struct ChainBuffer *next,bool freeData)
+{
+	Init(this,data, size, next,
+		CHAIN_BUFFER_ON_STACK | (freeData ? CHAIN_BUFFER_FREE_DATA : 0));
+}
+
+//-------------------------------------------------------------------------------------------------
+unsigned int _rand32(void)
+{
+	static unsigned int next = 0;
+	if (next == 0)
+		next = GetTickCount() / 1000000;
+
+	next = (next >> 1) ^ (unsigned int)((0 - (next & 1U)) & 0xd0000001U);
+		// characteristic polynomial: x^32 + x^31 + x^29 + x + 1
+	return next;
+}
+
+unsigned short _rand14(void)
+{
+	// TODO: Find suitable generator polynomial.
+	return _rand32() & 0x3fff;
+}
+
+int SetTo(struct TCPPacket *packet,const void* data, int size, net_ipv4 sourceAddress,
+	uint16_t sourcePort, net_ipv4 destinationAddress, uint16_t destinationPort,
+	uint32_t sequenceNumber, uint32_t acknowledgmentNumber, uint8_t flags)
+{
+	if (data == NULL && size > 0)
+		return -1;
+
+	if (size > 0) {
+		packet->fData = NEW(size);
+		if (packet->fData == NULL)
+			return -1;
+		memcpy(packet->fData, data, size);
+	} else
+		packet->fData = NULL;
+
+	packet->fSize = size;
+	packet->fSourceAddress = sourceAddress;
+	packet->fSourcePort = sourcePort;
+	packet->fDestinationAddress = destinationAddress;
+	packet->fDestinationPort = destinationPort;
+	packet->fSequenceNumber = sequenceNumber;
+	packet->fAcknowledgmentNumber = acknowledgmentNumber;
+	packet->fFlags = flags;
+
+	return 0;
+}
+
+
+bool ProvidesSequenceNumber(struct TCPPacket *packet,uint32_t sequenceNumber)
+{
+	// TODO PAWS
+	return packet->fSequenceNumber <= sequenceNumber
+		&& packet->fSequenceNumber + packet->fSize > sequenceNumber;
+}
+
+int WindowSize()
+{
+	return 4096;
+}
+
+
+int Send(netif_t *eth,uint16_t sourcePort, net_ipv4 destinationAddress,
+	uint16_t destinationPort, uint32_t sequenceNumber,
+	uint32_t acknowledgmentNumber, uint8_t flags, uint16_t windowSize,
+	struct ChainBuffer* buffer)
+{
+	if (buffer == NULL)
+		return -1;
+
+	struct proto_tcp_t header;
+	struct ChainBuffer headerBuffer;
+	Init(&headerBuffer,&header, sizeof(header), buffer,false);
+	memset(&header, 0, sizeof(header));
+	header.port_source = htons(sourcePort);
+	header.port_dest = htons(destinationPort);
+	header.seq = htonl(sequenceNumber);
+	header.ack = htonl(acknowledgmentNumber);
+	header.data_offset = 5;
+	header.flags = flags;
+	header.window = htons(windowSize);
+
+	header.checksum = 0;
+	header.checksum = htons(_ChecksumBuffer(&headerBuffer,
+			eth->ip, destinationAddress,
+		headerBuffer.fTotalSize));
+
+//	unsigned ret = net_proto_ip_send (eth, packet, ip, (char *) buf_tcp, l+len);
+//	return fIPService->Send(destinationAddress, IPPROTO_TCP, &headerBuffer);
+}
+
+void
+_EnqueueOutgoingPacket(struct TCPPacket* packet,struct proto_tcp_conn_context *this)
+{
+	if (this->fLastSentPacket != NULL) {
+		this->fLastSentPacket->fNext = (packet);
+		this->fLastSentPacket = packet;
+	} else {
+		this->fFirstSentPacket = this->fLastSentPacket = packet;
+	}
+}
+
+int
+Close(struct proto_tcp_conn_context *context)
+{
+	// send FIN
+	struct TCPPacket* packet = NEW( sizeof(struct TCPPacket));
+	if (packet == NULL)
+		return -1;
+	int error = SetTo(packet,NULL, 0, context->ip_source, context->port_source, context->ip_dest,
+			context->port_dest, context->seq, context->ack, TCP_FIN | TCP_ACK);
+	if (error != 0) {
+		DEL (packet);
+		return error;
+	}
+	error = _Send(context,packet,true);
+	if (error != 0)
+		return error;
+
+	context->fState = TCP_SOCKET_STATE_FIN_SENT;
+	TRACE("FIN sent\n");
+
+	error = _WaitForState(context,TCP_SOCKET_STATE_CLOSED, 1000000LL);
+	if (error != 0)
+		return error;
+
+	return 0;
+}
+
+int
+Write(struct proto_tcp_conn_context *context,const void* buffer, int bufferSize)
+{
+	if (buffer == NULL || bufferSize == 0)
+		return -1;
+
+	// TODO: Check for MTU and create multiple packets if necessary.
+
+	struct TCPPacket* packet = NEW(sizeof(struct TCPPacket));
+	if (packet == NULL)
+		return -1;
+	int error = SetTo(packet,buffer, bufferSize, context->ip_source, context->port_source,
+			context->ip_dest, context->port_dest, context->seq, context->ack,
+		TCP_ACK);
+	if (error != 0) {
+		DEL (packet);
+		return error;
+	}
+	return _Send(context,packet,true);
+}
+
+
+void
+Acknowledge(struct proto_tcp_conn_context *context,uint32_t number)
+{
+	TRACE("TCPSocket::Acknowledge(): %lu\n", number);
+	// dequeue packets
+	struct TCPPacket* packet;
+	for (packet = context->fFirstSentPacket; packet != NULL;
+			packet = context->fFirstSentPacket) {
+		if (packet->fSequenceNumber >= number)
+			return;
+
+		context->fFirstSentPacket = packet->fNext;
+		DEL (packet);
+	}
+	context->fLastSentPacket = NULL;
+}
+
+void
+ProcessPacket(struct proto_tcp_conn_context *context,struct TCPPacket* packet)
+{
+	TRACE("TCPSocket::ProcessPacket()\n");
+
+	if ((packet->fFlags & TCP_FIN) != 0) {
+		context->fRemoteState = TCP_SOCKET_STATE_FIN_SENT;
+		TRACE("FIN received\n");
+		_Ack();
+	}
+
+	if (context->fState == TCP_SOCKET_STATE_SYN_SENT) {
+		if ((packet->fFlags & TCP_SYN) != 0
+				&& (packet->fFlags & TCP_ACK) != 0) {
+			context->fNextSequence = context->ack = packet->fSequenceNumber + 1;
+			context->fRemoteState = TCP_SOCKET_STATE_SYN_SENT;
+			DEL (packet);
+			_Ack();
+			context->fState = context->fRemoteState = TCP_SOCKET_STATE_OPEN;
+			return;
+		}
+	} else if (context->fState == TCP_SOCKET_STATE_OPEN) {
+	} else if (context->fState == TCP_SOCKET_STATE_FIN_SENT) {
+		if ((packet->fFlags & TCP_ACK) != 0) {
+			TRACE("FIN-ACK received\n");
+			if (context->fRemoteState == TCP_SOCKET_STATE_FIN_SENT)
+				context->fState = TCP_SOCKET_STATE_CLOSED;
+		}
+	}
+
+	if (packet->fSize == 0) {
+		TRACE("TCPSocket::ProcessPacket(): not queuing due to lack of data\n");
+		DEL (packet);
+		return;
+	}
+
+	// For now rather protect us against being flooded with packets already
+	// acknowledged. "If it's important, they'll send it again."
+	// TODO PAWS
+	if (packet->fSequenceNumber < context->ack) {
+		TRACE_QUEUE("TCPSocket::ProcessPacket(): not queuing due to wraparound\n");
+		DEL (packet);
+		return;
+	}
+
+	if (context->fLastPacket == NULL) {
+		// no packets enqueued
+		TRACE("TCPSocket::ProcessPacket(): first in queue\n");
+		packet->fNext = (NULL);
+		context->fFirstPacket = context->fLastPacket = packet;
+	} else if (context->fLastPacket->fSequenceNumber < packet->fSequenceNumber) {
+		// enqueue in back
+		TRACE("TCPSocket::ProcessPacket(): enqueue in back\n");
+		packet->fNext = (NULL);
+		context->fLastPacket->fNext = (packet);
+		context->fLastPacket = packet;
+	} else if (context->fFirstPacket->fSequenceNumber > packet->fSequenceNumber) {
+		// enqueue in front
+		TRACE("TCPSocket::ProcessPacket(): enqueue in front\n");
+		TRACE_QUEUE("TCP: Enqueuing %lx - %lx in front! (next is %lx)\n",
+			packet->fSequenceNumber,
+			packet->fSequenceNumber + packet->fSize - 1,
+			context->fNextSequence);
+		packet->fNext = (context->fFirstPacket);
+		context->fFirstPacket = packet;
+	} else if (context->fFirstPacket->fSequenceNumber == packet->fSequenceNumber) {
+		TRACE_QUEUE("%s(): dropping due to identical first packet\n", __func__);
+		DEL (packet);
+		return;
+	} else {
+		// enqueue in middle
+		TRACE("TCPSocket::ProcessPacket(): enqueue in middle\n");
+		struct TCPPacket* queuedPacket ;
+		for (queuedPacket = context->fFirstPacket; queuedPacket != NULL;
+				queuedPacket = queuedPacket->fNext) {
+			if (queuedPacket->fSequenceNumber == packet->fSequenceNumber) {
+				TRACE_QUEUE("TCPSocket::EnqueuePacket(): TCP packet dropped\n");
+				// we may be waiting for a previous packet
+				DEL (packet);
+				return;
+			}
+			if (queuedPacket->fNext->fSequenceNumber
+					> packet->fSequenceNumber) {
+				packet->fNext = (queuedPacket->fNext);
+				queuedPacket->fNext = (packet);
+				break;
+			}
+		}
+	}
+	while (packet != NULL && packet->fSequenceNumber == context->ack) {
+		context->ack = packet->fSequenceNumber + packet->fSize;
+		packet = packet->fNext;
+	}
+}
+
+
+struct TCPPacket*
+_PeekPacket(struct proto_tcp_conn_context *context)
+{
+	TRACE("TCPSocket::_PeekPacket(): fNextSequence = %lu\n", context->fNextSequence);
+
+	struct TCPPacket* packet;
+	for (packet = context->fFirstPacket; packet != NULL;
+			packet = packet->fNext) {
+		if (ProvidesSequenceNumber(packet,context->fNextSequence))
+			return packet;
+	}
+	return NULL;
+}
+
+
+struct TCPPacket*
+_DequeuePacket(struct proto_tcp_conn_context *context)
+{
+	//TRACE("TCPSocket::DequeuePacket()\n");
+	if (context->fFirstPacket == NULL)
+		return NULL;
+
+	if (ProvidesSequenceNumber(context->fFirstPacket,context->fNextSequence)) {
+		struct TCPPacket* packet = context->fFirstPacket;
+		context->fFirstPacket = packet->fNext;
+		if (context->fFirstPacket == NULL)
+			context->fLastPacket = NULL;
+		packet->fNext = (NULL);
+		TRACE("TCP: Dequeuing %lx - %lx from front.\n",
+			packet->fSequenceNumber,
+			packet->fSequenceNumber + packet->fSize - 1);
+		return packet;
+	}
+
+	struct TCPPacket* packet;
+	for (packet = context->fFirstPacket;
+			packet != NULL && packet->fNext != NULL;
+			packet = packet->fNext) {
+		if (ProvidesSequenceNumber(packet->fNext,context->fNextSequence)) {
+			struct TCPPacket* nextPacket = packet->fNext;
+			packet->fNext = (nextPacket->fNext);
+			if (context->fLastPacket == nextPacket)
+				context->fLastPacket = packet;
+			Printf("TCP: Dequeuing %lx - %lx.\n",
+				nextPacket->fSequenceNumber,
+				nextPacket->fSequenceNumber + nextPacket->fSize - 1);
+			return nextPacket;
+		}
+	}
+	Printf("dequeue failed!\n");
+	return NULL;
+}
+
+int ___Send(net_ipv4 destination, uint8_t protocol, struct ChainBuffer *buffer);
+int ESend(mac_addr_t destination, uint16_t protocol,struct ChainBuffer *buffer);
+
+int __Send(uint16_t sourcePort, net_ipv4 destinationAddress,
+	uint16_t destinationPort, uint32_t sequenceNumber,
+	uint32_t acknowledgmentNumber, uint8_t flags, uint16_t windowSize,
+	struct ChainBuffer* buffer)
+{
+	TRACE("TCPService::Send(): seq = %lu, ack = %lu\n",
+		sequenceNumber, acknowledgmentNumber);
+	if (buffer == NULL)
+		return -1;
+
+	netif_t *netif = netif_findbyname ("eth0");
+
+	struct proto_tcp_t header;
+	struct ChainBuffer headerBuffer;
+	ChainBuffer(&headerBuffer,&header, sizeof(header), buffer,false);
+	memset(&header, 0, sizeof(header));
+	header.port_source = htons(sourcePort);
+	header.port_dest = htons(destinationPort);
+	header.seq = htonl(sequenceNumber);
+	header.ack = htonl(acknowledgmentNumber);
+	header.data_offset = 5;
+	header.flags = flags;
+	header.window = htons(windowSize);
+
+	header.checksum = 0;
+	header.checksum = htons(_ChecksumBuffer(&headerBuffer,
+			netif->ip, destinationAddress,
+		headerBuffer.fTotalSize));
+
+	return ___Send(destinationAddress, IPPROTO_TCP, &headerBuffer);
+}
+
+int ___Send(net_ipv4 destination, uint8_t protocol, struct ChainBuffer *buffer)
+{
+	TRACE(("IPService::Send(to: %08lx, proto: %lu, %lu bytes)\n", destination,
+		(uint32_t)protocol, (buffer ? buffer->fBuffer : 0)));
+
+	if (!buffer)
+		return -1;
+
+	netif_t *netif = netif_findbyname ("eth0");
+
+	// prepare header
+	struct proto_ip_t header;
+	struct ChainBuffer headerBuffer;
+	ChainBuffer(&headerBuffer,&header, sizeof(header), buffer,false);
+
+	header.head_len = 5;	// 5 32 bit words, no options
+	header.ver = IP_PROTOCOL_VERSION_4;
+	header.res0 = 0;
+	header.total_len = htons(headerBuffer.fTotalSize);
+	header.ident = 0;
+	header.flags = htons(IP_DONT_FRAGMENT);
+	header.ttl = IP_DEFAULT_TIME_TO_LIVE;
+	header.proto = protocol;
+	header.checksum = 0;
+	header.ip_source = htonl(netif->ip);
+	header.ip_dest = htonl(destination);
+
+	// compute check sum
+	header.checksum = 0;//htons(_Checksum(header));
+
+	// get target MAC address
+	mac_addr_t mac_dest;
+	unsigned get = arp_cache_get (destination, &mac_dest);
+
+	if (!get)
+	{
+		arp_send_request (netif, destination);
+
+		unsigned i = 0;
+		/* 100ms for waiting on ARP reply */
+		while (i < 100)
+		{
+			get = arp_cache_get (destination, &mac_dest);
+
+			if (get)
+				break;
+
+				/* TODO: make better waiting for ARP reply */
+			Sleep (10);
+
+			Schedule ();
+
+			i ++;
+		}
+
+		if (!get)
+			return 0;
+	}
+
+	return ESend(mac_dest, ETHERTYPE_IP, &headerBuffer);
+	// send the packet
+
+}
+
+int ESend(mac_addr_t destination, uint16_t protocol,struct ChainBuffer *buffer)
+{
+//	TRACE(("EthernetService::Send(to: %012llx, proto: 0x%hx, %lu bytes)\n",
+//		destination.ToUInt64(), protocol, (buffer ? buffer->TotalSize() : 0)));
+
+	if (!buffer)
+		return -1;
+
+	// data too long?
+	size_t dataSize = buffer->fTotalSize;
+	if (dataSize > ETHER_MAX_TRANSFER_UNIT)
+		return -1;
+
+	netif_t *netif = netif_findbyname ("eth0");
+
+	// prepend ethernet header
+	packet_t header;
+	struct ChainBuffer headerBuffer;
+	ChainBuffer(&headerBuffer,&header, sizeof(header), buffer,false);
+
+	memcpy (&header.mac_source, netif->dev->dev_addr, 6);
+	memcpy (&header.mac_dest, destination, 6);
+	header.type = htons(protocol);
+
+	// flatten
+	int totalSize = headerBuffer.fTotalSize;
+
+	char fSendBuffer[4096];
+	Flatten(&headerBuffer,fSendBuffer);
+
+/*	// pad data, if necessary
+	if (dataSize < ETHER_MIN_TRANSFER_UNIT) {
+		size_t paddingSize = ETHER_MIN_TRANSFER_UNIT - dataSize;
+		memset((uint8*)fSendBuffer + totalSize, 0, paddingSize);
+		totalSize += paddingSize;
+	}
+
+	// send
+*/
+	int bytesSent = net_packet_send2(netif,fSendBuffer,totalSize);
+	if (bytesSent < 0)
+		return bytesSent;
+	if (bytesSent != (ssize_t)totalSize)
+		return -1;
+
+	return 0;
+}
+
+int _Send(struct proto_tcp_conn_context *context,struct TCPPacket* packet, bool enqueue)
+{
+	struct ChainBuffer buffer;
+	ChainBuffer(&buffer,(void*)packet->fData, packet->fSize,NULL,false);
+
+	int error;// = fTCPService->Send(context->port_source, context->ip_dest, context->port_dest,
+		//packet->fSequenceNumber, context->ack, packet->fFlags,
+		//WindowSize(), &buffer);
+	if (error != 0)
+		return error;
+	if (packet->fSequenceNumber == context->seq)
+		context->seq += packet->fSize;
+
+	if (enqueue)
+		_EnqueueOutgoingPacket(context,packet);
+
+	return 0;
+}
+
+
+int
+_ResendQueue(struct proto_tcp_conn_context *context)
+{
+	TRACE("resending queue\n");
+	struct TCPPacket* packet;
+	for (packet = context->fFirstSentPacket; packet != NULL;
+			packet = packet->fNext) {
+
+		struct ChainBuffer buffer;
+		ChainBuffer(&buffer,(void*)packet->fData, packet->fSize,NULL,false);
+
+		int error;// = fTCPService->Send(context->port_source, context->ip_dest, context->port_dest,
+//			packet->fSequenceNumber, context->ack, packet->fFlags,
+//			WindowSize(), &buffer);
+		if (error != 0)
+			return error;
+	}
+	return 0;
+}
+
+
+int
+_Ack(struct proto_tcp_conn_context *context)
+{
+	struct TCPPacket* packet = NEW( sizeof( struct TCPPacket));
+	if (packet == NULL)
+		return -1;
+	int error = SetTo(packet,NULL, 0, context->ip_source, context->port_source, context->ip_dest,
+			context->port_dest, context->seq, context->ack, TCP_ACK);
+	if (error != 0) {
+		DEL (packet);
+		return error;
+	}
+	error = _Send(context,packet, false);
+	DEL (packet);
+	if (error != 0)
+		return error;
+	return 0;
+}
+
+
+int _WaitForState(struct proto_tcp_conn_context *conn,enum TCPSocketState state, long timeout)
+{
+	long startTime = GetTickCount();
+	do
+	{
+		if (conn->fState == state)
+			return 0;
+	} while (GetTickCount() - startTime < timeout);
+	return timeout == 0 ? -1 : -1;
+}
+
+uint16_t
+ip_checksum(struct ChainBuffer *buffer)
+{
+	return 0;
+}
+
+unsigned short _ChecksumBuffer(struct ChainBuffer* buffer, net_ipv4 source,net_ipv4 destination, unsigned short length)
+{
+	struct pseudo_header header = {
+		htonl(source),
+		htonl(destination),
+		0,
+		IPPROTO_TCP,
+		htons(length)
+	};
+
+	struct ChainBuffer headerBuffer;
+	ChainBuffer(&headerBuffer,&header, sizeof(header), buffer,false);
+
+	unsigned short checksum = 0;//ip_checksum(&headerBuffer);
+	DetachNext(&headerBuffer);
+	return checksum;
+}
+
+
+unsigned short
+_ChecksumData(const void* data, unsigned short length, net_ipv4 source,
+		net_ipv4 destination)
+{
+	struct ChainBuffer buffer;
+	ChainBuffer(&buffer,(void*)data, length,NULL,false);
+	return _ChecksumBuffer(&buffer, source, destination, length);
+}
+
+
+struct proto_tcp_conn_t*
+_FindSocket(net_ipv4 address, unsigned short port)
+{
+
+	proto_tcp_conn_t *conn = NULL;
+	for (conn = proto_tcp_conn_list.next; conn != &proto_tcp_conn_list; conn = conn->next)
+	{
+		if (conn->ip_source == address && conn->port_source == port)
+			return conn;
+	}
+
+	return NULL;
+}
+
+
+int Read(proto_tcp_conn_t *conn,void* buffer, int bufferSize, int* bytesRead,
+	long timeout)
+{
+	TRACE("TCPSocket::Read(): size = %lu\n", bufferSize);
+	if (bytesRead == NULL)
+		return -1;
+
+	*bytesRead = 0;
+	struct TCPPacket* packet = NULL;
+
+	long startTime = GetTickCount();
+	do {
+		//_ResendQueue();
+		packet = _PeekPacket(conn);
+		if (packet == NULL && conn->fRemoteState != TCP_SOCKET_STATE_OPEN)
+			return -1;
+		if (packet == NULL && timeout > 0LL)
+			_Ack(conn);
+	} while (packet == NULL && GetTickCount() - startTime < timeout);
+	if (packet == NULL) {
+#ifdef TRACE_TCP_QUEUE
+		_DumpQueue();
+#endif
+		return (timeout == 0) ? -1 : -1;
+	}
+	uint32_t packetOffset = conn->seq - packet->fSequenceNumber;
+	int readBytes = packet->fSize - packetOffset;
+	if (readBytes > bufferSize)
+		readBytes = bufferSize;
+	if (buffer != NULL)
+		memcpy(buffer, (uint8_t*)packet->fData + packetOffset, readBytes);
+	*bytesRead = readBytes;
+	if (!ProvidesSequenceNumber(packet,conn->fNextSequence + readBytes)) {
+		_DequeuePacket(conn);
+		DEL (packet);
+		packet = NULL;
+	}
+	conn->fNextSequence += readBytes;
+
+	if (packet == NULL && *bytesRead < bufferSize) {
+		do {
+			if (buffer != NULL)
+				buffer = (uint8_t*)buffer + readBytes;
+			bufferSize -= readBytes;
+			packet = _PeekPacket(conn);
+			if (packet == NULL && conn->fRemoteState != TCP_SOCKET_STATE_OPEN)
+				break;
+			readBytes = 0;
+			if (packet == NULL) {
+				_Ack(conn);
+				continue;
+			}
+			readBytes = packet->fSize;
+			if (readBytes > bufferSize)
+				readBytes = bufferSize;
+			if (buffer != NULL)
+				memcpy(buffer, packet->fData, readBytes);
+			*bytesRead += readBytes;
+			if (readBytes == packet->fSize) {
+				_DequeuePacket(conn);
+				DEL (packet);
+			}
+			conn->fNextSequence += readBytes;
+		} while (readBytes < bufferSize &&
+			GetTickCount() - startTime < timeout);
+#ifdef TRACE_TCP_QUEUE
+		if (readBytes < bufferSize) {
+			TRACE_QUEUE("TCP: Unable to deliver more data!\n");
+			_DumpQueue();
+		}
+#endif
+	}
+
+	return 0;
+}
+
+void HandleIPPacket(net_ipv4 sourceIP,
+		net_ipv4 destinationIP, const void* data, size_t size)
+{
+	TRACE("TCPService::HandleIPPacket(): source = %08lx, "
+		"destination = %08lx, %lu - %lu bytes\n", sourceIP, destinationIP,
+		size, sizeof(proto_tcp_t));
+
+	if (data == NULL || size < sizeof(proto_tcp_t))
+		return;
+
+	const proto_tcp_t* header = (const proto_tcp_t*)data;
+
+	uint16_t chksum = _ChecksumData(data, size, sourceIP, destinationIP);
+	if (chksum != 0) {
+		TRACE_CHECKSUM("TCPService::HandleIPPacket(): invalid checksum "
+			"(%04x vs. %04x), padding %lu\n",
+			header->checksum, chksum, size % 2);
+		return;
+	}
+
+	uint16_t source = ntohs(header->port_source);
+	uint16_t destination = ntohs(header->port_dest);
+	uint32_t sequenceNumber = ntohl(header->seq);
+	uint32_t ackedNumber = ntohl(header->ack);
+	TRACE("\tsource = %u, dest = %u, seq = %lu, ack = %lu, dataOffset = %u, "
+		"flags %s %s %s %s\n", source, destination, sequenceNumber,
+		ackedNumber, header->data_offset,
+		(header->flags & TCP_ACK) != 0 ? "ACK" : "",
+		(header->flags & TCP_SYN) != 0 ? "SYN" : "",
+		(header->flags & TCP_FIN) != 0 ? "FIN" : "",
+		(header->flags & TCP_RST) != 0 ? "RST" : "");
+	if (header->data_offset > 5) {
+		uint8_t* option = (uint8_t*)data + sizeof(proto_tcp_t);
+		while ((uint32_t*)option < (uint32_t*)data + header->data_offset) {
+			uint8_t optionKind = option[0];
+			if (optionKind == 0)
+				break;
+			uint8_t optionLength = 1;
+			if (optionKind > 1) {
+				optionLength = option[1];
+				TRACE("\tTCP option kind %u, length %u\n",
+					optionKind, optionLength);
+				if (optionKind == 2)
+					TRACE("\tTCP MSS = %04hu\n", *(uint16_t*)&option[2]);
+			}
+			option += optionLength;
+		}
+	}
+
+	struct proto_tcp_conn_context* socket = _FindSocket(destinationIP, destination);
+	if (socket == NULL) {
+		// TODO If SYN, answer with RST?
+		TRACE("TCPService::HandleIPPacket(): no socket\n");
+		return;
+	}
+
+	if ((header->flags & TCP_ACK) != 0) {
+		socket->ack = ackedNumber;
+	}
+
+	struct TCPPacket* packet = NEW( sizeof(struct TCPPacket));
+	if (packet == NULL)
+		return;
+	int error = SetTo(&packet,(uint32_t*)data + header->data_offset,
+		size - header->data_offset * 4, sourceIP, source, destinationIP,
+		destination, sequenceNumber, ackedNumber, header->flags);
+	if (error == 0)
+		ProcessPacket(socket,packet);
+	else
+		DEL (packet);
+}

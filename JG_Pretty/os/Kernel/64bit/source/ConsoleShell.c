@@ -30,7 +30,7 @@
 #include "RAMDisk.h"
 #include "utility.h"
 #include "fat32/fat_defs.h"
-#include "fat32/fat_filelib.h"
+
 #include "NETPROTOCOL/socket.h"
 #include "NETPROTOCOL/if.h"
 #include "MODULE/ftp.h"
@@ -1671,18 +1671,22 @@ static void Cat(const char* pcParameterBuffer )
 
 }
 
+int exit = 0;
+FL_FILE *fdlog;
+
 static void Ping(const char* pcParameterBuffer )
 {
 	int sock;
 	char sendBuffer[2048];
 	char recvBuffer[2048];
 
+	fdlog = fl_fopen("/log32", "wb");
+
 	sock = connectServer2("52.78.67.32",20000 );
 
 	send(sock,"1",1,0);
 
 	int idx = 0;
-	int exit = 0;
 
 	while(1)
 	{
@@ -1694,17 +1698,9 @@ static void Ping(const char* pcParameterBuffer )
 		{
 			if(recvBuffer[k] != 48 + idx)
 			{
+
 				Printf ("Wrong Number\n");
 				exit = 1;
-
-				Printf ("\nlen = %d idx = %d\n",len,idx);
-
-				Printf ("\n%d\n",strlen(recvBuffer));
-
-				int i=0;
-				for(i=0;i<len;i++)
-				Printf ("%c",recvBuffer[i]);
-
 				break;
 			}
 
@@ -1712,7 +1708,6 @@ static void Ping(const char* pcParameterBuffer )
 
 			if(idx == 10)
 				idx = 0;
-
 		}
 
 		if(exit == 1)

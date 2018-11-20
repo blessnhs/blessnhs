@@ -35,6 +35,7 @@ typedef struct packet_t {
 } packet_t;
 
 extern unsigned net_packet_send (netif_t *netif, packet_t *packet, char *buf, unsigned len);
+extern unsigned net_packet_send2 (netif_t *netif, char *buf, unsigned len);
 extern unsigned init_packet ();
 
 #endif
