@@ -60,7 +60,7 @@ typedef struct proto_ip_t {
 
 	net_ipv4 ip_source;
 	net_ipv4 ip_dest;
-} proto_ip_t;
+} __attribute__((packed))  proto_ip_t;
 
 typedef struct proto_ipv6_t {
 	unsigned char ver;
@@ -75,7 +75,7 @@ typedef struct proto_ipv6_t {
 
 	net_ipv6 ip_source;
 	net_ipv6 ip_dest;
-} proto_ipv6_t;
+} __attribute__((packed))  proto_ipv6_t;
 
 extern void NET_IPV6_TO_ADDR (net_ipv6 ip, unsigned short a, unsigned short b, unsigned short c, unsigned short d, 
 			  unsigned short e, unsigned short f, unsigned short g, unsigned short h);

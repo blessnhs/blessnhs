@@ -10,7 +10,7 @@
 #define __CONSOLESHELL_H__
 
 #include "Types.h"
-
+#include "fat32/fat_filelib.h"
 ////////////////////////////////////////////////////////////////////////////////
 //
 // ∏≈≈©∑Œ
@@ -138,7 +138,7 @@ static void Ping(const char* pcParameterBuffer );
 static void Cat(const char* pcParameterBuffer );
 
 
-
-
+extern 	int exit;
+extern FL_FILE *fdlog;
 
 #endif /*__CONSOLESHELL_H__*/

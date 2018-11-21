@@ -29,10 +29,9 @@
 #include "../NETPROTOCOL/net.h"
 #include "../AssemblyUtility.h"
 #include "../DynamicMemory.h"
-
+#include "../fat32/fat_filelib.h"
 #include "../types.h"
-
-
+#include "../consoleshell.h"
 /* AMD Vendor ID */
 #define AMD_VENDORID				0x1022
 
@@ -249,6 +248,8 @@ struct pcnet32_dev_t {
 	int chip_ver;
 };
 
+MUTEX mutex_queue_pcnet = {0,0,0};
+
 struct pcnet32_dev_t *pcnet32_dev;
 static netdev_t *ifdev;
 QWORD init_block;
@@ -448,6 +449,8 @@ unsigned init_pcnet32 ()
 
 	pcnet32_dev = dev;
 
+
+
 	return pcnet32_start (dev);
 }
 
@@ -622,6 +625,8 @@ void pcnet32_int (pciDev_t* device)
 
 }
 
+char buffer[3000];
+
 unsigned pcnet32_int_rx (struct pcnet32_dev_t *dev)
 {
 	struct pcnet32_ringrx_t *ringrx = /*NEW(sizeof(struct pcnet32_ringrx_t) * pcnet32_ring_xlen[PCNET32_BUF_ENC_RX]);*/PCNET32_RXRING;
@@ -649,6 +654,8 @@ unsigned pcnet32_int_rx (struct pcnet32_dev_t *dev)
 		if (ringrx[index].rmd2.mcnt > 120)
 			kPrintf ("len: %d\n", ringrx[index].rmd2.mcnt);*/
 
+
+
 		netdev_rx_add_queue (ifdev, buf, ringrx[index].rmd2.mcnt);
         }
 
@@ -657,6 +664,7 @@ unsigned pcnet32_int_rx (struct pcnet32_dev_t *dev)
 
 unsigned pcnet32_tx (char *buf, unsigned len)
 {
+	Lock (&mutex_queue_pcnet);
 
 	/* create tx ring */
 	struct pcnet32_ringtx_t *ringtx =  /*NEW(sizeof(struct pcnet32_ringtx_t) * pcnet32_ring_xlen[PCNET32_BUF_ENC_TX]);*/(struct pcnet32_ringtx_t *) PCNET32_TXRING;
@@ -674,6 +682,8 @@ unsigned pcnet32_tx (char *buf, unsigned len)
 		ringtx[index].tmd1.stp = ~0;
 		ringtx[index].tmd1.enp = ~0;
         }
+
+        Unlock (&mutex_queue_pcnet);
 }
 
 char pcnet32_acthandler (unsigned act, char *block, unsigned block_len)

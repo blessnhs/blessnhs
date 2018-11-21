@@ -56,6 +56,29 @@ unsigned net_packet_send (netif_t *netif, packet_t *packet, char *buf, unsigned 
 	return 1;
 }
 
+unsigned net_packet_send2 (netif_t *netif, char *buf, unsigned len)
+{
+	Lock (&mutex_packet);
+
+	if (!netif) {
+
+		Printf("net_packet_send failed \n");
+		Unlock (&mutex_packet);
+		return 0;
+	}
+
+	memcpy (netif->buf_tx, buf, len);
+
+	netif->dev->write ((char *) netif->buf_tx, len);
+
+	/* add transfered bytes to stats */
+	netif->dev->info_tx += len;
+
+	Unlock (&mutex_packet);
+
+	return 1;
+}
+
 /* Here we process a received packets */
 unsigned net_packet_handler (char *buf, unsigned len)
 {
@@ -97,6 +120,7 @@ unsigned task_net_packet ()
 			for (netif = netif_list.next; netif != &netif_list; netif = netif->next)
 			if(netif != 0)
 			{
+				Lock (&mutex_packet);
 				/* check for incoming data */
 				int ret = netdev_rx (netif->dev, netif->buf_rx, 2048);
 
@@ -107,6 +131,8 @@ unsigned task_net_packet ()
 					/* clear buffer */
 					memset (netif->buf_rx, 0, 2048);
 				}
+
+				Unlock (&mutex_packet);
 			}
 
 			Schedule ();

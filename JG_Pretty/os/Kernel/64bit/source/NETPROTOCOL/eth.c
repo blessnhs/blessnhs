@@ -136,10 +136,16 @@ netdev_buffer_queue_t *netdev_rx_queue (struct netdev_t *dev)
 	if (!dev)
 		return 0;
 
+	Lock (&mutex_queue_rx);
+
 	netdev_buffer_queue_t *queue;
 	for (queue = dev->queue_rx_list.next; queue != &dev->queue_rx_list; queue = queue->next)
+	{
+		Unlock (&mutex_queue_rx);
 		return queue;
+	}
 
+	Unlock (&mutex_queue_rx);
 	return 0;
 }
 
@@ -148,8 +154,12 @@ unsigned netdev_rx_queue_flush (struct netdev_t *dev, netdev_buffer_queue_t *que
 	if (!dev)
 		return 0;
 
+	Lock (&mutex_queue_rx);
+
 	queue->next->prev = queue->prev;
 	queue->prev->next = queue->next;
+
+	Unlock (&mutex_queue_rx);
 
 	DEL (queue->buf);
 	DEL (queue);
@@ -176,8 +186,6 @@ int netdev_rx (struct netdev_t *dev, char *buf, unsigned len)
 	/* copy available data from queue to our buffer */
 	memcpy (buf, queue->buf, l);
 
-	buf[l] = '\0';
-	
 	/* clean old queue entry */
 	netdev_rx_queue_flush (dev, queue);
 

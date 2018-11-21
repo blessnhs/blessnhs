@@ -20,6 +20,34 @@
 #define _TCP_H
 
 #include "ip.h"
+#include "../types.h"
+
+// IP protocol version 4
+#define	IP_PROTOCOL_VERSION_4		4
+
+// fragment flags/offset mask
+#define IP_DONT_FRAGMENT			0x4000	/* dont fragment flag */
+#define IP_FRAGMENT_OFFSET_MASK		0x1fff	/* mask for fragment offset */
+
+// Internet implementation parameters.
+#define IP_MAX_TIME_TO_LIVE			255		/* maximum time to live */
+#define IP_DEFAULT_TIME_TO_LIVE		64		/* default ttl, from RFC 1340 */
+#define ETH_ALEN			6
+
+#define ETHERTYPE_IP		0x0800	// IP
+#define ETHERTYPE_ARP		0x0806	// Address resolution
+
+#define ETHER_MIN_TRANSFER_UNIT	46
+#define ETHER_MAX_TRANSFER_UNIT	1500
+
+// IP protocols
+#define IPPROTO_TCP					6
+#define IPPROTO_UDP					17
+
+#define TRACE Printf
+#define TRACE_QUEUE Printf
+#define TRACE_CHECKSUM Printf
+#define TRACE_PORT Printf
 
 #define PROTO_TCP_CONN_STATE_ESTABILISH		0x1
 #define PROTO_TCP_CONN_STATE_ESTABILISHED	0x2
@@ -28,6 +56,15 @@
 #define PROTO_TCP_CONN_STATE_READY		0x10
 #define PROTO_TCP_CONN_STATE_CLOSE		0x20
 #define PROTO_TCP_CONN_STATE_ESTABILISHERROR	0x40
+
+enum TCPSocketState {
+	TCP_SOCKET_STATE_INITIAL,
+	TCP_SOCKET_STATE_SYN_SENT,
+	TCP_SOCKET_STATE_SYN_RECEIVED,
+	TCP_SOCKET_STATE_OPEN,
+	TCP_SOCKET_STATE_FIN_SENT,
+	TCP_SOCKET_STATE_CLOSED
+};
 
 /* TCP connection structure */
 typedef struct proto_tcp_conn_context {
@@ -57,7 +94,26 @@ typedef struct proto_tcp_conn_context {
 	unsigned int offset;
 	unsigned int len;
 	char *data;
+
+
+	uint32_t		fNextSequence;
+	struct TCPPacket*	fFirstPacket;
+	struct TCPPacket*	fLastPacket;
+	struct TCPPacket*	fFirstSentPacket;
+	struct TCPPacket*	fLastSentPacket;
+	enum TCPSocketState fState;
+	enum TCPSocketState fRemoteState;
+
 } proto_tcp_conn_t;
+
+struct pseudo_header {
+	net_ipv4	source;
+	net_ipv4	destination;
+	uint8_t		pad;
+	uint8_t		protocol;
+	unsigned short		length;
+} __attribute__ ((__packed__));
+
 
 /* TCPv6 connection structure */
 typedef struct proto_tcp6_conn_context {
@@ -87,6 +143,7 @@ typedef struct proto_tcp6_conn_context {
 	unsigned short offset;
 	unsigned short len;
 	char *data;
+
 } proto_tcp6_conn_t;
 
 /* TCP server backlog structure */
@@ -117,26 +174,89 @@ typedef struct proto_tcp6_backlog_context {
 
 /* TCP layer structure */
 typedef struct proto_tcp_t {
-	net_port port_source;		// 2
-	net_port port_dest;		// 4
+	net_port port_source:16;		// 2
+	net_port port_dest:16;		// 4
 
-	unsigned seq;			// 8
-	unsigned ack;			// 12
+	unsigned seq:32;			// 8
+	unsigned ack:32;			// 12
 
 	unsigned char res:4;		// 13
 	unsigned char data_offset:4;	
 
-	unsigned char flags;		// 14
+	unsigned char flags:8;		// 14
 
-	unsigned short window;		// 16
+	unsigned short window:16;		// 16
 
-	unsigned short checksum;	// 18
+	unsigned short checksum:16;	// 18
+	unsigned short urgentPointer:16;
+	unsigned short urgent_offset:16;
+}  __attribute__((packed)) proto_tcp_t;
 
-//	unsigned char *options;
-} proto_tcp_t;
 
+#define TCP_FIN		(1 << 0)
+#define TCP_SYN		(1 << 1)
+#define TCP_RST		(1 << 2)
+#define TCP_PSH		(1 << 3)
+#define TCP_ACK		(1 << 4)
+#define TCP_URG		(1 << 5)
+#define TCP_ECE		(1 << 6)	// RFC 3168
+#define TCP_CWR		(1 << 7)	// RFC 3168
+
+
+#define PROTO_TCP_CONN_STATE_ESTABILISH		0x1
+#define PROTO_TCP_CONN_STATE_ESTABILISHED	0x2
+#define PROTO_TCP_CONN_STATE_DISCONNECTED	0x4
+#define PROTO_TCP_CONN_STATE_WAIT		0x8
+#define PROTO_TCP_CONN_STATE_READY		0x10
+#define PROTO_TCP_CONN_STATE_CLOSE		0x20
+#define PROTO_TCP_CONN_STATE_ESTABILISHERROR	0x40
+
+
+
+struct ChainBuffer {
+	enum {
+		CHAIN_BUFFER_HEAD			= 0x1,
+		CHAIN_BUFFER_EMBEDDED_DATA	= 0x2,
+		CHAIN_BUFFER_FREE_DATA		= 0x4,
+		CHAIN_BUFFER_ON_STACK		= 0x8,
+	};
+
+	uint32_t		fFlags:4;
+	uint32_t		fSize:14;
+	uint32_t		fTotalSize:14;
+	void		*fData;
+	struct ChainBuffer	*fNext;
+	uint8_t		fBuffer[0];
+};
+
+typedef struct TCPPacket
+{
+	net_ipv4	fSourceAddress;
+	net_ipv4	fDestinationAddress;
+	uint16_t		fSourcePort;
+	uint16_t		fDestinationPort;
+	uint32_t		fSequenceNumber;
+	uint32_t		fAcknowledgmentNumber;
+	void*		fData;
+	int			fSize;
+	uint8_t		fFlags;
+	struct TCPPacket*		fNext;
+};
 
 extern unsigned init_net_proto_tcp ();
 extern unsigned init_net_proto_tcp6 ();
 
+unsigned int _rand32(void);
+unsigned short _rand14(void);
+
+void HandleIPPacket(net_ipv4 sourceIP,net_ipv4 destinationIP, const void* data, size_t size);
+int _WaitForState(struct proto_tcp_conn_context *conn,enum TCPSocketState state, long timeout);
+
+int SetTo(struct TCPPacket *packet,const void* data, int size, net_ipv4 sourceAddress,
+	uint16_t sourcePort, net_ipv4 destinationAddress, uint16_t destinationPort,
+	uint32_t sequenceNumber, uint32_t acknowledgmentNumber, uint8_t flags);
+
+unsigned short _ChecksumBuffer(struct ChainBuffer* buffer, net_ipv4 source,net_ipv4 destination, unsigned short length);
+int _Send(struct proto_tcp_conn_context *context,struct TCPPacket* packet, bool enqueue);
+void ChainBuffer(struct ChainBuffer *this,void *data, uint32_t size, struct ChainBuffer *next,bool freeData);
 #endif

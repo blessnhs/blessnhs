@@ -24,6 +24,7 @@
 #include "ip.h"
 #include "checksum.h"
 #include "../DynamicMemory.h"
+#include "../utility.h"
 
 static char buf_ip_prealloc[NET_PACKET_MTU + sizeof (net_ipv4) + 1];
 
@@ -154,7 +155,13 @@ unsigned net_proto_ip_handler (packet_t *packet, char *buf, unsigned len)
 
 	switch (ip->proto) {
 		case NET_PROTO_IP_TYPE_TCP:
-			return net_proto_tcp_handler (packet, ip, buf+head_len, len-head_len);
+		{
+			HandleIPPacket(ntohl(ip->ip_source),
+						ntohl(ip->ip_dest),
+						(uint8_t*)buf + head_len,
+						ntohs(ip->total_len) - head_len);
+			return;
+		}
 		case NET_PROTO_IP_TYPE_UDP:
 			return net_proto_udp_handler (packet, ip, buf+head_len, len-head_len);
 		case NET_PROTO_IP_TYPE_ICMP:

@@ -17,7 +17,7 @@ void debug(char *msg) {
 	}
 }
 
-static int connectServer2(char *ip, short port);
+
 
 static int connectServer(char *hostName, short port) {
 
@@ -56,7 +56,7 @@ static int connectServer(char *hostName, short port) {
 	return ncsock;
 }
 
-static int connectServer2(char *ip, short port) {
+int connectServer2(char *ip, short port) {
 
 	sockaddr_in serverSock;
 
