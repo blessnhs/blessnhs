@@ -29,6 +29,8 @@
 #include "fat32/fat_filelib.h"
 #include "NETPROTOCOL/fd.h"
 #include "NETPROTOCOL/if.h"
+#include "NETPROTOCOL/socket.h"
+#include "MODULE/ftp.h"
 
 // Application Processor를 위한 Main 함수
 void MainForApplicationProcessor( void );
@@ -176,6 +178,9 @@ void Main( void )
 		dhcp_config_if(netif);
 	else
 		Printf( " Fail dhcp_config_if\n");
+
+
+//	connectServer("ftp.twaren.net",21);
 
     CreateTask( TASK_FLAGS_LOW | TASK_FLAGS_THREAD , 0, 0,
                      ( QWORD ) usb_pollInterruptTransfers, GetAPICID() );

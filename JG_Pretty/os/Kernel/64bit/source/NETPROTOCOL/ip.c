@@ -35,7 +35,7 @@ void net_proto_ip_print (net_ipv4 ip)
 	unsigned char c = (unsigned char) (ip >> 16);
 	unsigned char d = (unsigned char) (ip >> 24);
 
-	Printf ("%d.%d.%d.%d", a, b, c, d);
+	Printf ("%d.%d.%d.%d\n", a, b, c, d);
 }
 
 net_ipv4 net_proto_ip_convert (char *ip)

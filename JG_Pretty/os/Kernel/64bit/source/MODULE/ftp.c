@@ -19,7 +19,7 @@ void debug(char *msg) {
 
 
 
-static int connectServer(char *hostName, short port) {
+int connectServer(char *hostName, short port) {
 
 	hostent *host;
 	sockaddr_in serverSock;

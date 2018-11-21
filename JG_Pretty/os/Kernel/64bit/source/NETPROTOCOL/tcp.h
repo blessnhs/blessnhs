@@ -243,6 +243,24 @@ typedef struct TCPPacket
 	struct TCPPacket*		fNext;
 };
 
+struct Iterator
+{
+	struct ChainBuffer	*fBuffer;
+	int			fOffset;
+};
+
+void Iterator(struct Iterator *iter,struct ChainBuffer *buffer);
+
+bool HasNext(struct Iterator *iter);
+
+uint16_t Next(struct Iterator *iter);
+
+void _Next(struct Iterator *iter);
+
+uint8_t _NextByte(struct Iterator *iter);
+uint16_t ip_checksum(struct ChainBuffer *buffer);
+uint16_t _Checksum(struct proto_ip_t *header);
+
 extern unsigned init_net_proto_tcp ();
 extern unsigned init_net_proto_tcp6 ();
 
@@ -257,6 +275,8 @@ int SetTo(struct TCPPacket *packet,const void* data, int size, net_ipv4 sourceAd
 	uint32_t sequenceNumber, uint32_t acknowledgmentNumber, uint8_t flags);
 
 unsigned short _ChecksumBuffer(struct ChainBuffer* buffer, net_ipv4 source,net_ipv4 destination, unsigned short length);
-int _Send(struct proto_tcp_conn_context *context,struct TCPPacket* packet, bool enqueue);
+int SSend(struct proto_tcp_conn_context *context,struct TCPPacket* packet, bool enqueue);
+int ___Send(net_ipv4 destination, uint8_t protocol, struct ChainBuffer *buffer);
+int ESend(mac_addr_t destination, uint16_t protocol,struct ChainBuffer *buffer);
 void ChainBuffer(struct ChainBuffer *this,void *data, uint32_t size, struct ChainBuffer *next,bool freeData);
 #endif
