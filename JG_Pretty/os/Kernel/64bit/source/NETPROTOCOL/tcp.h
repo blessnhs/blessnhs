@@ -189,7 +189,6 @@ typedef struct proto_tcp_t {
 
 	unsigned short checksum:16;	// 18
 	unsigned short urgentPointer:16;
-	unsigned short urgent_offset:16;
 }  __attribute__((packed)) proto_tcp_t;
 
 
@@ -233,10 +232,10 @@ typedef struct TCPPacket
 {
 	net_ipv4	fSourceAddress;
 	net_ipv4	fDestinationAddress;
-	uint16_t		fSourcePort;
-	uint16_t		fDestinationPort;
-	uint32_t		fSequenceNumber;
-	uint32_t		fAcknowledgmentNumber;
+	uint16_t	fSourcePort;
+	uint16_t	fDestinationPort;
+	uint32_t	fSequenceNumber;
+	uint32_t	fAcknowledgmentNumber;
 	void*		fData;
 	int			fSize;
 	uint8_t		fFlags;
