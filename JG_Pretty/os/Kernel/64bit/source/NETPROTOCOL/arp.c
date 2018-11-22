@@ -50,7 +50,6 @@ unsigned net_proto_arp_handler (packet_t *packet, char *buf, unsigned len)
 		//Printf ("ARP - REQUEST: %02x:%02x:%02x:%02x:%02x:%02x\n", (unsigned char) arp->sender_ethernet[0], (unsigned char) arp->sender_ethernet[1], (unsigned char) arp->sender_ethernet[2], (unsigned char) arp->sender_ethernet[3], (unsigned char) arp->sender_ethernet[4], (unsigned char) arp->sender_ethernet[5]);
 		/* TODO: melo by to projit vsechny rozhrani */
 		netif_t *netif = netif_findbyname ("eth0");
-		Printf("net_packet_handler arp->target_ipv4 %d == netif->ip %d\n",arp->op,arp->target_ipv4 , netif->ip);
 
 		/* send ARP reply */
 		if (arp->target_ipv4 == netif->ip)
@@ -61,7 +60,6 @@ unsigned net_proto_arp_handler (packet_t *packet, char *buf, unsigned len)
 
 	if (arp->op == ARP_OP_REPLY) {
 		//Printf ("ARP - REPLY: %02x:%02x:%02x:%02x:%02x:%02x\n", (unsigned char) arp->sender_ethernet[0], (unsigned char) arp->sender_ethernet[1], (unsigned char) arp->sender_ethernet[2], (unsigned char) arp->sender_ethernet[3], (unsigned char) arp->sender_ethernet[4], (unsigned char) arp->sender_ethernet[5]);
-		Printf("net_packet_handler  netif->ip %d\n",arp->sender_ipv4 );
 
 		arp_cache_add (arp->sender_ethernet, arp->sender_ipv4);
 

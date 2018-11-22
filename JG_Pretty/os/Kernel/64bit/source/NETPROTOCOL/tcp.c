@@ -199,9 +199,9 @@ int net_proto_tcp_recv (int fd, char *msg, unsigned size)
 	if (!conn)
 		return -3;
 
-	int ret = Read(conn,msg,size,msg,100);
+	int rsize = Read(conn,msg,size,&rsize,1000);
 
-	return ret;
+	return rsize;
 }
 
 int net_proto_tcp_close (int fd)
@@ -1373,27 +1373,34 @@ Acknowledge(struct proto_tcp_conn_context *context,uint32_t number)
 void
 ProcessPacket(struct proto_tcp_conn_context *context,struct TCPPacket* packet)
 {
-	TRACE("TCPSocket::ProcessPacket()\n");
-
-	if ((packet->fFlags & TCP_FIN) != 0) {
+	if ((packet->fFlags & TCP_FIN) != 0)
+	{
 		context->fRemoteState = TCP_SOCKET_STATE_FIN_SENT;
 		TRACE("FIN received\n");
-		_Ack();
+		_Ack(context);
 	}
 
-	if (context->fState == TCP_SOCKET_STATE_SYN_SENT) {
+	if (context->fState == TCP_SOCKET_STATE_SYN_SENT)
+	{
 		if ((packet->fFlags & TCP_SYN) != 0
-				&& (packet->fFlags & TCP_ACK) != 0) {
+				&& (packet->fFlags & TCP_ACK) != 0)
+		{
 			context->fNextSequence = context->ack = packet->fSequenceNumber + 1;
 			context->fRemoteState = TCP_SOCKET_STATE_SYN_SENT;
 			DEL (packet);
-			_Ack();
+			_Ack(context);
 			context->fState = context->fRemoteState = TCP_SOCKET_STATE_OPEN;
+			TRACE("TCP_SOCKET_STATE_OPEN state\n");
 			return;
 		}
-	} else if (context->fState == TCP_SOCKET_STATE_OPEN) {
-	} else if (context->fState == TCP_SOCKET_STATE_FIN_SENT) {
-		if ((packet->fFlags & TCP_ACK) != 0) {
+	}
+	else if (context->fState == TCP_SOCKET_STATE_OPEN)
+	{
+	}
+	else if (context->fState == TCP_SOCKET_STATE_FIN_SENT)
+	{
+		if ((packet->fFlags & TCP_ACK) != 0)
+		{
 			TRACE("FIN-ACK received\n");
 			if (context->fRemoteState == TCP_SOCKET_STATE_FIN_SENT)
 				context->fState = TCP_SOCKET_STATE_CLOSED;
@@ -1401,10 +1408,12 @@ ProcessPacket(struct proto_tcp_conn_context *context,struct TCPPacket* packet)
 	}
 
 	if (packet->fSize == 0) {
-		TRACE("TCPSocket::ProcessPacket(): not queuing due to lack of data\n");
+		//TRACE("TCPSocket::ProcessPacket(): not queuing due to lack of data\n");
 		DEL (packet);
 		return;
 	}
+
+//	Printf("\n%s\n",packet->fData);
 
 	// For now rather protect us against being flooded with packets already
 	// acknowledged. "If it's important, they'll send it again."
@@ -1429,14 +1438,14 @@ ProcessPacket(struct proto_tcp_conn_context *context,struct TCPPacket* packet)
 	} else if (context->fFirstPacket->fSequenceNumber > packet->fSequenceNumber) {
 		// enqueue in front
 		TRACE("TCPSocket::ProcessPacket(): enqueue in front\n");
-		TRACE_QUEUE("TCP: Enqueuing %lx - %lx in front! (next is %lx)\n",
+		TRACE_QUEUE("TCP: Enqueuing %lx - %d in front! (next is %d)\n",
 			packet->fSequenceNumber,
 			packet->fSequenceNumber + packet->fSize - 1,
 			context->fNextSequence);
 		packet->fNext = (context->fFirstPacket);
 		context->fFirstPacket = packet;
 	} else if (context->fFirstPacket->fSequenceNumber == packet->fSequenceNumber) {
-		TRACE_QUEUE("%s(): dropping due to identical first packet\n", __func__);
+		TRACE_QUEUE("%d(): dropping due to identical first packet\n", packet->fSequenceNumber);
 		DEL (packet);
 		return;
 	} else {
@@ -1469,11 +1478,9 @@ ProcessPacket(struct proto_tcp_conn_context *context,struct TCPPacket* packet)
 struct TCPPacket*
 _PeekPacket(struct proto_tcp_conn_context *context)
 {
-	TRACE("TCPSocket::_PeekPacket(): fNextSequence = %lu\n", context->fNextSequence);
-
 	struct TCPPacket* packet;
-	for (packet = context->fFirstPacket; packet != NULL;
-			packet = packet->fNext) {
+	for (packet = context->fFirstPacket; packet != NULL;packet = packet->fNext)
+	{
 		if (ProvidesSequenceNumber(packet,context->fNextSequence))
 			return packet;
 	}
@@ -1673,7 +1680,7 @@ int ESend(mac_addr_t destination, uint16_t protocol,struct ChainBuffer *buffer)
 		return -1;
 	}
 
-	TRACE("bytesSent %d\n",bytesSent);
+	//TRACE("bytesSent %d\n",bytesSent);
 
 	return 0;
 }
@@ -1804,7 +1811,7 @@ _FindSocket(net_ipv4 address, unsigned short port)
 int Read(proto_tcp_conn_t *conn,void* buffer, int bufferSize, int* bytesRead,
 	long timeout)
 {
-	TRACE("TCPSocket::Read(): size = %lu\n", bufferSize);
+	TRACE("TCPSocket::Read(): size = %d\n", bufferSize);
 	if (bytesRead == NULL)
 		return -1;
 
@@ -1815,17 +1822,23 @@ int Read(proto_tcp_conn_t *conn,void* buffer, int bufferSize, int* bytesRead,
 	do {
 		//_ResendQueue();
 		packet = _PeekPacket(conn);
+
+		TRACE("_PeekPacket: %d\n",packet);
+
 		if (packet == NULL && conn->fRemoteState != TCP_SOCKET_STATE_OPEN)
 			return -1;
 		if (packet == NULL && timeout > 0LL)
 			_Ack(conn);
 	} while (packet == NULL && GetTickCount() - startTime < timeout);
+
+	TRACE("TCPSocket::Read(): 1\n");
 	if (packet == NULL) {
 #ifdef TRACE_TCP_QUEUE
 		_DumpQueue();
 #endif
 		return (timeout == 0) ? -1 : -1;
 	}
+	TRACE("TCPSocket::Read(): 2\n");
 	uint32_t packetOffset = conn->seq - packet->fSequenceNumber;
 	int readBytes = packet->fSize - packetOffset;
 	if (readBytes > bufferSize)
@@ -1839,7 +1852,7 @@ int Read(proto_tcp_conn_t *conn,void* buffer, int bufferSize, int* bytesRead,
 		packet = NULL;
 	}
 	conn->fNextSequence += readBytes;
-
+	TRACE("TCPSocket::Read(): 3\n");
 	if (packet == NULL && *bytesRead < bufferSize) {
 		do {
 			if (buffer != NULL)
@@ -1866,6 +1879,8 @@ int Read(proto_tcp_conn_t *conn,void* buffer, int bufferSize, int* bytesRead,
 			conn->fNextSequence += readBytes;
 		} while (readBytes < bufferSize &&
 			GetTickCount() - startTime < timeout);
+
+		TRACE("TCPSocket::Read(): 4\n");
 #ifdef TRACE_TCP_QUEUE
 		if (readBytes < bufferSize) {
 			TRACE_QUEUE("TCP: Unable to deliver more data!\n");
@@ -1874,7 +1889,7 @@ int Read(proto_tcp_conn_t *conn,void* buffer, int bufferSize, int* bytesRead,
 #endif
 	}
 
-	return 0;
+	return *bytesRead;
 }
 
 void HandleIPPacket(net_ipv4 sourceIP,
@@ -1918,10 +1933,10 @@ void HandleIPPacket(net_ipv4 sourceIP,
 			uint8_t optionLength = 1;
 			if (optionKind > 1) {
 				optionLength = option[1];
-				TRACE("\tTCP option kind %u, length %u\n",
-					optionKind, optionLength);
-				if (optionKind == 2)
-					TRACE("\tTCP MSS = %04hu\n", *(uint16_t*)&option[2]);
+		//		TRACE("\tTCP option kind %u, length %u\n",
+		//			optionKind, optionLength);
+		//		if (optionKind == 2)
+		//			TRACE("\tTCP MSS = %04hu\n", *(uint16_t*)&option[2]);
 			}
 			option += optionLength;
 		}

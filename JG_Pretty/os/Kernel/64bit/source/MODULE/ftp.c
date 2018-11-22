@@ -84,8 +84,6 @@ int connectServer2(char *ip, short port) {
 		return -1;
 	}
 
-	Sleep(1000);
-
 	return ncsock;
 }
 
@@ -113,8 +111,10 @@ static int recvProtocol(int sock, char *recvBuffer, int bufferSize) {
 	recvBuffer[recvLen] = '\0';
 
 	if (MODE_DEBUG == mode) {
-		//Printf("recv len: %d\n", recvLen);
+
 	}
+
+	Printf("recv len: %s\n", recvBuffer);
 	return recvLen;
 }
 

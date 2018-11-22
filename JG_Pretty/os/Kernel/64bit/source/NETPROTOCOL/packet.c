@@ -83,7 +83,6 @@ unsigned net_packet_send2 (netif_t *netif, char *buf, unsigned len)
 unsigned net_packet_handler (char *buf, unsigned len)
 {
 	packet_t *packet = (packet_t *) buf;
-	Printf("net_packet_handler called %d\n",packet->type);
 
 	if (!packet)
 		return 0;
