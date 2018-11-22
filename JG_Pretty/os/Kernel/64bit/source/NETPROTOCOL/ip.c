@@ -156,8 +156,8 @@ unsigned net_proto_ip_handler (packet_t *packet, char *buf, unsigned len)
 	switch (ip->proto) {
 		case NET_PROTO_IP_TYPE_TCP:
 		{
-			HandleIPPacket(ntohl(ip->ip_source),
-						ntohl(ip->ip_dest),
+			HandleIPPacket((ip->ip_source),
+						(ip->ip_dest),
 						(uint8_t*)buf + head_len,
 						ntohs(ip->total_len) - head_len);
 			return;

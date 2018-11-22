@@ -135,6 +135,8 @@ int net_proto_tcp_connect (int fd, sockaddr_in *addr)
 		conn->ip_source = netif->ip;
 		conn->ip_dest = addr->sin_addr;
 		conn->port_dest = addr->sin_port;
+
+	
 		conn->seq = _rand32();
 		conn->port_source = 0xC000 + (_rand14() & ~0xc000);
 		TRACE_PORT("TCPSocket::Connect(): connecting from port %u\n", conn->port_source);
@@ -1758,8 +1760,8 @@ int _WaitForState(struct proto_tcp_conn_context *conn,enum TCPSocketState state,
 unsigned short _ChecksumBuffer(struct ChainBuffer* buffer, net_ipv4 source,net_ipv4 destination, unsigned short length)
 {
 	struct pseudo_header header = {
-		htonl(source),
-		htonl(destination),
+		(source),
+		(destination),
 		0,
 		IPPROTO_TCP,
 		htons(length)
@@ -1790,7 +1792,8 @@ _FindSocket(net_ipv4 address, unsigned short port)
 	proto_tcp_conn_t *conn = NULL;
 	for (conn = proto_tcp_conn_list.next; conn != &proto_tcp_conn_list; conn = conn->next)
 	{
-		if (conn->ip_dest == address && conn->port_dest == port)
+	
+		if (conn->ip_source == address && conn->port_source == (port))
 			return conn;
 	}
 
@@ -1877,14 +1880,15 @@ int Read(proto_tcp_conn_t *conn,void* buffer, int bufferSize, int* bytesRead,
 void HandleIPPacket(net_ipv4 sourceIP,
 		net_ipv4 destinationIP, const void* data, size_t size)
 {
-	TRACE("TCPService::HandleIPPacket(): source = %d, "
-		"destination = %d, %d - %d bytes\n", sourceIP, destinationIP,
-		size, sizeof(proto_tcp_t));
-
 	if (data == NULL || size < sizeof(proto_tcp_t))
 		return;
 
 	const proto_tcp_t* header = (const proto_tcp_t*)data;
+
+/*	TRACE("TCPService::HandleIPPacket(): source = %d, "
+		"destination = %d, %d - %d bytes\n", sourceIP, (destinationIP),
+		size, sizeof(proto_tcp_t));
+*/
 
 	uint16_t chksum = _ChecksumData(data, size, sourceIP, destinationIP);
 	if (chksum != 0) {
@@ -1898,13 +1902,13 @@ void HandleIPPacket(net_ipv4 sourceIP,
 	uint16_t destination = ntohs(header->port_dest);
 	uint32_t sequenceNumber = ntohl(header->seq);
 	uint32_t ackedNumber = ntohl(header->ack);
-	TRACE("\tsource = %d, dest = %d, seq = %d, ack = %d, dataOffset = %d, "
+/*	TRACE("\tsource = %d, dest = %d, seq = %d, ack = %d, dataOffset = %d, "
 		"flags %s %s %s %s\n", source, destination, sequenceNumber,
 		ackedNumber, header->data_offset,
 		(header->flags & TCP_ACK) != 0 ? "ACK" : "",
 		(header->flags & TCP_SYN) != 0 ? "SYN" : "",
 		(header->flags & TCP_FIN) != 0 ? "FIN" : "",
-		(header->flags & TCP_RST) != 0 ? "RST" : "");
+		(header->flags & TCP_RST) != 0 ? "RST" : "");*/
 	if (header->data_offset > 5) {
 		uint8_t* option = (uint8_t*)data + sizeof(proto_tcp_t);
 		while ((uint32_t*)option < (uint32_t*)data + header->data_offset) {
@@ -1922,6 +1926,7 @@ void HandleIPPacket(net_ipv4 sourceIP,
 			option += optionLength;
 		}
 	}
+
 	struct proto_tcp_conn_context* socket = _FindSocket(destinationIP, destination);
 	if (socket == NULL) {
 		// TODO If SYN, answer with RST?
@@ -1936,7 +1941,7 @@ void HandleIPPacket(net_ipv4 sourceIP,
 	struct TCPPacket* packet = NEW( sizeof(struct TCPPacket));
 	if (packet == NULL)
 		return;
-	int error = SetTo(&packet,(uint32_t*)data + header->data_offset,
+	int error = SetTo(packet,(uint32_t*)data + header->data_offset,
 		size - header->data_offset * 4, sourceIP, source, destinationIP,
 		destination, sequenceNumber, ackedNumber, header->flags);
 	if (error == 0)
