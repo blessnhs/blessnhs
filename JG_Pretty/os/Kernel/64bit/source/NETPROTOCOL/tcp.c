@@ -76,12 +76,57 @@ int net_proto_tcp_socket (fd_t *fd)
 	return net_proto_tcp_conn_add (fd);
 }
 
-int net_proto_tcp_connect (int fd, sockaddr_in *addr)
+int net_proto_tcp_connect2 (int fd, sockaddr_in *addr)
 {
 	int ret = -1;
 
 	proto_tcp_conn_t *conn = net_proto_tcp_conn_find (fd);
 
+	if (!conn)
+		return -1;
+
+	netif_t *netif;
+	for (netif = netif_list.next; netif != &netif_list; netif = netif->next) {
+		ret = net_proto_tcp_conn_estabilish (conn, netif, addr->sin_addr, addr->sin_port);
+
+		unsigned long stime = GetTickCount();
+
+		/* blocking mode */
+		if (!(conn->flags & O_NONBLOCK)) {
+			if (!ret)
+				return -1;
+
+			for (;;) {
+				Schedule ();
+
+				/* timeout for 8s */
+				if ((stime+3000) < GetTickCount())
+					return -1;
+
+				if (conn->state == PROTO_TCP_CONN_STATE_ESTABILISHED)
+					break;
+
+				/* when connection cant be accepted succefully first time, try it again */
+				if (conn->state == PROTO_TCP_CONN_STATE_ESTABILISHERROR) {
+					ret = net_proto_tcp_conn_estabilish (conn, netif, addr->sin_addr, addr->sin_port);
+					conn->state = PROTO_TCP_CONN_STATE_ESTABILISH;
+				}
+			}
+		} else
+		/* non-blocking mode */
+			return -1;
+
+		ret = 0;
+	}
+
+	return ret;
+}
+
+int net_proto_tcp_connect (int fd, sockaddr_in *addr)
+{
+	int ret = -1;
+
+	proto_tcp_conn_t *conn = net_proto_tcp_conn_find (fd);
 	if (!conn)
 		return -1;
 
@@ -96,38 +141,38 @@ int net_proto_tcp_connect (int fd, sockaddr_in *addr)
 		conn->ack = 0;
 		conn->fNextSequence = 0;
 
-			// send SYN
+		// send SYN
 		struct TCPPacket* packet = NEW(sizeof(struct TCPPacket));
 		if (packet == NULL)
 			return -1;
 
 		int	error = SetTo(packet,NULL, 0, conn->ip_source, conn->port_source, conn->ip_dest, conn->port_dest,
 				conn->seq, conn->ack, TCP_SYN);
-			if (error != 0)
-			{
-				TRACE("Call SetTo error %d\n",error);
+		if (error != 0)
+		{
+			TRACE("Call SetTo error %d\n",error);
 
-				DEL( packet );
-				return error;
-			}
-			error = SSend(conn,packet,true);
-			if (error != 0)
-			{
-				TRACE("_Send error %d\n",error);
-				return error;
-			}
-			conn->fState = TCP_SOCKET_STATE_SYN_SENT;
-			conn->seq++;
+			DEL( packet );
+			return error;
+		}
+		error = SSend(conn,packet,true);
+		if (error != 0)
+		{
+			TRACE("_Send error %d\n",error);
+			return error;
+		}
+		conn->fState = TCP_SOCKET_STATE_SYN_SENT;
+		conn->seq++;
 
-			// receive SYN-ACK
-			error = _WaitForState(conn,TCP_SOCKET_STATE_OPEN, 1000000LL);
-			if (error != 0) {
-				TRACE("no SYN-ACK received\n");
-				return error;
-			}
-			TRACE("SYN-ACK received\n");
+		// receive SYN-ACK
+		error = _WaitForState(conn,TCP_SOCKET_STATE_OPEN, 1000000LL);
+		if (error != 0) {
+			TRACE("no SYN-ACK received\n");
+			return error;
+		}
+		TRACE("SYN-ACK received\n");
 
-			return 1;
+		return 1;
 	}
 
 	return 0;
@@ -610,6 +655,7 @@ int net_proto_tcp_write (netif_t *eth, net_ipv4 dest, proto_tcp_t *tcp, char *da
 	/* calculate total length of packet (tcp/ip) */
 	ip->total_len = swap16 (l+sizeof (proto_tcp_t)+len);
 
+	
 	if (len+l > NET_PACKET_MTU + sizeof (proto_tcp_t)) {
 		Printf("TCP -> data lenght is exceed: %d/%d bytes", len+l, NET_PACKET_MTU + sizeof (proto_tcp_t) + 1);
 		return 0;
@@ -632,6 +678,7 @@ int net_proto_tcp_write (netif_t *eth, net_ipv4 dest, proto_tcp_t *tcp, char *da
 
 	tcp_->checksum = checksum16_tcp (eth->ip, dest, buf_tcp, l+len);
 
+	
 	/* send tcp header+data to ip layer */
 	unsigned ret = net_proto_ip_send (eth, packet, ip, (char *) buf_tcp, l+len);
 
@@ -1223,16 +1270,17 @@ int Send(netif_t *eth,uint16_t sourcePort, net_ipv4 destinationAddress,
 	struct proto_tcp_t header;
 	struct ChainBuffer headerBuffer;
 
-	Init(&headerBuffer,&header, sizeof(header), buffer,false);
+	ChainBuffer(&headerBuffer,&header, sizeof(header), buffer,false);
 
 	memset(&header, 0, sizeof(header));
 	header.port_source = htons(sourcePort);
-	header.port_dest = htons(destinationPort);
+	header.port_dest = (destinationPort);
 	header.seq = htonl(sequenceNumber);
 	header.ack = htonl(acknowledgmentNumber);
 	header.data_offset = 5;
 	header.flags = flags;
 	header.window = htons(windowSize);
+	header.res = 0;
 
 	header.checksum = 0;
 
@@ -1240,7 +1288,6 @@ int Send(netif_t *eth,uint16_t sourcePort, net_ipv4 destinationAddress,
 			eth->ip, destinationAddress,
 		headerBuffer.fTotalSize));
 
-//	unsigned ret = net_proto_ip_send (eth, packet, ip, (char *) buf_tcp, l+len);
 	return ___Send(destinationAddress, IPPROTO_TCP, &headerBuffer);
 }
 
@@ -1520,20 +1567,21 @@ int ___Send(net_ipv4 destination, uint8_t protocol, struct ChainBuffer *buffer)
 	header.head_len = 5;	// 5 32 bit words, no options
 	header.ver = IP_PROTOCOL_VERSION_4;
 	header.res0 = 0;
-	header.total_len = htons(headerBuffer.fTotalSize);
+	header.total_len =htons(headerBuffer.fTotalSize);
 	header.ident = 0;
 	header.flags = htons(IP_DONT_FRAGMENT);
 	header.ttl = IP_DEFAULT_TIME_TO_LIVE;
 	header.proto = protocol;
 	header.checksum = 0;
-	header.ip_source = htonl(netif->ip);
-	header.ip_dest = htonl(destination);
+	header.ip_source = (netif->ip);
+	header.ip_dest = (destination);
 
 	// compute check sum
 	header.checksum = htons(_Checksum(&header));
 
 	// get target MAC address
 	mac_addr_t mac_dest;
+	
 	unsigned get = arp_cache_get (destination, &mac_dest);
 
 	if (!get)
@@ -1566,8 +1614,8 @@ int ___Send(net_ipv4 destination, uint8_t protocol, struct ChainBuffer *buffer)
 
 	return ESend(mac_dest, ETHERTYPE_IP, &headerBuffer);
 	// send the packet
-
 }
+
 
 int ESend(mac_addr_t destination, uint16_t protocol,struct ChainBuffer *buffer)
 {
@@ -1596,24 +1644,21 @@ int ESend(mac_addr_t destination, uint16_t protocol,struct ChainBuffer *buffer)
 
 	memcpy (&header.mac_source, netif->dev->dev_addr, 6);
 	memcpy (&header.mac_dest, destination, 6);
-	header.type = htons(protocol);
+	header.type = NET_PACKET_TYPE_IPV4;
 
 	// flatten
 	int totalSize = headerBuffer.fTotalSize;
 
-
 	char fSendBuffer[4096];
 	Flatten(&headerBuffer,fSendBuffer);
 
-/*	// pad data, if necessary
+	// pad data, if necessary
 	if (dataSize < ETHER_MIN_TRANSFER_UNIT) {
 		size_t paddingSize = ETHER_MIN_TRANSFER_UNIT - dataSize;
-		memset((uint8*)fSendBuffer + totalSize, 0, paddingSize);
+		memset((uint8_t*)fSendBuffer + totalSize, 0, paddingSize);
 		totalSize += paddingSize;
 	}
 
-	// send
-*/
 	int bytesSent = net_packet_send2(netif,fSendBuffer,totalSize);
 	if (bytesSent < 0)
 	{
@@ -1633,9 +1678,7 @@ int ESend(mac_addr_t destination, uint16_t protocol,struct ChainBuffer *buffer)
 
 int SSend(struct proto_tcp_conn_context *context,struct TCPPacket* packet, bool enqueue)
 {
-	TRACE("Send begin1");
 	netif_t *netif = netif_findbyname ("eth0");
-
 
 	struct ChainBuffer buffer;
 	ChainBuffer(&buffer,(void*)packet->fData, packet->fSize,NULL,false);
@@ -1747,7 +1790,7 @@ _FindSocket(net_ipv4 address, unsigned short port)
 	proto_tcp_conn_t *conn = NULL;
 	for (conn = proto_tcp_conn_list.next; conn != &proto_tcp_conn_list; conn = conn->next)
 	{
-		if (conn->ip_source == address && conn->port_source == port)
+		if (conn->ip_dest == address && conn->port_dest == port)
 			return conn;
 	}
 
@@ -1834,8 +1877,8 @@ int Read(proto_tcp_conn_t *conn,void* buffer, int bufferSize, int* bytesRead,
 void HandleIPPacket(net_ipv4 sourceIP,
 		net_ipv4 destinationIP, const void* data, size_t size)
 {
-	TRACE("TCPService::HandleIPPacket(): source = %08lx, "
-		"destination = %08lx, %lu - %lu bytes\n", sourceIP, destinationIP,
+	TRACE("TCPService::HandleIPPacket(): source = %d, "
+		"destination = %d, %d - %d bytes\n", sourceIP, destinationIP,
 		size, sizeof(proto_tcp_t));
 
 	if (data == NULL || size < sizeof(proto_tcp_t))
@@ -1855,7 +1898,7 @@ void HandleIPPacket(net_ipv4 sourceIP,
 	uint16_t destination = ntohs(header->port_dest);
 	uint32_t sequenceNumber = ntohl(header->seq);
 	uint32_t ackedNumber = ntohl(header->ack);
-	TRACE("\tsource = %u, dest = %u, seq = %lu, ack = %lu, dataOffset = %u, "
+	TRACE("\tsource = %d, dest = %d, seq = %d, ack = %d, dataOffset = %d, "
 		"flags %s %s %s %s\n", source, destination, sequenceNumber,
 		ackedNumber, header->data_offset,
 		(header->flags & TCP_ACK) != 0 ? "ACK" : "",
@@ -1879,7 +1922,6 @@ void HandleIPPacket(net_ipv4 sourceIP,
 			option += optionLength;
 		}
 	}
-
 	struct proto_tcp_conn_context* socket = _FindSocket(destinationIP, destination);
 	if (socket == NULL) {
 		// TODO If SYN, answer with RST?
