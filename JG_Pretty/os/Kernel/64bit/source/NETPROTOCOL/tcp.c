@@ -199,7 +199,8 @@ int net_proto_tcp_recv (int fd, char *msg, unsigned size)
 	if (!conn)
 		return -3;
 
-	int rsize = Read(conn,msg,size,&rsize,1000);
+	int rsize;
+	Read(conn,msg,size,&rsize,1000);
 
 	return rsize;
 }
@@ -1419,43 +1420,32 @@ ProcessPacket(struct proto_tcp_conn_context *context,struct TCPPacket* packet)
 	// acknowledged. "If it's important, they'll send it again."
 	// TODO PAWS
 	if (packet->fSequenceNumber < context->ack) {
-		TRACE_QUEUE("TCPSocket::ProcessPacket(): not queuing due to wraparound\n");
 		DEL (packet);
 		return;
 	}
 
 	if (context->fLastPacket == NULL) {
 		// no packets enqueued
-		TRACE("TCPSocket::ProcessPacket(): first in queue\n");
 		packet->fNext = (NULL);
 		context->fFirstPacket = context->fLastPacket = packet;
 	} else if (context->fLastPacket->fSequenceNumber < packet->fSequenceNumber) {
 		// enqueue in back
-		TRACE("TCPSocket::ProcessPacket(): enqueue in back\n");
 		packet->fNext = (NULL);
 		context->fLastPacket->fNext = (packet);
 		context->fLastPacket = packet;
 	} else if (context->fFirstPacket->fSequenceNumber > packet->fSequenceNumber) {
 		// enqueue in front
-		TRACE("TCPSocket::ProcessPacket(): enqueue in front\n");
-		TRACE_QUEUE("TCP: Enqueuing %lx - %d in front! (next is %d)\n",
-			packet->fSequenceNumber,
-			packet->fSequenceNumber + packet->fSize - 1,
-			context->fNextSequence);
 		packet->fNext = (context->fFirstPacket);
 		context->fFirstPacket = packet;
 	} else if (context->fFirstPacket->fSequenceNumber == packet->fSequenceNumber) {
-		TRACE_QUEUE("%d(): dropping due to identical first packet\n", packet->fSequenceNumber);
 		DEL (packet);
 		return;
 	} else {
 		// enqueue in middle
-		TRACE("TCPSocket::ProcessPacket(): enqueue in middle\n");
 		struct TCPPacket* queuedPacket ;
 		for (queuedPacket = context->fFirstPacket; queuedPacket != NULL;
 				queuedPacket = queuedPacket->fNext) {
 			if (queuedPacket->fSequenceNumber == packet->fSequenceNumber) {
-				TRACE_QUEUE("TCPSocket::EnqueuePacket(): TCP packet dropped\n");
 				// we may be waiting for a previous packet
 				DEL (packet);
 				return;
@@ -1468,10 +1458,13 @@ ProcessPacket(struct proto_tcp_conn_context *context,struct TCPPacket* packet)
 			}
 		}
 	}
+
 	while (packet != NULL && packet->fSequenceNumber == context->ack) {
 		context->ack = packet->fSequenceNumber + packet->fSize;
 		packet = packet->fNext;
 	}
+
+	TRACE("\n[ack-> %d]",context->ack);
 }
 
 
@@ -1501,9 +1494,6 @@ _DequeuePacket(struct proto_tcp_conn_context *context)
 		if (context->fFirstPacket == NULL)
 			context->fLastPacket = NULL;
 		packet->fNext = (NULL);
-		TRACE("TCP: Dequeuing %lx - %lx from front.\n",
-			packet->fSequenceNumber,
-			packet->fSequenceNumber + packet->fSize - 1);
 		return packet;
 	}
 
@@ -1516,9 +1506,6 @@ _DequeuePacket(struct proto_tcp_conn_context *context)
 			packet->fNext = (nextPacket->fNext);
 			if (context->fLastPacket == nextPacket)
 				context->fLastPacket = packet;
-			Printf("TCP: Dequeuing %lx - %lx.\n",
-				nextPacket->fSequenceNumber,
-				nextPacket->fSequenceNumber + nextPacket->fSize - 1);
 			return nextPacket;
 		}
 	}
@@ -1531,8 +1518,6 @@ _DequeuePacket(struct proto_tcp_conn_context *context)
 int __Send(uint16_t sourcePort, net_ipv4 destinationAddress,uint16_t destinationPort, uint32_t sequenceNumber,
 	uint32_t acknowledgmentNumber, uint8_t flags, uint16_t windowSize,struct ChainBuffer* buffer)
 {
-	TRACE("TCPService::Send(): seq = %lu, ack = %lu\n",
-		sequenceNumber, acknowledgmentNumber);
 	if (buffer == NULL)
 		return -1;
 
@@ -1745,6 +1730,7 @@ _Ack(struct proto_tcp_conn_context *context)
 		DEL (packet);
 		return error;
 	}
+
 	error = SSend(context,packet, false);
 	DEL (packet);
 	if (error != 0)
@@ -1811,7 +1797,6 @@ _FindSocket(net_ipv4 address, unsigned short port)
 int Read(proto_tcp_conn_t *conn,void* buffer, int bufferSize, int* bytesRead,
 	long timeout)
 {
-	TRACE("TCPSocket::Read(): size = %d\n", bufferSize);
 	if (bytesRead == NULL)
 		return -1;
 
@@ -1820,10 +1805,8 @@ int Read(proto_tcp_conn_t *conn,void* buffer, int bufferSize, int* bytesRead,
 
 	long startTime = GetTickCount();
 	do {
-		//_ResendQueue();
+		//_ResendQueue(conn);
 		packet = _PeekPacket(conn);
-
-		TRACE("_PeekPacket: %d\n",packet);
 
 		if (packet == NULL && conn->fRemoteState != TCP_SOCKET_STATE_OPEN)
 			return -1;
@@ -1831,15 +1814,13 @@ int Read(proto_tcp_conn_t *conn,void* buffer, int bufferSize, int* bytesRead,
 			_Ack(conn);
 	} while (packet == NULL && GetTickCount() - startTime < timeout);
 
-	TRACE("TCPSocket::Read(): 1\n");
 	if (packet == NULL) {
 #ifdef TRACE_TCP_QUEUE
 		_DumpQueue();
 #endif
 		return (timeout == 0) ? -1 : -1;
 	}
-	TRACE("TCPSocket::Read(): 2\n");
-	uint32_t packetOffset = conn->seq - packet->fSequenceNumber;
+	uint32_t packetOffset = conn->fNextSequence - packet->fSequenceNumber;
 	int readBytes = packet->fSize - packetOffset;
 	if (readBytes > bufferSize)
 		readBytes = bufferSize;
@@ -1852,7 +1833,6 @@ int Read(proto_tcp_conn_t *conn,void* buffer, int bufferSize, int* bytesRead,
 		packet = NULL;
 	}
 	conn->fNextSequence += readBytes;
-	TRACE("TCPSocket::Read(): 3\n");
 	if (packet == NULL && *bytesRead < bufferSize) {
 		do {
 			if (buffer != NULL)
@@ -1880,7 +1860,6 @@ int Read(proto_tcp_conn_t *conn,void* buffer, int bufferSize, int* bytesRead,
 		} while (readBytes < bufferSize &&
 			GetTickCount() - startTime < timeout);
 
-		TRACE("TCPSocket::Read(): 4\n");
 #ifdef TRACE_TCP_QUEUE
 		if (readBytes < bufferSize) {
 			TRACE_QUEUE("TCP: Unable to deliver more data!\n");
@@ -1950,7 +1929,7 @@ void HandleIPPacket(net_ipv4 sourceIP,
 	}
 
 	if ((header->flags & TCP_ACK) != 0) {
-		socket->ack = ackedNumber;
+		Acknowledge(socket,ackedNumber);
 	}
 
 	struct TCPPacket* packet = NEW( sizeof(struct TCPPacket));
