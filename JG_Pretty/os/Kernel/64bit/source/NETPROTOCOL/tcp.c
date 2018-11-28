@@ -1398,6 +1398,9 @@ ProcessPacket(struct proto_tcp_conn_context *context,struct TCPPacket* packet)
 		context->fRemoteState = TCP_SOCKET_STATE_FIN_SENT;
 		TRACE("FIN received\n");
 
+		context->seq = packet->fAcknowledgmentNumber;
+		context->ack = packet->fSequenceNumber + 1;
+
 		_Ack(context);
 	}
 
