@@ -94,10 +94,6 @@ static void sendProtocol(int sock, char *protocol) {
 		Printf("send failed");
 		return;
 	}
-
-	if (MODE_DEBUG == mode) {
-		Printf("send: %s", protocol);
-	}
 }
 
 static int recvProtocol(int sock, char *recvBuffer, int bufferSize) {
@@ -260,9 +256,7 @@ void openCon(char *openCmd) {
 	char hostname[26], serverPort[16];
 	char cmd[BUFFER_SIZE];
 	char sendBuffer[BUFFER_SIZE];
-	;
 	char recvBuffer[BUFFER_SIZE];
-	;
 
 	Printf("\nhostname: ");
 	GUICommandShell(hostname);
@@ -419,8 +413,8 @@ void list(char *listCmd) {
 	printMessage(recvBuffer,len);
 
 	// recv complete message from PI server
-//	len = recvProtocol(sock, recvBuffer, BUFFER_SIZE);
-//	printMessage(recvBuffer,len);
+	len = recvProtocol(sock, recvBuffer, BUFFER_SIZE);
+	printMessage(recvBuffer,len);
 
 	sclose(dtpSock);
 }

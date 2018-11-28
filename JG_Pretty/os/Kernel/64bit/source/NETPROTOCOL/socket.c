@@ -249,7 +249,7 @@ int send (int fd, char *msg, size_t size, int flags)
 
 	if (!sock)
 	{
-		Printf("send %d fail\n", fd);
+		Printf("send socket_getbyfd %d fail\n", fd);
 		return -1;
 	}
 

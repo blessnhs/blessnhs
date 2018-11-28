@@ -122,6 +122,8 @@ int net_proto_tcp_connect2 (int fd, sockaddr_in *addr)
 	return ret;
 }
 
+static int source_port = 10;
+
 int net_proto_tcp_connect (int fd, sockaddr_in *addr)
 {
 	int ret = -1;
@@ -147,7 +149,7 @@ int net_proto_tcp_connect (int fd, sockaddr_in *addr)
 
 	
 		conn->seq = _rand32();
-		conn->port_source = 0xC000 + (_rand14() & ~0xc000);
+		conn->port_source = ++source_port;//0xC000 + (_rand14() & ~0xc000);
 		conn->ack = 0;
 		conn->fNextSequence = 0;
 		conn->checkedask = 1;
@@ -168,6 +170,7 @@ int net_proto_tcp_connect (int fd, sockaddr_in *addr)
 			return error;
 		}
 		error = SSend(conn,packet,true);
+
 		if (error != 0)
 		{
 			TRACE("_Send error %d\n",error);
@@ -197,9 +200,7 @@ int net_proto_tcp_send (int fd, char *msg, unsigned size)
 	if (!conn)
 		return -1;
 
-	int len = Write(conn,msg,size);
-
-	return len;
+	return Write(conn,msg,size);;
 }
 
 int net_proto_tcp_recv (int fd, char *msg, unsigned size)
@@ -220,12 +221,12 @@ int net_proto_tcp_close (int fd)
 	proto_tcp_conn_t *conn = net_proto_tcp_conn_find (fd);
 
 	if (!conn)
+	{
+		TRACE("CANT FOUND net_proto_tcp_close %d\n ",fd);
 		return -1;
+	}
 
-	if (conn->state == PROTO_TCP_CONN_STATE_DISCONNECTED)
-		return 0;
-
-	return net_proto_tcp_conn_close (conn);
+	return Close(conn);
 }
 
 int net_proto_tcp_fcntl (int fd, int cmd, long arg)
@@ -1325,7 +1326,6 @@ Close(struct proto_tcp_conn_context *context)
 	struct TCPPacket* packet = NEW( sizeof(struct TCPPacket));
 	if (packet == NULL)
 		return -1;
-	packet->fNext = NULL;
 
 	int error = SetTo(packet,NULL, 0, context->ip_source, context->port_source, context->ip_dest,
 			context->port_dest, context->seq, context->ack, TCP_FIN | TCP_ACK);
@@ -1379,7 +1379,10 @@ Acknowledge(struct proto_tcp_conn_context *context,uint32_t number)
 	for (packet = context->fFirstSentPacket; packet != NULL;
 			packet = context->fFirstSentPacket) {
 		if (packet->fSequenceNumber >= number)
+		{
+			TRACE("packet->fSequenceNumber %d >= number %d",packet->fSequenceNumber , number);
 			return;
+		}
 
 		context->fFirstSentPacket = packet->fNext;
 		DEL (packet);
@@ -1394,6 +1397,7 @@ ProcessPacket(struct proto_tcp_conn_context *context,struct TCPPacket* packet)
 	{
 		context->fRemoteState = TCP_SOCKET_STATE_FIN_SENT;
 		TRACE("FIN received\n");
+
 		_Ack(context);
 	}
 
@@ -1408,6 +1412,7 @@ ProcessPacket(struct proto_tcp_conn_context *context,struct TCPPacket* packet)
 			_Ack(context);
 			context->fState = context->fRemoteState = TCP_SOCKET_STATE_OPEN;
 			TRACE("TCP_SOCKET_STATE_OPEN state\n");
+
 			return;
 		}
 	}
@@ -1708,7 +1713,7 @@ int SSend(struct proto_tcp_conn_context *context,struct TCPPacket* packet, bool 
 	if (enqueue)
 		_EnqueueOutgoingPacket(context,packet);
 
-	return 0;
+	return packet->fSize;
 }
 
 
@@ -1741,8 +1746,6 @@ _Ack(struct proto_tcp_conn_context *context)
 	struct TCPPacket* packet = NEW( sizeof( struct TCPPacket));
 	if (packet == NULL)
 		return -1;
-
-	packet->fNext = NULL;
 
 	int error = SetTo(packet,NULL, 0, context->ip_source, context->port_source, context->ip_dest,
 			context->port_dest, context->seq, context->ack, TCP_ACK);
@@ -1801,13 +1804,14 @@ _ChecksumData(const void* data, unsigned short length, net_ipv4 source,
 struct proto_tcp_conn_t*
 _FindSocket(net_ipv4 address, unsigned short port)
 {
-
 	proto_tcp_conn_t *conn = NULL;
 	for (conn = proto_tcp_conn_list.next; conn != &proto_tcp_conn_list; conn = conn->next)
 	{
 	
 		if (conn->ip_source == address && conn->port_source == (port))
+		{
 			return conn;
+		}
 	}
 
 	return NULL;
@@ -1918,13 +1922,13 @@ void HandleIPPacket(net_ipv4 sourceIP,
 	uint16_t destination = ntohs(header->port_dest);
 	uint32_t sequenceNumber = ntohl(header->seq);
 	uint32_t ackedNumber = ntohl(header->ack);
-/*	TRACE("source = %d, dest = %d, seq = %d, ack = %d, size = %d, "
+	TRACE("source = %d, dest = %d, seq = %d, ack = %d, size = %d, "
 		"flags %s %s %s %s\n", source, destination, sequenceNumber,
 		ackedNumber, size,
 		(header->flags & TCP_ACK) != 0 ? "ACK" : "",
 		(header->flags & TCP_SYN) != 0 ? "SYN" : "",
 		(header->flags & TCP_FIN) != 0 ? "FIN" : "",
-		(header->flags & TCP_RST) != 0 ? "RST" : "");*/
+		(header->flags & TCP_RST) != 0 ? "RST" : "");
 	if (header->data_offset > 5) {
 		uint8_t* option = (uint8_t*)data + sizeof(proto_tcp_t);
 		while ((uint32_t*)option < (uint32_t*)data + header->data_offset) {
@@ -1958,17 +1962,20 @@ void HandleIPPacket(net_ipv4 sourceIP,
 	if (packet == NULL)
 		return;
 
-	packet->fNext = NULL;
-
 	socket->checkedask = ackedNumber;
 
 	int error = SetTo(packet,(uint32_t*)data + header->data_offset,
 		size - header->data_offset * 4, sourceIP, source, destinationIP,
 		destination, sequenceNumber, ackedNumber, header->flags);
+
+
 	if (error == 0)
 		ProcessPacket(socket,packet);
 	else
+	{
+		TRACE("TCPService::HandleIPPacket(): SetTo %d\n",error);
 		DEL (packet);
+	}
 }
 
 
