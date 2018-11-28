@@ -654,8 +654,6 @@ unsigned pcnet32_int_rx (struct pcnet32_dev_t *dev)
 		if (ringrx[index].rmd2.mcnt > 120)
 			kPrintf ("len: %d\n", ringrx[index].rmd2.mcnt);*/
 
-		Printf ("len: %d\n", ringrx[index].rmd2.mcnt);
-
 		netdev_rx_add_queue (ifdev, buf, ringrx[index].rmd2.mcnt);
         }
 

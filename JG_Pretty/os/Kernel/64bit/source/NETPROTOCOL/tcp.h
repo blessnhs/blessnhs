@@ -76,6 +76,8 @@ typedef struct proto_tcp_conn_context {
 	net_port port_source;
 	net_port port_dest;
 
+	unsigned checkedask;
+
 	unsigned seq;
 	unsigned ack;
 

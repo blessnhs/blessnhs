@@ -90,8 +90,6 @@ netdev_t *netdev_create (mac_addr_t addr_mac, unsigned (*read) (char *, unsigned
 
 unsigned netdev_rx_add_queue (struct netdev_t *dev, char *buffer, unsigned len)
 {
-	Lock (&mutex_queue_rx);
-
 	if (!dev)
 		goto Unlock;
 
@@ -121,12 +119,9 @@ unsigned netdev_rx_add_queue (struct netdev_t *dev, char *buffer, unsigned len)
 	queue->prev = dev->queue_rx_list.prev;
 	queue->prev->next = queue;
 	queue->next->prev = queue;
-	
-	Unlock (&mutex_queue_rx);
 
 	return 1;
 Unlock:
-Unlock (&mutex_queue_rx);
 
 	return 0;
 }
@@ -136,16 +131,12 @@ netdev_buffer_queue_t *netdev_rx_queue (struct netdev_t *dev)
 	if (!dev)
 		return 0;
 
-	Lock (&mutex_queue_rx);
-
 	netdev_buffer_queue_t *queue;
 	for (queue = dev->queue_rx_list.next; queue != &dev->queue_rx_list; queue = queue->next)
 	{
-		Unlock (&mutex_queue_rx);
 		return queue;
 	}
 
-	Unlock (&mutex_queue_rx);
 	return 0;
 }
 
