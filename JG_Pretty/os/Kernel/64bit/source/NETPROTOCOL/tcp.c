@@ -1692,7 +1692,7 @@ int SSend(struct proto_tcp_conn_context *context,struct TCPPacket* packet, bool 
 	struct ChainBuffer buffer;
 	ChainBuffer(&buffer,(void*)packet->fData, packet->fSize,NULL,false);
 
-	TRACE("seq %d ack %d  packet->fSize %d\n",packet->fSequenceNumber, context->ack, packet->fSize);
+//	TRACE("seq %d ack %d  packet->fSize %d\n",packet->fSequenceNumber, context->ack, packet->fSize);
 
 	int error =  Send(netif,context->port_source, context->ip_dest, context->port_dest,
 		packet->fSequenceNumber, context->ack, packet->fFlags,
@@ -1820,6 +1820,8 @@ int Read(proto_tcp_conn_t *conn,void* buffer, int bufferSize, int* bytesRead,
 	if (bytesRead == NULL)
 		return -1;
 
+	while(conn->checkedask != conn->seq);
+
 	*bytesRead = 0;
 	struct TCPPacket* packet = NULL;
 
@@ -1916,13 +1918,13 @@ void HandleIPPacket(net_ipv4 sourceIP,
 	uint16_t destination = ntohs(header->port_dest);
 	uint32_t sequenceNumber = ntohl(header->seq);
 	uint32_t ackedNumber = ntohl(header->ack);
-	TRACE("source = %d, dest = %d, seq = %d, ack = %d, size = %d, "
+/*	TRACE("source = %d, dest = %d, seq = %d, ack = %d, size = %d, "
 		"flags %s %s %s %s\n", source, destination, sequenceNumber,
 		ackedNumber, size,
 		(header->flags & TCP_ACK) != 0 ? "ACK" : "",
 		(header->flags & TCP_SYN) != 0 ? "SYN" : "",
 		(header->flags & TCP_FIN) != 0 ? "FIN" : "",
-		(header->flags & TCP_RST) != 0 ? "RST" : "");
+		(header->flags & TCP_RST) != 0 ? "RST" : "");*/
 	if (header->data_offset > 5) {
 		uint8_t* option = (uint8_t*)data + sizeof(proto_tcp_t);
 		while ((uint32_t*)option < (uint32_t*)data + header->data_offset) {
