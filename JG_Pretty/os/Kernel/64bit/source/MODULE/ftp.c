@@ -104,6 +104,9 @@ static int recvProtocol(int sock, char *recvBuffer, int bufferSize) {
 		return 0;
 	}
 
+	if (recvLen > 0)
+		return recvLen;
+
 	recvBuffer[recvLen] = '\0';
 
 	if (MODE_DEBUG == mode) {
@@ -207,27 +210,22 @@ void initializeFtpClient() {
 // ftp client start
 void startFtpClient(char *ip, char *port) {
 	char cmd[COMMAND_MAX_SIZE];
+	memset(cmd,0,COMMAND_MAX_SIZE);
 
 	initializeFtpClient();
 
 	while (1)
 	{
-		// input user command
-		 if (ip == 0 && port == 0)
-		 {
-			 Printf("ftp>");
-			 GUICommandShell(cmd);
-		 }
-		 else
-		 {
-			 SPrintf(cmd, "open %s %s", ip, port);
-			 ip = port = 0;
-		 }
+		 Printf("ftp>");
+		 GUICommandShell(cmd);
 		 // call handler
 		 commandHandle(cmd);
 
 		 if(strcmp(cmd,"quit") == 0)
 			 break;
+
+		memset(cmd,0,COMMAND_MAX_SIZE);
+
 	 }
 
 }
@@ -264,7 +262,8 @@ void openCon(char *openCmd) {
 
 	sock = connectServer(hostname, atoi(serverPort));
 
-	recvProtocol(sock, recvBuffer, BUFFER_SIZE - 1);
+	int len = recvProtocol(sock, recvBuffer, BUFFER_SIZE - 1);
+	printMessage(recvBuffer,len);
 
 	// send user name
 	Printf("\nName: ");
@@ -273,7 +272,7 @@ void openCon(char *openCmd) {
 	SPrintf(sendBuffer, "User %s\r\n", cmd);
 	send(sock, sendBuffer, strlen(sendBuffer), 0);
 	//sendProtocol(sock, sendBuffer);
-	int len = recvProtocol(sock, recvBuffer, BUFFER_SIZE - 1);
+	len = recvProtocol(sock, recvBuffer, BUFFER_SIZE - 1);
 	printMessage(recvBuffer,len);
 
 	// send password
@@ -299,6 +298,10 @@ void openCon(char *openCmd) {
 void passiveMode(char *ip, int *port) {
 	 char sendBuffer[BUFFER_SIZE];
 	 char recvBuffer[BUFFER_SIZE];
+
+	 memset(sendBuffer, 0, BUFFER_SIZE);
+	 memset(recvBuffer, 0, BUFFER_SIZE);
+
 	 int host0, host1, host2, host3;
 	 int port0, port1;
 
@@ -306,27 +309,25 @@ void passiveMode(char *ip, int *port) {
 	 sendProtocol(sock, sendBuffer);
 
 	 int passiveLen = 0;
-	 passiveLen = recvProtocol(sock, recvBuffer, BUFFER_SIZE-1);
+	 passiveLen = recvProtocol(sock, recvBuffer, BUFFER_SIZE);
 
+	 if (passiveLen < 4)
+	 {
+		 return;
+	 }
 
 	 while(1)
 	 {
-		 if(passiveLen < 4)
-		 {
-			 passiveLen = recvProtocol(sock, recvBuffer, BUFFER_SIZE-1);
-			 continue;
-		 }
-
 		 //227
 		 char number[5];
 		 memcpy(number,recvBuffer,3);
 		 number[4] = 0;
 
-//		 Printf("%s cmd",number);
+		 Printf("%s cmd",number);
 
 		 if(atoi(number) !=  227 )
 		 {
-			 passiveLen = recvProtocol(sock, recvBuffer, BUFFER_SIZE-1);
+			  passiveLen = recvProtocol(sock, recvBuffer, BUFFER_SIZE-1);
 		 }
 		 else
 		 {
@@ -340,6 +341,9 @@ void passiveMode(char *ip, int *port) {
 	 int pos = 0;
 	 while(1)
 	 {
+		 if (passiveLen <= pos)
+			 return;
+
 		 if(recvBuffer[pos] == '(')
 			 break;
 
@@ -349,11 +353,18 @@ void passiveMode(char *ip, int *port) {
 	 k=0;
 	 pos++;
 
-//	 Printf("passiveMode total %d %d\n",passiveLen,pos);
+	 Printf("passiveMode total %d %d\n",passiveLen,pos);
 	 char word[20];
 	 int wordindex = 0;
 	 while(1)
 	 {
+		 if (passiveLen <= pos)
+			 return;
+
+		 if (k >= 20)
+			 return;
+
+
 		 word[k] = recvBuffer[pos];
 
 		 if(word[k] == ',' || word[k] == ')')
@@ -361,7 +372,7 @@ void passiveMode(char *ip, int *port) {
 			 char check = word[k];
 
 			 word[k] = 0;
-//			 Printf("%d\n",atoi(word));
+			 Printf("%d\n",atoi(word));
 			 array[wordindex] = atoi(word);
 			 wordindex++;
 			 k = 0;
@@ -382,9 +393,6 @@ void passiveMode(char *ip, int *port) {
 
 	 SPrintf(ip, "%d.%d.%d.%d", array[0], array[1], array[2], array[3]);
 	 *port = array[4]*256 + array[5];
-
-	 Printf("\ndtp port : %d ip %s\n", *port,ip);
-
 }
 
 // get remote working directory file list
@@ -397,15 +405,13 @@ void list(char *listCmd) {
 	// recv server response and parsing
 	passiveMode(ip, &port);
 
-	// connect to DTP
-	dtpSock = connectServer2(ip, port);
-
+	int len = 0;
 	// send LIST command to PI server
 	SPrintf(sendBuffer, "LIST%s", END_OF_PROTOCOL);
 	sendProtocol(sock, sendBuffer);
-	int len = recvProtocol(sock, recvBuffer, BUFFER_SIZE);
-	printMessage(recvBuffer,len);
 
+	// connect to DTP
+	dtpSock = connectServer2(ip, port);
 	// recv file list from DTP
 	len = recvProtocol(dtpSock, recvBuffer, BUFFER_SIZE * 8);
 	printMessage(recvBuffer,len);
@@ -591,6 +597,9 @@ void shellEscape(char *shellCmd) {
 
 void printMessage(char *msg,int len)
 {
+	if(len < 0 || len > 2040)
+		return;
+
 	int i=0;
 	while(1)
 	{

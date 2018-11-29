@@ -137,8 +137,4 @@ static void CreateDirectory( const char* pcParameterBuffer );
 static void Ping(const char* pcParameterBuffer );
 static void Cat(const char* pcParameterBuffer );
 
-
-extern 	int exit;
-extern FL_FILE *fdlog;
-
 #endif /*__CONSOLESHELL_H__*/

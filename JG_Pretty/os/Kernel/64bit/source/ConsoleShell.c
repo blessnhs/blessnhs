@@ -1672,7 +1672,6 @@ static void Cat(const char* pcParameterBuffer )
 }
 
 int exit = 0;
-FL_FILE *fdlog;
 
 static void Ping(const char* pcParameterBuffer )
 {
@@ -1680,39 +1679,23 @@ static void Ping(const char* pcParameterBuffer )
 	char sendBuffer[2048];
 	char recvBuffer[2048];
 
-	fdlog = fl_fopen("/log32", "wb");
-
-	sock = connectServer2("52.78.67.32",20000 );
-
-	send(sock,"1",1,0);
+	sock = connectServer2("54.180.123.125",20000 );
 
 	int idx = 0;
-
 	while(1)
 	{
+		send(sock,"0123456789",10,0);
 
-		int len = recv(sock, recvBuffer, 2048,0);
+/*		int len = recv(sock, recvBuffer, 2048,0);
 
-		int k;
-		for(k=0;k<len;k++)
-		{
-			if(recvBuffer[k] != 48 + idx)
-			{
+		if(len <= 0)
+			continue;
 
-				Printf ("Wrong Number\n");
-				exit = 1;
-				break;
-			}
+		recvBuffer[len] = 0;
 
-			idx++;
-
-			if(idx == 10)
-				idx = 0;
-		}
-
-		if(exit == 1)
-			break;
-
+		Printf ("%d_%s\n",idx,recvBuffer);
+*/
+		idx++;
 
 	}
 

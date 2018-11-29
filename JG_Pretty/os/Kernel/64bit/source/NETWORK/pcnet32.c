@@ -642,18 +642,6 @@ unsigned pcnet32_int_rx (struct pcnet32_dev_t *dev)
 
 		char *buf = (char *) ringrx[index].rmd0.rbadr;
 
-		//kPrintf ("zeros (%d): 0x%x\n", ringrx[index].rmd2.zeros, ringrx[index].rmd2.zeros);
-		//kPrintf ("ones: %d / 0x%x\n", ringrx[index].rmd1.ones, ringrx[index].rmd1.ones);
-		/*if (!ringrx[index].rmd1.err)
-			kPrintf ("err: %d / 0x%x\n", ringrx[index].rmd1.err, ringrx[index].rmd1.err);
-		if (ringrx[index].rmd1.oflo)
-			kPrintf ("oflo: %d / 0x%x\n", ringrx[index].rmd1.oflo, ringrx[index].rmd1.oflo);
-		if (!ringrx[index].rmd1.buff)
-			kPrintf ("buff: %d / 0x%x\n", ringrx[index].rmd1.buff, ringrx[index].rmd1.buff);
-		//kPrintf ("bcnt: %d / 0x%x\n", ringrx[index].rmd1.bcnt, ringrx[index].rmd1.bcnt);
-		if (ringrx[index].rmd2.mcnt > 120)
-			kPrintf ("len: %d\n", ringrx[index].rmd2.mcnt);*/
-
 		netdev_rx_add_queue (ifdev, buf, ringrx[index].rmd2.mcnt);
         }
 

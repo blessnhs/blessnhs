@@ -135,7 +135,7 @@ int net_proto_tcp_recv (int fd, char *msg, unsigned size)
 		return -3;
 
 	int rsize;
-	Read(conn,msg,size,&rsize,3000);
+	Read(conn,msg,size,&rsize,10);
 
 	return rsize;
 }
@@ -694,6 +694,7 @@ void Init(struct ChainBuffer *this,void *data, uint32_t size, struct ChainBuffer
 	this->fTotalSize = this->fSize;
 	this->fData = data;
 	this->fNext = NULL;
+
 	Append(this,next);
 }
 
@@ -1344,9 +1345,10 @@ int Read(proto_tcp_conn_t *conn,void* buffer, int bufferSize, int* bytesRead,
 	*bytesRead = 0;
 	struct TCPPacket* packet = NULL;
 
+	_WaitForAck(conn,10);
+
 	long startTime = GetTickCount();
 	do {
-		_WaitForAck(conn,3000);
 
 		//_ResendQueue(conn);
 		packet = _PeekPacket(conn);
@@ -1381,8 +1383,7 @@ int Read(proto_tcp_conn_t *conn,void* buffer, int bufferSize, int* bytesRead,
 			if (buffer != NULL)
 				buffer = (uint8_t*)buffer + readBytes;
 			bufferSize -= readBytes;
-			_WaitForAck(conn,3000);
-			packet = _PeekPacket(conn);
+				packet = _PeekPacket(conn);
 			if (packet == NULL && conn->fRemoteState != TCP_SOCKET_STATE_OPEN)
 				break;
 			readBytes = 0;
