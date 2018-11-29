@@ -1,23 +1,3 @@
-/*
- *  ZeX/OS
- *  Copyright (C) 2008  Tomas 'ZeXx86' Jedrzejek (zexx86@zexos.org)
- *  Copyright (C) 2009  Tomas 'ZeXx86' Jedrzejek (zexx86@zexos.org)
- *  Copyright (C) 2010  Tomas 'ZeXx86' Jedrzejek (zexx86@zexos.org)
- *
- *  This program is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
-
 
 #include "eth.h"
 #include "net.h"
@@ -43,10 +23,8 @@ extern netif_t netif_list;
 proto_tcp_conn_t proto_tcp_conn_list;
 proto_tcp_backlog_t proto_tcp_backlog_list;
 
-static unsigned short proto_tcp_dup;
 static unsigned proto_tcp_seq;
 static proto_ip_t proto_ip_prealloc;
-static proto_tcp_t proto_tcp_prealloc;
 static packet_t packet_prealloc;
 static char buf_tcp_prealloc[NET_PACKET_MTU + sizeof (proto_tcp_t) + 1];
 
@@ -54,15 +32,7 @@ static char buf_tcp_prealloc[NET_PACKET_MTU + sizeof (proto_tcp_t) + 1];
 proto_tcp_conn_t *net_proto_tcp_conn_check (net_ipv4 ip_source, net_port port_source, net_ipv4 ip_dest, net_port port_dest, unsigned char *ret);
 int net_proto_tcp_conn_add (fd_t *fd);
 int net_proto_tcp_conn_set (proto_tcp_conn_t *conn, netif_t *eth, net_port port_source, net_ipv4 ip_dest, net_port port_dest);
-int net_proto_tcp_conn_estabilish (proto_tcp_conn_t *conn, netif_t *eth, net_ipv4 ip_dest, net_port port_dest);
-int net_proto_tcp_conn_estabilish_reply (proto_tcp_conn_t *conn, proto_ip_t *ip_old, proto_tcp_t *tcp_old);
-int net_proto_tcp_read_cache (proto_tcp_conn_t *conn, char *data, unsigned len);
-int net_proto_tcp_read_ok (proto_tcp_conn_t *conn, proto_ip_t *ip_old, proto_tcp_t *tcp_old, unsigned len);
 int net_proto_tcp_write (netif_t *eth, net_ipv4 dest, proto_tcp_t *tcp, char *data, unsigned len);
-int net_proto_tcp_write_data (proto_tcp_conn_t *conn, char *data, unsigned len);
-int net_proto_tcp_write_data_ok (proto_tcp_conn_t *conn, proto_ip_t *ip_old, proto_tcp_t *tcp_old);
-int net_proto_tcp_conn_disconnected (proto_tcp_conn_t *conn, proto_ip_t *ip_old, proto_tcp_t *tcp_old);
-int net_proto_tcp_conn_close (proto_tcp_conn_t *conn);
 unsigned net_proto_tcp_conn_del (proto_tcp_conn_t *conn);
 proto_tcp_conn_t *net_proto_tcp_conn_find (int fd);
 int net_proto_tcp_backlog_add (proto_tcp_conn_t *conn, net_ipv4 ip, net_port port, unsigned seq);
@@ -74,52 +44,6 @@ int net_proto_tcp_conn_invite (proto_tcp_conn_t *conn, net_ipv4 ip, net_port por
 int net_proto_tcp_socket (fd_t *fd)
 {
 	return net_proto_tcp_conn_add (fd);
-}
-
-int net_proto_tcp_connect2 (int fd, sockaddr_in *addr)
-{
-	int ret = -1;
-
-	proto_tcp_conn_t *conn = net_proto_tcp_conn_find (fd);
-
-	if (!conn)
-		return -1;
-
-	netif_t *netif;
-	for (netif = netif_list.next; netif != &netif_list; netif = netif->next) {
-		ret = net_proto_tcp_conn_estabilish (conn, netif, addr->sin_addr, addr->sin_port);
-
-		unsigned long stime = GetTickCount();
-
-		/* blocking mode */
-		if (!(conn->flags & O_NONBLOCK)) {
-			if (!ret)
-				return -1;
-
-			for (;;) {
-				Schedule ();
-
-				/* timeout for 8s */
-				if ((stime+3000) < GetTickCount())
-					return -1;
-
-				if (conn->state == PROTO_TCP_CONN_STATE_ESTABILISHED)
-					break;
-
-				/* when connection cant be accepted succefully first time, try it again */
-				if (conn->state == PROTO_TCP_CONN_STATE_ESTABILISHERROR) {
-					ret = net_proto_tcp_conn_estabilish (conn, netif, addr->sin_addr, addr->sin_port);
-					conn->state = PROTO_TCP_CONN_STATE_ESTABILISH;
-				}
-			}
-		} else
-		/* non-blocking mode */
-			return -1;
-
-		ret = 0;
-	}
-
-	return ret;
 }
 
 static int source_port = 10;
@@ -274,6 +198,21 @@ int net_proto_tcp_listen (int fd, int backlog)
 	return 0;
 }
 
+
+int _WaitForAck(struct proto_tcp_conn_context *context,long timeout)
+{
+	long startTime = GetTickCount();
+	do
+	{
+		if(context->checkedask == context->seq)
+			return 0;
+
+	} while (GetTickCount() - startTime < timeout);
+
+	return timeout == 0 ? -1 : -1;
+}
+
+
 int net_proto_tcp_accept (int fd, sockaddr_in *addr, socklen_t *addrlen)
 {
 	proto_tcp_conn_t *conn = net_proto_tcp_conn_find (fd);
@@ -398,209 +337,6 @@ int net_proto_tcp_select (int readfd, int writefd, int exceptfd)
 	return 0;
 }
 
-/** TCP protocol
- *  Hardcore code - syn, ack, psh, fin, etc :P
- */
-unsigned net_proto_tcp_handler (packet_t *packet, proto_ip_t *ip, char *buf, unsigned len)
-{
-	proto_tcp_t *tcp = (proto_tcp_t *) buf;
-
-	unsigned char ret = 0;
-
-	/* First check ip address and ports, that we want this data */
-	proto_tcp_conn_t *conn = net_proto_tcp_conn_check (ip->ip_dest, tcp->port_dest, ip->ip_source, tcp->port_source, &ret);
-
-	if (!conn && ret == 0)
-	{
-		Printf ("net_proto_tcp_conn_check fail %d\n",ret);
-		return 1;
-	}
-
-	//Printf ("tcp->flags: 0x%x, ret: %d, conn: 0x%x, fd: %d\n", tcp->flags, ret, conn, conn->fd);
-
-	/* connection from client before accept () */
-	if (ret == 1) {
-		/* client want connect to our server */
-		if (tcp->flags == 0x02) {
-			Lock (&mutex_tcp_accept);
-
-			unsigned ret = net_proto_tcp_backlog_add (conn, ip->ip_source, tcp->port_source, tcp->seq);
-
-			Unlock (&mutex_tcp_accept);
-
-			return ret; 
-		}
-
-		return 1;
-	}
-
-	unsigned data_cache = 0;
-
-	/* data received */
-	if (tcp->flags & 0x08) {
-		Lock (&mutex_tcp_read_cache);
-
-		/* needed for calculate real offset from 4bit number */
-		unsigned offset = tcp->data_offset * 4;
-
-		/* now calculate accurate length of tcp _data_ */
-		unsigned size = swap16 (ip->total_len) - (offset + (ip->head_len*4));
-
-		//Printf ("2.1>>>>total_len  %d : offset %d ip->head_len  %d\n", swap16 (ip->total_len), offset, (offset + (ip->head_len*4)));
-		//Printf ("2.>>>>offset  %d : size %d len  %d\n", offset, size, len);
-
-		net_proto_tcp_read_cache (conn, buf+offset, size);
-		/* send ack */
-		net_proto_tcp_read_ok (conn, ip, tcp, size);
-
-		data_cache = 1;
-		Unlock (&mutex_tcp_read_cache);
-	}
-
-	/* sended data was delivered succefully / ACK */
-	if (tcp->flags & 0x10) {
-		/* HACK: It is interesting, that no push flag, and there could be some data to read */
-		Lock (&mutex_tcp_read_cache);
-
-		/* needed for calculate real offset from 4bit number */
-		unsigned offset = tcp->data_offset * 4;
-
-		/* now calculate accurate length of tcp _data_ */
-		unsigned size = swap16 (ip->total_len) - (offset + (ip->head_len*4));
-
-		//Printf ("2.>>>>offset  %d : size %d len  %d\n", offset, size, len);
-
-
-		/* there are data for read */
-		if (size) {
-			/* data was cached, so no need cache it again */
-			if (!data_cache) {
-				//kPrintf (">>>>2 %d : %d : %d\n", offset, size, len);
-				net_proto_tcp_read_cache (conn, buf+offset, size);
-				/* send ack */
-				net_proto_tcp_read_ok (conn, ip, tcp, size);
-			}
-		} else {
-			/* when data are'nt available, lets normal work - acknowledgement */
-			if (conn->state == PROTO_TCP_CONN_STATE_ESTABILISH) {
-				conn->state = PROTO_TCP_CONN_STATE_ESTABILISHERROR;
-				net_proto_tcp_write_data_ok (conn, ip, tcp);
-			} else
-				net_proto_tcp_write_data_ok (conn, ip, tcp);
-		}
-
-		Unlock (&mutex_tcp_read_cache);
-
-	}
-
-	/* connection estabilish respond */
-	if (tcp->flags == 0x12) {
-		return net_proto_tcp_conn_estabilish_reply (conn, ip, tcp);
-	}
-
-	/* another side close connection */
-	if (tcp->flags & 0x01) {
-		Printf("TCP -> fd %d connection closed by remote host\n", conn->fd);
-		net_proto_tcp_conn_disconnected (conn, ip, tcp);			// FIXME: problem in server with hangind the whole program
-	}
-
-	/* another side close connection */
-	if (tcp->flags & 0x04) {
-		Printf("TCP -> fd %d connection reseted by peer\n", conn->fd);
-		net_proto_tcp_conn_disconnected (conn, ip, tcp);
-	}
-
-	return 1;
-}
-
-int net_proto_tcp_read_cache (proto_tcp_conn_t *conn, char *data, unsigned len)
-{
-	if (!data || !conn || !len)
-		return 0;
-
-	if (!conn->len) {
-		conn->data = (char *) NEW (sizeof (char) * (len + 1));
-
-		memcpy (conn->data, data, len);
-	} else {
-		char *newdata = (char *) NEW (sizeof (char) * (conn->len + len + 1));
-
-		if (!newdata)
-			return 0;
-
-		memcpy (newdata, conn->data, conn->len);
-		memcpy (newdata+conn->len, data, len);
-
-		DEL (conn->data);
-
-		conn->data = newdata;
-	}
-
-	if (!conn->data)
-		return -1;
-
-	//Printf ("\n3.DATA: %d - fd %d\n", len, conn->fd);
-	
-	conn->len += len;
-
-	conn->data[conn->len] = '\0';
-
-	return conn->len;
-}
-
-int net_proto_tcp_read_ok (proto_tcp_conn_t *conn, proto_ip_t *ip_old, proto_tcp_t *tcp_old, unsigned len)
-{
-	if (!ip_old || !tcp_old || !conn)
-		return 0;
-
-	proto_tcp_t *tcp = (proto_tcp_t *) NEW (sizeof (proto_tcp_t));
-
-	if (!tcp)
-		return 0;
-
-	tcp->port_source = conn->port_source; // increase client port too
-	tcp->port_dest = conn->port_dest;
-
-	tcp->seq = tcp_old->ack;
-
-	/* this small thing did bad work when e.g. 10 10 10 fe get to calculation,
-		it returns 10 10 10 08, no 10 10 11 08 */
-	unsigned seq = swap32 (tcp_old->seq);
-	seq += len;
-
-	tcp->ack = swap32 (seq);
-
-	tcp->res = 0;
-	tcp->data_offset = 5;
-	tcp->flags = 0x10;
-	tcp->window = tcp_old->window + swap16 (64);
-	tcp->checksum = 0;
-
-	int ret = net_proto_tcp_write (conn->netif, conn->ip_dest, tcp, 0, 0);
-
-	/*if (proto_tcp_dup == tcp_old->checksum) {
-		Printf ("Duplicated packet :)");
-		Sleep (150);
-	}*/
-
-	if (ret) {
-		//Printf ("read_ok: seq: 0x%x | ack: 0x%x\n", conn->seq, conn->ack);
-
-		conn->seq = tcp->ack;
-		conn->ack = tcp->seq;
-
-		//Printf ("read_ok2: seq: 0x%x | ack: 0x%x\n", conn->seq, conn->ack);
-
-		proto_tcp_dup = tcp_old->checksum;
-
-		conn->cross = 1;
-	}
-
-	DEL (tcp);
-
-	return ret;
-}
-
 int net_proto_tcp_write (netif_t *eth, net_ipv4 dest, proto_tcp_t *tcp, char *data, unsigned len)
 {
 	if (!eth || !tcp)
@@ -697,217 +433,6 @@ int net_proto_tcp_write (netif_t *eth, net_ipv4 dest, proto_tcp_t *tcp, char *da
 	unsigned ret = net_proto_ip_send (eth, packet, ip, (char *) buf_tcp, l+len);
 
 	//DEL (buf_tcp);
-
-	return ret;
-}
-
-int net_proto_tcp_write_data (proto_tcp_conn_t *conn, char *data, unsigned len)
-{
-	if (!conn || !len || !data)
-		return 0;
-
-	proto_tcp_t *tcp = &proto_tcp_prealloc;
-
-	if (!tcp)
-		return 0;
-
-	tcp->port_source = conn->port_source;
-	tcp->port_dest = conn->port_dest;
-
-	unsigned seq = swap32 (proto_tcp_seq);
-	seq ++;
-
-	//tcp->ack = swap32 (seq);
-
-	proto_tcp_seq = swap32 (seq);
-
-	if (!conn->cross) {
-		tcp->seq = conn->seq;
-		tcp->ack = conn->ack;
-	} else {
-		tcp->seq = conn->ack;
-		tcp->ack = conn->seq;
-
-		conn->cross = 0;
-	}
-
-//	Printf ("TCP -> seq: 0x%x | ack: 0x%x | proto_seq: 0x%x\n", tcp->seq, tcp->ack, proto_tcp_seq);
-
-	tcp->res = 0;
-	tcp->data_offset = 5;
-	tcp->flags = 0x18;
-	tcp->window = swap16 (32768);
-	tcp->checksum = 0;
-
-	int ret = net_proto_tcp_write (conn->netif, conn->ip_dest, tcp, data, len);
-
-	if (ret)
-		conn->state = PROTO_TCP_CONN_STATE_WAIT;
-
-	return ret;
-}
-
-int net_proto_tcp_write_data_ok (proto_tcp_conn_t *conn, proto_ip_t *ip_old, proto_tcp_t *tcp_old)
-{
-	if (!ip_old || !tcp_old || !conn)
-		return 0;
-
-	/* cross - because we change now sides :) */
-	conn->seq = tcp_old->ack;
-	conn->ack = tcp_old->seq;
-
-//	Printf ("data_ok: seq: 0x%x | ack: 0x%x\n", tcp_old->ack, tcp_old->seq);
-
-	conn->state = PROTO_TCP_CONN_STATE_READY;
-
-	return 1;
-}
-
-/* try connect to server */
-int net_proto_tcp_conn_estabilish (proto_tcp_conn_t *conn, netif_t *eth, net_ipv4 ip_dest, net_port port_dest)
-{
-	if (!conn)
-		return 0;
-
-	proto_tcp_t *tcp = (proto_tcp_t *) NEW (sizeof (proto_tcp_t));
-
-	if (!tcp)
-		return 0;
-
-	tcp->port_source = swap16 (netif_port_get ()); // increase client port too
-	tcp->port_dest = port_dest;
-
-	/* setup new connection */
-	net_proto_tcp_conn_set (conn, eth, tcp->port_source, ip_dest, tcp->port_dest);
-
-	tcp->seq = conn->seq;
-	tcp->ack = conn->ack;
-
-	tcp->res = 0;
-	tcp->data_offset = 5;
-	tcp->flags = 0x02;
-	tcp->window = swap16 (32792);
-	tcp->checksum = 0;
-
-	int ret = net_proto_tcp_write (eth, ip_dest, tcp, 0, 0);
-
-	DEL (tcp);
-
-	if (!ret) {
-		net_proto_tcp_conn_del (conn);
-		return 0;
-	}
-
-	return 1;
-}
-
-int net_proto_tcp_conn_estabilish_reply (proto_tcp_conn_t *conn, proto_ip_t *ip_old, proto_tcp_t *tcp_old)
-{
-	if (!ip_old || !tcp_old || !conn)
-		return 0;
-
-	proto_tcp_t *tcp = (proto_tcp_t *) NEW (sizeof (proto_tcp_t));
-
-	if (!tcp)
-		return 0;
-
-	tcp->port_source = conn->port_source; // increase client port too
-	tcp->port_dest = conn->port_dest;
-
-	tcp->seq = tcp_old->ack;
-	tcp->ack = tcp_old->seq + swap32 (1);
-
-	tcp->res = 0;
-	tcp->data_offset = 5;
-	tcp->flags = 0x10;
-	tcp->window = tcp_old->window + swap16 (64);
-	tcp->checksum = 0;
-
-	int ret = net_proto_tcp_write (conn->netif, conn->ip_dest, tcp, 0, 0);
-
-	if (ret) {
-		conn->seq = tcp->seq;
-		conn->ack = tcp->ack;
-		conn->state = PROTO_TCP_CONN_STATE_ESTABILISHED;
-		
-		//Printf("TCP -> fd %d connected to server succefully\n", conn->fd);
-	}
-
-	DEL (tcp);
-
-	return ret;
-}
-
-int net_proto_tcp_conn_disconnected (proto_tcp_conn_t *conn, proto_ip_t *ip_old, proto_tcp_t *tcp_old)
-{
-	if (!ip_old || !tcp_old || !conn)
-		return 0;
-
-	if (conn->state == PROTO_TCP_CONN_STATE_CLOSE)
-		return net_proto_tcp_conn_del (conn);
-
-	proto_tcp_t *tcp = (proto_tcp_t *) NEW (sizeof (proto_tcp_t));
-
-	if (!tcp)
-		return 0;
-
-	tcp->port_source = conn->port_source; // increase client port too
-	tcp->port_dest = conn->port_dest;
-
-	tcp->seq = tcp_old->ack;
-	tcp->ack = tcp_old->seq + swap32 (1);
-
-	tcp->res = 0;
-	tcp->data_offset = 5;
-	tcp->flags = 0x10;
-	tcp->window = tcp_old->window + swap16 (64);
-	tcp->checksum = 0;
-
-	int ret = net_proto_tcp_write (conn->netif, conn->ip_dest, tcp, 0, 0);
-
-	DEL (tcp);
-
-	if (ret)
-		conn->state = PROTO_TCP_CONN_STATE_CLOSE; //ret = net_proto_tcp_conn_del (conn);
-	else
-		return -1;
-
-	return ret;
-}
-
-int net_proto_tcp_conn_close (proto_tcp_conn_t *conn)
-{
-	return 0;	/* FIXME: close () is faster then send () sometime :-B */
-  
-	if (!conn)
-		return 0;
-
-	if (conn->state == PROTO_TCP_CONN_STATE_CLOSE)
-		return 0;
-
-	proto_tcp_t *tcp = (proto_tcp_t *) NEW (sizeof (proto_tcp_t));
-
-	if (!tcp)
-		return 0;
-
-	tcp->port_source = conn->port_source; // increase client port too
-	tcp->port_dest = conn->port_dest;
-
-	tcp->seq = conn->seq;
-	tcp->ack = conn->ack;
-
-	tcp->res = 0;
-	tcp->data_offset = 5;
-	tcp->flags = 0x11;
-	tcp->window = swap16 (32832);
-	tcp->checksum = 0;
-
-	int ret = net_proto_tcp_write (conn->netif, conn->ip_dest, tcp, 0, 0);
-
-	DEL (tcp);
-
-	if (ret)
-		conn->state = PROTO_TCP_CONN_STATE_CLOSE;
 
 	return ret;
 }
@@ -1035,16 +560,6 @@ proto_tcp_conn_t *net_proto_tcp_conn_check (net_ipv4 ip_source, net_port port_so
 	proto_tcp_conn_t *conn_ret = NULL;
 	//Printf ("-------------------------\n");
 	for (conn = proto_tcp_conn_list.next; conn != &proto_tcp_conn_list; conn = conn->next) {
-		/*Printf ("-> ");
-		net_proto_ip_print (conn->ip_source);
-		Printf (" / ");
-		net_proto_ip_print (ip_source);
-		Printf ("\n2> ");
-		net_proto_ip_print (conn->ip_dest);
-		Printf (" / ");
-		net_proto_ip_print (ip_dest);
-		Printf ("\nporty: %d / %d\n", swap16 (conn->port_source), swap16 (port_source));
-		Printf ("porty2: %d / %d\n", swap16 (conn->port_dest), swap16 (port_dest));*/
 
 		if (conn->ip_source == ip_source && conn->port_source == port_source) {
 			if (conn->ip_dest == ip_dest && conn->port_dest == port_dest) {
@@ -1121,7 +636,6 @@ unsigned init_net_proto_tcp ()
 	proto_tcp_backlog_list.next = &proto_tcp_backlog_list;
 	proto_tcp_backlog_list.prev = &proto_tcp_backlog_list;
 
-	proto_tcp_dup = 0x0;
 	proto_tcp_seq = 0x1;
 
 	return 1;
@@ -1359,7 +873,7 @@ Write(struct proto_tcp_conn_context *context,const void* buffer, int bufferSize)
 	if (packet == NULL)
 		return -1;
 
-	while(context->checkedask != context->seq);
+	_WaitForAck(context,3000);
 
 	int error = SetTo(packet,buffer, bufferSize, context->ip_source, context->port_source,
 			context->ip_dest, context->port_dest, context->seq, context->ack,TCP_ACK);
@@ -1827,13 +1341,13 @@ int Read(proto_tcp_conn_t *conn,void* buffer, int bufferSize, int* bytesRead,
 	if (bytesRead == NULL)
 		return -1;
 
-	while(conn->checkedask != conn->seq);
-
 	*bytesRead = 0;
 	struct TCPPacket* packet = NULL;
 
 	long startTime = GetTickCount();
 	do {
+		_WaitForAck(conn,3000);
+
 		//_ResendQueue(conn);
 		packet = _PeekPacket(conn);
 
@@ -1867,6 +1381,7 @@ int Read(proto_tcp_conn_t *conn,void* buffer, int bufferSize, int* bytesRead,
 			if (buffer != NULL)
 				buffer = (uint8_t*)buffer + readBytes;
 			bufferSize -= readBytes;
+			_WaitForAck(conn,3000);
 			packet = _PeekPacket(conn);
 			if (packet == NULL && conn->fRemoteState != TCP_SOCKET_STATE_OPEN)
 				break;
@@ -1925,13 +1440,13 @@ void HandleIPPacket(net_ipv4 sourceIP,
 	uint16_t destination = ntohs(header->port_dest);
 	uint32_t sequenceNumber = ntohl(header->seq);
 	uint32_t ackedNumber = ntohl(header->ack);
-	TRACE("source = %d, dest = %d, seq = %d, ack = %d, size = %d, "
+/*	TRACE("source = %d, dest = %d, seq = %d, ack = %d, size = %d, "
 		"flags %s %s %s %s\n", source, destination, sequenceNumber,
 		ackedNumber, size,
 		(header->flags & TCP_ACK) != 0 ? "ACK" : "",
 		(header->flags & TCP_SYN) != 0 ? "SYN" : "",
 		(header->flags & TCP_FIN) != 0 ? "FIN" : "",
-		(header->flags & TCP_RST) != 0 ? "RST" : "");
+		(header->flags & TCP_RST) != 0 ? "RST" : "");*/
 	if (header->data_offset > 5) {
 		uint8_t* option = (uint8_t*)data + sizeof(proto_tcp_t);
 		while ((uint32_t*)option < (uint32_t*)data + header->data_offset) {

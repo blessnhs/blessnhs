@@ -41,10 +41,6 @@ unsigned net_proto_arp_handler (packet_t *packet, char *buf, unsigned len)
 	if (arp->prot_type != NET_PACKET_TYPE_IPV4)
 		return 0;
 
-	Printf("net_packet_handler arp->op %d\n",arp->op);
-
-
-
 	/* ARP request */
 	if (arp->op == ARP_OP_REQUEST) {
 		//Printf ("ARP - REQUEST: %02x:%02x:%02x:%02x:%02x:%02x\n", (unsigned char) arp->sender_ethernet[0], (unsigned char) arp->sender_ethernet[1], (unsigned char) arp->sender_ethernet[2], (unsigned char) arp->sender_ethernet[3], (unsigned char) arp->sender_ethernet[4], (unsigned char) arp->sender_ethernet[5]);

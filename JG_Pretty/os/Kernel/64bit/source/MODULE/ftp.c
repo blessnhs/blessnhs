@@ -109,8 +109,6 @@ static int recvProtocol(int sock, char *recvBuffer, int bufferSize) {
 	if (MODE_DEBUG == mode) {
 
 	}
-
-	Printf("recv len: %s\n", recvBuffer);
 	return recvLen;
 }
 

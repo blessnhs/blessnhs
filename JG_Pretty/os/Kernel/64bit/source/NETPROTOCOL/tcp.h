@@ -203,17 +203,6 @@ typedef struct proto_tcp_t {
 #define TCP_ECE		(1 << 6)	// RFC 3168
 #define TCP_CWR		(1 << 7)	// RFC 3168
 
-
-#define PROTO_TCP_CONN_STATE_ESTABILISH		0x1
-#define PROTO_TCP_CONN_STATE_ESTABILISHED	0x2
-#define PROTO_TCP_CONN_STATE_DISCONNECTED	0x4
-#define PROTO_TCP_CONN_STATE_WAIT		0x8
-#define PROTO_TCP_CONN_STATE_READY		0x10
-#define PROTO_TCP_CONN_STATE_CLOSE		0x20
-#define PROTO_TCP_CONN_STATE_ESTABILISHERROR	0x40
-
-
-
 struct ChainBuffer {
 	enum {
 		CHAIN_BUFFER_HEAD			= 0x1,
