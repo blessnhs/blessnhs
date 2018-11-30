@@ -47,7 +47,6 @@ enum {
 };
 
 typedef unsigned ipv4_addr_t;
-typedef unsigned char mac_addr_t[6];
 typedef unsigned short net_port;
 /*
 #define ntohs(n) \

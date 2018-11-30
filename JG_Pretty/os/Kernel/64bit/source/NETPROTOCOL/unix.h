@@ -51,6 +51,14 @@ typedef struct proto_unix_backlog_context {
 	proto_unix_conn_t *session;
 } proto_unix_backlog_t;
 
+int net_proto_unix_read_cache (proto_unix_conn_t *conn, char *data, unsigned len);
+int net_proto_unix_write (proto_unix_conn_t *conn, char *data, unsigned len);
+proto_unix_conn_t *net_proto_unix_conn_find (int fd);
+proto_unix_conn_t *net_proto_unix_conn_findbypath (char *path);
+int net_proto_unix_conn_set (proto_unix_conn_t *conn, char *path, unsigned char bind);
+unsigned net_proto_unix_conn_del (proto_unix_conn_t *conn);
+int net_proto_unix_conn_add ();
+int net_proto_unix_backlog_add (proto_unix_conn_t *conn, proto_unix_conn_t *session);
 
 /* externs */
 extern unsigned init_net_proto_unix ();

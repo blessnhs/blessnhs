@@ -20,6 +20,7 @@
 #define _TCP_H
 
 #include "ip.h"
+#include "socket.h"
 #include "../types.h"
 
 // IP protocol version 4
@@ -250,19 +251,23 @@ void _Next(struct Iterator *iter);
 uint8_t _NextByte(struct Iterator *iter);
 uint16_t ip_checksum(struct ChainBuffer *buffer);
 uint16_t _Checksum(struct proto_ip_t *header);
+void Flatten(struct ChainBuffer *this,void *_buffer);
 
-extern unsigned init_net_proto_tcp ();
-extern unsigned init_net_proto_tcp6 ();
+unsigned init_net_proto_tcp ();
+unsigned init_net_proto_tcp6 ();
 
 unsigned int _rand32(void);
 unsigned short _rand14(void);
 
+int net_proto_tcp_connect (int fd, sockaddr_in *addr);
 void HandleIPPacket(net_ipv4 sourceIP,net_ipv4 destinationIP, const void* data, size_t size);
 int _WaitForState(struct proto_tcp_conn_context *conn,enum TCPSocketState state, long timeout);
 
 int SetTo(struct TCPPacket *packet,const void* data, int size, net_ipv4 sourceAddress,
 	uint16_t sourcePort, net_ipv4 destinationAddress, uint16_t destinationPort,
 	uint32_t sequenceNumber, uint32_t acknowledgmentNumber, uint8_t flags);
+
+int Write(struct proto_tcp_conn_context *context,const void* buffer, int bufferSize);
 
 unsigned short _ChecksumBuffer(struct ChainBuffer* buffer, net_ipv4 source,net_ipv4 destination, unsigned short length);
 int SSend(struct proto_tcp_conn_context *context,struct TCPPacket* packet, bool enqueue);

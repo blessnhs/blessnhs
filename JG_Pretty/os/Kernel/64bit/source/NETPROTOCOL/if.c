@@ -25,6 +25,7 @@
 #include "tun.h"
 #include "../time.h"
 #include "../DynamicMemory.h"
+#include "../utility.h"
 
 netif_t netif_list;
 

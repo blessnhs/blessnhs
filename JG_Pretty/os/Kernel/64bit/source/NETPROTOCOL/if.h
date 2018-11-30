@@ -45,14 +45,16 @@ typedef struct netif_context {
 	unsigned char cfgv6;
 } netif_t;
 
-extern unsigned netif_ip_addr (netif_t *netif, net_ipv4 ip, unsigned char cfg);
-extern unsigned netif_ipv6_addr (netif_t *netif, net_ipv6 ip, unsigned char cfg);
-extern unsigned netif_gw_addr (netif_t *netif, net_ipv4 gw);
-extern unsigned netif_gwv6_addr (netif_t *netif, net_ipv6 gw);
-extern netif_t *netif_findbyname (char *name);
-extern netif_t *netif_create (struct netdev_t *dev);
-extern void iflist_display ();
-extern net_port netif_port_get ();
-extern unsigned init_netif ();
+extern netif_t netif_list;
+
+unsigned netif_ip_addr (netif_t *netif, net_ipv4 ip, unsigned char cfg);
+unsigned netif_ipv6_addr (netif_t *netif, net_ipv6 ip, unsigned char cfg);
+unsigned netif_gw_addr (netif_t *netif, net_ipv4 gw);
+unsigned netif_gwv6_addr (netif_t *netif, net_ipv6 gw);
+netif_t *netif_findbyname (char *name);
+netif_t *netif_create (struct netdev_t *dev);
+void iflist_display ();
+net_port netif_port_get ();
+unsigned init_netif ();
 
 #endif

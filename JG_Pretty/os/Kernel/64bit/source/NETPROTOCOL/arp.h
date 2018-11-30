@@ -57,8 +57,8 @@ enum {
 	ARP_HARD_TYPE_ETHERNET = 0x100
 };
 
-extern net_ipv4 arp_cache_add (mac_addr_t mac, net_ipv4 ip);
-extern net_ipv4 arp_cache_get (net_ipv4 ip, mac_addr_t *mac);
-extern net_ipv4 init_proto_arp ();
+net_ipv4 arp_cache_add (mac_addr_t mac, net_ipv4 ip);
+net_ipv4 arp_cache_get (net_ipv4 ip, mac_addr_t *mac);
+net_ipv4 init_proto_arp ();
 
 #endif

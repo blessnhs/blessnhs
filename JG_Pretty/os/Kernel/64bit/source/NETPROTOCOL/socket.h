@@ -232,16 +232,16 @@ typedef struct {
 	char *h_addr;
 } hostent;
 
-//extern int htons (int port);
-extern hostent *gethostbyname (char *hostname);
-extern int socket (int family, int type, int protocol);
-extern int connect (int fd, sockaddr *addr, socklen_t len);
-extern int send (int fd, char *msg, size_t size, int flags);
-extern int recv (int fd, char *msg, size_t size, int flags);
-extern int bind (int fd, sockaddr *addr, socklen_t len);
-extern int sclose (int fd);
-extern int sfcntl (int fd, int cmd, long arg);
-extern int sselect (int readfd, int writefd, int exceptfd);
-extern unsigned int init_socket ();
-extern unsigned inet_addr (const char *src);
+socket_t *socket_getbyfd (int fd);
+hostent *gethostbyname (char *hostname);
+int socket (int family, int type, int protocol);
+int connect (int fd, sockaddr *addr, socklen_t len);
+int send (int fd, char *msg, size_t size, int flags);
+int recv (int fd, char *msg, size_t size, int flags);
+int bind (int fd, sockaddr *addr, socklen_t len);
+int sclose (int fd);
+int sfcntl (int fd, int cmd, long arg);
+int sselect (int readfd, int writefd, int exceptfd);
+unsigned int init_socket ();
+unsigned inet_addr (const char *src);
 #endif

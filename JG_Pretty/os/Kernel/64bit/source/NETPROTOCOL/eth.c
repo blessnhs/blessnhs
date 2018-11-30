@@ -6,8 +6,6 @@
 #include "../DynamicMemory.h"
 /* Mutex for data queue */
 
-MUTEX mutex_queue_rx = {0,0,0};
-
 unsigned char netdev_count = 0;
 
 netdev_t *netdev_create (mac_addr_t addr_mac, unsigned (*read) (char *, unsigned), unsigned (*write) (char *, unsigned), unsigned addr_io)
@@ -127,12 +125,10 @@ unsigned netdev_rx_queue_flush (struct netdev_t *dev, netdev_buffer_queue_t *que
 	if (!dev)
 		return 0;
 
-	Lock (&mutex_queue_rx);
 
 	queue->next->prev = queue->prev;
 	queue->prev->next = queue->next;
 
-	Unlock (&mutex_queue_rx);
 
 	DEL (queue->buf);
 	DEL (queue);

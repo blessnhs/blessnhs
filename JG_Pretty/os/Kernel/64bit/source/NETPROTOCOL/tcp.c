@@ -13,10 +13,9 @@
 #include "../DynamicMemory.h"
 #include "../Utility.h"
 #include "../types.h"
-
-/* Mutex for socket function */
-MUTEX_CREATE (mutex_tcp_accept);
-MUTEX_CREATE (mutex_tcp_read_cache);
+#include "arp.h"
+#include "../task.h"
+#include "../NETWORK/pcnet32.h"
 
 extern netif_t netif_list;
 
@@ -1174,8 +1173,8 @@ int ESend(mac_addr_t destination, uint16_t protocol,struct ChainBuffer *buffer)
 	struct ChainBuffer headerBuffer;
 	ChainBuffer(&headerBuffer,&header, sizeof(header), buffer,false);
 
-	memcpy (&header.mac_source, netif->dev->dev_addr, 6);
-	memcpy (&header.mac_dest, destination, 6);
+	memcpy (header.mac_source, netif->dev->dev_addr, 6);
+	memcpy (header.mac_dest, destination, 6);
 	header.type = NET_PACKET_TYPE_IPV4;
 
 	// flatten
@@ -1192,6 +1191,7 @@ int ESend(mac_addr_t destination, uint16_t protocol,struct ChainBuffer *buffer)
 		memset((uint8_t*)fSendBuffer + totalSize, 0, paddingSize);
 		totalSize += paddingSize;
 	}
+
 
 	int bytesSent = net_packet_send2(netif,fSendBuffer,totalSize);
 	if (bytesSent < 0)

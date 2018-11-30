@@ -1,8 +1,8 @@
 #include "ftp.h"
-#include "../NETPROTOCOL/socket.h"
 #include "../console.h"
 #include "../dynamicMemory.h"
 #include "../fat32/fat_filelib.h"
+#include "../NETPROTOCOL/socket.h"
 //////////////////////////////////////////////begin ftp
 
 // Map Ftp Command to Handler
@@ -104,7 +104,7 @@ static int recvProtocol(int sock, char *recvBuffer, int bufferSize) {
 		return 0;
 	}
 
-	if (recvLen > 0)
+	if (recvLen < 0)
 		return recvLen;
 
 	recvBuffer[recvLen] = '\0';
@@ -409,16 +409,18 @@ void list(char *listCmd) {
 	// send LIST command to PI server
 	SPrintf(sendBuffer, "LIST%s", END_OF_PROTOCOL);
 	sendProtocol(sock, sendBuffer);
+	len = recvProtocol(sock, recvBuffer, BUFFER_SIZE * 8);
 
 	// connect to DTP
 	dtpSock = connectServer2(ip, port);
 	// recv file list from DTP
 	len = recvProtocol(dtpSock, recvBuffer, BUFFER_SIZE * 8);
+
 	printMessage(recvBuffer,len);
 
 	// recv complete message from PI server
-	len = recvProtocol(sock, recvBuffer, BUFFER_SIZE);
-	printMessage(recvBuffer,len);
+//	len = recvProtocol(sock, recvBuffer, BUFFER_SIZE);
+//	printMessage(recvBuffer,len);
 
 	sclose(dtpSock);
 }

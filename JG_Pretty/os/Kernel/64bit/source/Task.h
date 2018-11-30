@@ -55,7 +55,7 @@
 // 스택 풀과 스택의 크기
 #define TASK_STACKPOOLADDRESS   ( TASK_TCBPOOLADDRESS + sizeof( TCB ) * TASK_MAXCOUNT )
 // 스택의 기본 크기를 64Kbyte로 변경
-#define TASK_STACKSIZE          ( 64 * 1024 )
+#define TASK_STACKSIZE          ( 128 * 1024 )
 
 // 유효하지 않은 태스크 ID
 #define TASK_INVALIDID          0xFFFFFFFFFFFFFFFF

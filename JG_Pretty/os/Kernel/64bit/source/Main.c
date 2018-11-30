@@ -315,13 +315,9 @@ BOOL kChangeToMultiCoreMode( void )
     
     return TRUE;
 }
-extern SPINLOCK mutex_tcp_read_cache;
 
 void InitNetwork( void )
 {
-
-	InitializeSpinLock(&mutex_tcp_read_cache);
-
 	//init network layer
 	init_fd();
 	init_netif();	/* Network interface */

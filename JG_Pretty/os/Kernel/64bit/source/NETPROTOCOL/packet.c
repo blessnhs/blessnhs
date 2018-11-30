@@ -27,19 +27,14 @@
 #include "../Synchronization.h"
 #include "../DynamicMemory.h"
 
-MUTEX_CREATE (mutex_packet);
-
 extern netif_t netif_list;
 extern unsigned long timer_ticks;
 
 unsigned net_packet_send (netif_t *netif, packet_t *packet, char *buf, unsigned len)
 {
-	Lock (&mutex_packet);
-
 	if (!netif) {
 
 		Printf("net_packet_send failed \n");
-		Unlock (&mutex_packet);
 		return 0;
 	}
 
@@ -51,19 +46,14 @@ unsigned net_packet_send (netif_t *netif, packet_t *packet, char *buf, unsigned 
 	/* add transfered bytes to stats */
 	netif->dev->info_tx += 14+len;
 
-	Unlock (&mutex_packet);
-
 	return 1;
 }
 
 unsigned net_packet_send2 (netif_t *netif, char *buf, unsigned len)
 {
-	Lock (&mutex_packet);
-
 	if (!netif) {
 
 		Printf("net_packet_send failed \n");
-		Unlock (&mutex_packet);
 		return 0;
 	}
 
@@ -73,8 +63,6 @@ unsigned net_packet_send2 (netif_t *netif, char *buf, unsigned len)
 
 	/* add transfered bytes to stats */
 	netif->dev->info_tx += len;
-
-	Unlock (&mutex_packet);
 
 	return len;
 }
@@ -111,7 +99,6 @@ unsigned task_net_packet ()
 			for (netif = netif_list.next; netif != &netif_list; netif = netif->next)
 			if(netif != 0)
 			{
-				Lock (&mutex_packet);
 				/* check for incoming data */
 				int ret = netdev_rx (netif->dev, netif->buf_rx, 2048);
 
@@ -122,8 +109,6 @@ unsigned task_net_packet ()
 					/* clear buffer */
 					memset (netif->buf_rx, 0, 2048);
 				}
-
-				Unlock (&mutex_packet);
 			}
 
 			Schedule ();

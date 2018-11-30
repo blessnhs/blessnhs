@@ -28,8 +28,6 @@
 
 socket_t socket_list;
 
-extern TCB *_curr_task;
-
 socket_t *socket_getbyfd (int fd)
 {
 	socket_t *socket;
@@ -209,6 +207,7 @@ hostent *gethostbyname (char *hostname)
 
 int connect (int fd, sockaddr *addr, socklen_t len)
 {
+
 //	Printf("connect () -> socket: %d", fd);
 	socket_t *sock = socket_getbyfd (fd);
 
@@ -540,7 +539,6 @@ int sclose (int fd)
 	int protocol = sock->protocol;
 
 	DEL (sock);
-
 	switch (family) {
 		case AF_UNSPEC:
 			return -1;

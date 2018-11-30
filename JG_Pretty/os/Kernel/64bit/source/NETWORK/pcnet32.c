@@ -101,8 +101,8 @@
 #define	LANCE_SELECT_PHONELINE	0x00000004
 #define	LANCE_MUST_UNRESET	0x00000008
 
-QWORD PCNET32_TXRING;//					0x151000
-QWORD PCNET32_RXRING;//					0x159000
+struct pcnet32_ringtx_t* PCNET32_TXRING;//					0x151000
+struct pcnet32_ringrx_t* PCNET32_RXRING;//					0x159000
 
 static unsigned short pcnet32_ring_xlen[] = { 1, 2, 4, 8, 16, 32, 64, 128, 256, 512 };
 
@@ -420,8 +420,8 @@ unsigned init_pcnet32 ()
 		return 0;
 
 
-	PCNET32_TXRING =  NEW(1024  * 1024 * 5);
-	PCNET32_RXRING =  NEW(1024  * 1024 * 5);
+	PCNET32_TXRING =  (struct pcnet32_ringtx_t *)NEW(sizeof(struct pcnet32_ringtx_t));
+	PCNET32_RXRING =  (struct pcnet32_ringrx_t *)NEW(sizeof(struct pcnet32_ringrx_t));
 
 	uint16_t pciCommandRegister = pci_configRead(pcidev, PCI_COMMAND, 2);
 	pci_configWrite_word(pcidev, PCI_COMMAND, pciCommandRegister | PCI_CMD_IO | PCI_CMD_BUSMASTER); // resets status register, sets command register
@@ -625,11 +625,9 @@ void pcnet32_int (pciDev_t* device)
 
 }
 
-char buffer[3000];
-
 unsigned pcnet32_int_rx (struct pcnet32_dev_t *dev)
 {
-	struct pcnet32_ringrx_t *ringrx = /*NEW(sizeof(struct pcnet32_ringrx_t) * pcnet32_ring_xlen[PCNET32_BUF_ENC_RX]);*/PCNET32_RXRING;
+	struct pcnet32_ringrx_t *ringrx = (struct pcnet32_ringrx_t *)PCNET32_RXRING;
 
         unsigned short index = 0;
         for (index = 0; index < pcnet32_ring_xlen[PCNET32_BUF_ENC_RX]; index ++) {
@@ -650,10 +648,8 @@ unsigned pcnet32_int_rx (struct pcnet32_dev_t *dev)
 
 unsigned pcnet32_tx (char *buf, unsigned len)
 {
-	Lock (&mutex_queue_pcnet);
-
 	/* create tx ring */
-	struct pcnet32_ringtx_t *ringtx =  /*NEW(sizeof(struct pcnet32_ringtx_t) * pcnet32_ring_xlen[PCNET32_BUF_ENC_TX]);*/(struct pcnet32_ringtx_t *) PCNET32_TXRING;
+	struct pcnet32_ringtx_t *ringtx =  (struct pcnet32_ringtx_t *) PCNET32_TXRING;
 
         unsigned short index = 0;
         for (index = 0; index < pcnet32_ring_xlen[PCNET32_BUF_ENC_TX]; index ++) {
@@ -668,8 +664,6 @@ unsigned pcnet32_tx (char *buf, unsigned len)
 		ringtx[index].tmd1.stp = ~0;
 		ringtx[index].tmd1.enp = ~0;
         }
-
-        Unlock (&mutex_queue_pcnet);
 }
 
 char pcnet32_acthandler (unsigned act, char *block, unsigned block_len)
