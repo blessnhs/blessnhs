@@ -131,7 +131,7 @@ unsigned int downloadFile(int sock,int dptsock, char *filePath, unsigned int fil
 	 {
 		 readBytes = recv(dptsock, readBuffer, TEMP_BUFFER_SIZE, 0);
 
-		 if (readBytes < 0)
+		 if (readBytes <= 0)
 		 {
 			break;
 		 }
@@ -139,13 +139,12 @@ unsigned int downloadFile(int sock,int dptsock, char *filePath, unsigned int fil
 		 cnt = fl_fwrite(readBuffer, 1,readBytes,fd);
 		 if(cnt <= 0)
 		 {
-			 Printf("fl_fwrite fail %s %d\n",readBuffer,readBytes);
-			 break;
+			 Printf("fl_fwrite fail %d\n",readBytes);
 		 }
 
 		 totalBytes += readBytes;
 
-		 //Printf("readBytes %d cnt %d fileSize %d totalBytes %d\n",readBytes,cnt,fileSize,totalBytes);
+		 Printf("readBytes %d cnt %d fileSize %d totalBytes %d\n",readBytes,cnt,fileSize,totalBytes);
 
 		 if(totalBytes >= (fileSize-1))
 			 break;
@@ -310,6 +309,10 @@ void passiveMode(char *ip, int *port) {
 	 int passiveLen = 0;
 	 passiveLen = recvProtocol(sock, recvBuffer, BUFFER_SIZE);
 
+	 recvBuffer[passiveLen] = 0;
+
+	 Printf("%s\n",recvBuffer);
+
 	 if (passiveLen < 4)
 	 {
 		 return;
@@ -322,11 +325,11 @@ void passiveMode(char *ip, int *port) {
 		 memcpy(number,recvBuffer,3);
 		 number[4] = 0;
 
-		 Printf("%s cmd",number);
+		 Printf("%s cmd\n",number);
 
 		 if(atoi(number) !=  227 )
 		 {
-			  passiveLen = recvProtocol(sock, recvBuffer, BUFFER_SIZE-1);
+			 break;
 		 }
 		 else
 		 {
@@ -352,7 +355,6 @@ void passiveMode(char *ip, int *port) {
 	 k=0;
 	 pos++;
 
-	 Printf("passiveMode total %d %d\n",passiveLen,pos);
 	 char word[20];
 	 int wordindex = 0;
 	 while(1)
@@ -392,11 +394,14 @@ void passiveMode(char *ip, int *port) {
 
 	 SPrintf(ip, "%d.%d.%d.%d", array[0], array[1], array[2], array[3]);
 	 *port = array[4]*256 + array[5];
+
+	 Printf("ip %s port %d\n",ip,*port);
 }
 
 // get remote working directory file list
 void list(char *listCmd) {
 	int port;
+	int len;
 	char ip[16];
 	char sendBuffer[BUFFER_SIZE];
 	char recvBuffer[BUFFER_SIZE * 8];
@@ -404,24 +409,26 @@ void list(char *listCmd) {
 	// recv server response and parsing
 	passiveMode(ip, &port);
 
-	int len = 0;
 	// send LIST command to PI server
 	SPrintf(sendBuffer, "LIST%s", END_OF_PROTOCOL);
 	sendProtocol(sock, sendBuffer);
-	len = recvProtocol(sock, recvBuffer, BUFFER_SIZE * 8);
 
-	// connect to DTP
-	dtpSock = connectServer2(ip, port);
-	// recv file list from DTP
-	len = recvProtocol(dtpSock, recvBuffer, BUFFER_SIZE * 8);
-
+	len = recvProtocol(sock, recvBuffer, BUFFER_SIZE);
 	printMessage(recvBuffer,len);
 
 	// recv complete message from PI server
-//	len = recvProtocol(sock, recvBuffer, BUFFER_SIZE);
-//	printMessage(recvBuffer,len);
+	len = recvProtocol(sock, recvBuffer, BUFFER_SIZE);
+	printMessage(recvBuffer,len);
+
+	// connect to DTP
+	dtpSock = connectServer2(ip, port);
+
+	// recv file list from DTP
+	len = recvProtocol(dtpSock, recvBuffer, BUFFER_SIZE * 8);
+	printMessage(recvBuffer,len);
 
 	sclose(dtpSock);
+
 }
 
 // file download
@@ -598,9 +605,6 @@ void shellEscape(char *shellCmd) {
 
 void printMessage(char *msg,int len)
 {
-	if(len < 0 || len > 2040)
-		return;
-
 	int i=0;
 	while(1)
 	{

@@ -25,16 +25,12 @@ proto_tcp_backlog_t proto_tcp_backlog_list;
 static unsigned proto_tcp_seq;
 static proto_ip_t proto_ip_prealloc;
 static packet_t packet_prealloc;
-static char buf_tcp_prealloc[NET_PACKET_MTU + sizeof (proto_tcp_t) + 1];
 
 /* prototype */
-proto_tcp_conn_t *net_proto_tcp_conn_check (net_ipv4 ip_source, net_port port_source, net_ipv4 ip_dest, net_port port_dest, unsigned char *ret);
 int net_proto_tcp_conn_add (fd_t *fd);
 int net_proto_tcp_conn_set (proto_tcp_conn_t *conn, netif_t *eth, net_port port_source, net_ipv4 ip_dest, net_port port_dest);
 int net_proto_tcp_write (netif_t *eth, net_ipv4 dest, proto_tcp_t *tcp, char *data, unsigned len);
-unsigned net_proto_tcp_conn_del (proto_tcp_conn_t *conn);
 proto_tcp_conn_t *net_proto_tcp_conn_find (int fd);
-int net_proto_tcp_backlog_add (proto_tcp_conn_t *conn, net_ipv4 ip, net_port port, unsigned seq);
 int net_proto_tcp_conn_invite (proto_tcp_conn_t *conn, net_ipv4 ip, net_port port, unsigned seq);
 
 /** TCP protocol
@@ -132,7 +128,7 @@ int net_proto_tcp_recv (int fd, char *msg, unsigned size)
 		return -3;
 
 	int rsize;
-	Read(conn,msg,size,&rsize,100);
+	Read(conn,msg,size,&rsize,1000);
 
 	return rsize;
 }
@@ -410,7 +406,7 @@ int net_proto_tcp_write (netif_t *eth, net_ipv4 dest, proto_tcp_t *tcp, char *da
 		return 0;
 	}
 	
-	char *buf_tcp = (char *) &buf_tcp_prealloc; //(char *) NEW ((len+l+1) * sizeof (char));
+	char *buf_tcp = (char *) (char *) NEW ((len+l+1) * sizeof (char));
 
 	if (!buf_tcp)
 		return 0;
@@ -431,7 +427,7 @@ int net_proto_tcp_write (netif_t *eth, net_ipv4 dest, proto_tcp_t *tcp, char *da
 	/* send tcp header+data to ip layer */
 	unsigned ret = net_proto_ip_send (eth, packet, ip, (char *) buf_tcp, l+len);
 
-	//DEL (buf_tcp);
+	DEL (buf_tcp);
 
 	return ret;
 }
@@ -530,63 +526,6 @@ int net_proto_tcp_conn_set (proto_tcp_conn_t *conn, netif_t *eth, net_port port_
 
 	return 1;
 }
-
-/* Delete existing connection from list */
-unsigned net_proto_tcp_conn_del (proto_tcp_conn_t *conn)
-{
-	if (!conn)
-		return 0;
-
-	conn->state = PROTO_TCP_CONN_STATE_DISCONNECTED;
-
-	if (conn->len)
-		DEL (conn->data);
-
-	conn->len = 0;
-
-	conn->next->prev = conn->prev;
-	conn->prev->next = conn->next;
-
-	DEL (conn);
-
-	return 1;
-}
-
-proto_tcp_conn_t *net_proto_tcp_conn_check (net_ipv4 ip_source, net_port port_source, net_ipv4 ip_dest, net_port port_dest, unsigned char *ret)
-{
-	*ret = 0;
-	proto_tcp_conn_t *conn = NULL;
-	proto_tcp_conn_t *conn_ret = NULL;
-	//Printf ("-------------------------\n");
-	for (conn = proto_tcp_conn_list.next; conn != &proto_tcp_conn_list; conn = conn->next) {
-
-		if (conn->ip_source == ip_source && conn->port_source == port_source) {
-			if (conn->ip_dest == ip_dest && conn->port_dest == port_dest) {
-				*ret = 2;
-				return conn;
-			}
-
-			*ret = 1;
-
-			conn_ret = conn;
-		}
-	}
-
-	if (*ret == 1)
-		if (!conn_ret->bind) {
-			conn_ret = 0;
-
-			for (conn = proto_tcp_conn_list.next; conn != &proto_tcp_conn_list; conn = conn->next) {
-				if (conn->bind) {
-					if (conn->ip_source == ip_source && conn->port_source == port_source)
-						conn_ret = conn;
-				}
-			}
-		}
-	
-	return conn_ret;
-}
-
 proto_tcp_conn_t *net_proto_tcp_conn_find (int fd)
 {
 	proto_tcp_conn_t *conn = NULL;
@@ -596,34 +535,6 @@ proto_tcp_conn_t *net_proto_tcp_conn_find (int fd)
 	}
 	
 	return 0;
-}
-
-/* Create new TCP backlog stamp */
-int net_proto_tcp_backlog_add (proto_tcp_conn_t *conn, net_ipv4 ip, net_port port, unsigned seq)
-{
-	if (!conn)
-		return 0;
-
-	proto_tcp_backlog_t *backlog;
-
-	/* alloc and init context */
-	backlog = (proto_tcp_backlog_t *) NEW (sizeof (proto_tcp_backlog_t));
-
-	if (!backlog)
-		return 0;
-
-	backlog->conn = conn;
-	backlog->ip = ip;
-	backlog->port = port;
-	backlog->seq = seq;
-
-	/* add into list */
-	backlog->next = &proto_tcp_backlog_list;
-	backlog->prev = proto_tcp_backlog_list.prev;
-	backlog->prev->next = backlog;
-	backlog->next->prev = backlog;
-	
-	return conn->fd;
 }
 
 /* init of tcp protocol */
@@ -931,7 +842,7 @@ ProcessPacket(struct proto_tcp_conn_context *context,struct TCPPacket* packet)
 			DEL (packet);
 			_Ack(context);
 			context->fState = context->fRemoteState = TCP_SOCKET_STATE_OPEN;
-			TRACE("TCP_SOCKET_STATE_OPEN state\n");
+			//TRACE("TCP_SOCKET_STATE_OPEN state\n");
 
 			return;
 		}
@@ -943,7 +854,7 @@ ProcessPacket(struct proto_tcp_conn_context *context,struct TCPPacket* packet)
 	{
 		if ((packet->fFlags & TCP_ACK) != 0)
 		{
-			TRACE("FIN-ACK received\n");
+			//TRACE("FIN-ACK received\n");
 			if (context->fRemoteState == TCP_SOCKET_STATE_FIN_SENT)
 				context->fState = TCP_SOCKET_STATE_CLOSED;
 		}
@@ -1321,7 +1232,7 @@ int Read(proto_tcp_conn_t *conn,void* buffer, int bufferSize, int* bytesRead,
 	*bytesRead = 0;
 	struct TCPPacket* packet = NULL;
 
-	_WaitForAck(conn,200);
+	_WaitForAck(conn,2000);
 
 	long startTime = GetTickCount();
 	do {

@@ -6,7 +6,10 @@
 #include "../DynamicMemory.h"
 #include "../Utility.h"
 #include "../console.h"
+
+
 /* Mutex for data queue */
+MUTEX_CREATE (packet_lock);
 
 unsigned char netdev_count = 0;
 
@@ -80,6 +83,8 @@ unsigned netdev_rx_add_queue (struct netdev_t *dev, char *buffer, unsigned len)
 		goto Unlock;
 	}
 
+	Lock(&packet_lock);
+
 	dev->info_rx += len;
 
 	netdev_buffer_queue_t *queue;
@@ -88,13 +93,17 @@ unsigned netdev_rx_add_queue (struct netdev_t *dev, char *buffer, unsigned len)
 	queue = (netdev_buffer_queue_t *) NEW (sizeof (netdev_buffer_queue_t));
 
 	if (!queue)
+	{
+		Unlock(&packet_lock);
 		goto Unlock;
+	}
 
 	queue->len = len;
 	queue->buf = (char *) NEW (sizeof (char) * (len + 1));
 
 	if (!queue->buf) {
 		DEL (queue);
+		Unlock(&packet_lock);
 		goto Unlock;
 	}
 
@@ -106,10 +115,10 @@ unsigned netdev_rx_add_queue (struct netdev_t *dev, char *buffer, unsigned len)
 	queue->prev = dev->queue_rx_list.prev;
 	queue->prev->next = queue;
 	queue->next->prev = queue;
-
+	Unlock(&packet_lock);
 	return 1;
 Unlock:
-
+Unlock(&packet_lock);
 	return 0;
 }
 
@@ -132,6 +141,7 @@ unsigned netdev_rx_queue_flush (struct netdev_t *dev, netdev_buffer_queue_t *que
 	if (!dev)
 		return 0;
 
+	Lock(&packet_lock);
 
 	queue->next->prev = queue->prev;
 	queue->prev->next = queue->next;
@@ -140,6 +150,7 @@ unsigned netdev_rx_queue_flush (struct netdev_t *dev, netdev_buffer_queue_t *que
 	DEL (queue->buf);
 	DEL (queue);
 
+	Unlock(&packet_lock);
 	return 1;
 }
 
