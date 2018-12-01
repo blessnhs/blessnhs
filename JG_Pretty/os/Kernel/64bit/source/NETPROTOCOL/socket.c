@@ -422,7 +422,7 @@ int bind (int fd, sockaddr *addr, socklen_t len)
 		case AF_INET:
 			switch (sock->protocol) {
 				case IPPROTO_TCP:
-					return net_proto_tcp_bind (fd, (sockaddr_in *) addr, len);
+					return net_proto_tcp_bind (fd, (sockaddr_in *) addr);
 				case IPPROTO_UDP:
 					return net_proto_udp_bind (fd, (sockaddr_in *) addr, len);
 			}

@@ -135,6 +135,7 @@ static void UsbWriteSector( const char* pcParameterBuffer );
 static void Ftp( const char* pcParameterBuffer );
 static void CreateDirectory( const char* pcParameterBuffer );
 static void Ping(const char* pcParameterBuffer );
+static void SVR(const char* pcParameterBuffer );
 static void Cat(const char* pcParameterBuffer );
 
 #endif /*__CONSOLESHELL_H__*/

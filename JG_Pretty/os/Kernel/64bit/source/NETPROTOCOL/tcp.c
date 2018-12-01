@@ -32,7 +32,7 @@ int net_proto_tcp_conn_set (proto_tcp_conn_t *conn, netif_t *eth, net_port port_
 int net_proto_tcp_write (netif_t *eth, net_ipv4 dest, proto_tcp_t *tcp, char *data, unsigned len);
 proto_tcp_conn_t *net_proto_tcp_conn_find (int fd);
 int net_proto_tcp_conn_invite (proto_tcp_conn_t *conn, net_ipv4 ip, net_port port, unsigned seq);
-
+int net_proto_tcp_backlog_add (proto_tcp_conn_t *conn, net_ipv4 ip, net_port port, unsigned seq);
 /** TCP protocol
  *  User-friendly socket functions
  */
@@ -164,7 +164,7 @@ int net_proto_tcp_fcntl (int fd, int cmd, long arg)
 	return -1;
 }
 
-int net_proto_tcp_bind (int fd, sockaddr_in *addr, socklen_t len)
+int net_proto_tcp_bind (int fd, sockaddr_in *addr)
 {
 	proto_tcp_conn_t *conn = net_proto_tcp_conn_find (fd);
 
@@ -207,6 +207,81 @@ int _WaitForAck(struct proto_tcp_conn_context *context,long timeout)
 	return timeout == 0 ? -1 : -1;
 }
 
+/* Create new TCP backlog stamp */
+int net_proto_tcp_backlog_add (proto_tcp_conn_t *conn, net_ipv4 ip, net_port port, unsigned seq)
+{
+	if (!conn)
+		return 0;
+
+	proto_tcp_backlog_t *backlog;
+
+	/* alloc and init context */
+	backlog = (proto_tcp_backlog_t *) NEW (sizeof (proto_tcp_backlog_t));
+
+	if (!backlog)
+		return 0;
+
+	backlog->conn = conn;
+	backlog->ip = ip;
+	backlog->port = port;
+	backlog->seq = seq;
+
+	/* add into list */
+	backlog->next = &proto_tcp_backlog_list;
+	backlog->prev = proto_tcp_backlog_list.prev;
+	backlog->prev->next = backlog;
+	backlog->next->prev = backlog;
+
+	return conn->fd;
+}
+
+
+proto_tcp_conn_t *net_proto_tcp_conn_check (net_ipv4 ip_source, net_port port_source, net_ipv4 ip_dest, net_port port_dest, unsigned char *ret)
+{
+	*ret = 0;
+	proto_tcp_conn_t *conn = NULL;
+	proto_tcp_conn_t *conn_ret = NULL;
+	//Printf ("-------------------------\n");
+	for (conn = proto_tcp_conn_list.next; conn != &proto_tcp_conn_list; conn = conn->next) {
+		/*Printf ("-> ");
+		net_proto_ip_print (conn->ip_source);
+		Printf (" / ");
+		net_proto_ip_print (ip_source);
+		Printf ("\n2> ");
+		net_proto_ip_print (conn->ip_dest);
+		Printf (" / ");
+		net_proto_ip_print (ip_dest);
+		Printf ("\nporty: %d / %d\n", swap16 (conn->port_source), swap16 (port_source));
+		Printf ("porty2: %d / %d\n", swap16 (conn->port_dest), swap16 (port_dest));*/
+
+		if (conn->ip_source == ip_source && conn->port_source == port_source) {
+			if (conn->ip_dest == ip_dest && conn->port_dest == port_dest) {
+				*ret = 2;
+				return conn;
+			}
+
+			*ret = 1;
+
+			conn_ret = conn;
+		}
+	}
+
+	if (*ret == 1)
+		if (!conn_ret->bind) {
+			conn_ret = 0;
+
+			for (conn = proto_tcp_conn_list.next; conn != &proto_tcp_conn_list; conn = conn->next) {
+				if (conn->bind) {
+					if (conn->ip_source == ip_source && conn->port_source == port_source)
+						conn_ret = conn;
+				}
+			}
+		}
+
+	return conn_ret;
+}
+
+
 
 int net_proto_tcp_accept (int fd, sockaddr_in *addr, socklen_t *addrlen)
 {
@@ -228,7 +303,7 @@ int net_proto_tcp_accept (int fd, sockaddr_in *addr, socklen_t *addrlen)
 					break;
 				}
 			}
-	
+
 			Schedule ();
 		}
 	} else {
@@ -1311,16 +1386,11 @@ void HandleIPPacket(net_ipv4 sourceIP,
 
 	const proto_tcp_t* header = (const proto_tcp_t*)data;
 
-/*	TRACE("TCPService::HandleIPPacket(): source = %d, "
-		"destination = %d, %d - %d bytes\n", sourceIP, (destinationIP),
-		size, sizeof(proto_tcp_t));
-*/
-
 	uint16_t chksum = _ChecksumData(data, size, sourceIP, destinationIP);
 	if (chksum != 0) {
-		TRACE_CHECKSUM("TCPService::HandleIPPacket(): invalid checksum "
-			"(%04x vs. %04x), padding %lu\n",
-			header->checksum, chksum, size % 2);
+//		TRACE_CHECKSUM("TCPService::HandleIPPacket(): invalid checksum "
+//			"(%04x vs. %04x), padding %lu\n",
+//			header->checksum, chksum, size % 2);
 		return;
 	}
 
@@ -1328,13 +1398,13 @@ void HandleIPPacket(net_ipv4 sourceIP,
 	uint16_t destination = ntohs(header->port_dest);
 	uint32_t sequenceNumber = ntohl(header->seq);
 	uint32_t ackedNumber = ntohl(header->ack);
-/*	TRACE("source = %d, dest = %d, seq = %d, ack = %d, size = %d, "
+	TRACE("source = %d, dest = %d, seq = %d, ack = %d, size = %d, "
 		"flags %s %s %s %s\n", source, destination, sequenceNumber,
 		ackedNumber, size,
 		(header->flags & TCP_ACK) != 0 ? "ACK" : "",
 		(header->flags & TCP_SYN) != 0 ? "SYN" : "",
 		(header->flags & TCP_FIN) != 0 ? "FIN" : "",
-		(header->flags & TCP_RST) != 0 ? "RST" : "");*/
+		(header->flags & TCP_RST) != 0 ? "RST" : "");
 	if (header->data_offset > 5) {
 		uint8_t* option = (uint8_t*)data + sizeof(proto_tcp_t);
 		while ((uint32_t*)option < (uint32_t*)data + header->data_offset) {
@@ -1344,10 +1414,10 @@ void HandleIPPacket(net_ipv4 sourceIP,
 			uint8_t optionLength = 1;
 			if (optionKind > 1) {
 				optionLength = option[1];
-		//		TRACE("\tTCP option kind %u, length %u\n",
-		//			optionKind, optionLength);
-		//		if (optionKind == 2)
-		//			TRACE("\tTCP MSS = %04hu\n", *(uint16_t*)&option[2]);
+				TRACE("\tTCP option kind %u, length %u\n",
+					optionKind, optionLength);
+				if (optionKind == 2)
+					TRACE("\tTCP MSS = %04hu\n", *(uint16_t*)&option[2]);
 			}
 			option += optionLength;
 		}
@@ -1359,6 +1429,30 @@ void HandleIPPacket(net_ipv4 sourceIP,
 		TRACE("TCPService::HandleIPPacket(): no socket\n");
 		return;
 	}
+
+	//for accept
+	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	unsigned char ret = 0;
+
+	/* First check ip address and ports, that we want this data */
+	proto_tcp_conn_t *conn = net_proto_tcp_conn_check (destinationIP,destination, sourceIP, header->port_source, &ret);
+
+	if (!conn && ret == 0)
+	{
+		Printf ("net_proto_tcp_conn_check fail %d\n",ret);
+		return ;
+	}
+	/* connection from client before accept () */
+	if (ret == 1)
+	{
+		/* client want connect to our server */
+		if (header->flags == 0x02) \
+		{
+			unsigned out = net_proto_tcp_backlog_add (conn, sourceIP, header->port_source, header->seq);
+			return out;
+		}
+	}
+	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	if ((header->flags & TCP_ACK) != 0) {
 		Acknowledge(socket,ackedNumber);

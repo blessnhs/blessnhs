@@ -81,6 +81,7 @@ SHELLCOMMANDENTRY gs_vstCommandTable[] =
 		{"mkdir","make directory",CreateDirectory},
 		{"ping","ping test",Ping},
 		{"cat","cat file",Cat},
+		{"svr","svr",SVR},
 };
 
 //==============================================================================
@@ -1671,7 +1672,47 @@ static void Cat(const char* pcParameterBuffer )
 
 }
 
-int exit = 0;
+static void SVR(const char* pcParameterBuffer )
+{
+
+	netif_t *netif = netif_findbyname ("eth0");
+
+	sockaddr_in serverSock;
+
+	int ncsock;
+	// Create socket
+	if ((ncsock = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP)) == -1) {
+			Printf("Cant create socket\n");
+		}
+
+	// Fill structure sockaddr_in
+	// 1) Family of protocols
+	serverSock.sin_family = AF_INET;
+	// 2) Number of server port
+	serverSock.sin_port = htons(20001);
+	// 3) Setup ip address of server, where we want to connect
+	serverSock.sin_addr = net_proto_ip_convert(netif->ip);
+
+	net_proto_ip_print(serverSock.sin_addr);
+
+	bind(ncsock,&serverSock,sizeof(sockaddr_in));
+
+	char buffer[1024];
+
+	while(1)
+	{
+			sockaddr_in newsd;
+			socklen_t len;
+			int sfd = accept(ncsock,&newsd,&len);
+
+			memset(buffer,0,1000);
+			recv(sfd,buffer,1000,0);
+
+			Printf("%s\n",buffer);
+	}
+
+	return;
+}
 
 static void Ping(const char* pcParameterBuffer )
 {
@@ -1679,7 +1720,7 @@ static void Ping(const char* pcParameterBuffer )
 	char sendBuffer[2048];
 	char recvBuffer[2048];
 
-	sock = connectServer2("54.180.123.125",20000 );
+	sock = connectServer2("54.180.123.125",1982 );
 
 	int idx = 0;
 	while(1)

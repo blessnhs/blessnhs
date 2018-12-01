@@ -224,6 +224,8 @@ struct Iterator
 	int			fOffset;
 };
 
+
+proto_tcp_conn_t *net_proto_tcp_conn_check (net_ipv4 ip_source, net_port port_source, net_ipv4 ip_dest, net_port port_dest, unsigned char *ret);
 void Iterator(struct Iterator *iter,struct ChainBuffer *buffer);
 
 bool HasNext(struct Iterator *iter);
@@ -243,6 +245,7 @@ unsigned init_net_proto_tcp6 ();
 unsigned int _rand32(void);
 unsigned short _rand14(void);
 
+int accept (int fd, sockaddr *addr, socklen_t *addrlen);
 int net_proto_tcp_connect (int fd, sockaddr_in *addr);
 void HandleIPPacket(net_ipv4 sourceIP,net_ipv4 destinationIP, const void* data, size_t size);
 int _WaitForState(struct proto_tcp_conn_context *conn,enum TCPSocketState state, long timeout);
