@@ -248,8 +248,6 @@ struct pcnet32_dev_t {
 	int chip_ver;
 };
 
-MUTEX mutex_queue_pcnet = {0,0,0};
-
 struct pcnet32_dev_t *pcnet32_dev;
 static netdev_t *ifdev;
 QWORD init_block;
@@ -629,9 +627,9 @@ unsigned pcnet32_int_rx (struct pcnet32_dev_t *dev)
 {
 	struct pcnet32_ringrx_t *ringrx = (struct pcnet32_ringrx_t *)PCNET32_RXRING;
 
-        unsigned short index = 0;
-        for (index = 0; index < pcnet32_ring_xlen[PCNET32_BUF_ENC_RX]; index ++) {
-
+    unsigned short index = 0;
+    for (index = 0; index < pcnet32_ring_xlen[PCNET32_BUF_ENC_RX]; index ++)
+    {
 		if (ringrx[index].rmd1.own)
 			continue;
 
@@ -641,7 +639,7 @@ unsigned pcnet32_int_rx (struct pcnet32_dev_t *dev)
 		char *buf = (char *) ringrx[index].rmd0.rbadr;
 
 		netdev_rx_add_queue (ifdev, buf, ringrx[index].rmd2.mcnt);
-        }
+    }
 
 	return 1;
 }
@@ -656,7 +654,7 @@ unsigned pcnet32_tx (char *buf, unsigned len)
 		if (ringtx[index].tmd1.own == ~0)
 			Printf( "pcnet32 -> bad txring.own bit!\n");
 
-        ringtx[index].tmd0.tbadr = (unsigned) buf;
+       ringtx[index].tmd0.tbadr = (unsigned) buf;
 		ringtx[index].tmd1.bcnt = -len;
         ringtx[index].tmd1.own = ~0;
 		ringtx[index].tmd3.res = 0;

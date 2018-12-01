@@ -131,10 +131,9 @@ unsigned int downloadFile(int sock,int dptsock, char *filePath, unsigned int fil
 	 {
 		 readBytes = recv(dptsock, readBuffer, TEMP_BUFFER_SIZE, 0);
 
-		 if (readBytes <= 0)
+		 if (readBytes < 0)
 		 {
-			 Printf("downloadFile recv fail %d\n",readBytes);
-			 break;
+			break;
 		 }
 
 		 cnt = fl_fwrite(readBuffer, 1,readBytes,fd);

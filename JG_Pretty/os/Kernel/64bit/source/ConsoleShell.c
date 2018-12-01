@@ -1686,7 +1686,7 @@ static void Ping(const char* pcParameterBuffer )
 	{
 		send(sock,"0123456789",10,0);
 
-/*		int len = recv(sock, recvBuffer, 2048,0);
+		int len = recv(sock, recvBuffer, 2048,0);
 
 		if(len <= 0)
 			continue;
@@ -1694,7 +1694,7 @@ static void Ping(const char* pcParameterBuffer )
 		recvBuffer[len] = 0;
 
 		Printf ("%d_%s\n",idx,recvBuffer);
-*/
+
 		idx++;
 
 	}

@@ -531,6 +531,13 @@ int sclose (int fd)
 
 //	Printf("close (%d)", fd);
 
+	fd_t *pfd = fd_get (fd);
+	if (!pfd)
+	{
+		DEL (pfd);
+		DEL (sock);
+	}
+
 	/* delete old socket from socket_list */
 	sock->next->prev = sock->prev;
 	sock->prev->next = sock->next;

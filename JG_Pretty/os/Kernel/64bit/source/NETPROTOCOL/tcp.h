@@ -204,20 +204,21 @@ typedef struct proto_tcp_t {
 #define TCP_ECE		(1 << 6)	// RFC 3168
 #define TCP_CWR		(1 << 7)	// RFC 3168
 
-struct ChainBuffer {
-	enum {
-		CHAIN_BUFFER_HEAD			= 0x1,
-		CHAIN_BUFFER_EMBEDDED_DATA	= 0x2,
-		CHAIN_BUFFER_FREE_DATA		= 0x4,
-		CHAIN_BUFFER_ON_STACK		= 0x8,
-	};
+enum
+{
+	CHAIN_BUFFER_HEAD			= 0x1,
+	CHAIN_BUFFER_EMBEDDED_DATA	= 0x2,
+	CHAIN_BUFFER_FREE_DATA		= 0x4,
+	CHAIN_BUFFER_ON_STACK		= 0x8,
+};
 
+struct ChainBuffer {
 	uint32_t		fFlags:4;
 	uint32_t		fSize:14;
 	uint32_t		fTotalSize:14;
-	void		*fData;
+	void			*fData;
 	struct ChainBuffer	*fNext;
-	uint8_t		fBuffer[0];
+	uint8_t		fBuffer[1];
 };
 
 typedef struct TCPPacket
@@ -274,4 +275,7 @@ int SSend(struct proto_tcp_conn_context *context,struct TCPPacket* packet, bool 
 int ___Send(net_ipv4 destination, uint8_t protocol, struct ChainBuffer *buffer);
 int ESend(mac_addr_t destination, uint16_t protocol,struct ChainBuffer *buffer);
 void ChainBuffer(struct ChainBuffer *this,void *data, uint32_t size, struct ChainBuffer *next,bool freeData);
+void Init(struct ChainBuffer *this,void *data, uint32_t size, struct ChainBuffer *next, uint32_t flags);
+void Append(struct ChainBuffer *buffer,struct ChainBuffer *next);
+struct ChainBuffer *DetachNext(struct ChainBuffer *buffer);
 #endif

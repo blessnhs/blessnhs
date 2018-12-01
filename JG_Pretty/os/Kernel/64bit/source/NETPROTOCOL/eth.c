@@ -4,6 +4,8 @@
 #include "if.h"
 #include "../Synchronization.h"
 #include "../DynamicMemory.h"
+#include "../Utility.h"
+#include "../console.h"
 /* Mutex for data queue */
 
 unsigned char netdev_count = 0;
@@ -72,6 +74,11 @@ unsigned netdev_rx_add_queue (struct netdev_t *dev, char *buffer, unsigned len)
 {
 	if (!dev)
 		goto Unlock;
+
+	if(len <= 0)
+	{
+		goto Unlock;
+	}
 
 	dev->info_rx += len;
 
