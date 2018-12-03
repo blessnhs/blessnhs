@@ -284,7 +284,6 @@ proto_tcp_conn_t *net_proto_tcp_conn_check (net_ipv4 ip_source, net_port port_so
 int net_proto_tcp_accept (int fd, sockaddr_in *addr, socklen_t *addrlen)
 {
 	proto_tcp_conn_t *conn = net_proto_tcp_conn_find (fd);
-
 	if (!conn)
 		return -1;
 
@@ -347,6 +346,9 @@ int net_proto_tcp_accept (int fd, sockaddr_in *addr, socklen_t *addrlen)
 		return -1;
 
 	net_proto_tcp_conn_set (conn_new, conn->netif, conn->port_source, ip, port);
+
+
+	conn_new->fNextSequence = conn_new->ack = ntohl(seq) + 1;
 
 	addr->sin_addr = ip;
 	addr->sin_port = port;
@@ -526,11 +528,13 @@ net_proto_tcp_conn_invite (proto_tcp_conn_t *conn, net_ipv4 ip, net_port port, u
 	if (!tcp)
 		return 0;
 
+	int hseq = ntohl(seq);
+
 	tcp->port_source = conn->port_source;
 	tcp->port_dest = port;
 
-	tcp->seq = proto_tcp_seq ++;
-	tcp->ack = seq + swap32 (1);
+	tcp->seq = swap32 (1);
+	tcp->ack = swap32 (hseq + 1);
 
 	tcp->res = 0;
 	tcp->data_offset = 5;
@@ -606,6 +610,16 @@ int net_proto_tcp_conn_set (proto_tcp_conn_t *conn, netif_t *eth, net_port port_
 	conn->offset = 0;
 	conn->len = 0;
 	conn->data = 0;
+
+	conn->fFirstPacket = NULL;
+	conn->fLastPacket = NULL;
+	conn->fFirstSentPacket = NULL;
+	conn->fLastSentPacket = NULL;
+	conn->fState = (TCP_SOCKET_STATE_INITIAL);
+	conn->fRemoteState = (TCP_SOCKET_STATE_INITIAL);
+
+
+
 
 	return 1;
 }
@@ -854,6 +868,8 @@ Close(struct proto_tcp_conn_context *context)
 	if (error != 0)
 		return error;
 
+	DEL (packet);
+
 	return 0;
 }
 
@@ -904,8 +920,6 @@ Acknowledge(struct proto_tcp_conn_context *context,uint32_t number)
 void
 ProcessPacket(struct proto_tcp_conn_context *context,struct TCPPacket* packet)
 {
-	TRACE("state %d \n",context->fState);
-
 	if ((packet->fFlags & TCP_FIN) != 0)
 	{
 		context->fRemoteState = TCP_SOCKET_STATE_FIN_SENT;
@@ -946,15 +960,11 @@ ProcessPacket(struct proto_tcp_conn_context *context,struct TCPPacket* packet)
 		}
 	}
 
-	TRACE("size %d packet->fSequenceNumber %d coentext -> ack %d \n",packet->fSize,packet->fSequenceNumber , context->ack);
-
 	if (packet->fSize == 0) {
 		//TRACE("TCPSocket::ProcessPacket(): not queuing due to lack of data\n");
 		DEL (packet);
 		return;
 	}
-
-//	Printf("\n%s\n",packet->fData);
 
 	// For now rather protect us against being flooded with packets already
 	// acknowledged. "If it's important, they'll send it again."
@@ -963,6 +973,10 @@ ProcessPacket(struct proto_tcp_conn_context *context,struct TCPPacket* packet)
 		DEL (packet);
 		return;
 	}
+
+//	TRACE("size %d packet->fSequenceNumber %d coentext -> ack %d state %d \n",
+//			packet->fSize,packet->fSequenceNumber,context->ack,context->fState);
+
 
 	if (context->fLastPacket == NULL) {
 		// no packets enqueued
@@ -1300,8 +1314,6 @@ _FindSocket(net_ipv4 address, unsigned short port)
 	proto_tcp_conn_t *conn = NULL;
 	for (conn = proto_tcp_conn_list.next; conn != &proto_tcp_conn_list; conn = conn->next)
 	{
-		if(conn->fd == 5)
-		Printf("fd %d address %d port %d conn->ip_dest %d conn->port_dest %d\n",conn->fd,address,port,conn->ip_dest,conn->port_dest);
 		if (conn->ip_dest == address && conn->port_dest == port)
 		{
 			return conn;
@@ -1412,7 +1424,7 @@ void HandleIPPacket(net_ipv4 sourceIP,
 	uint16_t destination = ntohs(header->port_dest);
 	uint32_t sequenceNumber = ntohl(header->seq);
 	uint32_t ackedNumber = ntohl(header->ack);
-/*	TRACE("source = %d, dest = %d, seq = %d, ack = %d, size = %d, "
+	TRACE("source = %d, dest = %d, seq = %d, ack = %d, size = %d, "
 		"flags %s %s %s %s\n", source, destination, sequenceNumber,
 		ackedNumber, size,
 		(header->flags & TCP_ACK) != 0 ? "ACK" : "",
