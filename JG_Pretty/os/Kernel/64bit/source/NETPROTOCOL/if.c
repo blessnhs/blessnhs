@@ -164,6 +164,7 @@ void iflist_display ()
 		Printf ("\n\t\t\t\t"); net_proto_ipv6_print (netif->ipv6); Printf (" /%s", if_cfg_type[netif->cfgv6]);
 		Printf ("\n\tGateway IP address:\t"); net_proto_ip_print (netif->gw);
 		Printf ("\n\t\t\t\t"); net_proto_ipv6_print (netif->gwv6);
+		Printf ("\nName : %s",netif->dev->name);
 		if (tun6_addr_get ()) {
 			Printf ("\n\tTunnel IP address:\t::"); net_proto_ip_print (tun6_addr_get ());
 		}

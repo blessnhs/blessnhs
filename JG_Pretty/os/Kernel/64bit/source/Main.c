@@ -170,14 +170,15 @@ void Main( void )
     pci_scan();
 	pci_installDevices();
 
-	//init end
-//	iflist_display();
 
 	netif_t *netif = netif_findbyname ("eth0");
 	if(netif != 0)
 		dhcp_config_if(netif);
 	else
 		Printf( " Fail dhcp_config_if\n");
+
+	//init end
+	iflist_display();
 
 
 //	connectServer("ftp.twaren.net",21);

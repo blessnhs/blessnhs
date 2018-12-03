@@ -23,8 +23,6 @@ proto_tcp_conn_t proto_tcp_conn_list;
 proto_tcp_backlog_t proto_tcp_backlog_list;
 
 static unsigned proto_tcp_seq;
-static proto_ip_t proto_ip_prealloc;
-static packet_t packet_prealloc;
 
 /* prototype */
 int net_proto_tcp_conn_add (fd_t *fd);
@@ -243,7 +241,7 @@ proto_tcp_conn_t *net_proto_tcp_conn_check (net_ipv4 ip_source, net_port port_so
 	proto_tcp_conn_t *conn_ret = NULL;
 	//Printf ("-------------------------\n");
 	for (conn = proto_tcp_conn_list.next; conn != &proto_tcp_conn_list; conn = conn->next) {
-		/*Printf ("-> ");
+	/*	Printf ("-> %d\n",conn->fd);
 		net_proto_ip_print (conn->ip_source);
 		Printf (" / ");
 		net_proto_ip_print (ip_source);
@@ -316,7 +314,7 @@ int net_proto_tcp_accept (int fd, sockaddr_in *addr, socklen_t *addrlen)
 		}
 	}
 
-	//Printf ("accept ()\n");
+	Printf ("accept (%d)\n",i);
 
 	if (!i)
 		return -1;
@@ -348,22 +346,22 @@ int net_proto_tcp_accept (int fd, sockaddr_in *addr, socklen_t *addrlen)
 	if (!conn_new)
 		return -1;
 
-	net_proto_tcp_conn_set (conn_new, conn->netif, conn->port_source, conn->netif->ip, port);
+	net_proto_tcp_conn_set (conn_new, conn->netif, conn->port_source, ip, port);
 
-	conn_new->ip_dest = ip;
-	
 	addr->sin_addr = ip;
 	addr->sin_port = port;
 	addr->sin_family = AF_INET;
 	
 	/* wait for ACK */
-	unsigned long stime = GetTickCount();
+/*	unsigned long stime = GetTickCount();
 	while (conn_new->state != PROTO_TCP_CONN_STATE_READY) {
 		if ((stime+10) < GetTickCount())
 			return -1;
 	  
 		Schedule ();
 	}
+*/
+	conn_new->fState = conn_new->fRemoteState = TCP_SOCKET_STATE_OPEN;
 
 	return fd_new->id;
 }
@@ -443,7 +441,7 @@ int net_proto_tcp_write (netif_t *eth, net_ipv4 dest, proto_tcp_t *tcp, char *da
 	}
 
 	/* packet header */
-	packet_t *packet = &packet_prealloc;
+	packet_t *packet = NEW (sizeof(packet_t));
 
 	if (!packet)
 		return 0;
@@ -453,10 +451,13 @@ int net_proto_tcp_write (netif_t *eth, net_ipv4 dest, proto_tcp_t *tcp, char *da
 	packet->type = NET_PACKET_TYPE_IPV4;
 
 	/* ip layer */
-	proto_ip_t *ip = &proto_ip_prealloc;
+	proto_ip_t *ip = NEW (sizeof(proto_ip_t));
 
 	if (!ip)
+	{
+		DEL(packet);
 		return 0;
+	}
 
 	/* there are some fixed values - yeah it is horrible */
 	ip->ver = 4;
@@ -478,13 +479,19 @@ int net_proto_tcp_write (netif_t *eth, net_ipv4 dest, proto_tcp_t *tcp, char *da
 	
 	if (len+l > NET_PACKET_MTU + sizeof (proto_tcp_t)) {
 		Printf("TCP -> data lenght is exceed: %d/%d bytes", len+l, NET_PACKET_MTU + sizeof (proto_tcp_t) + 1);
+		DEL(ip);
+		DEL(packet);
 		return 0;
 	}
 	
 	char *buf_tcp = (char *) (char *) NEW ((len+l+1) * sizeof (char));
 
 	if (!buf_tcp)
+	{
+		DEL(ip);
+		DEL(packet);
 		return 0;
+	}
 
 	memcpy (buf_tcp, (char *) tcp, l);
 
@@ -503,7 +510,8 @@ int net_proto_tcp_write (netif_t *eth, net_ipv4 dest, proto_tcp_t *tcp, char *da
 	unsigned ret = net_proto_ip_send (eth, packet, ip, (char *) buf_tcp, l+len);
 
 	DEL (buf_tcp);
-
+	DEL(ip);
+	DEL(packet);
 	return ret;
 }
 
@@ -896,6 +904,8 @@ Acknowledge(struct proto_tcp_conn_context *context,uint32_t number)
 void
 ProcessPacket(struct proto_tcp_conn_context *context,struct TCPPacket* packet)
 {
+	TRACE("state %d \n",context->fState);
+
 	if ((packet->fFlags & TCP_FIN) != 0)
 	{
 		context->fRemoteState = TCP_SOCKET_STATE_FIN_SENT;
@@ -924,6 +934,7 @@ ProcessPacket(struct proto_tcp_conn_context *context,struct TCPPacket* packet)
 	}
 	else if (context->fState == TCP_SOCKET_STATE_OPEN)
 	{
+
 	}
 	else if (context->fState == TCP_SOCKET_STATE_FIN_SENT)
 	{
@@ -934,6 +945,8 @@ ProcessPacket(struct proto_tcp_conn_context *context,struct TCPPacket* packet)
 				context->fState = TCP_SOCKET_STATE_CLOSED;
 		}
 	}
+
+	TRACE("size %d packet->fSequenceNumber %d coentext -> ack %d \n",packet->fSize,packet->fSequenceNumber , context->ack);
 
 	if (packet->fSize == 0) {
 		//TRACE("TCPSocket::ProcessPacket(): not queuing due to lack of data\n");
@@ -1287,8 +1300,9 @@ _FindSocket(net_ipv4 address, unsigned short port)
 	proto_tcp_conn_t *conn = NULL;
 	for (conn = proto_tcp_conn_list.next; conn != &proto_tcp_conn_list; conn = conn->next)
 	{
-	
-		if (conn->ip_source == address && conn->port_source == (port))
+		if(conn->fd == 5)
+		Printf("fd %d address %d port %d conn->ip_dest %d conn->port_dest %d\n",conn->fd,address,port,conn->ip_dest,conn->port_dest);
+		if (conn->ip_dest == address && conn->port_dest == port)
 		{
 			return conn;
 		}
@@ -1398,7 +1412,7 @@ void HandleIPPacket(net_ipv4 sourceIP,
 	uint16_t destination = ntohs(header->port_dest);
 	uint32_t sequenceNumber = ntohl(header->seq);
 	uint32_t ackedNumber = ntohl(header->ack);
-	TRACE("source = %d, dest = %d, seq = %d, ack = %d, size = %d, "
+/*	TRACE("source = %d, dest = %d, seq = %d, ack = %d, size = %d, "
 		"flags %s %s %s %s\n", source, destination, sequenceNumber,
 		ackedNumber, size,
 		(header->flags & TCP_ACK) != 0 ? "ACK" : "",
@@ -1423,24 +1437,18 @@ void HandleIPPacket(net_ipv4 sourceIP,
 		}
 	}
 
-	struct proto_tcp_conn_context* socket = _FindSocket(destinationIP, destination);
-	if (socket == NULL) {
-		// TODO If SYN, answer with RST?
-		TRACE("TCPService::HandleIPPacket(): no socket\n");
-		return;
-	}
-
 	//for accept
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	unsigned char ret = 0;
 
 	/* First check ip address and ports, that we want this data */
-	proto_tcp_conn_t *conn = net_proto_tcp_conn_check (destinationIP,destination, sourceIP, header->port_source, &ret);
+	unsigned char ret = 0;
+	proto_tcp_conn_t *conn = net_proto_tcp_conn_check (destinationIP,header->port_dest, sourceIP, header->port_source, &ret);
 
 	if (!conn && ret == 0)
 	{
+		Sleep(7000);
 		Printf ("net_proto_tcp_conn_check fail %d\n",ret);
-		return ;
+
 	}
 	/* connection from client before accept () */
 	if (ret == 1)
@@ -1453,6 +1461,15 @@ void HandleIPPacket(net_ipv4 sourceIP,
 		}
 	}
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	struct proto_tcp_conn_context* socket = _FindSocket(sourceIP, header->port_source);
+	if (socket == NULL) {
+		// TODO If SYN, answer with RST?
+		TRACE("TCPService::HandleIPPacket(): no socket\n");
+		return;
+	}
+
+	Printf("fd = %d\n",socket->fd);
 
 	if ((header->flags & TCP_ACK) != 0) {
 		Acknowledge(socket,ackedNumber);
