@@ -49,14 +49,11 @@ LEVEL1:
     push STARTUP_MESSAGE		; message
     push 0						; x
     push 0						; y
-    call PRINTMESSAGE			; call print
+    call PRINT_STRING			; call print
     add  sp, 6
 
-    push IMAGE_LOADING_MESSAGE
-    push 1
-    push 0
-    call PRINTMESSAGE
-    add  sp, 6
+ 	mov si, IMAGE_LOADING_MESSAGE
+    call PRINT_STRING
 
 LEVEL2:
 
@@ -131,12 +128,8 @@ READDATA:
 
 READEND:
 
-    push LOADING_COMPLETE_MESSAGE
-    push 1
-    push 20
-    call PRINTMESSAGE
-    add  sp, 6
-
+	mov si, LOADING_COMPLETE_MESSAGE
+    call PRINT_STRING
 
 	;비디오 모드 정보 바이오스 함수 호출
     mov ax, 0x4F01						;비디오 모드 정보 호출 번호
@@ -165,7 +158,7 @@ VBEERROR:
     push CHANGE_GRAPHIC_MODE_FAIL
     push 2
     push 0
-    call PRINTMESSAGE
+    call PRINT_STRING
     add  sp, 6
     jmp $
 
@@ -176,60 +169,21 @@ HANDLEDISKERROR:
     push DISK_ERROR_MESSAGE
     push 1
     push 20
-    call PRINTMESSAGE
+    call PRINT_STRING
 
     jmp $
 
-PRINTMESSAGE:
-    push bp
-    mov bp, sp
+PRINT_STRING:
+    mov ah, 0x0E                    ; BIOS function 0x0E: teletype
+    .loop:
+        lodsb                       ; grab a byte from SI
+        test al, al                 ; NULL?
+        jz .done                    ; if zero: end loop
+        int 0x10                    ; else: print character to screen
+        jmp .loop
+    .done:
+        ret
 
-    push es
-    push si
-    push di
-    push ax
-    push cx
-    push dx
-
-    mov ax, 0xB800
-
-    mov es, ax
-
-    mov ax, word [ bp + 6 ]
-    mov si, 160
-    mul si
-    mov di, ax
-
-    mov ax, word [ bp + 4 ]
-    mov si, 2
-    mul si
-    add di, ax
-
-    ; 출력할 문자열의 어드레스
-    mov si, word [ bp + 8 ]
-
-.MESSAGELOOP:
-    mov cl, byte [ si ]
-
-    cmp cl, 0
-    je .MESSAGEEND
-
-    mov byte [ es: di ], cl
-
-    add si, 1
-    add di, 2
-
-    jmp .MESSAGELOOP
-
-.MESSAGEEND:
-    pop dx
-    pop cx
-    pop ax
-    pop di
-    pop si
-    pop es
-    pop bp
-    ret
 
 STARTUP_MESSAGE:    		db  	'JG OS Boot Loader Begin.', 0 ; 출력할 메시지 정의
 DISK_ERROR_MESSAGE:       	db  	'DISK Error', 0

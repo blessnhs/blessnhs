@@ -983,3 +983,45 @@ void memshow(const void* start, size_t count, bool alpha)
         }
     }
 }
+
+char *strstr(char *string, char *substring)
+{
+    char *a, *b;
+    int idx = 0;
+    /* First scan quickly through the two strings looking for a
+     * single-character match.  When it's found, then compare the
+     * rest of the substring.
+     */
+
+    b = substring;
+    if (*b == 0)
+    {
+    	return string;
+    }
+
+    for ( ; *string != 0; string += 1)
+    {
+    	if (*string != *b)
+    	{
+    		continue;
+    	}
+
+    	a = string;
+
+		while (1)
+		{
+			if (*b == 0)
+			{
+				return string;
+			}
+			if (*a++ != *b++)
+			{
+				break;
+			}
+		}
+
+		b = substring;
+    }
+    return (char *) 0;
+}
+

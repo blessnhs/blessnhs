@@ -77,9 +77,7 @@ typedef struct proto_tcp_conn_context {
 
 	netif_t *netif;
 
-	unsigned int offset;
 	unsigned int len;
-	char *data;
 
 
 	uint32_t		fNextSequence;
@@ -89,6 +87,8 @@ typedef struct proto_tcp_conn_context {
 	struct TCPPacket*	fLastSentPacket;
 	enum TCPSocketState fState;
 	enum TCPSocketState fRemoteState;
+
+	long close_wait_time;
 
 } proto_tcp_conn_t;
 

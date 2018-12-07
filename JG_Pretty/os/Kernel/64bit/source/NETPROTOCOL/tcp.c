@@ -57,7 +57,7 @@ int net_proto_tcp_connect (int fd, sockaddr_in *addr)
 	conn->fLastSentPacket = NULL;
 	conn->fState = (TCP_SOCKET_STATE_INITIAL);
 	conn->fRemoteState = (TCP_SOCKET_STATE_INITIAL);
-
+	conn->close_wait_time = 0;
 	netif_t *netif = netif_findbyname ("eth0");
 	{
 		conn->ip_source = netif->ip;
@@ -364,6 +364,7 @@ int net_proto_tcp_accept (int fd, sockaddr_in *addr, socklen_t *addrlen)
 	}
 */
 	conn_new->fState = conn_new->fRemoteState = TCP_SOCKET_STATE_OPEN;
+	conn_new->close_wait_time = 0;
 
 	return fd_new->id;
 }
@@ -607,9 +608,7 @@ int net_proto_tcp_conn_set (proto_tcp_conn_t *conn, netif_t *eth, net_port port_
 
 	conn->netif = eth;
 
-	conn->offset = 0;
 	conn->len = 0;
-	conn->data = 0;
 
 	conn->fFirstPacket = NULL;
 	conn->fLastPacket = NULL;
@@ -617,7 +616,7 @@ int net_proto_tcp_conn_set (proto_tcp_conn_t *conn, netif_t *eth, net_port port_
 	conn->fLastSentPacket = NULL;
 	conn->fState = (TCP_SOCKET_STATE_INITIAL);
 	conn->fRemoteState = (TCP_SOCKET_STATE_INITIAL);
-
+	conn->close_wait_time = 0;
 
 
 
@@ -925,10 +924,12 @@ ProcessPacket(struct proto_tcp_conn_context *context,struct TCPPacket* packet)
 		context->fRemoteState = TCP_SOCKET_STATE_FIN_SENT;
 		TRACE("FIN received\n");
 
-		context->seq = packet->fAcknowledgmentNumber;
-		context->ack = packet->fSequenceNumber + 1;
+		{
+			context->seq = packet->fAcknowledgmentNumber;
+			context->ack = packet->fSequenceNumber + 1;
 
-		_Ack(context);
+			_Ack(context);
+		}
 	}
 
 	if (context->fState == TCP_SOCKET_STATE_SYN_SENT)
@@ -954,9 +955,12 @@ ProcessPacket(struct proto_tcp_conn_context *context,struct TCPPacket* packet)
 	{
 		if ((packet->fFlags & TCP_ACK) != 0)
 		{
-			//TRACE("FIN-ACK received\n");
+			TRACE("FIN-ACK received\n");
 			if (context->fRemoteState == TCP_SOCKET_STATE_FIN_SENT)
+			{
 				context->fState = TCP_SOCKET_STATE_CLOSED;
+
+			}
 		}
 	}
 
@@ -1424,13 +1428,13 @@ void HandleIPPacket(net_ipv4 sourceIP,
 	uint16_t destination = ntohs(header->port_dest);
 	uint32_t sequenceNumber = ntohl(header->seq);
 	uint32_t ackedNumber = ntohl(header->ack);
-	TRACE("source = %d, dest = %d, seq = %d, ack = %d, size = %d, "
+/*	TRACE("source = %d, dest = %d, seq = %d, ack = %d, size = %d, "
 		"flags %s %s %s %s\n", source, destination, sequenceNumber,
 		ackedNumber, size,
 		(header->flags & TCP_ACK) != 0 ? "ACK" : "",
 		(header->flags & TCP_SYN) != 0 ? "SYN" : "",
 		(header->flags & TCP_FIN) != 0 ? "FIN" : "",
-		(header->flags & TCP_RST) != 0 ? "RST" : "");
+		(header->flags & TCP_RST) != 0 ? "RST" : "");*/
 	if (header->data_offset > 5) {
 		uint8_t* option = (uint8_t*)data + sizeof(proto_tcp_t);
 		while ((uint32_t*)option < (uint32_t*)data + header->data_offset) {
@@ -1440,10 +1444,10 @@ void HandleIPPacket(net_ipv4 sourceIP,
 			uint8_t optionLength = 1;
 			if (optionKind > 1) {
 				optionLength = option[1];
-				TRACE("\tTCP option kind %u, length %u\n",
-					optionKind, optionLength);
-				if (optionKind == 2)
-					TRACE("\tTCP MSS = %04hu\n", *(uint16_t*)&option[2]);
+		//		TRACE("\tTCP option kind %u, length %u\n",
+		//			optionKind, optionLength);
+		//		if (optionKind == 2)
+		//			TRACE("\tTCP MSS = %04hu\n", *(uint16_t*)&option[2]);
 			}
 			option += optionLength;
 		}
@@ -1453,25 +1457,22 @@ void HandleIPPacket(net_ipv4 sourceIP,
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	/* First check ip address and ports, that we want this data */
-	unsigned char ret = 0;
+/*	unsigned char ret = 0;
 	proto_tcp_conn_t *conn = net_proto_tcp_conn_check (destinationIP,header->port_dest, sourceIP, header->port_source, &ret);
 
 	if (!conn && ret == 0)
 	{
-		Sleep(7000);
 		Printf ("net_proto_tcp_conn_check fail %d\n",ret);
 
 	}
-	/* connection from client before accept () */
 	if (ret == 1)
 	{
-		/* client want connect to our server */
 		if (header->flags == 0x02) \
 		{
 			unsigned out = net_proto_tcp_backlog_add (conn, sourceIP, header->port_source, header->seq);
 			return out;
 		}
-	}
+	}*/
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	struct proto_tcp_conn_context* socket = _FindSocket(sourceIP, header->port_source);
@@ -1480,8 +1481,6 @@ void HandleIPPacket(net_ipv4 sourceIP,
 		TRACE("TCPService::HandleIPPacket(): no socket\n");
 		return;
 	}
-
-	Printf("fd = %d\n",socket->fd);
 
 	if ((header->flags & TCP_ACK) != 0) {
 		Acknowledge(socket,ackedNumber);

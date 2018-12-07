@@ -1,7 +1,7 @@
 #ifndef __FTP_H__
 #define __FTP_H__
 
-
+#include "../types.h"
 //begin ftp
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 #define CMD_OPEN "open"
@@ -29,9 +29,8 @@ extern int mode;
 #define FILENAME_SIZE 256
 #define END_OF_PROTOCOL "\r\n"
 
-
-
-typedef struct _FtpCmdHandler {
+typedef struct _FtpCmdHandler
+{
 	char cmd[5];
 	void (*handler)(char* arg);
 
@@ -56,7 +55,7 @@ void quit(char *quitCmd);
 void pwd(char *pwdCmd);
 void bye(char *byeCmd);
 void hash(char *hashCmd);
-void passiveMode(char *ip, int *port);
+bool passiveMode(char *ip, int *port);
 void shellEscape(char *shellCmd);
 
 

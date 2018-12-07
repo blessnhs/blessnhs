@@ -3,6 +3,7 @@
 #include "../dynamicMemory.h"
 #include "../fat32/fat_filelib.h"
 #include "../NETPROTOCOL/socket.h"
+#include "../utility.h"
 //////////////////////////////////////////////begin ftp
 
 // Map Ftp Command to Handler
@@ -16,8 +17,6 @@ void debug(char *msg) {
 		Printf("[debug] : %s \n", msg);
 	}
 }
-
-
 
 int connectServer(char *hostName, short port) {
 
@@ -100,7 +99,6 @@ static int recvProtocol(int sock, char *recvBuffer, int bufferSize) {
 	int recvLen;
 
 	if ((recvLen = recv(sock, recvBuffer, bufferSize - 1, 0)) <= 0) {
-		Printf("recv failed");
 		return 0;
 	}
 
@@ -109,9 +107,6 @@ static int recvProtocol(int sock, char *recvBuffer, int bufferSize) {
 
 	recvBuffer[recvLen] = '\0';
 
-	if (MODE_DEBUG == mode) {
-
-	}
 	return recvLen;
 }
 
@@ -293,9 +288,10 @@ void openCon(char *openCmd) {
 }
 
 // send EPSV or PASS to Server
-void passiveMode(char *ip, int *port) {
+bool passiveMode(char *ip, int *port) {
 	 char sendBuffer[BUFFER_SIZE];
 	 char recvBuffer[BUFFER_SIZE];
+	 char *findstr;
 
 	 memset(sendBuffer, 0, BUFFER_SIZE);
 	 memset(recvBuffer, 0, BUFFER_SIZE);
@@ -307,34 +303,17 @@ void passiveMode(char *ip, int *port) {
 	 sendProtocol(sock, sendBuffer);
 
 	 int passiveLen = 0;
-	 passiveLen = recvProtocol(sock, recvBuffer, BUFFER_SIZE);
 
-	 recvBuffer[passiveLen] = 0;
-
-	 Printf("%s\n",recvBuffer);
-
-	 if (passiveLen < 4)
 	 {
-		 return;
-	 }
+		 passiveLen = recvProtocol(sock, recvBuffer, BUFFER_SIZE);
+		 if(passiveLen <= 0)
+			 return false;
 
-	 while(1)
-	 {
-		 //227
-		 char number[5];
-		 memcpy(number,recvBuffer,3);
-		 number[4] = 0;
+		 recvBuffer[passiveLen] = 0;
 
-		 Printf("%s cmd\n",number);
+		 Printf("\n%s\n",recvBuffer);
 
-		 if(atoi(number) !=  227 )
-		 {
-			 break;
-		 }
-		 else
-		 {
-			 break;
-		 }
+		 findstr = strstr(recvBuffer,(char*)"227");
 	 }
 
 	 int array[10] = {0,};
@@ -344,9 +323,9 @@ void passiveMode(char *ip, int *port) {
 	 while(1)
 	 {
 		 if (passiveLen <= pos)
-			 return;
+			 return false;
 
-		 if(recvBuffer[pos] == '(')
+		 if(findstr[pos] == '(')
 			 break;
 
 		 pos++;
@@ -360,20 +339,20 @@ void passiveMode(char *ip, int *port) {
 	 while(1)
 	 {
 		 if (passiveLen <= pos)
-			 return;
+			 return false;
 
 		 if (k >= 20)
-			 return;
+			 return false;
 
 
-		 word[k] = recvBuffer[pos];
+		 word[k] = findstr[pos];
 
 		 if(word[k] == ',' || word[k] == ')')
 		 {
 			 char check = word[k];
 
 			 word[k] = 0;
-			 Printf("%d\n",atoi(word));
+		//	 Printf("%d\n",atoi(word));
 			 array[wordindex] = atoi(word);
 			 wordindex++;
 			 k = 0;
@@ -395,7 +374,9 @@ void passiveMode(char *ip, int *port) {
 	 SPrintf(ip, "%d.%d.%d.%d", array[0], array[1], array[2], array[3]);
 	 *port = array[4]*256 + array[5];
 
-	 Printf("ip %s port %d\n",ip,*port);
+	 Printf("\nip %s port %d\n",ip,*port);
+
+	 return true;
 }
 
 // get remote working directory file list
@@ -407,7 +388,12 @@ void list(char *listCmd) {
 	char recvBuffer[BUFFER_SIZE * 8];
 
 	// recv server response and parsing
-	passiveMode(ip, &port);
+	bool ret = passiveMode(ip, &port);
+	if(ret == false)
+	{
+		Printf("Passive Failed\n");
+		return ;
+	}
 
 	// send LIST command to PI server
 	SPrintf(sendBuffer, "LIST%s", END_OF_PROTOCOL);
@@ -439,12 +425,7 @@ void get(char *getCmd) {
 	 char sendBuffer[BUFFER_SIZE];
 	 char recvBuffer[BUFFER_SIZE];
 
-	 // get local current working directory
-	 //getcwd(filePath, FILENAME_SIZE);
-
-
 	 memcpy(filePath,"",2);
-
 
 	 GUICommandShell(fileName);
 	 SPrintf(getCmd, "%*s %s%*c", fileName);
@@ -454,7 +435,11 @@ void get(char *getCmd) {
 	 Printf("fileName: %s\n", fileName);
 	 Printf("filePath: %s\n", filePath);
 
-	 passiveMode(ip, &port);
+	 if(passiveMode(ip, &port) == false)
+	 {
+		 Printf("passiveMode Fail\n");
+		 return ;
+	 }
 
 	 // request server for transfer start - RETR fileName
 	 SPrintf(sendBuffer, "SIZE %s%s", fileName, END_OF_PROTOCOL);
@@ -490,19 +475,21 @@ void get(char *getCmd) {
 	 downloadFile(sock,dtpSock, filePath, fileSize, hashFlag);
 
 	 // recv complete message from PI server
-//	 sizelen = recvProtocol(sock, recvBuffer, BUFFER_SIZE);
-//	 printMessage(recvBuffer,sizelen);
+	 sizelen = recvProtocol(sock, recvBuffer, BUFFER_SIZE);
+	 printMessage(recvBuffer,sizelen);
 
 	 sclose(dtpSock);
 }
 
 // file upload
 void put(char *putCmd) {
-	/*	int port;
+/*	 int port;
 	 unsigned int fileSize;
 	 char ip[16], filePath[FILENAME_SIZE], fileName[50];
 	 char sendBuffer[BUFFER_SIZE];
 	 char recvBuffer[BUFFER_SIZE];
+
+
 
 	 sscanf(putCmd, "%*s %s%*c", fileName);
 

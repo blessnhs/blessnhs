@@ -1,11 +1,3 @@
-/**
- *  file    Utility.h
- *  date    2009/01/17
- *  author  kkamagui 
- *          Copyright(c)2008 All rights reserved by kkamagui
- *  brief   OS에서 사용할 유틸리티 함수에 관련된 파일
- */
-
 #ifndef __UTILITY_H__
 #define __UTILITY_H__
 
@@ -54,6 +46,7 @@ long int strtol(const char* nptr, char** endptr, int base);
 int atoi(const char* nptr);
 int isspace(int c);
 void memshow(const void* start, size_t count, bool alpha);
+char *strstr(char *string, char *substring);
 unsigned long long *GetPhysAddr(void *virtualaddr);
 unsigned long long *GetEntryLevel(unsigned long long address, int level);
 int32_t strcmp(const char* s1, const char* s2);

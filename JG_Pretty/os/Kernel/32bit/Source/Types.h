@@ -1,10 +1,3 @@
-/**
- *  file    Types.h
- *  date    2008/12/14
- *  author  kkamagui 
- *          Copyright(c)2008 All rights reserved by kkamagui
- *  brief   커널에서 사용하는 각종 타입을 정의한 파일
- */
 
 #ifndef __TYPES_H__
 #define __TYPES_H__
