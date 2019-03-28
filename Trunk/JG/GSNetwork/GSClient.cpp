@@ -311,7 +311,7 @@ VOID GSClient::ProcDisconnect()
 		Clear();
 		BOOL Result = Recycle(pServer->GetTcpListen()->GetSocket());
 
-		//printf("Recycle Socket  %d %d\n",pClient->GetSocket(),pClient->GetId());
+		printf("Recycle Socket  %d %d\n",GetSocket(),GetId());
 	}
 	else
 	{
@@ -382,18 +382,31 @@ void GSClient::OnDisconnect()
 
 	GSServer::GSServer *pServer = (GSServer::GSServer *)m_GSServer;
 
-	PROC_REG_CLOSE_JOB(this,this,pServer)
+	//아래 함수를 로직 쓰레드로 던지게 되면 동기화 문제가 발생하여 
+	//바로 콜하는 것으로 대체
+	//PROC_REG_CLOSE_JOB(this,this,pServer)
+
+	ProcDisconnect();
 	
 }
 
 void GSClient::OnConnect() 
 {
-	CThreadSync Sync;
-
-	SetConnected(TRUE);
 	//Accept가 떨어졌다.
+	CThreadSync Sync;
+	SetConnected(TRUE);
 	//printf("Accept Success Socket %d %d %d\n",GetSocket(),GetId(),GetMyTP());
 
+	//아래 함수를 로직 쓰레드로 던지게 되면 동기화 문제가 발생하여 
+	//바로 콜하는 것으로 대체
+
+	GSServer::GSServer *pServer = (GSServer::GSServer *)m_GSServer;
+
+	SetAliveTime(GetTickCount());
+
+	pServer->Accept(this);
+
+	/*
 	GSServer::GSServer *pServer = (GSServer::GSServer *)m_GSServer;
 
 	MSG_PLAYER_ACCEPT_PTR pPlayerAccept = ALLOCATOR.Create<MSG_PLAYER_ACCEPT>(); //(new MSG_PLAYER_ACCEPT);// 
@@ -403,6 +416,7 @@ void GSClient::OnConnect()
 	pPlayerAccept->SubType = ONACCEPT;
 
 	MAINPROC.RegisterCommand(pPlayerAccept);
+	*/
 }
 
 VOID GSClient::RecevieComplete()
