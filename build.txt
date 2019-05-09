@@ -1,0 +1,153 @@
+저는 현재 집 pc2대  회사 pc2대에서 성공적 설치해서 사용하고 있습니다.
+
+
+
+os는 전부다 windows 7 pro 64bit 입니다.
+
+
+
+이클립스 버전입니다.
+
+Eclipse IDE for C/C++ Developers
+
+Version: Oxygen.3a Release (4.7.3a)
+
+Build id: 20180405-1200
+
+OS: Windows 7, v.6.1, x86_64 / win32
+
+
+
+
+핵심은 버전입니다. 
+
+구글링 하면 하는 이야기가 윗 버전에서는 수정되었다 이겁니다.
+
+
+
+아래는 mint64os가 아니라 다른 os를 빌드할때 사용하던 cross build gcc 입니다.
+
+
+
+성공하시면 설치 폴더 기준으로
+
+
+
+cygwin60\usr\local\cross\bin 
+
+
+
+위치를 환경설정  path에 등록해 주시고 mint64os project의 64bit makefile 의
+
+
+
+GCC64 = x86_64-elf-gcc.exe -c 
+
+LD4 = x86_64-elf-ld.exe -melf_x86_64 -T ....
+
+
+
+정 안되시면 유트브로 찍던가 해보겠습니다.
+
+
+
+ -------------------------------------------------------------------------------
+
+Setup and Installation for Windows:
+
+
+
+- Install Cygwin (http://www.cygwin.com/) including the following packages
+
+  and their dependencies: install by category
+
+
+
+    - bison
+
+    - flex
+
+    - make
+
+    - nasm
+
+    - wget
+
+    - gcc 
+
+
+
+- Build a 64-bit cross compiler for the kernel:
+
+  - Setup
+
+    - export PREFIX=/usr/local/cross
+
+    - export TARGET=x86_64-elf
+
+    - export PATH=$PATH:$PREFIX/bin
+
+    - mkdir cross_gcc
+
+    - cd cross_gcc
+
+    - mkdir build_binutils build_gcc
+
+
+
+  - Download and unpack source code
+
+    - wget http://ftp.gnu.org/gnu/binutils/binutils-2.29.tar.bz2
+
+    - wget http://ftp.gnu.org/gnu/gcc/gcc-4.9.4/gcc-4.9.4.tar.bz2
+
+    - wget http://ftp.gnu.org/gnu/gmp/gmp-4.3.2.tar.bz2
+
+    - wget http://www.mpfr.org/mpfr-2.4.2/mpfr-2.4.2.tar.bz2
+
+    - wget http://www.multiprecision.org/downloads/mpc-0.8.1.tar.gz
+
+    - tar xjf binutils-2.29.tar.bz2
+
+    - tar xjf gcc-4.9.4.tar.bz2
+
+    - tar xjf gmp-4.3.2.tar.bz2
+
+    - tar xjf mpfr-2.4.2.tar.bz2
+
+    - tar xzf mpc-0.8.1.tar.gz
+
+    - mv gmp-4.3.2 gcc-4.9.4/gmp
+
+    - mv mpfr-2.4.2 gcc-4.9.4/mpfr
+
+    - mv mpc-0.8.1 gcc-4.9.4/mpc
+
+rn
+
+  - Build binutils
+
+    - cd build_binutils
+
+    - ../binutils-2.29/configure --target=$TARGET --prefix=$PREFIX --disable-nls
+
+    - make all
+
+    - make install
+
+    - cd ..
+
+
+
+  - Build gcc
+
+    - cd build_gcc
+
+    - ../gcc-4.9.4/configure --target=$TARGET --prefix=$PREFIX --disable-nls --enable-languages=c --without-headers
+
+    - make all-gcc
+
+    - make install-gcc
+
+
+안된다는 문의가 있어서 내용수정해서 다시 올렸습니다.
