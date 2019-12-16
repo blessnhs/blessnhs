@@ -179,12 +179,11 @@ BOOL GSPacketTCP::WriteComplete(VOID)
 	return TRUE;
 }
 
-VOID GSPacketTCP::MakePacket(DWORD dwDataLength,WORD &Mainprotocol, WORD &Subprotocol,DWORD &dataLength)
+VOID GSPacketTCP::MakePacket(DWORD dwDataLength,WORD &Mainprotocol, WORD &Subprotocol,DWORD &dwPacketLength )
 {
 	CThreadSync Sync;
 	
 	WORD  MainProtocol = 0,SubProtocol = 0;
-	DWORD dwPacketLength = 0;
 	BYTE Packet[MAX_BUFFER_LENGTH] = {0,};
 	memset(Packet,0,MAX_BUFFER_LENGTH);
 
@@ -196,7 +195,7 @@ VOID GSPacketTCP::MakePacket(DWORD dwDataLength,WORD &Mainprotocol, WORD &Subpro
 			pBuffer->m_Buffer.SetBuffer(Packet,dwPacketLength);
 			pBuffer->MainId = MainProtocol;
 			pBuffer->SubId  = Subprotocol;
-			pBuffer->Length = dataLength;
+			pBuffer->Length = dwPacketLength ;
 
 			m_PacketList.push(pBuffer);
 
