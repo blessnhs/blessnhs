@@ -189,8 +189,8 @@ VOID GSIocp::WorkerThread(VOID)
 		}
 		__except( ExceptionFilter(GetExceptionInformation(),"IOCP Handler") )
         {
-			GSSocket *pCommon = reinterpret_cast<GSSocket*>(Object);
-				if(pCommon != NULL)
+			GSNetwork::GSClient::GSClient *pCommon = reinterpret_cast<GSNetwork::GSClient::GSClient*>(Object);
+			if(pCommon != NULL)
 			{
 				OnDisconnected(Object);
 			}

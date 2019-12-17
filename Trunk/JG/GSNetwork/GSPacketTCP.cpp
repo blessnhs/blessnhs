@@ -44,7 +44,7 @@ BOOL	GSPacketTCP::ReadPacket(DWORD readLength)
 {
 	CThreadSync Sync;
 
-	if (!GSSocketTCP::ReadForIocp(m_PacketBuffer + m_RemainLength, readLength,m_RemainLength))
+	if (!GSSocketTCP::ReadForIocp(m_PacketBuffer, readLength,m_RemainLength))
 		return FALSE;
 
 	m_RemainLength	+= readLength;
