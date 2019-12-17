@@ -30,8 +30,11 @@ bool GSProactorImpl::Create(int InputTheadCnt)
 
 
 	unsigned int WorkerId = 0;
-	for(int i=0;i<InputTheadCnt;i++)
+	for (int i = 0; i < InputTheadCnt; i++)
+	{
+		WorkerId = i;
 		m_hThread = reinterpret_cast<HANDLE>(_beginthreadex(NULL, 0, DistributionThread, (LPVOID)this, 0, &WorkerId));
+	}
 
 	return TRUE;
 }
