@@ -23,6 +23,8 @@ GSServer::GSServer(void)
 
 GSServer::~GSServer(void)
 {
+	DeleteCriticalSection(&m_PublicLock);
+
 	WSACleanup();
 	GSNetwork::GSMiniDump::GSMiniDump::End();
 	CoUninitialize();
