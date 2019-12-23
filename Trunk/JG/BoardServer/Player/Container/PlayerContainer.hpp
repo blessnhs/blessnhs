@@ -9,11 +9,9 @@ template<template<class T> class CreationPolicy> PlayerContainer<CreationPolicy>
 
 template<template<class T> class CreationPolicy> bool PlayerContainer<CreationPolicy>::Add(PlayerPtr &pObj)
 {
-	std::map<DWORD,PlayerPtr>::iterator iter;
-
 	EnterCriticalSection(&m_PublicLock);
 
-	iter = m_PlayerMap.find(pObj->GetId());
+	auto iter = m_PlayerMap.find(pObj->GetId());
 
 	if(iter == m_PlayerMap.end())
 	{
@@ -21,6 +19,7 @@ template<template<class T> class CreationPolicy> bool PlayerContainer<CreationPo
 		LeaveCriticalSection(&m_PublicLock);
 		return true;;
 	}
+
 	LeaveCriticalSection(&m_PublicLock);
 	return false;
 }
@@ -29,7 +28,7 @@ template<template<class T> class CreationPolicy> bool PlayerContainer<CreationPo
 {
 	EnterCriticalSection(&m_PublicLock);
 
-	std::map<DWORD,PlayerPtr>::iterator iter = m_PlayerMap.find(pObj->GetId());
+	auto iter = m_PlayerMap.find(pObj->GetId());
 
 	if(iter == m_PlayerMap.end())
 	{
@@ -37,8 +36,8 @@ template<template<class T> class CreationPolicy> bool PlayerContainer<CreationPo
 		return false;
 	}
 
-	m_PlayerMap.erase(iter);
 	LeaveCriticalSection(&m_PublicLock);
+	m_PlayerMap.erase(iter);
 
 	return true;
 }
@@ -60,6 +59,27 @@ template<template<class T> class CreationPolicy> PlayerPtr PlayerContainer<Creat
 	return (iter->second);
 }
 
+template<template<class T> class CreationPolicy> PlayerPtr PlayerContainer<CreationPolicy>::SearchBySocketId(DWORD Id)
+{
+	EnterCriticalSection(&m_PublicLock);
+
+	std::map<DWORD, PlayerPtr>::iterator iter = m_PlayerMap.begin();
+
+	while (iter != m_PlayerMap.end())
+	{
+		PlayerPtr pPlayer = iter->second;
+		if (pPlayer->GetPair() == Id)
+		{
+			LeaveCriticalSection(&m_PublicLock);
+			return pPlayer;
+		}
+
+		++iter;
+	}
+	LeaveCriticalSection(&m_PublicLock);
+	return PlayerPtr(0);
+}
+
 template<template<class T> class CreationPolicy> PlayerPtr PlayerContainer<CreationPolicy>:: Search(wstring Account)
 {
 	EnterCriticalSection(&m_PublicLock);
@@ -79,34 +99,6 @@ template<template<class T> class CreationPolicy> PlayerPtr PlayerContainer<Creat
 	}
 	LeaveCriticalSection(&m_PublicLock);
 	return PlayerPtr(0);
-}
-
-template<template<class T> class CreationPolicy> void PlayerContainer<CreationPolicy>::DeleteAllByServerId(WORD ServerId)
-{
-	EnterCriticalSection(&m_PublicLock);
-
-	std::map<DWORD,PlayerPtr>::iterator iter = m_PlayerMap.begin();
-
-	while(iter != m_PlayerMap.end())
-	{
-		PlayerPtr pPlayer = iter->second;
-
-		if(pPlayer == NULL)
-		{
-			++iter;
-			continue;;
-		}
-
-		if(pPlayer->m_GameServerId == ServerId)
-		{
-			iter = m_PlayerMap.erase(iter);
-			continue;
-		}
-
-		++iter;
-	}
-
-	LeaveCriticalSection(&m_PublicLock);
 }
 
 template<template<class T> class CreationPolicy> PlayerPtr PlayerContainer<CreationPolicy>::Create()

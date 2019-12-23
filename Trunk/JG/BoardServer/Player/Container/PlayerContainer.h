@@ -5,6 +5,8 @@
 
 #include <boost/pool/object_pool.hpp>
 #include <boost/shared_ptr.hpp>
+#include <concurrent_unordered_map.h>
+
 #include "TemplateStrategyPattern.h"
 
 #include "GSFactory.h"
@@ -35,7 +37,7 @@ public:
 	bool Del(PlayerPtr &pObj);
 	PlayerPtr Search(DWORD Id);
 	PlayerPtr Search(wstring Account);
-	void DeleteAllByServerId(WORD ServerId);
+	PlayerPtr SearchBySocketId(DWORD Id);
 
 	void Print();
 

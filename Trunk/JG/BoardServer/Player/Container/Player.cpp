@@ -3,7 +3,6 @@
 
 Player::Player(void)
 {
-	m_UnityServerId = 0;
 	m_ChannelId = 1;
 }
 
@@ -41,9 +40,6 @@ void Player::Initialize()
 	memset(&m_Account,0,sizeof(m_Account));
 	memset(&m_Char,0,sizeof(m_Char));
 
-	m_GameServerId = 0;
-
-	m_UnityServerId = 0;
 	m_PairSessionId = 0;
 	m_RoomNumber    = 0;
 }

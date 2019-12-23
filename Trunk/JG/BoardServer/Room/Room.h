@@ -56,7 +56,9 @@ public:
 		while(iter != m_PlayerMap.end())
 		{
 			GSCLIENT *pSession = IOCP.GetSessionMgr()->GetSession(iter->second->GetPair());
-			Sender::Send(pSession,snd);
+			
+			if (pSession)
+				Sender::Send(pSession,snd);
 			iter++;
 		}
 	}
@@ -67,7 +69,9 @@ public:
 		while(iter != m_PlayerMap.end())
 		{
 			GSCLIENT *pSession = SERVER.GetClient(iter->second->GetPair());
-			pSession->GetTCPSocket()->WritePacket(MainId,0,Data,Length);
+			
+			if(pSession)
+				pSession->GetTCPSocket()->WritePacket(MainId,0,Data,Length);
 			iter++;
 		}
 	}

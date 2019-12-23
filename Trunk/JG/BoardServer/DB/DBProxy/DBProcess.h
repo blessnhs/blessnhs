@@ -11,12 +11,7 @@ public:
 	
 	BOOL Initalize(	WCHAR *m_szDSN,WCHAR *m_szUID,WCHAR *m_szPWD);
 
-
-	WORD GetAuthenticKeyFromDB(const WCHAR* id, const WCHAR* pw, WCHAR* out);	
-
-	bool RecordAuthenticKeyFromDB( WCHAR* id,  WCHAR* key,  WCHAR* ip);
-	int SelectCharacterInfo(const WCHAR *Account, RequestPlayerAuth &pRes);
-	int	 ProcedureUserLogin(const WCHAR *Account, const WCHAR *SessionKey, int ChannelId);
+	int	 ProcedureUserLogin(const WCHAR* id, const WCHAR* pw, std::wstring&szKey, INT64 &Index);
 
 	COdbc*				m_pDB;
 

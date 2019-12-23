@@ -50,23 +50,23 @@ VOID BoardProcess::LOGIN_PLAYER(LPVOID Data, DWORD Length)
 	GET_JSON_WSTR_MEMBER("Id", Id)
 	GET_JSON_WSTR_MEMBER("Passwd", Passwd)
 
-	WORD nRet = _ERR_NONE;
-
-	DBPROCESS_CER_PTR pProc = DBPROCESSCONTAINER_CER.Search(pOwner->GetMyDBTP());
-	if (pProc == NULL)
-		return;
-
 	//로그인 쿼리를 날린다.
 	boost::shared_ptr<RequestPlayerAuth> pRequest = ALLOCATOR.Create<RequestPlayerAuth>();
 	pRequest->Account = Id;
 	pRequest->Passwd = Passwd;
-	PROC_REG_QUERY_JOB(pRequest, DBP_GET_LOGIN_INFO, pOwner, Board::MSG_PLAYER_QUERY, RequestPlayerAuth)
+
+	boost::shared_ptr<Board::MSG_PLAYER_QUERY<RequestPlayerAuth>>		PLAYER_MSG = ALLOCATOR.Create<Board::MSG_PLAYER_QUERY<RequestPlayerAuth>>();
+	PLAYER_MSG->pSession = pOwner;
+	PLAYER_MSG->pRequst = pRequest;
+	PLAYER_MSG->Type = pOwner->GetMyDBTP(MSG_TYPE_DB_1);
+	PLAYER_MSG->SubType = ONQUERY; 
+	MAINPROC.RegisterCommand(PLAYER_MSG);
 }
 
 VOID BoardProcess::ROOM_CREATE(LPVOID Data, DWORD Length)
 {
 	PlayerPtr pPlayer = PLAYERMGR.Search(pOwner->GetPair());
-	if (pPlayer == NULL)
+	if (pPlayer == NULL || pPlayer->m_RoomNumber != 0)
 	{
 		DECLARE_JSON_WRITER
 		ADD_JSON_MEMBER("Result", FC_PKT_CREATE_ROOM_RES::ErrorCode::NOT_FOUND_PLAYER)
@@ -204,37 +204,34 @@ VOID BoardProcess::ROOM_LEAVE(LPVOID Data, DWORD Length)
 	ROOM_PTR RoomPtr = ROOMMGR.Search(RoomNumber);
 	if (RoomPtr != NULL)
 	{
-		PlayerPtr pPlayer = PLAYERMGR.Search(pOwner->GetPair());
-		if (pPlayer != NULL)
+		if (RoomPtr->FindPlayer(pPlayer) != USHRT_MAX)
 		{
-			if (RoomPtr->FindPlayer(pPlayer) != USHRT_MAX)
-			{
-				FC_PKT_LEAVE_ROOM_RES res;
+			FC_PKT_LEAVE_ROOM_RES res;
 
-				res.Result = FC_PKT_LEAVE_ROOM_RES::SUCCESS;
-				res.PlayerName = pPlayer->m_Account.GetName();
+			res.Result = FC_PKT_LEAVE_ROOM_RES::SUCCESS;
+			res.PlayerName = pPlayer->m_Account.GetName();
 
-				DECLARE_JSON_WRITER
-				ADD_JSON_MEMBER("Result", FC_PKT_LEAVE_ROOM_RES::SUCCESS)
-					ADD_JSON_WSTR_MEMBER("PlayerName", res.PlayerName)
+			DECLARE_JSON_WRITER
+			ADD_JSON_MEMBER("Result", FC_PKT_LEAVE_ROOM_RES::SUCCESS)
+				ADD_JSON_WSTR_MEMBER("PlayerName", res.PlayerName)
 
-					Json::FastWriter writer;
-				std::string outputConfig = writer.write(root2);
+				Json::FastWriter writer;
+			std::string outputConfig = writer.write(root2);
 
-				RoomPtr->SendToAll(ID_FC_PKT_LEAVE_ROOM_RES, (BYTE *)outputConfig.c_str(), outputConfig.size());
+			RoomPtr->SendToAll(ID_FC_PKT_LEAVE_ROOM_RES, (BYTE *)outputConfig.c_str(), outputConfig.size());
 
-				RoomPtr->RemovePlayer(pPlayer);
-				pPlayer->m_RoomNumber = 0;
+			RoomPtr->RemovePlayer(pPlayer);
+			pPlayer->m_RoomNumber = 0;
 
-				if (RoomPtr->GetCurrPlayer() == 0)
-					ROOMMGR.Del(RoomPtr);
-			}
-
-			pPlayer->m_Char[0].SetAllComplete(FALSE);
-			pPlayer->m_Char[0].SetReady(FALSE);
-
-			return;
+			if (RoomPtr->GetCurrPlayer() == 0)
+				ROOMMGR.Del(RoomPtr);
 		}
+
+		pPlayer->m_Char[0].SetAllComplete(FALSE);
+		pPlayer->m_Char[0].SetReady(FALSE);
+
+		return;
+		
 	}
 
 	DECLARE_JSON_WRITER
@@ -374,13 +371,7 @@ VOID BoardProcess::ALL_COMPLETE(LPVOID Data, DWORD Length)
 		return;
 	}
 
-	if (pPlayer != NULL)
-	{
-		pPlayer->m_Char[0].SetAllComplete(TRUE);
-	}
-	else
-		return;
-
+	pPlayer->m_Char[0].SetAllComplete(TRUE);
 
 	ROOM_PTR pPtr = ROOMMGR.Search(pPlayer->m_RoomNumber);
 	if (pPtr != NULL)

@@ -38,9 +38,7 @@ public:
 	Account		m_Account;
 	Character	m_Char[MAX_CHAR_CNT];
 
-	DWORD		m_GameServerId;
 
-	DWORD		m_UnityServerId;
 	DWORD       m_PairSessionId;
 
 	DWORD		m_ChannelId;

@@ -77,7 +77,7 @@
 		{
 			DBPROCESS_CER_PTR process = iter->second;
 
-			process->Initalize(_T("GS_ACCOUNT"),_T("SQL_NHS"),_T("SQL_NHS"));
+			process->Initalize(_T("board"),_T("blessnhs"),_T("blessnhs"));
 
 			iter++;
 		}
