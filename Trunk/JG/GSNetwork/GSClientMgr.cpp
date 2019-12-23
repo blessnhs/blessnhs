@@ -16,15 +16,15 @@ GSClientMgr::~GSClientMgr(void)
 
 VOID GSClientMgr::CheckAliveTime()
 {
-	for (DWORD i=0;i<m_Clients.size();i++)
+	for each (auto client in m_Clients)
 	{
-		if (m_Clients[i]->GetConnected())
+		if (client.second->GetConnected())
 		{
-			GSServer::GSServer *pServer = (GSServer::GSServer *)m_Clients[i]->m_GSServer;
+			GSServer::GSServer *pServer = (GSServer::GSServer *)client.second->m_GSServer;
 
-			if(m_Clients[i]->GetAliveTime() + (pServer->GetArgument().m_AliveTime * 1000) <= GetTickCount())
-				if( m_Clients[i]->GetType() == _PLAYER_ )
-					m_Clients[i]->OnDisconnect();
+			if(client.second->GetAliveTime() + (pServer->GetArgument().m_AliveTime * 1000) <= GetTickCount())
+				if(client.second->GetType() == _PLAYER_ )
+					client.second->OnDisconnect();
 		}
 	}
 }
@@ -32,9 +32,9 @@ VOID GSClientMgr::CheckAliveTime()
 int GSClientMgr::GetActiveSocketCount()
 {
 	int Count = 0;
-	for (DWORD i=0;i<m_Clients.size();i++)
+	for each (auto client in m_Clients)
 	{
-		if (m_Clients[i]->GetConnected() == FALSE)
+		if (client.second->GetConnected() == FALSE)
 		{
 			Count++;
 		}
@@ -54,7 +54,6 @@ BOOL GSClientMgr::Begin(SOCKET ListenSocket,WORD MaxClients,LPVOID pServer)
 	{
 		GSCLIENT *pClient = new GSCLIENT();
 		pClient->Create(TCP);
-		m_Clients.push_back(pClient);
 		pClient->m_GSServer = pServer;
 
 		if (!pClient->GetTCPSocket()->Initialize())
@@ -71,6 +70,8 @@ BOOL GSClientMgr::Begin(SOCKET ListenSocket,WORD MaxClients,LPVOID pServer)
 
 		pClient->SetId(i);
 		pClient->SetType(_PLAYER_);
+		m_Clients[i] = pClient;
+
 	}
 
 	return TRUE;

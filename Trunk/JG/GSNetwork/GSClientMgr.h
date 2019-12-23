@@ -1,6 +1,7 @@
 #pragma once
 
 #include "GSClient.h"
+#include <concurrent_unordered_map.h>
 
 namespace GSNetwork	{	namespace GSClientMgr	{
 
@@ -20,8 +21,7 @@ public:
 	VOID End();
 
 
-
-	std::vector<GSClient::GSClient*> m_Clients;
+	concurrency::concurrent_unordered_map<int, GSClient::GSClient*> m_Clients;
 };
 
 }	}

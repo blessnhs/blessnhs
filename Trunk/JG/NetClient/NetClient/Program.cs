@@ -480,7 +480,7 @@ public class Client
 
 public class Process
 {
-    public int max = 11;
+    public int max = 20;
 
     public Client[] login;
     public Client[] front;
@@ -490,26 +490,30 @@ public class Process
     public void start()
     {
    
-        login = new Client[max]; 
-        front = new Client[max];
-        for (int i = 1; i < max; i++)
+        login = new Client[max];
+
+        while (true)
         {
-            login[i] = new Client(i);
-            login[i].sequence = i;
 
-            front[i] = new Client(i);
-            front[i].sequence = i;
+            for (int i = 1; i < max; i++)
+            {
+                login[i] = new Client(i);
+                login[i].sequence = i;
 
-            login[i].Front = front[i];
+                login[i].ConnectPos = 0;
+                login[i].StartClient("127.0.0.1", 20003);
 
-            //릴레이 서버 테스트 인자;
-            login[i].ConnectPos = 0;
-            login[i].StartClient("127.0.0.1", 20000);
+                Thread.Sleep(10);
+            }
 
-            Thread.Sleep(1);
+            for (int i = 1; i < max; i++)
+            {
+                login[i].socket.Close();
+                Thread.Sleep(10);
+            }
+
         }
-
-        DateTime NOW = DateTime.Now;
+            DateTime NOW = DateTime.Now;
 
 
         while (true)
