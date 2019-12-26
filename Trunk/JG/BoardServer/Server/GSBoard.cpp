@@ -16,7 +16,7 @@ GSBoard::~GSBoard(void)
 {
 }
 
-BOOL GSBoard::Disconnect(GSCLIENT *pSession)
+BOOL GSBoard::Disconnect(GSCLIENT_PTR pSession)
 {
 	PlayerPtr pPlayer = PLAYERMGR.Search(pSession->GetPair());
 	if (pPlayer != NULL)
@@ -36,7 +36,7 @@ BOOL GSBoard::Disconnect(GSCLIENT *pSession)
 	return TRUE;
 }
 
-VOID GSBoard::Accept(GSCLIENT *object)
+VOID GSBoard::Accept(GSCLIENT_PTR object)
 {
 
 }

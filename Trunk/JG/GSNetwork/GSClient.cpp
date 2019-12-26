@@ -8,7 +8,7 @@
 #include "GSAllocator.h"
 #include "GSServer.h"
 
-namespace GSNetwork	{	namespace GSClient	{
+//namespace GSNetwork	{	namespace GSClient	{
 
 GSClient::GSClient(void)
 {
@@ -47,18 +47,18 @@ BOOL  GSClient::Create(BYTE Type)
 		m_TCPSocket = TCP;
 
 		m_CreateType = Type;
-		m_TCPSocket->m_Accept_OLP.Object = this;
-		m_TCPSocket->m_Read_OLP.Object   = this;
-		m_TCPSocket->m_Write_OLP.Object  = this;
+		m_TCPSocket->m_Accept_OLP.Object = shared_from_this();
+		m_TCPSocket->m_Read_OLP.Object   = shared_from_this();
+		m_TCPSocket->m_Write_OLP.Object  = shared_from_this();
 	}
 	else if(Type == UDP)
 	{
 		boost::shared_ptr<GSPacketUDP> UDP(new GSPacketUDP);
 		m_UDPSocket = UDP;
 		m_CreateType = Type;
-		m_UDPSocket->m_Accept_OLP.Object = this;
-		m_UDPSocket->m_Read_OLP.Object   = this;
-		m_UDPSocket->m_Write_OLP.Object  = this;
+		m_UDPSocket->m_Accept_OLP.Object = shared_from_this();
+		m_UDPSocket->m_Read_OLP.Object   = shared_from_this();
+		m_UDPSocket->m_Write_OLP.Object  = shared_from_this();
 	}
 	else
 		return FALSE;
@@ -252,7 +252,7 @@ VOID GSClient::TakeMsg()
 	pPlayerPacket->pHandler= this;
 	pPlayerPacket->Type	= GetMyTP();
 	pPlayerPacket->SubType = ONPACKET;
-	pPlayerPacket->pClient = this;
+	pPlayerPacket->pClient = shared_from_this();
 
 	MAINPROC.RegisterCommand(pPlayerPacket);
 }
@@ -305,7 +305,7 @@ VOID GSClient::ProcDisconnect()
 		return ;
 	}
 
-	if(pServer->Disconnect(this) == TRUE)
+	if(pServer->Disconnect(shared_from_this()) == TRUE)
 	{
 		SetConnected(FALSE);
 		Clear();
@@ -404,7 +404,7 @@ void GSClient::OnConnect()
 
 	SetAliveTime(GetTickCount());
 
-	pServer->Accept(this);
+	pServer->Accept(shared_from_this());
 
 	/*
 	GSServer::GSServer *pServer = (GSServer::GSServer *)m_GSServer;
@@ -465,4 +465,4 @@ DWORD GSClient::GetDBStampTime()
 }
 
 
-}	}
+//}	}

@@ -5,6 +5,7 @@
 #include "Systimer.h"
 #include "MiniDump.h"
 #include "GSMainProcess.h"
+#include <boost/make_shared.hpp>
 
 namespace GSNetwork	{	namespace GSServer	{
 
@@ -56,27 +57,23 @@ bool GSServer::Create(GSArgument arg)
 }
 
 
-VOID GSServer::OnRead(VOID *pObject, DWORD dataLength)
+VOID GSServer::OnRead(boost::shared_ptr<GSClient> pClient, DWORD dataLength)
 {
-	GSClient::GSClient *pClient = reinterpret_cast<GSClient::GSClient*>(pObject);
-
 	pClient->OnRecv(dataLength);
 
 	if (!pClient->InitializeReadForIocp())
 		OnDisconnected(pClient);
 }
 
-VOID GSServer::OnWrote(VOID *pObject, DWORD dataLength)
+VOID GSServer::OnWrote(boost::shared_ptr<GSClient> pClient, DWORD dataLength)
 {
-	GSClient::GSClient *pClient = reinterpret_cast<GSClient::GSClient*>(pObject);
 	pClient->WriteComplete();
 }
 
-VOID GSServer::OnConnected(VOID *pObject)
+VOID GSServer::OnConnected(boost::shared_ptr<GSClient> pClient)
 {
-	GSClient::GSClient *pClient = reinterpret_cast<GSClient::GSClient*>(pObject);
 
-	if (!GSIocp::RegIocpHandler(pClient->GetSocket(), reinterpret_cast<ULONG_PTR>(pClient))) 
+	if (!GSIocp::RegIocpHandler(pClient->GetSocket(), reinterpret_cast<ULONG_PTR>(&pClient))) 
 		return;
 
 	if (!pClient->InitializeReadForIocp())
@@ -88,14 +85,12 @@ VOID GSServer::OnConnected(VOID *pObject)
 	pClient->OnConnect();	
 }
 
-VOID GSServer::OnDisconnected(VOID *pObject)	
+VOID GSServer::OnDisconnected(boost::shared_ptr<GSClient> pClient)
 {
-	GSClient::GSClient *pClient = reinterpret_cast<GSClient::GSClient*>(pObject);
-
 	pClient->OnDisconnect();
 }
 
-GSCLIENT* GSServer::GetTcpListen()
+GSCLIENT_PTR GSServer::GetTcpListen()
 {
 	return m_pTCPListen;
 }
@@ -120,7 +115,6 @@ VOID GSServer::End(VOID)
 	{
 		m_pTCPListen->GetTCPSocket()->Termination();
 
-		delete m_pTCPListen;
 	}
 
 	for(int i=0;i<m_UDPListenPorts.size();i++)
@@ -149,7 +143,7 @@ BOOL GSServer::BeginTCP()
 {
 	if (!GSIocp::Initialize()) return FALSE;
 
-	m_pTCPListen = new GSCLIENT();
+	m_pTCPListen = boost::make_shared<GSClient>();
 	m_pTCPListen->Create(TCP);
 
 	if (!m_pTCPListen->GetTCPSocket()->Initialize())
@@ -173,7 +167,7 @@ BOOL GSServer::BeginTCP()
 		return FALSE;
 	}
 
-	if (!GSIocp::RegIocpHandler(m_pTCPListen->GetSocket(), reinterpret_cast<ULONG_PTR>(m_pTCPListen)))
+	if (!GSIocp::RegIocpHandler(m_pTCPListen->GetSocket(), (ULONG_PTR)((&m_pTCPListen))))
 	{
 		GSServer::End();
 
@@ -234,7 +228,7 @@ GSArgument &GSServer::GetArgument()
 	return m_Arguments;
 }
 
-GSCLIENT*	GSServer::GetClient(DWORD _Id)
+GSCLIENT_PTR	GSServer::GetClient(DWORD _Id)
 {
 	if(_Id < 0 ) return NULL;
 

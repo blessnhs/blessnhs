@@ -21,7 +21,7 @@ public:
 	VOID End();
 
 
-	concurrency::concurrent_unordered_map<int, GSClient::GSClient*> m_Clients;
+	concurrency::concurrent_unordered_map<int, GSCLIENT_PTR> m_Clients;
 };
 
 }	}

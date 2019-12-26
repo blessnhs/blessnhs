@@ -12,8 +12,8 @@ public:
 
 	BOOL Initialize();
 
-	BOOL Disconnect(GSCLIENT *object);
-	VOID Accept(GSCLIENT *object);
+	BOOL Disconnect(GSCLIENT_PTR object);
+	VOID Accept(GSCLIENT_PTR object);
 
 	BoardINI			  m_Ini;
 	

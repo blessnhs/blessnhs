@@ -1,6 +1,8 @@
 #pragma once
 
 #include "common.h"
+#include <boost/shared_ptr.hpp>
+class GSClient;
 
 enum IO_TYPE
 {
@@ -13,7 +15,7 @@ typedef struct _OVERLAPPED_EX
 {
 	OVERLAPPED	Overlapped;
 	IO_TYPE		IoType;
-	VOID		*Object;
+	boost::shared_ptr<GSClient>		Object;
 
 } OVERLAPPED_EX;
 

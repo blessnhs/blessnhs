@@ -11,7 +11,8 @@
 #include <boost/pool/object_pool.hpp>
 #include <boost/enable_shared_from_this.hpp>
 
-namespace GSNetwork	{	namespace GSClient	{
+using namespace GSNetwork;
+//namespace GSNetwork	{	namespace GSClient	{
 
 typedef GSSocket::GSPacket::GSPacketTCP::GSPacketTCP GSPacketTCP;
 typedef GSSocket::GSPacket::GSPacketUDP::GSPacketUDP GSPacketUDP;
@@ -135,9 +136,9 @@ public:
 	_LogContext										m_LoginContext;
 };
 
-#define GSCLIENT  GSNetwork::GSClient::GSClient
+#define GSCLIENT  GSClient
 
 #define GSCLIENT_PTR  boost::shared_ptr<GSCLIENT>
 
 
-}	}
+//}	}

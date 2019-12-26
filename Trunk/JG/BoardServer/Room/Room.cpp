@@ -111,7 +111,7 @@ void Room::SendNewUserInfo(PLAYER_PTR Player)
 	{
 		if (iter->second != NULL)
 		{
-			GSCLIENT *pPair = SERVER.GetClient(iter->second ->GetPair());
+			GSCLIENT_PTR pPair = SERVER.GetClient(iter->second ->GetPair());
 			if(pPair != NULL)
 			{
 				//if(Player->GetId() != iter->second->GetId())

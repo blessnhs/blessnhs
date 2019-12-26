@@ -1,5 +1,8 @@
 #pragma once
 
+#include <boost/shared_ptr.hpp>
+class GSClient;
+
 namespace GSNetwork	{	namespace GSIocp	{
 
 class GSIocp
@@ -17,10 +20,10 @@ private:
 	HANDLE				m_BeginEvtHandle;
 
 protected:
-	virtual VOID		OnRead(VOID *object, DWORD dataLength)	= 0;
-	virtual VOID		OnWrote(VOID *object, DWORD dataLength)	= 0;
-	virtual VOID		OnConnected(VOID *object)				= 0;
-	virtual VOID		OnDisconnected(VOID *object)			= 0;
+	virtual VOID		OnRead(boost::shared_ptr<GSClient> object, DWORD dataLength)	= 0;
+	virtual VOID		OnWrote(boost::shared_ptr<GSClient> object, DWORD dataLength)	= 0;
+	virtual VOID		OnConnected(boost::shared_ptr<GSClient> object)				= 0;
+	virtual VOID		OnDisconnected(boost::shared_ptr<GSClient> object)			= 0;
 
 public:
 	BOOL				Initialize(VOID);

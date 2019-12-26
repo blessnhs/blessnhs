@@ -12,7 +12,7 @@ public:
 	MSG_PLAYER_ACCEPT();
 	~MSG_PLAYER_ACCEPT();
 
-	GSCLIENT		*pClient;
+	GSCLIENT_PTR		pClient;
 
 	void Execute(LPVOID Param);
 	void Undo(){}

@@ -1,6 +1,7 @@
 #include "StdAfx.h"
 #include "GSClientMgr.h"
 #include "GSServer.h"
+#include <boost/make_shared.hpp>
 
 namespace GSNetwork	{	namespace GSClientMgr	{
 
@@ -52,7 +53,7 @@ BOOL GSClientMgr::Begin(SOCKET ListenSocket,WORD MaxClients,LPVOID pServer)
 
 	for (DWORD i=0;i<MaxUser;i++)
 	{
-		GSCLIENT *pClient = new GSCLIENT();
+		GSCLIENT_PTR pClient = boost::make_shared<GSClient>();
 		pClient->Create(TCP);
 		pClient->m_GSServer = pServer;
 

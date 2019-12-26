@@ -15,8 +15,8 @@ public:
 	MSG_PLAYER_CLOSE();
 	~MSG_PLAYER_CLOSE();
 
-	GSCLIENT			*pClient;
-	GSCLIENT			*pListen;
+	GSCLIENT_PTR			pClient;
+	GSCLIENT_PTR			pListen;
 
 	void Execute(LPVOID Param);
 	void Undo(){}

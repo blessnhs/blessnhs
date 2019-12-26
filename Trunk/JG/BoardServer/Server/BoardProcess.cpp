@@ -166,7 +166,7 @@ VOID BoardProcess::ROOM_ENTER(LPVOID Data, DWORD Length)
 
 			if (iter->second->m_Account.GetName() != pPlayer->m_Account.GetName())
 			{
-				GSCLIENT *pPair = SERVER.GetClient(pPlayer->GetPair());
+				GSCLIENT_PTR pPair = SERVER.GetClient(pPlayer->GetPair());
 
 				DECLARE_JSON_WRITER
 				ADD_JSON_MEMBER("Pos", pos)

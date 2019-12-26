@@ -33,12 +33,12 @@ public:
 	BOOL														  BeginUDP();
 	VOID														  End(VOID);
 
-	virtual VOID												  OnRead(VOID *object, DWORD dataLength);
-	virtual VOID												  OnWrote(VOID *object, DWORD dataLength);
-	virtual VOID												  OnConnected(VOID *object);
-	virtual VOID												  OnDisconnected(VOID *object);
+	virtual VOID												  OnRead(boost::shared_ptr<GSClient> object, DWORD dataLength);
+	virtual VOID												  OnWrote(boost::shared_ptr<GSClient> object, DWORD dataLength);
+	virtual VOID												  OnConnected(boost::shared_ptr<GSClient> object);
+	virtual VOID												  OnDisconnected(boost::shared_ptr<GSClient> object);
 
-	GSCLIENT*													  GetTcpListen();
+	GSCLIENT_PTR												  GetTcpListen();
 	std::vector<GSCLIENT*>										 &GetUDPListenPorts();
 	GSClientMgr::GSClientMgr									 &GetClientMgr();
 
@@ -54,16 +54,16 @@ public:
 		}
 	}
 
-	GSCLIENT*													  GetClient(DWORD _Id);
+	GSCLIENT_PTR												  GetClient(DWORD _Id);
 
-	virtual BOOL												  Disconnect(GSCLIENT *object) = 0;
-	virtual VOID												  Accept(GSCLIENT *object) = 0;
+	virtual BOOL												  Disconnect(GSCLIENT_PTR object) = 0;
+	virtual VOID												  Accept(GSCLIENT_PTR object) = 0;
 
 private:
 
 	GSClientMgr::GSClientMgr									  m_ClientMgr;
 
-	GSCLIENT													 *m_pTCPListen;
+	GSCLIENT_PTR												  m_pTCPListen;
 	std::vector<GSCLIENT*>										  m_UDPListenPorts;
 	std::vector<GSSocket::GSSocketUDP::GSSocketUDP*>			  m_FreePorts;
 

@@ -103,11 +103,11 @@ VOID GSIocp::WorkerThread(VOID)
 	VOID			*CompletionKey			= NULL;
 	OVERLAPPED		*Overlapped				= NULL;
 	OVERLAPPED_EX	*OverlappedEx			= NULL;
-	VOID			*Object					= NULL;
+	boost::shared_ptr<GSClient>			Object;
 
 	while (TRUE)
 	{
-		__try
+//		__try
 		{
 		
 			SetEvent(m_BeginEvtHandle);
@@ -140,12 +140,11 @@ VOID GSIocp::WorkerThread(VOID)
 
 			if(Successed == FALSE && Overlapped != NULL && Object != NULL)
 			 {
-				GSNetwork::GSClient::GSClient *pCommon = reinterpret_cast<GSNetwork::GSClient::GSClient*>(Object);
 				DWORD dwError = GetLastError();
 				if(dwError==ERROR_OPERATION_ABORTED || dwError==ERROR_NETNAME_DELETED)
 				{
 				//	if(pCommon->GetSocketStatus() != STATUS_DISCONNECTED)
-					if(pCommon->GetConnected() ==  TRUE)
+					if(Object->GetConnected() ==  TRUE)
 					{
 						OnDisconnected(Object);
 						continue;
@@ -187,10 +186,9 @@ VOID GSIocp::WorkerThread(VOID)
 			}
 		
 		}
-		__except( ExceptionFilter(GetExceptionInformation(),"IOCP Handler") )
+/*		__except( ExceptionFilter(GetExceptionInformation(),"IOCP Handler") )
         {
-			GSNetwork::GSClient::GSClient *pCommon = reinterpret_cast<GSNetwork::GSClient::GSClient*>(Object);
-			if(pCommon != NULL)
+			if(Object != NULL)
 			{
 				OnDisconnected(Object);
 			}
@@ -201,7 +199,7 @@ VOID GSIocp::WorkerThread(VOID)
 			printf("IOCP WORKER THREAD EXCEPTION DETECTED\n");
 			printf("IOCP WORKER THREAD EXCEPTION DETECTED\n");
 			printf("IOCP WORKER THREAD EXCEPTION DETECTED\n");
-		}
+		}*/
 	}
 }
 

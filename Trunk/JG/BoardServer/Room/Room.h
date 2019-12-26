@@ -55,7 +55,7 @@ public:
 		std::map<DWORD,PLAYER_PTR>::iterator iter = m_PlayerMap.begin();
 		while(iter != m_PlayerMap.end())
 		{
-			GSCLIENT *pSession = IOCP.GetSessionMgr()->GetSession(iter->second->GetPair());
+			GSCLIENT_PTR pSession = IOCP.GetSessionMgr()->GetSession(iter->second->GetPair());
 			
 			if (pSession)
 				Sender::Send(pSession,snd);
@@ -68,7 +68,7 @@ public:
 		std::map<DWORD,PLAYER_PTR>::iterator iter = m_PlayerMap.begin();
 		while(iter != m_PlayerMap.end())
 		{
-			GSCLIENT *pSession = SERVER.GetClient(iter->second->GetPair());
+			GSCLIENT_PTR pSession = SERVER.GetClient(iter->second->GetPair());
 			
 			if(pSession)
 				pSession->GetTCPSocket()->WritePacket(MainId,0,Data,Length);
