@@ -1,5 +1,6 @@
 #include "StdAfx.h"
 #include "GSSocket.h"
+#include <WinSock2.h>
 
 namespace GSNetwork	{ namespace GSSocket	{
 
@@ -16,11 +17,6 @@ GSSocket::GSSocket(VOID)
 	m_Accept_OLP.IoType					= IO_ACCEPT;
 	m_Read_OLP.IoType					= IO_READ;
 	m_Write_OLP.IoType					= IO_WRITE;
-
-	m_Accept_OLP.Object					= this;
-	m_Read_OLP.Object					= this;
-	m_Write_OLP.Object					= this;
-	m_dwState							= STATUS_DISCONNECTED;
 
 	m_bConnected = FALSE;
 }
@@ -60,7 +56,6 @@ BOOL GSSocket::Termination(VOID)
 	closesocket(m_Socket);
 
 	m_Socket					= NULL;
-	m_dwState					= STATUS_DISCONNECTED;
 	return TRUE;
 }
 
@@ -80,7 +75,7 @@ BOOL GSSocket::Listen(USHORT port, INT backLog)
 	ListenSocketInfo.sin_port				= htons(port);
 	ListenSocketInfo.sin_addr.S_un.S_addr	= htonl(INADDR_ANY);
 
-	if (bind(m_Socket, (struct sockaddr*) &ListenSocketInfo, sizeof(SOCKADDR_IN)) == SOCKET_ERROR)
+	if (::bind(m_Socket, (struct sockaddr*) &ListenSocketInfo, sizeof(SOCKADDR_IN)) == SOCKET_ERROR)
 	{
 		Termination();
 

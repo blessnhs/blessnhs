@@ -3,7 +3,6 @@
 #include "GSObject.h"
 #include "IHandler.h"
 #include "./IMessage.h"
-#include "GSQueue.h"
 #include <concurrent_queue.h>
 
 namespace GSFrames	{	namespace GSReactorImpl	{

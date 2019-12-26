@@ -258,9 +258,6 @@
     <ClInclude Include="GSLog.h">
       <Filter>Frame</Filter>
     </ClInclude>
-    <ClInclude Include="GSMap.h">
-      <Filter>Frame</Filter>
-    </ClInclude>
     <ClInclude Include="GSOdbc.h">
       <Filter>Frame</Filter>
     </ClInclude>
@@ -268,9 +265,6 @@
       <Filter>Frame</Filter>
     </ClInclude>
     <ClInclude Include="GSProactorImpl.h">
-      <Filter>Frame</Filter>
-    </ClInclude>
-    <ClInclude Include="GSQueue.h">
       <Filter>Frame</Filter>
     </ClInclude>
     <ClInclude Include="GSReactor.h">
@@ -491,9 +485,6 @@
     <ClCompile Include="GSLog.cpp">
       <Filter>Frame</Filter>
     </ClCompile>
-    <ClCompile Include="GSMap.cpp">
-      <Filter>Frame</Filter>
-    </ClCompile>
     <ClCompile Include="GSOdbc.cpp">
       <Filter>Frame</Filter>
     </ClCompile>
@@ -501,9 +492,6 @@
       <Filter>Frame</Filter>
     </ClCompile>
     <ClCompile Include="GSProactorImpl.cpp">
-      <Filter>Frame</Filter>
-    </ClCompile>
-    <ClCompile Include="GSQueue.cpp">
       <Filter>Frame</Filter>
     </ClCompile>
     <ClCompile Include="GSReactor.cpp">

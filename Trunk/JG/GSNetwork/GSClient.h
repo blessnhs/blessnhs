@@ -9,7 +9,7 @@
 #include "IClientSession.h"
 
 #include <boost/pool/object_pool.hpp>
-
+#include <boost/enable_shared_from_this.hpp>
 
 namespace GSNetwork	{	namespace GSClient	{
 
@@ -30,7 +30,7 @@ struct _LogContext
 	DWORD Time;
 };
 
-class GSClient : public GSGuard<GSClient>,public IClientSession::IClientSession ,public IResponse , public IHandler<IMessagePtr>
+class GSClient : public GSGuard<GSClient>,public IClientSession::IClientSession ,public IResponse , public IHandler<IMessagePtr>, public boost::enable_shared_from_this<GSClient>
 {
 public:
 
@@ -135,7 +135,9 @@ public:
 	_LogContext										m_LoginContext;
 };
 
-#define GSCLIENT GSNetwork::GSClient::GSClient
+#define GSCLIENT  GSNetwork::GSClient::GSClient
+
+#define GSCLIENT_PTR  boost::shared_ptr<GSCLIENT>
 
 
 }	}

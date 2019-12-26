@@ -89,7 +89,7 @@ BOOL GSSocketUDP::CreateUdpSocket(USHORT port)
 	if (m_Socket == INVALID_SOCKET)
 		return FALSE;
 
-	if (bind(m_Socket, (struct sockaddr*) &RemoteAddressInfo, sizeof(SOCKADDR_IN)) == SOCKET_ERROR)
+	if (::bind(m_Socket, (struct sockaddr*) &RemoteAddressInfo, sizeof(SOCKADDR_IN)) == SOCKET_ERROR)
 	{
 		Termination();
 
