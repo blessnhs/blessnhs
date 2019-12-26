@@ -1,5 +1,6 @@
 #include "StdAfx.h"
 #include "GSSocket.h"
+#include <WinSock2.h>
 
 namespace GSNetwork	{ namespace GSSocket	{
 
@@ -74,7 +75,7 @@ BOOL GSSocket::Listen(USHORT port, INT backLog)
 	ListenSocketInfo.sin_port				= htons(port);
 	ListenSocketInfo.sin_addr.S_un.S_addr	= htonl(INADDR_ANY);
 
-	if (bind(m_Socket, (struct sockaddr*) &ListenSocketInfo, sizeof(SOCKADDR_IN)) == SOCKET_ERROR)
+	if (::bind(m_Socket, (struct sockaddr*) &ListenSocketInfo, sizeof(SOCKADDR_IN)) == SOCKET_ERROR)
 	{
 		Termination();
 
