@@ -53,9 +53,9 @@ public:
 
 protected:
 
-	map<DWORD, PlayerPtr> m_PlayerMap;
+	concurrency::concurrent_unordered_map<DWORD, PlayerPtr> m_PlayerMap;
 
-	CRITICAL_SECTION											  m_PublicLock;
+	CRITICAL_SECTION										  m_PublicLock;
 };
 
 

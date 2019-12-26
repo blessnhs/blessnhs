@@ -28,7 +28,7 @@ public:
 
 protected:
 
-	map<DWORD,ROOM_PTR>											m_RoomMap;
+	concurrency::concurrent_unordered_map<DWORD,ROOM_PTR>		m_RoomMap;
 
 	CRITICAL_SECTION											m_PublicLock;
 };
