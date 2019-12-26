@@ -26,7 +26,6 @@ protected:
 	BYTE			m_Buffer[MAX_BUFFER_LENGTH];
 
 	SOCKET			m_Socket;
-	DWORD			m_dwState;
 
 	BOOL			m_bConnected;
 
@@ -44,8 +43,6 @@ public:
 	BOOL			Connect(LPSTR address, USHORT port);
 
 	SOCKET			GetSocket(VOID);
-	DWORD			GetSocketStatus()			{ return m_dwState; }
-	VOID			SetSocketStatus(BYTE State) { m_dwState = State; }
 	
 	long			ExceptionFilter(LPEXCEPTION_POINTERS pExceptionInfo, char *Info);
 	long			ExceptionFilter(LPEXCEPTION_POINTERS pExceptionInfo, DWORD Info);

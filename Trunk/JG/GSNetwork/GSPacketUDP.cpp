@@ -31,7 +31,6 @@ BOOL	GSPacketUDP::Termination(VOID)
 
 	GSPacket::Termination();
 
-	SetSocketStatus(STATUS_DISCONNECTED);
 #ifndef CLIENT_MODULE
 	m_PacketList.clear();
 #endif

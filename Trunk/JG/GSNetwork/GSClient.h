@@ -135,7 +135,9 @@ public:
 	_LogContext										m_LoginContext;
 };
 
-#define GSCLIENT GSNetwork::GSClient::GSClient
+#define GSCLIENT  GSNetwork::GSClient::GSClient
+
+#define GSCLIENT_PTR  boost::shared_ptr<GSCLIENT>
 
 
 }	}
