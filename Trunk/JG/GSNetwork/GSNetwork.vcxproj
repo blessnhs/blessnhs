@@ -22,7 +22,7 @@
     <ProjectGuid>{5CC150A9-431C-400E-ADCA-287D34A466EC}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>GSNetwork</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.15063.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -184,7 +184,6 @@
     <ClInclude Include="GSIocp.h" />
     <ClInclude Include="GSLog.h" />
     <ClInclude Include="GSMainProcess.h" />
-    <ClInclude Include="GSMap.h" />
     <ClInclude Include="GSMemPool.h" />
     <ClInclude Include="GSObject.h" />
     <ClInclude Include="GSOdbc.h" />
@@ -193,7 +192,6 @@
     <ClInclude Include="GSPacketUDP.h" />
     <ClInclude Include="GSProactor.h" />
     <ClInclude Include="GSProactorImpl.h" />
-    <ClInclude Include="GSQueue.h" />
     <ClInclude Include="GSReactor.h" />
     <ClInclude Include="GSReactorImpl.h" />
     <ClInclude Include="GSSerialize.h" />
@@ -270,7 +268,6 @@
     <ClCompile Include="GSIocp.cpp" />
     <ClCompile Include="GSLog.cpp" />
     <ClCompile Include="GSMainProcess.cpp" />
-    <ClCompile Include="GSMap.cpp" />
     <ClCompile Include="GSMemPool.cpp" />
     <ClCompile Include="GSObject.cpp" />
     <ClCompile Include="GSOdbc.cpp" />
@@ -279,7 +276,6 @@
     <ClCompile Include="GSPacketUDP.cpp" />
     <ClCompile Include="GSProactor.cpp" />
     <ClCompile Include="GSProactorImpl.cpp" />
-    <ClCompile Include="GSQueue.cpp" />
     <ClCompile Include="GSReactor.cpp" />
     <ClCompile Include="GSReactorImpl.cpp" />
     <ClCompile Include="GSSerialize.cpp" />
