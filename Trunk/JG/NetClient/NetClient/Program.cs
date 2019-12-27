@@ -480,7 +480,7 @@ public class Client
 
 public class Process
 {
-    public int max = 20;
+    public int max = 2;
 
     public Client[] login;
     public Client[] front;
@@ -492,31 +492,42 @@ public class Process
    
         login = new Client[max];
 
-        while (true)
+         while (true)
         {
 
-            for (int i = 1; i < max; i++)
             {
-                login[i] = new Client(i);
-                login[i].sequence = i;
+                Client login = new Client(i);
+                login.sequence = i;
 
-                login[i].ConnectPos = 0;
-                login[i].StartClient("127.0.0.1", 20003);
+                login.ConnectPos = 0;
+                login.StartClient("127.0.0.1", 20003);
 
                 Thread.Sleep(10);
+
+                string id = String.Format("nhs{0}", 1);
+                string pwd = String.Format("nhs{0}", 1);
+
+                for (int i = 0; i < 100; i++)
+                { 
+                JsonObjectCollection collection = new JsonObjectCollection();
+                collection.Add(new JsonStringValue("Id", id));
+                collection.Add(new JsonStringValue("Passwd", pwd));
+
+                login.WritePacket(30000, System.Text.Encoding.UTF8.GetBytes(collection.ToString()), collection.ToString().Length);
+                }
+//                login.socket.Close();
             }
 
             for (int i = 1; i < max; i++)
             {
-                login[i].socket.Close();
+        //        login[i].socket.Close();
                 Thread.Sleep(10);
             }
 
         }
             DateTime NOW = DateTime.Now;
-
-
-        while (true)
+   
+           while (true)
         {
             for (int i = 1; i < max; i++)
             {

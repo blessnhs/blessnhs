@@ -59,7 +59,7 @@ int		CDBProcessCer::ProcedureUserLogin(const WCHAR* id, const WCHAR* pw, std::ws
 		{	// true is Disconnected...
 
 
-			if (m_pDB->SQLErrorMsg(hstmt, (LPCSTR)__FUNCTION__) == true)
+			if (m_pDB->SQLErrorMsg(hstmt, _T(__FUNCTION__)) == true)
 			{
 				wprintf(_T("database server Network Error... %s() \n"), __FUNCTION__);
 				m_pDB->Close();

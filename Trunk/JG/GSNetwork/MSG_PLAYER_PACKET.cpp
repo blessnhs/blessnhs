@@ -25,7 +25,7 @@ void MSG_PLAYER_PACKET::Execute(LPVOID Param)
 {
 	if(pClient != NULL)
 	{
-		pClient->ProcPacket();
+		pClient->ProcPacket(pClient);
 	}
 }
 

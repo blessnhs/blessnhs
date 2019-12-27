@@ -6,7 +6,7 @@
 
 namespace GSNetwork {	namespace IPlayerProcess	{
 
-class IPlayerProcess : public IProcess<GSCLIENT>
+class IPlayerProcess : public IProcess<int>
 {
 public:
 	IPlayerProcess(void);

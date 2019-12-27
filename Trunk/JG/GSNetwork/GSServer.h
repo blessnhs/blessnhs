@@ -33,10 +33,10 @@ public:
 	BOOL														  BeginUDP();
 	VOID														  End(VOID);
 
-	virtual VOID												  OnRead(boost::shared_ptr<GSClient> object, DWORD dataLength);
-	virtual VOID												  OnWrote(boost::shared_ptr<GSClient> object, DWORD dataLength);
-	virtual VOID												  OnConnected(boost::shared_ptr<GSClient> object);
-	virtual VOID												  OnDisconnected(boost::shared_ptr<GSClient> object);
+	virtual VOID												  OnRead(int client_id, DWORD dataLength);
+	virtual VOID												  OnWrote(int client_id, DWORD dataLength);
+	virtual VOID												  OnConnected(int client_id);
+	virtual VOID												  OnDisconnected(int client_id);
 
 	GSCLIENT_PTR												  GetTcpListen();
 	std::vector<GSCLIENT*>										 &GetUDPListenPorts();
@@ -47,14 +47,18 @@ public:
 	template<class U>
 	VOID														  SetHandler()
 	{
-		for(int i=0;i<m_ClientMgr.m_Clients.size();i++)
+		for each (auto client in m_ClientMgr.m_Clients)
 		{
-			boost::shared_ptr<U> Handler(new U);
-			m_ClientMgr.m_Clients[i]->SetProcess(Handler);
+			if (client.second == NULL)
+				continue;
+
+				boost::shared_ptr<U> Handler(new U);
+				client.second->SetProcess(Handler);
 		}
 	}
 
 	GSCLIENT_PTR												  GetClient(DWORD _Id);
+	int															  IncClinetId();
 
 	virtual BOOL												  Disconnect(GSCLIENT_PTR object) = 0;
 	virtual VOID												  Accept(GSCLIENT_PTR object) = 0;

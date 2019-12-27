@@ -172,7 +172,7 @@ SQLRETURN CDBProcess::OdbcExecDirect(COdbc* odbc, SQLHSTMT	hstmt, WCHAR* query)
 		}
 
 		char err_str[256];
-		if( odbc->SQLErrorMsg(hstmt, (LPCSTR)__FUNCTION__, err_str) == true ) 
+		if( odbc->SQLErrorMsg(hstmt,_T(__FUNCTION__), err_str) == true ) 
 		{
 			while(!odbc->ReConnect())
 			{
@@ -200,7 +200,7 @@ bool CDBProcess::RecordAuthenticKeyFromDB(WCHAR* id, WCHAR* key, WCHAR* ip)
 	retcode = SQLExecDirect (hstmt, szsql, SQL_NTS);
 	if (retcode==SQL_ERROR)
 	{
-		if( m_AccountDB->SQLErrorMsg(hstmt, (LPCSTR)__FUNCTION__) == true ) 
+		if( m_AccountDB->SQLErrorMsg(hstmt, _T(__FUNCTION__)) == true ) 
 		{	
 			wprintf(_T("database server Network Error... %s() \n"), __FUNCTION__);
 			m_AccountDB->Close();
@@ -237,7 +237,7 @@ WORD CDBProcess::GetAuthenticKeyFromDB(const WCHAR* id, const WCHAR* pw,WCHAR* o
 		{	// true is Disconnected...
 
 
-			if( m_AccountDB->SQLErrorMsg(hstmt, (LPCSTR)__FUNCTION__) == true ) 
+			if( m_AccountDB->SQLErrorMsg(hstmt, _T(__FUNCTION__)) == true ) 
 			{	
 				wprintf(_T("database server Network Error... %s() \n"), __FUNCTION__);
 				m_AccountDB->Close();

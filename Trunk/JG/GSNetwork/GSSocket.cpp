@@ -19,6 +19,8 @@ GSSocket::GSSocket(VOID)
 	m_Write_OLP.IoType					= IO_WRITE;
 
 	m_bConnected = FALSE;
+
+	m_ClientId = -1;
 }
 
 BYTE *GSSocket::GetBuffer()
@@ -127,6 +129,8 @@ BOOL GSSocket::Accept(SOCKET listenSocket)
 		return FALSE;
 	}
 
+	m_Accept_OLP.ObjectId = m_ClientId;
+
 	//BOOL NoDelay = TRUE;
 	//setsockopt(m_Socket, IPPROTO_TCP, TCP_NODELAY, (const char FAR *)&NoDelay, sizeof(NoDelay));
 
@@ -164,6 +168,8 @@ BOOL GSSocket::Accept2(SOCKET listenSocket)
 
 		return FALSE;
 	}
+
+	m_Accept_OLP.ObjectId = m_ClientId;
 
 	//BOOL NoDelay = TRUE;
 	//setsockopt(m_Socket, IPPROTO_TCP, TCP_NODELAY, (const char FAR *)&NoDelay, sizeof(NoDelay));

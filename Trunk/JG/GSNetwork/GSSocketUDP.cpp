@@ -161,6 +161,8 @@ BOOL GSSocketUDP::InitializeReadFromForIocp(VOID)
 	WsaBuf.buf			= (CHAR*) m_Buffer;
 	WsaBuf.len			= MAX_BUFFER_LENGTH;
 
+	m_Read_OLP.ObjectId = m_ClientId;
+
 	INT		ReturnValue = WSARecvFrom(m_Socket,
 		&WsaBuf,
 		1,
@@ -201,6 +203,8 @@ BOOL			GSSocketUDP::ReadFromForEventSelect(LPSTR remoteAddress, USHORT &remotePo
 
 	WsaBuf.buf			= (CHAR*) m_Buffer;
 	WsaBuf.len			= MAX_BUFFER_LENGTH;
+
+	m_Read_OLP.ObjectId = m_ClientId;
 
 	INT		ReturnValue = WSARecvFrom(m_Socket,
 		&WsaBuf,
@@ -377,6 +381,8 @@ BOOL			GSSocketUDP::WriteTo2(LPSTR remoteAddress, USHORT remotePort, BYTE *data,
 	RemoteAddressInfo.sin_family			= AF_INET;
 	RemoteAddressInfo.sin_addr.S_un.S_addr	= inet_addr(remoteAddress);
 	RemoteAddressInfo.sin_port				= htons(remotePort);
+
+	m_Write_OLP.ObjectId = m_ClientId;
 
 	INT		ReturnValue	= WSASendTo(m_Socket,
 		&WsaBuf,

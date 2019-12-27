@@ -45,20 +45,17 @@ BOOL  GSClient::Create(BYTE Type)
 	{
 		boost::shared_ptr<GSPacketTCP> TCP(new GSPacketTCP);
 		m_TCPSocket = TCP;
+		m_TCPSocket->m_ClientId = GetId();
 
 		m_CreateType = Type;
-		m_TCPSocket->m_Accept_OLP.Object = shared_from_this();
-		m_TCPSocket->m_Read_OLP.Object   = shared_from_this();
-		m_TCPSocket->m_Write_OLP.Object  = shared_from_this();
 	}
 	else if(Type == UDP)
 	{
 		boost::shared_ptr<GSPacketUDP> UDP(new GSPacketUDP);
 		m_UDPSocket = UDP;
+		m_UDPSocket->m_ClientId = GetId();
+
 		m_CreateType = Type;
-		m_UDPSocket->m_Accept_OLP.Object = shared_from_this();
-		m_UDPSocket->m_Read_OLP.Object   = shared_from_this();
-		m_UDPSocket->m_Write_OLP.Object  = shared_from_this();
 	}
 	else
 		return FALSE;
@@ -177,19 +174,19 @@ BOOL GSClient::GetConnected(VOID)
 	return m_bConnected;
 }
 
-boost::shared_ptr<IProcess<GSClient>> GSClient::GetProcess()
+boost::shared_ptr<IProcess<int>> GSClient::GetProcess()
 {
 	return m_Process;
 }
 
-void GSClient::SetProcess(boost::shared_ptr<IProcess<GSClient>> Process)
+void GSClient::SetProcess(boost::shared_ptr<IProcess<int>> Process)
 {
 	CThreadSync Sync;
 
 	m_Process = Process;
 
 	if(m_Process != NULL)
-		m_Process->pOwner = this;
+		m_Process->pOwnerId = GetId();
 }
 
 void GSClient::SetType(BYTE _Type)
@@ -243,7 +240,7 @@ BOOL GSClient::GetWillBeTerminated()
 	return m_WillBeTerminated;
 }
 
-VOID GSClient::TakeMsg()
+VOID GSClient::TakeMsg(boost::shared_ptr<GSClient> client)
 {
 	GSServer::GSServer *pServer = (GSServer::GSServer *)m_GSServer;
 
@@ -252,7 +249,7 @@ VOID GSClient::TakeMsg()
 	pPlayerPacket->pHandler= this;
 	pPlayerPacket->Type	= GetMyTP();
 	pPlayerPacket->SubType = ONPACKET;
-	pPlayerPacket->pClient = shared_from_this();
+	pPlayerPacket->pClient = client;
 
 	MAINPROC.RegisterCommand(pPlayerPacket);
 }
@@ -267,7 +264,7 @@ VOID GSClient::Close()
 	closesocket(GetSocket());
 }
 
-VOID GSClient::ProcPacket()
+VOID GSClient::ProcPacket(boost::shared_ptr<GSClient> pClient)
 {
 	CThreadSync Sync;
 
@@ -289,11 +286,11 @@ VOID GSClient::ProcPacket()
 			return ;
 		}
 
-		GetProcess()->Process(pBuffer->m_Buffer.GetBuffer(),pBuffer->Length,pBuffer->MainId,pBuffer->SubId);
+		GetProcess()->Process(pBuffer->m_Buffer.GetBuffer(),pBuffer->Length,pBuffer->MainId,pBuffer->SubId, pClient);
 	}
 }
 
-VOID GSClient::ProcDisconnect()
+VOID GSClient::ProcDisconnect(boost::shared_ptr<GSClient> pClient)
 {
 	CThreadSync Sync;
 	
@@ -305,13 +302,21 @@ VOID GSClient::ProcDisconnect()
 		return ;
 	}
 
-	if(pServer->Disconnect(shared_from_this()) == TRUE)
+	if(pServer->Disconnect(pClient) == TRUE)
 	{
 		SetConnected(FALSE);
 		Clear();
-		BOOL Result = Recycle(pServer->GetTcpListen()->GetSocket());
+//		BOOL Result = Recycle(pServer->GetTcpListen()->GetSocket());
+		pServer->GetClientMgr().DelClient(pClient->GetId());
+		printf("Release Socket  %d %d\n",GetSocket(),GetId());
 
-		printf("Recycle Socket  %d %d\n",GetSocket(),GetId());
+		int NewClient = 1;
+		if (pServer->GetClientMgr().GetActiveSocketCount() < 20)
+			NewClient = 100;
+
+		pServer->GetClientMgr().NewClient(pServer->GetTcpListen()->GetSocket(), NewClient, pServer);
+
+		printf("New Alloc Socket  %d \n", NewClient);
 	}
 	else
 	{
@@ -345,7 +350,7 @@ void GSClient::OnSend(WORD MainId,WORD SubId,char *Data,WORD Length)
 
 }
 
-void GSClient::OnRecv(DWORD Length) 
+void GSClient::OnRecv(DWORD Length, boost::shared_ptr<GSClient> client)
 {
 	CThreadSync Sync;
 
@@ -354,10 +359,10 @@ void GSClient::OnRecv(DWORD Length)
 
 	GetTCPSocket()->MakePacket(Length,MainProtocol,SubProtocol,dwPacketLength);
 
-	TakeMsg();
+	TakeMsg(client);
 }
 
-void GSClient::OnDisconnect() 
+void GSClient::OnDisconnect(boost::shared_ptr<GSClient> client)
 {
 	CThreadSync Sync;
 
@@ -372,10 +377,13 @@ void GSClient::OnDisconnect()
 			}
 
 			printf("Code %d ERROR_NETNAME_DELETED\n",Code);
-			Clear();
-			SetConnected(FALSE);
-			GSServer::GSServer *pServer = (GSServer::GSServer *)m_GSServer;
-			Recycle(pServer->GetTcpListen()->GetSocket());
+
+			ProcDisconnect(client);
+
+//			Clear();
+//			SetConnected(FALSE);
+//			GSServer::GSServer *pServer = (GSServer::GSServer *)m_GSServer;
+//			Recycle(pServer->GetTcpListen()->GetSocket());
 			return ;
 		}
 	}
@@ -386,7 +394,7 @@ void GSClient::OnDisconnect()
 	//바로 콜하는 것으로 대체
 	//PROC_REG_CLOSE_JOB(this,this,pServer)
 
-	ProcDisconnect();
+	ProcDisconnect(client);
 	
 }
 
@@ -394,6 +402,7 @@ void GSClient::OnConnect()
 {
 	//Accept가 떨어졌다.
 	CThreadSync Sync;
+
 	SetConnected(TRUE);
 	//printf("Accept Success Socket %d %d %d\n",GetSocket(),GetId(),GetMyTP());
 
@@ -404,7 +413,12 @@ void GSClient::OnConnect()
 
 	SetAliveTime(GetTickCount());
 
-	pServer->Accept(shared_from_this());
+	boost::shared_ptr<GSClient> pClient = pServer->GetClient(GetId());
+	if (pClient == NULL)
+		return;
+
+
+	pServer->Accept(pClient);
 
 	/*
 	GSServer::GSServer *pServer = (GSServer::GSServer *)m_GSServer;

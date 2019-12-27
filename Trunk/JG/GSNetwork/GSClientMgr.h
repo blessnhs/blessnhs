@@ -17,8 +17,15 @@ public:
 	VOID CheckAliveTime();
 	int  GetActiveSocketCount();
 
+	int IncClientId();
+
 	BOOL Begin(SOCKET ListenSocket,WORD MaxClients,LPVOID PServer);
+	BOOL NewClient(SOCKET ListenSocket, WORD Count, LPVOID PServer);
+
 	VOID End();
+
+	GSCLIENT_PTR GetClient(int id);
+	BOOL DelClient(int id);
 
 
 	concurrency::concurrent_unordered_map<int, GSCLIENT_PTR> m_Clients;

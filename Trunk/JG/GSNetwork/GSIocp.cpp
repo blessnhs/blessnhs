@@ -3,14 +3,13 @@
 #include "GSSocket.h"
 #include "GSClient.h"
 
-
 namespace GSNetwork	{	namespace GSIocp	{
 
 typedef GSNetwork::GSSocket::GSSocket GSSocket;
 
 DWORD WINAPI WorkerThread(LPVOID parameter)
 {
-	GSIocp *Owner = (GSIocp*) parameter;
+	GSIocp *Owner = (GSIocp*) parameter;	
 	Owner->WorkerThread();
 
 	return 0;
@@ -96,7 +95,7 @@ BOOL GSIocp::RegIocpHandler(SOCKET socket, ULONG_PTR completionKey)
 	return TRUE;
 }
 
-VOID GSIocp::WorkerThread(VOID)
+VOID GSIocp::WorkerThread()
 {
 	BOOL			Successed				= FALSE;
 	DWORD			NumberOfByteTransfered	= 0;
@@ -125,13 +124,12 @@ VOID GSIocp::WorkerThread(VOID)
 			if(Overlapped == NULL) continue;
 
 			OverlappedEx	= (OVERLAPPED_EX*) Overlapped;
-			Object			= OverlappedEx->Object;
-
+	
 			if(Overlapped == NULL && Successed == FALSE)
 			{
 				if(Object != NULL)
 				{
-					OnDisconnected(Object);
+					OnDisconnected(OverlappedEx->ObjectId);
 				}
 				continue;
 			}
@@ -146,22 +144,22 @@ VOID GSIocp::WorkerThread(VOID)
 				//	if(pCommon->GetSocketStatus() != STATUS_DISCONNECTED)
 					if(Object->GetConnected() ==  TRUE)
 					{
-						OnDisconnected(Object);
+						OnDisconnected(OverlappedEx->ObjectId);
 						continue;
 					}
 				}
 				
-				OnDisconnected(Object);
+				OnDisconnected(OverlappedEx->ObjectId);
 				continue;
 			}
 
 			if (!Successed || (Successed && !NumberOfByteTransfered))
 			{
 				if (OverlappedEx->IoType == IO_ACCEPT)
-					OnConnected(Object);
+					OnConnected(OverlappedEx->ObjectId);
 				else
 				{
-					OnDisconnected(Object);
+					OnDisconnected(OverlappedEx->ObjectId);
 				}
 
 				continue;
@@ -173,15 +171,15 @@ VOID GSIocp::WorkerThread(VOID)
 				{
 					if(NumberOfByteTransfered == 0)
 					{
-						OnDisconnected(Object);
+						OnDisconnected(OverlappedEx->ObjectId);
 						break;
 					}
-					OnRead(Object, NumberOfByteTransfered);
+					OnRead(OverlappedEx->ObjectId, NumberOfByteTransfered);
 				}
 				break;
 
 			case IO_WRITE:
-				OnWrote(Object, NumberOfByteTransfered);
+				OnWrote(OverlappedEx->ObjectId, NumberOfByteTransfered);
 				break;
 			}
 		

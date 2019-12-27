@@ -57,21 +57,32 @@ bool GSServer::Create(GSArgument arg)
 }
 
 
-VOID GSServer::OnRead(boost::shared_ptr<GSClient> pClient, DWORD dataLength)
+VOID GSServer::OnRead(int client_id, DWORD dataLength)
 {
-	pClient->OnRecv(dataLength);
+	boost::shared_ptr<GSClient> pClient = GetClient(client_id);
+	if (pClient == NULL)
+		return;
+
+	pClient->OnRecv(dataLength,pClient);
 
 	if (!pClient->InitializeReadForIocp())
-		OnDisconnected(pClient);
+		OnDisconnected(client_id);
 }
 
-VOID GSServer::OnWrote(boost::shared_ptr<GSClient> pClient, DWORD dataLength)
+VOID GSServer::OnWrote(int client_id, DWORD dataLength)
 {
+	boost::shared_ptr<GSClient> pClient = GetClient(client_id);
+	if (pClient == NULL)
+		return;
+
 	pClient->WriteComplete();
 }
 
-VOID GSServer::OnConnected(boost::shared_ptr<GSClient> pClient)
+VOID GSServer::OnConnected(int client_id)
 {
+	boost::shared_ptr<GSClient> pClient = GetClient(client_id);
+	if (pClient == NULL)
+		return;
 
 	if (!GSIocp::RegIocpHandler(pClient->GetSocket(), reinterpret_cast<ULONG_PTR>(&pClient))) 
 		return;
@@ -85,9 +96,13 @@ VOID GSServer::OnConnected(boost::shared_ptr<GSClient> pClient)
 	pClient->OnConnect();	
 }
 
-VOID GSServer::OnDisconnected(boost::shared_ptr<GSClient> pClient)
+VOID GSServer::OnDisconnected(int client_id)
 {
-	pClient->OnDisconnect();
+	boost::shared_ptr<GSClient> pClient = GetClient(client_id);
+	if (pClient == NULL)
+		return;
+
+	pClient->OnDisconnect(pClient);
 }
 
 GSCLIENT_PTR GSServer::GetTcpListen()
@@ -231,14 +246,24 @@ GSArgument &GSServer::GetArgument()
 GSCLIENT_PTR	GSServer::GetClient(DWORD _Id)
 {
 	if(_Id < 0 ) return NULL;
+	
+	auto client = m_ClientMgr.m_Clients.find(_Id);
 
-	if(m_ClientMgr.m_Clients.size() <= _Id)
+	if (client == m_ClientMgr.m_Clients.end())
+	{
 		return NULL;
+	}
 
-	if( m_ClientMgr.m_Clients[_Id]->GetConnected() == FALSE)
-		return NULL;
+	return client->second;
+}
 
-	return m_ClientMgr.m_Clients[_Id];
+int GSServer::IncClinetId()
+{
+	static atomic<int> intAtomic = 0;
+
+	intAtomic.fetch_add(1);       
+
+	return intAtomic;
 }
 
 }	}

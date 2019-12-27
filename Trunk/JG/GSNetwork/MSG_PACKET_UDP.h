@@ -10,7 +10,7 @@ public:
 	MSG_PACKET_UDP();
 	~MSG_PACKET_UDP(){}
 
-	GSCLIENT		*pClient;
+	GSCLIENT_PTR		pClient;
 
 	void Execute(LPVOID Param);
 	void Undo(){}

@@ -133,7 +133,7 @@ bool COdbc::ReConnect()
 	return res;
 }
 
-bool COdbc::SQLErrorMsg(SQLHSTMT hstmt, LPCSTR errfunction, char* error_str)
+bool COdbc::SQLErrorMsg(SQLHSTMT hstmt, LPCWSTR errfunction, char* error_str)
 {
 	WCHAR			SqlState[6], Msg[1024];
 	SQLINTEGER		NativeError=0;
@@ -169,7 +169,7 @@ bool COdbc::SQLErrorMsg(SQLHSTMT hstmt, LPCSTR errfunction, int& error)
 	return result;
 }
 */
-bool COdbc::SQLErrorMsg(SQLHSTMT hstmt, LPCSTR errfunction)
+bool COdbc::SQLErrorMsg(SQLHSTMT hstmt, LPCWSTR errfunction)
 {
 	SQLWCHAR		SqlState[6], Msg[1024];
 	SQLINTEGER		NativeError=0;

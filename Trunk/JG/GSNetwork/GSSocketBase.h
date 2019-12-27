@@ -15,7 +15,7 @@ typedef struct _OVERLAPPED_EX
 {
 	OVERLAPPED	Overlapped;
 	IO_TYPE		IoType;
-	boost::shared_ptr<GSClient>		Object;
+	int		ObjectId;
 
 } OVERLAPPED_EX;
 

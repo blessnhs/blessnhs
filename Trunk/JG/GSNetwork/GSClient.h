@@ -60,8 +60,16 @@ public:
 
 	BOOL											WriteComplete(VOID);
 
-	boost::shared_ptr<IProcess<GSClient>>			GetProcess();
-	void											SetProcess(boost::shared_ptr<IProcess<GSClient>> Process);
+	boost::shared_ptr<IProcess<int>>				GetProcess();
+	void											SetProcess(boost::shared_ptr<IProcess<int>> Process);
+
+	template<class U>
+	VOID   										    SetHandler()
+	{
+		
+		boost::shared_ptr<U> Handler(new U);
+		SetProcess(Handler);
+	}
 
 	virtual VOID									OnResponse(LPVOID Data);
 	virtual void									OnEvt(IMessagePtr Arg);
@@ -79,7 +87,7 @@ public:
 	void											SetWillBeTerminated(bool _terminate);
 	BOOL											GetWillBeTerminated();
 
-	VOID											TakeMsg();
+	VOID											TakeMsg(boost::shared_ptr<GSClient> client);
 
 	bool											GetAbuseCheckTime(const std::wstring _str,DWORD _dwTime = 500);
 
@@ -91,12 +99,12 @@ public:
 public:	
 
 	virtual void									OnSend(WORD MainId,WORD SubId,char *Data,WORD Length);
-	virtual void									OnRecv(DWORD Length);
-	virtual void									OnDisconnect();
+	virtual void									OnRecv(DWORD Length, boost::shared_ptr<GSClient> client);
+	virtual void									OnDisconnect(boost::shared_ptr<GSClient> client);
 	virtual void									OnConnect();
 
-	VOID											ProcPacket();
-	VOID											ProcDisconnect();
+	VOID											ProcPacket(boost::shared_ptr<GSClient> pClient);
+	VOID											ProcDisconnect(boost::shared_ptr<GSClient> pClient);
 
 	WORD											GetMyTP();
 	WORD											GetMyDBTP(WORD StartIndex = 0);
@@ -105,7 +113,7 @@ public:
 
 private:
 
-	boost::shared_ptr<IProcess<GSClient>>			m_Process;
+	boost::shared_ptr<IProcess<int>>				m_Process;
 
 	BYTE											m_CreateType;			//tcp,udp
 	BOOL											m_bConnected;

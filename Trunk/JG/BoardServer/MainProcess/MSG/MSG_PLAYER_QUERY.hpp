@@ -18,6 +18,7 @@
 #include "../../Ini/INI.h"
 
 #include "../../PLAYER/Container/PlayerContainer.h"
+#include "../../SERVER/GSBoard.h"
 
 namespace Board	{
 
@@ -48,13 +49,14 @@ namespace Board	{
 		MSG_PLAYER_QUERY() { }
 		~MSG_PLAYER_QUERY(){}
 
-		GSCLIENT					*pSession;
+		GSCLIENT_PTR pSession;
 
 		boost::shared_ptr<RequestPlayerAuth> pRequst;
 
 		void Execute(LPVOID Param)
 		{
-			if(pSession->GetConnected() == false)
+
+			if(pSession == NULL || pSession->GetConnected() == false)
 				return ;
 
 			DBPROCESS_CER_PTR pProcess = DBPROCESSCONTAINER_CER.Search(pSession->GetMyDBTP());

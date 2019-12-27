@@ -69,6 +69,8 @@ BOOL GSSocketTCP::InitializeReadForIocp(VOID)
 	WsaBuf.buf			= (CHAR*) m_Buffer;
 	WsaBuf.len			= MAX_BUFFER_LENGTH;
 
+	m_Read_OLP.ObjectId = m_ClientId;
+
 	INT		ReturnValue = WSARecv(m_Socket,
 		&WsaBuf,
 		1,
@@ -125,6 +127,8 @@ BOOL			GSSocketTCP::ReadForEventSelect(BYTE *data, DWORD &dataLength)
 	WsaBuf.buf			= (CHAR*) m_Buffer;
 	WsaBuf.len			= MAX_BUFFER_LENGTH;
 
+	m_Read_OLP.ObjectId = m_ClientId;
+
 	INT		ReturnValue = WSARecv(m_Socket,
 		&WsaBuf,
 		1,
@@ -174,6 +178,8 @@ BOOL GSSocketTCP::Write(BYTE *data, DWORD dataLength)
 
 	WsaBuf.buf			= (CHAR*) data;
 	WsaBuf.len			= dataLength;
+
+	m_Write_OLP.ObjectId = m_ClientId;
 
 	INT		ReturnValue	= WSASend(m_Socket,
 		&WsaBuf,

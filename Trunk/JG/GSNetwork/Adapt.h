@@ -19,8 +19,6 @@ public:
 		_SERVER_3,
 		_SERVER_4,
 	};
-
-	static IProcess<GSCLIENT> *Create(E_TYPE nType);
 };
 
 }	}

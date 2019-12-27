@@ -38,7 +38,7 @@ BOOL GSBoard::Disconnect(GSCLIENT_PTR pSession)
 
 VOID GSBoard::Accept(GSCLIENT_PTR object)
 {
-
+	object->SetHandler<BoardProcess>();
 }
 
 
@@ -60,7 +60,7 @@ BOOL GSBoard::Initialize()
 	_arg.m_Naggle = false;
 
 	Create(_arg);
-	SetHandler<BoardProcess>();
+//	SetHandler<BoardProcess>();
 	
 	return TRUE;
 }

@@ -21,6 +21,8 @@ public:
 	OVERLAPPED_EX	m_Read_OLP;
 	OVERLAPPED_EX	m_Write_OLP;
 
+	int				m_ClientId;
+
 protected:
 	
 	BYTE			m_Buffer[MAX_BUFFER_LENGTH];
