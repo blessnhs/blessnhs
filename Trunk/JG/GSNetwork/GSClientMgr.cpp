@@ -28,7 +28,8 @@ VOID GSClientMgr::CheckAliveTime()
 
 			if (client.second->GetAliveTime() + (pServer->GetArgument().m_AliveTime * 1000) <= GetTickCount())
 				if (client.second->GetType() == _PLAYER_)
-					client.second->OnDisconnect(client.second);
+					//client.second->OnDisconnect(client.second);
+					client.second->Close();
 		}
 	}
 }

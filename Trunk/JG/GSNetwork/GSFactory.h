@@ -111,7 +111,10 @@ private:
 
 		m_AllocCount--;
 
-	//	printf("destroy %s %d\n",typeid(T).name(),m_AllocCount);
+		if ((m_AllocCount % 100) == 0)
+		{
+			printf("dealloc %s %d\n", typeid(T).name(), m_AllocCount);
+		};
 	}
 
 	boost::object_pool<T>	m_allocator;
