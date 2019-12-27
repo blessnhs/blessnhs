@@ -5,6 +5,7 @@
 #include "../Command/Command.h"
 
 #include "../server/GSBoard.h"
+#include "MiniDump.h"
 
 BoardConstructor::BoardConstructor(void)
 {
@@ -13,7 +14,7 @@ BoardConstructor::BoardConstructor(void)
 	DBPROCESSCONTAINER_CER.Initialize();
 	
 	BoardCommand _Command;
-
+	
 	while(TRUE)
 	{
 		WCHAR command[256];

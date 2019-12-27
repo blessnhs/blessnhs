@@ -73,7 +73,7 @@ void GSClient::SetPair(DWORD Player)
 	m_PairPlayerId = Player;
 }
 
-BOOL GSClient::Recycle(SOCKET hListenSocket)
+/*BOOL GSClient::Recycle(SOCKET hListenSocket)
 {
 	CThreadSync Sync;
 
@@ -91,7 +91,7 @@ BOOL GSClient::Recycle(SOCKET hListenSocket)
 	}
 
 	return FALSE;
-}
+}*/
 
 SOCKET GSClient::GetSocket(VOID)
 {
@@ -388,7 +388,7 @@ void GSClient::OnDisconnect(boost::shared_ptr<GSClient> client)
 		}
 	}
 
-	GSServer::GSServer *pServer = (GSServer::GSServer *)m_GSServer;
+	//GSServer::GSServer *pServer = (GSServer::GSServer *)m_GSServer;
 
 	//아래 함수를 로직 쓰레드로 던지게 되면 동기화 문제가 발생하여 
 	//바로 콜하는 것으로 대체
@@ -398,7 +398,7 @@ void GSClient::OnDisconnect(boost::shared_ptr<GSClient> client)
 	
 }
 
-void GSClient::OnConnect() 
+void GSClient::OnConnect(boost::shared_ptr<GSClient> pClient)
 {
 	//Accept가 떨어졌다.
 	CThreadSync Sync;
@@ -412,11 +412,6 @@ void GSClient::OnConnect()
 	GSServer::GSServer *pServer = (GSServer::GSServer *)m_GSServer;
 
 	SetAliveTime(GetTickCount());
-
-	boost::shared_ptr<GSClient> pClient = pServer->GetClient(GetId());
-	if (pClient == NULL)
-		return;
-
 
 	pServer->Accept(pClient);
 

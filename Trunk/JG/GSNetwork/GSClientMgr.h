@@ -26,6 +26,7 @@ public:
 
 	GSCLIENT_PTR GetClient(int id);
 	BOOL DelClient(int id);
+	BOOL AddClient(GSCLIENT_PTR client);
 
 
 	concurrency::concurrent_unordered_map<int, GSCLIENT_PTR> m_Clients;

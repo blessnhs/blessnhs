@@ -84,16 +84,16 @@ VOID GSServer::OnConnected(int client_id)
 	if (pClient == NULL)
 		return;
 
-	if (!GSIocp::RegIocpHandler(pClient->GetSocket(), reinterpret_cast<ULONG_PTR>(&pClient))) 
+	if (!GSIocp::RegIocpHandler(pClient->GetSocket(), reinterpret_cast<ULONG_PTR>(&client_id)))
 		return;
 
 	if (!pClient->InitializeReadForIocp())
 	{ 
-		pClient->Recycle(m_pTCPListen->GetSocket()); 
+		pClient->Close();
 		return; 
 	}
 
-	pClient->OnConnect();	
+	pClient->OnConnect(pClient);
 }
 
 VOID GSServer::OnDisconnected(int client_id)

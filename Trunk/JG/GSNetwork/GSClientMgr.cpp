@@ -26,8 +26,8 @@ VOID GSClientMgr::CheckAliveTime()
 		{
 			GSServer::GSServer *pServer = (GSServer::GSServer *)client.second->m_GSServer;
 
-			if(client.second->GetAliveTime() + (pServer->GetArgument().m_AliveTime * 1000) <= GetTickCount())
-				if(client.second->GetType() == _PLAYER_ )
+			if (client.second->GetAliveTime() + (pServer->GetArgument().m_AliveTime * 1000) <= GetTickCount())
+				if (client.second->GetType() == _PLAYER_)
 					client.second->OnDisconnect(client.second);
 		}
 	}
@@ -53,9 +53,9 @@ int GSClientMgr::IncClientId()
 {
 	static atomic<int> intAtomic = 0;
 
-	intAtomic.fetch_add(1);         
+	int idx = intAtomic.fetch_add(1);         
 
-	return intAtomic;
+	return idx;
 }
 
 
@@ -77,6 +77,13 @@ BOOL GSClientMgr::DelClient(int id)
 		return FALSE;
 
 	m_Clients[id] = NULL;
+
+	return TRUE;
+}
+
+BOOL GSClientMgr::AddClient(GSCLIENT_PTR pClient)
+{
+	m_Clients[pClient->GetId()] = pClient;
 
 	return TRUE;
 }

@@ -55,18 +55,12 @@ namespace Board	{
 
 		void Execute(LPVOID Param)
 		{
-
 			if(pSession == NULL || pSession->GetConnected() == false)
 				return ;
 
 			DBPROCESS_CER_PTR pProcess = DBPROCESSCONTAINER_CER.Search(pSession->GetMyDBTP());
 			if(pProcess == NULL)
 				return ;
-
-			if (PLAYERMGR.Search(pRequst->Account.c_str()) != NULL)
-			{
-				return;
-			}
 
 			// 로그인 절차 : 아이디의 접속확인 및 인증키값을 가져온다.
 			std::wstring authentickey;
@@ -76,7 +70,7 @@ namespace Board	{
 			DECLARE_JSON_WRITER
 			ADD_JSON_MEMBER("MPID",ID_AUTH_LOGIN_RES)
 
-			if(nRet != _ERR_NONE)
+			if(nRet != _ERR_NONE || (PLAYERMGR.Search(pRequst->Account.c_str()) != NULL))
 			{ 
 				ADD_JSON_MEMBER("Result",_ERR_LOGINED)
 				END_JSON_MEMBER(pSession->GetTCPSocket(),(WORD)ID_AUTH_LOGIN_RES)
@@ -89,6 +83,7 @@ namespace Board	{
 			pNewPlayer->m_Account.SetName(pRequst->Account.c_str());
 			pNewPlayer->SetId(Index);
 			pNewPlayer->SetPair(pSession->GetId());
+			pSession->SetPair(Index);
 			PLAYERMGR.Add(pNewPlayer);
 
 

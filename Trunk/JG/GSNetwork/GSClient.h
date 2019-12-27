@@ -47,7 +47,8 @@ public:
 
 	VOID											Clear();
 
-	BOOL											Recycle(SOCKET hListenSocket);
+
+//	BOOL											Recycle(SOCKET hListenSocket);
 	SOCKET											GetSocket(VOID);
 
 	boost::shared_ptr<GSPacketTCP>					GetTCPSocket();
@@ -101,7 +102,7 @@ public:
 	virtual void									OnSend(WORD MainId,WORD SubId,char *Data,WORD Length);
 	virtual void									OnRecv(DWORD Length, boost::shared_ptr<GSClient> client);
 	virtual void									OnDisconnect(boost::shared_ptr<GSClient> client);
-	virtual void									OnConnect();
+	virtual void									OnConnect(boost::shared_ptr<GSClient> client);
 
 	VOID											ProcPacket(boost::shared_ptr<GSClient> pClient);
 	VOID											ProcDisconnect(boost::shared_ptr<GSClient> pClient);
