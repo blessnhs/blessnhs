@@ -336,6 +336,9 @@
     <ClInclude Include="lzfP.h">
       <Filter>Network\Compress</Filter>
     </ClInclude>
+    <ClInclude Include="MinidumpHelp.h">
+      <Filter>Frame</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -550,6 +553,9 @@
     </ClCompile>
     <ClCompile Include="lzf_d.cpp">
       <Filter>Network\Compress</Filter>
+    </ClCompile>
+    <ClCompile Include="MinidumpHelp.cpp">
+      <Filter>Frame</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

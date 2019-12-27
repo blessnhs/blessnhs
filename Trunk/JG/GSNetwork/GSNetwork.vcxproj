@@ -22,7 +22,7 @@
     <ProjectGuid>{5CC150A9-431C-400E-ADCA-287D34A466EC}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>GSNetwork</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.18362.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -35,7 +35,7 @@
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
@@ -222,6 +222,7 @@
     <ClInclude Include="lzfP.h" />
     <ClInclude Include="MessageMapDef.h" />
     <ClInclude Include="MiniDump.h" />
+    <ClInclude Include="MinidumpHelp.h" />
     <ClInclude Include="MSG_PACKET_UDP.h" />
     <ClInclude Include="MSG_PLAYER.h" />
     <ClInclude Include="MSG_PLAYER_ACCEPT.h" />
@@ -300,6 +301,7 @@
     <ClCompile Include="lzf_c.cpp" />
     <ClCompile Include="lzf_d.cpp" />
     <ClCompile Include="MiniDump.cpp" />
+    <ClCompile Include="MinidumpHelp.cpp" />
     <ClCompile Include="MSG_PACKET_UDP.cpp" />
     <ClCompile Include="MSG_PLAYER_ACCEPT.cpp" />
     <ClCompile Include="MSG_PLAYER_CLOSE.cpp" />
