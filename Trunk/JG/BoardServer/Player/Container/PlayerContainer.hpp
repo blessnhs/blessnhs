@@ -72,6 +72,9 @@ template<template<class T> class CreationPolicy> PlayerPtr PlayerContainer<Creat
 	while(iter != m_PlayerMap.end())
 	{
 		PlayerPtr pPlayer = iter->second;
+		if (pPlayer == NULL)
+			continue;
+
 		if(pPlayer->m_Account.GetName() == Account)
 		{
 			return pPlayer;

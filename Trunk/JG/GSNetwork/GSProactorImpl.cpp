@@ -84,7 +84,7 @@ unsigned int __stdcall DistributionThread(LPVOID parameter)
 	{
 		if( WaitForSingleObject( Owner->m_hKillEvent, 10 ) == WAIT_OBJECT_0 ){ break; }
 
-		WaitForSingleObject( Owner->m_InputJobEvt, 500 ) ;
+		WaitForSingleObject( Owner->m_InputJobEvt, 10 ) ;
 		
 		IMessagePtr pJob;
 		if(Owner->m_InputJobList.try_pop(pJob) == FALSE) 
@@ -119,7 +119,7 @@ unsigned int __stdcall ExecuteThread(LPVOID parameter)
 	{
 		if( WaitForSingleObject( Owner->m_ProcactorImpl->m_hKillEvent, 10 ) == WAIT_OBJECT_0 ){ break; }
 
-		WaitForSingleObject( Owner->m_ProcactorImpl->m_ExecuteJobEvt[ProcId], 500 ) ;
+		WaitForSingleObject( Owner->m_ProcactorImpl->m_ExecuteJobEvt[ProcId], 10 ) ;
 
 		Owner->m_ProcactorImpl->Handle_Event(ProcId);
 

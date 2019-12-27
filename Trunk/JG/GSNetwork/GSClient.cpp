@@ -307,16 +307,17 @@ VOID GSClient::ProcDisconnect(boost::shared_ptr<GSClient> pClient)
 		SetConnected(FALSE);
 		Clear();
 //		BOOL Result = Recycle(pServer->GetTcpListen()->GetSocket());
+
 		pServer->GetClientMgr().DelClient(pClient->GetId());
-		printf("Release Socket  %d %d\n",GetSocket(),GetId());
 
 		int NewClient = 1;
 		if (pServer->GetClientMgr().GetActiveSocketCount() < 20)
+		{
+			printf("New Alloc  %d \n", NewClient);
 			NewClient = 100;
+		}
 
 		pServer->GetClientMgr().NewClient(pServer->GetTcpListen()->GetSocket(), NewClient, pServer);
-
-		printf("New Alloc Socket  %d \n", NewClient);
 	}
 	else
 	{
