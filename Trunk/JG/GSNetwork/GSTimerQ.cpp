@@ -67,8 +67,6 @@ bool GSTimerQ::AddTimerJob(GSTimerJob *pJob)
 
 	CThreadSync Sync;
 
-	//EnterCriticalSection(&cs);
-
 	int i;
 	for(i=0;i<10000;i++)	
 	{
@@ -82,35 +80,29 @@ bool GSTimerQ::AddTimerJob(GSTimerJob *pJob)
 	if(i >=  10000)
 		printf("erase evt = %d\n",i);
 
-	//LeaveCriticalSection(&cs);
-
 	return true;
 }
 
 bool GSTimerQ::DelTimerJob(GSTimerJob *pJob)
 {
+	if (pJob == NULL)
+		return false;
 
 	CThreadSync sync;
-	//EnterCriticalSection(&cs);
 
 	iterator iter = m_TimeJobList.begin();
 
 	while(iter != m_TimeJobList.end())
 	{
 		GSTimerJob *Job =  (GSTimerJob *)(iter->second);
-		if(pJob == pJob)
+		if(pJob == Job)
 		{
 			iter = m_TimeJobList.erase(iter);
-			if(pJob != NULL)
-			{
-				delete pJob;
-				pJob = NULL;
-			}
 		}
 		else
 			++iter;
 	}
-	//LeaveCriticalSection(&cs);
+	
 	return true;
 }
 

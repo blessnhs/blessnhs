@@ -156,9 +156,6 @@ VOID BoardProcess::ROOM_ENTER(LPVOID Data, DWORD Length, boost::shared_ptr<GSCli
 			pos++;
 		}
 
-
-
-
 		iter = RoomPtr->m_PlayerMap.begin();
 		while (iter != RoomPtr->m_PlayerMap.end())
 		{

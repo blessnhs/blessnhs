@@ -59,7 +59,7 @@ namespace Board	{
 				return ;
 
 			DBPROCESS_CER_PTR pProcess = DBPROCESSCONTAINER_CER.Search(pSession->GetMyDBTP());
-			if(pProcess == NULL)
+			if(pProcess == NULL || pProcess->m_pDB->IsOpen() == false)
 				return ;
 
 			// 로그인 절차 : 아이디의 접속확인 및 인증키값을 가져온다.

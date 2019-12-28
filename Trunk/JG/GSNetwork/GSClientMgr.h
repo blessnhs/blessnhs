@@ -5,7 +5,7 @@
 
 namespace GSNetwork	{	namespace GSClientMgr	{
 
-class GSClientMgr : public IHandler<IMessagePtr>
+class GSClientMgr : public IHandler<IMessagePtr> ,  public GSGuard<GSClientMgr>
 {
 public:
 
@@ -20,7 +20,7 @@ public:
 	int IncClientId();
 
 	BOOL Begin(SOCKET ListenSocket,WORD MaxClients,LPVOID PServer);
-	BOOL NewClient(SOCKET ListenSocket, WORD Count, LPVOID PServer);
+	BOOL NewClient(SOCKET ListenSocket, LPVOID PServer);
 
 	VOID End();
 

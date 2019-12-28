@@ -43,7 +43,7 @@ void SysTimer::OnEvt(LPVOID Arg)
 	{
 		case SysTimer::SYS_TIMER:
 		{
-			GSNetwork::MSG_PLAYER_TIME_PTR	    pPlayerTime = ALLOCATOR.Create<GSNetwork::MSG_PLAYER_TIME>();//(new GSFrontServer::MSG_PLAYER_TIME ) ;
+			GSNetwork::MSG_PLAYER_TIME_PTR	    pPlayerTime = ALLOCATOR.Create<GSNetwork::MSG_PLAYER_TIME>();
 
 			GSNetwork::GSServer::GSServer *Server = (GSNetwork::GSServer::GSServer *)GetSysTimer().pGSServer;
 			

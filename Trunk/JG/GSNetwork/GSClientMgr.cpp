@@ -89,12 +89,21 @@ BOOL GSClientMgr::AddClient(GSCLIENT_PTR pClient)
 	return TRUE;
 }
 
-BOOL GSClientMgr::NewClient(SOCKET ListenSocket, WORD Count, LPVOID pServer)
+BOOL GSClientMgr::NewClient(SOCKET ListenSocket, LPVOID pServer)
 {
+	CThreadSync Sync;
+
 	if (!ListenSocket)
 		return FALSE;
 
-	for (DWORD i = 0; i < Count; i++)
+	int NewClient = 1;
+	if (GetActiveSocketCount() < 20)
+	{
+		NewClient = 100;
+		printf("New Alloc  %d \n", NewClient);
+	}
+
+	for (DWORD i = 0; i < NewClient; i++)
 	{
 		GSCLIENT_PTR pClient = boost::make_shared<GSClient>();
 		pClient->SetId(IncClientId());

@@ -10,10 +10,10 @@ public:
 	IServerContainer()	 {}
 	~IServerContainer() {}
 
-	virtual bool Add(GSCLIENT *pObj,DWORD Key) = 0;
+	virtual bool Add(GSCLIENT_PTR pObj,DWORD Key) = 0;
 	virtual bool Del(DWORD Key) = 0;
 
-	virtual GSCLIENT* Search(DWORD Id) = 0;
+	virtual GSCLIENT_PTR Search(DWORD Id) = 0;
 };
 
 }	

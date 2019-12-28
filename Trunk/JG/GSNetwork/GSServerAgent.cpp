@@ -12,13 +12,13 @@ GSServerAgent::~GSServerAgent(void)
 {
 }
 
-bool GSServerAgent::Add(GSCLIENT *pObj,DWORD Key)
+bool GSServerAgent::Add(GSCLIENT_PTR pObj,DWORD Key)
 {
-	std::map<DWORD,GSCLIENT*>::iterator iter = m_ServerMap.find(Key);
+	auto iter = m_ServerMap.find(Key);
 
 	if(iter == m_ServerMap.end())
 	{
-		m_ServerMap[Key] = (GSCLIENT* )pObj;
+		m_ServerMap[Key] = pObj;
 		return true;;
 	}
 	return false;
@@ -26,24 +26,23 @@ bool GSServerAgent::Add(GSCLIENT *pObj,DWORD Key)
 
 bool GSServerAgent::Del(DWORD Key)
 {
-	std::map<DWORD,GSCLIENT*>::iterator iter = m_ServerMap.find(Key);
+	auto iter = m_ServerMap.find(Key);
 
 	if(iter != m_ServerMap.end())
 	{
-		m_ServerMap.erase(Key);
+		m_ServerMap[Key] = NULL;
 		return true;;
 	}
 	return false;
 }
 
-GSCLIENT* 
-GSServerAgent::Search(DWORD Id)
+GSCLIENT_PTR GSServerAgent::Search(DWORD Id)
 {
-	std::map<DWORD,GSCLIENT*>::iterator iter = m_ServerMap.find(Id);
+	auto iter = m_ServerMap.find(Id);
 
 	if(iter != m_ServerMap.end())
 	{
-		return (GSCLIENT *)(iter->second);
+		return iter->second;
 
 	}
 	return NULL;

@@ -10,6 +10,8 @@
 
 //namespace GSNetwork	{	namespace GSClient	{
 
+int statcount = 0;
+
 GSClient::GSClient(void)
 {
 	m_bConnected			= FALSE;
@@ -21,6 +23,7 @@ GSClient::GSClient(void)
 	m_PairPlayerId			= ULONG_MAX;
 	m_GSServer				= NULL;
 
+	statcount++;
 }
 
 boost::shared_ptr<GSPacketTCP>	GSClient::GetTCPSocket()
@@ -35,6 +38,8 @@ boost::shared_ptr<GSPacketUDP>	GSClient::GetUDPSocket()
 
 GSClient::~GSClient(void)
 {
+	statcount--;
+	printf("~client count %d\n", statcount);
 }
 
 BOOL  GSClient::Create(BYTE Type)
@@ -310,14 +315,7 @@ VOID GSClient::ProcDisconnect(boost::shared_ptr<GSClient> pClient)
 
 		pServer->GetClientMgr().DelClient(pClient->GetId());
 
-		int NewClient = 1;
-		if (pServer->GetClientMgr().GetActiveSocketCount() < 20)
-		{
-			printf("New Alloc  %d \n", NewClient);
-			NewClient = 100;
-		}
-
-		pServer->GetClientMgr().NewClient(pServer->GetTcpListen()->GetSocket(), NewClient, pServer);
+		pServer->GetClientMgr().NewClient(pServer->GetTcpListen()->GetSocket(), pServer);
 	}
 	else
 	{

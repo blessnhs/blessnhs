@@ -39,7 +39,7 @@ public:
 	virtual VOID												  OnDisconnected(int client_id);
 
 	GSCLIENT_PTR												  GetTcpListen();
-	std::vector<GSCLIENT*>										 &GetUDPListenPorts();
+	concurrency::concurrent_unordered_map<DWORD, GSCLIENT_PTR>	 &GetUDPListenPorts();
 	GSClientMgr::GSClientMgr									 &GetClientMgr();
 
 	GSArgument													 &GetArgument();
@@ -68,14 +68,13 @@ private:
 	GSClientMgr::GSClientMgr									  m_ClientMgr;
 
 	GSCLIENT_PTR												  m_pTCPListen;
-	std::vector<GSCLIENT*>										  m_UDPListenPorts;
-	std::vector<GSSocket::GSSocketUDP::GSSocketUDP*>			  m_FreePorts;
-
-public:
-	CRITICAL_SECTION											  m_PublicLock;
+	concurrency::concurrent_unordered_map<DWORD,GSCLIENT_PTR>	  m_UDPListenPorts;
+	concurrency::concurrent_queue<boost::shared_ptr<GSSocket::GSSocketUDP::GSSocketUDP>>			  m_FreePorts;
 
 protected:
 	GSArgument													  m_Arguments;
+
+	int															  m_EvtClientId;
 };
 
 }	}

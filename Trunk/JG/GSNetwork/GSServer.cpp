@@ -15,19 +15,11 @@ GSServer::GSServer(void)
 
 	WSADATA WsaData;
 	WSAStartup(MAKEWORD(2, 2), &WsaData);	
-
-	if (!GSMiniDump::GSMiniDump::Begin())
-		return ;
-
-	InitializeCriticalSection(&m_PublicLock);
 }
 
 GSServer::~GSServer(void)
 {
-	DeleteCriticalSection(&m_PublicLock);
-
 	WSACleanup();
-	GSNetwork::GSMiniDump::GSMiniDump::End();
 	CoUninitialize();
 }
 
@@ -84,7 +76,9 @@ VOID GSServer::OnConnected(int client_id)
 	if (pClient == NULL)
 		return;
 
-	if (!GSIocp::RegIocpHandler(pClient->GetSocket(), reinterpret_cast<ULONG_PTR>(&client_id)))
+	m_EvtClientId = client_id;
+
+	if (!GSIocp::RegIocpHandler(pClient->GetSocket(), reinterpret_cast<ULONG_PTR>(&m_EvtClientId)))
 		return;
 
 	if (!pClient->InitializeReadForIocp())
@@ -110,7 +104,7 @@ GSCLIENT_PTR GSServer::GetTcpListen()
 	return m_pTCPListen;
 }
 
-std::vector<GSCLIENT*>&	GSServer::GetUDPListenPorts()
+concurrency::concurrent_unordered_map<DWORD, GSCLIENT_PTR>&	GSServer::GetUDPListenPorts()
 {
 	return m_UDPListenPorts;
 }
@@ -132,23 +126,7 @@ VOID GSServer::End(VOID)
 
 	}
 
-	for(int i=0;i<m_UDPListenPorts.size();i++)
-	{
-		GSCLIENT *Socket = m_UDPListenPorts[i];
-
-		if(Socket != NULL)
-			delete Socket;
-	}
-
 	m_UDPListenPorts.clear();
-
-	for(int i=0;i<m_FreePorts.size();i++)
-	{
-		GSSocket::GSSocketUDP::GSSocketUDP *Socket = m_FreePorts[i];
-
-		if(Socket != NULL)
-			delete Socket;
-	}
 
 	m_FreePorts.clear();
 
@@ -207,32 +185,38 @@ BOOL GSServer::BeginUDP()
 
 	for(int i=0;i<MaxPort;i++)
 	{
-		m_UDPListenPorts[i] = new GSCLIENT;
-		m_UDPListenPorts[i]->Create(UDP);
+		auto UDPListenPort = boost::make_shared<GSCLIENT>();
+		UDPListenPort->SetId(IncClinetId());
+
+		UDPListenPort->SetId(IncClinetId());
+		UDPListenPort->Create(UDP);
 	
-		if (!m_UDPListenPorts[i]->GetUDPSocket()->Initialize())
+		if (!UDPListenPort->GetUDPSocket()->Initialize())
 		{
 			GSServer::End();
 
 			return FALSE;
 		}
 
-		if (!m_UDPListenPorts[i]->GetUDPSocket()->CreateUdpSocket(m_Arguments.m_UdpPorts[i]))
+		if (!UDPListenPort->GetUDPSocket()->CreateUdpSocket(m_Arguments.m_UdpPorts[i]))
 		{
 			GSServer::End();
 
 			return FALSE;
 		}
 
-		if (!GSIocp::RegIocpHandler(m_UDPListenPorts[i]->GetSocket(), reinterpret_cast<ULONG_PTR>(m_UDPListenPorts[i])))
+		if (!GSIocp::RegIocpHandler(UDPListenPort->GetSocket(), reinterpret_cast<ULONG_PTR>(UDPListenPort->GetUDPSocket().get())))
 		{
 			GSServer::End();
 
 			return FALSE;
 		}
 
-		m_FreePorts.push_back(m_UDPListenPorts[i]->GetUDPSocket().get());
-		m_UDPListenPorts[i]->GetUDPSocket()->InitializeReadFromForIocp();
+		UDPListenPort->GetUDPSocket()->InitializeReadFromForIocp();
+
+		m_FreePorts.push(UDPListenPort->GetUDPSocket());
+		m_UDPListenPorts[UDPListenPort->GetId()] = UDPListenPort;
+
 	}
 
 	return TRUE;

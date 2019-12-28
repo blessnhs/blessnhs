@@ -1,5 +1,7 @@
 #pragma once
 
+#include <concurrent_unordered_map.h>
+
 #include "IManager.h"
 #include "GSServerAgentContainer.h"
 #include "SingleTonHolder.h"
@@ -13,12 +15,12 @@ public:
 	GSServerAgent(void);
 	~GSServerAgent(void);
 
-	bool Add(GSCLIENT *pObj,DWORD Key);
+	bool Add(GSCLIENT_PTR pObj,DWORD Key);
 	bool Del(DWORD Key);
 
-	GSCLIENT* Search(DWORD Id);
+	GSCLIENT_PTR Search(DWORD Id);
 
-	std::map<DWORD,GSCLIENT*> m_ServerMap;
+	concurrency::concurrent_unordered_map<DWORD, GSCLIENT_PTR> m_ServerMap;
 };
 
 }	
