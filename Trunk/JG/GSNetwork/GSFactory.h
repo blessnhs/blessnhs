@@ -90,9 +90,9 @@ public:
 
 		m_AllocCount++;
 
-		if((m_AllocCount % 100 ) == 0)
+		if(m_AllocCount != 0 && (m_AllocCount % 100 ) == 0)
 		{
-			//printf("alloc %s %d\n",typeid(T).name(),m_AllocCount);
+			printf("alloc %s %d\n",typeid(T).name(),m_AllocCount);
 		};
 
 	//	printf("alloc %s %d\n",typeid(T).name(),m_AllocCount);
@@ -111,9 +111,9 @@ private:
 
 		m_AllocCount--;
 
-		if ((m_AllocCount % 100) == 0)
+		if (m_AllocCount != 0 && (m_AllocCount % 100) == 0)
 		{
-			//printf("dealloc %s %d\n", typeid(T).name(), m_AllocCount);
+			printf("dealloc %s %d\n", typeid(T).name(), m_AllocCount);
 		};
 	}
 

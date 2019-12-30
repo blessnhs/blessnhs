@@ -10,7 +10,6 @@
 
 //namespace GSNetwork	{	namespace GSClient	{
 
-int statcount = 0;
 
 GSClient::GSClient(void)
 {
@@ -22,8 +21,6 @@ GSClient::GSClient(void)
 	m_DBStampTime			= 0;
 	m_PairPlayerId			= ULONG_MAX;
 	m_GSServer				= NULL;
-
-	statcount++;
 }
 
 boost::shared_ptr<GSPacketTCP>	GSClient::GetTCPSocket()
@@ -38,8 +35,6 @@ boost::shared_ptr<GSPacketUDP>	GSClient::GetUDPSocket()
 
 GSClient::~GSClient(void)
 {
-	statcount--;
-	printf("~client count %d\n", statcount);
 }
 
 BOOL  GSClient::Create(BYTE Type)
