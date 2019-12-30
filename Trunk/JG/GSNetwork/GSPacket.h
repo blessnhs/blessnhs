@@ -46,7 +46,7 @@ protected:
 
 	GSFactory<XDATA,true>													m_GSBufferPool;
 
-	GSFactory<WRITE_PACKET_INFO>											m_WritePool;
+	GSFactory<WRITE_PACKET_INFO,true>										m_WritePool;
 	std::vector<READ_PACKET_INFO>											m_LastReadPacketInfoVectorForUdp;
 	
 	GSFactory<XDATA,true> &													GetGSBufferPool();

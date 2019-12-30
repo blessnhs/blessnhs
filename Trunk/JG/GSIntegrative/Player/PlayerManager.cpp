@@ -196,7 +196,7 @@ VOID PlayerManager::CheckCloseJob()
 }
 
 
-GSFactory<Player> &PlayerManager::GetPlayerPool()
+GSFactory<Player, true> &PlayerManager::GetPlayerPool()
 {
 	return m_PlayerPool;
 }

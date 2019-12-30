@@ -30,7 +30,7 @@ struct GSCreator
 {
 	boost::shared_ptr<T> Create()
 	{
-	    static GSFactory<T>		m_Pool;
+	    static GSFactory<T,true>		m_Pool;
 		return m_Pool.alloc();
 	}
 

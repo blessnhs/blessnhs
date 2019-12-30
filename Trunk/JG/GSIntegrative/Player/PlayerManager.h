@@ -43,14 +43,14 @@ public:
 
 	VOID Print();
 
-	GSFactory<Player> &GetPlayerPool();
+	GSFactory<Player, true> &GetPlayerPool();
 
 protected:
 public:
 	std::map<DWORD,PlayerPtr>										m_PlayerMap;
 
 
-	GSFactory<Player>												m_PlayerPool;
+	GSFactory<Player,true>												m_PlayerPool;
 };
 
 #define PLAYERMGR Singleton<PlayerManager>::Instance()
