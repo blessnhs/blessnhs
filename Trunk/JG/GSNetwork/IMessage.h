@@ -13,8 +13,8 @@ public:
 
 	IHandler<boost::shared_ptr<IMessage>>	*pHandler;
 	LPVOID		Message;
-	BYTE		Type;
-	BYTE		SubType;
+	int			Type;
+	int			SubType;
 
 	virtual void Execute(LPVOID Param){};
 

@@ -19,7 +19,7 @@ public:
 
 	void TryConnect();
 
-	void Initialize();
+	void Initialize(INT Count);
 
 	std::map<DWORD,DBPROCESS_CER_PTR> m_List;
 };

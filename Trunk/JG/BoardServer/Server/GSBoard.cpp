@@ -4,7 +4,7 @@
 #include "BoardProcess.h"
 #include "../PLAYER/Container/PlayerContainer.h"
 #include "../Room/RoomContainer.h"
-
+#include "../DB/DBProxy/DBProcessContainer.h"
 
 GSBoard::GSBoard(void)
 {
@@ -54,13 +54,15 @@ BOOL GSBoard::Initialize()
 
 	_arg.m_AliveTime = 30; //sec
 	_arg.m_BindPort  = m_Ini.Port;
-	_arg.m_DBThreadCnt = dwThreadNum;
+	_arg.m_DBThreadCnt = 512;
 	_arg.m_LogicThreadCnt = dwThreadNum;
 	_arg.m_MaxClient = m_Ini.MaxUser;
 	_arg.m_Naggle = false;
 
 	Create(_arg);
 //	SetHandler<BoardProcess>();
+
+	DBPROCESSCONTAINER_CER.Initialize(_arg.m_DBThreadCnt);
 	
 	return TRUE;
 }

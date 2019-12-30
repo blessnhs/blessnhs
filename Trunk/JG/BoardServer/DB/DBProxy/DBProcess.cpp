@@ -23,7 +23,7 @@ BOOL CDBProcessCer::Initalize(	WCHAR *m_szDSN,WCHAR *m_szUID,WCHAR *m_szPWD)
 	m_pDB = new COdbc;
 	if( m_pDB->Open2(m_szDSN, m_szUID, m_szPWD) == false )
 	{
-		printf("fail -> %s()\n", __FUNCTION__);
+		printf("fail -> %s(%d)\n", __FUNCTION__,GetId());
 		return false;
 	}
 

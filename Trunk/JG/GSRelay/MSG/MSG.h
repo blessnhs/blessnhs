@@ -7,7 +7,7 @@ public:
 	SvrMSG() {}
 	~SvrMSG(){}
 
-	BYTE SubType;
+	int SubType;
 
 	virtual void Execute(LPVOID Param){};
 };

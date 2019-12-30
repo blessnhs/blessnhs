@@ -19,7 +19,7 @@ bool GSProactorImpl::Create(int InputTheadCnt)
 	m_hKillEvent	= CreateEvent(NULL, TRUE, FALSE, NULL);
 	m_InputJobEvt	= CreateEvent(NULL, TRUE, FALSE, NULL);
 
-	for(int i=0;i<USHRT_MAX;i++)
+	for(int i=0;i< MAX_QUUEUE_SIZE;i++)
 		m_ExecuteJobEvt[i] = CreateEvent(NULL, TRUE, FALSE, NULL);
 
 	if (NULL == m_hKillEvent || NULL == m_InputJobEvt || NULL == m_ExecuteJobEvt)
@@ -68,7 +68,7 @@ bool GSProactorImpl::Remove()
 	return false;
 }
 
-bool GSProactorImpl::Register(BYTE Type,IMessagePtr Msg)
+bool GSProactorImpl::Register(int Type,IMessagePtr Msg)
 {
 	m_JobList[Type].push(Msg);
 	SetEvent(m_ExecuteJobEvt[Type]);
@@ -112,8 +112,8 @@ unsigned int __stdcall ExecuteThread(LPVOID parameter)
 {
 	GSExecuteArgument *Owner = (GSExecuteArgument*) parameter;
 
-	BYTE ProcId = Owner->m_ExecuteType;
-	BYTE Id		= Owner->m_Id;
+	int ProcId = Owner->m_ExecuteType;
+	int Id		= Owner->m_Id;
 
 	while(TRUE)
 	{
@@ -129,7 +129,7 @@ unsigned int __stdcall ExecuteThread(LPVOID parameter)
 	return 0;
 }
 
-bool GSProactorImpl::Handle_Event(BYTE ProcId)
+bool GSProactorImpl::Handle_Event(int ProcId)
 {
 	IMessagePtr pJob;
 	if(m_JobList[ProcId].try_pop(pJob) == FALSE) 

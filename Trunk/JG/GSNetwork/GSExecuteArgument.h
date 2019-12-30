@@ -11,8 +11,8 @@ public:
 	~GSExecuteArgument()	{}
 
 	GSProactorImpl	*m_ProcactorImpl;
-	BYTE			m_ExecuteType;
-	WORD			m_Id;
+	int				m_ExecuteType;
+	int				m_Id;
 
 };
 

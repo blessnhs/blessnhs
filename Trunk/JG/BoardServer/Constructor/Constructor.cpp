@@ -1,17 +1,13 @@
 #include "StdAfx.h"
 #include "Constructor.h"
 
-#include "../DB/DBProxy/DBProcessContainer.h"
 #include "../Command/Command.h"
-
-#include "../server/GSBoard.h"
+#include "../Server/GSBoard.h"
 #include "MiniDump.h"
 
 BoardConstructor::BoardConstructor(void)
 {
 	GSBoard *_instance = new GSBoard;
-
-	DBPROCESSCONTAINER_CER.Initialize();
 	
 	BoardCommand _Command;
 	

@@ -48,8 +48,8 @@ void SysTimer::OnEvt(LPVOID Arg)
 			GSNetwork::GSServer::GSServer *Server = (GSNetwork::GSServer::GSServer *)GetSysTimer().pGSServer;
 			
 			pPlayerTime->pHandler= &Server->GetClientMgr();
-			pPlayerTime->Type	 = (BYTE)(MSG_TYPE_USER);
-			pPlayerTime->SubType = (BYTE)(ONTIME);
+			pPlayerTime->Type	 = MSG_TYPE_USER;
+			pPlayerTime->SubType = ONTIME;
 			pPlayerTime->pServer = Server;
 
 			MAINPROC.RegisterCommand(pPlayerTime);

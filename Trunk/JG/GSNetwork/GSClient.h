@@ -108,7 +108,7 @@ public:
 	VOID											ProcDisconnect(boost::shared_ptr<GSClient> pClient);
 
 	WORD											GetMyTP();
-	WORD											GetMyDBTP(WORD StartIndex = 0);
+	WORD											GetMyDBTP(WORD StartIndex = MSG_TYPE_DB_1);
 
 	VOID											Close();
 

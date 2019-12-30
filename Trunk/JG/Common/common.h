@@ -94,9 +94,9 @@ struct UserInfo
 
 enum EVT_TYPE
 {
-	MSG_TYPE_USER=0,
-	MSG_TYPE_DB_1=100,
-	MSG_TYPE_LOG=200,
+	MSG_TYPE_USER = 0,
+	MSG_TYPE_DB_1 = 2500,
+	MSG_TYPE_LOG  = 3500,
 };
 
 #define GT(X,MAX) (X%MAX)

@@ -40,7 +40,7 @@
 		std::map<DWORD,DBPROCESS_CER_PTR>::iterator iter = m_List.find(Id);
 		if(iter != m_List.end())
 		{
-			if (iter->second->m_pDB->IsOpen() == false)
+			if (iter->second->m_pDB == NULL || iter->second->m_pDB->IsOpen() == false)
 			{
 				return DBPROCESS_CER_PTR();
 			}
@@ -50,16 +50,12 @@
 		return DBPROCESS_CER_PTR();
 	}
 
-	void DBProcessContainer::Initialize()
+	void DBProcessContainer::Initialize(INT Count)
 	{
-		SYSTEM_INFO SystemInfo; 
-		GetSystemInfo(&SystemInfo);
-		int dwThreadNum = 2*SystemInfo.dwNumberOfProcessors;
-
-		for(int i=0;i<dwThreadNum;i++)
+		for(int i=0;i< Count;i++)
 		{
 			DBPROCESS_CER_PTR pDBProcess(new DBPROCESS_CER);
-			pDBProcess->SetId( i);
+			pDBProcess->SetId( i + MSG_TYPE_DB_1);
 
 			Add(pDBProcess);
 		}

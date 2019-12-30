@@ -58,7 +58,7 @@ namespace Board	{
 			if(pSession == NULL || pSession->GetConnected() == false)
 				return ;
 
-			DBPROCESS_CER_PTR pProcess = DBPROCESSCONTAINER_CER.Search(pSession->GetMyDBTP());
+			DBPROCESS_CER_PTR pProcess = DBPROCESSCONTAINER_CER.Search(pSession->GetMyDBTP(MSG_TYPE_DB_1));
 			if(pProcess == NULL || pProcess->m_pDB->IsOpen() == false)
 				return ;
 
