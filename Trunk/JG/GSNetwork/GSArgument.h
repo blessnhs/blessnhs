@@ -13,7 +13,7 @@ public:
 	WORD m_BindPort;
 
 	//로직 쓰레드 카운트
-	BYTE m_LogicThreadCnt;
+	WORD m_LogicThreadCnt;
 
 	//버전
 	WORD m_Version;
