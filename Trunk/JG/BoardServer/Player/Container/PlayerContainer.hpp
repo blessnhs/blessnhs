@@ -50,38 +50,35 @@ template<template<class T> class CreationPolicy> PlayerPtr PlayerContainer<Creat
 
 template<template<class T> class CreationPolicy> PlayerPtr PlayerContainer<CreationPolicy>::SearchBySocketId(DWORD Id)
 {
-	auto iter = m_PlayerMap.begin();
-
-	while (iter != m_PlayerMap.end())
-	{
-		PlayerPtr pPlayer = iter->second;
-		if (pPlayer->GetPair() == Id)
-		{
-			return pPlayer;
-		}
-
-		++iter;
-	}
-	return PlayerPtr(0);
-}
-
-template<template<class T> class CreationPolicy> PlayerPtr PlayerContainer<CreationPolicy>:: Search(wstring Account)
-{
-	auto iter = m_PlayerMap.begin();
-
-	while(iter != m_PlayerMap.end())
+	for each(auto& iter in m_PlayerMap)
 	{
 		PlayerPtr pPlayer = iter->second;
 		if (pPlayer == NULL)
 			continue;
 
-		if(pPlayer->m_Account.GetName() == Account)
+		if (pPlayer->GetPair() == Id)
 		{
 			return pPlayer;
 		}
-
-		++iter;
 	}
+
+	return PlayerPtr(0);
+}
+
+template<template<class T> class CreationPolicy> PlayerPtr PlayerContainer<CreationPolicy>:: Search(wstring Account)
+{
+	for each( auto iter in m_PlayerMap)
+	{
+		PlayerPtr pPlayer = iter.second;
+		if (pPlayer == NULL)
+			continue;
+
+		if (pPlayer->m_Account.GetName() == Account)
+		{
+			return pPlayer;
+		}
+	}
+	
 	return PlayerPtr(0);
 }
 
