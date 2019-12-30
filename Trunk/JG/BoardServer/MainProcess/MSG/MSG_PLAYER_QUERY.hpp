@@ -47,7 +47,7 @@ namespace Board	{
 	{
 	public:
 		MSG_PLAYER_QUERY() { }
-		~MSG_PLAYER_QUERY(){}
+		~MSG_PLAYER_QUERY() {}
 
 		GSCLIENT_PTR pSession;
 
@@ -55,11 +55,11 @@ namespace Board	{
 
 		void Execute(LPVOID Param)
 		{
-			if(pSession == NULL || pSession->GetConnected() == false)
-				return ;
+			if (pSession == NULL || pSession->GetConnected() == false)
+				return;
 
 			DBPROCESS_CER_PTR pProcess = DBPROCESSCONTAINER_CER.Search(pSession->GetMyDBTP(MSG_TYPE_DB_1));
-			if(pProcess == NULL || pProcess->m_pDB->IsOpen() == false)
+			if (pProcess == NULL || pProcess->m_pDB == NULL || pProcess->m_pDB->IsOpen() == false)
 				return ;
 
 			// 로그인 절차 : 아이디의 접속확인 및 인증키값을 가져온다.
