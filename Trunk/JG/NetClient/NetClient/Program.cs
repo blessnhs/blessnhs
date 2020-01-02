@@ -163,7 +163,10 @@ public class Client
                     collection.Add(new JsonStringValue("Id", id));
                     collection.Add(new JsonStringValue("Passwd", pwd));
 
-                    WritePacket(30000, System.Text.Encoding.UTF8.GetBytes(collection.ToString()), collection.ToString().Length);
+                    WritePacket(0, System.Text.Encoding.UTF8.GetBytes(collection.ToString()), collection.ToString().Length);
+                    ConnectPos = 1;
+
+
 
                 }
                 else if (ConnectPos == 1)
@@ -492,9 +495,10 @@ public class Process
    
         login = new Client[max];
 
-         while (true)
+        while (true)
         {
 
+            Thread t3 = new Thread(delegate ()
             {
                 Client login = new Client(i);
                 login.sequence = i;
@@ -502,30 +506,30 @@ public class Process
                 login.ConnectPos = 0;
                 login.StartClient("127.0.0.1", 20003);
 
-                Thread.Sleep(10);
-
+                Thread.Sleep(100);
                 string id = String.Format("nhs{0}", 1);
                 string pwd = String.Format("nhs{0}", 1);
 
-                for (int i = 0; i < 100; i++)
-                { 
-                JsonObjectCollection collection = new JsonObjectCollection();
-                collection.Add(new JsonStringValue("Id", id));
-                collection.Add(new JsonStringValue("Passwd", pwd));
+                for (int i = 0; i < 10; i++)
+                {
+                    Thread.Sleep(10);
+                    JsonObjectCollection collection = new JsonObjectCollection();
+                    collection.Add(new JsonStringValue("Id", id));
+                    collection.Add(new JsonStringValue("Passwd", pwd));
 
-                login.WritePacket(30000, System.Text.Encoding.UTF8.GetBytes(collection.ToString()), collection.ToString().Length);
+                    login.WritePacket(0, System.Text.Encoding.UTF8.GetBytes(collection.ToString()), collection.ToString().Length);
                 }
-//                login.socket.Close();
-            }
 
-            for (int i = 1; i < max; i++)
-            {
-        //        login[i].socket.Close();
-                Thread.Sleep(10);
-            }
-
+                Thread.Sleep(9750);
+                login.socket.Close();
+            });
+            t3.Start();
+            Thread.Sleep(600);
         }
-            DateTime NOW = DateTime.Now;
+
+        while (true) ;
+
+        DateTime NOW = DateTime.Now;
    
            while (true)
         {
