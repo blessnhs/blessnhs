@@ -23,7 +23,7 @@
     <ProjectGuid>{FC113D51-4CE0-4EE8-A319-21F86E357AEB}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>BoardServer</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -42,7 +42,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
@@ -73,8 +73,8 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
     <OutDir>../BIN/</OutDir>
-    <IncludePath>../Common/boost_1_68_0;../GSPacket;../common/lib_json;$(IncludePath)</IncludePath>
-    <LibraryPath>../Common/boost_1_68_0/lib;../Common/lib_json;$(LibraryPath)</LibraryPath>
+    <IncludePath>../Common/boost_1_68_0;../GSPacket;../common/lib_json;../common/protobuf/include;../common/Protocol/Cpp;$(IncludePath)</IncludePath>
+    <LibraryPath>../Common/boost_1_68_0/lib;../Common/lib_json;../Common/protobuf/lib;../Common/protobuf/Debug/lib;$(LibraryPath)</LibraryPath>
     <TargetName>$(ProjectName)_d_x64</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -101,7 +101,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>ws2_32.lib;Mswsock.lib;json_d.lib;../Common/GSCore/GSNetwork_d.lib;%(AdditionalDependencies);kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib</AdditionalDependencies>
+      <AdditionalDependencies>ws2_32.lib;Mswsock.lib;json_d.lib;../Common/GSCore/GSNetwork_d.lib;../Common/protobuf/debug/lib/libprotobufd.lib;../Common/protobuf/debug/lib/libprotobuf-lited.lib;../Common/protobuf/debug/lib/libprotocd.lib;%(AdditionalDependencies);kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">

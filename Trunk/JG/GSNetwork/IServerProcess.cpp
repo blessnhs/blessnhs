@@ -4,11 +4,6 @@
 #include "lib_json/json/reader.h"
 #include "lib_json/json/writer.h"
 
-#include "../GSPacket/protocol.h"
-#include "../GSPacket/Front.h"
-
-#include "GSSerialize.h"
-
 namespace GSNetwork {	namespace IServerProcess	{
 
 IServerProcess::IServerProcess(void)
