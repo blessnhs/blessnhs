@@ -1,8 +1,0 @@
-
-class CCS_PKT_AUTHENCATION2
-{
-	string Id;
-	string Passwd;
-	int Index;
-	list<int> ilist;
-};
