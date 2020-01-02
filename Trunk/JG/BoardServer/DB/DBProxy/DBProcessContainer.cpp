@@ -1,8 +1,6 @@
 #include "StdAfx.h"
 #include "DBProcessContainer.h"
 
-#include "../../../GSPacket/protocol.h"
-
 	DBProcessContainer::DBProcessContainer(void)
 	{
 	}

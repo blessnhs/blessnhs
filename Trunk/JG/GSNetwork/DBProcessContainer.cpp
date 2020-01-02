@@ -1,6 +1,5 @@
 #include "StdAfx.h"
 #include "DBProcessContainer.h"
-#include "../GSPacket/protocol.h"
 
 namespace GSNetwork	{	namespace DBProcessContainer	{
 

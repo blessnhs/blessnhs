@@ -3,7 +3,6 @@
 
 #include "MSG_PLAYER_QUERY_RES.h"
 
-#include "../GSPacket/Protocol.h"
 #include <boost/shared_ptr.hpp>
 #include "GSClient.h"
 #include "DBProcess.h"
@@ -64,7 +63,6 @@ namespace GSNetwork	{
 
 				res->Index = 0;
 
-				res->SetId(DBP_GET_LOGIN_INFO_RE);
 				res->Index = pProcess->ProcedureUserLogin(res->Account.c_str(),res->SessionKey.c_str(),0);
 
 				if(res->Index != 0)

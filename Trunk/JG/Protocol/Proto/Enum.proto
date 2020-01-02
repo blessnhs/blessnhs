@@ -1,0 +1,1517 @@
+option optimize_for = SPEED;
+
+
+package H3Enum;
+
+//enum eVersion
+//{
+//    option allow_alias = true;
+//    RELEASE  = 0; // 1 ~ 999
+//    MAJOR    = 5; // 1 ~ 999
+//    MINOR    = 0; // 1 ~ 999
+//}
+
+enum eVersion
+{
+    option allow_alias = true;
+    MAJOR    = 1;  // 1 ~ 999
+    MIDDLE   = 56; // 1 ~ 999
+    MINOR    = 0;  // 1 ~ 999
+}
+
+enum eSecure
+{
+    Plain    = 0; // 서버 내부용
+    Weak     = 1; // 약한 암호화 XOR
+    Simple   = 2; // 보통 암호화 RC4
+    Advanced = 3; // 강한 암호화 AES
+}
+
+enum eAuthService
+{
+    Guest       = 0;
+    NC_GUEST    = 1;
+    NC_GOOGLE   = 2;
+    NC_APPLE    = 3;
+    NC_PLAYNC   = 4;
+    NC_FACEBOOK = 5;
+
+//  Kakao       = 2;
+//  Naver       = 1;
+//  Facebook    = 2;
+//  Google      = 3;
+}
+
+enum ePlatform
+{
+    Android     = 0; // Android phone
+    IOS         = 1; // IOS phone
+    Windows     = 2; // Windows phone
+    PcLauncher  = 3; // PC 런처
+    UnityDev    = 4; // Unity
+}
+
+enum eStoreType
+{
+    Google      = 0;
+    OneStore    = 1;
+    Apple       = 2;
+}
+
+enum eNetworkType
+{
+	WiFi				= 0;
+	ThirdGeneration		= 1;
+	FourthGeneration	= 2;
+}
+
+// 오류 코드
+enum eServiceCode
+{
+    Success                     = 0;
+    DatabaseErrors              = 1; // 데이터베이스 오류
+    InvalidProto                = 2; // 프로토콜 분석 오류
+    BanUser                     = 3; // 접속 차단 유저
+    GameServerConnectionIsLost  = 4; // 게임 서버 없음
+    AuthenticationIsRequired    = 5; // 로그인 필요(세션 만료, 프로토콜 오류 등)
+    NeedToCreateTeam            = 6; // 팀 생성 필요
+    UserDataIsNotLoaded         = 7; //
+    PacketInProgress            = 8; // 이미 처리중인 패킷이 있을 때
+    ServerErrors                = 9; // 서버 오류
+}
+
+// 서버 컨텐츠 상수 
+enum eServer_Constant
+{
+    option allow_alias                      = true;
+    MAX_PROCESS_CARD_SIZE                   = 20;       // 한번에 처리 가능한 카드 개수
+    MIN_CARD_COUNT                          = 25;       // 최소 보유 카드
+    MAX_ROSTER_MEMBER_SIZE	                = 25;       // 로스트 멤버 최대 크기
+    REFRESH_INTERVAL                        = 5;        // 갱신 간격
+    MAX_BINARY_BUFFER_SIZE                  = 20000;    // 경기 시뮬레이션 바이너리 버퍼 크기(현재)
+    MAX_BINARY_BUFFER_SIZE_BEFORE           = 8000;     // 경기 시뮬레이션 바이너리 버퍼 크기(변경전)
+    SHOP_NOT_LIMIT_COUNT                    = 2100000000; // 상점 구매 제한이 없는 상품의 구매 제한 값
+    MAX_PLAYER_CARD_SPECIAL_ABILITY         = 4;        // 선수카드 특수 능력 최대 개수
+    PLAYER_CARD_LIMIT_USE_ROUND_COUNT       = 3;        // 선발투수 로스터 제외시 교체불가 Round 개수
+    MAX_NPC_TEAM_GUID                       = 10000;    // NPC 팀 GUID 최대값
+    //-------------------------------------------------------------------------
+    // 페넌트 레이스 정규시즌
+    PENNANT_REGULAR_MAX_GAMES_IN_ROUND          = 3;    // 정규시즌 한 라운드 최대 경기 수 (특정 두 팀 연전)
+    //PENNANT_SWEEP_REWARD_GAMES                  = 3;    // 스윕 보상 경기수 (한 라운드 3연전에만 해당. 2연전은 제외.)
+    PENNANT_REGULAR_WINNING_SERISE_WIN_COUNT    = 2;    // 정규시즌 위닝시리즈 승리 개수 (한 라운드 최대 3연전 가정)
+    //-------------------------------------------------------------------------
+    // 페넌트 레이스 리포트
+    MAX_PENNANT_REPORT_READY_PLAYERS            = 3;    // 기대주 선정 후보 선수 수
+    MAX_PENNANT_REPORT_INTERVIEWS               = 3;    // 인터뷰 최대 항목 수 (임의로 정한 수치로 예외 처리에 사용)
+    MIN_PENNANT_REPORT_KPI_FORECAST_VALUE       = 1;    // KPI 예상 최소 값
+    MAX_PENNANT_REPORT_KPI_FORECAST_VALUE       = 8;    // KPI 예상 최대 값
+    MIN_PENNANT_REPORT_FORECAST_ROUND           = 0;    // 시즌 예상 리포트 '조회' 및 '설정' 가능 최소 Round ID
+    MAX_PENNANT_REPORT_FORECAST_ROUND           = 3;    // 시즌 예상 리포트 '설정' 가능 최대 Round ID
+    MIN_PENNANT_REPORT_FIRST_ROUND              = 18;   // 전반기 결산 리포트 '조회' 및 '설정' 가능 최소 Round ID
+    MAX_PENNANT_REPORT_FIRST_ROUND              = 21;   // 전반기 결산 리포트 '설정' 가능 최대 Round ID
+    MIN_PENNANT_REPORT_SECOND_ROUND             = 36;   // 중반기 결산 리포트 '조회' 및 '설정' 가능 최소 Round ID
+    MAX_PENNANT_REPORT_SECOND_ROUND             = 39;   // 중반기 결산 리포트 '설정' 가능 최대 Round ID
+    MIN_PENNANT_REPORT_END_ROUND                = 54;   // 시즌 결산 리포트 '조회' 및 '설정' 가능 최소 Round ID
+    MIN_PENNANT_REPORT_POST_END_ROUND           = 73;   // 포스트 시즌 결산 리포트 '조회' 및 '설정' 가능 최소 Round ID (4연승으로 조기 종표시의 Round ID 를 설정함)
+    MIN_PENNANT_REPORT_BEGINNER_FIRST_ROUND     = 21;   // [비기너] 전반기 결산 리포트 '조회' 및 '설정' 가능 최소 Round ID
+    MAX_PENNANT_REPORT_BEGINNER_FIRST_ROUND     = 24;   // [비기너] 전반기 결산 리포트 '설정' 가능 최대 Round ID
+    MIN_PENNANT_REPORT_BEGINNER_SECOND_ROUND    = 42;   // [비기너] 중반기 결산 리포트 '조회' 및 '설정' 가능 최소 Round ID
+    MAX_PENNANT_REPORT_BEGINNER_SECOND_ROUND    = 45;   // [비기너] 중반기 결산 리포트 '설정' 가능 최대 Round ID
+    MIN_PENNANT_REPORT_BEGINNER_END_ROUND       = 62;   // [비기너] 시즌 결산 리포트 '조회' 및 '설정' 가능 최소 Round ID
+    //-------------------------------------------------------------------------
+    // 페넌트 레이스 미니 게임
+    MIN_PENNANT_MINI_GAME_BONUS_POINT       = 100;      // 미니 게임 발동에 필요한 최소 보너스 포인트
+    MIN_PENNANT_MINI_GAME_ID                = 1;        // 미니 게임 ID 범위
+    MAX_PENNANT_MINI_GAME_ID                = 3;
+    PENNANT_MINI_GAME_ID_STRIKEOUT          = 1;        // 미니 게임 ID - 삼진
+    PENNANT_MINI_GAME_ID_HOMERUN            = 2;        // 미니 게임 ID - 홈런
+    PENNANT_MINI_GAME_ID_STEALBASE          = 3;        // 미니 게임 ID - 도루
+    //-------------------------------------------------------------------------
+    // 챌린지 미니 게임
+    MAX_CHALLENGE_MINI_GAME_PLAY_COUNT      = 1;        // 각 미니 게임의 최대 플레이 가능 횟수
+    MIN_CHALLENGE_MINI_GAME_DIFFICULTY      = 1;        // 미니 게임 난이도 범위 최소값
+    MAX_CHALLENGE_MINI_GAME_DIFFICULTY      = 4;        // 미니 게임 난이도 범위 최대값
+    MAX_CHALLENGE_MINI_GAME_DIFFICULTY_FREE = 4;        // 플레이 제약없는 미니 게임 최대 난이도
+    //-------------------------------------------------------------------------
+    // 라이프라인
+    MAX_LIFELINE_STEP                       = 8;        // 라이프라인 등급 업 최고 단계 (실제 최고 단계는 선수카드 종류에 따라 다름)
+    MAX_LIFELINE_ONE_STEP_SLOTS             = 7;        // 라이프라인 한 단계의 최대 훈련 슬롯 개수 (실제 슬롯 개수는 라이프라인 종류에 따라 다름)
+    //-------------------------------------------------------------------------
+    // 싱글모드
+    SINGLE_MODE_GAME_COUNT                  = 3;        // 싱글모드 한 라운드 게임수
+    //-------------------------------------------------------------------------
+    // 랭킹전
+    RANKING_MODE_STATE_NONE                 = 0;        // 랭킹전 상태: 랭킹전 시스템 비활성
+    RANKING_MODE_STATE_SEASON_OPEN          = 1;        // 랭킹전 상태: 랭킹전 시즌 진행중
+    RANKING_MODE_STATE_SEASON_END           = 2;        // 랭킹전 상태: 랭킹전 시즌 종료됨
+    MAX_RANKING_MODE_PLAY_COUNT             = 10;       // 무료 최대 플레이 가능 횟수
+    MAX_RANKING_MODE_NUM_GAME_PREDICT       = 3;        // 경기 예측 가능한 최대 항목 수
+    MAX_RANKING_MODE_RANK_LIST_ITEMS        = 100;      // 랭킹전 순위 목록 최대 항목 개수
+    //-------------------------------------------------------------------------
+    // 구단 마스터리
+    MIN_TEAM_MASTERY_CATEGORY_NUM           = 1;        // 구단 마스터리 특성 탭 구분번호 범위
+    MAX_TEAM_MASTERY_CATEGORY_NUM           = 4;
+    //-------------------------------------------------------------------------
+    // 명성 시스템
+    FAME_REWARD_TOP_PERCENT_THRESHOLD       = 90;       // 명성 순위 보상 한계점 (DB)
+    MAX_FAME_RANK_LIST_ITEMS                = 100;      // 명성 순위 목록 최대 항목 개수
+    MAX_FAME_RANK_DISPLAY                   = 10000;    // 명성 순위 표시 하한선
+    //-------------------------------------------------------------------------
+    // 인벤토리 아이템
+    ITEM_INVENTORY_ID_INDEX_1_ITEM           = 1;        // 아이템 인벤토리 ID 구분자 : 1. 아이템
+    ITEM_INVENTORY_ID_INDEX_2_FUNCTIONAL_CARD       = 10000001; // 아이템 인벤토리 ID 구분자 : 2. 기능성 카드
+    ITEM_INVENTORY_ID_INDEX_3_SPECIAL_ABILITY_CARD  = 20000001; // 아이템 인벤토리 ID 구분자 : 3. 특수능력 카드
+    //-------------------------------------------------------------------------
+    // KBO 예측
+    MAX_KBO_BETTING_RANK_LIST_ITEMS         = 100;      // KBO 예측 순위 목록 최대 항목 개수
+    //-------------------------------------------------------------------------
+    // 레전드 영입
+    MAX_NUM_LEGEND_PLAYER_THEME_SLOTS       = 5;        // 최대 테마 슬롯 개수
+    MAX_NUM_LEGEND_PLAYER_MATERIAL_SLOTS    = 8;        // (테마당) 최대 재료 슬롯 개수
+    //-------------------------------------------------------------------------
+    // 평가전
+    MAX_TRYOUT_MATCH_PLAY_COUNT             = 20;       // 최대 플레이 가능 횟수 (1일)
+    MAX_TRYOUT_MATCH_RANK_LIST_ITEMS        = 100;      // 평가전 순위 목록 최대 항목 개수
+    MIN_TRYOUT_MATCH_STARTER_PITCHER_ROTATION_NUM   = 0;
+    MAX_TRYOUT_MATCH_STARTER_PITCHER_ROTATION_NUM   = 4;
+    //-------------------------------------------------------------------------
+    // 잠재력 개방
+    MAX_NUM_LATENT_ABILITY_SLOTS                    = 6;    // 잠재력 개방 슬롯 최대 개수
+    LATENT_ABILITY_SLOT_OPEN_FLAGS_DB_NOT_UPDATE    = -1;
+    LATENT_ABILITY_SLOT_OPEN_FLAGS_DB_NOT_UPDATE_2  = -2;
+    LATENT_ABILITY_SLOT_OPEN_FLAGS_DEFAULT          = 0;
+    MAX_NUM_LATENT_ABILITY_DEV_REQUEST_COUNT        = 50;
+    //-------------------------------------------------------------------------
+    // 벤치 팀컬러
+    MAX_NUM_BENCH_TEAM_COLOR_SLOTS                  = 2;    // 벤치 팀컬러 슬롯 최대 개수
+    //-------------------------------------------------------------------------
+    // 최강자전
+    MAX_MTN_MATCH_COUNT                             = 3;    // 한 라운드에 3판
+    MIN_MTN_MATCH_COUNT                             = 2;    // 2선승
+    //-------------------------------------------------------------------------
+	// 마스터카드 영입
+    MAX_NUM_MASTER_PLAYER_THEME_SLOTS					= 4;   // 최대 테마 슬롯 개수
+    MAX_NUM_MASTER_PLAYER_MATERIAL_PLAYER_SLOTS			= 8;   // (테마당) 최대 재료 슬롯 개수.
+	MAX_NUM_MASTER_PLAYER_MATERIAL_ABILITYCARD_SLOTS	= 16;  // 최대 특수능력 재료 슬롯 개수.
+}
+
+//enum eGameType
+//{
+//    AwayGame                = 0;
+//    SeasonGame              = 1;
+//    RankingGame             = 2;
+//    FriendlyGame            = 3;
+//    RevengeGame             = 4;
+//	PracticeGame              = 5;
+//}
+
+enum eContentType
+{
+    NoneContent             = 0;
+//    Season                  = 1;
+//    Away                    = 2;
+//    Ranking                 = 3;
+//    Revenge                 = 4;
+//    Friendly                = 5;
+//    Shop                    = 6;
+//    Trade                   = 7;
+//    PotentialTraining       = 8;
+//    ComposeCard             = 9;
+//    ExperiencePass          = 10;
+//    Scout                   = 11;
+}
+
+enum eNotificationType
+{
+    eFriendRequest      = 1;
+    eRevengeMatch       = 2;
+}
+
+enum ePriceType
+{
+    None                = 0;
+    Bat                 = 1;
+    Pt                  = 2;
+}
+
+enum ePositionConstant
+{
+    Fielder_1           = 1;
+    Fielder_2           = 2;
+    Fielder_3           = 3;
+    Fielder_4           = 4;
+    Fielder_5           = 5;
+    Fielder_6           = 6;
+    Fielder_7           = 7;
+    Fielder_8           = 8;
+    Fielder_9           = 9;
+
+    PinchHitter_1       = 10;
+    PinchHitter_2       = 11;
+    PinchHitter_3       = 12;
+    PinchHitter_4       = 13;
+    PinchHitter_5       = 14;
+
+    StartingPitcher_1   = 15;
+    StartingPitcher_2   = 16;
+    StartingPitcher_3   = 17;
+    StartingPitcher_4   = 18;
+    StartingPitcher_5   = 19;
+    ReliefPitcher_1     = 20;
+    ReliefPitcher_2     = 21;
+    ReliefPitcher_3     = 22;
+    ReliefPitcher_4     = 23;
+    SetupPitcher        = 24;
+    CloserPitcher       = 25;
+}
+
+//enum eSeasonStatus
+//{
+//    BeforeSeason     = 0;
+//    SeasonInProgress = 1;
+//    EndSeason        = 2;
+//    NoneData         = 3;
+//}
+
+//// 게임 진행 방식
+//enum ePlayType
+//{
+//    Watch             = 0; // 야구 중계 시청
+//    Highlights        = 1; // 하이라이트
+//    Scoreboard        = 2; // 스코어보드
+//}
+
+//enum ePromotion
+//{
+//    InSeason    = 0;
+//    Promotion   = 1;
+//    Remain      = 2;
+//    Demotion    = 3;
+//}
+// 페넌트 레이스 리그 시험 여부
+enum eLeagueTestType
+{
+    LeagueTestType_Normal           = 0; // 일반
+    LeagueTestType_PromotionTest    = 1; // 승격 시험
+    LeagueTestType_DemotionTest     = 2; // 강등 시험
+}
+
+//enum eFriendType
+//{
+//    eFriend       = 0; // 친구 리스트
+//    eRequest      = 1; // 요청 리스트
+//    eRecommend    = 2; // 추천 리스트
+//    eRecently     = 3; // 최근 플레이 리스트
+//}
+
+enum ePushTopic
+{
+    AllPushTopic    = 0; // 모든 푸쉬
+}
+
+enum eAccountState
+{
+    Normal          = 1;  // 일반 상태
+    DropOut         = 4;  // 탈퇴 상태
+}
+
+// 페넌트 레이스 매치업 정보 비트 플래그
+enum ePennantMatchTypeFlag
+{
+    PennantMatchTypeFlag_Friend                 = 0x00000001;   // 친구 매치
+    PennantMatchTypeFlag_Rival                  = 0x00000002;   // 라이벌 매치
+    PennantMatchTypeFlag_Today                  = 0x00000004;   // 투데이 매치
+    PennantMatchTypeFlag_Event01                = 0x00000008;   // 이벤트: 부스팅 데이
+    PennantMatchTypeFlag_Event02                = 0x00000010;   // 이벤트: 추석연휴 부스팅
+    PennantMatchTypeFlag_BeginnerSpecialReward  = 0x00000020;   // 비기너 특별 보상
+}
+
+// 선수카드 잠금 상태 정보 비트 플래그
+enum eLockStateFlag
+{
+    LockStateFlag_Lock                                  = 0x0001;   // 잠금
+    LockStateFlag_TrainingCamp                          = 0x0002;   // 전지 훈련
+	LockStateFlag_NotUseFirstStringTicketStudyAbroad	= 0x0004;	// 1군 등록 가능 티켓 미사용 유학
+	LockStateFlag_UseFirstStringTicketStudyAbroad		= 0x0008;	// 1군 등록 가능 티켓 사용 유학
+	LockStateFlag_Correct								= 0x0010;	// 교정진행중 여부
+
+    _LockStateFlag_All                                  = 0x7FFF;   // (주의) UserVerifier::CheckPlayerCardLockStateFlags() 에서 사용. 다른 용도로 사용하지 말 것.
+}
+
+enum eInfoUpdateType
+{
+    InfoUpdateType_PennantGameComp          = 0;    // 페넌트 경기 종료
+    InfoUpdateType_PennantNewSeason         = 1;    // 페넌트 새시즌 오픈
+}
+
+// 친구 리스트 종류
+enum eFriendType
+{
+    eFriend         = 0; // 친구
+    eSend           = 1; // 보낸 신청
+    eReceive        = 2; // 받은 친구
+    eRecommend      = 3; // 추천 친구
+}
+
+message BatterRecordCode
+{
+    enum eCode
+    {
+        ab      =  0; // At Bat 타수
+        pa      =  1; // PLATE_APPEARANCES 타석
+        hits    =  2; // Hits all 안타
+        hit1    =  3; // single
+        hit2    =  4; // double
+        hit3    =  5; // triple
+        hr      =  6; // HomeRun 홈런
+        r       =  7; // Runs 득점
+        rbi     =  8; // Run Batted In 타점
+        bb      =  9; // Base On Balls 볼넷
+        hbp     = 10; // Hit By Pitch 데드 볼
+        sb      = 11; // Stolen Bases 도루
+        cs      = 12; // Caught Stealing 도루 실패
+        gdp     = 13; // Grounded Into DoublePlay 병살
+        so      = 14; // Strike Outs 삼진
+        sh      = 15; // Sacrifice Hit 희생타
+        sf      = 16; // Sacrifice Fly 희생 플라이
+        e       = 17; // Error 실책
+        btbhr   = 18; // back to back homerun 2연타석 홈런
+        lob     = 19; // Left on base 잔루
+        sba     = 20; // Stolen base allowed 도루 허용
+        rto     = 21; // Runners Thrown Out 도루 저지 횟수
+        risp_ab = 22; // 득점권 타수
+        risp_hits = 23; // 득점권 안타(Hits all)
+    }
+}
+
+message PitcherRecordCode
+{
+    enum eCode
+    {
+        faced           =  0; // Faced 상대 타자수 = OPA 상대 타석
+        ball_count      =  1; // Ball Count 투구수
+        outs            =  2; // Out Count 아웃 카운트
+        w               =  3; // Win 승리
+        l               =  4; // lose 패배
+        hold            =  5; // Hold 홀드
+        sv              =  6; // Save 세이브
+        bs              =  7; // Blown Save 세이브
+        er              =  8; // Earned Runs 자책점
+        ra              =  9; // Runs Allowed 실점
+        hits            = 10; // Hits all 피안타
+        hit1            = 11; // single 피 1루타
+        hit2            = 12; // double 피 2루타
+        hit3            = 13; // triple 피 3루타
+        hr              = 14; // HomeRun 피홈런
+        k               = 15; // Strike Outs 삼진
+        bb              = 16; // Base On Balls 볼넷
+        hbp             = 17; // Hit By Pitch 데드 볼
+        wp              = 18; // wild Pitch 폭투
+        cg              = 19; // Complete Game 완투 승
+        shut_out        = 20; // ShutOut 완봉승
+        start_win       = 21; // StartWin 선발승
+        relief_win      = 22; // ReliefWin 구원승
+        qs              = 23; // Quality Pitch 퀄리티 스타트
+        osh             = 24; // Opponent Sacrifice Bunts 희생 번트 허용 수
+        osf             = 25; // Opponent Sacrifice Flies 희생 플라이 허용 수
+        perfect_game    = 26; // Perfect Game 퍼펙트 게임
+        no_hit_no_run   = 27; // no hit no run노히트 노런
+        oab             = 28; // 상대타수
+    }
+}
+
+message TeamRecordCode
+{
+    enum eCode
+    {
+        result =  0; // 승무패(1: 승, 2: 무승부, 3: 패배)
+        r      =  1; // 팀 득점
+        hits   =  2; // 팀 안타
+        ab     =  3; // At Bat 타수
+        or     =  4; // 팀 실점(Opponent Sacrifice Runs)
+        hr     =  5; // 팀 홈런
+        sb     =  6; // 팀 도루
+        er     =  7; // 팀 자책점
+        outs   =  8; // 팀 아웃 카운트(INN)
+        er_s   =  9; // 선발 투수 누적 자책점
+        outs_s = 10; // 선발 투수 누적 아웃 카운트
+        w      = 11; // 승
+        l      = 12; // 무
+        d      = 13; // 패
+    }
+}
+
+// 페넌트레이스 리포트 주목 선수 상태 정보
+// (참고) 비트 플래그 형식으로 변경.  (seonguki 2017-01-31)
+enum ePennantReportAttentionPlayerState
+{
+    PennantReportAttentionPlayerState_Normal    = 0x00; // 후보
+    PennantReportAttentionPlayerState_Prev      = 0x01; // 후보(이전 주목 선수)
+    PennantReportAttentionPlayerState_Selected  = 0x02; // 선택 주목 선수
+}
+
+//enum ePennantReportTopRecordType
+//{
+//    PennantReportTopRecordTypeBA   = 0; // (타자) 타율
+//    PennantReportTopRecordTypeHR   = 1; // (타자) 홈런
+//    PennantReportTopRecordTypeH    = 2; // (타자) 안타
+//    PennantReportTopRecordTypeRBI  = 3; // (타자) 타점
+//    PennantReportTopRecordTypeSB   = 4; // (타자) 도루
+//    PennantReportTopRecordTypeERA  = 5; // (투수) 평균 자책점
+//    PennantReportTopRecordTypeW    = 6; // (투수) 다승
+//    PennantReportTopRecordTypeHold = 7; // (투수) 홀드
+//    PennantReportTopRecordTypeSV   = 8; // (투수) 세이브
+//    PennantReportTopRecordTypeK    = 9; // (투수) 삼진
+//}
+
+// 타자 카드 후면 기록
+enum eCardSimpleRecordBatter
+{
+    CardSimpleRecordBatter_G    	= 0;	// 경기수
+    CardSimpleRecordBatter_HITS 	= 1;	// 총 안타
+    CardSimpleRecordBatter_AB   	= 2;	// 타수
+    CardSimpleRecordBatter_HR   	= 3;	// 홈런
+    CardSimpleRecordBatter_RBI  	= 4;	// 타점
+    CardSimpleRecordBatter_SB   	= 5;	// 도루
+    CardSimpleRecordBatter_E    	= 6;	// 실책
+	CardSimpleRecordBatter_HIT1		= 7;	// 1루타
+	CardSimpleRecordBatter_HIT2		= 8;	// 2루타
+	CardSimpleRecordBatter_HIT3		= 9;	// 3루타
+	CardSimpleRecordBatter_BB		= 10;	// 볼넷
+	CardSimpleRecordBatter_HBP		= 11;	// 데드볼
+	CardSimpleRecordBatter_SF		= 12;	// 희생플라이
+	CardSimpleRecordBatter_RISPAB	= 13;	// 득접권 타수
+	CardSimpleRecordBatter_RISPHITS	= 14;	// 득점권 안타
+}
+
+// 투수 카드 후면 기록
+enum eCardSimpleRecordPitcher 
+{
+    CardSimpleRecordPitcher_G		= 0;	// 경기수
+    CardSimpleRecordPitcher_ER		= 1;	// 자책점
+    CardSimpleRecordPitcher_OUTS	= 2;	// 아웃 카운트
+    CardSimpleRecordPitcher_W		= 3;	// 승
+    CardSimpleRecordPitcher_L		= 4;	// 패
+    CardSimpleRecordPitcher_SV		= 5;	// 세이브
+    CardSimpleRecordPitcher_HOLD	= 6;	// 홀드
+	CardSimpleRecordPitcher_BB		= 7;	// 볼넷
+	CardSimpleRecordPitcher_HITS	= 8;	// 피안타
+	CardSimpleRecordPitcher_K		= 9;	// 삼진
+	CardSimpleRecordPitcher_HR		= 10;	// 피홈런
+	CardSimpleRecordPitcher_RA		= 11;	// 실점
+	CardSimpleRecordPitcher_QS		= 12;	// 퀄리티 스타트
+	CardSimpleRecordPitcher_HBP		= 13;	// 데드볼
+	CardSimpleRecordPitcher_WP		= 14;	// 폭투
+}
+
+enum eBastPlayerSection
+{
+    BastPlayerSection_BA   = 0; // 타율
+    BastPlayerSection_HITS = 1; // 안타
+    BastPlayerSection_HR   = 2; // 홈런
+    BastPlayerSection_RBI  = 3; // 타점
+    BastPlayerSection_SB   = 4; // 도루
+    BastPlayerSection_ERA  = 5; // 평균자책
+    BastPlayerSection_W    = 6; // 승
+    BastPlayerSection_H    = 7; // 홀드
+    BastPlayerSection_SV   = 8; // 세이브
+    BastPlayerSection_k    = 9; // 탈삼진
+}
+
+enum eCheatFlag
+{
+    CheatFlag_TeamBadgeGetCheckDisable          = 0x00000001; // 팀 배지 획득 조건검사 끔
+    CheatFlag_ShopProductListReset              = 0x00000002; // 상점 상품 리스트 강제 리셋 상태
+    CheatFlag_LifeLineGradeUpMaterialDisable    = 0x00000004; // 라이프라인 등급업 재료체크 비활성화 여부
+    CheatFlag_SingleModeNpcBuffViewDisable      = 0x00000008; // 시범 경기 NPC 히든 버프 화면 출력 여부
+    CheatFlag_PlayerCollectionCheckDisable      = 0x00000010; // [선수카드 컬렉션] 재료 체크 기능 비활성화 여부. Params: mode(0:Off, 1:On)
+    CheatFlag_SpecialAbilityRecipeCheckDisable  = 0x00000020; // [선수카드 컬렉션] 재료 체크 기능 비활성화 여부. Params: mode(0:Off, 1:On)
+	CheatFlag_MasterPlayerMaterialCheckDisable  = 0x00000040; // [마스터 카드] 재료 체크 기능 비활성화 여부. Param: mode(0:Off, 1:On)
+}
+
+// 도전과제 종류 (주의: DB 액세스에도 사용함)
+enum eAchieveType
+{
+    AchieveType_Normal  = 1; // 업적 도전과제
+    AchieveType_Daily   = 2; // 일일 도전과제
+    AchieveType_Week    = 3; // 주간 도전과제
+    
+    AchieveType_MuseumPhotoMake     = 4;    // 뮤지엄 - 사진 제작 도전과제
+    AchieveType_MuseumPhotoLevelUp  = 5;    // 뮤지엄 - 사진 레벨업 도전과제
+    AchieveType_MuseumNotset        = 99;  
+}
+
+// 예측 보상 타입
+enum eBettingRewardType
+{
+    BettingReward_MaxPoint          = 1; // 경기 누적 포인트 보상
+    BettingReward_ComboCount        = 2; // 경기 연속 콤보 보상
+    BettingReward_MaxCombo          = 3; // 경기 누적 콤보 보상
+    BettingReward_SeasonSuccess     = 4; // 시즌 예측 성공 보상
+    BettingReward_SeasonSingle      = 5; // 단독 예측 성공 보상
+    BettingReward_PointRanking      = 6; // 포인트 랭킹 보상
+    BettingReward_Instant           = 7; // 예측 즉시 보상
+    BettingReward_PostSeasonMaxCombo = 8; // 포스트 시즌 누적 콤보 보상
+}
+
+// 경기 관전 종류
+enum eGameWatchType
+{
+    GameWatchTypeNone               = 0; // 없음 (스코어 보드)
+    GameWatchTypeBroadcast          = 1; // 3D 중계 보기
+    GameWatchTypeDigest             = 2; // 다이제스트 중계 보기
+    GameWatchTypeHighlight          = 3; // 하이라이트 중계 보기 
+}
+
+enum ePushOption
+{
+    PushOptionAllOn                 = 0x00; // 모든 옵션 ON
+    PushOptionMarketing             = 0x01; // 홍보성 PUSH 
+    PushOptionNight                 = 0x02; // 야간 PUSH 
+    PushOptionAllOff                = 0xFF; // 모든 옵션 OFF
+}
+
+enum eTutorialProgress
+{
+    TutorialProgressStart           = 0;    // 투토리얼 시작
+    TutorialProgressBonusGet        = 10;   // 미니게임 보너스 받기
+    TutorialIdSet                   = 20;   // 중간 저장
+    TutorialGameResult              = 30;   // 경기 결과 저장 (튜토리얼 종료) - 값 수정 시 DB에 설정값 같이 바꿔야함.
+}
+
+// NP 웨어하우스 상품 지급 코드
+enum eWarehouseRequstCode
+{
+    WarehouseRequstCode_MobileAdmin  = 34;  // 운영자 선물
+    WarehouseRequstCode_MobileReward = 29;  // 이벤트 보상
+    WarehouseRequstCode_MobileCoupon = 30;  // 쿠폰
+    WarehouseRequstCode_MobilePg     = 32;  // 인앱 결제
+}
+
+// 컨텐츠 보상 종류
+// (주의) 값은 운영로그에서도 사용되므로, 기존값을 임의로 변경하면 안됨. (seonguki 20170320)
+enum eContentRewardType
+{
+    ContentRewardType_None              = 0; // 없음 (서버 내부에서만 사용. 클라이언트 전송되지 않음.)
+    ContentRewardType_Normal            = 1; // 일반
+    ContentRewardType_Sweep             = 2; // (페넌트레이스) 한 라운드 전승
+    ContentRewardType_MatchTypeFriend   = 3; // (페넌트레이스) 친구 매치
+    ContentRewardType_MatchTypeToday    = 4; // (페넌트레이스) 투데이 매치
+    ContentRewardType_MatchTypeRival    = 5; // (페넌트레이스) 라이벌 매치
+    ContentRewardType_BeginnerSpecial   = 6; // (페넌트레이스) 비기너 리그 특별 보상
+    ContentRewardType_Event             = 7; // (페넌트레이스) 이벤트 보상
+}
+
+// 월드 활성 유저 상태
+enum eWorldActiveUsersState
+{
+    WorldActiveUsersState_Low           = 0; // 원활. 활성 유저 수 적음.
+    WorldActiveUsersState_Normal        = 1; // 보통. 활성 유저 수 보통.
+    WorldActiveUsersState_High          = 2; // 혼잡. 활성 유저 수 많음.
+    WorldActiveUsersState_Full          = 3; // 불가. 신규 구단 생성 불가.
+}
+
+// 웹 이벤트 액션 종류
+enum eWebEventActionType
+{
+    WebEventAction_SinglePlay                   = 1;  // 싱글플레이
+    WebEventAction_BuyItem                      = 2;  // 상점 아이템 구매
+    WebEventAction_PredictTry                   = 3;  // 경기 예측 시도: 승수 예측, 라운드 예측
+    WebEventAction_PredictSuccess               = 4;  // 경기 예측 성공: 승수 예측, 라운드 예측
+    WebEventAction_BoardWrite                   = 5;  // 게시판 댓글 작성
+    WebEventAction_ChargeCash                   = 6;  // 캐시 충전
+    WebEventAction_UseGradeUpItem               = 7;  // 승급 아이템 사용
+    WebEventAction_AddFriend                    = 8;  // 친구 추가
+    WebEventAction_TrainingPlayer               = 9;  // 선수 훈련
+    WebEventAction_UseCash                      = 10; // 캐시 사용
+    WebEventAction_DailyMissionAllComplete      = 11; // 일일도전과제 전체 완료 
+    WebEventAction_AchieveComplete              = 12; // 특정 업적 완료 (조건: 업적-레벨)
+    WebEventAction_ChallengeMinigameDifficultClear = 13; // 챌린지: 미니게임 특정 난이도 수행 (조건: 쉬움1, 보통2, 어려움3, 매우어려움4)
+    WebEventAction_TrainingReset                = 14; // 선수 훈련: 리셋
+    WebEventAction_PennantResultView            = 15; // 중계보기 (조건: 전체1, 하이라이트2, 스코어보드3)
+    webEventAction_PlayerCardCompose            = 16; // 선수카드 조합 (조건: 오버롤)
+    WebEventAction_TrainingGradeUp              = 17; // 선수카드 승급
+    WebEventAction_AbroadStart                  = 18; // 유학 시작
+    WebEventAction_AbroadFinish                 = 19; // 유학 종료
+    WebEventAction_WebMiniGamePredictTry        = 20; // 웹미니게임 경기 예측 시도: 승수/라운드 1개라도 되면 됨.
+
+    WebEventAction_Login                        = 21; // 로그인                - 2017/11 추가
+    WebEventAction_RankingModeGameStart         = 22; // 랭킹전 시작           - 2017/11 추가  
+    WebEventAction_InAppPurchase                = 23; // 인앱구매              - 2017/12 추가 : 2018년 1월 말 패치위해
+    // 이후 계속 추가 (얼마나 있을지는 모르겠다)
+}
+
+enum eMuseumCategory
+{
+    MuseumCategory_Notset       = 0;        
+    MuseumCategory_Equipment    = 1;           // 사진 장착
+    MuseumCategory_Make         = 2;           // 사진 제작
+    MuseumCategory_LevelUp      = 3;           // 사진 레벨업
+}
+
+enum eMuseumAction
+{
+    MuseumAction_Notset                   = 0;       
+    
+    MuseumAction_UnequipPhoto             = 10;           // 장착 해제
+    MuseumAction_EquipPhoto               = 11;           // 사진 장착(이미 있는 사진이면 교체)
+
+    MuseumAction_SelectMakePhoto          = 20;           // 사진 만들기 시작
+    MuseumAction_CancelMakePhoto          = 21;           // 사진 만들기 취소
+    MuseumAction_CompleteMakePhoto        = 22;           // 사진 만들기 완료
+    MuseumAction_CompleteMakeAchieve      = 23;           // 사진 만들기 업적 완료
+
+    MuseumAction_SelectLevelUpPhoto       = 30;           // 사진 레벨업 시작
+    MuseumAction_CancelLevelUpPhoto       = 31;           // 사진 레벨업 취소
+    MuseumAction_CompleteLevelUpPhoto     = 32;           // 사진 레벨업 완료
+    //MuseumAction_CompleteLevelUpAchieve   = 33;           // 사진 레벨업 업적 완료       :: 렙업 미션은 개별로 완료 처리 하지 않는다.
+}
+
+// 팝업 공지 종류
+enum eNoticePopUpType
+{
+    NoticePopUpType_Alert               = 1; // 긴급 공지
+    NoticePopUpType_Normal              = 2; // 일반 공지
+    NoticePopUpType_None                = 3; // 간단한 형식의 공지
+}
+
+// 인디게이터 정보 비트 플래그
+enum eIndicatorTypeFlag
+{
+    IndicatorTypeFlag_Friend        = 0x00000001;   // 친구
+    IndicatorTypeFlag_Gift          = 0x00000002;   // 선물함
+    IndicatorTypeFlag_Shop          = 0x00000004;   // 상점
+    IndicatorTypeFlag_Memo          = 0x00000008;   // 쪽지
+    IndicatorTypeFlag_Museum        = 0x00000010;   // 뮤지엄
+}
+
+// [20180515 chsoo82] 클라이언트팀 요청으로 Crema Enum type 로 이전함.
+//// 인스턴트 이벤트 타입
+//enum eInstantEventType
+//{
+//    InstantEventType_None                       = 0;     // 이벤트 설정 안함
+//    InstantEventType_HomerunRace                = 1;     // 홈런 레이스 이벤트
+//    InstantEventType_WinningBallMileage         = 2;     // 위닝볼 마일리지 이벤트 
+//    InstantEventType_StrikeOut                  = 3;     // 전설의 삼진왕 이벤트
+//    InstantEventType_HomerunKing                = 4;     // 전설의 홈런왕 이벤트
+//    InstantEventType_PlayerCollection           = 5;     // 선수 컬렉션 이벤트
+//    InstantEventType_HitTheHighlight            = 6;     // 힛 더 하이라이트 이벤트
+//    InstantEventType_Achievement                = 1000;  // DB/서버에서 관리하지 않는 타입. 클라이언트에서 상시DP하기 위한 타입이다.
+//}
+
+// 인스턴트 이벤트 : 위닝볼 마일리지 이벤트 포인트 별 단계
+enum eInstantEventWinningBallMileageStep
+{
+	WinningBallMileageStep_D					= 1;
+	WinningBallMileageStep_C					= 2;
+	WinningBallMileageStep_B					= 3;
+	WinningBallMileageStep_A					= 4;
+	WinningBallMileageStep_S					= 5;
+}
+
+
+// 인스턴트 이벤트 : 위닝볼 마일리지 이벤트 추가 기능 플래그
+enum eInstantEventWinningBallMileageExtraFlag
+{
+	WinningBallMileageRanking					= 0x00000001;	// 랭킹 보상
+	WinningBallMileageTier						= 0x00000002;	// 티어 보상
+}
+// 인스턴트 이벤트 : 전설의 삼진왕 이벤트 추가 기능 플래그
+enum eInstantEventStrikeOutExtraFlag
+{
+    StrikeOutNone                               = 0x00000000;   // 랭킹/티어보상 없음
+	StrikeOutRanking					        = 0x00000001;	// 랭킹 보상
+	StrikeOutTier					        	= 0x00000002;	// 티어 보상
+}
+// 인스턴트 이벤트 : 전설의 홈런왕 이벤트 추가 기능 플래그
+enum eInstantEventHomerunKingExtraFlag
+{
+    HomerunKingNone                             = 0x00000000;   // 랭킹/티어보상 없음
+	HomerunKingRanking					        = 0x00000001;	// 랭킹 보상
+	HomerunKingTier					        	= 0x00000002;	// 티어 보상
+}
+
+// 유저캐어 이벤트 타입
+enum eUserCareEventType
+{
+    UserCareEventType_None          = 0;     // 이벤트 설정 안함
+    UserCareEventType_Newbie        = 1;     // 신규유저 이벤트
+    UserCareEventType_Return        = 2;     // 복귀유저 이벤트
+}
+
+// 모바일 환불 제재 시스템 : 세부 정책 타입
+enum ePaymentReputationPolicyDetailType
+{
+    PaymentReputationPolicyDetailType_None          = 1; // 없음
+    PaymentReputationPolicyDetailType_Warning       = 2; // 경고
+    PaymentReputationPolicyDetailType_RepaymentAll  = 3; // 전체 재결제
+    PaymentReputationPolicyDetailType_RepaymentPart = 4; // 일부 재결제
+    PaymentReputationPolicyDetailType_BlackList     = 5; // 블렉 리스트
+    PaymentReputationPolicyDetailType_ETC           = 6; // 기타 오류
+}
+
+// 팀 정보 수정 타입
+enum eChangeTeamInfoType
+{
+    ChangeTeamInfoType_TeamName     = 0x00000001;      // 팀명 변경
+    ChangeTeamInfoType_FavTeamId    = 0x00000002;      // 선호구단 변경
+    ChangeTeamInfoType_EmblemId     = 0x00000004;      // 엠블럼 변경
+}
+
+// [이사회] : 이사회 멤버 상태 타입
+enum eGuildMemberStateType
+{
+	GuildNotJoin				= 0; // 가입하지 않음.
+	GuildReserveJoin			= 1; // 가입 신청 중.
+	GuildJoining				= 2; // 가입 중.
+	GuildKickedOut				= 3; // 추방.
+	GuildDestroy				= 4; // 해체.
+	GuildLeave					= 5; // 탈퇴
+}
+
+// KBO 예측 시즌 상태 (DB)
+enum eKboBettingSeasonState
+{
+    KboBettingSeasonState_Normal                    = 0; // 일반
+    KboBettingSeasonState_LastSeasonOfYear_Reward   = 1; // 해당년도 시즌마감, 순위보상 가능
+    KboBettingSeasonState_LastSeasonOfYear_NoReward = 2; // 해당년도 시즌마감, 순위보상 불가
+}
+
+// KBO 예측 가능 상태 (DB)
+enum eKboBettingEnableState
+{
+    KboBettingEnableState_Enable        = 0; // 예측 가능
+    KboBettingEnableState_Complate      = 1; // 예측 완료
+    KboBettingEnableState_NoGame        = 2; // 예측 경기 없음 (상황표시없음(예측마감, 경기없는경우, 시즌오프))
+}
+
+// KBO 예측 경기 구분 코드 (DB)
+enum eKboBettingGameCode
+{
+    KboBettingGameCode_Regular          = 0; // 정규
+    KboBettingGameCode_SemiPlayOff      = 3; // 준플레이오프
+    KboBettingGameCode_WildCard         = 4; // 와일드카드결정전
+    KboBettingGameCode_PlayOff          = 5; // 플레이오프
+    KboBettingGameCode_KoreanSeries     = 7; // 한국시리즈
+    KboBettingGameCode_World            = 8; // 국제경기
+    KboBettingGameCode_AllStar          = 9; // 올스타전
+}
+
+// KBO 예측 결과 비트 플래그 (DB)
+enum eKboBettingResultFlag
+{
+    KboBettingResultFlag_AllFailed      = 0x01; // 예측실패 (DB 에서 사용)
+    KboBettingResultFlag_Win            = 0x02; // 승리예측성공
+    KboBettingResultFlag_Score          = 0x04; // 점수예측성공
+    KboBettingResultFlag_HomeRun        = 0x08; // 홈런예측성공
+    KboBettingResultFlag_StrikeOut      = 0x10; // 탈삼진예측성공
+}
+
+// [이사회 연고지 쟁탈전] : 쟁탈전 진행 상태
+enum eGuildLeagueStatus
+{
+	GuildLeagueStatus_Unavailable					= 0; // 쟁탈전 정보 없음
+	GuildLeagueStatus_InProgressParticipation		= 1; // 참가 기간
+	GuildLeagueStatus_PreparePlayLeague				= 2; // 리그 구성
+	GuildLeagueStatus_InProgressPlayLeague			= 3; // 리그 경기 진행
+	GuildLeagueStatus_PrepareClosing				= 4; // 리그 결산
+	GuildLeagueStatus_ClosedWeek					= 5; // 주차 쟁탈전 종료
+	GuildLeagueStatus_ClosedSeason					= 6; // 시즌 쟁탈전 종료
+	GuildLeagueStatus_Nonparticipation				= 7; // 리그 구성 안됨( 참가 조건 불충분.. )
+	GuildLeagueStatus_UnplayableLeague				= 8; // 리그 진행 불가( 리그 내 이사회 해체 등의 이유로 최소 참가 이사회수 보다 미만이 된 경우.. )
+}
+
+// [이사회 연고지 쟁탈전] : 쟁탈전 보상 flag
+enum eGuildLeagueRewardFlag
+{
+	GuildLeagueRewardFlag_None						= 0;
+	GuildLeagueRewardFlag_HomeTown					= 0x01; // 주단위 연고지 점령 보상
+	GuildLeagueRewardFlag_WeekRanking				= 0x02; // 주단위 랭킹 보상
+	GuildLeagueRewardFlag_SeasonTotalRanking		= 0x04; // 시즌단위 통합 랭킹 보상
+	GuildLeagueRewardFlag_WeekTotalRanking			= 0x08; // 주단위 통합 랭킹 보상
+	GuildLeagueRewardFlag_All						= 0x7fff;
+}
+
+// [이사회 연고지 쟁탈전] : 전적 기록 타입
+enum eGuildLeagueRecordsType
+{
+	GuildLeagueRecordsType_CurrentSeason			= 0; // 현재 시즌
+	GuildLeagueRecordsType_PreviousSeason			= 1; // 이전 시즌
+	GuildLeagueRecordsType_TotalSeason				= 2; // 누적 시즌
+	
+	GuildLeagueRecordsType_CurrentWeek				= 3; // 현재 주차
+	GuildLeagueRecordsType_PreviousWeek				= 4; // 이전 주차
+}
+
+// [이사회 연고지 쟁탈전] : 전적 현황 타입
+enum eGuildLeagueScoreboardType
+{
+	GuildLeagueScoreboardType_Overall				= 0; // 통합 현황
+	GuildLeagueScoreboardType_Offense				= 1; // 공격 현황
+	GuildLeagueScoreboardType_Defense				= 2; // 수비 현황
+}
+
+// [특수능력] : 특수능력 카드 생성 이펙트 등급
+enum eSpecialAbilityCardCreateEffectGrade
+{
+    SpecialAbilityCardCreateEffectGrade_BigFail         = -1; // 대실패
+    SpecialAbilityCardCreateEffectGrade_Fail            = 0; // 실패
+    SpecialAbilityCardCreateEffectGrade_Success         = 1; // 성공
+    SpecialAbilityCardCreateEffectGrade_GreatSuccess    = 2; // 대성공
+}
+
+// 확률 결과
+enum eProbabilityResult
+{
+	eProbabilityResult_Error						= 0;
+	eProbabilityResult_Success						= 1;
+	eProbabilityResult_Failure						= 2;
+	eProbabilityResult_GreatSuccess					= 3;
+	eProbabilityResult_GreatFailure					= 4;
+}
+
+enum eAddAbilityDBCategory
+{
+    AddAbilityDBCategory_SpecialAbility         = 1; // 특수능력
+    AddAbilityDBCategory_LatentAbility          = 2; // 잠재력
+}
+
+enum eMemoType
+{
+    Send = 0;  // 보낸 쪽지
+    Recv = 1;  // 받은 쪽지
+}
+
+enum eMemoBlockAction
+{
+    Unregister = 0; // 차단 등록 해제
+    Register = 1;   // 차단 등록
+}
+
+enum eDifficultyLevel
+{
+	DifficultyNone		= 0;
+	DifficultyEasy		= 1;
+	DifficultyNormal	= 2;
+	DifficultyHard		= 3;
+}
+
+enum ePriorConsentState
+{
+	PriorConsentState_Nonacceptance		= 0;
+	PriorConsentState_Acceptance		= 1;
+	PriorConsentState_TermsChange		= 2;
+}
+
+enum eDbMasteryIdContentsFlag
+{
+    DbMasteryIdContentsFlag_TeamMastery         = 1;
+    DbMasteryIdContentsFlag_MuseumPhoto         = 2;
+    DbMasteryIdContentsFlag_BenchTeamColor      = 3;
+}
+
+enum eCorrectStepState
+{
+	Correct_None					= 0;
+	Correct_Progress				= 1;
+	Correct_End_Select_Stat			= 2;
+	Correct_End_Complete			= 3;
+}
+
+enum eSpecialAbilityRecipeMaterial
+{
+    SpecialAbilityRecipeMaterial_None           = 0;
+    SpecialAbilityRecipeMaterial_PlayerCard     = 1;
+    SpecialAbilityRecipeMaterial_AbilityCard    = 2;
+}
+
+enum eWWTournamentGameState
+{
+	WWTournamentGameState_None							= 0;
+	WWTournamentGameState_Participation					= 1; // 신청 진행
+	WWTournamentGameState_ParticipationClosing			= 2; // 신청 종료
+	WWTournamentGameState_Playing						= 3; // 경기 진행
+	WWTournamentGameState_PlayingClosing				= 4; // 경기 종료
+	WWTournamentGameState_Reward						= 5; // 보상 진행
+}
+
+enum eWWTournamentRoundState
+{
+	WWTournamentRoundState_None						= 0;
+	WWTournamentRoundState_PrepareSimulation		= 1; // 시뮬 준비
+	WWTournamentRoundState_InProgressSimulation		= 2; // 시뮬 진행
+	WWTournamentRoundState_CompleteSimulation		= 3; // 시뮬 완료
+}
+
+enum eWWTournamentGoStopState
+{
+	WWTournamentGoStopState_None			= 0;
+	WWTournamentGoStopState_Go				= 1;
+	WWTournamentGoStopState_Stop			= 2;
+}
+
+enum eWWMainTournamentGameState
+{
+	WWMainTournamentGameState_None                  = 0;
+	WWMainTournamentGameState_Participation         = 1; // 신청 진행
+	WWMainTournamentGameState_ParticipationClosing  = 2; // 신청 종료
+	WWMainTournamentGameState_Playing               = 3; // 경기 진행
+	WWMainTournamentGameState_PlayingClosing        = 4; // 경기 종료
+	WWMainTournamentGameState_Reward                = 5; // 보상 진행
+    WWMainTournamentGameState_Cancel                = 6; // 대회 취소
+    WWMainTournamentGameState_MatchReadyComplete    = 7; // 대진 완료 (대회 시작전 매칭완료)
+}
+
+enum eWWMainTournamentBettingState
+{
+	WWMainTournamentBettingState_None	            = 0; // 시작전
+    WWMainTournamentBettingState_BettingOpen        = 1; // 예측 가능 (8강 대진 완료, 경기전)
+    WWMainTournamentBettingState_BettingClose       = 2; // 예측 불가 (8강 이상 경기 진행중)
+    WWMainTournamentBettingState_Reward             = 3; // 결과 보상중
+}
+ 
+enum eBenchTeamColorSlot
+{
+	BenchTeamColorSlot_TeamColorA			=	0;
+	BenchTeamColorSlot_TeamColorB			=	1;
+}
+
+enum eBenchTeamColorEquipType
+{
+	BenchTeamColorEquipType_Common			=	1;
+	BenchTeamColorEquipType_TeamColorA		=	2;
+	BenchTeamColorEquipType_TeamColorB		=	3;
+}
+
+enum eMasterPlayerMaterial
+{
+    MasterPlayerMaterial_None           = 0;
+    MasterPlayerMaterial_PlayerCard     = 1;
+    MasterPlayerMaterial_AbilityCard    = 2;
+}
+
+
+message GameResultCode
+{
+    enum eCode
+    {
+        Success                         =   0; // 성공
+//        InvalidPractice               =   1; // 연습경기 아이디 오류
+//        InvalidRosterId               =   2; // 엔트리 아이디가 없다.
+//        InvalidPitcherId              =   3; // 선발 투수 아이디가 이상하다.
+//        NotFoundTargetTeam            =   4; // 상대팀을 찾을 수 없다.
+//        NeedToPassThePreviousPractice	=   5;
+//        NeedToStartSeasonMode         =   6;
+//        NeedToEndSeasonMode           =   7;
+
+        NotFoundSimulator               =   8; // 시뮬 서버 없다.
+        FailureSimulation               =   9; // 시뮬레이션 서버 오류
+//        LackOfMatchBall                 =  10; //
+//        LackOfCash                      =  11; //
+//        LackOfGameMoney                 =  12; //
+//        LackOfRankingStamina            =  13; // 랭킹스테미나 최대치 도달
+//        MaxGameCount                    =  14; // 하루 최대 경기수 도달
+
+        AlreadyWonMatch                 =  15; // 이미 승리한 게임
+        InProgressMatch                 =  16; // 진행중인 경기
+
+//        InvalidOpenId                   =  17; // 유효하지 않은 OpenId
+//        InvalidTourId                   =  18; // 유효하지 않은 TeamId
+//        InvalidAwayTeamId               =  19; // 유효하지 않은 AwayTeamId
+//        NeedToAwayGameList              =  20; // AwayGame 정보 부족
+
+//        NeedNextRanking                 =  21; // 랭킹 시즌 종료 필요
+//        NotExistTeamSynergy             =  22; // 없는 시너지 ID
+//        NotExistRosterId                =  23;
+//        InvalidMemberCount              =  24;
+//        InvalidTeamCardId               =  25;
+//        InvalidPosition                 =  26;
+//        InvalidCost                     =  27;
+//        InvalidPlayerId                 =  28;
+//        InvalidCardId                   =  29;
+//        AdjustmentTime                  =  30; // 랭킹전 조정 시간(날짜 넘어갈 때)
+//
+//        LackOfAwayGamePass              =  31;
+//        ProgressFriendlyGame            =  32; // 상대방과 친선 경기 진행 중
+//        EndTimeFriendlyGame             =  33; // 친선 경기 
+
+        Maintenance                     =  97; // 컨텐츠 점검중
+        InvalidSession                  =  98; // 세션키 오류
+        DataBaseError                   =  99; // DB 오류
+        ServerError                     = 100; // 서버 통신 에러
+    }
+}
+
+message PacketCode
+{
+    enum eCode
+    {
+        Success                     =     0;
+        
+        InvalidVersion              =     1; // 클라이언트 버전 오류
+        HigherVersion               =     2; // 클라이언트 버전이 더 높음.
+        NeedCreateTeam              =     3; // 새 팀 생성 필요
+        
+        StandByDropOut              =     4; // 탈퇴 처리 대기중인 유저(탈퇴 철회 대상)
+        CompleteDropOut             =     5; // 탈퇴 처리 완료된 유저
+        BanUser                     =     6; // 접속 차단 유저
+        ServerCheck                 =     7; // 서버 점검
+        
+        InvalidToken                =     8; // 토큰 검증 실패
+        ExpiredToken                =     9; // 만료된 토큰
+        UserCountFull               =    10; // 동시 접속자 수 제한
+        ExistPlatform               =    11; // 연동된 계정이 있는 플랫폼
+        HavePlatform                =    12; // 이미 다른 플랫폼에 연동된 계정
+        TimeOut                     =    13; // 
+        InvalidPlatform             =    14; //
+        OAuthError                  =    15; // OAuth 인증 오류
+        ExistAccount                =    16; // 이미 존재하는 계정
+        InvalidRequest              =    17;
+
+        TeamExistInOtherWorld       =    18; // 구단이 다른 월드에 존재함.
+        ExistTeam                   =    19; // 구단이 존재함.
+        WorldClosed                 =    20; // 월드 닫힘 상태. 구단 생성할 수 없음.
+        TeamNotExist                =    21; // 구단이 존재하지 않음.
+        XignCodeFail                =    22; // XignCode 검증 실패
+		
+		InvalidCremaTableData		= 100; // 크레마 테이블 데이터 오류
+		
+		UnavailableContent			= 1000; // 이용할 수 없는 컨텐츠
+                    
+        InvalidSession              = 10001; // 세션키 오류
+        DataBaseError               = 10002; // DB 에러
+        ServerError                 = 10003; // 서버 통신 에러      
+        
+        InventoryFull               = 10004;
+        InvalidParam                = 10005; // 잘못된 parameter  
+        
+        InvalidName                 = 10006; // 팀이름 오류
+        InvalidShortName            = 10007; // 팀이름 짧음
+        InvalidLongName             = 10008; // 팀이름 김
+        LimitReusePerideTeamName    = 10009; // 재사용 제한중인 이름
+        ExistTeamName               = 10010; // 존재하는 이름
+        AlreadyInTheTeam            = 10011; // 이미 팀 있음
+        Failed                      = 10012; // 실패
+        
+        InvalidCardGuid             = 10013; // 존재하는 선수 카드 없음
+        WorkInProgress              = 10014; // 작업 진행중
+        OutOfGameMoney              = 10015; // Game Money 가 부족함.
+        OutOfCash                   = 10016; // Cash 가 부족함.
+        
+        NeedPlayerCardListUpdate    = 10017; // 선수 카드 리스트 갱신이 필요함.
+        PlayerNotExist              = 10018; // 선수 카드가 존재하지 않음.
+
+        TeamLevelLimit              = 10019; // 구단 레밸 제한.
+        PennantGradeLimit           = 10020; // 페넌트레이스 등급 제한.
+        CurrentDevelopment          = 10021; // 현재 개발 중인 기능입니다.
+
+        OutOfTrainingPoint          = 10022; // 훈련 포인트가 부족함.
+        OutOfItem                   = 10023; // 아이템이 부족함. (재료 아이템 등)
+        NotConfirmedPennantGame     = 10024; // 확인안한 페넌트레이스 경기가 있음.
+        NotExist                    = 10025; // 항목이 존재하지 않음.
+        NeedCremaDataUpdate         = 10026; // Asset 파일 업데이트가 필요합니다.
+        
+        ManagementMode_WorkerBusy                   = 10100; // [메니지먼트 모드] 고용인에 이미 진행중인 업무가 있음.
+        ManagementMode_WorkerNotUse                 = 10101; // [메니지먼트 모드] 고용인을 사용할 수 없음.
+        ManagementMode_InvalidTeamLevel             = 10102; // [메니지먼트 모드] 구단 레벨이 유효하지 않음.
+        ManagementMode_WorkerNotExist               = 10103; // [메니지먼트 모드] 고용인이 존재하지 않음.
+        ManagementMode_WorkNotExist                 = 10104; // [메니지먼트 모드] 업무가 존재하지 않음.
+        ManagementMode_WorkNotExpired               = 10105; // [메니지먼트 모드] 업무 남은 시간이 만료되지 않음.
+        ManagementMode_InvalidInstantlyCompleteType = 10106; // [메니지먼트 모드] 업무 즉시 완료 Type 이 유효하지 않음.
+
+        Friend_EmptyFriend                          = 10150; // [친구] 삭제할 친구가 없습니다.
+        Friend_OutOfDeleteCount                     = 10151; // [친구] 1일 삭제 횟수 초가
+        Friend_FullSendList                         = 10152; // [친구] 보낸 요청 리스트가 가득참.
+        Friend_FullReceiveList                      = 10153; // [친구] 받은 요청 리스트가 가득참.
+        Friend_AlreadyFriend                        = 10154; // [친구] 이미 친구입니다.
+        Friend_OutOfFriendCount                     = 10155; // [친구] 친구 수 초가.
+        Friend_OutOfOppentFriendCount               = 10156; // [친구] 상대방의 친구 수 초가.
+        Friend_AccountFail                          = 10157; // [친구] 친구를 맺을 수 없는 구단
+        Friend_AlreadRequest                        = 10158; // [친구] 이미 친구 요청함.
+        Friend_NotFoundName                         = 10159; // [친구] 찾을 수 없는 구단.
+
+        Pennant_BinaryOpenFailed    = 10200; // [페넌트 레이스] 바이너리 파일 로딩 실패
+        Pennant_SeasonNotFound      = 10201; // [페넌트 레이스] 해당 시즌이 존재하지 않음.
+        Pennant_ScheduleNotFound    = 10202; // [페넌트 레이스] 해당 경기 일정이 존재하지 않음.
+        Pennant_InvalidMiniGame     = 10203; // [페넌트 레이스] 미니게임을 할 수 없음.
+        Pennant_ch_season_create    = 10204; // [페넌트 레이스] 새로운 리그를 구성중.
+        Pennant_ch_sim_progress     = 10205; // [페넌트 레이스] 시뮬레이션 진행 중.
+        Pennant_ReportExpired       = 10206; // [페넌트 레이스] 해당 리포트가 만료됨.
+        Pennant_ProgressGame        = 10207; // [페넌트 레이스] 해당 리포트가 만료됨.
+        Pennant_KpiChangeExpired    = 10208; // [페넌트 레이스] (KPI) 리그 예측 변경이 만료됨.
+
+        LifeLine_SlotNotEmpty               = 10300; // [라이프라인] 훈련 슬롯이 비어있지 않음.
+        LifeLine_SlotEmpty                  = 10301; // [라이프라인] 훈련 슬롯이 비어있음.
+        LifeLine_NotExistRequirePlayerCard  = 10302; // [라이프라인] 요구 선수카드가 존재하지 않음.
+
+        TeamBadge_AlreadyExist          = 10310; // [팀 배지] 팀 배지 이미 보유중.
+        TeamBadge_NotExist              = 10311; // [팀 배지] 팀 배지가 존재하지 않음.
+        TeamBadge_NotOpen               = 10312; // [팀 배지] 팀 배지가 개방되지 않음.
+        TeamBadge_MaterialAlreadyExist  = 10313; // [팀 배지] 해당 재료 슬롯에 이미 재료가 존재함.
+        TeamBadge_MaterialNotEnough     = 10314; // [팀 배지] 팀 배지 재료가 모자름.
+        TeamBadge_InvalidMaterial       = 10315; // [팀 배지] 등록할 팀 배지 재료가 유효하지 않음.
+        TeamBadge_AlreadyUsed           = 10316; // [팀 배지] 팀 배지 이미 사용중.
+        TeamBadge_SlotNotOpen           = 10317; // [팀 배지] 팀 배지 슬롯이 개방되지 않음.
+
+        TrainingCamp_SlotNotOpen        = 10330; // [전지훈련] 슬롯이 개방되지 않음.
+        TrainingCamp_SlotBusy           = 10331; // [전지훈련] 슬롯이 이미 전지훈련중.
+        TrainingCamp_SlotAlreadyExist   = 10332; // [전지훈련] 슬롯이 이미 존재함.
+        TrainingCamp_NotExpired         = 10333; // [전지훈련] 훈련시간이 완료되지 않음.
+        TrainingCamp_SlotEmpty          = 10334; // [전지훈련] 슬롯이 비어있음.
+
+        Achieve_NotExist                = 10350; // [도전과제] 기간 만료 등으로 도전과제가 존재하지 않음.
+        Achieve_NotComplete             = 10351; // [도전과제] 도전과제 달성되지 않음.
+
+        Album_AlreadyMaxLevel           = 10360; // [앨범] 이미 최대 레벨에 도달해 있음.
+        Album_NotEnoughExp              = 10361; // [앨범] 카드 레벨업을 위한 경험치가 부족함.
+        Album_NotExist                  = 10362; // [앨범] 앨범 카드가 존재하지 않는다. (레벨업 처리용)
+        Album_NotLoadFromDB             = 10363; // [앨범] DB에서 개인 앨범을 로드하지 않았습니다.
+        Album_Mission_NotEnoughCard     = 10364; // [앨범:미션] 보상을 받기 위한 카드가 부족함.
+        Album_Mission_NotExist          = 10365; // [앨범:미션] 미션이 존재하지 않는다. 
+        Album_Mission_AlreadyRegistered = 10366; // [앨범:미션] 이미 완료된 미션.
+        Album_Mission_NotLoadFromDB     = 10367; // [앨범:미션] DB에서 개인 앨범 미션을 로드하지 않았습니다.
+		Album_NotEnoughSoul             = 10368; // [앨범] 카드 레벨업을 위한 선수의 혼이 부족함.
+		Album_FirstExpLevelUp           = 10369; // [앨범] 카드 레벨업을 먼저 하고 선수의 혼을 사용해야 합니다.
+
+        TeamMastery_AlreadySet          = 10370; // [구단 마스터리] 해당 구단 마스터리가 이미 설정됨.
+        TeamMastery_PointExExceed       = 10371; // [구단 마스터리] 확장 구단 마스터리 포인트 초과.
+        TeamMastery_OutOfPoint          = 10372; // [구단 마스터리] 구단 마스트러 포인트가 부족함.
+
+        SingleMode_NeedInfoUpdate       = 10380; // [싱글모드] 정보 갱신이 필요함.
+        SingleMode_OutOfCoupon          = 10381; // [싱글모드] 쿠폰이 부족함.
+        SingleMode_NotClearAgain        = 10382; // [싱글모드] 클리어한 라운드를 재시도 재한.
+        SingleMode_NotSweep             = 10383; // [싱글모드] 스윕 기능 제한.
+        SingleMode_NotFoundInfo         = 10384; // [싱글모드] 라운드 정보를 찾을 수 없습니다.
+        SingleMode_InfoRefresh          = 10385; // [싱글모드] 싱글모드 정보를 갱신합니다.
+
+        Board_OverWriteCountPerDay      = 10390; // [게시판] 하루 글 작성 수 초과 (5AM에 초기화)
+        Board_ReplyWrongEnoughLength    = 10391; // [게시판] 댓글 내용 길이 오류 (10자 이하이거나 100자 이상.)
+        Board_AssessementTableError     = 10392; // [게시판] 선수카드평가 테이블 오류. 작업 진행 불가(기획에서 확인)
+        Board_CantLikeMyReply           = 10393; // [게시판] 내가 쓴 글에는 내가 좋아요 누를 수 없다.
+        Board_AlreadyLikeThisReply      = 10394; // [게시판] 이미 댓글에 좋아요 누른 상태.
+        Board_InvalidOwner              = 10395; // [게시판] 댓글 소유자가 아닙니다.
+        Board_InvalidListView           = 10396; // [게시판] 현재 리스트와 좋아요, 삭제를 누른 리스트가 다름.
+        
+        InvalidMemberCount              = 10400; // 설정된 선수 카드 수가 맞지 않음.
+        InvalidTeamCardId               = 10401; // TeamCardId가 잘못됨.
+        InvalidPlayerId                 = 10402; // 테이블에 존재하지 않는 선수.
+        InvalidCardId                   = 10403; // 테이블에 존재하지 않는 선수카드.
+        InvalidPosition                 = 10404; // 포지션 값이 잘못됨.
+        LockedCard                      = 10405; // 카드가 잠겨있음.
+        ExistRosterCard                 = 10406; // 라인업에 등록된 카드가 포함됨.
+        InvalidCardCount                = 10407; // 요청한 카드 숫자가 잘못됨.
+        TrainingCampCard                = 10408; // 전지훈련 중인 카드.
+        RosterSPitcherLimitUse          = 10409; // [로스터 선발교체 룰] 교체 제한
+        RosterSPitcherOrderChange       = 10410; // [로스터 선발교체 룰] 위치 변경 제한
+        InvalidForeingerCount           = 10411; // 로스터 용병 선수 수가 유효하지 않음.
+        InvalidExCardCount              = 10412; // 로스터 EX 카드 수가 유효하지 않음.
+		NotUseFirstStringTicketStudyAbroadCard		= 10413; // 1군 등록 가능 티켓 미사용 유학 중인 선수 카드.
+		UseFirstStringTicketStudyAbroadCard			= 10414; // 1군 등록 가능 티켓 사용 유학 중인 선수 카드.
+        CorrectCard                     = 10415; // 교정중인 선수카드.
+        InvalidLegendCardCount          = 10416; // 로스터 레전드 카드 수가 유효하지 않음.
+        Roster_Submitting               = 10417; // 로스터 정보를 제출중입니다.
+		
+		InvalidClassicCardCount			= 10418; // 로스터 클래식 카드 수가 유효하지 않음.
+
+		ExistBenchTeamColorCard			= 10419; // 벤치 팀컬러가 장착중인 벤치 선수입니다.
+
+        Shop_ProductListUpdate          = 10500; // 상점 리스트 갱신이 필요함.
+        Shop_InvalidProduct             = 10501; // 상품 정보가 잘못됨.
+        Shop_InvalidCount               = 10502; // 상품 수량이 잘못됨.
+
+        Betting_PastRound               = 10503; // 지나간 경기 입니다. 
+        Betting_RefillSeasonFail        = 10504; // 예측 초기화 후 첫 번째 경기는 리필이 불가능합니다.
+
+        ItemInven_NotFoundItem          = 10600; // [아이템 보관함] - 아이템을 찾을 수 없습니다.
+        ItemInven_NotEnoughItem         = 10601; // [아이템 보관함] - 보유한 아이템 수량이 부족합니다.
+        ItemInven_NotAllowedUse         = 10602; // [아이템 보관함] - 이 아이템은 인벤토리에서 사용이 불가능합니다.
+        ItemInven_NotAllowedSell        = 10603; // [아이템 보관함] - 이 아이템은 인벤토리에서 판매가 불가능합니다.
+        ItemInven_OverCountToUse        = 10604; // [아이템 보관함] - 최대로 사용할 수 있는 수량을 초과하였습니다.
+
+        InAppShop_NeedRetry             = 10701; // [인앱구매] - 배송 지연. 아이템 지급요청 재시도 필요.
+        InAppShop_CountOver             = 10702; // [인앱구매] - 아이템 구매 가능 횟수 초가
+        InAppShop_RemainPeriod          = 10703; // [인앱구매] - 정액 상품 사용 기간이 남았습니다.
+        InAppShop_MonthBonusBuyDay      = 10704; // [인앱구매] - 구매 일에는 보너스 상품을 받을 수 없습니다.
+        InAppShop_MonthBonusAlreadyGet  = 10705; // [인앱구매] - 금일 보너스 상품을 수령하였습니다.
+        InAppShop_MonthBonusPeriodOver  = 10706; // [인앱구매] - 보너스 기간이 만료되었습니다.
+
+        Coupon_NeedRetry                = 10751; // [쿠폰]    - 배송 지연. 아이템 지급요청 재시도 필요.
+
+        FriendlyTactics_PastRount       = 10761; // [작전방침 설정] - 이미 지나간 경기입니다.
+        FriendlyTactics_NotFoundId      = 10762; // [작전방침 설정] - 잘못된 작전 방침입니다.
+        FriendlyTactics_UseFriend       = 10763; // [작전방침 설정] - 이미 사용한 친구입니다.
+        FriendlyTactics_NotUseFriend    = 10764; // [작전방침 설정] - 사용할 수 없는 친구입니다.
+
+        ChallengeMiniGame_InvalidMiniGameId         = 10800; // [챌린지 미니게임] 해당 미니게임 ID 가 유효하지 않음.
+        ChallengeMiniGame_RequiredPrevDifficulty    = 10801; // [챌린지 미니게임] 이전 단계 난이도 달성이 요구됨.
+        ChallengeMiniGame_PlayCountExceed           = 10802; // [챌린지 미니게임] 도전 가능 횟수가 초과됨.
+        ChallengeMiniGame_InvalidMiniGamePlay       = 10803; // [챌린지 미니게임] 미니게임 플레이 오류. (프로토콜 데이터 변조 등)
+
+        InstantEvent_NotRunning                     = 10900; // [인스턴트 이벤트] 요청받은 이벤트를 진행중이지 않음.
+        InstantEvent_WrongTables                    = 10901; // [인스턴트 이벤트] 테이블 오류
+        InstantEvent_NotDataLoad                    = 10902; // [인스턴트 이벤트] 사용자의 이벤트 데이터를 로드하지 못했음.
+        InstantEvent_HomerunRace_AlreadyComplete    = 10910; // [인스턴트 이벤트:홈런 레이스] 이미 완료함
+        InstantEvent_HomerunRace_NotEnoughCash      = 10911; // [인스턴트 이벤트:홈런 레이스] 도전하기 캐시 부족
+        InstantEvent_HomerunRace_NotEnoughAccCash   = 10912; // [인스턴트 이벤트:홈런 레이스] 누적 사용량 부족
+		InstantEvent_WinningBallMileage_NotEnoughMileage	= 10913; // [인스턴트 이벤트 : 위닝볼 마일리지] 마일리지가 부족하여 상품을 획득할 수 없음.
+        InstantEvent_StrikeOut_NotEnoughGoldenBall  = 10914; // [인스턴트 이벤트:전설의 삼진왕] 골든볼 부족
+        InstantEvent_StrikeOut_NotEnoughPoint       = 10915; // [인스턴트 이벤트:전설의 삼진왕] 삼진 포인트 부족
+        InstantEvent_StrikeOut_AllCompleteStepReward= 10916; // [인스턴트 이벤트:전설의 삼진왕] 전체 단계 보상 모두 받음
+        InstantEvent_HomerunKing_NotEnoughGoldenBall  = 10917; // [인스턴트 이벤트:전설의 홈런왕] 골든볼 부족
+        InstantEvent_HomerunKing_NotEnoughPoint       = 10918; // [인스턴트 이벤트:전설의 홈런왕] 홈런 포인트 부족
+        InstantEvent_HomerunKing_AllCompleteStepReward= 10919; // [인스턴트 이벤트:전설의 홈런왕] 전체 단계 보상 모두 받음
+        InstantEvent_PlayerCardCollection_WrongSlotId = 10920; // [인스턴트 이벤트:선수컬렉션] 슬롯 선택이 잘못됨
+        InstantEvent_PlayerCardCollection_TeamCardId  = 10921; // [인스턴트 이벤트:선수컬렉션] 선수 카드 선택이 잘못됨
+
+
+		SecretaryManagement_UnavailableSecretary		= 11000; // [매니저 시스템] 보유하지 않은 또는 기간이 만료된 매니저.
+		SecretaryManagement_AlreadyAppliedSecretary		= 11001; // [매니저 시스템] 이미 적용중인 매니저.
+		
+		PlayerStudyAbroad_DeactivatedSlot					= 11100; // [유학 시스템] 활성화 되지 않은 유학 슬롯.
+		PlayerStudyAbroad_ActivatedSlot						= 11101; // [유학 시스템] 이미 활성화 된 유학 슬롯.
+		PlayerStudyAbroad_NotExistPlayerSlot				= 11102; // [유학 시스템] 유학중인 선수가 없는 슬롯.
+		PlayerStudyAbroad_ExistPlayerSlot					= 11103; // [유학 시스템] 이미 유학중인 선수가 있는 슬롯.
+		PlayerStudyAbroad_DeactivatedContinent				= 11104; // [유학 시스템] 활성화 되지 않은 유학 대륙.
+		PlayerStudyAbroad_DeactivatedCenter					= 11105; // [유학 시스템] 활성화 되지 않은 유학지.
+		PlayerStudyAbroad_UnavailablePlayer					= 11106; // [유학 시스템] 유학을 보낼 수 없는 상태의 선수.
+		PlayerStudyAbroad_UnsuitableConditionPlayer			= 11107; // [유학 시스템] 해당 유학지 조건에 맞지 않아 보낼 수 없는 선수.
+		PlayerStudyAbroad_AlreadyFatigueRecoveredPlayer		= 11108; // [유학 시스템] 이미 피로도가 회복된 선수.
+		PlayerStudyAbroad_AbnormalStatePlayer				= 11109; // [유학 시스템] 피로도가 꽉차 상태 이상에 걸린 상태라 컨트롤 되지 않는 선수.
+		PlayerStudyAbroad_UnchangeableTraining				= 11110; // [유학 시스템] 훈련 변경을 할 수 없는 상태.
+		PlayerStudyAbroad_InvalidTrainingIndex				= 11111; // [유학 시스템] 잘못된 또는 선택할 수 없는 훈련 인덱스.
+		PlayerStudyAbroad_UncompletedPlayer					= 11112; // [유학 시스템] 유학 기간이 남아 있어 종료를 할 수 없는 선수.
+		PlayerStudyAbroad_NoncancelablePlayer				= 11113; // [유학 시스템] 유학 취소를 할 수 없는 선수.
+		PlayerStudyAbroad_UnavailableAbility				= 11114; // [유학 시스템] 훈련 성취도를 하나도 채우지 못해 선택할 수 있는 능력치가 존재 하지 않는 선수.
+		PlayerStudyAbroad_CompletePlayer					= 11115; // [유학 시스템] 유학 기간이 종료된 선수.
+		PlayerStudyAbroad_MistakeFirstStringTicketUse		= 11116; // [유학 시스템] 1군 등록 가능 유학권을 잘못 사용한 경우.( 1군에 등록중인 선수를 유학보낼때만 사용하여야 함. )
+		PlayerStudyAbroad_InvalidSelectAbilityID			= 11117; // [유학 시스템] 잘못된 능력치 ID를 선택한 경우.
+		PlayerStudyAbroad_NotExistAbilityID					= 11118; // [유학 시스템] 기존에 유학을 통해 얻은 능력치가 없는 경우.
+		PlayerStudyAbroad_NonProgressPlayer					= 11119; // [유학 시스템] 이미 유학을 종료하였거나 또는 진행중이 아닌 선수.
+
+		WishList_AlreadyInsertPlayerCard					= 11201; // [위시 리스트] 이미 등록되어있는 선수
+		WishList_AlreadyDeletePlayerCard					= 11202; // [위시 리스트] 이미 삭제되어있는 선수
+		WishList_MaxPlayerCard							    = 11203; // [위시 리스트] 위시 리스트가 꽉찼습니다.
+
+		Retire_LockedCard									= 11211; // [은퇴 시스템] 락, 1군등록, 유학중, 전진훈련중, 기타 사유로 인하여 은퇴가 불가능합니다.
+		Retire_RetireIDError								= 11212; // [은퇴 시스템] 은퇴 테이블 ID가 다릅니다.
+
+        RankingMode_SeasonClosed                            = 11220; // [랭킹전] 랭킹전 시즌이 종료됨.
+        RankingMode_InvalidGameId                           = 11221; // [랭킹전] 요청 Game ID 가 유효하지 않음.
+        RankingMode_AlreadyUsedTactics                      = 11222; // [랭킹전] 이미 사용된 작전방침.
+        RankingMode_NotExistReward                          = 11223; // [랭킹전] 보상이 존재하지 않음.
+
+		Correct_DidNotCorrectCard							= 11231; // [교정] 교정을 하지 않은 카드입니다. - 리셋권사용시
+		Correct_AlreadyUsedCorrect							= 11232; // [교정] 이미 해당 교정장이 사용중입니다.
+		Correct_InvalidChargeType							= 11233; // [교정] 지불방식이 없는 방식을 선택하였습니다.
+		Correct_UncompletedCorrect							= 11234; // [교정] 아직 교정이 완료되지 않았습니다.
+        Correct_DidNotCorrect							    = 11235; // [교정] 교정장이 비어있습니다.(교정이 진행중이지 않습니다.)
+        Correct_OverCorrect                                 = 11236; // [교정] 교정횟수를 초과하였습니다.
+        Correct_NotEnoughItem                               = 11237; // [교정] 충분한 수량의 교정리셋권을 가지고 있지 않습니다.
+		Correct_MismatchCorrectionTrainingType				= 11238; // [교정] 교정장과 인스트럭터 타입이 매칭되지 않음.
+		Correct_NotExistNewAbility							= 11239; // [교정] 신규 능력치가 존재하지 않음.
+		Correct_DoNotExecuteBecauseExistNewAbility			= 11240; // [교정] 신규 능력치가 존재하여 해당 요청을 수행하지 못함.
+
+        KboBetting_InvalidSeasonId                          = 11250; // [KBO 예측] 요청 KBO 예측 시즌 ID 가 유효하지 않음.
+        KboBetting_OutOfKboPoint                            = 11251; // [KBO 예측] KBO 포인트가 부족함.
+        KboBetting_LimitUseKboPoint                         = 11252; // [KBO 예측] KBO 포인트 사용 범위 제한.
+        KboBetting_LimitBuyKboPoint                         = 11253; // [KBO 예측] KBO 포인트 구입 제한.
+        KboBetting_NotExistReward                           = 11254; // [KBO 예측] 보상이 존재하지 않음.
+        KboBetting_InvalidKboShopId                         = 11255; // [KBO 예측] 구입할 수 있는 KBO 상품이 아님.
+        KboBetting_KboSeasonEnd                             = 11256; // [KBO 예측] KBO 시즌이 종료됨.
+        KboBetting_NotExistGame                             = 11257; // [KBO 예측] 경기가 존재하지 않음.
+        KboBetting_LimitBetting                             = 11258; // [KBO 예측] 더이상 예측 설정할 수 없음.
+        KboBetting_BettingExpired                           = 11259; // [KBO 예측] 예측 시간이 만료됨.
+        KboBetting_NoGameResult                             = 11260; // [KBO 예측] 경기 결과가 정산되지 않음.
+		KboBetting_LineUpNotYetUpdate						= 12261; // [KBO 예측] 라인업 정보가 아직 갱신되지 않았습니다.
+
+        LegendPlayer_MaterialAlreadyExist                   = 11270; // [레전드 영입] 해당 재료 슬롯에 이미 재료가 존재함.
+        LegendPlayer_MaterialNotEnough                      = 11271; // [레전드 영입] 재료가 모자름.
+        //LegendPlayer_InvalidMaterial                        = 11272; // [레전드 영입] 재료가 유효하지 않음.
+
+        TryoutMatch_InvalidSeasonId                         = 11280; // [평가전] 평가전 시즌 ID 가 유효하지 않음.
+        TryoutMatch_OutOfRemainPlayCount                    = 11281; // [평가전] 잔여 플레이 가능 횟수가 없음.
+        TryoutMatch_NotExistGameData                        = 11282; // [평가전] 경기 데이터가 존재하지 않음.
+
+        LatentAbility_NotExistLatentAbility                 = 11290; // [잠재력 개방] 해당 잠재력을 보유하고 있지 않음.
+
+        EventShop_NotRunning                             = 11301;  // [이벤트샵] 이벤트가 진행중이지 않습니다.
+        EventShop_WrongEventId                           = 11302;  // [이벤트샵] 잘못된 이벤트 ID입니다
+        EventShop_InvalidProduct                         = 11303;  // [이벤트샵] 잘못된 상품 정보
+        EventShop_CountOver                              = 11304;  // [이벤트샵] 아이템 구매 가능 횟수 초과.
+        EventSHop_AllCountOver                           = 11305;  // [이벤트샵] 모든 아이템 구매 가능 횟수 초과.
+        
+        FunctionalCardInven_NotFoundFunctionalCard       = 11401; // [기능성카드 보관함] - 기능성 카드를 찾을 수 없습니다.
+        FunctionalCardInven_NotEnoughFunctionalCard      = 11402; // [기능성카드 보관함] - 기능성 카드 수량이 부족합니다.
+        FunctionalCardInven_NotAllowedUse                = 11403; // [기능성카드 보관함] - 이 아이템은 인벤토리에서 사용이 불가능합니다.
+        FunctionalCardInven_NotAllowedSell               = 11404; // [기능성카드 보관함] - 이 아이템은 인벤토리에서 판매가 불가능합니다.
+        FunctionalCardInven_OverCountToUse               = 11405; // [기능성카드 보관함] - 최대로 사용할 수 있는 수량을 초과하였습니다.
+		
+		Guild_NotFoundGuildByName											= 11500; // [이사회 시스템] 이름으로 검색한 이사회가 존재하지 않는 경우.
+		Guild_NotFoundGuildByID												= 11501; // [이사회 시스템] ID로 검색한 이사회가 존재하지 않는 경우.
+		Guild_DuplicateGuildName											= 11502; // [이사회 시스템] 이미 사용중인 이사회 이름인 경우.
+		Guild_NotExistTargetMemberOwnGuild									= 11503; // [이사회 시스템] 대상이 해당 이사회 소속이 아닌 경우.
+		Guild_CreateUnsuitableConditionUnavailableGrade						= 11504; // [이사회 시스템] 이사회 창설 조건이 맞지 않은 경우 - 등급 제한.
+		Guild_ConfigureUnsuitableConditionUnavailableAppointment			= 11505; // [이사회 시스템] 이사회 설정 조건이 맞지 않은 경우 - 해당 기능 설정을 이용할 수 없는 직책.
+		Guild_ConfigureUnsuitableConditionNotModified						= 11506; // [이사회 시스템] 이사회 설정 조건이 맞지 않은 경우 - 기존과 변경 사항이 없는 경우.
+		Guild_ConfigureUnsuitableConditionExistJoinReserveMember			= 11507; // [이사회 시스템] 이사회 설정 조건이 맞지 않은 경우 - 가입 대기중인 멤버가 존재해서 가입 승인 방식을 변경 못함.
+		Guild_ConfigureUnsuitableConditionDoNotElevateMember				= 11508; // [이사회 시스템] 이사회 설정 조건이 맞지 않은 경우 - 해당 멤버를 승격할 수 없는 경우.
+		Guild_ConfigureUnsuitableConditionOverflowSubMasterMember			= 11509; // [이사회 시스템] 이사회 설정 조건이 맞지 않은 경우 - 부총재 수 제한으로 인하여 해당 멤버를 승격할 수 없는 경우.
+		Guild_ConfigureUnsuitableConditionDoNotDemoteMember					= 11510; // [이사회 시스템] 이사회 설정 조건이 맞지 않은 경우 - 해당 멤버를 강등할 수 없는 경우.
+		Guild_ConfigureUnsuitableConditionDoNotKickMember					= 11511; // [이사회 시스템] 이사회 설정 조건이 맞지 않은 경우 - 해당 멤버를 추방할 수 없는 경우.
+		Guild_ConfigureUnsuitableConditionCommonError						= 11512; // [이사회 시스템] 이사회 설정 조건이 맞지 않은 경우 - 오류로 인한 변경 불가.
+		Guild_JoinPermitUnsuitableConditionUnavailableTime					= 11513; // [이사회 시스템] 이사회 가입 승인 조건이 맞지 않은 경우 - 해당 유저의 이사회 이용 시간 제한이 남아 있음.
+		Guild_JoinPermitUnsuitableConditionDoNotPermitJoinAlreadyOtherGuild	= 11514; // [이사회 시스템] 이사회 가입 승인 조건이 맞지 않은 경우 - 이미 다른 이사회에 가입한 유저라서 가입 승인 불가.
+		Guild_JoinPermitUnsuitableConditionDoNotPermitJoinAlreadyOwnGuild	= 11515; // [이사회 시스템] 이사회 가입 승인 조건이 맞지 않은 경우 - 이미 해당 이사회에 가입한 유저라서 가입 승인 불가.
+		Guild_JoinPermitUnsuitableConditionDoNotPermitJoinMemberFull		= 11516; // [이사회 시스템] 이사회 가입 승인 조건이 맞지 않은 경우 - 이사회 멤버가 꽉찬 상태라 가입 승인 불가.
+		Guild_JoinRejectUnsuitableConditionDoNotRejectJoinAlreadyOwnGuild	= 11517; // [이사회 시스템] 이사회 가입 거부 조건이 맞지 않은 경우 - 이미 해당 이사회에 가입한 유저라서 가입 거부 불가.
+		Guild_LeaveUnsuitableConditionNecessaryTransferAppointment			= 11518; // [이사회 시스템] 이사회 탈퇴 조건이 맞지 않은 경우 - 총재는 권한 이행 후 탈퇴 가능.
+		Guild_LeaveUnsuitableConditionUnavailableState						= 11519; // [이사회 시스템] 이사회 탈퇴 조건이 맞지 않은 경우 - 탈퇴 불가능한 상태.
+		Guild_DailyLoginUnsuitableConditionAlreadyCheck						= 11520; // [이사회 시스템] 이사회 출석 체크 조건이 맞지 않은 경우 - 이미 출석 체크 함.
+		Guild_ShopUnsuitableConditionChangedShopGoods						= 11521; // [이사회 시스템] 이사회 상품 구매 조건이 맞지 않은 경우 - 상품 구성이 변경되어 해당 상품 구매 불가한 경우.
+		Guild_ShopUnsuitableConditionUnlockSlotGoods						= 11522; // [이사회 시스템] 이사회 상품 구매 조건이 맞지 않은 경우 - 미오픈 상태의 슬롯이라 구매 불가한 경우.
+		Guild_ShopUnsuitableConditionLimitPurchaseCount						= 11523; // [이사회 시스템] 이사회 상품 구매 조건이 맞지 않은 경우 - 해당 상품 구매 개수 제한을 초과하여 구매 불가한 경우.
+		Guild_JoinUnsuitableConditionOverflowTargetGuildMember				= 11524; // [이사회 시스템] 이사회 가입 신청 조건이 맞지 않은 경우 - 해당 이사회가 자동 가입 방식인데 인원수 초과로 가입 불가.
+		Guild_JoinUnsuitableConditionOverflowJoinCount						= 11525; // [이사회 시스템] 이사회 가입 신청 조건이 맞지 않은 경우 - 이사회 동시 가입 신청 개수 제한을 넘어선 경우.
+		Guild_JoinUnsuitableConditionAlreadyJoinReserve						= 11526; // [이사회 시스템] 이사회 가입 신청 조건이 맞지 않은 경우 - 이미 가입 신청한 이사회인 경우.
+		
+		Guild_NotExistOwnGuild												= 11527; // [이사회 시스템] 나의 이사회가 존재하지 않는 경우.
+		Guild_ExistOwnGuild													= 11528; // [이사회 시스템] 나의 이사회가 존재 하는 경우.
+		Guild_NotMemberOwnGuild												= 11529; // [이사회 시스템] 내가 해당 이사회 소속이 아닌 경우.
+		Guild_CreateUnsuitableConditionUnavailableTime						= 11530; // [이사회 시스템] 이사회 창설 조건이 맞지 않은 경우 - 이사회 이용 시간 제한이 남아 있음.
+		Guild_JoinUnsuitableConditionUnavailableTime						= 11531; // [이사회 시스템] 이사회 가입 신청 조건이 맞지 않은 경우 - 이사회 이용 시간 제한이 남아 있음.
+		
+		UserCare_NotRunning                                                 = 11600;  // [유저케어] 이벤트가 진행중이지 않습니다.
+        UserCare_WrongEventId                                               = 11601;  // [유저케어] 잘못된 이벤트 ID입니다
+        UserCare_InvalidRewardAttendanceDay									= 11602;  // [유저케어] 출석-출석 보상을 받으려는 날자가 잘못됨.( 출석을 하지 않았거나 음수이거나 등등.. )
+		UserCare_AlreadyRewardAttendanceDay									= 11603;  // [유저케어] 출석-이미 출석 보상을 받음.
+		UserCare_AlreadyRewardTutorial										= 11604;  // [유저케어] 튜토리얼-이미 튜토리얼 보상을 받음.
+        UserCare_ShopInvalidProduct                                         = 11605;  // [유저케어] 샵-잘못된 상품 정보
+        UserCare_ShopCountOver                                              = 11606;  // [유저케어] 샵-아이템 구매 가능 횟수 초과.
+
+		GuildLeague_ParticipateGuildLeagueUnavailableAppointment			= 11700; // [이사회 연고지 쟁탈전] : 참가 신청 불가 - 신청 가능 직책이 아님.
+		GuildLeague_ParticipateGuildLeagueUnderflowMemberCount				= 11701; // [이사회 연고지 쟁탈전] : 참가 신청 불가 - 참가 가능 등급의 회원 수 부족.
+		GuildLeague_ParticipateGuildLeagueUnavailablePeriod					= 11702; // [이사회 연고지 쟁탈전] : 참가 신청 불가 - 참가 기간이 아님.
+		GuildLeague_ParticipateGuildLeagueAlreadyParticipation				= 11703; // [이사회 연고지 쟁탈전] : 참가 신청 불가 - 이미 참가 신청 했음.
+		GuildLeague_PlayGuildLeagueUnavailableMember						= 11704; // [이사회 연고지 쟁탈전] : 경기 진행 불가 - 경기 진행 가능 직책이 아니거나 경기 진행 중 가입한 멤버.
+		GuildLeague_PlayGuildLeagueOverflowDailyChallengeCount				= 11705; // [이사회 연고지 쟁탈전] : 경기 진행 불가 - 일일 도전 횟수 초과.
+		GuildLeague_PlayGuildLeagueUnavailablePeriod						= 11706; // [이사회 연고지 쟁탈전] : 경기 진행 불가 - 경기 진행 기간이 아님.
+		GuildLeague_PlayGuildLeagueUnavailableLeague						= 11707; // [이사회 연고지 쟁탈전] : 경기 진행 불가 - 경기 진행 가능한 리그가 아님.
+		GuildLeague_PlayGuildLeagueUnavailableMatchupGuild					= 11708; // [이사회 연고지 쟁탈전] : 경기 진행 불가 - 경기 진행 가능한 상대 이사회가 아님.
+		GuildLeague_PlayGuildLeagueUnavailableMatchupTeam					= 11709; // [이사회 연고지 쟁탈전] : 경기 진행 불가 - 경기 진행 가능한 상대 구단이 아님.
+		GuildLeague_ShowSeasonLeagueRecordsInvalidSeasonID					= 11710; // [이사회 연고지 쟁탈전] : 시즌 기록 조회 - 잘못된 시즌 ID.
+		GuildLeague_RewardGuildLeagueClosingUnderflowTotalPlayCount			= 11711; // [이사회 연고지 쟁탈전] : 종료 보상 불가 - 누적 경기수 부족.
+		GuildLeague_RewardGuildLeagueClosingAlreadyReward					= 11712; // [이사회 연고지 쟁탈전] : 종료 보상 불가 - 이미 보상 받음.
+		GuildLeague_RewardGuildLeagueClosingUnavailablePeriod				= 11713; // [이사회 연고지 쟁탈전] : 종료 보상 불가 - 보상 기간이 아님.
+		GuildLeague_ParticipateGuildLeagueSystemProgress					= 11714; // [이사회 연고지 쟁탈전] : 참가 신청 불가 - 시스템에서 리그 구성중이라 참가 신청 불가.
+
+        SpecialAbilityCard_SetSameCard                                      = 11801; // [특수능력] 동일한 카드로 변경 할 수 없습니다.
+        SpecialAbilityCard_UnMountableCard                                  = 11802; // [특수능력] 장착할 수 없는 특수 능력 카드 입니다.
+		
+		TrainingCampRenewal_NotEnoughRefreshCount							= 11900; // [전지훈련 리뉴얼] : 리프레쉬 카운트를 모두 소진하였습니다.
+		TrainingCampRenewal_NotExistReward									= 11901; // [전지훈련 리뉴얼] : 받을 수 있는 보상이 없습니다.
+		TrainingCampRenewal_AlreadyReceiveReward							= 11902; // [전지훈련 리뉴얼] : 이미 보상을 받았습니다.
+		
+		InvitationMatch_UnavailablePeriod									= 12000; // [초청 경기] : 초청 경기 진행 기간이 아님.
+
+        Memo_BlockCountOver                                                 = 12101; // [쪽지] : 차단 수량이 초과 되었습니다.
+        Memo_AlreadyBlock                                                   = 12102; // [쪽지] : 이미 차단된 구단입니다.
+        Memo_SendCountOver                                                  = 12103; // [쪽지] : 보낸 쪽지함 수량 초과 입니다.
+        Memo_RecvCountOver                                                  = 12104; // [쪽지] : 받음 쪽지함 수량 초과 입니다.
+        Memo_NotFoundBlockUser                                              = 12105; // [쪽지] : 차단 해지할 구단이 존재하지 않습니다.
+        Memo_NotFoundMemo                                                   = 12106; // [쪽지] : 쪽지가 없습니다.(삭제시)
+        Memo_SendDenied                                                     = 12107; // [쪽지] : 쪽지 보내기 실패-상대 구단으로 부터 거부 (내가 차단 당한 구단)
+        Memo_SendBlock                                                      = 12108; // [쪽지] : 쪽지 보내기 실패-내가 차단한 유저라서 보낼 수 없음. (내가 차단한구단)
+        Memo_SendTooShortContents                                           = 12109; // [쪽지] : 쪽지 보내기 실패-1자 이하다. 글자가 없다.
+        Memo_SendTooLongContents                                            = 12110; // [쪽지] : 쪽지 보내기 실패-300자 이상이다. 글자가 너무 많다.
+        Memo_NotAllowedSendToSelf                                           = 12111; // [쪽지] : 쪽지 보내기 실패-자기 자신에게 보낼 수 없습니다. 
+
+        EXPBoosting_TeamLevelOver											= 12120; // [부스트] : 팀 레벨이 부스트 적용 레벨 이상입니다.
+		
+		TransformPlayerCard_InvalidBasePlayerCard							= 12200; // [선수 카드] : 변환하려는 선수 카드가 변환 불가능한 경우.
+		TransformPlayerCard_UnsuitableConditionBasePlayerCard				= 12201; // [선수 카드] : 변환하려는 선수 카드가 변환 조건을 충족하지 못한 경우.
+		TransformPlayerCard_InvalidMaterialPlayerCard						= 12202; // [선수 카드] : 변환에 사용될 재료 선수 카드가 재료 카드가 아닌 경우.
+		TransformPlayerCard_UnsuitableConditionMaterialPlayerCard			= 12203; // [선수 카드] : 변환에 사용될 재료 선수 카드가 사용 조건을 충족하지 못한 경우.
+		TransformPlayerCard_NotEnoughMaterialPlayerCard						= 12204; // [선수 카드] : 변환에 사용될 재료 선수 카드가 부족한 경우.
+		TransformPlayerCard_MismatchPlayerCard								= 12205; // [선수 카드] : 변환하려는 선수 카드와 재료 선수 카드가 매칭이 되지 않는 경우.
+
+        Museum_WrongPhotoId                                                 = 12206; // [뮤지엄] : 잘못된 사진ID 입니다.
+        Museum_WrongPhotoLevelId                                            = 12207; // [뮤지엄] : 잘못된 사진레벨ID 입니다.
+        Museum_NotOwnPhoto                                                  = 12208; // [뮤지엄] : 소유하지 않은 사진입니다.
+        Museum_AlreadyMakePhoto                                             = 12209; // [뮤지엄] : 이미 제작중인 사진입니다.
+        Museum_DuplicatePhoto                                               = 12210; // [뮤지엄] : 소유한 사진을 중복 제작할 수 없습니다.
+        Museum_AlreayLevelUpPhoto                                           = 12211; // [뮤지엄] : 이미 강화중인 사진입니다.
+        Museum_MaxLevelPhoto                                                = 12212; // [뮤지엄] : 사진이 최대 레벨입니다.
+        Museum_EmptyMakeSlot                                                = 12213; // [뮤지엄] : 제작을 취소할 수 있는 사진이 존재하지 않습니다.
+        Museum_EmptyLevelUpSlot                                             = 12214; // [뮤지엄] : 강화를 취소할 수 있는 사진이 존재하지 않습니다.
+        Museum_WrongAchieve                                                 = 12215; // [뮤지엄] : 잘못된 미션입니다.
+        Museum_AlreadyCompleteAchieve                                       = 12216; // [뮤지엄] : 이미 완료된 미션입니다.
+        Museum_NotEnoughEquipSlot                                           = 12217; // [뮤지엄] : 사진을 더 이상 장착할 수 없습니다.
+        Museum_AlreayEqiupPhoto                                             = 12218; // [뮤지엄] : 이미 장착한 사진입니다.
+        Museum_NotCompleteAllAchieve                                        = 12219; // [뮤지엄] : 모든 미션을 완료해야 합니다.
+        Museum_WrongSlotNumber                                              = 12220; // [뮤지엄] : 잘못된 슬롯위치 입니다.
+		
+		HitTheHighlightEvent_DoNotGoThroughPriorConsent						= 12300; // [힛 더 하이라이트 이벤트] 사전동의를 하지 않은 경우.
+		HitTheHighlightEvent_OverflowRewardGiveawayComboStreak				= 12301; // [힛 더 하이라이트 이벤트] 경품 신청 콤보수가 최대 콤보수를 초과.
+		HitTheHighlightEvent_OverflowRewardGiveawayAmount					= 12302; // [힛 더 하이라이트 이벤트] 경품 신청 가능 수 초과.
+		HitTheHighlightEvent_AlreadyRewardGiveaway							= 12303; // [힛 더 하이라이트 이벤트] 이미 경품 신청한 콤보수.
+		HitTheHighlightEvent_AlreadyRewardIngameGoods						= 12304; // [힛 더 하이라이트 이벤트] 이미 인게임 상품 수령한 콤보수.
+
+		ItemSwapCenter_InvalidItem											= 12310; // [아이템 교환 센터] 교환하려는 아이템 정보가 없습니다.
+		ItemSwapCenter_NotEnoughMaterial									= 12311; // [아이템 교환 센터] 재료가 부족합니다.
+		ItemSwapCenter_NotEnoughExchangeCount								= 12312; // [아이템 교환 센터] 교환 횟수가 부족합니다.
+		ItemSwapCenter_InvalidSeasonDataInfo								= 12313; // [아이템 교환 센터] 시즌 정보가 없습니다.
+		ItemSwapCenter_SwapTimeIsOver										= 12314; // [아이템 교환 센터] 교환 시간이 지났습니다.
+        
+        SpecialAbilityCardGrade_PlayerCardDelete							= 12315; // [특수능력] 레전드 등급 특수능력을 장착한 카드는 사용할 수 없습니다.
+        SpecialAbilityCardGrade_CardDelete									= 12316; // [특수능력] 레전드 등급 특수능력은 삭제할 수 없습니다.
+		
+		WWSubTournament_NeedSyncSchedule									= 12400; // [결전의 그라운드] 대회 정보 갱신이 필요함.
+		WWSubTournament_NeedSyncMatchup										= 12401; // [결전의 그라운드] 경기 일정 갱신이 필요함.
+		WWSubTournament_NotInProgress										= 12402; // [결전의 그라운드] 토너먼트가 진행중이 아님.
+		WWSubTournament_UnsuitableCondition									= 12403; // [결전의 그라운드] 참가 가능 조건을 충족하지 못함.
+		WWSubTournament_OverflowParticipant									= 12404; // [결전의 그라운드] 참가 가능 인원 초과.
+		WWSubTournament_AlreadyParticipate									= 12405; // [결전의 그라운드] 이미 토너먼트에 참가 중임.
+		WWSubTournament_NotParticipate										= 12406; // [결전의 그라운드] 토너먼트에 참가 중이 아님.
+		WWSubTournament_NotExistListMatches									= 12407; // [결전의 그라운드] 토너먼트 대진이 결정되지 않음.
+		WWSubTournament_LoserDoNotProgress									= 12408; // [결전의 그라운드] 경기에 패하였기에 더이상 진행할 수 없음.
+		WWSubTournament_NotExistMatchupDoNotProgress						= 12409; // [결전의 그라운드] 마지막 라운드가 종료되어 더이상 진행할 수 없음.
+		WWSubTournament_ExistNotConfirmedGame								= 12410; // [결전의 그라운드] 확인하지 않은 경기가 남아있음.
+		WWSubTournament_UnavailablePeriodSetupTactics						= 12411; // [결전의 그라운드] 작전방침 설정 가능 시간이 아님.
+		WWSubTournament_UnavailablePeriodSetupNextRoundGoStop				= 12412; // [결전의 그라운드] 다음 라운드 GO & STOP 설정 가능 시간이 아님.
+
+        WWMainTournament_NotInProgress                                      = 12420; // [최강자전] 대회가 진행되고 있지 않음.
+        WWMainTournament_AlreadyJoined                                      = 12421; // [최강자전] 대회에 이미 참여중.
+        WWMainTournament_EndOfJoin                                          = 12422; // [최강자전] 대회 모집 종료.
+        WWMainTournament_OutOfJoinCost                                      = 12423; // [최강자전] 대회 참가 비용이 부족함.
+        WWMainTournament_InvalidJoinCondition                               = 12424; // [최강자전] 대회 참가 조건이 유효하지 않음.
+        WWMainTournament_NotJoin                                            = 12425; // [최강자전] 대회에 참가중이지 않음.
+        WWMainTournament_NotMatchResult                                     = 12426; // [최강자전] 경기 결과가 없음.
+        WWMainTournament_ExpiredTacticsSet                                  = 12427; // [최강자전] 작전방침 설정 시간이 만료됨.
+        WWMainTournament_NotInProgressBetting                               = 12428; // [최강자전] 예측이 진행되고 있지 않음.
+		WWMainTournament_AlreadyBetting                                     = 12429; // [최강자전] 이미 예측 참여중.
+        WWMainTournament_NotBetting                                         = 12430; // [최강자전] 예측에 참가하지 않음.
+        WWMainTournament_NotBettingResult                                   = 12431; // [최강자전] 예측 결과가 없음.
+        WWMainTournament_OutOfBettingPoint                                  = 12432; // [최강자전] 예측 포인트가 부족함.
+        WWMainTournament_ExistNotConfirmedGame                              = 12433; // [최강자전] 확인하지 않은 경기가 남아있음.
+
+		Coach_InvalidCoachGUID												= 12500; // [코치] 테이블에 존재하지 않는 코치 카드.
+		Coach_InvalidTeamCoachID											= 12501; // [코치] 인벤토리에 존재하지 않는 코치 카드.
+		Coach_InvalidMaterialTeamCoachID									= 12502; // [코치] 잘못된 재료 코치 카드.
+		Coach_UnsuitableConditionUpgrade									= 12503; // [코치] 승급 조건 불충족.
+		Coach_UnsuitableConditionEnchant									= 12504; // [코치] 강화 조건 불충족.
+		Coach_UnsuitableConditionAssignTrainingAbility						= 12505; // [코치] 육성 효과 부여 조건 불충족.
+		Coach_UnsuitableConditionAssignSpecialAbility						= 12506; // [코치] 특능 효과 부여 조건 불충족.
+		Coach_InvalidSlotNumber												= 12507; // [코치] 잘못된 슬롯 넘버.
+		Coach_ExistCoachInSlot												= 12508; // [코치] 해당 슬롯에 코치 카드가 이미 등록되어 있음.
+		Coach_NotExistCoachInSlot											= 12509; // [코치] 해당 슬롯에 코치 카드가 등록되어 있지 않음.
+		Coach_RegisteredSlotCoach											= 12510; // [코치] 슬롯에 등록되어 있는 코치 카드.
+		Coach_LockedCoach													= 12511; // [코치] 잠겨 있는 코치 카드.
+		Coach_MismatchCoachTypeAndSlot										= 12512; // [코치] 해당 슬롯에 등록 불가능한 코치 타입.
+		Coach_OverflowInventorySize											= 12513; // [코치] 코치 보유 수량 한계치 초과.
+		Coach_ExistReserveSpecialAbility									= 12514; // [코치] 특능 재부여 결과 선택을 해야 하는 코치가 존재 함.
+
+		MasterPlayer_MaterialAlreadyExist									= 12600; // [마스터 영입] 해당 재료 슬롯에 이미 재료가 존재함.
+        MasterPlayer_MaterialNotEnough										= 12601; // [마스터 영입] 재료가 모자름.
+        MasterPlayer_InvalidMaterial										= 12602; // [마스터 영입] 등록할 팀 배지 재료가 유효하지 않음.
+    }
+}

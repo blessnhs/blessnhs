@@ -1,5 +1,4 @@
 #pragma once
-#include "GSObject.h"
 #include "GSCommand.h"
 
 class BoardCommand : public GSCommand

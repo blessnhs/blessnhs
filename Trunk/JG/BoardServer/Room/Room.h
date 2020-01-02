@@ -52,31 +52,35 @@ public:
 	template<class T>
 	void SendToAll(T &snd)
 	{
-		std::map<DWORD,PLAYER_PTR>::iterator iter = m_PlayerMap.begin();
-		while(iter != m_PlayerMap.end())
+		for each(auto iter in m_PlayerMap)
 		{
+			PlayerPtr pPlayer = iter.second;
+			if (pPlayer == NULL)
+				continue;
+
 			GSCLIENT_PTR pSession = IOCP.GetSessionMgr()->GetSession(iter->second->GetPair());
-			
+
 			if (pSession)
-				Sender::Send(pSession,snd);
-			iter++;
+				Sender::Send(pSession, snd);
 		}
 	}
 
 	void SendToAll(WORD MainId,BYTE *Data,WORD Length)
 	{
-		std::map<DWORD,PLAYER_PTR>::iterator iter = m_PlayerMap.begin();
-		while(iter != m_PlayerMap.end())
+		for each(auto iter in m_PlayerMap)
 		{
-			GSCLIENT_PTR pSession = SERVER.GetClient(iter->second->GetPair());
-			
-			if(pSession)
-				pSession->GetTCPSocket()->WritePacket(MainId,0,Data,Length);
-			iter++;
+			PlayerPtr pPlayer = iter.second;
+			if (pPlayer == NULL)
+				continue;
+
+			GSCLIENT_PTR pSession = SERVER.GetClient(iter.second->GetPair());
+
+			if (pSession)
+				pSession->GetTCPSocket()->WritePacket(MainId, 0, Data, Length);
 		}
 	}
 
-	std::map<DWORD,PLAYER_PTR>									m_PlayerMap;
+	concurrency::concurrent_unordered_map<DWORD,PLAYER_PTR>		m_PlayerMap;
 
 private:
 	CRITICAL_SECTION											m_PublicLock;

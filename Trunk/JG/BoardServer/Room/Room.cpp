@@ -1,23 +1,22 @@
 #include "StdAfx.h"
 #include "./Room.h"
 
-#include "../GSPacket/Front.h"
-
 #include "lib_json/json/reader.h"
 #include "lib_json/json/writer.h"
 #include "GSSerialize.h"
 
 DWORD Room::FindPlayer(PLAYER_PTR Player)
 {
-	std::map<DWORD,PLAYER_PTR>::iterator iter = m_PlayerMap.begin();
-	while(iter != m_PlayerMap.end())
+	for each(auto iter in m_PlayerMap)
 	{
-		if(iter->second == Player)
-		{
-			return iter->first;
-		}
+		PlayerPtr pPlayer = iter.second;
+		if (pPlayer == NULL)
+			continue;
 
-		iter++;
+		if (iter.second == Player)
+		{
+			return iter.first;
+		}
 	}
 
 	return USHRT_MAX;
@@ -35,20 +34,20 @@ Room::~Room(void)
 
 bool Room::RemovePlayer(PLAYER_PTR Player)
 {
-	EnterCriticalSection(&m_PublicLock);
-	std::map<DWORD,PLAYER_PTR>::iterator iter = m_PlayerMap.begin();
-	while(iter != m_PlayerMap.end())
+	for each(auto iter in m_PlayerMap)
 	{
-		if(iter->second == Player)
+		PlayerPtr pPlayer = iter.second;
+		if (pPlayer == NULL)
+			continue;
+
+		if (iter.second == Player)
 		{
-			iter = m_PlayerMap.erase(iter);
-			LeaveCriticalSection(&m_PublicLock);
+			m_PlayerMap[iter.first] = NULL;
 			return TRUE;
 		}
-		else
-			iter++;
+	
 	}
-	LeaveCriticalSection(&m_PublicLock);
+
 	return FALSE;
 }
 
@@ -58,8 +57,6 @@ bool Room::InsertPlayer(PLAYER_PTR Player)
 
 	if(MaxCount < 2) MaxCount = 2;
 
-	EnterCriticalSection(&m_PublicLock);
-
 	for(int i=0;i<MaxCount;i++)
 	{
 		if(m_PlayerMap.find(i) == m_PlayerMap.end())
@@ -67,7 +64,6 @@ bool Room::InsertPlayer(PLAYER_PTR Player)
 			m_PlayerMap[i] = Player;
 			Player->m_Char[0].SetTeam( WHITE );
 			Player->m_RoomNumber = GetId();
-			LeaveCriticalSection(&m_PublicLock);
 			return true;
 		}
 	}
@@ -78,11 +74,9 @@ bool Room::InsertPlayer(PLAYER_PTR Player)
 		{
 			m_PlayerMap[i+MaxCount] = Player;
 			Player->m_Char[0].SetTeam( BLACK );
-			LeaveCriticalSection(&m_PublicLock);
 			return true;
 		}
 	}
-	LeaveCriticalSection(&m_PublicLock);
 	return false;
 }
 
@@ -103,57 +97,55 @@ void Room::SendNewUserInfo(PLAYER_PTR Player)
 {
 	if(Player == NULL)	return ;
 
-	EnterCriticalSection(&m_PublicLock);
-
-	std::map<DWORD,PLAYER_PTR>::iterator iter = m_PlayerMap.begin();
-
-	while(iter != m_PlayerMap.end())
+	for each(auto iter in m_PlayerMap)
 	{
-		if (iter->second != NULL)
+		PlayerPtr pPlayer = iter.second;
+		if (pPlayer == NULL)
+			continue;
+
+		if (iter.second != NULL)
 		{
-			GSCLIENT_PTR pPair = SERVER.GetClient(iter->second ->GetPair());
-			if(pPair != NULL)
+			GSCLIENT_PTR pPair = SERVER.GetClient(iter.second->GetPair());
+			if (pPair != NULL)
 			{
 				//if(Player->GetId() != iter->second->GetId())
 				{
-					FC_PKT_NEW_USER_IN_ROOM SND;
+					/*					FC_PKT_NEW_USER_IN_ROOM SND;
 
-					SND.Pos = iter->first;
-					SND.PlayerName = Player->m_Account.GetName().c_str();
+										SND.Pos = iter->first;
+										SND.PlayerName = Player->m_Account.GetName().c_str();
 
-					DECLARE_JSON_WRITER
-					ADD_JSON_MEMBER("Pos",(WORD)SND.Pos)
-					ADD_JSON_WSTR_MEMBER("PlayerName",SND.PlayerName)
-					END_JSON_MEMBER(pPair->GetTCPSocket(),ID_FC_PKT_NEW_USER_IN_ROOM)
+										DECLARE_JSON_WRITER
+										ADD_JSON_MEMBER("Pos",(WORD)SND.Pos)
+										ADD_JSON_WSTR_MEMBER("PlayerName",SND.PlayerName)
+										END_JSON_MEMBER(pPair->GetTCPSocket(),ID_FC_PKT_NEW_USER_IN_ROOM)*/
 				}
 
 			}
 		}
-		iter++;
+
 	}
 
-	LeaveCriticalSection(&m_PublicLock);
+
 }
 
 bool Room::IsAllComplete()
 {
-	EnterCriticalSection(&m_PublicLock);
-	std::map<DWORD,PLAYER_PTR>::iterator iter = m_PlayerMap.begin();
-
-	while(iter != m_PlayerMap.end())
+	for each(auto iter in m_PlayerMap)
 	{
-		if (iter->second != NULL)
+		PlayerPtr pPlayer = iter.second;
+		if (pPlayer == NULL)
+			continue;
+		
+		if (iter.second != NULL)
 		{
-			if (iter->second->m_Char[0].GetAllComplete() == false)
+			if (iter.second->m_Char[0].GetAllComplete() == false)
 			{
-				LeaveCriticalSection(&m_PublicLock);
 				return FALSE;
 			}
 		}
-		iter++;
 	}
 
-	LeaveCriticalSection(&m_PublicLock);
 	return TRUE;
 }
 

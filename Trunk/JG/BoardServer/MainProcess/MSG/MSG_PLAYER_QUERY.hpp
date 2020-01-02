@@ -4,9 +4,6 @@
 
 #include "../MSG/MSG_PLAYER_QUERY_RES.h"
 
-#include "Protocol.h"
-
-#include "Auth.h"
 #include "../../DB/DBJob/DBContext.h"
 
 #include "lib_json/json/reader.h"
@@ -67,31 +64,31 @@ namespace Board	{
 			INT64 Index = 0;
 			WORD nRet = pProcess->ProcedureUserLogin(pRequst->Account.c_str(), pRequst->Passwd.c_str(), authentickey, Index);
 
-			DECLARE_JSON_WRITER
-			ADD_JSON_MEMBER("MPID",ID_AUTH_LOGIN_RES)
+			//DECLARE_JSON_WRITER
+			//ADD_JSON_MEMBER("MPID",/*ID_AUTH_LOGIN_RES*/0)
 
-			if(nRet != _ERR_NONE || (PLAYERMGR.Search(pRequst->Account.c_str()) != NULL))
-			{ 
-				ADD_JSON_MEMBER("Result",_ERR_LOGINED)
-				END_JSON_MEMBER(pSession->GetTCPSocket(),(WORD)ID_AUTH_LOGIN_RES)
-				return ;
-			}
+			//if(nRet != _ERR_NONE || (PLAYERMGR.Search(pRequst->Account.c_str()) != NULL))
+			//{ 
+			//	ADD_JSON_MEMBER("Result",_ERR_LOGINED)
+			//	END_JSON_MEMBER(pSession->GetTCPSocket(),(WORD)/*ID_AUTH_LOGIN_RES*/0)
+			//	return ;
+			//}
 
-			PlayerPtr pNewPlayer = PLAYERMGR.Create();
-			pNewPlayer->Initialize();
-			pNewPlayer->m_Char[0].SetName(pRequst->Account.c_str());
-			pNewPlayer->m_Account.SetName(pRequst->Account.c_str());
-			pNewPlayer->SetId(Index);
-			pNewPlayer->SetPair(pSession->GetId());
-			pSession->SetPair(Index);
-			PLAYERMGR.Add(pNewPlayer);
+			//PlayerPtr pNewPlayer = PLAYERMGR.Create();
+			//pNewPlayer->Initialize();
+			//pNewPlayer->m_Char[0].SetName(pRequst->Account.c_str());
+			//pNewPlayer->m_Account.SetName(pRequst->Account.c_str());
+			//pNewPlayer->SetId(Index);
+			//pNewPlayer->SetPair(pSession->GetId());
+			//pSession->SetPair(Index);
+			//PLAYERMGR.Add(pNewPlayer);
 
 
-			ADD_JSON_WSTR_MEMBER("SessionKey", authentickey)
-			ADD_JSON_WSTR_MEMBER("Id", pRequst->Account)
-			ADD_JSON_MEMBER("Result",_ERR_NONE)
+			//ADD_JSON_WSTR_MEMBER("SessionKey", authentickey)
+			//ADD_JSON_WSTR_MEMBER("Id", pRequst->Account)
+			//ADD_JSON_MEMBER("Result",_ERR_NONE)
 
-			END_JSON_MEMBER(pSession->GetTCPSocket(),(WORD)ID_AUTH_LOGIN_RES)
+			//END_JSON_MEMBER(pSession->GetTCPSocket(),/*(WORD)ID_AUTH_LOGIN_RES*/0)
 		}
 
 

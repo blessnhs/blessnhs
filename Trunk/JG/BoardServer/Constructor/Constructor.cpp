@@ -3,7 +3,6 @@
 
 #include "../Command/Command.h"
 #include "../Server/GSBoard.h"
-#include "MiniDump.h"
 
 BoardConstructor::BoardConstructor(void)
 {

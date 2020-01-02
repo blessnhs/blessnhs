@@ -9,20 +9,10 @@
 
 #include "TemplateStrategyPattern.h"
 
-#include "GSFactory.h"
-
-#include "../GSPacket/Front.h"
-#include "../GSPacket/Protocol.h"
-#include "../../DB/DBJob/DBContext.h"
-
-#include "GSSerialize.h"
-#include "../../LOG/Log.h"
-#include "../../Ini/Ini.h"
-
-#include "lib_json/json/reader.h"
-#include "lib_json/json/writer.h"
 
 typedef boost::shared_ptr<Player> PlayerPtr;
+
+using namespace std;
 
 template<template<class T> class CreationPolicy>
 class PlayerContainer : public IContainer<PlayerPtr>, public CreationPolicy<Player>

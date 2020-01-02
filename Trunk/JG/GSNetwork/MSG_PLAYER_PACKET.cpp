@@ -4,7 +4,6 @@
 #include "ICommand.h"
 #include "GSPacketTCP.h"
 #include "ICommand.h"
-#include "../GSPacket/Front.h"
 #include "GSBuffer.h"
 
 
