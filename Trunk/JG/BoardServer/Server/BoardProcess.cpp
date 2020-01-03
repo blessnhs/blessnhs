@@ -1,28 +1,7 @@
 #include "StdAfx.h"
 
 #include "BoardProcess.h"
-#include "lib_json/json/reader.h"
-#include "lib_json/json/writer.h"
 
-#include "../DB/DBProxy/DBProcess.h"
-#include "../DB/DBProxy/DBProcessContainer.h"
-#include "../DB/DBJob/DBContext.h"
-
-#include "GSAllocator.h"
-#include "GSMainProcess.h"
-#include "../PLAYER/Container/PlayerContainer.h"
-#include "../Room/RoomContainer.h"
-
-#include "MessageMapDef.h"
-
-#include "GSBoard.h"
-
-#include "../MainProcess/MSG/MSG_PLAYER_QUERY.h"
-
-#include <google/protobuf/io/zero_copy_stream_impl_lite.h>
-#include <boost/make_shared.hpp>
-
-#include "CLI.GS.pb.h"
 
 using namespace google;
 
@@ -56,12 +35,9 @@ VOID BoardProcess::Process(LPVOID Data, DWORD Length, WORD MainProtocol, WORD Su
 
 VOID BoardProcess::LOGIN_PLAYER(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> pOwner)
 {
-	LOGIN_REQ login;
-	bool result = login.ParseFromArray((char*)Data, Length);
-	if (result == false)
-		return;
-	
-	printf("result %d id %s pwd %s\n", result,login.var_id().c_str(), login.var_passwd().c_str());
+	DECLARE_RECV_TYPE(LOGIN_REQ,login)
+		
+	printf("result %d id %s pwd %s\n", _result_,login.var_id().c_str(), login.var_passwd().c_str());
 	
 
 	//로그인 쿼리를 날린다.

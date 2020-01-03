@@ -28,9 +28,27 @@
 #include "MiniDump.h"
 
 #include "GSOdbc.h"
-#include "DB/DBProxy/DBProcess.h"
 #include "Log/Log.h"
 #include "SingleTonHolder.h"
+#include "GSAllocator.h"
+#include "GSMainProcess.h"
 
+#include "DB/DBProxy/DBProcess.h"
 
+#include "./DB/DBProxy/DBProcessContainer.h"
+#include "./DB/DBJob/DBContext.h"
+
+#include "./PLAYER/Container/PlayerContainer.h"
+#include "./Room/RoomContainer.h"
+
+#include "MessageMapDef.h"
+
+#include "./Server/GSBoard.h"
+
+#include "./MainProcess/MSG/MSG_PLAYER_QUERY.h"
+
+#include <google/protobuf/io/zero_copy_stream_impl_lite.h>
+#include <boost/make_shared.hpp>
+
+#include "CLI.GS.pb.h"
 // TODO: 프로그램에 필요한 추가 헤더는 여기에서 참조합니다.

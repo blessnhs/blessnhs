@@ -1,22 +1,13 @@
 #include <google/protobuf/io/zero_copy_stream_impl_lite.h>
 
-#include "../../DB/DBProxy/DBProcess.h"
-#include "../../DB/DBProxy/DBProcessContainer.h"
-
-#include "../MSG/MSG_PLAYER_QUERY_RES.h"
 
 #include "../../DB/DBJob/DBContext.h"
-
-#include "lib_json/json/reader.h"
-#include "lib_json/json/writer.h"
-
-#include "GSSerialize.h"
+#include "../../DB/DBProxy/DBProcessContainer.h"
 #include "GSClient.h"
-
-#include "../../Ini/INI.h"
 
 #include "../../PLAYER/Container/PlayerContainer.h"
 #include "../../SERVER/GSBoard.h"
+
 #include "GS.CLI.pb.h"
 #include "Enum.pb.h"
 
@@ -63,15 +54,7 @@ namespace Board	{
 			{
 				res.set_var_code(DataBaseError);
 
-				int bufSize = res.ByteSizeLong();
-
-				boost::shared_ptr<BYTE[]> arr(new BYTE[bufSize]);
-
-				// 버퍼에 직렬화
-				protobuf::io::ArrayOutputStream os(arr.get(), bufSize);
-				res.SerializeToZeroCopyStream(&os);
-
-				pSession->GetTCPSocket()->WritePacket(res.id(), 0, arr.get(), bufSize);
+				SEND_PROTO_BUFFER(res,pSession)
 				return;
 			}
 
@@ -80,15 +63,7 @@ namespace Board	{
 			{
 				res.set_var_code(DataBaseError);
 
-				int bufSize = res.ByteSizeLong();
-
-				boost::shared_ptr<BYTE[]> arr(new BYTE[bufSize]);
-
-				// 버퍼에 직렬화
-				protobuf::io::ArrayOutputStream os(arr.get(), bufSize);
-				res.SerializeToZeroCopyStream(&os);
-
-				pSession->GetTCPSocket()->WritePacket(res.id(), 0, arr.get(), bufSize);
+				SEND_PROTO_BUFFER(res, pSession)
 				return;
 			}
 
@@ -116,15 +91,7 @@ namespace Board	{
 
 			res.set_var_code(Success);
 
-			int bufSize = res.ByteSizeLong();
-
-			boost::shared_ptr<BYTE[]> arr(new BYTE[bufSize]);
-
-			// 버퍼에 직렬화
-			protobuf::io::ArrayOutputStream os(arr.get(), bufSize);
-			res.SerializeToZeroCopyStream(&os);
-
-			pSession->GetTCPSocket()->WritePacket(res.id(),0, arr.get(),bufSize);
+			SEND_PROTO_BUFFER(res, pSession)
 		}
 
 

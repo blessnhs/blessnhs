@@ -1,10 +1,6 @@
 #include "StdAfx.h"
 #include "./Room.h"
 
-#include "lib_json/json/reader.h"
-#include "lib_json/json/writer.h"
-#include "GSSerialize.h"
-
 DWORD Room::FindPlayer(PLAYER_PTR Player)
 {
 	for each(auto iter in m_PlayerMap)
