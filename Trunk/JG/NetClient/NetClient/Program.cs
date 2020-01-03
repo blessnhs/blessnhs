@@ -501,7 +501,7 @@ public class Process
     {
         login = new Client[max];
 
-       // while (true)
+        while (true)
         {
 
             Thread t3 = new Thread(delegate ()
@@ -523,7 +523,7 @@ public class Process
                     collection.Add(new JsonStringValue("Id", id));
                     collection.Add(new JsonStringValue("Passwd", pwd));
 
-               //     login.WritePacket(0, System.Text.Encoding.Unicode.GetBytes(collection.ToString()), collection.ToString().Length);
+                    login.WritePacket(0, System.Text.Encoding.Unicode.GetBytes(collection.ToString()), collection.ToString().Length);
                 }
 
                 Thread.Sleep(9750);

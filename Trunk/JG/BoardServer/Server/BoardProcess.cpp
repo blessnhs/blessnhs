@@ -57,10 +57,10 @@ VOID BoardProcess::Process(LPVOID Data, DWORD Length, WORD MainProtocol, WORD Su
 VOID BoardProcess::LOGIN_PLAYER(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> pOwner)
 {
 	LOGIN_REQ login;
-
 	bool result = login.ParseFromArray((char*)Data, Length);
-
-
+	if (result == false)
+		return;
+	
 	printf("result %d id %s pwd %s\n", result,login.var_id().c_str(), login.var_passwd().c_str());
 	
 
