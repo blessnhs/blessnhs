@@ -24,5 +24,6 @@ enum ErrorCode
 {
 
 	Success = 0;
-
+	DataBaseError = 1;
+	LoginDuplicate = 2;
 };

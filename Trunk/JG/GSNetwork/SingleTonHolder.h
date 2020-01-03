@@ -147,13 +147,13 @@ public :
 	static T& Instance()
 	{
 		if ( Singleton::instance_ == 0 ) {
-			LockThread lock;
+		//	LockThread lock;
 			if ( Singleton::instance_ == 0 ) {
 				if ( Singleton::destroyed_ ) {
-					OnDeadReference();
+					//OnDeadReference();
 					Singleton::destroyed_ = false;
 				}
-				Singleton::instance_ = CreateInstance();
+				Singleton::instance_ = new T();// CreateInstance();
 				try {
 					ScheduleForDestruction(Singleton::Destroy);
 				} catch(...) {
@@ -166,7 +166,7 @@ public :
 	static void Destroy()
 	{
 		if ( Singleton::instance_ != 0 ) {
-			LockThread lock;
+		//	LockThread lock;
 			if ( Singleton::instance_ != 0 ) {
 				DestroyInstance(Singleton::instance_);
 				Singleton::instance_ = 0;

@@ -5,8 +5,6 @@ import "Structure.proto";
 
 option optimize_for = SPEED;
 
-package PROTOCOL_GS_TO_CLI; // gameserver -> client
-
 message LOGIN_RES
 {
     PROTOCOL   id                  = 1;

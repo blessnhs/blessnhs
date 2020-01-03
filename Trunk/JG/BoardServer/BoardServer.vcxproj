@@ -73,7 +73,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
     <OutDir>../BIN/</OutDir>
-    <IncludePath>../Common/boost_1_68_0;../GSPacket;../common/lib_json;../common/protobuf/include;../common/Protocol/Cpp;$(IncludePath)</IncludePath>
+    <IncludePath>../Common/boost_1_68_0;../GSPacket;../common/lib_json;../common/protobuf/include;../common/Protocol/Cpp;../Protocol/Cpp;$(IncludePath)</IncludePath>
     <LibraryPath>../Common/boost_1_68_0/lib;../Common/lib_json;../Common/protobuf/lib;../Common/protobuf/Debug/lib;$(LibraryPath)</LibraryPath>
     <TargetName>$(ProjectName)_d_x64</TargetName>
   </PropertyGroup>
@@ -158,6 +158,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\Protocol\Cpp\CLI.GS.pb.h" />
+    <ClInclude Include="..\Protocol\Cpp\Enum.pb.h" />
+    <ClInclude Include="..\Protocol\Cpp\GS.CLI.pb.h" />
+    <ClInclude Include="..\Protocol\Cpp\Structure.pb.h" />
     <ClInclude Include="Command\Command.h" />
     <ClInclude Include="Constructor\Constructor.h" />
     <ClInclude Include="DB\DBJob\DBContext.h" />
@@ -180,6 +184,18 @@
     <ClInclude Include="stdafx.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\Protocol\Cpp\CLI.GS.pb.cc">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\Protocol\Cpp\Enum.pb.cc">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\Protocol\Cpp\GS.CLI.pb.cc">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\Protocol\Cpp\Structure.pb.cc">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
     <ClCompile Include="BoardServer.cpp" />
     <ClCompile Include="Command\Command.cpp" />
     <ClCompile Include="Constructor\Constructor.cpp" />

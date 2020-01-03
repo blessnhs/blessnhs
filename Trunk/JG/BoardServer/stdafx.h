@@ -30,4 +30,7 @@
 #include "GSOdbc.h"
 #include "DB/DBProxy/DBProcess.h"
 #include "Log/Log.h"
+#include "SingleTonHolder.h"
+
+
 // TODO: 프로그램에 필요한 추가 헤더는 여기에서 참조합니다.

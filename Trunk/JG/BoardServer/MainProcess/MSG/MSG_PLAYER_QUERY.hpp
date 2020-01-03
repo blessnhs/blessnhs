@@ -1,3 +1,4 @@
+#include <google/protobuf/io/zero_copy_stream_impl_lite.h>
 
 #include "../../DB/DBProxy/DBProcess.h"
 #include "../../DB/DBProxy/DBProcessContainer.h"
@@ -16,6 +17,10 @@
 
 #include "../../PLAYER/Container/PlayerContainer.h"
 #include "../../SERVER/GSBoard.h"
+#include "GS.CLI.pb.h"
+#include "Enum.pb.h"
+
+using namespace google;
 
 namespace Board	{
 
@@ -52,43 +57,74 @@ namespace Board	{
 
 		void Execute(LPVOID Param)
 		{
+			LOGIN_RES res;
+
 			if (pSession == NULL || pSession->GetConnected() == false)
+			{
+				res.set_var_code(DataBaseError);
+
+				int bufSize = res.ByteSizeLong();
+
+				boost::shared_ptr<BYTE[]> arr(new BYTE[bufSize]);
+
+				// 버퍼에 직렬화
+				protobuf::io::ArrayOutputStream os(arr.get(), bufSize);
+				res.SerializeToZeroCopyStream(&os);
+
+				pSession->GetTCPSocket()->WritePacket(res.id(), 0, arr.get(), bufSize);
 				return;
+			}
 
 			DBPROCESS_CER_PTR pProcess = DBPROCESSCONTAINER_CER.Search(pSession->GetMyDBTP(MSG_TYPE_DB_1));
 			if (pProcess == NULL || pProcess->m_pDB == NULL || pProcess->m_pDB->IsOpen() == false)
-				return ;
+			{
+				res.set_var_code(DataBaseError);
+
+				int bufSize = res.ByteSizeLong();
+
+				boost::shared_ptr<BYTE[]> arr(new BYTE[bufSize]);
+
+				// 버퍼에 직렬화
+				protobuf::io::ArrayOutputStream os(arr.get(), bufSize);
+				res.SerializeToZeroCopyStream(&os);
+
+				pSession->GetTCPSocket()->WritePacket(res.id(), 0, arr.get(), bufSize);
+				return;
+			}
 
 			// 로그인 절차 : 아이디의 접속확인 및 인증키값을 가져온다.
 			std::wstring authentickey;
 			INT64 Index = 0;
 			WORD nRet = pProcess->ProcedureUserLogin(pRequst->Account.c_str(), pRequst->Passwd.c_str(), authentickey, Index);
 
-			//DECLARE_JSON_WRITER
-			//ADD_JSON_MEMBER("MPID",/*ID_AUTH_LOGIN_RES*/0)
 
-			//if(nRet != _ERR_NONE || (PLAYERMGR.Search(pRequst->Account.c_str()) != NULL))
-			//{ 
-			//	ADD_JSON_MEMBER("Result",_ERR_LOGINED)
-			//	END_JSON_MEMBER(pSession->GetTCPSocket(),(WORD)/*ID_AUTH_LOGIN_RES*/0)
-			//	return ;
-			//}
+			if(nRet != _ERR_NONE || (PLAYERMGR.Search(pRequst->Account.c_str()) != NULL))
+			{ 
+				res.set_var_code(LoginDuplicate);
+				return ;
+			}
 
-			//PlayerPtr pNewPlayer = PLAYERMGR.Create();
-			//pNewPlayer->Initialize();
-			//pNewPlayer->m_Char[0].SetName(pRequst->Account.c_str());
-			//pNewPlayer->m_Account.SetName(pRequst->Account.c_str());
-			//pNewPlayer->SetId(Index);
-			//pNewPlayer->SetPair(pSession->GetId());
-			//pSession->SetPair(Index);
-			//PLAYERMGR.Add(pNewPlayer);
+			PlayerPtr pNewPlayer = PLAYERMGR.Create();
+			pNewPlayer->Initialize();
+			pNewPlayer->m_Char[0].SetName(pRequst->Account.c_str());
+			pNewPlayer->m_Account.SetName(pRequst->Account.c_str());
+			pNewPlayer->SetId(Index);
+			pNewPlayer->SetPair(pSession->GetId());
+			pSession->SetPair(Index);
+			PLAYERMGR.Add(pNewPlayer);
 
 
-			//ADD_JSON_WSTR_MEMBER("SessionKey", authentickey)
-			//ADD_JSON_WSTR_MEMBER("Id", pRequst->Account)
-			//ADD_JSON_MEMBER("Result",_ERR_NONE)
+			res.set_var_code(Success);
 
-			//END_JSON_MEMBER(pSession->GetTCPSocket(),/*(WORD)ID_AUTH_LOGIN_RES*/0)
+			int bufSize = res.ByteSizeLong();
+
+			boost::shared_ptr<BYTE[]> arr(new BYTE[bufSize]);
+
+			// 버퍼에 직렬화
+			protobuf::io::ArrayOutputStream os(arr.get(), bufSize);
+			res.SerializeToZeroCopyStream(&os);
+
+			pSession->GetTCPSocket()->WritePacket(res.id(),0, arr.get(),bufSize);
 		}
 
 

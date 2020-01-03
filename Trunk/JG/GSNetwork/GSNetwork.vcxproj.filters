@@ -309,9 +309,6 @@
     <ClInclude Include="IResponse.h">
       <Filter>Frame</Filter>
     </ClInclude>
-    <ClInclude Include="SingleTonHolder.h">
-      <Filter>Frame</Filter>
-    </ClInclude>
     <ClInclude Include="TemplateStrategyPattern.h">
       <Filter>Frame</Filter>
     </ClInclude>
@@ -337,6 +334,9 @@
       <Filter>Network\Compress</Filter>
     </ClInclude>
     <ClInclude Include="MinidumpHelp.h">
+      <Filter>Frame</Filter>
+    </ClInclude>
+    <ClInclude Include="SingleTonHolder.h">
       <Filter>Frame</Filter>
     </ClInclude>
   </ItemGroup>
@@ -530,9 +530,6 @@
     <ClCompile Include="IProcess.cpp">
       <Filter>Frame</Filter>
     </ClCompile>
-    <ClCompile Include="SingleTonHolder.cpp">
-      <Filter>Frame</Filter>
-    </ClCompile>
     <ClCompile Include="TypeList.cpp">
       <Filter>Frame</Filter>
     </ClCompile>
@@ -555,6 +552,9 @@
       <Filter>Network\Compress</Filter>
     </ClCompile>
     <ClCompile Include="MinidumpHelp.cpp">
+      <Filter>Frame</Filter>
+    </ClCompile>
+    <ClCompile Include="SingleTonHolder.cpp">
       <Filter>Frame</Filter>
     </ClCompile>
   </ItemGroup>

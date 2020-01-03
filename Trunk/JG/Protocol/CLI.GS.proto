@@ -5,11 +5,9 @@ import "Structure.proto";
 
 option optimize_for = SPEED;
 
-package PROTOCOL_CLI_TO_GS; // client -> server
-
 message LOGIN_REQ
 {
     PROTOCOL   id                  = 1 ;
-    bytes var_id                       = 2;
-    bytes var_passwd                = 3;
+    string var_id                       = 2;
+    string var_passwd                = 3;
 }

@@ -55,6 +55,9 @@
     <Filter Include="ROOM">
       <UniqueIdentifier>{c60e7b67-234a-4e2d-98d7-1712521593ee}</UniqueIdentifier>
     </Filter>
+    <Filter Include="PROTO">
+      <UniqueIdentifier>{c26e4cea-0fc7-4eb4-8dff-d438cf760093}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Ini\INI.h">
@@ -117,6 +120,18 @@
     <ClInclude Include="Room\RoomContainer.hpp">
       <Filter>ROOM</Filter>
     </ClInclude>
+    <ClInclude Include="..\Protocol\Cpp\CLI.GS.pb.h">
+      <Filter>PROTO</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Protocol\Cpp\Enum.pb.h">
+      <Filter>PROTO</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Protocol\Cpp\GS.CLI.pb.h">
+      <Filter>PROTO</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Protocol\Cpp\Structure.pb.h">
+      <Filter>PROTO</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BoardServer.cpp">
@@ -172,6 +187,18 @@
     </ClCompile>
     <ClCompile Include="Room\RoomContainer.cpp">
       <Filter>ROOM</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Protocol\Cpp\CLI.GS.pb.cc">
+      <Filter>PROTO</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Protocol\Cpp\Enum.pb.cc">
+      <Filter>PROTO</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Protocol\Cpp\GS.CLI.pb.cc">
+      <Filter>PROTO</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Protocol\Cpp\Structure.pb.cc">
+      <Filter>PROTO</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

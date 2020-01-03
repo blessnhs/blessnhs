@@ -4,10 +4,11 @@ using System.Net.Sockets;
 using System.Threading;
 using System.Text;
 using System.Net.Json;
-
+using System.IO;
 using UDPEchoClient;
 
-// State object for receiving data from remote device.
+using Google.Protobuf;
+
 public class StateObject
 {
     // Client socket.
@@ -155,15 +156,21 @@ public class Client
             {
                 if (ConnectPos == 0)
                 {
+                    byte[] bytes;
+                    LOGIN_REQ person = new LOGIN_REQ
+                    {
+                        Id = PROTOCOL.IdPktLoginRes,
+                        VarId = "Foo",
+                        VarPasswd = "foo@bar",
+                    };
+                    using (MemoryStream stream = new MemoryStream())
+                    {
+                        person.WriteTo(stream);
 
-                    string id = String.Format("nhs{0}", sequence);
-                    string pwd = String.Format("nhs{0}", sequence);
-
-                    JsonObjectCollection collection = new JsonObjectCollection();
-                    collection.Add(new JsonStringValue("Id", id));
-                    collection.Add(new JsonStringValue("Passwd", pwd));
-
-                    WritePacket(0, System.Text.Encoding.UTF8.GetBytes(collection.ToString()), collection.ToString().Length);
+                        WritePacket((int)PROTOCOL.IdPktLoginReq,stream.ToArray(), stream.ToArray().Length);
+                    }
+                    
+               
                     ConnectPos = 1;
 
 
@@ -492,10 +499,9 @@ public class Process
 
     public void start()
     {
-   
         login = new Client[max];
 
-        while (true)
+       // while (true)
         {
 
             Thread t3 = new Thread(delegate ()
@@ -504,7 +510,7 @@ public class Process
                 login.sequence = i;
 
                 login.ConnectPos = 0;
-                login.StartClient("127.0.0.1", 20003);
+                login.StartClient("127.0.0.1", 20000);
 
                 Thread.Sleep(100);
                 string id = String.Format("nhs{0}", 1);
@@ -512,16 +518,16 @@ public class Process
 
                 for (int i = 0; i < 10; i++)
                 {
-                    Thread.Sleep(10);
+                    Thread.Sleep(11);
                     JsonObjectCollection collection = new JsonObjectCollection();
                     collection.Add(new JsonStringValue("Id", id));
                     collection.Add(new JsonStringValue("Passwd", pwd));
 
-                    login.WritePacket(0, System.Text.Encoding.UTF8.GetBytes(collection.ToString()), collection.ToString().Length);
+               //     login.WritePacket(0, System.Text.Encoding.Unicode.GetBytes(collection.ToString()), collection.ToString().Length);
                 }
 
                 Thread.Sleep(9750);
-                login.socket.Close();
+           //     login.socket.Close();
             });
             t3.Start();
             Thread.Sleep(600);

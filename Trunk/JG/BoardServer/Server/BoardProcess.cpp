@@ -19,8 +19,12 @@
 
 #include "../MainProcess/MSG/MSG_PLAYER_QUERY.h"
 
-#include "../Protocol/Cpp/Enum.pb.h"
-#include "../Protocol/Cpp/Enum.pb.cc"
+#include <google/protobuf/io/zero_copy_stream_impl_lite.h>
+#include <boost/make_shared.hpp>
+
+#include "CLI.GS.pb.h"
+
+using namespace google;
 
 BoardProcess::BoardProcess(void)
 {
@@ -40,20 +44,30 @@ BoardProcess::~BoardProcess(void)
 
 VOID BoardProcess::Process(LPVOID Data, DWORD Length, WORD MainProtocol, WORD SubProtocol, boost::shared_ptr<GSClient> Client)
 {
-	NET_FUNC_EXE(MainProtocol, Data, Length, Client);
+	try
+	{
+		NET_FUNC_EXE(MainProtocol, Data, Length, Client);
+	}
+	catch (int exception)
+	{
+		printf("handle exception\n");
+	}
 }
-
 
 VOID BoardProcess::LOGIN_PLAYER(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> pOwner)
 {
-	DECLARE_JSON_READ
-	GET_JSON_WSTR_MEMBER("Id", Id)
-	GET_JSON_WSTR_MEMBER("Passwd", Passwd)
+	LOGIN_REQ login;
+
+	bool result = login.ParseFromArray((char*)Data, Length);
+
+
+	printf("result %d id %s pwd %s\n", result,login.var_id().c_str(), login.var_passwd().c_str());
+	
 
 	//로그인 쿼리를 날린다.
 	boost::shared_ptr<RequestPlayerAuth> pRequest = ALLOCATOR.Create<RequestPlayerAuth>();
-	pRequest->Account = Id;
-	pRequest->Passwd = Passwd;
+	pRequest->Account.assign(login.var_id().begin(), login.var_id().end());
+	pRequest->Passwd.assign(login.var_passwd().begin(), login.var_passwd().end());
 
 	boost::shared_ptr<Board::MSG_PLAYER_QUERY<RequestPlayerAuth>>		PLAYER_MSG = ALLOCATOR.Create<Board::MSG_PLAYER_QUERY<RequestPlayerAuth>>();
 	PLAYER_MSG->pSession = pOwner;
