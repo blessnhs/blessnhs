@@ -1,4 +1,4 @@
-﻿syntax = "proto3";
+﻿syntax = "proto2";
 
 import "Enum.proto";
 import "Structure.proto";
@@ -7,7 +7,7 @@ option optimize_for = SPEED;
 
 message LOGIN_REQ
 {
-    PROTOCOL   id                  = 1 ;
-    string var_id                       = 2;
-    string var_passwd                = 3;
+    optional PROTOCOL   id                  = 1 [default = ID_PKT_LOGIN_REQ ];
+    required string var_id                       = 2;
+    required string var_passwd                = 3;
 }

@@ -160,8 +160,8 @@ public class Client
                     LOGIN_REQ person = new LOGIN_REQ
                     {
                         Id = PROTOCOL.IdPktLoginRes,
-                        VarId = "Foo",
-                        VarPasswd = "foo@bar",
+                        VarId = "nhs1",
+                        VarPasswd = "nhs1",
                     };
                     using (MemoryStream stream = new MemoryStream())
                     {
@@ -210,13 +210,7 @@ public class Client
 
     public void Update()
     {
-        if (isconnected == 1)
-            Receive(socket);
-        else if (isconnected == 3)
-        {
-            StartClient("127.0.0.1", 20000);
-            isconnected = 0;
-        }
+           Receive(socket);
     }
 
 
@@ -276,7 +270,7 @@ public class Client
 
             //Console.Write("{0} ", Encoding.ASCII.GetString(mCompletePacketBuffer, 0, PacketLength));
 
-            if (Protocol == 30001)
+            if (Protocol == 1)
             {
                 ++repeatcount;
                 if (repeatcount >= 200)
@@ -290,26 +284,11 @@ public class Client
           //      socket.Disconnect(false);
                 isconnected = 0;
 
-                string parseStr = System.Text.Encoding.UTF8.GetString(mCompletePacketBuffer);
+                 LOGIN_RES res = new LOGIN_RES();
+                 res = LOGIN_RES.Parser.ParseFrom(mCompletePacketBuffer);
 
-                JsonTextParser parser = new JsonTextParser();
-                JsonObject obj = parser.Parse(parseStr);
-                JsonObjectCollection col = (JsonObjectCollection)obj;
+                 Console.Write(res.VarCode.ToString()); 
 
-                Front.id = Convert.ToString(col["Id"].GetValue());
-                Front.sessionkey = Convert.ToString(col["SessionKey"].GetValue());
-                Front.ConnectPos = 1;
- 
-                //Front.StartClient("127.0.0.1", 20001);
-
-                string id = String.Format("nhs{0}", sequence);
-                string pwd = String.Format("nhs{0}", sequence);
-
-                JsonObjectCollection collection = new JsonObjectCollection();
-                collection.Add(new JsonStringValue("Id", id));
-                collection.Add(new JsonStringValue("Passwd", pwd));
-
-                WritePacket(30000, System.Text.Encoding.UTF8.GetBytes(collection.ToString()), collection.ToString().Length);
 
                 repeatcount++;
 
@@ -516,7 +495,7 @@ public class Process
                 string id = String.Format("nhs{0}", 1);
                 string pwd = String.Format("nhs{0}", 1);
 
-                for (int i = 0; i < 10; i++)
+                for (int i = 0; i < 1; i++)
                 {
                     Thread.Sleep(11);
                     JsonObjectCollection collection = new JsonObjectCollection();
@@ -526,14 +505,14 @@ public class Process
                     login.WritePacket(0, System.Text.Encoding.Unicode.GetBytes(collection.ToString()), collection.ToString().Length);
                 }
 
-                Thread.Sleep(9750);
-           //     login.socket.Close();
+                Thread.Sleep(3750);
+                login.socket.Close();
             });
             t3.Start();
-            Thread.Sleep(600);
+            Thread.Sleep(100);
         }
 
-        while (true) ;
+      
 
         DateTime NOW = DateTime.Now;
    

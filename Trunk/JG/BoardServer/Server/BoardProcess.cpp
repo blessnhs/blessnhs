@@ -21,6 +21,7 @@ BoardProcess::~BoardProcess(void)
 {
 }
 
+
 VOID BoardProcess::Process(LPVOID Data, DWORD Length, WORD MainProtocol, WORD SubProtocol, boost::shared_ptr<GSClient> Client)
 {
 	try

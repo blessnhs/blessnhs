@@ -1,4 +1,4 @@
-﻿syntax = "proto3";
+﻿syntax = "proto2";
 
 import "Enum.proto";
 import "Structure.proto";
@@ -7,8 +7,8 @@ option optimize_for = SPEED;
 
 message LOGIN_RES
 {
-    PROTOCOL   id                  = 1;
+    optional PROTOCOL   id                  = 1 [default = ID_PKT_LOGIN_RES];
 
-    ErrorCode    var_code          = 2;
+    optional  ErrorCode    var_code         = 2;
    
 }

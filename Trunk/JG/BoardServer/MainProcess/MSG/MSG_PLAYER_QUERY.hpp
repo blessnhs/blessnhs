@@ -59,7 +59,7 @@ namespace Board	{
 			}
 
 			DBPROCESS_CER_PTR pProcess = DBPROCESSCONTAINER_CER.Search(pSession->GetMyDBTP(MSG_TYPE_DB_1));
-			if (pProcess == NULL || pProcess->m_pDB == NULL || pProcess->m_pDB->IsOpen() == false)
+			if (pProcess == NULL || pProcess->m_IsOpen == false)
 			{
 				res.set_var_code(DataBaseError);
 

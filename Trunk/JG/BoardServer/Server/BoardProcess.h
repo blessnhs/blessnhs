@@ -1,6 +1,8 @@
 #pragma once
 
 #include "IPlayerProcess.h"
+#include "CLI.GS.pb.h"
+#include <boost/shared_ptr.hpp>
 
 class BoardProcess : public GSNetwork::IPlayerProcess::IPlayerProcess
 {

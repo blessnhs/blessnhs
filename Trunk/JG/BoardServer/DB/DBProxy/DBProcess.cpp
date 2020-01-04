@@ -9,6 +9,7 @@ inline std::string trim_right ( const std::string & source , const std::string &
 
 CDBProcessCer::CDBProcessCer(void)
 {
+	m_IsOpen = false;
 	InitializeCriticalSection(&m_CS);
 }
 
@@ -26,7 +27,7 @@ BOOL CDBProcessCer::Initalize(	WCHAR *m_szDSN,WCHAR *m_szUID,WCHAR *m_szPWD)
 		printf("fail -> %s(%d)\n", __FUNCTION__,GetId());
 		return false;
 	}
-
+	m_IsOpen = true;
 	return true;
 }
 
