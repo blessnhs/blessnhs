@@ -16,8 +16,8 @@ namespace WBA
 		public PageOldTestament ()
 		{
             Children.Add(new BibleList(BibleSplite.OldTestament));
-            Children.Add(new Chapter(0));
-            Children.Add(new Verse(0));
+            Children.Add(new Chapter(1));
+            Children.Add(new Verse(1));
         }
 	}
 }

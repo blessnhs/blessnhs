@@ -181,6 +181,7 @@ namespace WBA
 
                     SQLLiteDB.CacheData.BibleName = words[9];
                     SQLLiteDB.CacheData.Chapter = Convert.ToInt32(words[10]);
+                    SQLLiteDB.CacheData.Verse = 1;
 
                     parentPage.CurrentPage = parentPage.Children[1];
                 };
@@ -194,16 +195,6 @@ namespace WBA
         public Notice()
         {
             InitializeComponent();
-
-            //var NoticeFile = Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal), "notice.txt");
-            //GoolgeService.DownloadFileFromURLToPath("https://drive.google.com/file/d/1NSS2P2ECkU6QdvEj0cX3TVDveIMwyn01/view?usp=sharing", NoticeFile);
-
-            //var worship = Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal), "worship.txt");
-            //GoolgeService.DownloadFileFromURLToPath("https://drive.google.com/file/d/1EamFoQDhKCminaJRFfKGU1OB50lobXos/view?usp=sharing", worship);
-
-
-            //SQLLiteDB.LoadCacheData();
-            //BibleInfo.LoadKRV();
 
             SetJuboLabel();
 

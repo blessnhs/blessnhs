@@ -228,8 +228,12 @@ namespace WBA
             MainLayout.Children.Add(ButtonLayout);
         }
 
+        private Dictionary<int, Label> MainTextLabel = new Dictionary<int, Label>();
+
         public void DrawMainText(StackLayout MainLayout)
         {
+            MainTextLabel.Clear();
+
             var TextLayout = new StackLayout { Orientation = StackOrientation.Vertical, Spacing = 5 };
             int verseSize = BibleInfo.GetVerseSize(SQLLiteDB.CacheData.BibleName, SQLLiteDB.CacheData.Chapter);
 
@@ -238,6 +242,8 @@ namespace WBA
                 string Text = BibleInfo.GetContextText(SQLLiteDB.CacheData.BibleName, SQLLiteDB.CacheData.Chapter, i);
 
                 var Label = new Label { Text = Text, FontSize = SQLLiteDB.FontSize, LineBreakMode = LineBreakMode.WordWrap, TextColor = Xamarin.Forms.Color.FromRgb(0, 0, 0) };
+
+                MainTextLabel[i] = Label;
 
                 // Your label tap event
                 var forgetPassword_tap = new TapGestureRecognizer();
@@ -292,6 +298,15 @@ namespace WBA
             MainLayout.Children.Add(ButtonLayout);
         }
 
+        private void GotoFocusLabel(ScrollView scrollView,int Verse)
+        {
+            Label Focus = null;
+            if(MainTextLabel.TryGetValue(Verse, out Focus) == true)
+            {
+                scrollView.ScrollToAsync(Focus, ScrollToPosition.Start, true);
+            }
+        }
+
         public void RefreshData()
         {
             Title = SQLLiteDB.CacheData.BibleName + " " + SQLLiteDB.CacheData.Chapter.ToString() + "장  KRV";
@@ -315,8 +330,9 @@ namespace WBA
 
             ScrollView scrollView = new ScrollView();
             scrollView.Content = MainLayout;
-              
+
             Content = scrollView;
+            GotoFocusLabel(scrollView, data.Verse);        
         }
 
         public Bible()
