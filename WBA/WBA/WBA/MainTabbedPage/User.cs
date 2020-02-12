@@ -13,7 +13,7 @@ namespace WBA.MainTabbedPage
 
     static public class Dic
     {
-        static Dictionary<string, string> _dictionary = new Dictionary<string, string>();
+        static public Dictionary<string, string> _dictionary = new Dictionary<string, string>();
         static public void LoadDic()
         {
             var assembly = IntrospectionExtensions.GetTypeInfo(typeof(Dic)).Assembly;

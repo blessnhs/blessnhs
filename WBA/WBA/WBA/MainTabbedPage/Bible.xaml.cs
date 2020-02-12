@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using Xamarin.Essentials;
+using WBA.MainTabbedPage;
 
 namespace WBA
 {
@@ -380,7 +381,26 @@ namespace WBA
                 {
                     var labelText = s as Label;
 
-                    string action = await DisplayActionSheet("줄 긋기", "안하기",null,"빨강", "노랑", "파랑");
+                    string Context = labelText.Text;
+
+                    string[]words = Context.Split(' ');
+
+                    string help = "";
+                    if (words != null || words.Length > 0)
+                    {
+                        for (int k=0;k<words.Length;k++)
+                        {
+                            string outstr;
+                            if(Dic._dictionary.TryGetValue(words[k],out outstr) == true)
+                            {
+                                help += outstr;
+                                help += "\n";
+                            }
+                        }
+                    }
+
+
+                    string action = await DisplayActionSheet(help, "안하기",null,"빨강", "노랑", "파랑");
 
                     switch(action)
                     {
@@ -394,6 +414,8 @@ namespace WBA
                             labelText.BackgroundColor = Color.Green;
                             break;
                     }
+
+
 
                 };
 
