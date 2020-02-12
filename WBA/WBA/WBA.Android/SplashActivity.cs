@@ -1,11 +1,11 @@
 ﻿using System.IO;
-using System.Threading;
 using System.Threading.Tasks;
 using Android.App;
 using Android.Content;
 using Android.OS;
 using Android.Support.V7.App;
 using Android.Util;
+using WBA.MainTabbedPage;
 
 namespace WBA.Droid
 {
@@ -37,6 +37,7 @@ namespace WBA.Droid
             SQLLiteDB.LoadCacheData();
             BibleInfo.LoadKRV();
             BibleInfo.LoadNIV();
+            Dic.LoadDic();
 
             var NoticeFile = Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal), "notice.txt");
             GoolgeService.DownloadFileFromURLToPath("https://drive.google.com/file/d/1NSS2P2ECkU6QdvEj0cX3TVDveIMwyn01/view?usp=sharing", NoticeFile);

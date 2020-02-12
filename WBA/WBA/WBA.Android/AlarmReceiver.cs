@@ -1,17 +1,9 @@
 ﻿using System;
 using Android.App;
 using Android.Content;
-using Android.Graphics;
 using Android.OS;
-using Android.Support.V4.App;
 using WBA.Droid;
-using Xamarin.Forms;
-using AndroidApp = Android.App.Application;
-using System.Globalization;
-using Java.Util.Concurrent;
-using Android.Widget;
-using WBA.MainTabbedPage;
-using System.Threading.Tasks;
+
 
 namespace WBA.MainTabbedPage.Droid
 {

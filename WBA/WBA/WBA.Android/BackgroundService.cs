@@ -1,20 +1,8 @@
 ﻿using System;
-using System.Threading.Tasks;
 using Android.OS;
 using Android.App;
 using Android.Content;
-using Android.Util;
-using Android.Widget;
-using Android.Support.V4.App;
 using Android.Graphics;
-using WBA.Droid;
-using System.Threading;
-using Android.App.Job;
-using Android.Content.PM;
-using SQLite;
-using System.Collections.Generic;
-using WBA.MainTabbedPage;
-using Plugin.LocalNotifications;
 using WBA.MainTabbedPage.Droid;
 //using Plugin.LocalNotifications;
 

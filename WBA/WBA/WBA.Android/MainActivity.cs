@@ -1,21 +1,11 @@
 ﻿using System;
 
 using Android.App;
-using Android.Content.PM;
 using Android.Runtime;
 using Android.Views;
-using Android.Widget;
 using Android.OS;
 using Android.Content;
-using WBA.MainTabbedPage.Droid;
-using Xamarin.Forms;
-using WBA.MainTabbedPage;
-using Android.Support.V4.App;
-using Android.Graphics;
-using System.Threading;
-using System.Threading.Tasks;
-using Android.App.Job;
-using Android.Support.V7.App;
+
 
 namespace WBA.Droid
 {
