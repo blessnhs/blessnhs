@@ -1,13 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="1" android:versionName="1.0" package="com.companyname.WBA" android:installLocation="auto">
-	<uses-sdk android:minSdkVersion="14" android:targetSdkVersion="27" />
-	<application android:label="WBA.Android" android:icon="@mipmap/icon"></application>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="2" android:versionName="2.0" package="com.blessnhs.BAC" android:installLocation="auto">
+	<uses-sdk android:targetSdkVersion="28" android:minSdkVersion="19" />
+	<application android:label="안디옥개역한글성경" android:icon="@mipmap/icon"></application>
 	<uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-	<uses-permission android:name="android.permission.READ_CONTACTS" />
-	<uses-permission android:name="android.permission.WRITE_CONTACTS" />
-	<uses-permission android:name="android.permission.BIND_REMOTEVIEWS" />
 	<uses-permission android:name="com.android.alarm.permission.SET_ALARM" />
-	<application android:permission="android.permission.BIND_JOB_SERVICE" />
 	<uses-permission android:name="android.permission.WAKE_LOCK" />
 	<uses-permission android:name="android.permission.INSTANT_APP_FOREGROUND_SERVICE" />
 	<uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY" />
