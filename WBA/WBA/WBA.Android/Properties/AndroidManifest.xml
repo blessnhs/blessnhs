@@ -7,5 +7,6 @@
 	<uses-permission android:name="android.permission.WAKE_LOCK" />
 	<uses-permission android:name="android.permission.INSTANT_APP_FOREGROUND_SERVICE" />
 	<uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY" />
+  <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
 	<service android:name=".NotifyService" />
 </manifest>

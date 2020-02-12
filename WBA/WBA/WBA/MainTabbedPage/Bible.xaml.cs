@@ -63,7 +63,12 @@ namespace WBA
                 bible[type][name][chapter] = new Dictionary<int, string>();
             }
 
-            bible[type][name][chapter][verse] = context;
+            if (bible[type][name][chapter].ContainsKey(verse) == false)
+            {
+                bible[type][name][chapter][verse] = "";
+            }
+
+            bible[type][name][chapter][verse] += context;
         }
 
         //성경 본문 가져오기 이름,장,절
@@ -168,8 +173,110 @@ namespace WBA
             }
         }
 
-        //niv 불러오기
+        static public void CheckValidate()
+        {
+            foreach(var data in List)
+            {
+                if (GetChapterSize(data.Name, BibleType.KRV) != GetChapterSize(data.Name, BibleType.NIV))
+                    continue;
+
+                for( int i=1;i<= GetChapterSize(data.Name, BibleType.KRV);i++)
+                {
+                    if (GetVerseSize(data.Name,i, BibleType.KRV) != GetVerseSize(data.Name, i, BibleType.NIV))
+                        continue;
+
+                }
+
+
+            }
+        }
+
         static public void LoadNIV()
+        {
+            var assembly = IntrospectionExtensions.GetTypeInfo(typeof(BibleInfo)).Assembly;
+            var list = assembly.GetManifestResourceNames().Where(r => r.StartsWith("WBA.Resource.NIV") /*&& r.EndsWith(".txt")*/).ToArray();
+
+            int DPrevVerse = 1, DPrevChapter = 1;
+            foreach (var book in list)
+            {
+                using (var reader = new System.IO.StreamReader(assembly.GetManifestResourceStream(book)))
+                {
+                    try
+                    {
+                        string[] path = book.Split('.');
+                        string bookName = path[path.Length-2];
+                        string text;
+                        int PrevVerse = 1,PrevChapter = 1;
+                        while ((text = reader.ReadLine()) != null)
+                        {
+                            if (text == "" || text == null)
+                                continue;
+
+                            int pos = text.IndexOf(':');
+                            if(pos == -1)
+                            {
+                                Upsert(BibleType.NIV, book, PrevChapter, PrevVerse, text);
+                                continue;
+                            }
+
+                            pos = text.IndexOf('+');
+                            if (pos != -1)
+                            {
+                                Upsert(BibleType.NIV, book, PrevChapter, PrevVerse, text);
+                                continue;
+                            }
+
+                            string[] checkNewLine = text.Split(':');
+                            if(checkNewLine == null || checkNewLine.Length < 2)
+                            {
+                                Upsert(BibleType.NIV, book, PrevChapter, PrevVerse, text);
+                                continue;
+                            }
+
+                            long number;
+                            if(long.TryParse(checkNewLine[0], out number) == false)
+                            {
+                                Upsert(BibleType.NIV, book, PrevChapter, PrevVerse, text);
+                                continue;
+                            }
+
+
+                            string[] words = text.Split(' ');
+                            if (words == null)
+                                continue;
+
+                            string[] Header = words[0].Split(':');
+
+                            if (Header == null || Header.Length == 0 || Header.Length == 1)
+                                continue;
+
+                            if (Header == null || Header[0] == null || Header[1] == null)
+                                continue;
+
+
+                            int chapter = PrevChapter = DPrevChapter = Convert.ToInt32(Header[0]);
+                            int verse = PrevVerse = DPrevVerse = Convert.ToInt32(Header[1]);
+
+                            string str = verse.ToString() + " ";
+                            for (int i = 1; i < words.Length; i++)
+                            {
+                                str += words[i];
+                                str += " ";
+                            }
+
+                            Upsert(BibleType.NIV, bookName, chapter, verse, str);
+                        }
+                    }
+                    catch (Exception e)
+                    {
+
+                    }
+                }
+            }
+        }
+
+        //niv 불러오기
+        static public void LoadNIV_()
         {
             var assembly = IntrospectionExtensions.GetTypeInfo(typeof(BibleInfo)).Assembly;
             var list = assembly.GetManifestResourceNames().Where(r => r.StartsWith("WBA.Resource.NIV") /*&& r.EndsWith(".txt")*/).ToArray();
@@ -180,7 +287,6 @@ namespace WBA
                 {
                     try
                     {
-                        int currentIndex = 0;
                         string currentBook = "";
                         string text;
                         bool FirstLine = false;
@@ -366,9 +472,7 @@ namespace WBA
             {
                 string Text = BibleInfo.GetContextText(type,SQLLiteDB.CacheData.BibleName, SQLLiteDB.CacheData.Chapter, i);
 
-                int index = GetBibleInfo(SQLLiteDB.CacheData.BibleName);
-
-                string TextEnglish = BibleInfo.GetContextText(BibleType.NIV, BibleInfo.List[index]?.EngName, SQLLiteDB.CacheData.Chapter, i);
+                string TextEnglish = BibleInfo.GetContextText(BibleType.NIV, SQLLiteDB.CacheData.BibleName, SQLLiteDB.CacheData.Chapter, i);
 
                 var Label = new Label { Text = Text, FontSize = SQLLiteDB.CacheData.FontSize, LineBreakMode = LineBreakMode.WordWrap, TextColor = Xamarin.Forms.Color.FromRgb(0, 0, 0) };
                 var LabelEnglish = new Label { Text = TextEnglish, FontSize = SQLLiteDB.CacheData.FontSize, LineBreakMode = LineBreakMode.WordWrap, TextColor = Xamarin.Forms.Color.FromRgb(0, 0, 0) };
@@ -376,33 +480,49 @@ namespace WBA
                 MainTextLabel[i] = Label;
 
                 // Your label tap event
-                var forgetPassword_tap = new TapGestureRecognizer();
-                forgetPassword_tap.Tapped += async (s, e) =>
+                var englishlabeltab = new TapGestureRecognizer();
+                englishlabeltab.Tapped += async (s, e) =>
                 {
                     var labelText = s as Label;
 
                     string Context = labelText.Text;
 
-                    string[]words = Context.Split(' ');
+                    string[] words = Context.Split(' ');
 
-                    string help = "";
+                    Dictionary<string, string> help = new Dictionary<string, string>();
                     if (words != null || words.Length > 0)
                     {
-                        for (int k=0;k<words.Length;k++)
+                        for (int k = 0; k < words.Length; k++)
                         {
                             string outstr;
-                            if(Dic._dictionary.TryGetValue(words[k],out outstr) == true)
+                            if (Dic._dictionary.TryGetValue(words[k], out outstr) == true)
                             {
-                                help += outstr;
-                                help += "\n";
+                                help[words[k]] = outstr;
                             }
                         }
                     }
 
+                    string context = "";
+                    foreach( var str in help)
+                    {
+                        context += str.Key;
+                        context += " : ";
+                        context += str.Value;
+                        context += "\n\n";
+                    }
 
-                    string action = await DisplayActionSheet(help, "안하기",null,"빨강", "노랑", "파랑");
+                    await DisplayAlert("Help", context, "OK");
+                                       
+                };
 
-                    switch(action)
+                var labeltab = new TapGestureRecognizer();
+                labeltab.Tapped += async (s, e) =>
+                {
+                    var labelText = s as Label;
+
+                    string action = await DisplayActionSheet("줄긋기", "안하기", null, "빨강", "노랑", "파랑");
+
+                    switch (action)
                     {
                         case "빨강":
                             labelText.BackgroundColor = Color.Red;
@@ -414,12 +534,10 @@ namespace WBA
                             labelText.BackgroundColor = Color.Green;
                             break;
                     }
-
-
-
                 };
 
-                Label.GestureRecognizers.Add(forgetPassword_tap);
+                Label.GestureRecognizers.Add(labeltab);
+                LabelEnglish.GestureRecognizers.Add(englishlabeltab);
 
                 TextLayout.Children.Add(Label);
 

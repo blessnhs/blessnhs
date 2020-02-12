@@ -37,6 +37,7 @@ namespace WBA.Droid
             SQLLiteDB.LoadCacheData();
             BibleInfo.LoadKRV();
             BibleInfo.LoadNIV();
+            BibleInfo.CheckValidate();
             Dic.LoadDic();
 
             var NoticeFile = Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal), "notice.txt");
