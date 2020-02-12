@@ -8,9 +8,16 @@ namespace WBA
     [Table("User")]
     public class UserCacheData
     {
-        [PrimaryKey, AutoIncrement, Column("_id")]
+        public UserCacheData()
+        {
+            Id = 1;
+        }
+        //[PrimaryKey, AutoIncrement, Column("_id")]
+        [PrimaryKey, Column("_id")]
+        [System.ComponentModel.DefaultValue(1)]
         public int Id { get; set; }
 
+        [System.ComponentModel.DefaultValue(20)]
         public int FontSize { get; set; }
 
         [System.ComponentModel.DefaultValue("창세기")]
@@ -20,6 +27,7 @@ namespace WBA
         [System.ComponentModel.DefaultValue(1)]
         public int Verse { get; set; }     //디폴트 1절
 
+        public bool EnalbeNIV { get; set; }
 
         public string UserName { get; set; }
         public string Passwd { get; set; }
@@ -46,7 +54,6 @@ namespace WBA
     static public class SQLLiteDB
     {
         static public UserCacheData CacheData = new UserCacheData();
-        static public int FontSize = 20;
 
         static public void InitDB()
         {
@@ -92,8 +99,7 @@ namespace WBA
             var UserCacheData = SQLLiteDB.ReadUserCache();
             if (UserCacheData != null)
             {
-                SQLLiteDB.FontSize = UserCacheData.FontSize;
-
+                SQLLiteDB.CacheData.FontSize = UserCacheData.FontSize;
                 SQLLiteDB.CacheData.BibleName = UserCacheData.BibleName;
                 SQLLiteDB.CacheData.Chapter = UserCacheData.Chapter;
                 SQLLiteDB.CacheData.Verse = UserCacheData.Verse;
@@ -106,13 +112,16 @@ namespace WBA
                 SQLLiteDB.CacheData.BibleName = "창세기";
                 SQLLiteDB.CacheData.Chapter = 1;
                 SQLLiteDB.CacheData.Verse = 1;
+                SQLLiteDB.CacheData.FontSize = 20;
+                SQLLiteDB.CacheData.EnalbeNIV = true;
             }
         }
 
-        static public bool Upsert(int FontSize, string BibleName, int Chapter, int Verse, string UserName, string Passwd)
+        static public bool Upsert(int FontSize, string BibleName, int Chapter, int Verse, string UserName, string Passwd,int id = 1)
         {
             UserCacheData data = new UserCacheData();
             data.FontSize = FontSize;
+            data.Id = id;
             data.BibleName = BibleName;
             data.Chapter = Chapter;
             data.Verse = Verse;
@@ -128,7 +137,10 @@ namespace WBA
             var db = new SQLiteConnection(DBPath);
             db.CreateTable<UserCacheData>();
 
-            if (db.Table<UserCacheData>().Count() == 0)
+
+            var list = db.Query<UserCacheData>("select * from User where _id = ?", Data.Id);
+
+            if (list.Count == 0)
             {
                 // only insert the data if it doesn't already exist
                 db.Insert(Data);
@@ -140,7 +152,7 @@ namespace WBA
             return true;
         }
 
-        static public UserCacheData ReadUserCache()
+        static public UserCacheData ReadUserCache(int id = 1)
         {
             string DBPath = System.IO.Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyDocuments), "WBA.db");
 
@@ -148,15 +160,13 @@ namespace WBA
 
             db.CreateTable<UserCacheData>();
 
-            var table = db.Table<UserCacheData>();
 
-            foreach (var s in table)
-            {
-                if (s.Id == 1)
-                    return s;
-            }
+            var list = db.Query<UserCacheData>("select * from User where _id = ?", id);
 
-            return null;
+            if (list.Count == 0)
+                return null;
+            else
+                return list[0];
         }
 
 

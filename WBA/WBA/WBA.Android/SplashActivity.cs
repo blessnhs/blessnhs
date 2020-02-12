@@ -36,6 +36,7 @@ namespace WBA.Droid
         {
             SQLLiteDB.LoadCacheData();
             BibleInfo.LoadKRV();
+            BibleInfo.LoadNIV();
 
             var NoticeFile = Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal), "notice.txt");
             GoolgeService.DownloadFileFromURLToPath("https://drive.google.com/file/d/1NSS2P2ECkU6QdvEj0cX3TVDveIMwyn01/view?usp=sharing", NoticeFile);

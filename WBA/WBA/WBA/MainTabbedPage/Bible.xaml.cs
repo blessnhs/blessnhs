@@ -15,6 +15,15 @@ using Xamarin.Essentials;
 
 namespace WBA
 {
+    //성경 타입
+    public enum BibleType
+    {
+        KRV  = 0,
+        NIV  = 1,
+        KJV  = 2
+    }
+
+    //성경의 타이틀 정보
     public class BibleTableInfo
     {
         public int Id { get; set; }
@@ -25,76 +34,106 @@ namespace WBA
         public int MaxVerseSize { get; set; }
     };
 
+
+    //krv, kjv,niv의 성경 text파일을 읽고 저장하고 있는 클래스
     static public class BibleInfo
     {
-        static public List<string> List = new List<string>();
+        //성경 목록
+        static public List<BibleTableInfo> List = new List<BibleTableInfo>();
+        //구약성경 목록
         static public List<string> ListOldTestament = new List<string>();
+        //신약성경 목록
         static public List<string> ListNewTestament = new List<string>();
 
-        static public Dictionary<string, Dictionary<int, Dictionary<int, string>>> bible = new Dictionary<string, Dictionary<int, Dictionary<int, string>>>();
+        //성경 데이터 저장 dictionary
+        static public Dictionary<BibleType,Dictionary<string, Dictionary<int, Dictionary<int, string>>>> bible = 
+            new Dictionary<BibleType, Dictionary<string, Dictionary<int, Dictionary<int, string>>>>();
 
-        static public void Upsert(string name, int chapter, int verse, string context)
+        static public void Upsert(BibleType type,string name, int chapter, int verse, string context)
         {
-            if (bible.ContainsKey(name) == false)
+            if (bible.ContainsKey(type) == false)
             {
-                bible[name] = new Dictionary<int, Dictionary<int, string>>();
+                bible[type] = new Dictionary<string, Dictionary<int, Dictionary<int, string>>>();
             }
 
-            if (bible[name].ContainsKey(chapter) == false)
+            if (bible[type].ContainsKey(name) == false)
             {
-                bible[name][chapter] = new Dictionary<int, string>();
+                bible[type][name] = new Dictionary<int, Dictionary<int, string>>();
             }
 
-            bible[name][chapter][verse] = context;
+            if (bible[type][name].ContainsKey(chapter) == false)
+            {
+                bible[type][name][chapter] = new Dictionary<int, string>();
+            }
+
+            bible[type][name][chapter][verse] = context;
         }
 
-        static public string GetContextText(string name, int chapter, int verse)
+        //성경 본문 가져오기 이름,장,절
+        static public string GetContextText(BibleType type,string name, int chapter, int verse)
         {
-            if (bible.ContainsKey(name) == false)
+            if (bible.ContainsKey(type) == false)
             {
-                bible[name] = new Dictionary<int, Dictionary<int, string>>();
+                bible[type] = new Dictionary<string, Dictionary<int, Dictionary<int, string>>>();
             }
 
-            if (bible[name].ContainsKey(chapter) == false)
+            if (bible[type].ContainsKey(name) == false)
             {
-                bible[name][chapter] = new Dictionary<int, string>();
+                bible[type][name] = new Dictionary<int, Dictionary<int, string>>();
             }
 
-            return bible[name][chapter][verse];
+            if (bible[type][name].ContainsKey(chapter) == false)
+            {
+                bible[type][name][chapter] = new Dictionary<int, string>();
+            }
+
+            return bible[type][name][chapter][verse];
         }
         
-        static public int GetChapterSize(string name)
+        static public int GetChapterSize(string name, BibleType type = BibleType.KRV)
         {
-            if (bible.ContainsKey(name) == false)
+            if (bible.ContainsKey(type) == false)
             {
-                bible[name] = new Dictionary<int, Dictionary<int, string>>();
+                bible[type] = new Dictionary<string, Dictionary<int, Dictionary<int, string>>>();
             }
 
-            return bible[name].Count;
+            if (bible[type].ContainsKey(name) == false)
+            {
+                bible[type][name] = new Dictionary<int, Dictionary<int, string>>();
+            }
+
+            return bible[type][name].Count;
         }
 
-        static public int GetVerseSize(string name,int chapter)
+        //절의 갯수 가져오기
+        static public int GetVerseSize(string name,int chapter, BibleType type = BibleType.KRV)
         {
-            if (bible.ContainsKey(name) == false)
+            if (bible.ContainsKey(type) == false)
             {
-                bible[name] = new Dictionary<int, Dictionary<int, string>>();
+                bible[type] = new Dictionary<string, Dictionary<int, Dictionary<int, string>>>();
             }
 
-            if (bible[name].ContainsKey(chapter) == false)
+            if (bible[type].ContainsKey(name) == false)
             {
-                bible[name][chapter] = new Dictionary<int, string>();
+                bible[type][name] = new Dictionary<int, Dictionary<int, string>>();
             }
 
-            return bible[name][chapter].Count;
+            if (bible[type][name].ContainsKey(chapter) == false)
+            {
+                bible[type][name][chapter] = new Dictionary<int, string>();
+            }
+
+            return bible[type][name][chapter].Count;
         }
 
-        static private void LoadBibleList(List<string> bibleList)
+        //성경 목록 전체,신약,구약 불러오기
+        static private void LoadBibleList(List<BibleTableInfo> bibleList)
         {
             Stream stream;
             var assembly = IntrospectionExtensions.GetTypeInfo(typeof(BibleInfo)).Assembly;
 
             stream = assembly.GetManifestResourceStream("WBA.Resource.Oldtestament.txt");
-
+            int idInc = 1;
             using (var reader = new System.IO.StreamReader(stream/*, Encoding.GetEncoding("euc-kr")*/))
             {
                 string text;
@@ -102,7 +141,12 @@ namespace WBA
                 {
                     string[] words = text.Split(',');
 
-                    bibleList.Add(words[0]);
+                    var info = new BibleTableInfo();
+                    info.Id = idInc++;
+                    info.Name = words[0];
+                    info.EngName = words[1];
+                    info.MaxChapterSize = Convert.ToInt32(words[2]);
+                    bibleList.Add(info);
                     ListOldTestament.Add(words[0]);
                 }
             }
@@ -116,19 +160,87 @@ namespace WBA
                 {
                     string[] words = text.Split(',');
 
-                    bibleList.Add(words[0]);
+                    var info = new BibleTableInfo();
+                    info.Id = idInc++;
+                    info.Name = words[0];
+                    info.EngName = words[1];
+                    info.MaxChapterSize = Convert.ToInt32(words[2]);
+                    bibleList.Add(info);
                     ListNewTestament.Add(words[0]);
                 }
             }
         }
 
+        //niv 불러오기
+        static public void LoadNIV()
+        {
+            var assembly = IntrospectionExtensions.GetTypeInfo(typeof(BibleInfo)).Assembly;
+            var list = assembly.GetManifestResourceNames().Where(r => r.StartsWith("WBA.Resource.NIV") /*&& r.EndsWith(".txt")*/).ToArray();
+
+            foreach( var book in list)
+            {
+                using (var reader = new System.IO.StreamReader(assembly.GetManifestResourceStream(book)))
+                {
+                    try
+                    {
+                        int currentIndex = 0;
+                        string currentBook = "";
+                        string text;
+                        bool FirstLine = false;
+                        while ((text = reader.ReadLine()) != null)
+                        {
+                            if (text == "" || text == null)
+                                continue;
+
+                            if (FirstLine == false)
+                            {
+                                currentBook = text.TrimEnd();
+                                FirstLine = true;
+                                continue;
+                            }
+
+                            string[] words = text.Split(' ');
+                            if (words == null)
+                                continue;
+
+                            string[] Header = words[0].Split(':');
+
+                            if (Header == null || Header.Length == 0 || Header.Length == 1)
+                                continue;
+
+                            if (Header == null || Header[0] == null || Header[1] == null)
+                                continue;
+
+
+                            int chapter = Convert.ToInt32(Header[0]);
+                            int verse = Convert.ToInt32(Header[1]);
+                            string str = verse.ToString() + " ";
+                            for (int i = 1; i < words.Length; i++)
+                            {
+                                str += words[i];
+                                str += " ";
+                            }
+
+                            Upsert(BibleType.NIV, currentBook, chapter, verse, str);
+                        }
+                    }
+                    catch (Exception e)
+                    {
+
+                    }
+                }
+            }            
+        }
+
+        //개역한글 불러오기
         static public void LoadKRV()
         {
+            var assembly = IntrospectionExtensions.GetTypeInfo(typeof(BibleInfo)).Assembly;
+      
             LoadBibleList(List);
    
             Stream stream;
-            var assembly = IntrospectionExtensions.GetTypeInfo(typeof(BibleInfo)).Assembly;
-
+    
             stream = assembly.GetManifestResourceStream("WBA.Resource.KRV.txt");
 
             using (var reader = new System.IO.StreamReader(stream))
@@ -172,7 +284,7 @@ namespace WBA
                             str += " ";
                         }
 
-                        Upsert(List[currentIndex - 1], chapter, verse, str);
+                        Upsert(BibleType.KRV,List[currentIndex - 1].Name, chapter, verse, str);
                     }
 
                 }
@@ -228,9 +340,25 @@ namespace WBA
             MainLayout.Children.Add(ButtonLayout);
         }
 
+        private int GetBibleInfo(string KRName)
+        {
+            int index = 0;
+            foreach( var bible in BibleInfo.List)
+            {
+                if (bible.Name == KRName)
+                    return index;
+
+                ++index;
+            }
+
+            return -1;
+        }
+
+
+        //자동이동을 위해 Label을 dictionary에 저장
         private Dictionary<int, Label> MainTextLabel = new Dictionary<int, Label>();
 
-        public void DrawMainText(StackLayout MainLayout)
+        public void DrawMainText(StackLayout MainLayout, BibleType type = BibleType.KRV)
         {
             MainTextLabel.Clear();
 
@@ -239,9 +367,14 @@ namespace WBA
 
             for (int i = 1; i <= verseSize; i++)
             {
-                string Text = BibleInfo.GetContextText(SQLLiteDB.CacheData.BibleName, SQLLiteDB.CacheData.Chapter, i);
+                string Text = BibleInfo.GetContextText(type,SQLLiteDB.CacheData.BibleName, SQLLiteDB.CacheData.Chapter, i);
 
-                var Label = new Label { Text = Text, FontSize = SQLLiteDB.FontSize, LineBreakMode = LineBreakMode.WordWrap, TextColor = Xamarin.Forms.Color.FromRgb(0, 0, 0) };
+                int index = GetBibleInfo(SQLLiteDB.CacheData.BibleName);
+
+                string TextEnglish = BibleInfo.GetContextText(BibleType.NIV, BibleInfo.List[index]?.EngName, SQLLiteDB.CacheData.Chapter, i);
+
+                var Label = new Label { Text = Text, FontSize = SQLLiteDB.CacheData.FontSize, LineBreakMode = LineBreakMode.WordWrap, TextColor = Xamarin.Forms.Color.FromRgb(0, 0, 0) };
+                var LabelEnglish = new Label { Text = TextEnglish, FontSize = SQLLiteDB.CacheData.FontSize, LineBreakMode = LineBreakMode.WordWrap, TextColor = Xamarin.Forms.Color.FromRgb(0, 0, 0) };
 
                 MainTextLabel[i] = Label;
 
@@ -271,11 +404,16 @@ namespace WBA
                 Label.GestureRecognizers.Add(forgetPassword_tap);
 
                 TextLayout.Children.Add(Label);
+
+                if(SQLLiteDB.CacheData.EnalbeNIV == true)
+                    TextLayout.Children.Add(LabelEnglish);
+                
             }
             MainLayout.Children.Add(TextLayout);
 
         }
 
+        //하단 ui그리기
         public void DrawBottomButton(StackLayout MainLayout)
         {
             var ButtonLayout = new StackLayout { Orientation = StackOrientation.Horizontal };
@@ -298,6 +436,7 @@ namespace WBA
             MainLayout.Children.Add(ButtonLayout);
         }
 
+        //선택한 절로 이동하기
         private void GotoFocusLabel(ScrollView scrollView,int Verse)
         {
             Label Focus = null;
@@ -307,6 +446,7 @@ namespace WBA
             }
         }
 
+        //ui 갱신
         public void RefreshData()
         {
             Title = SQLLiteDB.CacheData.BibleName + " " + SQLLiteDB.CacheData.Chapter.ToString() + "장  KRV";
@@ -317,22 +457,13 @@ namespace WBA
             DrawMainText(MainLayout);
             DrawBottomButton(MainLayout);
 
-            UserCacheData data = new UserCacheData();
-            data.FontSize = SQLLiteDB.FontSize;
-            data.Id = 1;
-            data.BibleName = SQLLiteDB.CacheData.BibleName;
-            data.Chapter = SQLLiteDB.CacheData.Chapter;
-            data.Verse = SQLLiteDB.CacheData.Verse;
-            data.UserName = SQLLiteDB.CacheData.UserName;
-            data.Passwd = SQLLiteDB.CacheData.Passwd;
-
-            SQLLiteDB.Upsert(data);
+            SQLLiteDB.Upsert(SQLLiteDB.CacheData);
 
             ScrollView scrollView = new ScrollView();
             scrollView.Content = MainLayout;
 
             Content = scrollView;
-            GotoFocusLabel(scrollView, data.Verse);        
+            GotoFocusLabel(scrollView, SQLLiteDB.CacheData.Verse);        
         }
 
         public Bible()
@@ -341,21 +472,25 @@ namespace WBA
 
         }
 
+        //구약 성경 버튼 클릭
         async void Handle_Clicked_OldTestament(object sender, System.EventArgs e)
         {
             await Navigation.PushModalAsync(new PageOldTestament());
         }
 
+        //신약 성경 버튼 클릭
         async void Handle_Clicked_NewTestament(object sender, System.EventArgs e)
         {
             await Navigation.PushModalAsync(new PageNewTestament());
         }
 
+        //공유 버튼 클릭
         async void Handle_Clicked_Shared(object sender, System.EventArgs e)
         {
             await ShareText(SQLLiteDB.CacheData.BibleName +" " + SQLLiteDB.CacheData.Chapter + "장 까지 읽었습니다.");
         }
 
+        //다음 성경 가져오기
         async void Handle_Clicked_Next(object sender, System.EventArgs e)
         {
             int CurrentMaxChapter = BibleInfo.GetChapterSize(SQLLiteDB.CacheData.BibleName);
@@ -373,7 +508,7 @@ namespace WBA
                int currentPos = 0;
                foreach( var bible in BibleInfo.List)
                {
-                    if (bible == SQLLiteDB.CacheData.BibleName)
+                    if (bible.Name == SQLLiteDB.CacheData.BibleName)
                         break;
 
                     currentPos++;
@@ -381,7 +516,7 @@ namespace WBA
 
                if(BibleInfo.List.Count > currentPos + 1)
                 {
-                    SQLLiteDB.CacheData.BibleName = BibleInfo.List[currentPos + 1];
+                    SQLLiteDB.CacheData.BibleName = BibleInfo.List[currentPos + 1].Name;
                     SQLLiteDB.CacheData.Chapter = 1;
                     SQLLiteDB.CacheData.Verse = 1;
 
@@ -389,7 +524,7 @@ namespace WBA
                 }
             }
         }
-
+        //이전 성경 가져오기
         async void Handle_Clicked_Prev(object sender, System.EventArgs e)
         {
             int CurrentMaxChapter = BibleInfo.GetChapterSize(SQLLiteDB.CacheData.BibleName);
@@ -408,7 +543,7 @@ namespace WBA
                 int currentPos = 0;
                 foreach (var bible in BibleInfo.List)
                 {
-                    if (bible == SQLLiteDB.CacheData.BibleName)
+                    if (bible.Name == SQLLiteDB.CacheData.BibleName)
                         break;
 
                     currentPos++;
@@ -416,7 +551,7 @@ namespace WBA
 
                 if (0 <= ( currentPos - 1) && SQLLiteDB.CacheData.Chapter == 1)
                 {
-                    SQLLiteDB.CacheData.BibleName = BibleInfo.List[currentPos - 1];
+                    SQLLiteDB.CacheData.BibleName = BibleInfo.List[currentPos - 1].Name;
                     SQLLiteDB.CacheData.Chapter = BibleInfo.GetChapterSize(SQLLiteDB.CacheData.BibleName);
                     SQLLiteDB.CacheData.Verse = 1;
                 }
@@ -426,7 +561,7 @@ namespace WBA
                     if (chapter < 1)
                         chapter = 1;
 
-                    SQLLiteDB.CacheData.BibleName = BibleInfo.List[currentPos];
+                    SQLLiteDB.CacheData.BibleName = BibleInfo.List[currentPos].Name;
                     SQLLiteDB.CacheData.Chapter = chapter;
                     SQLLiteDB.CacheData.Verse = 1;
                 }

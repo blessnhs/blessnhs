@@ -21,7 +21,7 @@ namespace WBA.MainTabbedPage
         {
             InitializeComponent();
 
-            TextSizeSlider.Value = SQLLiteDB.FontSize;
+            TextSizeSlider.Value = SQLLiteDB.CacheData.FontSize;
 
             TextSizeSlider.ValueChanged += (sender, args) =>
             {
@@ -31,21 +31,15 @@ namespace WBA.MainTabbedPage
 
                 SliderMain.Value = newStep * StepValue;
 
-                SQLLiteDB.FontSize = (int)args.NewValue;
+                SQLLiteDB.CacheData.FontSize = (int)args.NewValue;
 
                 TextSizeLabel.FontSize = (int)args.NewValue;
 
-                UserCacheData data = new UserCacheData();
-                data.FontSize = SQLLiteDB.FontSize;
-                data.Id = 1;
-                data.BibleName = SQLLiteDB.CacheData.BibleName;
-                data.Chapter = SQLLiteDB.CacheData.Chapter;
-                data.Verse = SQLLiteDB.CacheData.Verse;
-                data.UserName = SQLLiteDB.CacheData.UserName;
-                data.Passwd = SQLLiteDB.CacheData.Passwd;
-
-                SQLLiteDB.Upsert(data);
+                SQLLiteDB.Upsert(SQLLiteDB.CacheData);
             };
+
+
+            NIVOption.IsToggled = SQLLiteDB.CacheData.EnalbeNIV;
         }
      
         async void OnLoginButtonClicked(object sender, EventArgs e)
@@ -66,6 +60,12 @@ namespace WBA.MainTabbedPage
                 messageLabel.Text = "Login failed";
                 passwordEntry.Text = string.Empty;
             }
+        }
+
+        void OnToggledNIV(object sender, ToggledEventArgs e)
+        {
+            SQLLiteDB.CacheData.EnalbeNIV = e.Value;
+            SQLLiteDB.Upsert(SQLLiteDB.CacheData);
         }
 
         bool AreCredentialsCorrect(User user)
