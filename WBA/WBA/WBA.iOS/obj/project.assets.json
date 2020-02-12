@@ -1380,11 +1380,10 @@
   },
   "libraries": {
     "Google.Apis/1.43.0": {
-      "sha512": "obrhmOs3G1NdKb6vJukj5nls3FJ8qcheSugvUDA5fHA+4sb9hOvSgtR4rzSiBFTSn30d8C9aJAUFlBtcFi4ltA==",
+      "sha512": "a95UhrSpPRGnqb36pnhEm+LUZSQUsgc5sgpLmGssQ8uVNGK5m+vLfvn3jM53xP1JNzCPRQC2dnbPFati/kbAHQ==",
       "type": "package",
       "path": "google.apis/1.43.0",
       "files": [
-        ".nupkg.metadata",
         ".signature.p7s",
         "LICENSE",
         "NuGetIcon.png",
@@ -1403,11 +1402,10 @@
       ]
     },
     "Google.Apis.Auth/1.43.0": {
-      "sha512": "612MnDeSfltoLztQnlG78ndEJn4kCKP/tnqKMI4l0biZoVJb9l+H1KtU1tTLW1ftiq+mgSoGfAR4jS2JGGOJRA==",
+      "sha512": "TMPPUIToQlKB9aeC+AY4wMM//vs4xT89rzRUPf+jFNczMuRTsHXTRSp6D9Jo5+6JENXDQ011wuisollf4PRkxg==",
       "type": "package",
       "path": "google.apis.auth/1.43.0",
       "files": [
-        ".nupkg.metadata",
         ".signature.p7s",
         "LICENSE",
         "NuGetIcon.png",
@@ -1428,11 +1426,10 @@
       ]
     },
     "Google.Apis.Core/1.43.0": {
-      "sha512": "Y5uzXQP58JFV1VKENO+/IALD1ID8PSff8jFVL9jYUdiXKCI82/1hR8PAx4sQcAenFrFgCNAPSwYJRFJ46OvtBQ==",
+      "sha512": "thXBa/Dgw4y/+opSR54QxXFSzYs2zsR7lFguw5+aMZcYYGVLfK/W9vtX1JuSSzTFShVU0dXvS58/qs1LM8T44Q==",
       "type": "package",
       "path": "google.apis.core/1.43.0",
       "files": [
-        ".nupkg.metadata",
         ".signature.p7s",
         "LICENSE",
         "NuGetIcon.png",
@@ -1450,11 +1447,10 @@
       ]
     },
     "Google.Apis.Drive.v2/1.43.0.1841": {
-      "sha512": "jXBPMc6wLvMOEHGGI4GY3lbceRJ6/mOEBlwi3NVF9ndc3GQnnQWM2Lt20XJc5LzQNOF0mD9SZ37zLh1H1S6ESg==",
+      "sha512": "7oZ6FiJeB05WVvElN5TRCiAw8eyMhAM9lUF3zrPgKhY5/90Hb8iCRyYf8UTMqmo0+rNBZ+jZ/zGNB2Vx3Hak5A==",
       "type": "package",
       "path": "google.apis.drive.v2/1.43.0.1841",
       "files": [
-        ".nupkg.metadata",
         ".signature.p7s",
         "LICENSE",
         "google.apis.drive.v2.1.43.0.1841.nupkg.sha512",
@@ -1477,11 +1473,10 @@
       ]
     },
     "Google.Apis.Storage.v1/1.43.0.1791": {
-      "sha512": "T+9tXM9+uX0MusBY+MZKpO0qJzcvOIdxIWIckyOQlW65FXS7mw+AbkLYoEMqZV0ugE0JMdsZpJfwmwwPvP5bLQ==",
+      "sha512": "JzkjExtQjb/MAtLr7749zrkb7C0E7n6lVfTMGxzQkXu0rMQTvSKZP8GbGS+M3VwFL1MTtGlOuqFfflEXiML5Qw==",
       "type": "package",
       "path": "google.apis.storage.v1/1.43.0.1791",
       "files": [
-        ".nupkg.metadata",
         ".signature.p7s",
         "LICENSE",
         "google.apis.storage.v1.1.43.0.1791.nupkg.sha512",
@@ -1504,11 +1499,10 @@
       ]
     },
     "Microsoft.CSharp/4.3.0": {
-      "sha512": "P+MBhIM0YX+JqROuf7i306ZLJEjQYA9uUyRDE+OqwUI5sh41e2ZbPQV3LfAPh+29cmceE1pUffXsGfR4eMY3KA==",
+      "sha512": "MMRAs0ZSyK8ABVelAoa3VXndUxG/W52iTo5XL0ajEadHzUa34CeWBwEPNOLF7oOTBBtTY2bAdwrqipfBAeLZGg==",
       "type": "package",
       "path": "microsoft.csharp/4.3.0",
       "files": [
-        ".nupkg.metadata",
         ".signature.p7s",
         "ThirdPartyNotices.txt",
         "dotnet_library_license.txt",
@@ -1563,12 +1557,10 @@
       ]
     },
     "Newtonsoft.Json/10.0.2": {
-      "sha512": "iwElSU2IXmwGvytJsezyDML2ZWDkG2JzTYzlU/BNlmzMdlmRvbnwITsGGY74gwVEpDli1UdOLkMT7/3jxWvXzA==",
+      "sha512": "vcX8ci+srBr5scnSKCUNNoFo5BQ6KjdfeJ5LCJQhvxncNkTy7w3pAWsnRJrsF9WBBdMiaQp0aOa3YRh1CDCc7A==",
       "type": "package",
       "path": "newtonsoft.json/10.0.2",
-      "hasTools": true,
       "files": [
-        ".nupkg.metadata",
         ".signature.p7s",
         "LICENSE.md",
         "lib/net20/Newtonsoft.Json.dll",
@@ -1593,11 +1585,10 @@
       ]
     },
     "sqlite-net-pcl/1.6.292": {
-      "sha512": "TZPs206/ZZXhDAgCzxE5Dmw1enkRmtpd1RKt+dLJA6Kvml4RxwkasRs4js2kijtGxik1SLCs39rh9nl9YFwrYg==",
+      "sha512": "k4vT1gddjAh1UrlW2CyPahC3sZcazBEQLn3T/S4Pj8nAHp2DIj/jReIfCL1nPlWXj8RQIV0Hl8Uo5xMKAYF6DA==",
       "type": "package",
       "path": "sqlite-net-pcl/1.6.292",
       "files": [
-        ".nupkg.metadata",
         ".signature.p7s",
         "lib/netstandard1.1/SQLite-net.deps.json",
         "lib/netstandard1.1/SQLite-net.dll",
@@ -1609,11 +1600,10 @@
       ]
     },
     "SQLitePCLRaw.bundle_green/1.1.13": {
-      "sha512": "E0Hm/XTfleE/LlrRZVucB1dQqDlIDPgqvkFymbGqMO7bSaoB6R2X5Cgzq/RDxBFSzHjpzet2Tp5Kar8faLSZ+Q==",
+      "sha512": "LHm53C/Imhtn9SMxQX2USt3ULkznQ47fRZg6o16hI4AIX/MIEuI8Zy40yJoDimZTBpkaxbDnScDjKz9M3ARqZQ==",
       "type": "package",
       "path": "sqlitepclraw.bundle_green/1.1.13",
       "files": [
-        ".nupkg.metadata",
         ".signature.p7s",
         "build/wp8/SQLitePCLRaw.bundle_green.targets",
         "build/wp80/arm/SQLitePCLRaw.batteries_green.dll",
@@ -1656,11 +1646,10 @@
       ]
     },
     "SQLitePCLRaw.core/1.1.13": {
-      "sha512": "I8Q9qL1urPegoyZ5uI32lgqsxl8aPRZAyVBJbO+0T/zlGz/LBc8vhRVyDyCOU9LWWpV8dYpT0nCpuLv1ua6zkA==",
+      "sha512": "UcP955bF6FtgzSu6S9jcC4FUzOqn5/E6dxby5CzzSxLYZHvGfDntfUzgwm/HD3nJgSpCi9VDNwU7TWVPICJdiQ==",
       "type": "package",
       "path": "sqlitepclraw.core/1.1.13",
       "files": [
-        ".nupkg.metadata",
         ".signature.p7s",
         "lib/MonoAndroid/SQLitePCLRaw.core.dll",
         "lib/Xamarin.Mac20/SQLitePCLRaw.core.dll",
@@ -1682,11 +1671,10 @@
       ]
     },
     "SQLitePCLRaw.provider.sqlite3.ios_unified/1.1.13": {
-      "sha512": "8+kMnKUM+BVuRyg1LhVYYQCRR8LAQb9UCvXO+JcS4WMTKPeX+JCWlNPuej9lPw67T8OZqQ3AAlLr1hc4dsyykQ==",
+      "sha512": "Lb4J3pw0XuwU+D8uxwjaNLjUGKKa8BKGjbFXbsIJY/vBR+ic/Oqh1x9NQL1Xgnz4a6hbu9KLV/Bt0SQz1gQxOg==",
       "type": "package",
       "path": "sqlitepclraw.provider.sqlite3.ios_unified/1.1.13",
       "files": [
-        ".nupkg.metadata",
         ".signature.p7s",
         "lib/Xamarin.iOS10/SQLitePCLRaw.provider.sqlite3.dll",
         "sqlitepclraw.provider.sqlite3.ios_unified.1.1.13.nupkg.sha512",
@@ -1694,11 +1682,10 @@
       ]
     },
     "System.ComponentModel.TypeConverter/4.3.0": {
-      "sha512": "16pQ6P+EdhcXzPiEK4kbA953Fu0MNG2ovxTZU81/qsCd1zPRsKc3uif5NgvllCY598k6bI0KUyKW8fanlfaDQg==",
+      "sha512": "CisvPCXeSmQpxsufuzdAnoYWiSHqcexYiJkSdC454bZ/XL52Sv/DWAqg7xZ8f3OlUzKgq/ewQ+iRhSkwKdiwhw==",
       "type": "package",
       "path": "system.componentmodel.typeconverter/4.3.0",
       "files": [
-        ".nupkg.metadata",
         ".signature.p7s",
         "ThirdPartyNotices.txt",
         "dotnet_library_license.txt",
@@ -1747,11 +1734,10 @@
       ]
     },
     "System.Numerics.Vectors/4.5.0": {
-      "sha512": "QQTlPTl06J/iiDbJCiepZ4H//BVraReU4O4EoRw1U02H5TLUIT7xn3GnDp9AXPSlJUDyFs4uWjWafNX6WrAojQ==",
+      "sha512": "nATsBTD2CKr4AYN6eRszhX4sptImWmBJwB/U6XKCWWfnCcrTBw8XSCm3QA9gjppkHTr8OkXUY21MR91D3QZXsw==",
       "type": "package",
       "path": "system.numerics.vectors/4.5.0",
       "files": [
-        ".nupkg.metadata",
         ".signature.p7s",
         "LICENSE.TXT",
         "THIRD-PARTY-NOTICES.TXT",
@@ -1794,11 +1780,10 @@
       ]
     },
     "System.Runtime.Serialization.Formatters/4.3.0": {
-      "sha512": "KT591AkTNFOTbhZlaeMVvfax3RqhH1EJlcwF50Wm7sfnBLuHiOeZRRKrr1ns3NESkM20KPZ5Ol/ueMq5vg4QoQ==",
+      "sha512": "W4UqymabiCb1xxuKrspJCzCHW95VZQ3GCmzpDYHvJxVUvPY2siwU4A5rPu8ERaRPUvQRaO3jdX8Gr+oe5Y4JCA==",
       "type": "package",
       "path": "system.runtime.serialization.formatters/4.3.0",
       "files": [
-        ".nupkg.metadata",
         ".signature.p7s",
         "ThirdPartyNotices.txt",
         "dotnet_library_license.txt",
@@ -1823,11 +1808,10 @@
       ]
     },
     "System.Runtime.Serialization.Primitives/4.3.0": {
-      "sha512": "Wz+0KOukJGAlXjtKr+5Xpuxf8+c8739RI1C+A2BoQZT+wMCCoMDDdO8/4IRHfaVINqL78GO8dW8G2lW/e45Mcw==",
+      "sha512": "/Pc7qt9WdQKekfLm5KccMF7s42ce9p9JRA+cbaFg17M/CnOSPWUvKYf3ZoCT907YPecrGF3izm7Gs3xughIXrg==",
       "type": "package",
       "path": "system.runtime.serialization.primitives/4.3.0",
       "files": [
-        ".nupkg.metadata",
         ".signature.p7s",
         "ThirdPartyNotices.txt",
         "dotnet_library_license.txt",
@@ -1896,11 +1880,10 @@
       ]
     },
     "System.Xml.XmlDocument/4.3.0": {
-      "sha512": "lJ8AxvkX7GQxpC6GFCeBj8ThYVyQczx2+f/cWHJU8tjS7YfI6Cv6bon70jVEgs2CiFbmmM8b9j1oZVx0dSI2Ww==",
+      "sha512": "IiUbPxbemqBuCRskuuobjJV1Lw0iJm+vNOH7drNHsj95EM2vVnBY4j0GtweZYQkMpwgFBwokka3V2k0Cca/RMw==",
       "type": "package",
       "path": "system.xml.xmldocument/4.3.0",
       "files": [
-        ".nupkg.metadata",
         ".signature.p7s",
         "ThirdPartyNotices.txt",
         "dotnet_library_license.txt",
@@ -2148,26 +2131,21 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\nhs\\.nuget\\packages\\": {},
-    "C:\\ProgramData\\Xamarin\\NuGet\\": {}
+    "C:\\Users\\blessnhs\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\work\\WBA\\WBA\\WBA.iOS\\WBA.iOS.csproj",
+      "projectUniqueName": "D:\\work\\blessnhs\\WBA\\WBA\\WBA.iOS\\WBA.iOS.csproj",
       "projectName": "WBA.iOS",
-      "projectPath": "D:\\work\\WBA\\WBA\\WBA.iOS\\WBA.iOS.csproj",
-      "packagesPath": "C:\\Users\\nhs\\.nuget\\packages\\",
-      "outputPath": "D:\\work\\WBA\\WBA\\WBA.iOS\\obj\\",
+      "projectPath": "D:\\work\\blessnhs\\WBA\\WBA\\WBA.iOS\\WBA.iOS.csproj",
+      "packagesPath": "C:\\Users\\blessnhs\\.nuget\\packages\\",
+      "outputPath": "D:\\work\\blessnhs\\WBA\\WBA\\WBA.iOS\\obj\\",
       "projectStyle": "PackageReference",
       "skipContentFileWrite": true,
-      "fallbackFolders": [
-        "C:\\ProgramData\\Xamarin\\NuGet\\"
-      ],
       "configFilePaths": [
-        "C:\\Users\\nhs\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+        "C:\\Users\\blessnhs\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
         "xamarinios10"
@@ -2179,8 +2157,8 @@
       "frameworks": {
         "xamarinios10": {
           "projectReferences": {
-            "D:\\work\\WBA\\WBA\\WBA\\WBA.csproj": {
-              "projectPath": "D:\\work\\WBA\\WBA\\WBA\\WBA.csproj"
+            "D:\\work\\blessnhs\\WBA\\WBA\\WBA\\WBA.csproj": {
+              "projectPath": "D:\\work\\blessnhs\\WBA\\WBA\\WBA\\WBA.csproj"
             }
           }
         }
