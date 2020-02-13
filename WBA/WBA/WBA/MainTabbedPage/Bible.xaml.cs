@@ -182,12 +182,12 @@ namespace WBA
         {
             foreach(var data in List)
             {
-                if (GetChapterSize(data.Name, BibleType.KRV) != GetChapterSize(data.Name, BibleType.NIV))
+                if (GetChapterSize(data.Name, BibleType.KRV) != GetChapterSize(data.Name, BibleType.KJV))
                     continue;
 
                 for( int i=1;i<= GetChapterSize(data.Name, BibleType.KRV);i++)
                 {
-                    if (GetVerseSize(data.Name,i, BibleType.KRV) != GetVerseSize(data.Name, i, BibleType.NIV))
+                    if (GetVerseSize(data.Name,i, BibleType.KRV) != GetVerseSize(data.Name, i, BibleType.KJV))
                         continue;
 
                 }
@@ -195,6 +195,67 @@ namespace WBA
 
             }
         }
+
+        static public void LoadKJV()
+        {
+            //이미 불러옴
+            if (bible.ContainsKey(BibleType.KJV) == true)
+                return;
+
+            var assembly = IntrospectionExtensions.GetTypeInfo(typeof(BibleInfo)).Assembly;
+        
+            Stream stream = assembly.GetManifestResourceStream("WBA.Resource.KJV.txt");
+            //1Chr.14:5 And Ibhar, and Elishua, and Elpalet,
+            using (var reader = new System.IO.StreamReader(stream))
+            {
+                int currentIndex = 0;
+                string currentBook = "";
+                string text;
+                int dchapter = 0, dverse = 0;
+                while ((text = reader.ReadLine()) != null)
+                {
+                    try
+                    {
+                        if (text == "" || text == null)
+                        continue;
+
+                        string[] words = text.Split(' ');
+
+                        string[] Header = words[0].Split(':');
+
+                        int verse = dverse = Convert.ToInt32(Header[1]);
+
+                        {
+
+                            string[] result = Header[0].Split('.');
+
+                            if (currentBook == "" || currentBook != result[0])
+                            {
+                                currentBook = result[0];
+                                currentIndex++;
+                            }
+
+                            int chapter =  dchapter = Convert.ToInt32(result[1]);
+
+                            string str = verse.ToString() + " ";
+                            for (int i = 1; i < words.Length; i++)
+                            {
+                                str += words[i];
+                                str += " ";
+                            }
+
+                            Upsert(BibleType.KJV, List[currentIndex - 1].Name, chapter, verse, str);
+                        }
+                    }
+                    catch (Exception e)
+                    {
+
+                    }
+
+                }
+            }
+        }
+
 
         static public void LoadNIV()
         {
@@ -282,66 +343,6 @@ namespace WBA
                     }
                 }
             }
-        }
-
-        //niv 불러오기
-        static public void LoadNIV_()
-        {
-            var assembly = IntrospectionExtensions.GetTypeInfo(typeof(BibleInfo)).Assembly;
-            var list = assembly.GetManifestResourceNames().Where(r => r.StartsWith("WBA.Resource.NIV") /*&& r.EndsWith(".txt")*/).ToArray();
-
-            foreach( var book in list)
-            {
-                using (var reader = new System.IO.StreamReader(assembly.GetManifestResourceStream(book)))
-                {
-                    try
-                    {
-                        string currentBook = "";
-                        string text;
-                        bool FirstLine = false;
-                        while ((text = reader.ReadLine()) != null)
-                        {
-                            if (text == "" || text == null)
-                                continue;
-
-                            if (FirstLine == false)
-                            {
-                                currentBook = text.TrimEnd();
-                                FirstLine = true;
-                                continue;
-                            }
-
-                            string[] words = text.Split(' ');
-                            if (words == null)
-                                continue;
-
-                            string[] Header = words[0].Split(':');
-
-                            if (Header == null || Header.Length == 0 || Header.Length == 1)
-                                continue;
-
-                            if (Header == null || Header[0] == null || Header[1] == null)
-                                continue;
-
-
-                            int chapter = Convert.ToInt32(Header[0]);
-                            int verse = Convert.ToInt32(Header[1]);
-                            string str = verse.ToString() + " ";
-                            for (int i = 1; i < words.Length; i++)
-                            {
-                                str += words[i];
-                                str += " ";
-                            }
-
-                            Upsert(BibleType.NIV, currentBook, chapter, verse, str);
-                        }
-                    }
-                    catch (Exception e)
-                    {
-
-                    }
-                }
-            }            
         }
 
         //개역한글 불러오기
@@ -480,7 +481,7 @@ namespace WBA
 
             var TextLayout = new StackLayout { Orientation = StackOrientation.Vertical, Spacing = 5 };
             int verseSize = BibleInfo.GetVerseSize(SQLLiteDB.CacheData.BibleName, SQLLiteDB.CacheData.Chapter);
-            int verseSizeEng = BibleInfo.GetVerseSize(SQLLiteDB.CacheData.BibleName, SQLLiteDB.CacheData.Chapter,BibleType.NIV);
+            int verseSizeEng = BibleInfo.GetVerseSize(SQLLiteDB.CacheData.BibleName, SQLLiteDB.CacheData.Chapter,BibleType.KJV);
 
             int size = verseSize > verseSizeEng ? verseSize : verseSizeEng;
 
@@ -488,7 +489,7 @@ namespace WBA
             {
                 string Text = BibleInfo.GetContextText(type,SQLLiteDB.CacheData.BibleName, SQLLiteDB.CacheData.Chapter, i);
 
-                string TextEnglish = BibleInfo.GetContextText(BibleType.NIV, SQLLiteDB.CacheData.BibleName, SQLLiteDB.CacheData.Chapter, i);
+                string TextEnglish = BibleInfo.GetContextText(BibleType.KJV, SQLLiteDB.CacheData.BibleName, SQLLiteDB.CacheData.Chapter, i);
 
                 var Label = new Label { Text = Text, FontSize = SQLLiteDB.CacheData.FontSize, LineBreakMode = LineBreakMode.WordWrap, TextColor = Xamarin.Forms.Color.FromRgb(0, 0, 0) };
                 var LabelEnglish = new Label { Text = TextEnglish, FontSize = SQLLiteDB.CacheData.FontSize, LineBreakMode = LineBreakMode.WordWrap, TextColor = Xamarin.Forms.Color.FromRgb(0, 0, 0) };
@@ -581,7 +582,7 @@ namespace WBA
 
                 TextLayout.Children.Add(Label);
 
-                if(SQLLiteDB.CacheData.EnalbeNIV == true)
+                if(SQLLiteDB.CacheData.EnalbeKJV == true)
                     TextLayout.Children.Add(LabelEnglish);
                 
             }

@@ -26,8 +26,8 @@
             
             <Frame BorderColor="Gray" Grid.Row="1" Grid.Column="0">
                 <StackLayout VerticalOptions="StartAndExpand">
-                    <Label Text="NIV  성경" />
-                    <Switch x:Name="NIVOption"  IsToggled="true" Toggled="OnToggledNIV"/>
+                    <Label Text="KJV  성경" />
+                    <Switch x:Name="KJVOption"  IsToggled="true" Toggled="OnToggledKJV"/>
                 </StackLayout>
             </Frame>
 

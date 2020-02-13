@@ -27,7 +27,7 @@ namespace WBA
         [System.ComponentModel.DefaultValue(1)]
         public int Verse { get; set; }     //디폴트 1절
 
-        public bool EnalbeNIV { get; set; }
+        public bool EnalbeKJV { get; set; }
 
         public string UserName { get; set; }
         public string Passwd { get; set; }
@@ -113,7 +113,7 @@ namespace WBA
                 SQLLiteDB.CacheData.Chapter = 1;
                 SQLLiteDB.CacheData.Verse = 1;
                 SQLLiteDB.CacheData.FontSize = 20;
-                SQLLiteDB.CacheData.EnalbeNIV = true;
+                SQLLiteDB.CacheData.EnalbeKJV = true;
             }
         }
 

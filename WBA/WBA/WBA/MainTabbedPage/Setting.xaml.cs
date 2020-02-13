@@ -39,7 +39,7 @@ namespace WBA.MainTabbedPage
             };
 
 
-            NIVOption.IsToggled = SQLLiteDB.CacheData.EnalbeNIV;
+            KJVOption.IsToggled = SQLLiteDB.CacheData.EnalbeKJV;
         }
      
         async void OnLoginButtonClicked(object sender, EventArgs e)
@@ -62,9 +62,9 @@ namespace WBA.MainTabbedPage
             }
         }
 
-        void OnToggledNIV(object sender, ToggledEventArgs e)
+        void OnToggledKJV(object sender, ToggledEventArgs e)
         {
-            SQLLiteDB.CacheData.EnalbeNIV = e.Value;
+            SQLLiteDB.CacheData.EnalbeKJV = e.Value;
             SQLLiteDB.Upsert(SQLLiteDB.CacheData);
         }
 

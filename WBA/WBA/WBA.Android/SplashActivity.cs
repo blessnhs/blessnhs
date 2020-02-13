@@ -37,7 +37,8 @@ namespace WBA.Droid
         {
             SQLLiteDB.LoadCacheData();
             BibleInfo.LoadKRV();
-            BibleInfo.LoadNIV();
+            BibleInfo.LoadKJV();
+     //       BibleInfo.LoadNIV();
             BibleInfo.CheckValidate();
             Dic.LoadDic();
 
