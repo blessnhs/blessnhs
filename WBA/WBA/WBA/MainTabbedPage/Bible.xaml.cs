@@ -89,6 +89,11 @@ namespace WBA
                 bible[type][name][chapter] = new Dictionary<int, string>();
             }
 
+            if (bible[type][name][chapter].ContainsKey(verse) == false)
+            {
+                bible[type][name][chapter][verse] = "";
+            }
+
             return bible[type][name][chapter][verse];
         }
         
@@ -467,8 +472,11 @@ namespace WBA
 
             var TextLayout = new StackLayout { Orientation = StackOrientation.Vertical, Spacing = 5 };
             int verseSize = BibleInfo.GetVerseSize(SQLLiteDB.CacheData.BibleName, SQLLiteDB.CacheData.Chapter);
+            int verseSizeEng = BibleInfo.GetVerseSize(SQLLiteDB.CacheData.BibleName, SQLLiteDB.CacheData.Chapter,BibleType.NIV);
 
-            for (int i = 1; i <= verseSize; i++)
+            int size = verseSize > verseSizeEng ? verseSize : verseSizeEng;
+
+            for (int i = 1; i <= size; i++)
             {
                 string Text = BibleInfo.GetContextText(type,SQLLiteDB.CacheData.BibleName, SQLLiteDB.CacheData.Chapter, i);
 
@@ -494,10 +502,34 @@ namespace WBA
                     {
                         for (int k = 0; k < words.Length; k++)
                         {
+                            words[k] = words[k].ToLower();
                             string outstr;
                             if (Dic._dictionary.TryGetValue(words[k], out outstr) == true)
                             {
                                 help[words[k]] = outstr;
+                            }
+                            else
+                            {
+                                if (words[k].Length > 3)
+                                {
+                                    //끝에 하나버림
+                                    string sub1 = words[k].Substring(0, words[k].Length - 1);
+                                    if (Dic._dictionary.TryGetValue(sub1, out outstr) == true)
+                                    {
+                                        help[sub1] = outstr;
+                                        
+                                    }
+                                    else
+                                    {
+                                        //끝에 두개버림
+                                        sub1 = words[k].Substring(0, words[k].Length - 2);
+                                        if (Dic._dictionary.TryGetValue(sub1, out outstr) == true)
+                                        {
+                                            help[sub1] = outstr;
+                                        }
+                                    }
+
+                                }
                             }
                         }
                     }

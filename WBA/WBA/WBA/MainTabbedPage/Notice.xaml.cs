@@ -91,6 +91,9 @@ namespace WBA
             var NoticeFile = Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal), "notice.txt");
             using (var reader = new StreamReader(NoticeFile, true))
             {
+                if (reader == null)
+                    return;
+
                 string line;
                 while ((line = reader.ReadLine()) != null)
                 {
@@ -108,6 +111,9 @@ namespace WBA
             var WorshipFile = Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal), "worship.txt");
             using (var reader = new StreamReader(WorshipFile, true))
             {
+                if (reader == null)
+                    return;
+
                 string line;
                 while ((line = reader.ReadLine()) != null)
                 {

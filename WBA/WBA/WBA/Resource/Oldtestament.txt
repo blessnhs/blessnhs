@@ -19,7 +19,7 @@
 시편,Psalms,150
 잠언,Proverbs,31
 전도서,Ecclesiastes,12
-아가,Song of Songs,8
+아가서,Song of Songs,8
 이사야,Isaiah,66
 예레미야,Jeremiah,52
 예레미야애가,Lamentations,5
