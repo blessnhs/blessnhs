@@ -16,6 +16,9 @@ namespace WBA.MainTabbedPage
         static public Dictionary<string, string> _dictionary = new Dictionary<string, string>();
         static public void LoadDic()
         {
+            if (_dictionary.ContainsKey("A") == true)
+                return;
+
             var assembly = IntrospectionExtensions.GetTypeInfo(typeof(Dic)).Assembly;
             var list = assembly.GetManifestResourceNames().Where(r => r.StartsWith("WBA.Resource.Dic") /*&& r.EndsWith(".txt")*/).ToArray();
 

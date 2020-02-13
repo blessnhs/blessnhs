@@ -107,12 +107,6 @@
                         <Button x:Name="ScheduleSaveButton" Text="저장"  Clicked="OnScheduleSaveButtonClicked" BackgroundColor="White"/>
                     </StackLayout>
                 </Frame>
-                <Frame BorderColor="Gray" Grid.Row="0" Grid.Column="3" BackgroundColor="White" Padding="3,3,3,3">
-                    <StackLayout  BackgroundColor="White" >
-                            <Button x:Name="LogSearchButton" Text="로그"  Clicked="OnLogSearchButtonClicked" BackgroundColor="White"/>
-                     </StackLayout>
-                </Frame>
-       
 
                 </Grid>
              <!-- List -->

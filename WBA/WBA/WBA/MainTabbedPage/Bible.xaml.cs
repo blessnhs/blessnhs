@@ -198,6 +198,10 @@ namespace WBA
 
         static public void LoadNIV()
         {
+            //이미 불러옴
+            if (bible.ContainsKey(BibleType.NIV) == true)
+                return;
+
             var assembly = IntrospectionExtensions.GetTypeInfo(typeof(BibleInfo)).Assembly;
             var list = assembly.GetManifestResourceNames().Where(r => r.StartsWith("WBA.Resource.NIV") /*&& r.EndsWith(".txt")*/).ToArray();
 
@@ -343,6 +347,10 @@ namespace WBA
         //개역한글 불러오기
         static public void LoadKRV()
         {
+            //이미 불러옴
+            if (bible.ContainsKey(BibleType.KRV) == true)
+                return ;
+
             var assembly = IntrospectionExtensions.GetTypeInfo(typeof(BibleInfo)).Assembly;
       
             LoadBibleList(List);
