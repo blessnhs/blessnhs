@@ -87,7 +87,6 @@
                     <ColumnDefinition Width="2*" />
                     <ColumnDefinition Width="8*" />
                     <ColumnDefinition Width="2*" />
-                    <ColumnDefinition Width="2*" />
                 </Grid.ColumnDefinitions>
 
                 <Frame BorderColor="Gray" Grid.Row="0" Grid.Column="0" BackgroundColor="White" Padding="3,3,3,3">

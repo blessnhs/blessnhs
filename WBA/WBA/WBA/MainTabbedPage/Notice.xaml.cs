@@ -1,5 +1,4 @@
-﻿using WBA.MainTabbedPage;
-using System;
+﻿using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using System.IO;
@@ -88,18 +87,25 @@ namespace WBA
         private void SetNoticeLabel()
         {
             string Message = "";
-            var NoticeFile = Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal), "notice.txt");
-            using (var reader = new StreamReader(NoticeFile, true))
+            try
             {
-                if (reader == null)
-                    return;
-
-                string line;
-                while ((line = reader.ReadLine()) != null)
+                var NoticeFile = Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal), "notice.txt");
+                using (var reader = new StreamReader(NoticeFile, true))
                 {
-                    Message += line;
-                    Message += "\n";
+                    if (reader == null)
+                        return;
+
+                    string line;
+                    while ((line = reader.ReadLine()) != null)
+                    {
+                        Message += line;
+                        Message += "\n";
+                    }
                 }
+            }
+            catch (Exception e)
+            {
+               
             }
 
             notify.Text = Message;
@@ -108,18 +114,25 @@ namespace WBA
         private void SetWorshipLabel()
         {
             string Message = "";
-            var WorshipFile = Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal), "worship.txt");
-            using (var reader = new StreamReader(WorshipFile, true))
-            {
-                if (reader == null)
-                    return;
-
-                string line;
-                while ((line = reader.ReadLine()) != null)
+            try
+            { 
+                var WorshipFile = Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal), "worship.txt");
+                using (var reader = new StreamReader(WorshipFile, true))
                 {
-                    Message += line;
-                    Message += "\n";
+                    if (reader == null)
+                        return;
+
+                    string line;
+                    while ((line = reader.ReadLine()) != null)
+                    {
+                        Message += line;
+                        Message += "\n";
+                    }
                 }
+            }
+            catch (Exception e)
+            {
+               
             }
 
             worship.Text = Message;
@@ -127,66 +140,74 @@ namespace WBA
         private void Set2020Message()
         {
             // Your label tap event
-            var forgetPassword_tap = new TapGestureRecognizer();
-            forgetPassword_tap.Tapped += async (s, e) =>
-            {
-                var labelText = s as Label;
+            //var forgetPassword_tap = new TapGestureRecognizer();
+            //forgetPassword_tap.Tapped += async (s, e) =>
+            //{
+            //    var labelText = s as Label;
 
-                Navigation.PushModalAsync(new ImageView("WBA.Resource.Image.2020Message.jpg"));
-            };
+            //    Navigation.PushModalAsync(new ImageView("WBA.Resource.Image.2020Message.jpg"));
+            //};
 
-            label_2020msg.GestureRecognizers.Add(forgetPassword_tap);
+          //  label_2020msg.GestureRecognizers.Add(forgetPassword_tap);
         }
 
         private void SetWeeklyReadTable()
         {
-            Label[] weekLabel = new Label[7];
-
-            weekLabel[0] = label_mon;
-            weekLabel[1] = label_tue;
-            weekLabel[2] = label_wed;
-            weekLabel[3] = label_thu;
-            weekLabel[4] = label_fri;
-            weekLabel[5] = label_sat;
-            weekLabel[6] = label_sun;
-
-            string[] week = { "월", "화", "수", "목", "금", "토", "일" };
-            for (int i = 0; i < 7; i++)
+            try
             {
-                var info = CalculateTodayBibleChapter(i);
+                Label[] weekLabel = new Label[7];
 
-                string Text = week[i] + "         " + info.bibleName + " " + info.chapter.ToString() + " 장";
+                weekLabel[0] = label_mon;
+                weekLabel[1] = label_tue;
+                weekLabel[2] = label_wed;
+                weekLabel[3] = label_thu;
+                weekLabel[4] = label_fri;
+                weekLabel[5] = label_sat;
+                weekLabel[6] = label_sun;
 
-                weekLabel[i].Text = Text;
-
-                DateTime checkDay = UtcToStandardTime();
-
-                int dayofPos = (int)checkDay.DayOfWeek - 1;
-                if (dayofPos < 0)
-                    dayofPos = 6;
-
-                if (dayofPos == i)
-                    weekLabel[i].TextColor = Color.Red;
-
-
-                // Your label tap event
-                var forgetPassword_tap = new TapGestureRecognizer();
-                forgetPassword_tap.Tapped += async (sender, e) =>
+                string[] week = { "월", "화", "수", "목", "금", "토", "일" };
+                for (int i = 0; i < 7; i++)
                 {
-                    var labelText = sender as Label;
+                    var info = CalculateTodayBibleChapter(i);
 
-                    var parentPage = this.Parent as TabbedPage;
+                    string Text = week[i] + "         " + info.bibleName + " " + info.chapter.ToString() + " 장";
 
-                    string[] words = labelText.Text.Split(' ');
+                    weekLabel[i].Text = Text;
 
-                    SQLLiteDB.CacheData.BibleName = words[9];
-                    SQLLiteDB.CacheData.Chapter = Convert.ToInt32(words[10]);
-                    SQLLiteDB.CacheData.Verse = 1;
+                    DateTime checkDay = UtcToStandardTime();
 
-                    parentPage.CurrentPage = parentPage.Children[1];
-                };
+                    int dayofPos = (int)checkDay.DayOfWeek - 1;
+                    if (dayofPos < 0)
+                        dayofPos = 6;
 
-                weekLabel[i].GestureRecognizers.Add(forgetPassword_tap);
+                    if (dayofPos == i)
+                        weekLabel[i].TextColor = Color.Red;
+
+
+                    // Your label tap event
+                    var forgetPassword_tap = new TapGestureRecognizer();
+                    forgetPassword_tap.Tapped += async (sender, e) =>
+                    {
+                        var labelText = sender as Label;
+
+                        var parentPage = this.Parent as TabbedPage;
+
+                        string[] words = labelText.Text.Split(' ');
+
+                        SQLLiteDB.CacheData.BibleName = words[9];
+                        SQLLiteDB.CacheData.Chapter = Convert.ToInt32(words[10]);
+                        SQLLiteDB.CacheData.Verse = 1;
+
+                        parentPage.CurrentPage = parentPage.Children[1];
+                    };
+
+                    weekLabel[i].GestureRecognizers.Add(forgetPassword_tap);
+                }
+
+            }
+            catch (Exception e)
+            {
+
             }
 
         }

@@ -1,11 +1,13 @@
 ﻿using System;
 using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 using Android.App;
 using Android.Content;
 using Android.OS;
 using Android.Support.V7.App;
 using Android.Util;
+using Plugin.LocalNotifications;
 using WBA.MainTabbedPage;
 
 namespace WBA.Droid
@@ -35,13 +37,6 @@ namespace WBA.Droid
         // Simulates background work that happens behind the splash screen
         async void SimulateStartup ()
         {
-            SQLLiteDB.LoadCacheData();
-            BibleInfo.LoadKRV();
-            BibleInfo.LoadKJV();
-     //       BibleInfo.LoadNIV();
-            BibleInfo.CheckValidate();
-            Dic.LoadDic();
-
             try
             {
                 var NoticeFile = Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal), "notice.txt");
@@ -52,8 +47,37 @@ namespace WBA.Droid
             }
             catch (Exception e)
             {
-
+                CrossLocalNotifications.Current.Show("Google Shared Drive Failed", DateTime.Now.ToString(), 0, DateTime.Now);
             }
+            
+           
+
+            try
+            {
+                SQLLiteDB.LoadCacheData();
+            }
+            catch (Exception e)
+            {
+                CrossLocalNotifications.Current.Show("SQLLiteDB.LoadCacheData Failded", DateTime.Now.ToString(), 0, DateTime.Now);
+            }
+
+            try
+            {
+                BibleInfo.LoadKRV();
+                BibleInfo.LoadKJV();
+                BibleInfo.LoadNIV();
+                Dic.LoadDic();
+                //      BibleInfo.CheckValidate();
+            }
+            catch (Exception e)
+            {
+                CrossLocalNotifications.Current.Show("SQLLiteDB.LoadKRV Failded", DateTime.Now.ToString(), 0, DateTime.Now);
+            }
+
+              
+      
+             
+
 
             StartActivity(new Intent(Application.Context, typeof (MainActivity)));
         }

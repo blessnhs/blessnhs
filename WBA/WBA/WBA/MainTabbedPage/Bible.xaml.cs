@@ -500,6 +500,9 @@ namespace WBA
                 var englishlabeltab = new TapGestureRecognizer();
                 englishlabeltab.Tapped += async (s, e) =>
                 {
+                    //기능 임시 주석
+                    return;
+
                     var labelText = s as Label;
 
                     string Context = labelText.Text;
