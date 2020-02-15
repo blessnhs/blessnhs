@@ -9,7 +9,6 @@ using WBA.MainTabbedPage.Droid;
 namespace WBA.Droid
 {
     [Service]
-
     public class BackEndService : Service
     {
         static readonly string TAG = typeof(BackEndService).FullName;
@@ -94,19 +93,34 @@ namespace WBA.Droid
         {
             NotificationManager Manager = (NotificationManager)GetSystemService(NotificationService);
 
-            var chan1 = new NotificationChannel("DE",
+            if (Build.VERSION.SdkInt >= Build.VERSION_CODES.O)
+            {
+
+                var chan1 = new NotificationChannel("DE",
                     "DE", NotificationImportance.Default);
-            chan1.LockscreenVisibility = NotificationVisibility.Private;
-            Manager.CreateNotificationChannel(chan1);
+                chan1.LockscreenVisibility = NotificationVisibility.Private;
+                Manager.CreateNotificationChannel(chan1);
 
-            var notification = new Notification.Builder(this, "DE")
-            .SetContentTitle("성경읽기 실행중")
-            .SetContentText("성경읽기")
-            .SetSmallIcon(Resource.Drawable.xamagonBlue)
-            .Build();
+                var notification = new Notification.Builder(this, "DE")
+                .SetContentTitle("성경읽기 실행중")
+                .SetContentText("성경읽기")
+                .SetSmallIcon(Resource.Drawable.xamagonBlue)
+                .Build();
 
 
-            StartForeground(Constants.SERVICE_RUNNING_NOTIFICATION_ID, notification);
+                StartForeground(Constants.SERVICE_RUNNING_NOTIFICATION_ID, notification);
+            }
+            else
+            {
+                var notification = new Notification.Builder(this)
+                           .SetContentTitle("성경읽기 실행중")
+                           .SetContentText("성경읽기")
+                           .SetSmallIcon(Resource.Drawable.xamagonBlue)
+                           .Build();
+
+
+                StartForeground(Constants.SERVICE_RUNNING_NOTIFICATION_ID, notification);
+            }
         }
     }
 

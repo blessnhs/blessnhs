@@ -65,9 +65,9 @@ namespace WBA.Droid
             {
                 BibleInfo.LoadKRV();
                 BibleInfo.LoadKJV();
-                BibleInfo.LoadNIV();
-                Dic.LoadDic();
-                //      BibleInfo.CheckValidate();
+                //BibleInfo.LoadNIV();
+                //Dic.LoadDic();
+                //BibleInfo.CheckValidate();
             }
             catch (Exception e)
             {
