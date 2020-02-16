@@ -17,11 +17,11 @@ namespace WBA.TestamentPage
         {
             Button evtButton = sender as Button;
             
-            SQLLiteDB.CacheData.Chapter = Convert.ToInt32(evtButton.Text);
+            User.CacheData.Chapter = Convert.ToInt32(evtButton.Text);
 
             var parentPage = this.Parent as TabbedPage;
 
-            int MaxVerse = BibleInfo.GetVerseSize(SQLLiteDB.CacheData.BibleName, SQLLiteDB.CacheData.Chapter);
+            int MaxVerse = BibleInfo.GetVerseSize(User.CacheData.BibleName, User.CacheData.Chapter);
 
             parentPage.Children[2] = new Verse(MaxVerse);
 

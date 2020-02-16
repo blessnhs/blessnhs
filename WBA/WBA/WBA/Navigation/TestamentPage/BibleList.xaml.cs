@@ -30,7 +30,7 @@ namespace WBA.TestamentPage
             //선택된 아이템을 Contact 타입으로 변환
             var contact = e.SelectedItem as BibleTableInfo;
 
-            SQLLiteDB.CacheData.BibleName = contact.Name;
+            User.CacheData.BibleName = contact.Name;
        
             var parentPage = this.Parent as TabbedPage;
 

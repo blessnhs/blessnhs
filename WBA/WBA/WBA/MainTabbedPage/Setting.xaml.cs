@@ -21,7 +21,7 @@ namespace WBA.MainTabbedPage
         {
             InitializeComponent();
 
-            TextSizeSlider.Value = SQLLiteDB.CacheData.FontSize;
+            TextSizeSlider.Value = User.CacheData.FontSize;
 
             TextSizeSlider.ValueChanged += (sender, args) =>
             {
@@ -31,15 +31,15 @@ namespace WBA.MainTabbedPage
 
                 SliderMain.Value = newStep * StepValue;
 
-                SQLLiteDB.CacheData.FontSize = (int)args.NewValue;
+                User.CacheData.FontSize = (int)args.NewValue;
 
                 TextSizeLabel.FontSize = (int)args.NewValue;
 
-                SQLLiteDB.Upsert(SQLLiteDB.CacheData);
+                SQLLiteDB.Upsert(User.CacheData);
             };
 
 
-            KJVOption.IsToggled = SQLLiteDB.CacheData.EnalbeKJV;
+            KJVOption.IsToggled = User.CacheData.EnalbeKJV;
         }
      
         async void OnLoginButtonClicked(object sender, EventArgs e)
@@ -64,8 +64,8 @@ namespace WBA.MainTabbedPage
 
         void OnToggledKJV(object sender, ToggledEventArgs e)
         {
-            SQLLiteDB.CacheData.EnalbeKJV = e.Value;
-            SQLLiteDB.Upsert(SQLLiteDB.CacheData);
+            User.CacheData.EnalbeKJV = e.Value;
+            SQLLiteDB.Upsert(User.CacheData);
         }
 
         bool AreCredentialsCorrect(User user)

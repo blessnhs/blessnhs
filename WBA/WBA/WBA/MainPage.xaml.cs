@@ -10,8 +10,9 @@ namespace WBA
             Children.Add(new Notice());
             Children.Add(new Bible());
             Children.Add(new Planxaml());
+            Children.Add(new PlanDetail());
             Children.Add(new Setting());
-            //Children.Add(new Admin() {  IsVisible = false });
+            Children.Add(new Admin() {  IsVisible = false });
         }
     }
 }

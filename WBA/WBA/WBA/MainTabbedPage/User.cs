@@ -9,6 +9,9 @@ namespace WBA.MainTabbedPage
     {
         public string Username { get; set; }
         public string Password { get; set; }
+
+        static public UserCacheData CacheData = new UserCacheData();
+
     }
 
 

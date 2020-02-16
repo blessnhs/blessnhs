@@ -480,19 +480,19 @@ namespace WBA
             MainTextLabel.Clear();
 
             var TextLayout = new StackLayout { Orientation = StackOrientation.Vertical, Spacing = 5 };
-            int verseSize = BibleInfo.GetVerseSize(SQLLiteDB.CacheData.BibleName, SQLLiteDB.CacheData.Chapter);
-            int verseSizeEng = BibleInfo.GetVerseSize(SQLLiteDB.CacheData.BibleName, SQLLiteDB.CacheData.Chapter,BibleType.KJV);
+            int verseSize = BibleInfo.GetVerseSize(User.CacheData.BibleName, User.CacheData.Chapter);
+            int verseSizeEng = BibleInfo.GetVerseSize(User.CacheData.BibleName, User.CacheData.Chapter,BibleType.KJV);
 
             int size = verseSize > verseSizeEng ? verseSize : verseSizeEng;
 
             for (int i = 1; i <= size; i++)
             {
-                string Text = BibleInfo.GetContextText(type,SQLLiteDB.CacheData.BibleName, SQLLiteDB.CacheData.Chapter, i);
+                string Text = BibleInfo.GetContextText(type, User.CacheData.BibleName, User.CacheData.Chapter, i);
 
-                string TextEnglish = BibleInfo.GetContextText(BibleType.KJV, SQLLiteDB.CacheData.BibleName, SQLLiteDB.CacheData.Chapter, i);
+                string TextEnglish = BibleInfo.GetContextText(BibleType.KJV, User.CacheData.BibleName, User.CacheData.Chapter, i);
 
-                var Label = new Label { Text = Text, FontSize = SQLLiteDB.CacheData.FontSize, LineBreakMode = LineBreakMode.WordWrap, TextColor = Xamarin.Forms.Color.FromRgb(0, 0, 0) };
-                var LabelEnglish = new Label { Text = TextEnglish, FontSize = SQLLiteDB.CacheData.FontSize, LineBreakMode = LineBreakMode.WordWrap, TextColor = Xamarin.Forms.Color.FromRgb(0, 0, 0) };
+                var Label = new Label { Text = Text, FontSize = User.CacheData.FontSize, LineBreakMode = LineBreakMode.WordWrap, TextColor = Xamarin.Forms.Color.FromRgb(0, 0, 0) };
+                var LabelEnglish = new Label { Text = TextEnglish, FontSize = User.CacheData.FontSize, LineBreakMode = LineBreakMode.WordWrap, TextColor = Xamarin.Forms.Color.FromRgb(0, 0, 0) };
 
                 MainTextLabel[i] = Label;
 
@@ -585,7 +585,7 @@ namespace WBA
 
                 TextLayout.Children.Add(Label);
 
-                if(SQLLiteDB.CacheData.EnalbeKJV == true)
+                if(User.CacheData.EnalbeKJV == true)
                     TextLayout.Children.Add(LabelEnglish);
                 
             }
@@ -629,7 +629,7 @@ namespace WBA
         //ui 갱신
         public void RefreshData()
         {
-            Title = SQLLiteDB.CacheData.BibleName + " " + SQLLiteDB.CacheData.Chapter.ToString() + "장  KRV";
+            Title = User.CacheData.BibleName + " " + User.CacheData.Chapter.ToString() + "장  KRV";
 
             var MainLayout = new StackLayout { Padding = new Thickness(5, 10) };
 
@@ -637,13 +637,13 @@ namespace WBA
             DrawMainText(MainLayout);
             DrawBottomButton(MainLayout);
 
-            SQLLiteDB.Upsert(SQLLiteDB.CacheData);
+            SQLLiteDB.Upsert(User.CacheData);
 
             ScrollView scrollView = new ScrollView();
             scrollView.Content = MainLayout;
 
             Content = scrollView;
-            GotoFocusLabel(scrollView, SQLLiteDB.CacheData.Verse);        
+            GotoFocusLabel(scrollView, User.CacheData.Verse);        
         }
 
         public Bible()
@@ -667,28 +667,28 @@ namespace WBA
         //공유 버튼 클릭
         async void Handle_Clicked_Shared(object sender, System.EventArgs e)
         {
-            await ShareText(SQLLiteDB.CacheData.BibleName +" " + SQLLiteDB.CacheData.Chapter + "장 까지 읽었습니다.");
+            await ShareText(User.CacheData.BibleName +" " + User.CacheData.Chapter + "장 까지 읽었습니다.");
         }
 
         //다음 성경 가져오기
         async void Handle_Clicked_Next(object sender, System.EventArgs e)
         {
-            int CurrentMaxChapter = BibleInfo.GetChapterSize(SQLLiteDB.CacheData.BibleName);
+            int CurrentMaxChapter = BibleInfo.GetChapterSize(User.CacheData.BibleName);
 
-            if(SQLLiteDB.CacheData.Chapter + 1 <= CurrentMaxChapter)
+            if(User.CacheData.Chapter + 1 <= CurrentMaxChapter)
             {
-                SQLLiteDB.CacheData.Chapter += 1;
+                User.CacheData.Chapter += 1;
 
                 RefreshData();
             }
             else
             {
                 //다음 성경 
-               string NextBible = SQLLiteDB.CacheData.BibleName;
+               string NextBible = User.CacheData.BibleName;
                int currentPos = 0;
                foreach( var bible in BibleInfo.List)
                {
-                    if (bible.Name == SQLLiteDB.CacheData.BibleName)
+                    if (bible.Name == User.CacheData.BibleName)
                         break;
 
                     currentPos++;
@@ -696,9 +696,9 @@ namespace WBA
 
                if(BibleInfo.List.Count > currentPos + 1)
                 {
-                    SQLLiteDB.CacheData.BibleName = BibleInfo.List[currentPos + 1].Name;
-                    SQLLiteDB.CacheData.Chapter = 1;
-                    SQLLiteDB.CacheData.Verse = 1;
+                    User.CacheData.BibleName = BibleInfo.List[currentPos + 1].Name;
+                    User.CacheData.Chapter = 1;
+                    User.CacheData.Verse = 1;
 
                     RefreshData();
                 }
@@ -707,43 +707,43 @@ namespace WBA
         //이전 성경 가져오기
         async void Handle_Clicked_Prev(object sender, System.EventArgs e)
         {
-            int CurrentMaxChapter = BibleInfo.GetChapterSize(SQLLiteDB.CacheData.BibleName);
+            int CurrentMaxChapter = BibleInfo.GetChapterSize(User.CacheData.BibleName);
 
             //최소 1장보다 커야한다. 
-            if (SQLLiteDB.CacheData.Chapter - 1 < 0)
+            if (User.CacheData.Chapter - 1 < 0)
             {
-                SQLLiteDB.CacheData.Chapter -= 1;
+                User.CacheData.Chapter -= 1;
 
                 RefreshData();
             }
             else
             {
                 //다음 성경 
-                string NextBible = SQLLiteDB.CacheData.BibleName;
+                string NextBible = User.CacheData.BibleName;
                 int currentPos = 0;
                 foreach (var bible in BibleInfo.List)
                 {
-                    if (bible.Name == SQLLiteDB.CacheData.BibleName)
+                    if (bible.Name == User.CacheData.BibleName)
                         break;
 
                     currentPos++;
                 }
 
-                if (0 <= ( currentPos - 1) && SQLLiteDB.CacheData.Chapter == 1)
+                if (0 <= ( currentPos - 1) && User.CacheData.Chapter == 1)
                 {
-                    SQLLiteDB.CacheData.BibleName = BibleInfo.List[currentPos - 1].Name;
-                    SQLLiteDB.CacheData.Chapter = BibleInfo.GetChapterSize(SQLLiteDB.CacheData.BibleName);
-                    SQLLiteDB.CacheData.Verse = 1;
+                    User.CacheData.BibleName = BibleInfo.List[currentPos - 1].Name;
+                    User.CacheData.Chapter = BibleInfo.GetChapterSize(User.CacheData.BibleName);
+                    User.CacheData.Verse = 1;
                 }
                 else
                 {
-                    int chapter = SQLLiteDB.CacheData.Chapter - 1;
+                    int chapter = User.CacheData.Chapter - 1;
                     if (chapter < 1)
                         chapter = 1;
 
-                    SQLLiteDB.CacheData.BibleName = BibleInfo.List[currentPos].Name;
-                    SQLLiteDB.CacheData.Chapter = chapter;
-                    SQLLiteDB.CacheData.Verse = 1;
+                    User.CacheData.BibleName = BibleInfo.List[currentPos].Name;
+                    User.CacheData.Chapter = chapter;
+                    User.CacheData.Verse = 1;
                 }
 
                 RefreshData();

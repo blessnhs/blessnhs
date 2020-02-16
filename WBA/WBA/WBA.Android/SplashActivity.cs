@@ -74,11 +74,6 @@ namespace WBA.Droid
                 CrossLocalNotifications.Current.Show("SQLLiteDB.LoadKRV Failded", DateTime.Now.ToString(), 0, DateTime.Now);
             }
 
-              
-      
-             
-
-
             StartActivity(new Intent(Application.Context, typeof (MainActivity)));
         }
     }

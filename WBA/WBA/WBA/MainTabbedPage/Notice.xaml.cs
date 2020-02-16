@@ -2,6 +2,7 @@
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using System.IO;
+using WBA.MainTabbedPage;
 
 namespace WBA
 {
@@ -11,8 +12,11 @@ namespace WBA
 
         public class MyPosToBibleRead
         {
-            public string bibleName;
-            public int chapter;
+            public string begin_bibleName;
+            public int begin_chapter;
+
+            public string end_bibleName;
+            public int end_chapter;
         }
 
         public DateTime UtcToStandardTime()
@@ -30,7 +34,7 @@ namespace WBA
             return dt.AddDays(-1 * diff).Date;
         }
 
-        private MyPosToBibleRead CalculateTodayBibleChapter(int addDay = 0)
+        private MyPosToBibleRead CalculateTodayBibleChapter2(int addDay = 0)
         {
             MyPosToBibleRead readpos = new MyPosToBibleRead();
                                 
@@ -41,8 +45,6 @@ namespace WBA
 
             int DiffDay = (MondayTime - BeginTime).Days;
 
-            string begin = "마태복음";
-
             int accChapterSize = 0;
             foreach(var bible in BibleInfo.ListNewTestament)
             {
@@ -51,7 +53,7 @@ namespace WBA
 
                 if ( DiffDay < accChapterSize)
                 {
-                    readpos.bibleName = bible;
+                    readpos.begin_bibleName = bible;
 
                     
                     int v = (accChapterSize - chapter);
@@ -60,7 +62,7 @@ namespace WBA
 
                     int diff = DiffDay - v; 
 
-                    readpos.chapter = diff + 1;
+                    readpos.begin_chapter = diff + 1;
                     break;
                     
                 }
@@ -69,6 +71,54 @@ namespace WBA
             return readpos;
 
         }
+
+        private MyPosToBibleRead CalculateTodayBibleChapter(int addDay = 0)
+        {
+            MyPosToBibleRead readpos = new MyPosToBibleRead();
+
+            var data = SQLLiteDB.ReadBibleReadPlan();
+            if(data == null)
+            {
+                return null;
+            }
+
+            DateTime BeginTime = data.StartTime;
+
+            DateTime MondayTime = WeekDateTime(DateTime.Now, DayOfWeek.Monday);
+
+            MondayTime = MondayTime.AddDays(addDay);
+
+            int DiffDay = (MondayTime - BeginTime).Days;
+
+            var search = BibleInfo.List.Find(e => e.Name == data.BibleName);
+            if (search == null)
+                return null;
+
+            int accChapterSize = 0;
+            foreach (var bible in BibleInfo.List)
+            {
+                if (search.Id > bible.Id)
+                    continue;                
+
+          
+                int chapter = BibleInfo.GetChapterSize(bible.Name);
+  
+                int currChapter = DiffDay * data.Count;
+                accChapterSize += chapter;
+
+                if (currChapter+1 < accChapterSize)
+                {
+                    readpos.begin_bibleName = bible.Name;
+                    readpos.begin_chapter =  Math.Abs((accChapterSize - currChapter) - chapter) + 1;
+                    break;
+                }
+ 
+            }
+
+            return readpos;
+
+        }
+
 
         private void SetJuboLabel()
         {
@@ -139,16 +189,16 @@ namespace WBA
         }
         private void Set2020Message()
         {
-            // Your label tap event
-            //var forgetPassword_tap = new TapGestureRecognizer();
-            //forgetPassword_tap.Tapped += async (s, e) =>
-            //{
-            //    var labelText = s as Label;
+           //  Your label tap event
+            var forgetPassword_tap = new TapGestureRecognizer();
+            forgetPassword_tap.Tapped += async (s, e) =>
+            {
+                var labelText = s as Label;
 
-            //    Navigation.PushModalAsync(new ImageView("WBA.Resource.Image.2020Message.jpg"));
-            //};
+                Navigation.PushModalAsync(new ImageView("WBA.Resource.Image.2020Message.jpg"));
+            };
 
-          //  label_2020msg.GestureRecognizers.Add(forgetPassword_tap);
+            label_2020msg.GestureRecognizers.Add(forgetPassword_tap);
         }
 
         private void SetWeeklyReadTable()
@@ -169,8 +219,10 @@ namespace WBA
                 for (int i = 0; i < 7; i++)
                 {
                     var info = CalculateTodayBibleChapter(i);
+                    if (info == null)
+                        continue;
 
-                    string Text = week[i] + "         " + info.bibleName + " " + info.chapter.ToString() + " 장";
+                    string Text = week[i] + "         " + info.begin_bibleName + " " + info.begin_chapter.ToString() + " 장";
 
                     weekLabel[i].Text = Text;
 
@@ -194,9 +246,9 @@ namespace WBA
 
                         string[] words = labelText.Text.Split(' ');
 
-                        SQLLiteDB.CacheData.BibleName = words[9];
-                        SQLLiteDB.CacheData.Chapter = Convert.ToInt32(words[10]);
-                        SQLLiteDB.CacheData.Verse = 1;
+                        User.CacheData.BibleName = words[9];
+                        User.CacheData.Chapter = Convert.ToInt32(words[10]);
+                        User.CacheData.Verse = 1;
 
                         parentPage.CurrentPage = parentPage.Children[1];
                     };

@@ -6,6 +6,13 @@ using Android.Views;
 using Android.OS;
 using Android.Content;
 
+using Microsoft.AppCenter;
+using Microsoft.AppCenter.Analytics;
+using Microsoft.AppCenter.Crashes;
+using Microsoft.AppCenter;
+using Microsoft.AppCenter.Analytics;
+using Microsoft.AppCenter.Crashes;
+using Microsoft.AppCenter.Distribute;
 
 namespace WBA.Droid
 {
@@ -14,6 +21,12 @@ namespace WBA.Droid
     {
         protected override void OnCreate(Bundle savedInstanceState)
         {
+            AppCenter.Start("d9ecfc4b-f729-47c3-9a13-3612f85034d4",
+                   typeof(Analytics), typeof(Crashes));
+
+            AppCenter.Start("{Your Xamarin Android App Secret}", typeof(Distribute));
+            Distribute.SetEnabledForDebuggableBuild(true);
+
             TabLayoutResource = Resource.Layout.Tabbar;
             ToolbarResource = Resource.Layout.Toolbar;
 

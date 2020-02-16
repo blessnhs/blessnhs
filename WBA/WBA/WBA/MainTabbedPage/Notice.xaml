@@ -56,13 +56,13 @@
              </StackLayout>
             </Frame>
 
-            <Frame BorderColor="Gray"  CornerRadius="5"  Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="1">
+            <Frame BorderColor="Gray"  CornerRadius="5"  Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2">
                 <StackLayout BackgroundColor="White" Padding="3,3,3,3">
                         <Label x:Name="notify" Text="중고등부 공지" HorizontalTextAlignment="Start" VerticalTextAlignment="Center" TextColor="Black"/>
                 </StackLayout>
             </Frame>
             
-            <Frame BorderColor="Gray"  CornerRadius="5"  Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="1">
+            <Frame BorderColor="Gray"  CornerRadius="5"  Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2">
                 <StackLayout BackgroundColor="White" Padding="3,3,3,3">
                         <Label x:Name="worship" Text="예배 위원" HorizontalTextAlignment="Start" VerticalTextAlignment="Center" TextColor="Black"/>
                </StackLayout>

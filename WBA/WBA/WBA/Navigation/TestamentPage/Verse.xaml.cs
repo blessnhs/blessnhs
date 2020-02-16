@@ -17,7 +17,7 @@ namespace WBA.TestamentPage
         {
             Button evtButton = sender as Button;
 
-            SQLLiteDB.CacheData.Verse = Convert.ToInt32(evtButton.Text);
+            User.CacheData.Verse = Convert.ToInt32(evtButton.Text);
 
             Navigation.PopModalAsync();
 

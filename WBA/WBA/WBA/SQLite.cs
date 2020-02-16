@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using WBA.MainTabbedPage;
 
 namespace WBA
 {
@@ -51,12 +52,67 @@ namespace WBA
         public DateTime Time { get; set; }
     }
 
+    [Table("BibleReadPlan")]
+    public class BibleReadPlan
+    {
+        [PrimaryKey, AutoIncrement, Column("_id")]
+        public int Id { get; set; }
+
+        public string BibleName { get; set; }
+
+        public int Count { get; set; }
+
+        public DateTime StartTime { get; set; }
+    }
+
     static public class SQLLiteDB
     {
-        static public UserCacheData CacheData = new UserCacheData();
-
         static public void InitDB()
         {
+        }
+
+        static public bool InsertBibleReadPlan(DateTime Time, string Name, int Count)
+        {
+            BibleReadPlan Data = new BibleReadPlan();
+            Data.StartTime = Time;
+            Data.BibleName = Name;
+            Data.Count = Count;
+
+            string DBPath = System.IO.Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyDocuments), "WBA.db");
+
+            var db = new SQLiteConnection(DBPath);
+            db.CreateTable<BibleReadPlan>();
+
+            var list = db.Query<BibleReadPlan>("select * from BibleReadPlan");
+
+            if (list.Count == 0)
+            {
+                db.Insert(Data);
+            }
+            else
+                db.Update(Data);
+
+            return true;
+        }
+
+        static public BibleReadPlan ReadBibleReadPlan()
+        {
+            string DBPath = System.IO.Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyDocuments), "WBA.db");
+
+            var db = new SQLiteConnection(DBPath);
+
+            db.CreateTable<BibleReadPlan>();
+
+            var table = db.Table<BibleReadPlan>();
+
+            List<BibleReadPlan> list = new List<BibleReadPlan>();
+
+            foreach (var s in table)
+            {
+                return s;
+            }
+
+            return null;
         }
 
         static public bool InsertScheduleLog(DateTime Time)
@@ -99,21 +155,21 @@ namespace WBA
             var UserCacheData = SQLLiteDB.ReadUserCache();
             if (UserCacheData != null)
             {
-                SQLLiteDB.CacheData.FontSize = UserCacheData.FontSize;
-                SQLLiteDB.CacheData.BibleName = UserCacheData.BibleName;
-                SQLLiteDB.CacheData.Chapter = UserCacheData.Chapter;
-                SQLLiteDB.CacheData.Verse = UserCacheData.Verse;
-                SQLLiteDB.CacheData.UserName = UserCacheData.UserName;
-                SQLLiteDB.CacheData.Passwd = UserCacheData.Passwd;
+                User.CacheData.FontSize = UserCacheData.FontSize;
+                User.CacheData.BibleName = UserCacheData.BibleName;
+                User.CacheData.Chapter = UserCacheData.Chapter;
+                User.CacheData.Verse = UserCacheData.Verse;
+                User.CacheData.UserName = UserCacheData.UserName;
+                User.CacheData.Passwd = UserCacheData.Passwd;
 
             }
             else
             {
-                SQLLiteDB.CacheData.BibleName = "창세기";
-                SQLLiteDB.CacheData.Chapter = 1;
-                SQLLiteDB.CacheData.Verse = 1;
-                SQLLiteDB.CacheData.FontSize = 20;
-                SQLLiteDB.CacheData.EnalbeKJV = true;
+                User.CacheData.BibleName = "창세기";
+                User.CacheData.Chapter = 1;
+                User.CacheData.Verse = 1;
+                User.CacheData.FontSize = 20;
+                User.CacheData.EnalbeKJV = true;
             }
         }
 
