@@ -14,10 +14,12 @@ namespace WBA.MainTabbedPage
 
         async void OnNoticeButtonClicked(object sender, EventArgs e)
         {
+            await DisplayAlert("", "관리자만 등록가능합니다..", "OK");
         }
 
         async void OnWorshipButtonClicked(object sender, EventArgs e)
         {
+            await DisplayAlert("", "관리자만 등록가능합니다..", "OK");
         }
     }
 }

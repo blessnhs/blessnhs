@@ -260,8 +260,8 @@ namespace WBA
 
                         string[] words = labelText.Text.Split(' ');
 
-                        User.CacheData.BibleName = words[9];
-                        User.CacheData.Chapter = Convert.ToInt32(words[10]);
+                        User.CacheData.BibleName = words[1];
+                        User.CacheData.Chapter = Convert.ToInt32(words[2]);
                         User.CacheData.Verse = 1;
 
                         parentPage.CurrentPage = parentPage.Children[1];

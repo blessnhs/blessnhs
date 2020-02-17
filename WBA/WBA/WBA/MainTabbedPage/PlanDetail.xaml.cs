@@ -11,33 +11,71 @@ namespace WBA.MainTabbedPage
         public PlanDetail()
         {
             InitializeComponent();
+        }
 
-            List<BibleTableInfo> LoadInfo = new List<BibleTableInfo>();
+        protected void OnItemSelected(object sender, SelectedItemChangedEventArgs e)
+        {
+          
+            {
+                listView.ScrollTo(e.SelectedItem, ScrollToPosition.MakeVisible, true);
+            }
+        }
+
+
+        private List<BibleTableInfo> LoadInfo = new List<BibleTableInfo>();
+        public void RefreshData()
+        {
+         
             int idInc = 0;
 
-            foreach (var data in BibleInfo.ListOldTestament)
+            if(LoadInfo.Count == 0)
             {
-                BibleTableInfo info = new BibleTableInfo();
+                foreach (var data in BibleInfo.ListOldTestament)
+                {
+                    BibleTableInfo info = new BibleTableInfo();
 
-                info.Id = idInc++;
-                info.Name = data;
-                info.MaxChapterSize = BibleInfo.GetChapterSize(data);
+                    info.Id = idInc++;
+                    info.Name = data;
+                    info.MaxChapterSize = BibleInfo.GetChapterSize(data);
 
-                LoadInfo.Add(info);
+                    LoadInfo.Add(info);
+                }
+
+                foreach (var data in BibleInfo.ListNewTestament)
+                {
+                    BibleTableInfo info = new BibleTableInfo();
+
+                    info.Id = idInc++;
+                    info.Name = data;
+                    info.MaxChapterSize = BibleInfo.GetChapterSize(data);
+
+                    LoadInfo.Add(info);
+                }
             }
-
-            foreach (var data in BibleInfo.ListNewTestament)
-            {
-                BibleTableInfo info = new BibleTableInfo();
-
-                info.Id = idInc++;
-                info.Name = data;
-                info.MaxChapterSize = BibleInfo.GetChapterSize(data);
-
-                LoadInfo.Add(info);
-            }           
-
+ 
             listView.ItemsSource = LoadInfo;
+
+            listView.ItemSelected += OnItemSelected;
+
+            var plan = SQLLiteDB.ReadBibleReadPlan();
+            if(plan != null)
+            {
+                ReadChapterCount.Text = plan.Count.ToString();
+
+                var search = LoadInfo.Find(e => e.Name == plan.BibleName);
+                if (search != null)
+                {
+                    listView.SelectedItem = search;
+                    listView.TabIndex = search.Id;
+                }
+
+                StartTime.Date = plan.StartTime;
+            }
+        }
+
+        protected override void OnAppearing()
+        {
+            RefreshData();
         }
 
         public bool IsNumber(string me)

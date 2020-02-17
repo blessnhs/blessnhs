@@ -74,6 +74,7 @@ namespace WBA
         static public bool InsertBibleReadPlan(DateTime Time, string Name, int Count)
         {
             BibleReadPlan Data = new BibleReadPlan();
+            Data.Id = 1;
             Data.StartTime = Time;
             Data.BibleName = Name;
             Data.Count = Count;
@@ -83,7 +84,7 @@ namespace WBA
             var db = new SQLiteConnection(DBPath);
             db.CreateTable<BibleReadPlan>();
 
-            var list = db.Query<BibleReadPlan>("select * from BibleReadPlan");
+           var list = db.Query<BibleReadPlan>("select * from BibleReadPlan where _id = ?", Data.Id);
 
             if (list.Count == 0)
             {
@@ -105,9 +106,9 @@ namespace WBA
 
             var table = db.Table<BibleReadPlan>();
 
-            List<BibleReadPlan> list = new List<BibleReadPlan>();
+            var list = db.Query<BibleReadPlan>("select * from BibleReadPlan where _id = ?", 1);
 
-            foreach (var s in table)
+            foreach (var s in list)
             {
                 return s;
             }

@@ -12,7 +12,7 @@ namespace WBA
             Children.Add(new Planxaml());
             Children.Add(new PlanDetail());
             Children.Add(new Setting());
-            Children.Add(new Admin() {  IsVisible = false });
+            Children.Add(new Admin());
         }
     }
 }
