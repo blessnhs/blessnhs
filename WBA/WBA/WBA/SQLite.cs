@@ -65,10 +65,66 @@ namespace WBA
         public DateTime StartTime { get; set; }
     }
 
+    [Table("UnderliningRcord")]
+    public class Underlining
+    {
+        [PrimaryKey, AutoIncrement, Column("_id")]
+        public int Id { get; set; }
+
+        [Column("BibleName")]
+        public string BibleName { get; set; }
+
+        public int Chapter { get; set; }
+
+         public int Verse { get; set; }
+
+        public string Color { get; set; }
+    }
+
     static public class SQLLiteDB
     {
         static public void InitDB()
         {
+        }
+
+        static public bool InsertUnderlining(string BibleName, int Chapter, int Verse,string color)
+        {
+            Underlining Data = new Underlining();
+            Data.BibleName = BibleName;
+            Data.Chapter = Chapter;
+            Data.Verse = Verse;
+            Data.Color = color;
+
+            string DBPath = System.IO.Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyDocuments), "WBA.db");
+
+            var db = new SQLiteConnection(DBPath);
+            db.CreateTable<Underlining>();
+
+            var list = db.Query<Underlining>("select * from UnderliningRcord where BibleName = ? and Chapter = ? and Verse = ?", BibleName,Chapter,Verse);
+
+            if (list.Count == 0)
+            {
+                db.Insert(Data);
+            }
+            else
+                db.Update(Data);
+
+            return true;
+        }
+
+        static public List<Underlining> ReadUnderlining()
+        {
+            string DBPath = System.IO.Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyDocuments), "WBA.db");
+
+            var db = new SQLiteConnection(DBPath);
+
+            db.CreateTable<Underlining>();
+
+            var table = db.Table<Underlining>();
+
+            var list = db.Query<Underlining>("select * from UnderliningRcord");
+         
+            return list;
         }
 
         static public bool InsertBibleReadPlan(DateTime Time, string Name, int Count)

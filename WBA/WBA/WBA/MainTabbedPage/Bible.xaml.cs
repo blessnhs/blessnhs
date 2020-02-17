@@ -457,26 +457,40 @@ namespace WBA
             MainLayout.Children.Add(ButtonLayout);
         }
 
-        private int GetBibleInfo(string KRName)
+        private void CheckUnderLine(List<Underlining> list,Label labelText,int verse)
         {
-            int index = 0;
-            foreach( var bible in BibleInfo.List)
+            if(list != null)
             {
-                if (bible.Name == KRName)
-                    return index;
+                foreach (var data in list)
+                {
+                    if(data.BibleName == User.CacheData.BibleName && data.Chapter == User.CacheData.Chapter && data.Verse == verse)
+                    {
 
-                ++index;
+                        switch (data.Color)
+                        {
+                            case "빨강":
+                                labelText.BackgroundColor = Color.Red;
+                                break;
+                            case "노랑":
+                                labelText.BackgroundColor = Color.Yellow;
+                                break;
+                            case "파랑":
+                                labelText.BackgroundColor = Color.Green;
+                                break;
+                        }
+                    }
+                }
             }
-
-            return -1;
         }
-
 
         //자동이동을 위해 Label을 dictionary에 저장
         private Dictionary<int, Label> MainTextLabel = new Dictionary<int, Label>();
 
         public void DrawMainText(StackLayout MainLayout, BibleType type = BibleType.KRV)
         {
+            //db에 밑줄 저장 데이터가 있는지 로딩한다. 
+            var list = SQLLiteDB.ReadUnderlining();
+
             MainTextLabel.Clear();
 
             var TextLayout = new StackLayout { Orientation = StackOrientation.Vertical, Spacing = 5 };
@@ -493,6 +507,9 @@ namespace WBA
 
                 var Label = new Label { Text = Text, FontSize = User.CacheData.FontSize, LineBreakMode = LineBreakMode.WordWrap, TextColor = Xamarin.Forms.Color.FromRgb(0, 0, 0) };
                 var LabelEnglish = new Label { Text = TextEnglish, FontSize = User.CacheData.FontSize, LineBreakMode = LineBreakMode.WordWrap, TextColor = Xamarin.Forms.Color.FromRgb(0, 0, 0) };
+
+                //SQL DB에 저장되어 있는 데이터가 존재하면 해당 색으로 배경을 변경한다.
+                CheckUnderLine(list, Label,i);
 
                 MainTextLabel[i] = Label;
 
@@ -564,19 +581,41 @@ namespace WBA
                 {
                     var labelText = s as Label;
 
-                    string action = await DisplayActionSheet("줄긋기", "안하기", null, "빨강", "노랑", "파랑");
-
-                    switch (action)
+                    try
                     {
-                        case "빨강":
-                            labelText.BackgroundColor = Color.Red;
-                            break;
-                        case "노랑":
-                            labelText.BackgroundColor = Color.Yellow;
-                            break;
-                        case "파랑":
-                            labelText.BackgroundColor = Color.Green;
-                            break;
+                        string action = await DisplayActionSheet("줄긋기", "안하기", null, "빨강", "노랑", "파랑");
+
+                        //선택한 라벨의 절수를 가져온다.
+                        int iverse = 1;
+                        string verse = labelText.Text;
+                        if (verse != null)
+                        {
+                            string[] header = verse.Split(' ');
+                            if (header.Length > 0)
+                            {
+                                iverse = Convert.ToInt32(header[0]);
+                            }
+                        }
+
+                        switch (action)
+                        {
+                            case "빨강":
+                                labelText.BackgroundColor = Color.Red;
+                                SQLLiteDB.InsertUnderlining(User.CacheData.BibleName, User.CacheData.Chapter, iverse, "빨강");
+                                break;
+                            case "노랑":
+                                labelText.BackgroundColor = Color.Yellow;
+                                SQLLiteDB.InsertUnderlining(User.CacheData.BibleName, User.CacheData.Chapter, iverse, "노랑");
+                                break;
+                            case "파랑":
+                                labelText.BackgroundColor = Color.Green;
+                                SQLLiteDB.InsertUnderlining(User.CacheData.BibleName, User.CacheData.Chapter, iverse, "파랑");
+                                break;
+                        }
+                    }
+                    catch(Exception)
+                    {
+
                     }
                 };
 

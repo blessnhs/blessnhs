@@ -55,6 +55,14 @@ namespace WBA.Droid
             try
             {
                 SQLLiteDB.LoadCacheData();
+
+                //성경 읽기계획이 없는 경우 디폴트로 분당에서 하는 것으로 설정한다. 
+                var plan = SQLLiteDB.ReadBibleReadPlan();
+                if(plan == null)
+                {
+                    DateTime StartTime = new DateTime(2020, 1, 6);
+                    SQLLiteDB.InsertBibleReadPlan(StartTime.Date, "마태복음", 1);
+                }
             }
             catch (Exception e)
             {

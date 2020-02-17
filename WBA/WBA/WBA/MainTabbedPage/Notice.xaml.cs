@@ -241,7 +241,13 @@ namespace WBA
                     if (info == null)
                         continue;
 
-                    string Text = week[i] + " " + info.begin_bibleName + " " + info.begin_chapter.ToString() + " 장" + " " + info.end_bibleName + " " + info.end_chapter.ToString() + " 장";
+                    string Text = week[i] + " " + info.begin_bibleName + " " + info.begin_chapter.ToString() + " 장" + "~ " + info.end_bibleName + " " + info.end_chapter.ToString() + " 장";
+
+                    //한장씩 읽을때는 end_bibleName 없으므로 시작 만 출력해준다. 
+                    if (info.end_bibleName == "")
+                    {
+                        Text = week[i] + " " + info.begin_bibleName + " " + info.begin_chapter.ToString() + " 장";
+                    }
 
                     weekLabel[i].Text = Text;
                     weekLabel[i].HorizontalTextAlignment = TextAlignment.Start;
@@ -257,23 +263,30 @@ namespace WBA
 
 
                     // Your label tap event
-                    var forgetPassword_tap = new TapGestureRecognizer();
-                    forgetPassword_tap.Tapped += async (sender, e) =>
+                    var table_tap = new TapGestureRecognizer();
+                    table_tap.Tapped += async (sender, e) =>
                     {
-                        var labelText = sender as Label;
+                        try
+                        {
+                            var labelText = sender as Label;
 
-                        var parentPage = this.Parent as TabbedPage;
+                            var parentPage = this.Parent as TabbedPage;
 
-                        string[] words = labelText.Text.Split(' ');
+                            string[] words = labelText.Text.Split(' ');
 
-                        User.CacheData.BibleName = words[1];
-                        User.CacheData.Chapter = Convert.ToInt32(words[2]);
-                        User.CacheData.Verse = 1;
+                            User.CacheData.BibleName = words[1];
+                            User.CacheData.Chapter = Convert.ToInt32(words[2]);
+                            User.CacheData.Verse = 1;
 
-                        parentPage.CurrentPage = parentPage.Children[1];
+                            parentPage.CurrentPage = parentPage.Children[1];
+                        }
+                        catch(Exception )
+                        {
+
+                        }
                     };
 
-                    weekLabel[i].GestureRecognizers.Add(forgetPassword_tap);
+                    weekLabel[i].GestureRecognizers.Add(table_tap);
                 }
 
             }

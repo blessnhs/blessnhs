@@ -70,6 +70,9 @@ namespace WBA.MainTabbedPage
                 }
 
                 StartTime.Date = plan.StartTime;
+
+
+                ShowInfomation(StartTime.Date,plan.Count);
             }
         }
 
@@ -87,6 +90,36 @@ namespace WBA.MainTabbedPage
             }
 
             return true;
+        }
+
+
+        private void ShowInfomation(DateTime StartTime,int Count)
+        {
+            //읽기 정보 출력
+            int totalchapter = 0;
+            var search = BibleInfo.List.Find(e => e.Name == SelBibleName);
+            if (search == null)
+                return ;
+
+            int accChapterSize = 0;
+            foreach (var bible in BibleInfo.List)
+            {
+                if (search.Id > bible.Id)
+                    continue;
+
+                totalchapter += bible.MaxChapterSize;
+            }
+
+            int enddays = totalchapter / Count;
+
+            int remainTime = totalchapter % Count;
+
+            if (remainTime > 0)
+                enddays += 1;
+
+            DateTime endTime = StartTime.AddDays(enddays);
+
+            Info.Text = "읽어야할 총 장수 " + totalchapter.ToString() + "\n 종료 날짜 " + endTime.ToLocalTime();
         }
 
         private string SelBibleName="";
@@ -112,21 +145,22 @@ namespace WBA.MainTabbedPage
 
                 int Count = Convert.ToInt16(CountText);
 
-                if (Count > 100 || 0 >=  Count)
+                if (Count > 100 || 0 >= Count)
                 {
                     await DisplayAlert("", "권장 장수가 아닙니다.", "OK");
                     return;
                 }
-              
-                bool answer = await DisplayAlert("안내", SelBibleName + "부터 " + "하루 " + CountText + "씩 시작하겠습니까?", "예", "아니요");
-                if(answer == true)
+
+                bool answer = await DisplayAlert("안내", SelBibleName + "부터 " + "하루 " + CountText + "장씩 시작 하시겠 습니까?", "예", "아니요");
+                if (answer == true)
                 {
                     SQLLiteDB.InsertBibleReadPlan(StartTime.Date, SelBibleName, Count);
+
+                    ShowInfomation(StartTime.Date,Count);
                 }
+
             }
-
         }
-
         void Handle_ItemSelected(object sender, Xamarin.Forms.SelectedItemChangedEventArgs e)
         {
             //선택된 아이템을 Contact 타입으로 변환

@@ -5,15 +5,17 @@
              Title=" 계획">
     <ContentPage.Content>
         <StackLayout VerticalOptions="StartAndExpand" HorizontalOptions="StartAndExpand" Padding="20,20,20,20">
+            <ScrollView>
 
-
-            <Grid>
+                <Grid>
                 <Grid.RowDefinitions BackgroundColor="White">
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="Auto" />
@@ -41,7 +43,6 @@
                 </Frame>
 
                 <Frame BorderColor="Gray" Grid.Row="0" Grid.Column="1" Grid.RowSpan="3">
-
                     <ListView x:Name="listView" ItemSelected="Handle_ItemSelected"   ItemsSource="{Binding BibleListInfo}" IsVisible="True">
                         <ListView.ItemTemplate>
                             <DataTemplate>
@@ -49,9 +50,16 @@
                             </DataTemplate>
                         </ListView.ItemTemplate>
                     </ListView>
-
                 </Frame>
-            </Grid>
+
+                 <Frame BorderColor="Gray" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2">
+                        <Label  x:Name="Info" Text="총 장 수  " HorizontalOptions="Center" HorizontalTextAlignment="Center"  />
+                 </Frame>
+
+
+
+                </Grid>
+           </ScrollView>
         </StackLayout>
     </ContentPage.Content>
 
