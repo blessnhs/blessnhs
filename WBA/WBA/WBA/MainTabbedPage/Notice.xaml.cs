@@ -34,42 +34,38 @@ namespace WBA
             return dt.AddDays(-1 * diff).Date;
         }
 
-        private MyPosToBibleRead CalculateTodayBibleChapter2(int addDay = 0)
+        private static void GetNextPos(string BibleName, int Chapter, out string outbible, out int chapter)
         {
-            MyPosToBibleRead readpos = new MyPosToBibleRead();
-                                
-            DateTime BeginTime = new DateTime(2020, 01, 13, 0, 0, 0, DateTimeKind.Local);
-            DateTime MondayTime = WeekDateTime(DateTime.Now, DayOfWeek.Monday);
+            outbible = "종료";
+            chapter = 0;
 
-            MondayTime = MondayTime.AddDays(addDay);
+            int CurrentMaxChapter = BibleInfo.GetChapterSize(BibleName);
 
-            int DiffDay = (MondayTime - BeginTime).Days;
-
-            int accChapterSize = 0;
-            foreach(var bible in BibleInfo.ListNewTestament)
+            if (Chapter + 1 <= CurrentMaxChapter)
             {
-                int chapter = BibleInfo.GetChapterSize(bible);
-                accChapterSize += chapter;
-
-                if ( DiffDay < accChapterSize)
+                Chapter += 1;
+                outbible = BibleName;
+                chapter = Chapter;
+            }
+            else
+            {
+                //다음 성경 
+                string NextBible = BibleName;
+                int currentPos = 0;
+                foreach (var bible in BibleInfo.List)
                 {
-                    readpos.begin_bibleName = bible;
+                    if (bible.Name == BibleName)
+                        break;
 
-                    
-                    int v = (accChapterSize - chapter);
-                    if (v < 0)
-                        v = 0;
+                    currentPos++;
+                }
 
-                    int diff = DiffDay - v; 
-
-                    readpos.begin_chapter = diff + 1;
-                    break;
-                    
+                if (BibleInfo.List.Count > currentPos + 1)
+                {
+                    outbible = BibleInfo.List[currentPos + 1].Name;
+                    chapter = 1;
                 }
             }
-
-            return readpos;
-
         }
 
         private MyPosToBibleRead CalculateTodayBibleChapter(int addDay = 0)
@@ -106,13 +102,31 @@ namespace WBA
                 int currChapter = DiffDay * data.Count;
                 accChapterSize += chapter;
 
-                if (currChapter+1 <= accChapterSize)
+
+                if (currChapter + 1 <= accChapterSize)
                 {
                     readpos.begin_bibleName = bible.Name;
-                    readpos.begin_chapter =  Math.Abs((accChapterSize - currChapter) - chapter) + 1;
+                    readpos.begin_chapter = Math.Abs((accChapterSize - currChapter) - chapter) + 1;
+             
+                    string outbible = "";
+                    int outchapter = 1;
+
+                    string inbible = readpos.begin_bibleName;
+                    int inchapter = readpos.begin_chapter;
+
+                    for (int i = 0; i < data.Count - 1; i++)
+                    {
+                        GetNextPos(inbible, inchapter, out outbible, out outchapter);
+
+                        inbible = outbible;
+                        inchapter = outchapter;
+                    }
+
+                    readpos.end_bibleName = outbible;
+                    readpos.end_chapter = outchapter;
                     break;
                 }
- 
+
             }
 
             return readpos;
@@ -222,7 +236,7 @@ namespace WBA
                     if (info == null)
                         continue;
 
-                    string Text = week[i] + "         " + info.begin_bibleName + " " + info.begin_chapter.ToString() + " 장";
+                    string Text = week[i] + " " + info.begin_bibleName + " " + info.begin_chapter.ToString() + " 장" + " " + info.end_bibleName + " " + info.end_chapter.ToString() + " 장";
 
                     weekLabel[i].Text = Text;
 
@@ -264,11 +278,8 @@ namespace WBA
 
         }
 
-
-        public Notice()
+        public void RefreshData()
         {
-            InitializeComponent();
-
             SetJuboLabel();
 
             SetWeeklyReadTable();
@@ -278,6 +289,19 @@ namespace WBA
             SetNoticeLabel();
 
             SetWorshipLabel();
+        }
+
+        protected override void OnAppearing()
+        {
+            RefreshData();
+        }
+
+
+        public Notice()
+        {
+            InitializeComponent();
+
+           
             return;
            
         }

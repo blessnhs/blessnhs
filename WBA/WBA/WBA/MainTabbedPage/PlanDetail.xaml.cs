@@ -74,7 +74,7 @@ namespace WBA.MainTabbedPage
 
                 int Count = Convert.ToInt16(CountText);
 
-                if(Count > 100)
+                if (Count > 100 || 0 >=  Count)
                 {
                     await DisplayAlert("", "권장 장수가 아닙니다.", "OK");
                     return;
