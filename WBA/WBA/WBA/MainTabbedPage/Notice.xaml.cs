@@ -78,6 +78,11 @@ namespace WBA
                 return null;
             }
 
+            if(data.StartTime > DateTime.Now)
+            {
+                return null;
+            }
+
             DateTime BeginTime = data.StartTime;
 
             DateTime MondayTime = WeekDateTime(DateTime.Now, DayOfWeek.Monday);
@@ -239,6 +244,7 @@ namespace WBA
                     string Text = week[i] + " " + info.begin_bibleName + " " + info.begin_chapter.ToString() + " 장" + " " + info.end_bibleName + " " + info.end_chapter.ToString() + " 장";
 
                     weekLabel[i].Text = Text;
+                    weekLabel[i].HorizontalTextAlignment = TextAlignment.Start;
 
                     DateTime checkDay = UtcToStandardTime();
 
