@@ -106,7 +106,7 @@ namespace WBA
                 int currChapter = DiffDay * data.Count;
                 accChapterSize += chapter;
 
-                if (currChapter+1 < accChapterSize)
+                if (currChapter+1 <= accChapterSize)
                 {
                     readpos.begin_bibleName = bible.Name;
                     readpos.begin_chapter =  Math.Abs((accChapterSize - currChapter) - chapter) + 1;
