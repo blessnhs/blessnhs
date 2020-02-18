@@ -611,6 +611,10 @@ namespace WBA
                                 labelText.BackgroundColor = Color.Green;
                                 SQLLiteDB.InsertUnderlining(User.CacheData.BibleName, User.CacheData.Chapter, iverse, "파랑");
                                 break;
+                            case "안하기":
+                                labelText.BackgroundColor = Color.White;
+                                SQLLiteDB.DeleteUnderlining(User.CacheData.BibleName, User.CacheData.Chapter, iverse, "파랑");
+                                break;
                         }
                     }
                     catch(Exception)

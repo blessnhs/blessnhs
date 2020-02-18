@@ -78,16 +78,16 @@ namespace WBA
                 return null;
             }
 
-            if(data.StartTime > DateTime.Now)
-            {
-                return null;
-            }
-
             DateTime BeginTime = data.StartTime;
 
             DateTime MondayTime = WeekDateTime(DateTime.Now, DayOfWeek.Monday);
 
             MondayTime = MondayTime.AddDays(addDay);
+
+            if (data.StartTime > MondayTime)
+            {
+                return null;
+            }
 
             int DiffDay = (MondayTime - BeginTime).Days;
 
@@ -239,7 +239,10 @@ namespace WBA
                 {
                     var info = CalculateTodayBibleChapter(i);
                     if (info == null)
+                    {
+                        weekLabel[i].Text = week[i] + " ";
                         continue;
+                    }
 
                     string Text = week[i] + " " + info.begin_bibleName + " " + info.begin_chapter.ToString() + " 장" + "~ " + info.end_bibleName + " " + info.end_chapter.ToString() + " 장";
 
