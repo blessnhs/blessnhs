@@ -300,6 +300,64 @@ namespace WBA
 
         }
 
+        private void AddMarkWord()
+        {
+            var list = SQLLiteDB.ReadUnderlining();
+            if(list != null)
+            {
+                int startpos = 4;
+                foreach (var data in list)
+                {
+                 
+                    var frame = new Frame {BorderColor = Color.Black,Padding = new Thickness(3, 3, 3, 3) };
+
+                    var contexttext = BibleInfo.GetContextText(BibleType.KRV,data.BibleName, data.Chapter, data.Verse);
+
+                    string[] header = contexttext.Split(' ');
+
+                    if (header.Length == 0) 
+                            continue;
+
+                    string line = "";
+                    for (int i = 1; i < header.Length; i++)
+                    {
+                        line += header[i];
+                        line += " ";
+                    }
+
+                    var text = data.BibleName + " " + data.Chapter + " 장" + " " + data.Verse + "절 \n" + line;
+
+                    var labelText = new Label { Text = text, FontSize = User.CacheData.FontSize, LineBreakMode = LineBreakMode.WordWrap, TextColor = Xamarin.Forms.Color.FromRgb(0, 0, 0) };
+                    switch (data.Color)
+                    {
+                        case "빨강":
+                            labelText.BackgroundColor = Color.Red;
+                            break;
+                        case "노랑":
+                            labelText.BackgroundColor = Color.Yellow;
+                            break;
+                        case "파랑":
+                            labelText.BackgroundColor = Color.Green;
+                            break;
+                        case "안하기":
+                            labelText.BackgroundColor = Color.White;
+                            break;
+                    }
+                    var stackLayout = new StackLayout();
+
+                    stackLayout.Children.Add(labelText);
+                    frame.Content = stackLayout;
+
+                    main_grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Auto), });
+
+                    main_grid.Children.Add(frame, 0, startpos++);
+                    Grid.SetColumnSpan(frame, 2);
+
+                }
+
+            }
+        }
+
         public void RefreshData()
         {
             SetJuboLabel();
@@ -311,6 +369,8 @@ namespace WBA
             SetNoticeLabel();
 
             SetWorshipLabel();
+
+            AddMarkWord();
         }
 
         protected override void OnAppearing()

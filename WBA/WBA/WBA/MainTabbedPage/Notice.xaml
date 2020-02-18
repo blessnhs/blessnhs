@@ -5,7 +5,7 @@
             Title=" 공지">
     <StackLayout Orientation="Vertical" Spacing="10" Padding="20,20,20,20">
         <ScrollView>
-            <Grid>
+            <Grid x:Name="main_grid">
             <Grid.RowDefinitions BackgroundColor="White">
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />

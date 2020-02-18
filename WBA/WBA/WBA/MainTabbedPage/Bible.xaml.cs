@@ -517,63 +517,67 @@ namespace WBA
                 var englishlabeltab = new TapGestureRecognizer();
                 englishlabeltab.Tapped += async (s, e) =>
                 {
-                    //기능 임시 주석
-                    return;
-
-                    var labelText = s as Label;
-
-                    string Context = labelText.Text;
-
-                    string[] words = Context.Split(' ');
-
-                    Dictionary<string, string> help = new Dictionary<string, string>();
-                    if (words != null || words.Length > 0)
+                    try
                     {
-                        for (int k = 0; k < words.Length; k++)
+                        var labelText = s as Label;
+
+                        string Context = labelText.Text;
+
+                        string[] words = Context.Split(' ');
+
+                        Dictionary<string, string> help = new Dictionary<string, string>();
+                        if (words != null || words.Length > 0)
                         {
-                            words[k] = words[k].ToLower();
-                            string outstr;
-                            if (Dic._dictionary.TryGetValue(words[k], out outstr) == true)
+                            for (int k = 0; k < words.Length; k++)
                             {
-                                help[words[k]] = outstr;
-                            }
-                            else
-                            {
-                                if (words[k].Length > 3)
+                                words[k] = words[k].ToLower();
+                                string outstr;
+                                if (Dic._dictionary.TryGetValue(words[k], out outstr) == true)
                                 {
-                                    //끝에 하나버림
-                                    string sub1 = words[k].Substring(0, words[k].Length - 1);
-                                    if (Dic._dictionary.TryGetValue(sub1, out outstr) == true)
+                                    help[words[k]] = outstr;
+                                }
+                                else
+                                {
+                                    if (words[k].Length > 3)
                                     {
-                                        help[sub1] = outstr;
-                                        
-                                    }
-                                    else
-                                    {
-                                        //끝에 두개버림
-                                        sub1 = words[k].Substring(0, words[k].Length - 2);
+                                        //끝에 하나버림
+                                        string sub1 = words[k].Substring(0, words[k].Length - 1);
                                         if (Dic._dictionary.TryGetValue(sub1, out outstr) == true)
                                         {
                                             help[sub1] = outstr;
+                                        
                                         }
-                                    }
+                                        else
+                                        {
+                                            //끝에 두개버림
+                                            sub1 = words[k].Substring(0, words[k].Length - 2);
+                                            if (Dic._dictionary.TryGetValue(sub1, out outstr) == true)
+                                            {
+                                                help[sub1] = outstr;
+                                            }
+                                        }
 
+                                    }
                                 }
                             }
                         }
-                    }
 
-                    string context = "";
-                    foreach( var str in help)
+                        string context = "";
+                        foreach( var str in help)
+                        {
+                            context += str.Key;
+                            context += " : ";
+                            context += str.Value;
+                            context += "\n\n";
+                        }
+
+                        await DisplayAlert("Help", context, "OK");
+                    }
+                    catch (Exception)
                     {
-                        context += str.Key;
-                        context += " : ";
-                        context += str.Value;
-                        context += "\n\n";
+
                     }
 
-                    await DisplayAlert("Help", context, "OK");
-                                       
                 };
 
                 var labeltab = new TapGestureRecognizer();

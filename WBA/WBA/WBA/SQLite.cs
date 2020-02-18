@@ -107,7 +107,31 @@ namespace WBA
                 db.Insert(Data);
             }
             else
-                db.Update(Data);
+            {
+                if (list?[0] != null)
+                {
+                    list[0].Color = color;
+                    db.Update(list[0]);
+                }
+            }
+
+            return true;
+        }
+
+        static public bool DeleteUnderlining(string BibleName, int Chapter, int Verse, string color)
+        {
+            Underlining Data = new Underlining();
+            Data.BibleName = BibleName;
+            Data.Chapter = Chapter;
+            Data.Verse = Verse;
+            Data.Color = color;
+
+            string DBPath = System.IO.Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyDocuments), "WBA.db");
+
+            var db = new SQLiteConnection(DBPath);
+            db.CreateTable<Underlining>();
+
+            var list = db.Query<Underlining>("delete from UnderliningRcord where BibleName = ? and Chapter = ? and Verse = ?", BibleName, Chapter, Verse);
 
             return true;
         }
