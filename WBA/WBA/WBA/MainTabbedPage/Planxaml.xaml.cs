@@ -258,7 +258,6 @@ namespace WBA.MainTabbedPage
         {
             public DateTime Time { get; set; }
             public string Message { get; set; }
-
             public string Display { get; set; }
         }
 

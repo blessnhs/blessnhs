@@ -519,6 +519,9 @@ namespace WBA
                 {
                     try
                     {
+                        if (User.Username != "강병욱")
+                            return;
+
                         var labelText = s as Label;
 
                         string Context = labelText.Text;
@@ -617,7 +620,7 @@ namespace WBA
                                 break;
                             case "안하기":
                                 labelText.BackgroundColor = Color.White;
-                                SQLLiteDB.DeleteUnderlining(User.CacheData.BibleName, User.CacheData.Chapter, iverse, "파랑");
+                                SQLLiteDB.DeleteUnderlining(User.CacheData.BibleName, User.CacheData.Chapter, iverse, "");
                                 break;
                         }
                     }

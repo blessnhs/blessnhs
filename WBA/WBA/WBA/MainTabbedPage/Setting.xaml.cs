@@ -44,13 +44,10 @@ namespace WBA.MainTabbedPage
      
         async void OnLoginButtonClicked(object sender, EventArgs e)
         {
-            var user = new User
-            {
-                Username = usernameEntry.Text,
-                Password = passwordEntry.Text
-            };
+            User.Username = usernameEntry.Text;
+            User.Password = passwordEntry.Text;
 
-            var isValid = AreCredentialsCorrect(user);
+            var isValid = AreCredentialsCorrect();
             if (isValid)
             {
                 messageLabel.Text = "Login Success";
@@ -68,7 +65,7 @@ namespace WBA.MainTabbedPage
             SQLLiteDB.Upsert(User.CacheData);
         }
 
-        bool AreCredentialsCorrect(User user)
+        bool AreCredentialsCorrect()
         {
             // return user.Username == Constants.Username && user.Password == Constants.Password;
             return true;

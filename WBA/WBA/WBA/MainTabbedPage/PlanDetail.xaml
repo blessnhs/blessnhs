@@ -53,10 +53,8 @@
                 </Frame>
 
                  <Frame BorderColor="Gray" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2">
-                        <Label  x:Name="Info" Text="총 장 수  " HorizontalOptions="Center" HorizontalTextAlignment="Center"  />
+                        <Label  x:Name="Info" Text="총 장 수  " HorizontalOptions="Start" HorizontalTextAlignment="Start"  />
                  </Frame>
-
-
 
                 </Grid>
            </ScrollView>

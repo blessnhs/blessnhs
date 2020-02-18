@@ -15,17 +15,13 @@ namespace WBA.MainTabbedPage
 
         protected void OnItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
-          
-            {
-                listView.ScrollTo(e.SelectedItem, ScrollToPosition.MakeVisible, true);
-            }
+            listView.ScrollTo(e.SelectedItem, ScrollToPosition.MakeVisible, true);
         }
 
 
         private List<BibleTableInfo> LoadInfo = new List<BibleTableInfo>();
         public void RefreshData()
         {
-         
             int idInc = 0;
 
             if(LoadInfo.Count == 0)

@@ -5,10 +5,10 @@ using System.Reflection;
 
 namespace WBA.MainTabbedPage
 {
-    internal class User
+    internal static class User
     {
-        public string Username { get; set; }
-        public string Password { get; set; }
+        static public string Username { get; set; }
+        static public string Password { get; set; }
 
         static public UserCacheData CacheData = new UserCacheData();
 
