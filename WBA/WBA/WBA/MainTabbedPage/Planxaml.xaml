@@ -113,8 +113,19 @@
             ItemsSource="{Binding ScheduleViewItem}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <TextCell Text="{Binding Display}" />
-                    </DataTemplate>
+                            <ViewCell>
+                                <ViewCell.View>
+                                    <Grid x:Name="Item">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="8*"/>
+                                            <ColumnDefinition Width="2*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Label Text="{Binding Display}" TextColor="Black"></Label>
+                                        <Button Grid.Column="1" Text="삭제"  Clicked="OnScheduleDelButtonClicked" CommandParameter="{Binding Id}" ></Button>
+                                    </Grid>
+                                </ViewCell.View>
+                            </ViewCell>
+                        </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
         </StackLayout>

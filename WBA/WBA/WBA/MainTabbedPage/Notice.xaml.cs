@@ -330,8 +330,6 @@ namespace WBA
                         var frame = new Frame { BorderColor = Color.Black, Padding = new Thickness(3, 3, 3, 3) };
                         frame.Content = stackLayout;
 
-                        main_grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Auto), });
-
                         main_grid.Children.Add(frame, 0, startpos++);
                         Grid.SetColumnSpan(frame, 2);
 
