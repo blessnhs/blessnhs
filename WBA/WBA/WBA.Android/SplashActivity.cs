@@ -34,8 +34,7 @@ namespace WBA.Droid
         // Prevent the back button from canceling the startup process
         public override void OnBackPressed() { }
 
-        // Simulates background work that happens behind the splash screen
-        async void SimulateStartup ()
+        private void LoadNoticeData()
         {
             try
             {
@@ -47,40 +46,58 @@ namespace WBA.Droid
             }
             catch (Exception e)
             {
+#if DEBUG
                 CrossLocalNotifications.Current.Show("Google Shared Drive Failed", DateTime.Now.ToString(), 0, DateTime.Now);
+#endif
             }
-            
-           
+        }
 
+        private void LoadCacheUserData()
+        {
             try
             {
                 SQLLiteDB.LoadCacheData();
 
                 //성경 읽기계획이 없는 경우 디폴트로 분당에서 하는 것으로 설정한다. 
                 var plan = SQLLiteDB.ReadBibleReadPlan();
-                if(plan == null)
+                if (plan == null)
                 {
-                    DateTime StartTime = new DateTime(2020, 1, 6);
+                    DateTime StartTime = new DateTime(2020, 1, 13);
                     SQLLiteDB.InsertBibleReadPlan(StartTime.Date, "마태복음", 1);
                 }
             }
             catch (Exception e)
             {
+#if DEBUG
                 CrossLocalNotifications.Current.Show("SQLLiteDB.LoadCacheData Failded", DateTime.Now.ToString(), 0, DateTime.Now);
+#endif
             }
+        }
 
+        private void LoadResourceData()
+        {
             try
             {
                 BibleInfo.LoadKRV();
                 BibleInfo.LoadKJV();
+                Dic.LoadDic();
                 //BibleInfo.LoadNIV();
-                //Dic.LoadDic();
                 //BibleInfo.CheckValidate();
             }
             catch (Exception e)
             {
+#if DEBUG
                 CrossLocalNotifications.Current.Show("SQLLiteDB.LoadKRV Failded", DateTime.Now.ToString(), 0, DateTime.Now);
+#endif
             }
+        }
+
+        // Simulates background work that happens behind the splash screen
+        async void SimulateStartup ()
+        {
+            LoadNoticeData();
+            LoadCacheUserData();
+            LoadResourceData();
 
             StartActivity(new Intent(Application.Context, typeof (MainActivity)));
         }

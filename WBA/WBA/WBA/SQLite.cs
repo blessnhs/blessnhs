@@ -323,6 +323,23 @@ namespace WBA
             return true;
         }
 
+        static public bool DelItem(long id)
+        {
+            string DBPath = System.IO.Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyDocuments), "WBA.db");
+
+            var db = new SQLiteConnection(DBPath);
+            db.CreateTable<UserScheduleData>();
+
+            var table = db.Table<UserScheduleData>();
+
+            var list = db.Query<UserCacheData>("delete from UserScheduleData where _id = ?", id);
+
+            if (list.Count != 0)
+                return true;
+            else
+                return false;
+        }
+
         static public List<UserScheduleData> ReadUserScheduleData()
         {
             string DBPath = System.IO.Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyDocuments), "WBA.db");

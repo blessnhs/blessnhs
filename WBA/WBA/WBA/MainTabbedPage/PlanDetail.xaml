@@ -46,7 +46,7 @@
                     <ListView x:Name="listView" ItemSelected="Handle_ItemSelected"   ItemsSource="{Binding BibleListInfo}" IsVisible="True">
                         <ListView.ItemTemplate>
                             <DataTemplate>
-                                <TextCell Text="{Binding Name}" />
+                                <TextCell Text="{Binding Name}" TextColor="Black" />
                             </DataTemplate>
                         </ListView.ItemTemplate>
                     </ListView>

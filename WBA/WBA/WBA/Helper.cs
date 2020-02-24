@@ -37,5 +37,11 @@ namespace WBA
                 text += " ";
             }
         }
+
+        static public string DateTimeToShortTime(DateTime time)
+        {
+            string timestr = time.ToString("HH:mm");
+            return timestr;
+        }
     }
 }

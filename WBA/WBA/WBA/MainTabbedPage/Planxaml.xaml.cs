@@ -140,7 +140,7 @@ namespace WBA.MainTabbedPage
                     foreach (var data in SQLLiteDB.ReadUserScheduleData())
                     {
                         if (dateTime.Year == data.Time.Year && dateTime.Month == data.Time.Month && Convert.ToInt16(dayButton.Text) == data.Time.Day)
-                            scheduleView.Add(new ScheduleViewItem { Display = data.Time.ToString() + data.Message });
+                            scheduleView.Add(new ScheduleViewItem { Display = Helper.DateTimeToShortTime(data.Time) + " " + data.Message,Id = data.Id });
                     }
                 };
 
@@ -180,19 +180,47 @@ namespace WBA.MainTabbedPage
         ObservableCollection<ScheduleViewItem> scheduleView = new ObservableCollection<ScheduleViewItem>();
         public ObservableCollection<ScheduleViewItem> ScheduleView { get { return scheduleView; } }
 
+        async void OnScheduleDelButtonClicked(object sender, EventArgs args)
+        {
+            Button button = sender as Button;
+
+            long id = Convert.ToInt32(button.CommandParameter.ToString());
+
+            SQLLiteDB.DelItem(id);
+
+            List<ScheduleViewItem> saveList = new List<ScheduleViewItem>();
+
+            foreach (var data in scheduleView)
+            {
+                if (data.Id == id)
+                    continue;
+
+                saveList.Add((ScheduleViewItem)data);
+            }
+
+            ScheduleView.Clear();
+
+            foreach (var data in saveList)
+            {
+                scheduleView.Add((ScheduleViewItem)data);
+            }
+
+            SchedueListView.ItemsSource = scheduleView;
+        }
+
         async void OnScheduleSaveButtonClicked(object sender, EventArgs args)
         {
             //하나씩 저장
             if (FocusButton != null)
             {
-      
                 DateTime saveDateTime = new DateTime(ViewModel.CurrentDateTime.Year, ViewModel.CurrentDateTime.Month, Convert.ToInt32(FocusButton.Text), timePicker1.Time.Hours, timePicker1.Time.Minutes, timePicker1.Time.Seconds);
-                scheduleView.Add(new ScheduleViewItem { Display = saveDateTime.ToString() + ScheduleEdit.Text });
-
+  
                 UserScheduleData saveShedulData = new UserScheduleData();
                 saveShedulData.Time = saveDateTime;
                 saveShedulData.Message = ScheduleEdit.Text;
                 SQLLiteDB.Upsert(saveShedulData);
+
+                scheduleView.Add(new ScheduleViewItem { Id = saveShedulData.Id,Display = Helper.DateTimeToShortTime(saveDateTime) + " " + ScheduleEdit.Text });
 
                 FocusButton.BackgroundColor = Color.White;
                 FocusButton = null;
@@ -227,9 +255,9 @@ namespace WBA.MainTabbedPage
         {
             ClearCalendarButtonColor(Color.White);
             ScheduleView.Clear();
-            foreach (var log in SQLLiteDB.ReadScheduleLog())
+            foreach (var schedule in SQLLiteDB.ReadScheduleLog())
             {
-                scheduleView.Add(new ScheduleViewItem { Display = log.Time.ToString() });
+                scheduleView.Add(new ScheduleViewItem { Display = schedule.Time.ToString() });
             }
 
             SchedueListView.ItemsSource = scheduleView;
@@ -256,6 +284,7 @@ namespace WBA.MainTabbedPage
 
         public class ScheduleViewItem
         {
+            public long Id { get; set; }
             public DateTime Time { get; set; }
             public string Message { get; set; }
             public string Display { get; set; }
