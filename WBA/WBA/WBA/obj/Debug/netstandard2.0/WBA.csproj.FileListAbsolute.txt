@@ -1,6 +1,7 @@
 D:\work\blessnhs\WBA\WBA\WBA\bin\Debug\netstandard2.0\WBA.deps.json
 D:\work\blessnhs\WBA\WBA\WBA\bin\Debug\netstandard2.0\WBA.dll
 D:\work\blessnhs\WBA\WBA\WBA\bin\Debug\netstandard2.0\WBA.pdb
+D:\work\blessnhs\WBA\WBA\WBA\obj\Debug\netstandard2.0\WBA.csprojAssemblyReference.cache
 D:\work\blessnhs\WBA\WBA\WBA\obj\Debug\netstandard2.0\App.xaml.g.cs
 D:\work\blessnhs\WBA\WBA\WBA\obj\Debug\netstandard2.0\MainTabbedPage\Admin.xaml.g.cs
 D:\work\blessnhs\WBA\WBA\WBA\obj\Debug\netstandard2.0\MainTabbedPage\Bible.xaml.g.cs
