@@ -57,6 +57,20 @@ namespace WBA.MainTabbedPage
                 messageLabel.Text = "Login failed";
                 passwordEntry.Text = string.Empty;
             }
+
+            if (User.Username == "강병욱" || User.Username == "nhs")
+            {
+                MainPage mainpage = Parent as MainPage;
+
+                bool find = false;
+                foreach (var child in mainpage.Children)
+                {
+                    if (child.Title == "찬송")
+                        find = true;
+                }
+                if (find == false)
+                    mainpage.Children.Add(new Hymn());
+            }
         }
 
         void OnToggledKJV(object sender, ToggledEventArgs e)

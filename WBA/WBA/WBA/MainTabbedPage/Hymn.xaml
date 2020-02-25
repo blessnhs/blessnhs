@@ -4,43 +4,34 @@
              x:Class="WBA.MainTabbedPage.Hymn"
              Title=" 찬송">
     <ContentPage.Content>
-        <StackLayout Orientation="Vertical">
+        <StackLayout Orientation="Vertical" Padding="20,20,20,20">
             <ScrollView>
                 <Grid>
                 <Grid.RowDefinitions BackgroundColor="White">
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="5*" />
-                    <ColumnDefinition Width="5*" />
+                    <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
 
                 <Frame BorderColor="Gray" Grid.Row="0" Grid.Column="0">
                         <StackLayout  BackgroundColor="White">
-                        <Entry x:Name="IndexEntry" Placeholder="" />
+                            <Entry x:Name="IndexEntry" Placeholder="장이나 제목을 입력하세요" TextChanged="Entry_TextChanged" />
                     </StackLayout>
                 </Frame>
 
-                <Frame BorderColor="Gray" Grid.Row="0" Grid.Column="1">
-                        <StackLayout  BackgroundColor="White"  Padding="2,2,2,2">
-                        <Button Text="찾기" Clicked="OnSearchButtonClicked" />
-                    </StackLayout>
+                <Frame BorderColor="Gray" Grid.Row="1" Grid.Column="0">
+                    <StackLayout  BackgroundColor="White">
+                            <ListView x:Name="listView" ItemSelected="Handle_ItemSelected"   ItemsSource="{Binding HymnTableInfo}" IsVisible="True">
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextCell Text="{Binding Display}" TextColor="Black" />
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+                        </StackLayout>
                 </Frame>
-
-                <Frame BorderColor="Gray" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
-                        <StackLayout VerticalOptions="StartAndExpand" >
-                            <Image x:Name="Image1" Aspect="AspectFit" />
-                    </StackLayout>
-                </Frame>
-
-                <Frame BorderColor="Gray" Grid.Row="2" Grid.Column="0"  Grid.ColumnSpan="2">
-                        <StackLayout VerticalOptions="StartAndExpand">
-                            <Image x:Name="Image2" Aspect="AspectFit" />
-                    </StackLayout>
-                </Frame>
-                
             </Grid>
          </ScrollView>
         </StackLayout>

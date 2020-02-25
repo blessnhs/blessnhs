@@ -37,6 +37,7 @@
     <None Remove="Resource\Dic\x.dic" />
     <None Remove="Resource\Dic\y.dic" />
     <None Remove="Resource\Dic\z.dic" />
+    <None Remove="Resource\HymnList.txt" />
     <None Remove="Resource\Hymn\001.gif" />
     <None Remove="Resource\Hymn\002.gif" />
     <None Remove="Resource\Hymn\003.gif" />
@@ -671,6 +672,7 @@
     <EmbeddedResource Include="Resource\Dic\x.dic" />
     <EmbeddedResource Include="Resource\Dic\y.dic" />
     <EmbeddedResource Include="Resource\Dic\z.dic" />
+    <EmbeddedResource Include="Resource\HymnList.txt" />
     <EmbeddedResource Include="Resource\Hymn\001.gif" />
     <EmbeddedResource Include="Resource\Hymn\002.gif" />
     <EmbeddedResource Include="Resource\Hymn\003.gif" />
@@ -1290,6 +1292,9 @@
 
   <ItemGroup>
     <EmbeddedResource Update="MainTabbedPage\Hymn.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="MainTabbedPage\HymnViewer.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
   </ItemGroup>

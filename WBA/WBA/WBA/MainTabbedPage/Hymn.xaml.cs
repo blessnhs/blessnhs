@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -10,81 +11,135 @@ using Xamarin.Forms.Xaml;
 
 namespace WBA.MainTabbedPage
 {
-	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class Hymn : ContentPage
+
+
+    //성경의 타이틀 정보
+    public class HymnTableInfo
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+
+        public string Display
+        {
+            get => Id + "장 " + Name;
+        }
+    };
+
+    [XamlCompilation(XamlCompilationOptions.Compile)]
+    public partial class Hymn : ContentPage
 	{
         public static int StartNumber = 1, EndNumber = 588;
-        public static Dictionary<string, int> DivideSong = new Dictionary<string, int>();
+
+        //문자열 인덱스 : "123" 해당 2장존재하는 데이터는 없음 (123장-1,123장-2) 존재하지 않음
+        public static Dictionary<string, string> DivideSong = new Dictionary<string, string>();
+        public static Dictionary<int, string> DivideSongTitle = new Dictionary<int, string>();
+
         public static bool LoadList()
         {
+            //이미 불러옴
+            if (DivideSong.Count > 0)
+                return true;
+
             var assembly = IntrospectionExtensions.GetTypeInfo(typeof(Hymn)).Assembly;
-            var list = assembly.GetManifestResourceNames().Where(r => r.StartsWith("WBA.Resource.Hymn") /*&& r.EndsWith(".txt")*/).ToArray();
 
-            foreach (var song in list)
+            //여기서 부터는 통일 찬송가 목록을 불러옴
             {
-                if(song.IndexOf('-') != -1)
+                assembly = IntrospectionExtensions.GetTypeInfo(typeof(BibleInfo)).Assembly;
+                Stream stream = assembly.GetManifestResourceStream("WBA.Resource.HymnList.txt");
+                //1Chr.14:5 And Ibhar, and Elishua, and Elpalet,
+                using (var reader = new System.IO.StreamReader(stream))
                 {
-                    string[] Header = song.Split('-');
-
-                    if(Header.Length > 0)
+                    string text;
+                    while ((text = reader.ReadLine()) != null)
                     {
-                        string[] Index = Header[0].Split('.');
-                        if (Index.Length > 0)
+                        try
                         {
-                            string Number = Index[Index.Length - 1];
-                            DivideSong[Number] = Index.Length;
+                            if (text == "" || text == null)
+                                continue;
+
+                            string[] Header = text.Split(':');
+
+                            if (Header == null || Header.Count() == 0)
+                                continue;
+
+                            string Title = Header[0].TrimEnd();
+                            int index = Convert.ToInt32(Header[1].TrimEnd());
+
+                            DivideSongTitle[index] = Title;
+                            DivideSong[Header[1]] = Title;
+
                         }
+                        catch (Exception e)
+                        {
+
+                        }
+
                     }
-                 
                 }
             }
 
             return true;
         }
 
-        async void OnSearchButtonClicked(object sender, EventArgs e)
+        void Handle_ItemSelected(object sender, Xamarin.Forms.SelectedItemChangedEventArgs e)
         {
+            //선택된 아이템을 Contact 타입으로 변환
+            var contact = e.SelectedItem as HymnTableInfo;
 
-            if (Helper.IsNumber(IndexEntry.Text) == false)
+            NavigationPage.SetHasNavigationBar(this, true);
+            NavigationPage.SetHasBackButton(this, true);
+
+            Navigation.PushModalAsync(new HymnViewer(contact.Id));
+        }
+        void Entry_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            var oldText = e.OldTextValue;
+            var newText = e.NewTextValue;
+
+            List<HymnTableInfo> hymnList = new List<HymnTableInfo>();
+     
+            foreach (var page in DivideSong)
             {
-                IndexEntry.Text = "";
-            }
-            else
-            {
-                int idx = Convert.ToInt16(IndexEntry.Text);
-                string number = string.Format("{0:000}", idx);
-
-                if(DivideSong.ContainsKey(number) == false)
+                if(page.Key.IndexOf(newText) != -1)
                 {
-                    string path = "WBA.Resource.Hymn." + number + ".gif";
+                    HymnTableInfo table = new HymnTableInfo();
+                    table.Id = Convert.ToInt16(page.Key);
+                    table.Name = page.Value;
 
-                    Image1.Source = ImageSource.FromResource(path);
-
-                    IndexEntry.Text = "";
-
-                    Image2.Source = "";
-                }
-                else
-                {
-                    string path1 = "WBA.Resource.Hymn." + number +"-1"+ ".gif";
-
-                    Image1.Source = ImageSource.FromResource(path1);
-
-                    IndexEntry.Text = "";
-
-                    string path2 = "WBA.Resource.Hymn." + number + "-2" + ".gif";
-
-                    Image2.Source = ImageSource.FromResource(path2);
-                    
+                    hymnList.Add(table);
+                    continue;
                 }
 
-         
+                if (page.Value.IndexOf(newText) != -1)
+                {
+                    HymnTableInfo table = new HymnTableInfo();
+                    table.Id = Convert.ToInt16(page.Key);
+                    table.Name = page.Value;
+
+                    hymnList.Add(table);
+                    continue;
+                }
             }
+
+            listView.ItemsSource = hymnList;
         }
 
         public Hymn()
         {
             InitializeComponent();
+
+            List<HymnTableInfo> hymnList = new List<HymnTableInfo>();
+
+            foreach (var page in DivideSong)
+            {
+                HymnTableInfo table = new HymnTableInfo();
+                table.Id = Convert.ToInt16(page.Key);
+                table.Name = page.Value;
+
+                hymnList.Add(table);
+            }
+
+            listView.ItemsSource = hymnList;
 
         }
 	}

@@ -474,7 +474,7 @@ namespace WBA
                             case "노랑":
                                 labelText.BackgroundColor = Color.Yellow;
                                 break;
-                            case "파랑":
+                            case "녹색":
                                 labelText.BackgroundColor = Color.Green;
                                 break;
                         }
