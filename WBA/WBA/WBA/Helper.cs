@@ -43,5 +43,18 @@ namespace WBA
             string timestr = time.ToString("HH:mm");
             return timestr;
         }
+
+
+        static public bool IsNumber(string me)
+        {
+            foreach (char ch in me)
+            {
+                if (!Char.IsDigit(ch))
+                    return false;
+            }
+
+            return true;
+        }
+
     }
 }

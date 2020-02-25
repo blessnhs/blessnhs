@@ -81,6 +81,7 @@ namespace WBA.Droid
                 BibleInfo.LoadKRV();
                 BibleInfo.LoadKJV();
                 Dic.LoadDic();
+                Hymn.LoadList();
                 //BibleInfo.LoadNIV();
                 //BibleInfo.CheckValidate();
             }

@@ -77,18 +77,6 @@ namespace WBA.MainTabbedPage
             RefreshData();
         }
 
-        public bool IsNumber(string me)
-        {
-            foreach (char ch in me)
-            {
-                if (!Char.IsDigit(ch))
-                    return false;
-            }
-
-            return true;
-        }
-
-
         private void ShowInfomation(DateTime StartTime,int Count)
         {
             //읽기 정보 출력
@@ -133,7 +121,7 @@ namespace WBA.MainTabbedPage
                 if (CountText == null)
                     CountText = "3";
 
-                if (IsNumber(CountText) == false)
+                if (Helper.IsNumber(CountText) == false)
                 {
                     await DisplayAlert("", "장수는 숫자로만 입력하세요 ", "OK");
                     return;
