@@ -30,14 +30,14 @@
                 </Frame>
 
                 <Frame BorderColor="Gray" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
-                    <StackLayout VerticalOptions="StartAndExpand">
-                        <Image x:Name="Image1" Aspect="AspectFill" />
+                        <StackLayout VerticalOptions="StartAndExpand" >
+                            <Image x:Name="Image1" Aspect="AspectFit" />
                     </StackLayout>
                 </Frame>
 
                 <Frame BorderColor="Gray" Grid.Row="2" Grid.Column="0"  Grid.ColumnSpan="2">
-                    <StackLayout VerticalOptions="StartAndExpand">
-                        <Image x:Name="Image2" Aspect="AspectFill" />
+                        <StackLayout VerticalOptions="StartAndExpand">
+                            <Image x:Name="Image2" Aspect="AspectFit" />
                     </StackLayout>
                 </Frame>
                 
