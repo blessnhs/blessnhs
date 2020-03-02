@@ -30,7 +30,7 @@ VOID BoardProcess::Process(LPVOID Data, DWORD Length, WORD MainProtocol, WORD Su
 	}
 	catch (int exception)
 	{
-		printf("handle exception\n");
+		printf("handle exception %d\n",exception);
 	}
 }
 

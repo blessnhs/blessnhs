@@ -1,6 +1,6 @@
 #pragma once
 
-#define MAX_BUFFER_LENGTH		1024 * 3
+#define MAX_BUFFER_LENGTH		1024 * 5
 #define MAX_ID_LENGTH			50
 #define MAX_CHAR_LENGTH			50
 #define MAX_CHAR_CNT			5

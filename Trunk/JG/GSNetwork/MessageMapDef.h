@@ -20,8 +20,9 @@ typedef void (SESSIONNAME::*NETFUNC)(LPVOID,DWORD,boost::shared_ptr<GSClient>);	
 #define SEND_PROTO_BUFFER(NAME,SESSION)	\
 {	\
 	int _bufSize__ = NAME.ByteSizeLong();	\
-	boost::shared_ptr<BYTE[]> _arr_send_(new BYTE[_bufSize__]);	\
-	google::protobuf::io::ArrayOutputStream os(_arr_send_.get(), _bufSize__);	\
+	BYTE *_arr_send_ = new BYTE[_bufSize__];	\
+	google::protobuf::io::ArrayOutputStream os(_arr_send_, _bufSize__);	\
 	NAME.SerializeToZeroCopyStream(&os);	\
-	SESSION->GetTCPSocket()->WritePacket(NAME.id(), 0, _arr_send_.get(), _bufSize__);	\
+	SESSION->GetTCPSocket()->WritePacket(NAME.id(), 0, _arr_send_, _bufSize__);	\
+	delete[] _arr_send_ ; \
 }
