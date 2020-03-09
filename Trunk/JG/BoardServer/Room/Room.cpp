@@ -1,5 +1,6 @@
 #include "StdAfx.h"
 #include "./Room.h"
+#include "../Server/GSBoard.h"
 
 DWORD Room::FindPlayer(PLAYER_PTR Player)
 {
@@ -49,11 +50,7 @@ bool Room::RemovePlayer(PLAYER_PTR Player)
 
 bool Room::InsertPlayer(PLAYER_PTR Player)
 {
-	int MaxCount = m_Stock.MAX_PLAYER/2;
-
-	if(MaxCount < 2) MaxCount = 2;
-
-	for(int i=0;i<MaxCount;i++)
+	for(int i=0;i<m_Stock.MAX_PLAYER;i++)
 	{
 		if(m_PlayerMap.find(i) == m_PlayerMap.end())
 		{
@@ -64,15 +61,6 @@ bool Room::InsertPlayer(PLAYER_PTR Player)
 		}
 	}
 
-	for(int i=0;i<MaxCount;i++)
-	{
-		if(m_PlayerMap.find(i) == m_PlayerMap.end())
-		{
-			m_PlayerMap[i+MaxCount] = Player;
-			Player->m_Char[0].SetTeam( BLACK );
-			return true;
-		}
-	}
 	return false;
 }
 
@@ -104,19 +92,16 @@ void Room::SendNewUserInfo(PLAYER_PTR Player)
 			GSCLIENT_PTR pPair = SERVER.GetClient(iter.second->GetPair());
 			if (pPair != NULL)
 			{
-				//if(Player->GetId() != iter->second->GetId())
-				{
-					/*					FC_PKT_NEW_USER_IN_ROOM SND;
+				NEW_USER_IN_ROOM_NTY nty;
 
-										SND.Pos = iter->first;
-										SND.PlayerName = Player->m_Account.GetName().c_str();
+				RoomUserInfo *userinfo = nty.mutable_var_room_user();
 
-										DECLARE_JSON_WRITER
-										ADD_JSON_MEMBER("Pos",(WORD)SND.Pos)
-										ADD_JSON_WSTR_MEMBER("PlayerName",SND.PlayerName)
-										END_JSON_MEMBER(pPair->GetTCPSocket(),ID_FC_PKT_NEW_USER_IN_ROOM)*/
-				}
+				std::string name;
+				name.assign(Player->m_Account.GetName().begin(), Player->m_Account.GetName().end());
 
+				userinfo->set_var_name(name.c_str());
+			
+				SEND_PROTO_BUFFER(nty, pPair)
 			}
 		}
 

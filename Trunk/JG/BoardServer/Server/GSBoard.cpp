@@ -8,7 +8,6 @@
 
 GSBoard::GSBoard(void)
 {
-	Initialize();
 }
 
 

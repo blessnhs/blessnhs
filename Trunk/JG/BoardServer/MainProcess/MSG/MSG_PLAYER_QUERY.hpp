@@ -54,7 +54,7 @@ namespace Board	{
 			{
 				res.set_var_code(DataBaseError);
 
-				SEND_PROTO_BUFFER(res,pSession)
+				SEND_PROTO_BUFFER(res, pSession)
 				return;
 			}
 
@@ -72,17 +72,17 @@ namespace Board	{
 			INT64 Index = 0;
 			WORD nRet = pProcess->ProcedureUserLogin(pRequst->Account.c_str(), pRequst->Passwd.c_str(), authentickey, Index);
 
-
-			if(nRet != _ERR_NONE || (PLAYERMGR.Search(pRequst->Account.c_str()) != NULL))
+			if(nRet != _ERR_NONE || (PLAYERMGR.Search(pRequst->Account) != NULL))
 			{ 
 				res.set_var_code(LoginDuplicate);
 				return ;
 			}
 
 			PlayerPtr pNewPlayer = PLAYERMGR.Create();
+	
 			pNewPlayer->Initialize();
-			pNewPlayer->m_Char[0].SetName(pRequst->Account.c_str());
-			pNewPlayer->m_Account.SetName(pRequst->Account.c_str());
+			pNewPlayer->m_Char[0].SetName(pRequst->Account);
+			pNewPlayer->m_Account.SetName(pRequst->Account);
 			pNewPlayer->SetId(Index);
 			pNewPlayer->SetPair(pSession->GetId());
 			pSession->SetPair(Index);

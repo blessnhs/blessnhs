@@ -19,9 +19,9 @@ public:
 		~Account() {}
 
 		std::wstring& GetName() { return m_Name;	}
-		void SetName(std::wstring _Name);
+		void SetName(const std::wstring& _Name) { m_Name = _Name; }
 
-	private:
+	public:
 
 		std::wstring m_Name;
 	};

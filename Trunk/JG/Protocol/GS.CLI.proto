@@ -10,5 +10,40 @@ message LOGIN_RES
     optional PROTOCOL   id                  = 1 [default = ID_PKT_LOGIN_RES];
 
     optional  ErrorCode    var_code         = 2;
-   
+}
+
+message CREATE_ROOM_RES
+{
+    optional PROTOCOL   id                  = 1 [default = ID_PKT_CREATE_ROOM_RES ];
+    optional string var_name                  = 2;
+ 
+    optional  ErrorCode    var_code         = 4;
+}
+
+message ENTER_ROOM_RES
+{
+    optional PROTOCOL   id                  = 1 [default = ID_PKT_ENTER_ROOM_RES ];
+    optional string var_name                = 2;
+    optional  ErrorCode    var_code         = 4;
+}
+ 
+ message NEW_USER_IN_ROOM_NTY
+{
+    optional PROTOCOL   id                  = 1 [default = ID_PKT_NEW_USER_IN_ROOM_NTY ];
+    optional RoomUserInfo var_room_user     = 3;
+    optional  ErrorCode    var_code         = 4;
+}
+
+message LEAVE_ROOM_RES
+{
+    optional PROTOCOL   id                  = 1 [default = ID_PKT_LEAVE_ROOM_RES ];
+	optional string var_name                = 2;
+    optional  ErrorCode    var_code         = 3;
+}
+
+message BROADCAST_ROOM_MESSAGE_RES
+{
+    optional PROTOCOL   id                  = 1 [default = ID_PKT_BROADCAST_ROOM_MESSAGE_RES ];
+    optional string     var_message         = 2;
+	optional string     var_name			= 3;
 }

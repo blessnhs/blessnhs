@@ -1,17 +1,10 @@
-﻿syntax = "proto3";
+﻿syntax = "proto2";
 
 import "Enum.proto";
 
-
 option optimize_for = SPEED;
 
-message PlayerStats
+message RoomUserInfo
 {
-    repeated int32          var_vital_stats              = 1;
-    repeated float          var_player_rating            = 2;
-
-    float          var_fastball_velocity        = 3;
-
-    repeated int32          var_breaking_ball_type       = 4;
-    repeated float          var_breaking_ball_value      = 5;
+	optional string var_name = 1 ;
 }

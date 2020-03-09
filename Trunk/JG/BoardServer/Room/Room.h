@@ -8,6 +8,10 @@
 
 #include "../Player/container/Player.h"
 #include "../Server/GSBoard.h"
+#include "MessageMapDef.h"
+
+#include "CLI.GS.pb.h"
+#include "GS.CLI.pb.h"
 
 using namespace std;
 typedef GSNetwork::GSObject::GSObject GSObject;
@@ -20,8 +24,8 @@ typedef GSNetwork::GSObject::GSObject GSObject;
 
 	struct RoomStock
 	{
-		wstring Name;
-		wstring Passwd;
+		string Name;
+		string Passwd;
 		WORD  MAX_PLAYER;
 		WORD  GameType;
 	
@@ -47,7 +51,16 @@ public:
 
 	bool IsAllComplete();
 
-	WORD GetCurrPlayer() { return (WORD)m_PlayerMap.size(); }
+	WORD GetCurrPlayer()
+	{
+		int count = 0;
+		for each (auto& player in m_PlayerMap)
+		{
+			if (player.second != NULL)
+				count++;
+		}
+		return count;
+	}
 
 	template<class T>
 	void SendToAll(T &snd)
@@ -58,10 +71,10 @@ public:
 			if (pPlayer == NULL)
 				continue;
 
-			GSCLIENT_PTR pSession = IOCP.GetSessionMgr()->GetSession(iter->second->GetPair());
+			GSCLIENT_PTR pSession = SERVER.GetClient(pPlayer->GetPair());
 
 			if (pSession)
-				Sender::Send(pSession, snd);
+				SEND_PROTO_BUFFER(snd,pSession)
 		}
 	}
 

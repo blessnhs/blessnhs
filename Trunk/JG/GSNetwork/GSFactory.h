@@ -111,6 +111,7 @@ private:
 
 		m_AllocCount--;
 
+
 		if (m_AllocCount != 0 && (m_AllocCount % 100) == 0)
 		{
 			printf("dealloc %s %d\n", typeid(T).name(), m_AllocCount);

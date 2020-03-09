@@ -20,11 +20,6 @@ void Player::SetPair(DWORD pPair)
 	m_PairSessionId = pPair;
 }
 
-void Player::Account::SetName(std::wstring _Name)
-{
-	m_Name = _Name;
-}
-
 VOID Player::SetChannel(DWORD _id)
 {
 	m_ChannelId = _id;
@@ -37,9 +32,6 @@ DWORD Player::GetChannel()
 
 void Player::Initialize()
 {
-	memset(&m_Account,0,sizeof(m_Account));
-	memset(&m_Char,0,sizeof(m_Char));
-
 	m_PairSessionId = 0;
 	m_RoomNumber    = 0;
 }

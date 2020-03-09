@@ -121,7 +121,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <OutDir>../BIN/release</OutDir>
+    <OutDir>../BIN</OutDir>
     <TargetName>$(ProjectName)_x64</TargetName>
     <IncludePath>../Common/boost_1_68_0;../GSPacket;../common/lib_json;../common/protobuf/include;../common/Protocol/Cpp;../Protocol/Cpp;$(IncludePath)</IncludePath>
     <LibraryPath>../Common/boost_1_68_0/lib;../Common/lib_json;../Common/protobuf/lib;../Common/protobuf/Debug/lib;$(LibraryPath)</LibraryPath>

@@ -9,13 +9,13 @@ template<template<class T> class CreationPolicy> PlayerContainer<CreationPolicy>
 
 template<template<class T> class CreationPolicy> bool PlayerContainer<CreationPolicy>::Add(PlayerPtr &pObj)
 {
-	auto iter = m_PlayerMap.find(pObj->GetId());
+	/*auto iter = m_PlayerMap.find(pObj->GetId());
 
 	if(iter == m_PlayerMap.end())
-	{
+	{*/
 		m_PlayerMap[pObj->GetId()] = pObj;
 		return true;;
-	}
+	//}
 
 	return false;
 }

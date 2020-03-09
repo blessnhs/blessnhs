@@ -23,7 +23,7 @@ class WRITE_PACKET_INFO
 {
 public:
 	WRITE_PACKET_INFO(){}
-	virtual ~WRITE_PACKET_INFO() {}
+	virtual ~WRITE_PACKET_INFO() { }
 
 	BYTE	Data[MAX_BUFFER_LENGTH];
 	DWORD	DataLength;

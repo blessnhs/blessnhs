@@ -13,9 +13,9 @@ std::wstring& Character::GetName()
 	return m_Name;	
 }
 
-void Character::SetName(std::wstring _Name)
+void Character::SetName(std::wstring& _Name)
 {
-	m_Name  = _Name;
+	m_Name =  _Name;
 }
 
 

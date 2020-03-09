@@ -156,12 +156,12 @@ public class Client
             {
                 if (ConnectPos == 0)
                 {
-                    byte[] bytes;
+                    string read = Console.ReadLine();
                     LOGIN_REQ person = new LOGIN_REQ
                     {
                         Id = PROTOCOL.IdPktLoginRes,
-                        VarId = "nhs1",
-                        VarPasswd = "nhs1",
+                        VarId = read,
+                        VarPasswd = read,
                     };
                     using (MemoryStream stream = new MemoryStream())
                     {
@@ -176,27 +176,6 @@ public class Client
 
 
                 }
-                else if (ConnectPos == 1)
-                {
-
-                    {
-                        JsonObjectCollection collection2 = new JsonObjectCollection();
-                        collection2.Add(new JsonStringValue("Id", id));
-                        collection2.Add(new JsonStringValue("SessionKey", sessionkey));
-                        Console.WriteLine(collection2.ToString());
-                        WritePacket(1002, System.Text.Encoding.UTF8.GetBytes(collection2.ToString()), collection2.ToString().Length);
-                    }
-                }
-                else if (ConnectPos == 5)
-                {
-                    JsonObjectCollection collection = new JsonObjectCollection();
-                    collection.Add(new JsonNumericValue("Id", 1));
-                    collection.Add(new JsonNumericValue("PlayerIndex", sequence));
-
-                    WritePacket(9004, System.Text.Encoding.UTF8.GetBytes(collection.ToString()), collection.ToString().Length);
-
-                }
-
             }
 
  //          WritePacket(30000, System.Text.Encoding.UTF8.GetBytes(SrcBuffer), SrcBuffer.Length);
@@ -252,9 +231,6 @@ public class Client
 
     public void OnRecvThreadProc()
     {
-        //lock (this)
-        {
-
         int Protocol = 0;
         int PacketLength = 0;
        
@@ -262,88 +238,103 @@ public class Client
 
         while (GetPacket(ref Protocol, ref mCompletePacketBuffer, ref PacketLength))
         {
-            /*   if (Protocol == 0) //로긴
-                   ProcessLogin(mCompletePacketBuffer, PacketLength, Protocol);
-               else
-                   ProcessGame(mCompletePacketBuffer, PacketLength, Protocol);
-             */
-
-            //Console.Write("{0} ", Encoding.ASCII.GetString(mCompletePacketBuffer, 0, PacketLength));
-
-            if (Protocol == 1)
-            {
-                ++repeatcount;
-                if (repeatcount >= 200)
+                switch (Protocol)
                 {
-                    socket.Disconnect(true);
-                    repeatcount = 0;
-                    isconnected = 3;
-                    return;
-                }
+                    case (int)PROTOCOL.IdPktLoginRes:
+                        {
+                             LOGIN_RES res = new LOGIN_RES();
+                             res = LOGIN_RES.Parser.ParseFrom(mCompletePacketBuffer);
 
-          //      socket.Disconnect(false);
-                isconnected = 0;
+                             Console.WriteLine("IdPktLoginRes " + res.VarCode.ToString());
 
-                 LOGIN_RES res = new LOGIN_RES();
-                 res = LOGIN_RES.Parser.ParseFrom(mCompletePacketBuffer);
+                       string readkey = Console.ReadLine();
+                        if (readkey == "0")
+                        {
+                            CREATE_ROOM_REQ person = new CREATE_ROOM_REQ
+                            {
+                                VarName = "nhs1_createRoom",
+                                VarPassword = "nhs1",
+                            };
+                            using (MemoryStream stream = new MemoryStream())
+                            {
+                                person.WriteTo(stream);
 
-                 Console.Write(res.VarCode.ToString()); 
+                                WritePacket((int)PROTOCOL.IdPktCreateRoomReq, stream.ToArray(), stream.ToArray().Length);
+                            }
+                        }
+                        else
+                        {
+                            ENTER_ROOM_REQ person = new ENTER_ROOM_REQ
+                            {
+                                VarId = 1,
+                                VarPassword = "1"
+                            };
+                            using (MemoryStream stream = new MemoryStream())
+                            {
+                                person.WriteTo(stream);
 
+                                WritePacket((int)PROTOCOL.IdPktEnterRoomReq, stream.ToArray(), stream.ToArray().Length);
+                            }
 
-                repeatcount++;
-
-             }
-
-            if (Protocol == 9005)
-            {
-                string parseStr = System.Text.Encoding.UTF8.GetString(mCompletePacketBuffer);
-
-                Console.Write(parseStr);
-
-                JsonTextParser parser = new JsonTextParser();
-                JsonObject obj = parser.Parse(parseStr);
-                JsonObjectCollection col = (JsonObjectCollection)obj;
-
-                int Port    = Convert.ToInt32(col["Port"].GetValue());
-                int GroupId = Convert.ToInt32(col["GroupID"].GetValue());
-                int Id = Convert.ToInt32(col["Id"].GetValue());
-                
-                udpsocket = new UDPClient();
-
-                udpsocket.ServerPortNumber = Port;
-
-                char input;
-                input = (char)Console.Read();
+                        }
 
 
-                udpsocket.Init();
-                udpsocket.Send(9011,Id, GroupId);
+                    }
+                        break;
+                case (int)PROTOCOL.IdPktCreateRoomRes:
+                    {
+                        CREATE_ROOM_RES res = new CREATE_ROOM_RES();
+                        res = CREATE_ROOM_RES.Parser.ParseFrom(mCompletePacketBuffer);
+
+                        Console.WriteLine("IdPktCreateRoomRes " + res.VarCode.ToString());
+                    }
+                    break;
+                case (int)PROTOCOL.IdPktNewUserInRoomNty:
+                    {
+                        NEW_USER_IN_ROOM_NTY res = new NEW_USER_IN_ROOM_NTY();
+                        res = NEW_USER_IN_ROOM_NTY.Parser.ParseFrom(mCompletePacketBuffer);
+
+                        Console.WriteLine("IdPktNewUserInRoomNty " + res.VarCode.ToString());
+                    }
+                    break;
+                case (int)PROTOCOL.IdPktBroadcastRoomMessageRes:
+                    {
+                        BROADCAST_ROOM_MESSAGE_RES res = new BROADCAST_ROOM_MESSAGE_RES();
+                        res = BROADCAST_ROOM_MESSAGE_RES.Parser.ParseFrom(mCompletePacketBuffer);
+
+                        Console.WriteLine("IdPktBroadcastRoomMessageRes " + res.VarName + " " + res.VarMessage);
+
+                        string message = Console.ReadLine();
+
+                        BROADCAST_ROOM_MESSAGE_REQ req = new BROADCAST_ROOM_MESSAGE_REQ
+                        {
+                          VarMessage = message
+                        };
+                        using (MemoryStream stream = new MemoryStream())
+                        {
+                            req.WriteTo(stream);
+
+                            WritePacket((int)PROTOCOL.IdPktBroadcastRoomMessageReq, stream.ToArray(), stream.ToArray().Length);
+                        }
+                    }
+                    break;
+                case (int)PROTOCOL.IdPktEnterRoomRes:
+                    {
+                        BROADCAST_ROOM_MESSAGE_REQ req = new BROADCAST_ROOM_MESSAGE_REQ
+                        {
+                            VarMessage = "test message"
+                        };
+                        using (MemoryStream stream = new MemoryStream())
+                        {
+                            req.WriteTo(stream);
+
+                            WritePacket((int)PROTOCOL.IdPktBroadcastRoomMessageReq, stream.ToArray(), stream.ToArray().Length);
+                        }
+                    }
+                    break;
             }
-
-
-            if (Protocol == 9012)
-            {
-                char input;
-                input = (char)Console.Read();
-
-                string parseStr = System.Text.Encoding.UTF8.GetString(mCompletePacketBuffer);
-
-                Console.Write(parseStr);
-
-                JsonTextParser parser = new JsonTextParser();
-                JsonObject obj = parser.Parse(parseStr);
-                JsonObjectCollection col = (JsonObjectCollection)obj;
-
-                string Ip = Convert.ToString(col["Ip"].GetValue());
-                int Port = Convert.ToInt32(col["Port"].GetValue());
-
-
-                udpsocket.Send(Ip, Port);
-            }
-
-        }
-        }
-  
+   
+         }  
     }
 
     private void ReceiveCallback(IAsyncResult ar)
@@ -478,72 +469,24 @@ public class Process
 
     public void start()
     {
-        login = new Client[max];
+
+     //   Thread t3 = new Thread(delegate ()
+    //    {
+            Client login = new Client(i);
+            login.sequence = i;
+
+            login.ConnectPos = 0;
+            login.StartClient("127.0.0.1", 20000);
+
+    //    });
+     //   t3.Start();
+        Thread.Sleep(100);
+
 
         while (true)
         {
-
-            Thread t3 = new Thread(delegate ()
-            {
-                Client login = new Client(i);
-                login.sequence = i;
-
-                login.ConnectPos = 0;
-                login.StartClient("127.0.0.1", 20000);
-
-                Thread.Sleep(100);
-                string id = String.Format("nhs{0}", 1);
-                string pwd = String.Format("nhs{0}", 1);
-
-                for (int i = 0; i < 1; i++)
-                {
-                    Thread.Sleep(11);
-                    JsonObjectCollection collection = new JsonObjectCollection();
-                    collection.Add(new JsonStringValue("Id", id));
-                    collection.Add(new JsonStringValue("Passwd", pwd));
-
-                    login.WritePacket(0, System.Text.Encoding.Unicode.GetBytes(collection.ToString()), collection.ToString().Length);
-                }
-
-                Thread.Sleep(3750);
-                login.socket.Close();
-            });
-            t3.Start();
+            login.Update();
             Thread.Sleep(100);
-        }
-
-      
-
-        DateTime NOW = DateTime.Now;
-   
-           while (true)
-        {
-            for (int i = 1; i < max; i++)
-            {
-                login[i].Update();
-//              front[i].Update();
-
-
-                Thread.Sleep(500);
-
-                if (NOW < DateTime.Now)
-                {
-                    NOW = NOW.AddSeconds(30);
-
-                    int activecount = 0;
-
-                    for (int j = 1; j < max; j++)
-                    {
-                        if (login[j].socket.Connected == true)
-                        {
-                            activecount++;
-                           
-                        }
-                    }
-
-                    Console.Write("activecount {0}\n", activecount);
-                }
-            }
         }
 
     }

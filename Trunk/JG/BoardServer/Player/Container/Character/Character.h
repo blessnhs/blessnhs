@@ -10,7 +10,7 @@ public:
 	~Character();
 
 	std::wstring& GetName();
-	void SetName(std::wstring _Name);
+	void SetName(std::wstring& _Name);
 
 	void SetReady(bool _ready);
 	bool GetReady();

@@ -6,7 +6,7 @@
 
 BoardConstructor::BoardConstructor(void)
 {
-	GSBoard *_instance = new GSBoard;
+	SERVER.Initialize();
 	
 	BoardCommand _Command;
 	
@@ -15,7 +15,7 @@ BoardConstructor::BoardConstructor(void)
 		WCHAR command[256];
 		wscanf_s(_T("%s"),command,sizeof(command));
 
-		printf("AliveCount %d\n",_instance->GetClientMgr().GetActiveSocketCount());
+		printf("AliveCount %d\n", SERVER.GetClientMgr().GetActiveSocketCount());
 	}
 
 

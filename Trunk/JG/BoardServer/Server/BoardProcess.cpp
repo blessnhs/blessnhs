@@ -1,19 +1,18 @@
 #include "StdAfx.h"
 
 #include "BoardProcess.h"
-
+#include "../Player/Container/PlayerContainer.h"
+#include "../Room/RoomContainer.h"
 
 using namespace google;
 
 BoardProcess::BoardProcess(void)
 {
 	ADD_NET_FUNC(BoardProcess, ID_PKT_LOGIN_REQ, LOGIN_PLAYER);
-	ADD_NET_FUNC(BoardProcess, ID_PKT_ALL_COMPLETE_NTY, ALL_COMPLETE);
-	ADD_NET_FUNC(BoardProcess, ID_PKT_AUTO_START_REQ, AUTO_START);
 	ADD_NET_FUNC(BoardProcess, ID_PKT_CREATE_ROOM_REQ, ROOM_CREATE);
 	ADD_NET_FUNC(BoardProcess, ID_PKT_ENTER_ROOM_REQ, ROOM_ENTER);
 	ADD_NET_FUNC(BoardProcess, ID_PKT_LEAVE_ROOM_REQ, ROOM_LEAVE);
-	ADD_NET_FUNC(BoardProcess, ID_PKT_CHAT_ROOM_REQ, ROOM_CHAT);
+	ADD_NET_FUNC(BoardProcess, ID_PKT_BROADCAST_ROOM_MESSAGE_REQ, ROOM_CHAT);
 }
 
 
@@ -56,157 +55,125 @@ VOID BoardProcess::LOGIN_PLAYER(LPVOID Data, DWORD Length, boost::shared_ptr<GSC
 
 VOID BoardProcess::ROOM_CREATE(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> pOwner)
 {
-	//PlayerPtr pPlayer = PLAYERMGR.Search(pOwner->GetPair());
-	//if (pPlayer == NULL || pPlayer->m_RoomNumber != 0)
-	//{
-	//	DECLARE_JSON_WRITER
-	//	ADD_JSON_MEMBER("Result", FC_PKT_CREATE_ROOM_RES::ErrorCode::NOT_FOUND_PLAYER)
-	//	END_JSON_MEMBER(pOwner->GetTCPSocket(), ID_FC_PKT_CREATE_ROOM_RES)
-	//	return;
-	//}
+	DECLARE_RECV_TYPE(CREATE_ROOM_REQ, createroom)
+	
+	CREATE_ROOM_RES res;
 
-	//DECLARE_JSON_READ
-	//GET_JSON_WSTR_MEMBER("Name", Name)
-	//GET_JSON_INT_MEMBER("Type", Type)
-	//GET_JSON_INT_MEMBER("MaxCount", MaxCount)
+	PlayerPtr pPlayer = PLAYERMGR.Search(pOwner->GetPair());
+	if (pPlayer == NULL)
+	{
+		res.set_var_code(SystemError);
+		SEND_PROTO_BUFFER(res, pOwner)
+		return;
+	}
 
-	//ROOM_PTR RoomPtr = ROOMMGR.Create();
-	//RoomPtr->m_Stock.Name = Name;
+	ROOM_PTR RoomPtr = ROOMMGR.Create();
+	RoomPtr->m_Stock.Name = createroom.var_name();
 
-	//ROOMMGR.Add(RoomPtr);
-	//RoomPtr->m_Stock.MAX_PLAYER = MaxCount;
+	ROOMMGR.Add(RoomPtr);
+	RoomPtr->m_Stock.MAX_PLAYER = USHRT_MAX;
 
-	//if (pPlayer != NULL)
-	//{
-	//	pPlayer->m_RoomNumber = RoomPtr->GetId();
-	//}
+	if (pPlayer != NULL)
+	{
+		pPlayer->m_RoomNumber = RoomPtr->GetId();
+	}
 
-	//RoomPtr->InsertPlayer(pPlayer);
+	RoomPtr->InsertPlayer(pPlayer);
 
-	//DECLARE_JSON_WRITER
-	//ADD_JSON_MEMBER("Result", 0)
-	//ADD_JSON_MEMBER("RoomNumber", (WORD)RoomPtr->GetId())
-	//ADD_JSON_MEMBER("MaxCount", RoomPtr->m_Stock.MAX_PLAYER)
-	//ADD_JSON_WSTR_MEMBER("Name", RoomPtr->m_Stock.Name)
-	//END_JSON_MEMBER(pOwner->GetTCPSocket(), ID_FC_PKT_CREATE_ROOM_RES)
+	res.set_var_name(RoomPtr->m_Stock.Name.c_str());
+	SEND_PROTO_BUFFER(res, pOwner)
 
-	//RoomPtr->SendNewUserInfo(pPlayer);	//방에 있는 유저들에게 새로운 유저 정보전송
+	RoomPtr->SendNewUserInfo(pPlayer);	//방에 있는 유저들에게 새로운 유저 정보전송
 }
 
 VOID BoardProcess::ROOM_ENTER(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> pOwner)
 {
-	//DECLARE_JSON_READ
-	//GET_JSON_UINT_MEMBER("RoomNumber", RoomNumber)
+	DECLARE_RECV_TYPE(ENTER_ROOM_REQ, enterroom)
 
-	//ROOM_PTR RoomPtr = ROOMMGR.Search(RoomNumber);
-	//if (RoomPtr != NULL)
-	//{
-	//	PlayerPtr pPlayer = PLAYERMGR.Search(pOwner->GetPair());
-	//	if (pPlayer != NULL)
-	//	{
-	//		RoomPtr->InsertPlayer(pPlayer);
+	ENTER_ROOM_RES res;
 
-	//		pPlayer->m_RoomNumber = RoomPtr->GetId();
-	//	}
+	ROOM_PTR RoomPtr = ROOMMGR.Search(enterroom.var_id());
+	if (RoomPtr == NULL)
+	{
+		res.set_var_code(SystemError);
+		SEND_PROTO_BUFFER(res, pOwner)
+		return;
+	}	
+	
+	PlayerPtr pPlayer = PLAYERMGR.Search(pOwner->GetPair());
+	if (pPlayer == NULL)
+	{
+		return;
+	}
+	
+	RoomPtr->InsertPlayer(pPlayer);
 
-	//	DECLARE_JSON_WRITER
-	//	ADD_JSON_MEMBER("Result", 0)
+	pPlayer->m_RoomNumber = RoomPtr->GetId();
 
-	//		FC_PKT_ENTER_ROOM_RES res;
-	//	res.Result = FC_PKT_ENTER_ROOM_RES::SUCCESS;
-	//	int pos = 0;
-	//	res.roominfo.Index = RoomPtr->GetId();
-	//	res.roominfo.Name = RoomPtr->m_Stock.Name;
+	res.set_var_name(RoomPtr->m_Stock.Name.c_str());
+	SEND_PROTO_BUFFER(res, pOwner)
 
-	//	root2["roominfo"]["Index"] = (WORD)RoomPtr->GetId();
-	//	root2["roominfo"]["Name"] = RoomPtr->m_Stock.Name.c_str();
+	//새로 입장한 유저에게 방안의 유저 정보전송
+	for each (auto iter in RoomPtr->m_PlayerMap)
+	{
+		NEW_USER_IN_ROOM_NTY nty;
 
-	//	Json::Value Array;
-	//	res.Result = 0;
-	//	root2["PlayerList"] = Array;
+		RoomUserInfo* userinfo = nty.mutable_var_room_user();
 
-	//	END_JSON_MEMBER(pOwner->GetTCPSocket(), ID_FC_PKT_ENTER_ROOM_RES)
+		std::string name;
+		name.assign(iter.second->m_Account.GetName().begin(), iter.second->m_Account.GetName().end());
 
-	//		std::map<DWORD, PLAYER_PTR>::iterator iter = RoomPtr->m_PlayerMap.begin();
-	//	while (iter != RoomPtr->m_PlayerMap.end())
-	//	{
-	//		Array["Pos"] = (WORD)iter->first;
-	//		root2["PlayerName"] = iter->second->m_Account.GetName().c_str();
+		userinfo->set_var_name(name.c_str());
 
-	//		DECLARE_JSON_WRITER
-	//		ADD_JSON_MEMBER("Pos", pos)
+		SEND_PROTO_BUFFER(nty, pOwner)
+	}
+	
+	//방안의 유저들 정보를 새로운 유저에게 전송
+	for each (auto iter in RoomPtr->m_PlayerMap)
+	{
+		if (iter.second->m_Account.GetName() != pPlayer->m_Account.GetName())
+		{
+			GSCLIENT_PTR pPair = SERVER.GetClient(pPlayer->GetPair());
+			if (pPair == NULL)
+				continue;
 
-	//			wstring Name = iter->second->m_Account.GetName();
-	//		ADD_JSON_WSTR_MEMBER("PlayerName", Name)
-	//			END_JSON_MEMBER(pOwner->GetTCPSocket(), ID_FC_PKT_NEW_USER_IN_ROOM)
+			NEW_USER_IN_ROOM_NTY nty;
 
-	//			res.Pos[pos] = iter->first;
-	//		res.PlayerName[pos] = iter->second->m_Account.GetName();
+			RoomUserInfo* userinfo = nty.mutable_var_room_user();
 
-	//		iter++;
-	//		pos++;
-	//	}
+			std::string name;
+			name.assign(pPlayer->m_Account.GetName().begin(), pPlayer->m_Account.GetName().end());
 
-	//	iter = RoomPtr->m_PlayerMap.begin();
-	//	while (iter != RoomPtr->m_PlayerMap.end())
-	//	{
-	//		//방안의 유저들 정보를 새로운 유저에게 전송
-
-	//		if (iter->second->m_Account.GetName() != pPlayer->m_Account.GetName())
-	//		{
-	//			GSCLIENT_PTR pPair = SERVER.GetClient(pPlayer->GetPair());
-
-	//			DECLARE_JSON_WRITER
-	//			ADD_JSON_MEMBER("Pos", pos)
-
-	//				wstring Name = iter->second->m_Account.GetName();
-	//			ADD_JSON_WSTR_MEMBER("PlayerName", Name)
-	//				END_JSON_MEMBER(pPair->GetTCPSocket(), ID_FC_PKT_NEW_USER_IN_ROOM)
-
-	//		}
-
-	//		iter++;
-	//		pos++;
-	//	}
-
-	//	RoomPtr->SendNewUserInfo(pPlayer);	//방에 있는 유저들에게 새로운 유저 정보전송
-	//	return;
-	//}
-
-	//DECLARE_JSON_WRITER
-	//ADD_JSON_MEMBER("Result", FC_PKT_ENTER_ROOM_RES::FAILED)
-	//	END_JSON_MEMBER(pOwner->GetTCPSocket(), ID_FC_PKT_ENTER_ROOM_RES)
+			userinfo->set_var_name(name.c_str());
+			SEND_PROTO_BUFFER(nty, pPair)
+		}
+	}
+	
 }
 
 VOID BoardProcess::ROOM_LEAVE(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> pOwner)
 {
-	/*DECLARE_JSON_READ
-	GET_JSON_UINT_MEMBER("RoomNumber", RoomNumber)
+	DECLARE_RECV_TYPE(LEAVE_ROOM_REQ, leaveroom)
 
+	LEAVE_ROOM_RES res;
+	
 	PlayerPtr pPlayer = PLAYERMGR.Search(pOwner->GetPair());
 	if (pPlayer == NULL)
 	{
 		return;
 	}
 
-	ROOM_PTR RoomPtr = ROOMMGR.Search(RoomNumber);
+	ROOM_PTR RoomPtr = ROOMMGR.Search(leaveroom.var_id());
 	if (RoomPtr != NULL)
 	{
 		if (RoomPtr->FindPlayer(pPlayer) != USHRT_MAX)
 		{
-			FC_PKT_LEAVE_ROOM_RES res;
-
-			res.Result = FC_PKT_LEAVE_ROOM_RES::SUCCESS;
-			res.PlayerName = pPlayer->m_Account.GetName();
-
-			DECLARE_JSON_WRITER
-			ADD_JSON_MEMBER("Result", FC_PKT_LEAVE_ROOM_RES::SUCCESS)
-				ADD_JSON_WSTR_MEMBER("PlayerName", res.PlayerName)
-
-				Json::FastWriter writer;
-			std::string outputConfig = writer.write(root2);
-
-			RoomPtr->SendToAll(ID_FC_PKT_LEAVE_ROOM_RES, (BYTE *)outputConfig.c_str(), outputConfig.size());
+		//	res.var_code(Success);
+			std::string name;
+			name.assign(pPlayer->m_Account.GetName().begin(), pPlayer->m_Account.GetName().end());
+			res.set_allocated_var_name(&name);
+					
+			RoomPtr->SendToAll(res);
 
 			RoomPtr->RemovePlayer(pPlayer);
 			pPlayer->m_RoomNumber = 0;
@@ -217,16 +184,7 @@ VOID BoardProcess::ROOM_LEAVE(LPVOID Data, DWORD Length, boost::shared_ptr<GSCli
 
 		pPlayer->m_Char[0].SetAllComplete(FALSE);
 		pPlayer->m_Char[0].SetReady(FALSE);
-
-		return;
-
 	}
-
-	DECLARE_JSON_WRITER
-	ADD_JSON_MEMBER("Result", FC_PKT_LEAVE_ROOM_RES::FAILED)
-	ADD_JSON_WSTR_MEMBER("PlayerName", pPlayer->m_Account.GetName())
-	END_JSON_MEMBER(pOwner->GetTCPSocket(), ID_FC_PKT_LEAVE_ROOM_RES)*/
-
 }
 
 VOID BoardProcess::ROOM_START(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> pOwner)
@@ -288,29 +246,29 @@ VOID BoardProcess::ROOM_READY(LPVOID Data, DWORD Length, boost::shared_ptr<GSCli
 
 VOID BoardProcess::ROOM_CHAT(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> pOwner)
 {
-	//DECLARE_JSON_READ
-	//GET_JSON_WSTR_MEMBER("Chat", Chat)
+	DECLARE_RECV_TYPE(BROADCAST_ROOM_MESSAGE_REQ, message)
 
-	//PlayerPtr pPlayer = PLAYERMGR.Search(pOwner->GetPair());
-	//if (pPlayer == NULL)
-	//{
-	//	return;
-	//}
+	BROADCAST_ROOM_MESSAGE_RES res;
 
-	//if (pPlayer != NULL)
-	//{
-	//	ROOM_PTR pPtr = ROOMMGR.Search(pPlayer->m_RoomNumber);
-	//	if (pPtr != NULL)
-	//	{
-	//		DECLARE_JSON_WRITER
-	//		ADD_JSON_WSTR_MEMBER("Chat", Chat)
+	PlayerPtr pPlayer = PLAYERMGR.Search(pOwner->GetPair());
+	if (pPlayer == NULL)
+	{
+		return;
+	}
 
-	//		Json::FastWriter writer;
-	//		std::string outputConfig = writer.write(root2);
+	{
+		std::string name;
+		name.assign(pPlayer->m_Account.GetName().begin(), pPlayer->m_Account.GetName().end());
 
-	//		pPtr->SendToAll(ID_FC_PKT_CHAT_ROOM_RES, (BYTE *)outputConfig.c_str(), outputConfig.size());
-	//	}
-	//}
+		res.set_var_message(message.var_message().c_str());
+		res.set_var_name(name.c_str());
+
+		ROOM_PTR pPtr = ROOMMGR.Search(pPlayer->m_RoomNumber);
+		if (pPtr != NULL)
+		{
+			pPtr->SendToAll(res);
+		}
+	}
 
 }
 
