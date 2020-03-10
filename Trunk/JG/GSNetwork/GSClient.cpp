@@ -302,20 +302,20 @@ VOID GSClient::ProcDisconnect(boost::shared_ptr<GSClient> pClient)
 		return ;
 	}
 
-	if(pServer->Disconnect(pClient) == TRUE)
-	{
-		SetConnected(FALSE);
-		Clear();
-//		BOOL Result = Recycle(pServer->GetTcpListen()->GetSocket());
+	pServer->Disconnect(pClient);
 
-		pServer->GetClientMgr().DelClient(pClient->GetId());
+	//상태값 초기화
+	SetConnected(FALSE);
+	Clear();
 
-		pServer->GetClientMgr().NewClient(pServer->GetTcpListen()->GetSocket(), pServer);
-	}
-	else
-	{
-		printf("Wait Cant Disconnected socket  %d %d\n",GetSocket(),pServer->GetTcpListen()->GetSocket());	
-	}
+	//이제는 소켓을 재사용하지 않기로 정함
+//	BOOL Result = Recycle(pServer->GetTcpListen()->GetSocket());
+
+	pServer->GetClientMgr().DelClient(pClient->GetId());
+
+	pServer->GetClientMgr().NewClient(pServer->GetTcpListen()->GetSocket(), pServer);
+	
+	printf("Disconnected socket %d %d\n",GetSocket(),pServer->GetTcpListen()->GetSocket());	
 }
 
 

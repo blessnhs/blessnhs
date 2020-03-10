@@ -131,24 +131,20 @@ VOID BoardProcess::ROOM_ENTER(LPVOID Data, DWORD Length, boost::shared_ptr<GSCli
 	//방안의 유저들 정보를 새로운 유저에게 전송
 	for each (auto iter in RoomPtr->m_PlayerMap)
 	{
-		if (iter.second->m_Account.GetName() != pPlayer->m_Account.GetName())
-		{
-			GSCLIENT_PTR pPair = SERVER.GetClient(pPlayer->GetPair());
-			if (pPair == NULL)
-				continue;
+		GSCLIENT_PTR pPair = SERVER.GetClient(pPlayer->GetPair());
+		if (pPair == NULL)
+			continue;
 
-			NEW_USER_IN_ROOM_NTY nty;
+		NEW_USER_IN_ROOM_NTY nty;
 
-			RoomUserInfo* userinfo = nty.mutable_var_room_user();
+		RoomUserInfo* userinfo = nty.mutable_var_room_user();
 
-			std::string name;
-			name.assign(pPlayer->m_Account.GetName().begin(), pPlayer->m_Account.GetName().end());
+		std::string name;
+		name.assign(pPlayer->m_Account.GetName().begin(), pPlayer->m_Account.GetName().end());
 
-			userinfo->set_var_name(name.c_str());
-			SEND_PROTO_BUFFER(nty, pPair)
-		}
+		userinfo->set_var_name(name.c_str());
+		SEND_PROTO_BUFFER(nty, pPair)
 	}
-	
 }
 
 VOID BoardProcess::ROOM_LEAVE(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> pOwner)
