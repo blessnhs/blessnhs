@@ -5,6 +5,11 @@ import "Structure.proto";
 
 option optimize_for = SPEED;
 
+message VERSION_REQ
+{
+    optional PROTOCOL   id                  = 1 [default = ID_PKT_VERSION_REQ  ];
+}
+
 message LOGIN_REQ
 {
     optional PROTOCOL   id                  = 1 [default = ID_PKT_LOGIN_REQ ];
@@ -37,3 +42,9 @@ message BROADCAST_ROOM_MESSAGE_REQ
     optional PROTOCOL   id                  = 1 [default = ID_PKT_BROADCAST_ROOM_MESSAGE_REQ ];
     required string     var_message         = 2;
 }
+
+message ROOM_LIST_REQ
+{
+    optional PROTOCOL   id                  = 1 [default = ID_PKT_ROOM_LIST_REQ ];
+}
+

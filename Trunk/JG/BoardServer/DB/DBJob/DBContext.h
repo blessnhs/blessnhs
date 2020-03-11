@@ -7,6 +7,16 @@
 
 typedef GSNetwork::GSObject::GSObject GSObject;
 
+class RequestVersion : public GSObject
+{
+public:
+	RequestVersion(void) {}
+	~RequestVersion(void) {}
+
+	float Version;
+};
+
+
 class RequestPlayerAuth : public GSObject
 {
 public:
@@ -21,9 +31,9 @@ public:
 	std::wstring SessionKey;
 	DWORD Index;
 	int Result;
-	
-
 };
+
+
 
 //sample
 class RPA : public GSObject

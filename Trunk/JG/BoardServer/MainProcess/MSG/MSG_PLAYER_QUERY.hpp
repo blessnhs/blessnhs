@@ -35,6 +35,52 @@ namespace Board	{
 		void Undo(){}
 	};
 
+
+	template<>
+	class MSG_PLAYER_QUERY<RequestVersion> : public IMESSAGE
+	{
+	public:
+		MSG_PLAYER_QUERY() { }
+		~MSG_PLAYER_QUERY() {}
+
+		GSCLIENT_PTR pSession;
+
+		boost::shared_ptr<RequestVersion> pRequst;
+
+		void Execute(LPVOID Param)
+		{
+			VERSION_RES res;
+
+			if (pSession == NULL || pSession->GetConnected() == false)
+			{
+				res.set_var_code(DataBaseError);
+
+				SEND_PROTO_BUFFER(res, pSession)
+				return;
+			}
+
+			DBPROCESS_CER_PTR pProcess = DBPROCESSCONTAINER_CER.Search(pSession->GetMyDBTP());
+			if (pProcess == NULL || pProcess->m_IsOpen == false)
+			{
+				res.set_var_code(DataBaseError);
+
+				SEND_PROTO_BUFFER(res, pSession)
+				return;
+			}
+
+			// 로그인 절차 : 아이디의 접속확인 및 인증키값을 가져온다.
+			float nRet = pProcess->ProcedureVersion();
+
+			res.set_var_version(nRet);
+			res.set_var_code(Success);
+
+			SEND_PROTO_BUFFER(res, pSession)
+		}
+
+
+		void Undo() {}
+	};
+
 	template<>
 	class MSG_PLAYER_QUERY<RequestPlayerAuth> : public IMESSAGE
 	{
@@ -58,7 +104,7 @@ namespace Board	{
 				return;
 			}
 
-			DBPROCESS_CER_PTR pProcess = DBPROCESSCONTAINER_CER.Search(pSession->GetMyDBTP(MSG_TYPE_DB_1));
+			DBPROCESS_CER_PTR pProcess = DBPROCESSCONTAINER_CER.Search(pSession->GetMyDBTP());
 			if (pProcess == NULL || pProcess->m_IsOpen == false)
 			{
 				res.set_var_code(DataBaseError);

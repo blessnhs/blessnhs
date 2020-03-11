@@ -12,6 +12,7 @@
 
 #include "CLI.GS.pb.h"
 #include "GS.CLI.pb.h"
+#include "Structure.pb.h"
 
 using namespace std;
 typedef GSNetwork::GSObject::GSObject GSObject;

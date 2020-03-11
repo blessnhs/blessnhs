@@ -31,7 +31,6 @@ public:
 
 	void Print();
 
-	VOID GetUserList(std::vector<UserInfo> &List);
 	VOID CheckUserList();
 
 	template<class TYPE>

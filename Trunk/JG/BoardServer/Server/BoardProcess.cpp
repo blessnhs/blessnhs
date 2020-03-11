@@ -8,6 +8,7 @@ using namespace google;
 
 BoardProcess::BoardProcess(void)
 {
+	ADD_NET_FUNC(BoardProcess, ID_PKT_VERSION_REQ, VERSION);
 	ADD_NET_FUNC(BoardProcess, ID_PKT_LOGIN_REQ, LOGIN_PLAYER);
 	ADD_NET_FUNC(BoardProcess, ID_PKT_CREATE_ROOM_REQ, ROOM_CREATE);
 	ADD_NET_FUNC(BoardProcess, ID_PKT_ENTER_ROOM_REQ, ROOM_ENTER);
@@ -24,7 +25,20 @@ BoardProcess::~BoardProcess(void)
 VOID BoardProcess::Process(LPVOID Data, DWORD Length, WORD MainProtocol, WORD SubProtocol, boost::shared_ptr<GSClient> Client)
 {
 	try
-	{
+	{	//로그인 하지 않은 유저가 패킷을 요청 했을때
+		// 버전이나 로그인 패킷이 아닌 경우 처리하지 않는다.
+		if (MainProtocol != ID_PKT_VERSION_REQ && MainProtocol != ID_PKT_LOGIN_REQ)
+		{
+			PlayerPtr pPlayer = PLAYERMGR.Search(Client->GetPair());
+			if (pPlayer == NULL)
+			{
+#ifdef _DEBUG_
+				printf("Not Login User d\n");
+#endif
+				return;
+			}
+		}
+
 		NET_FUNC_EXE(MainProtocol, Data, Length, Client);
 	}
 	catch (int exception)
@@ -33,7 +47,22 @@ VOID BoardProcess::Process(LPVOID Data, DWORD Length, WORD MainProtocol, WORD Su
 	}
 }
 
-VOID BoardProcess::LOGIN_PLAYER(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> pOwner)
+VOID BoardProcess::VERSION(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client)
+{
+	DECLARE_RECV_TYPE(VERSION_REQ, version)
+
+	//로그인 쿼리를 날린다.
+	boost::shared_ptr<RequestVersion> pRequest = ALLOCATOR.Create<RequestVersion>();
+	
+	boost::shared_ptr<Board::MSG_PLAYER_QUERY<RequestVersion>>		PLAYER_MSG = ALLOCATOR.Create<Board::MSG_PLAYER_QUERY<RequestVersion>>();
+	PLAYER_MSG->pSession = Client;
+	PLAYER_MSG->pRequst = pRequest;
+	PLAYER_MSG->Type = Client->GetMyDBTP();
+	PLAYER_MSG->SubType = ONQUERY;
+	MAINPROC.RegisterCommand(PLAYER_MSG);
+}
+
+VOID BoardProcess::LOGIN_PLAYER(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client)
 {
 	DECLARE_RECV_TYPE(LOGIN_REQ,login)
 		
@@ -46,9 +75,9 @@ VOID BoardProcess::LOGIN_PLAYER(LPVOID Data, DWORD Length, boost::shared_ptr<GSC
 	pRequest->Passwd.assign(login.var_passwd().begin(), login.var_passwd().end());
 
 	boost::shared_ptr<Board::MSG_PLAYER_QUERY<RequestPlayerAuth>>		PLAYER_MSG = ALLOCATOR.Create<Board::MSG_PLAYER_QUERY<RequestPlayerAuth>>();
-	PLAYER_MSG->pSession = pOwner;
+	PLAYER_MSG->pSession = Client;
 	PLAYER_MSG->pRequst = pRequest;
-	PLAYER_MSG->Type = pOwner->GetMyDBTP(MSG_TYPE_DB_1);
+	PLAYER_MSG->Type = Client->GetMyDBTP();
 	PLAYER_MSG->SubType = ONQUERY; 
 	MAINPROC.RegisterCommand(PLAYER_MSG);
 }
@@ -267,6 +296,26 @@ VOID BoardProcess::ROOM_CHAT(LPVOID Data, DWORD Length, boost::shared_ptr<GSClie
 	}
 
 }
+
+VOID BoardProcess::ROOM_LIST(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client)
+{
+	DECLARE_RECV_TYPE(ROOM_LIST_REQ, roomlistreq)
+
+	ROOM_LIST_RES res;
+
+	PlayerPtr pPlayer = PLAYERMGR.Search(Client->GetPair());
+	if (pPlayer == NULL)
+	{
+		return;
+	}
+
+	auto roomlist = res.mutable_var_room_list();
+
+	ROOMMGR.GetRoomList(roomlist);
+
+	SEND_PROTO_BUFFER(res, Client)
+}
+
 
 VOID BoardProcess::AUTO_START(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> pOwner)
 {

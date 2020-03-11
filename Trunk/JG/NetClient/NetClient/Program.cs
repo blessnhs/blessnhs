@@ -156,21 +156,18 @@ public class Client
             {
                 if (ConnectPos == 0)
                 {
-                    string read = Console.ReadLine();
-                    LOGIN_REQ person = new LOGIN_REQ
+
+                    VERSION_REQ person = new VERSION_REQ
                     {
-                        Id = PROTOCOL.IdPktLoginRes,
-                        VarId = read,
-                        VarPasswd = read,
+                        Id = PROTOCOL.IdPktVersionReq,
                     };
                     using (MemoryStream stream = new MemoryStream())
                     {
                         person.WriteTo(stream);
 
-                        WritePacket((int)PROTOCOL.IdPktLoginReq,stream.ToArray(), stream.ToArray().Length);
+                        WritePacket((int)PROTOCOL.IdPktVersionReq, stream.ToArray(), stream.ToArray().Length);
                     }
-                    
-               
+
                     ConnectPos = 1;
 
 
@@ -240,6 +237,28 @@ public class Client
         {
                 switch (Protocol)
                 {
+                    case (int)PROTOCOL.IdPktVersionRes:
+                        {
+
+                        VERSION_RES res = new VERSION_RES();
+                        res = VERSION_RES.Parser.ParseFrom(mCompletePacketBuffer);
+
+                        string read = Console.ReadLine();
+                        LOGIN_REQ person = new LOGIN_REQ
+                        {
+                            Id = PROTOCOL.IdPktLoginRes,
+                            VarId = read,
+                            VarPasswd = read,
+                        };
+                        using (MemoryStream stream = new MemoryStream())
+                        {
+                            person.WriteTo(stream);
+
+                            WritePacket((int)PROTOCOL.IdPktLoginReq, stream.ToArray(), stream.ToArray().Length);
+                        }
+
+                    }
+                    break;
                     case (int)PROTOCOL.IdPktLoginRes:
                         {
                              LOGIN_RES res = new LOGIN_RES();

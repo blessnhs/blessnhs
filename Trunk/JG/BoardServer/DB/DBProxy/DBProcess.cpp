@@ -36,6 +36,42 @@ CDBProcessCer &GetDBProcess()
 	static CDBProcessCer g_DBProcess;
 	return g_DBProcess;
 }
+float CDBProcessCer::ProcedureVersion()
+{
+	SQLRETURN		retcode = SQL_ERROR;
+	TCHAR			szSQL[1024];
+	SQLCHAR			szSessionKey[MAX_SESSION_KEY_SIZE] = { 0, };
+
+	SQLREAL			sParmRet = 0;
+	SQLLEN			cbParmRet = 0;
+	CDBHandle		dbhandle(m_pDB->m_hdbc, &(m_pDB->m_csDBHandle));
+	SQLHSTMT		hstmt = dbhandle.GetHandle();
+
+
+	wsprintf(szSQL, _T("{call SP_VERSION ( ?)}"));
+	retcode = SQLBindParameter(hstmt, 1, SQL_PARAM_OUTPUT, SQL_C_FLOAT, SQL_FLOAT, 0, 0, &sParmRet, 0, &cbParmRet);
+
+	if (retcode == SQL_SUCCESS)
+	{
+		retcode = SQLExecDirect(hstmt, szSQL, SQL_NTS);
+		if (retcode == SQL_ERROR)
+		{	// true is Disconnected...
+
+
+			if (m_pDB->SQLErrorMsg(hstmt, _T(__FUNCTION__)) == true)
+			{
+				wprintf(_T("database server Network Error... %s() \n"), __FUNCTION__);
+				m_pDB->Close();
+				m_pDB->ReConnect();
+				//odbc->SetRecconectFlag(true);
+			}
+			wprintf(_T("database server query Error... %s() \n"), __FUNCTION__);
+			return -1;
+		}
+	}
+
+	return sParmRet;
+}
 
 int		CDBProcessCer::ProcedureUserLogin(const WCHAR* id, const WCHAR* pw, std::wstring& szKey, INT64 &Index)
 {

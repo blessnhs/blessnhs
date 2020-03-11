@@ -70,23 +70,20 @@ template<template<class T> class CreationPolicy> ROOM_PTR RoomContainer<Creation
 	return PTR;
 }
 
-
-template<template<class T> class CreationPolicy> VOID RoomContainer<CreationPolicy>::GetRoomList(std::vector<RoomInfo> &List)
+template<template<class T> class CreationPolicy> VOID RoomContainer<CreationPolicy>::GetRoomList(google::protobuf::RepeatedPtrField<RoomInfo2>*List)
 {
 	auto iter = m_RoomMap.begin();
-	RoomInfo info;
 
 	while(iter != m_RoomMap.end())
 	{
 		if(iter->second != NULL)
 		{
-			info.Name = iter->second->m_Stock.Name;
-			info.Index  = iter->second->GetId();
+			RoomInfo2 *info = List->Add();
+			info->set_var_name( iter->second->m_Stock.Name );
+			info->set_var_id( iter->second->GetId() );
+			info->set_var_current_count(iter->second->GetCurrPlayer());
+			info->set_var_max_count(-1);
 		}
-		List.push_back(info);
-
-		//memset(&info,0,sizeof(info));
-		info.Index = 0;
 		
 		iter++;
 	}

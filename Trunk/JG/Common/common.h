@@ -64,33 +64,7 @@ typedef unsigned long ul32;
 typedef signed __int64 s64;
 typedef unsigned __int64 u64;
 
-struct PlayerRoomInfo
-{
-	std::string PlayerName;
-	int Pos;
-};
-
-
 #define	MAX_TRNASMISSION_COUNT	20
-
-
-struct RoomInfo
-{
-	DWORD Index;
-	std::wstring Name;
-	
-};
-struct RoomPlayerStock
-{
-	std::wstring Name;
-	WORD	    SeatPos;
-};
-
-struct UserInfo
-{
-	std::wstring Name;
-};
-
 
 enum EVT_TYPE
 {

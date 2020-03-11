@@ -87,25 +87,6 @@ template<template<class T> class CreationPolicy> PlayerPtr PlayerContainer<Creat
 	return CreationPolicy<Player>().Create();
 }
 
-template<template<class T> class CreationPolicy> void PlayerContainer<CreationPolicy>::GetUserList(std::vector<UserInfo> &List)
-{
-	auto iter = m_PlayerMap.begin();
-	UserInfo info;
-
-	while(iter != m_PlayerMap.end())
-	{
-		if(iter->second != NULL)
-		{
-			info.Name = iter->second->m_Account.GetName();
-		}
-		List.push_back(info);
-
-		memset(&info,0,sizeof(info));
-
-		iter++;
-	}
-}
-
 template<template<class T> class CreationPolicy> void PlayerContainer<CreationPolicy>::CheckUserList()
 {
 	auto iter = m_PlayerMap.begin();

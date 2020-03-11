@@ -9,6 +9,10 @@
 #include "TemplateStrategyPattern.h"
 #include "GSFactory.h"
 
+#include "CLI.GS.pb.h"
+#include "GS.CLI.pb.h"
+#include "Structure.pb.h"
+
 template<template<class T> class CreationPolicy>
 class RoomContainer  : public IContainer<ROOM_PTR>, public CreationPolicy<ROOM>
 {
@@ -24,7 +28,13 @@ public:
 
 	ROOM_PTR SearchByGameType(WORD Type);
 
-	VOID GetRoomList(std::vector<RoomInfo> &List);
+	VOID GetRoomList(google::protobuf::RepeatedPtrField<RoomInfo2> *List);
+
+	const concurrency::concurrent_unordered_map<DWORD, ROOM_PTR>& GetRoomMap() 
+	{
+		return m_RoomMap;
+	}
+
 
 protected:
 
