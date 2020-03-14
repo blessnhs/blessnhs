@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="WBA.MainTabbedPage.HymnViewer">
+        <StackLayout>
+            
+        <ScrollView>
+
+            <Grid x:Name="main_grid">
+                <Grid.RowDefinitions BackgroundColor="White">
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <Frame BorderColor="White" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
+                    <StackLayout VerticalOptions="StartAndExpand" >
+                        <Image x:Name="Image1" Aspect="AspectFit" />
+                    </StackLayout>
+                </Frame>
+
+                <Frame BorderColor="White" Grid.Row="2" Grid.Column="0"  Grid.ColumnSpan="2">
+                    <StackLayout VerticalOptions="StartAndExpand">
+                        <Image x:Name="Image2" Aspect="AspectFit" />
+                    </StackLayout>
+                </Frame>
+            </Grid>
+                
+            </ScrollView>
+            
+        </StackLayout>
+</ContentPage>

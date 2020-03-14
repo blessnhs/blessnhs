@@ -24,7 +24,7 @@ public static class Process
 
             if(client.PacketQueue.Count > 0)
             {
-                PacketData data;
+                CompletePacket data;
                 if (client.PacketQueue.TryDequeue(out data) == true)
                 {
                     switch (data.Protocol)
