@@ -641,8 +641,17 @@
     <None Remove="Resource\Image\Notice.jpg" />
     <None Remove="Resource\KJV.txt" />
     <None Remove="Resource\KRV.txt" />
+    <None Remove="Resource\Message2020.txt" />
     <None Remove="Resource\Newtestament.txt" />
     <None Remove="Resource\Oldtestament.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="..\..\..\Trunk\JG\Protocol\CSharp\CLIGS.cs" Link="Protobuff\CLIGS.cs" />
+    <Compile Include="..\..\..\Trunk\JG\Protocol\CSharp\Enum.cs" Link="Protobuff\Enum.cs" />
+    <Compile Include="..\..\..\Trunk\JG\Protocol\CSharp\GSCLI.cs" Link="Protobuff\GSCLI.cs" />
+    <Compile Include="..\..\..\Trunk\JG\Protocol\CSharp\Sample.cs" Link="Protobuff\Sample.cs" />
+    <Compile Include="..\..\..\Trunk\JG\Protocol\CSharp\Structure.cs" Link="Protobuff\Structure.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -1276,6 +1285,7 @@
     <EmbeddedResource Include="Resource\Image\Notice.jpg" />
     <EmbeddedResource Include="Resource\KJV.txt" />
     <EmbeddedResource Include="Resource\KRV.txt" />
+    <EmbeddedResource Include="Resource\Message2020.txt" />
     <EmbeddedResource Include="Resource\Newtestament.txt" />
     <EmbeddedResource Include="Resource\Oldtestament.txt" />
   </ItemGroup>
@@ -1285,6 +1295,7 @@
     <PackageReference Include="Google.Apis.Auth" Version="1.43.0" />
     <PackageReference Include="Google.Apis.Drive.v2" Version="1.43.0.1841" />
     <PackageReference Include="Google.Apis.Storage.v1" Version="1.43.0.1791" />
+    <PackageReference Include="Google.Protobuf" Version="3.11.4" />
     <PackageReference Include="sqlite-net-pcl" Version="1.6.292" />
     <PackageReference Include="Xamarin.Forms" Version="4.4.0.991537" />
     <PackageReference Include="Xamarin.Essentials" Version="1.1.0" />
@@ -1297,5 +1308,9 @@
     <EmbeddedResource Update="MainTabbedPage\HymnViewer.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Protobuff\" />
   </ItemGroup>
 </Project>

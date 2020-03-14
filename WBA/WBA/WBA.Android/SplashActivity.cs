@@ -9,6 +9,7 @@ using Android.Support.V7.App;
 using Android.Util;
 using Plugin.LocalNotifications;
 using WBA.MainTabbedPage;
+using WBA.Network;
 
 namespace WBA.Droid
 {
@@ -84,6 +85,16 @@ namespace WBA.Droid
                 Hymn.LoadList();
                 //BibleInfo.LoadNIV();
                 //BibleInfo.CheckValidate();
+
+                //소켓 연결
+                {
+                    Thread t3 = new Thread(delegate ()
+                    {
+                        NetProcess.start();
+                    });
+                    t3.Start();
+                }
+
             }
             catch (Exception e)
             {

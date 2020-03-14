@@ -511,6 +511,7 @@ namespace WBA
                 //SQL DB에 저장되어 있는 데이터가 존재하면 해당 색으로 배경을 변경한다.
                 CheckUnderLine(list, Label,i);
 
+                //자동이동을 위해 따로 저장한다.
                 MainTextLabel[i] = Label;
 
                 // Your label tap event

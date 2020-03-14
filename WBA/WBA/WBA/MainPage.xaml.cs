@@ -11,7 +11,9 @@ namespace WBA
             Children.Add(new Bible());
             Children.Add(new Planxaml());
             Children.Add(new PlanDetail());
+            Children.Add(new Community());
             Children.Add(new Setting());
+
         }
     }
 }
