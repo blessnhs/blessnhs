@@ -639,6 +639,7 @@
     <None Remove="Resource\Image\2020Message.jpg" />
     <None Remove="Resource\Image\Blesss.jpg" />
     <None Remove="Resource\Image\Notice.jpg" />
+    <None Remove="Resource\Image\Test.jpg" />
     <None Remove="Resource\KJV.txt" />
     <None Remove="Resource\KRV.txt" />
     <None Remove="Resource\Message2020.txt" />
@@ -1283,6 +1284,7 @@
     <EmbeddedResource Include="Resource\Image\2020Message.jpg" />
     <EmbeddedResource Include="Resource\Image\Blesss.jpg" />
     <EmbeddedResource Include="Resource\Image\Notice.jpg" />
+    <EmbeddedResource Include="Resource\Image\Test.jpg" />
     <EmbeddedResource Include="Resource\KJV.txt" />
     <EmbeddedResource Include="Resource\KRV.txt" />
     <EmbeddedResource Include="Resource\Message2020.txt" />
@@ -1312,5 +1314,11 @@
 
   <ItemGroup>
     <Folder Include="Protobuff\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Mono.Android">
+      <HintPath>..\..\..\..\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\ReferenceAssemblies\Microsoft\Framework\MonoAndroid\v8.1\Mono.Android.dll</HintPath>
+    </Reference>
   </ItemGroup>
 </Project>

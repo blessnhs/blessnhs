@@ -1,14 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using Xamarin.Essentials;
 using Xamarin.Forms;
-using Xamarin.Forms.Internals;
 using Xamarin.Forms.Xaml;
-using SQLite;
+using WBA.Network;
+using NetClient;
+using WBA.Navigation;
 
 namespace WBA.MainTabbedPage
 {
@@ -40,23 +35,30 @@ namespace WBA.MainTabbedPage
 
 
             KJVOption.IsToggled = User.CacheData.EnalbeKJV;
+
+            MessagingCenter.Subscribe<Setting, CompletePacket>(this, "setting", (s, e) =>
+            {
+                LOGIN_RES res = new LOGIN_RES();
+                res = LOGIN_RES.Parser.ParseFrom(e.Data);
+
+                messageLabel.Text = res.VarCode.ToString();
+            });
         }
-     
+
+
+
         async void OnLoginButtonClicked(object sender, EventArgs e)
         {
             User.Username = usernameEntry.Text;
             User.Password = passwordEntry.Text;
 
-            var isValid = AreCredentialsCorrect();
-            if (isValid)
+            if (User.Username == null || User.Password == null)
             {
-                messageLabel.Text = "Login Success";
+                messageLabel.Text = "아이디와 비번을 다시 입력하세요";
+                return;
             }
-            else
-            {
-                messageLabel.Text = "Login failed";
-                passwordEntry.Text = string.Empty;
-            }
+
+            NetProcess.SendLogin(User.Username, User.Password);
 
             if (User.Username == "강병욱" || User.Username == "nhs")
             {

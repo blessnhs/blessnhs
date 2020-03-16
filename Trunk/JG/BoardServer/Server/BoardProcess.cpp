@@ -281,12 +281,17 @@ VOID BoardProcess::ROOM_CHAT(LPVOID Data, DWORD Length, boost::shared_ptr<GSClie
 		return;
 	}
 
+	if (message.var_message().length() > 1024 || message.var_message().length() <= 0)
+	{
+		return;
+	}
+
 	{
 		std::string name;
 		name.assign(pPlayer->m_Account.GetName().begin(), pPlayer->m_Account.GetName().end());
 
-		res.set_var_message(message.var_message().c_str());
-		res.set_var_name(name.c_str());
+		res.mutable_var_message()->assign(message.var_message());
+		res.mutable_var_name()->assign(name);
 
 		ROOM_PTR pPtr = ROOMMGR.Search(pPlayer->m_RoomNumber);
 		if (pPtr != NULL)

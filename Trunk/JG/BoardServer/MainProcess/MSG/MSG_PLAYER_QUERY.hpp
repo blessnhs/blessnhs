@@ -120,7 +120,8 @@ namespace Board	{
 
 			if(nRet != _ERR_NONE || (PLAYERMGR.Search(pRequst->Account) != NULL))
 			{ 
-				res.set_var_code(LoginDuplicate);
+				res.set_var_code(LoginFailed);
+				SEND_PROTO_BUFFER(res, pSession)
 				return ;
 			}
 

@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Threading;
+using WBA.Network;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -11,6 +13,21 @@ namespace WBA
             InitializeComponent();
 
             MainPage = new MainPage();
+
+            //소켓 연결
+            {
+                NetProcess.start();
+
+                Device.StartTimer(new TimeSpan(0, 0, 1), () =>
+                {
+                    Device.BeginInvokeOnMainThread(() =>
+                    {
+                        NetProcess.Loop((MainPage)MainPage);
+                    });
+                    return true; //if true repeat
+                });
+                
+            }
         }
 
         protected override void OnStart()

@@ -1,10 +1,15 @@
-﻿using Google.Protobuf;
+﻿using Android.OS;
+using Android.Widget;
+using Google.Protobuf;
+using Google.Protobuf.WellKnownTypes;
 using NetClient;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Threading;
+using WBA.MainTabbedPage;
+using Xamarin.Forms;
 
 namespace WBA.Network
 {
@@ -14,57 +19,32 @@ namespace WBA.Network
         static public Client client = new Client();
         static public void start()
         {
-            client.StartClient("192.168.0.12", 20000);
-   
-            while (true)
+            client.StartClient("192.168.0.4", 20000);
+        }
+
+        static public void Loop(MainPage page)
+        {
+           // while(true)
             {
+                if (client.socket.Connected == false)
+                    return;
 
                 client.Update();
-                Thread.Sleep(100);
 
                 CompletePacket data;
                 if (client.PacketQueue.TryDequeue(out data) == true)
                 {
-                    switch (data.Protocol)
+                    try
                     {
-                        case (int)PROTOCOL.IdPktVersionRes:
-                            {
-                                VERSION_RES res = new VERSION_RES();
-                                res = VERSION_RES.Parser.ParseFrom(data.Data);
-                            }
-                            break;
-                        case (int)PROTOCOL.IdPktLoginRes:
-                            {
-                                LOGIN_RES res = new LOGIN_RES();
-                                res = LOGIN_RES.Parser.ParseFrom(data.Data);
-                            }
-                            break;
-                        case (int)PROTOCOL.IdPktCreateRoomRes:
-                            {
-                                CREATE_ROOM_RES res = new CREATE_ROOM_RES();
-                                res = CREATE_ROOM_RES.Parser.ParseFrom(data.Data);
-                            }
-                            break;
-                        case (int)PROTOCOL.IdPktNewUserInRoomNty:
-                            {
-                                NEW_USER_IN_ROOM_NTY res = new NEW_USER_IN_ROOM_NTY();
-                                res = NEW_USER_IN_ROOM_NTY.Parser.ParseFrom(data.Data);
-                            }
-                            break;
-                        case (int)PROTOCOL.IdPktBroadcastRoomMessageRes:
-                            {
-                                BROADCAST_ROOM_MESSAGE_RES res = new BROADCAST_ROOM_MESSAGE_RES();
-                                res = BROADCAST_ROOM_MESSAGE_RES.Parser.ParseFrom(data.Data);
-                            }
-                            break;
-                        case (int)PROTOCOL.IdPktEnterRoomRes:
-                            {
-                                ENTER_ROOM_RES res = new ENTER_ROOM_RES();
-                                res = ENTER_ROOM_RES.Parser.ParseFrom(data.Data);
-                            }
-                            break;
+                       MessagingCenter.Send<CompletePacket>(data, "recv_packet");
                     }
+                    catch (Exception ex)
+                    {
+                        Console.Write(ex.ToString());
+                    }
+                   
                 }
+
             }
         }
 
@@ -72,13 +52,69 @@ namespace WBA.Network
         {
             VERSION_REQ person = new VERSION_REQ
             {
-                Id = PROTOCOL.IdPktVersionReq,
             };
             using (MemoryStream stream = new MemoryStream())
             {
                 person.WriteTo(stream);
 
                 client.WritePacket((int)PROTOCOL.IdPktVersionReq, stream.ToArray(), stream.ToArray().Length);
+            }
+        }
+
+        static public void SendMakeRoom(string Name)
+        {
+            CREATE_ROOM_REQ person = new CREATE_ROOM_REQ
+            {
+                VarName = Name,
+                VarPassword = ""
+            };
+            using (MemoryStream stream = new MemoryStream())
+            {
+                person.WriteTo(stream);
+
+                client.WritePacket((int)PROTOCOL.IdPktCreateRoomReq, stream.ToArray(), stream.ToArray().Length);
+            }
+        }
+
+        static public void SendRoomMessage(string msg)
+        {
+            BROADCAST_ROOM_MESSAGE_REQ message = new BROADCAST_ROOM_MESSAGE_REQ
+            {
+                VarMessage = msg
+            };
+            using (MemoryStream stream = new MemoryStream())
+            {
+                message.WriteTo(stream);
+
+                client.WritePacket((int)PROTOCOL.IdPktBroadcastRoomMessageReq, stream.ToArray(), stream.ToArray().Length);
+            }
+        }
+
+        static public void SendReqRoomList()
+        {
+            ROOM_LIST_REQ person = new ROOM_LIST_REQ
+            {
+            };
+            using (MemoryStream stream = new MemoryStream())
+            {
+                person.WriteTo(stream);
+
+                client.WritePacket((int)PROTOCOL.IdPktRoomListReq, stream.ToArray(), stream.ToArray().Length);
+            }
+        }
+
+        static public void SendLogin(string id,string pwd)
+        {
+            LOGIN_REQ person = new LOGIN_REQ
+            {
+                VarId = id,
+                VarPasswd = pwd,
+            };
+            using (MemoryStream stream = new MemoryStream())
+            {
+                person.WriteTo(stream);
+
+                client.WritePacket((int)PROTOCOL.IdPktLoginReq, stream.ToArray(), stream.ToArray().Length);
             }
         }
     }

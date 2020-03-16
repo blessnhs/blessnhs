@@ -27,4 +27,5 @@ enum ErrorCode
 	DataBaseError = 1;
 	LoginDuplicate = 2;
 	SystemError = 3;
+	LoginFailed = 4;
 };
