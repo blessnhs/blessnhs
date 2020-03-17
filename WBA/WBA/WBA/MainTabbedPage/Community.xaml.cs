@@ -13,6 +13,12 @@ namespace WBA.MainTabbedPage
     {
         List<CommunityRoomInfo> RoomInfo = new List<CommunityRoomInfo>();
 
+
+        protected override void OnAppearing()
+        {
+            listView.ItemsSource = RoomInfo;
+        }
+
         public Community()
         {
             InitializeComponent();
@@ -51,6 +57,9 @@ namespace WBA.MainTabbedPage
         {
             //선택된 아이템을 Contact 타입으로 변환
             var contact = e.SelectedItem as CommunityRoomInfo;
+
+            if(contact != null)
+                NetProcess.SendEnterRoom(contact.Id);
         }
 
         async void OnRoomMakeClicked(object sender, System.EventArgs e)

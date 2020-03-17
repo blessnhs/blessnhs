@@ -142,7 +142,7 @@ VOID BoardProcess::ROOM_ENTER(LPVOID Data, DWORD Length, boost::shared_ptr<GSCli
 	}
 
 	//이미 입장 해 있다면 
-	if (pPlayer->m_RoomNumber = RoomPtr->GetId())
+	if (RoomPtr->FindPlayer(pPlayer) == TRUE)
 	{
 		return;
 	}
@@ -157,6 +157,9 @@ VOID BoardProcess::ROOM_ENTER(LPVOID Data, DWORD Length, boost::shared_ptr<GSCli
 	//새로 입장한 유저에게 방안의 유저 정보전송
 	for each (auto iter in RoomPtr->m_PlayerMap)
 	{
+		if (iter.second == NULL)
+			continue;
+
 		NEW_USER_IN_ROOM_NTY nty;
 
 		RoomUserInfo* userinfo = nty.mutable_var_room_user();

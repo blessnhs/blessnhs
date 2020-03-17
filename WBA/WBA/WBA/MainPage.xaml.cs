@@ -44,9 +44,9 @@ namespace WBA
 
            
                 //네트워크 메세지 수신
-                MessagingCenter.Subscribe<CompletePacket>(
+                MessagingCenter.Subscribe<MainPage, CompletePacket>(
 
-                this, "recv_packet", (data) =>
+                this, "recv_packet", (page,data) =>
                 {
 
                     switch (data.Protocol)
@@ -101,6 +101,15 @@ namespace WBA
                             {
                                 ENTER_ROOM_RES res = new ENTER_ROOM_RES();
                                 res = ENTER_ROOM_RES.Parser.ParseFrom(data.Data);
+
+                                if (res.VarCode == ErrorCode.Success)
+                                {
+                                    Device.BeginInvokeOnMainThread(() =>
+                                    {
+                                        ChatPage = new MainChatView();
+                                        Navigation.PushModalAsync(new NavigationPage(ChatPage));
+                                    });
+                                }
                             }
                             break;
                     }

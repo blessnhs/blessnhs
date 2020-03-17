@@ -21,14 +21,14 @@ message CREATE_ROOM_REQ
 {
     optional PROTOCOL   id                  = 1 [default = ID_PKT_CREATE_ROOM_REQ ];
     required string var_name                  = 2;
-    required string var_password             = 3;
+   
 }
 
 message ENTER_ROOM_REQ
 {
     optional PROTOCOL   id                  = 1 [default = ID_PKT_ENTER_ROOM_REQ ];
     required int32      var_id                  = 2;
-    required string     var_password            = 3;
+   
 }
 
 message LEAVE_ROOM_REQ

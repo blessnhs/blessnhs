@@ -19,7 +19,7 @@ namespace WBA.Network
         static public Client client = new Client();
         static public void start()
         {
-            client.StartClient("192.168.0.4", 20000);
+            client.StartClient("192.168.0.12", 20000);
         }
 
         static public void Loop(MainPage page)
@@ -36,7 +36,7 @@ namespace WBA.Network
                 {
                     try
                     {
-                       MessagingCenter.Send<CompletePacket>(data, "recv_packet");
+                       MessagingCenter.Send<MainPage,CompletePacket>(page, "recv_packet", data);
                     }
                     catch (Exception ex)
                     {
@@ -66,13 +66,26 @@ namespace WBA.Network
             CREATE_ROOM_REQ person = new CREATE_ROOM_REQ
             {
                 VarName = Name,
-                VarPassword = ""
             };
             using (MemoryStream stream = new MemoryStream())
             {
                 person.WriteTo(stream);
 
                 client.WritePacket((int)PROTOCOL.IdPktCreateRoomReq, stream.ToArray(), stream.ToArray().Length);
+            }
+        }
+
+        static public void SendEnterRoom(int id)
+        {
+            ENTER_ROOM_REQ person = new ENTER_ROOM_REQ
+            {
+                VarId = id,
+            };
+            using (MemoryStream stream = new MemoryStream())
+            {
+                person.WriteTo(stream);
+
+                client.WritePacket((int)PROTOCOL.IdPktEnterRoomReq, stream.ToArray(), stream.ToArray().Length);
             }
         }
 
