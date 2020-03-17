@@ -92,6 +92,9 @@ namespace WBA.Network
 
         static public void SendReqRoomList()
         {
+            if (client.socket.Connected == false)
+                return;
+
             ROOM_LIST_REQ person = new ROOM_LIST_REQ
             {
             };

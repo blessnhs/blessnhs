@@ -92,6 +92,11 @@ namespace WBA
                                 }
                             }
                             break;
+                        case (int)PROTOCOL.IdPktRoomListRes:
+                            {
+                                MessagingCenter.Send<Community, CompletePacket>(community, "community", data);
+                            }
+                            break;
                         case (int)PROTOCOL.IdPktEnterRoomRes:
                             {
                                 ENTER_ROOM_RES res = new ENTER_ROOM_RES();

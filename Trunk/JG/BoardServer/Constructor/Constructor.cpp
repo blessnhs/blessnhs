@@ -8,6 +8,8 @@ BoardConstructor::BoardConstructor(void)
 {
 	SERVER.Initialize();
 	
+	wprintf(_T("Alloc Client Count %d\n"), SERVER.GetClientMgr().GetActiveSocketCount());
+
 	BoardCommand _Command;
 	
 	while(TRUE)

@@ -72,20 +72,20 @@ template<template<class T> class CreationPolicy> ROOM_PTR RoomContainer<Creation
 
 template<template<class T> class CreationPolicy> VOID RoomContainer<CreationPolicy>::GetRoomList(google::protobuf::RepeatedPtrField<RoomInfo2>*List)
 {
-	auto iter = m_RoomMap.begin();
+	//auto iter = m_RoomMap.begin();
 
-	while(iter != m_RoomMap.end())
-	{
-		if(iter->second != NULL)
-		{
-			RoomInfo2 *info = List->Add();
-			info->set_var_name( iter->second->m_Stock.Name );
-			info->set_var_id( iter->second->GetId() );
-			info->set_var_current_count(iter->second->GetCurrPlayer());
-			info->set_var_max_count(-1);
-		}
-		
-		iter++;
-	}
+	//while(iter != m_RoomMap.end())
+	//{
+	//	if(iter->second != NULL)
+	//	{
+	//		RoomInfo2 *info = List->Add();
+	//		info->mutable_var_name()->assign( iter->second->m_Stock.Name );
+	//		info->set_var_id( iter->second->GetId() );
+	//		info->set_var_current_count(iter->second->GetCurrPlayer());
+	//		info->set_var_max_count(-1);
+	//	}
+	//	
+	//	iter++;
+	//}
 }
 

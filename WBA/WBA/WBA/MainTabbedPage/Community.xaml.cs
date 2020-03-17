@@ -1,6 +1,7 @@
 ﻿using NetClient;
+using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
-using WBA.Navigation;
 using WBA.Network;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -10,13 +11,39 @@ namespace WBA.MainTabbedPage
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class Community : ContentPage
     {
+        List<CommunityRoomInfo> RoomInfo = new List<CommunityRoomInfo>();
+
         public Community()
         {
             InitializeComponent();
 
+            Device.StartTimer(new TimeSpan(0, 0, 3), () =>
+            {
+                Device.BeginInvokeOnMainThread(() =>
+                {
+                    NetProcess.SendReqRoomList();
+                });
+                return true; //if true repeat
+            });
+
             MessagingCenter.Subscribe<Community, CompletePacket>(this, "community", (s, e) =>
             {
-               
+                RoomInfo.Clear();
+
+                ROOM_LIST_RES res = new ROOM_LIST_RES();
+                res = ROOM_LIST_RES.Parser.ParseFrom(e.Data);
+
+                foreach( var room in res.VarRoomList)
+                {
+                    CommunityRoomInfo croom = new CommunityRoomInfo();
+                    croom.Id = room.VarId;
+                    croom.Name = room.VarName;
+                    croom.CurrentCount = room.VarCurrentCount;
+
+                    RoomInfo.Add(croom);
+                }
+
+                listView.ItemsSource = RoomInfo;
             });
         }
 
@@ -39,13 +66,13 @@ namespace WBA.MainTabbedPage
             // wait in this proc, until user did his input 
             var tcs = new TaskCompletionSource<string>();
 
-            var lblTitle = new Label { Text = "Title", HorizontalOptions = LayoutOptions.Center, FontAttributes = FontAttributes.Bold };
-            var lblMessage = new Label { Text = "Enter new text:" };
-            var txtInput = new Entry { Text = "" };
+            var lblTitle   = new Label { Text = "방 생성", HorizontalOptions = LayoutOptions.Center, FontAttributes = FontAttributes.Bold };
+            var lblMessage = new Label { Text = "방 이름을 입력하세요:" };
+            var txtInput   = new Entry { Text = "토론1" };
 
             var btnOk = new Button
             {
-                Text = "Ok",
+                Text = "확인",
                 WidthRequest = 100,
                 BackgroundColor = Color.FromRgb(0.8, 0.8, 0.8),
             };
@@ -60,7 +87,7 @@ namespace WBA.MainTabbedPage
 
             var btnCancel = new Button
             {
-                Text = "Cancel",
+                Text = "취소",
                 WidthRequest = 100,
                 BackgroundColor = Color.FromRgb(0.8, 0.8, 0.8)
             };

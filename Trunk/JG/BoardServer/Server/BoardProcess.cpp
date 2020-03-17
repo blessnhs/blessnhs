@@ -14,6 +14,7 @@ BoardProcess::BoardProcess(void)
 	ADD_NET_FUNC(BoardProcess, ID_PKT_ENTER_ROOM_REQ, ROOM_ENTER);
 	ADD_NET_FUNC(BoardProcess, ID_PKT_LEAVE_ROOM_REQ, ROOM_LEAVE);
 	ADD_NET_FUNC(BoardProcess, ID_PKT_BROADCAST_ROOM_MESSAGE_REQ, ROOM_CHAT);
+	ADD_NET_FUNC(BoardProcess, ID_PKT_ROOM_LIST_REQ, ROOM_LIST);
 }
 
 
@@ -96,6 +97,11 @@ VOID BoardProcess::ROOM_CREATE(LPVOID Data, DWORD Length, boost::shared_ptr<GSCl
 		return;
 	}
 
+	if (createroom.var_name().size() == 0)
+	{
+		return;
+	}
+
 	ROOM_PTR RoomPtr = ROOMMGR.Create();
 	RoomPtr->m_Stock.Name = createroom.var_name();
 
@@ -109,7 +115,7 @@ VOID BoardProcess::ROOM_CREATE(LPVOID Data, DWORD Length, boost::shared_ptr<GSCl
 
 	RoomPtr->InsertPlayer(pPlayer);
 
-	res.set_var_name(RoomPtr->m_Stock.Name.c_str());
+	res.mutable_var_name()->assign(RoomPtr->m_Stock.Name);
 	SEND_PROTO_BUFFER(res, pOwner)
 
 	RoomPtr->SendNewUserInfo(pPlayer);	//방에 있는 유저들에게 새로운 유저 정보전송
@@ -134,6 +140,12 @@ VOID BoardProcess::ROOM_ENTER(LPVOID Data, DWORD Length, boost::shared_ptr<GSCli
 	{
 		return;
 	}
+
+	//이미 입장 해 있다면 
+	if (pPlayer->m_RoomNumber = RoomPtr->GetId())
+	{
+		return;
+	}
 	
 	RoomPtr->InsertPlayer(pPlayer);
 
@@ -152,8 +164,7 @@ VOID BoardProcess::ROOM_ENTER(LPVOID Data, DWORD Length, boost::shared_ptr<GSCli
 		std::string name;
 		name.assign(iter.second->m_Account.GetName().begin(), iter.second->m_Account.GetName().end());
 
-		userinfo->set_var_name(name.c_str());
-
+		userinfo->mutable_var_name()->assign(name);
 		SEND_PROTO_BUFFER(nty, pOwner)
 	}
 	
@@ -171,7 +182,7 @@ VOID BoardProcess::ROOM_ENTER(LPVOID Data, DWORD Length, boost::shared_ptr<GSCli
 		std::string name;
 		name.assign(pPlayer->m_Account.GetName().begin(), pPlayer->m_Account.GetName().end());
 
-		userinfo->set_var_name(name.c_str());
+		userinfo->mutable_var_name()->assign(name);
 		SEND_PROTO_BUFFER(nty, pPair)
 	}
 }
@@ -188,16 +199,16 @@ VOID BoardProcess::ROOM_LEAVE(LPVOID Data, DWORD Length, boost::shared_ptr<GSCli
 		return;
 	}
 
-	ROOM_PTR RoomPtr = ROOMMGR.Search(leaveroom.var_id());
+	ROOM_PTR RoomPtr = ROOMMGR.Search(pPlayer->m_RoomNumber);
 	if (RoomPtr != NULL)
 	{
 		if (RoomPtr->FindPlayer(pPlayer) != USHRT_MAX)
 		{
-		//	res.var_code(Success);
+			res.set_var_code(Success);
 			std::string name;
 			name.assign(pPlayer->m_Account.GetName().begin(), pPlayer->m_Account.GetName().end());
-			res.set_allocated_var_name(&name);
-					
+			res.mutable_var_name()->assign(name);
+
 			RoomPtr->SendToAll(res);
 
 			RoomPtr->RemovePlayer(pPlayer);
@@ -314,9 +325,18 @@ VOID BoardProcess::ROOM_LIST(LPVOID Data, DWORD Length, boost::shared_ptr<GSClie
 		return;
 	}
 
-	auto roomlist = res.mutable_var_room_list();
+	for each (auto& room in ROOMMGR.GetRoomMap())
+	{
+		if (room.second == NULL)
+			continue;
 
-	ROOMMGR.GetRoomList(roomlist);
+		RoomInfo2* info = res.mutable_var_room_list()->Add();
+	
+		info->set_var_id(room.first);
+		info->set_var_name(room.second->m_Stock.Name);
+		info->set_var_current_count(room.second->GetCurrPlayer());
+		info->set_var_max_count(-1);
+	}
 
 	SEND_PROTO_BUFFER(res, Client)
 }

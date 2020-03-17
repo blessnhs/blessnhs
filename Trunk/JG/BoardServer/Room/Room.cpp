@@ -99,7 +99,7 @@ void Room::SendNewUserInfo(PLAYER_PTR Player)
 				std::string name;
 				name.assign(Player->m_Account.GetName().begin(), Player->m_Account.GetName().end());
 
-				userinfo->set_var_name(name.c_str());
+				userinfo->mutable_var_name()->assign(name);
 			
 				SEND_PROTO_BUFFER(nty, pPair)
 			}

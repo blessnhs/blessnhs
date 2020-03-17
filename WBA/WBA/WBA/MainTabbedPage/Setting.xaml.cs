@@ -43,6 +43,8 @@ namespace WBA.MainTabbedPage
 
                 messageLabel.Text = res.VarCode.ToString();
             });
+
+            usernameEntry.Focus();
         }
 
 
