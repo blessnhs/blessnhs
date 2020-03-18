@@ -11,12 +11,36 @@ namespace WBA.MainTabbedPage
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class Community : ContentPage
     {
-        List<CommunityRoomInfo> RoomInfo = new List<CommunityRoomInfo>();
-
+        CommunityViewModel viewModel = new CommunityViewModel();
 
         protected override void OnAppearing()
         {
-            listView.ItemsSource = RoomInfo;
+            base.OnAppearing();
+
+            MessagingCenter.Subscribe<Community, CompletePacket>(this, "community", (s, e) =>
+            {
+                viewModel.RoomModel.Clear();
+
+                 ROOM_LIST_RES res = new ROOM_LIST_RES();
+                res = ROOM_LIST_RES.Parser.ParseFrom(e.Data);
+
+                foreach (var room in res.VarRoomList)
+                {
+                    CommunityRoomInfoModel croom = new CommunityRoomInfoModel();
+                    croom.Id =  room.VarId;
+                    croom.Name = room.VarName;
+                    croom.CurrentCount = room.VarCurrentCount;
+
+                    viewModel.RoomModel.Add(croom);
+                }
+
+                listView.ItemsSource = viewModel.RoomModel;
+            });
+        }
+
+        protected override void OnDisappearing()
+        {
+            MessagingCenter.Unsubscribe<Community, CompletePacket>(this, "community");
         }
 
         public Community()
@@ -32,31 +56,13 @@ namespace WBA.MainTabbedPage
                 return true; //if true repeat
             });
 
-            MessagingCenter.Subscribe<Community, CompletePacket>(this, "community", (s, e) =>
-            {
-                RoomInfo.Clear();
-
-                ROOM_LIST_RES res = new ROOM_LIST_RES();
-                res = ROOM_LIST_RES.Parser.ParseFrom(e.Data);
-
-                foreach( var room in res.VarRoomList)
-                {
-                    CommunityRoomInfo croom = new CommunityRoomInfo();
-                    croom.Id = room.VarId;
-                    croom.Name = room.VarName;
-                    croom.CurrentCount = room.VarCurrentCount;
-
-                    RoomInfo.Add(croom);
-                }
-
-                listView.ItemsSource = RoomInfo;
-            });
+            
         }
 
         public void Handle_ItemSelected(object sender, Xamarin.Forms.SelectedItemChangedEventArgs e)
         {
             //선택된 아이템을 Contact 타입으로 변환
-            var contact = e.SelectedItem as CommunityRoomInfo;
+            var contact = e.SelectedItem as CommunityRoomInfoModel;
 
             if(contact != null)
                 NetProcess.SendEnterRoom(contact.Id);
@@ -137,12 +143,4 @@ namespace WBA.MainTabbedPage
 
     }
 
-
-
-    public class CommunityRoomInfo
-    {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public int CurrentCount { get; set; }
-    };
 }
