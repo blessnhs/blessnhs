@@ -1,4 +1,5 @@
-﻿using Android.OS;
+﻿using Android.Content.PM;
+using Android.OS;
 using Android.Widget;
 using Google.Protobuf;
 using Google.Protobuf.WellKnownTypes;
@@ -10,6 +11,7 @@ using System.Text;
 using System.Threading;
 using WBA.MainTabbedPage;
 using WBA.Navigation;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace WBA.Network
@@ -20,7 +22,9 @@ namespace WBA.Network
         static public Client client = new Client();
         static public void start()
         {
-            client.StartClient("192.168.0.4", 20000);
+            //연결중이면 안한다. 
+            if(client.socket == null || client.socket.Connected == false)
+                client.StartClient("192.168.0.4", 20000);
         }
 
         public static Page GetPageByTitle(MainPage page, string name)
@@ -36,6 +40,8 @@ namespace WBA.Network
 
         static public Page ChatPage = null;
 
+        static public bool IsSuccessAuth = false;
+        static public string UserId;
 
         static public void Loop(MainPage page)
         {
@@ -57,10 +63,32 @@ namespace WBA.Network
                                 {
                                     VERSION_RES res = new VERSION_RES();
                                     res = VERSION_RES.Parser.ParseFrom(data.Data);
+
+
+                                    //get my version
+                                    {
+                                        var context = global::Android.App.Application.Context;
+
+                                        PackageManager manager = context.PackageManager;
+                                        PackageInfo info = manager.GetPackageInfo(context.PackageName, 0);
+
+                                        float myversion = float.Parse(info.VersionName);
+                                        const Double Eps = 0.000000000000001;
+
+                                        if (Math.Abs(res.VarVersion - myversion) > Eps)
+      //                                      if (res.VarVersion.ToString() != info.VersionName)
+                                            Xamarin.Essentials.Browser.OpenAsync("https://play.google.com/store/apps/details?id=com.blessnhs.BAC");
+                                    }
                                 }
                                 break;
                             case (int)PROTOCOL.IdPktLoginRes:
                                 {
+                                    LOGIN_RES res = new LOGIN_RES();
+                                    res = LOGIN_RES.Parser.ParseFrom(data.Data);
+
+                                    if (res.VarCode == ErrorCode.Success)
+                                        IsSuccessAuth = true;
+
                                     MessagingCenter.Send<Setting, CompletePacket>((Setting)GetPageByTitle(page,"설정"), "setting", data);
                                 }
                                 break;
@@ -71,11 +99,12 @@ namespace WBA.Network
 
                                     if (res.VarCode == ErrorCode.Success)
                                     {
-                                        Device.BeginInvokeOnMainThread(() =>
-                                        {
-                                            ChatPage = new MainChatView(res.VarRoomId);
-                                            page.Navigation.PushModalAsync(new NavigationPage(ChatPage));
-                                        });
+                                        ChatPage = new MainChatView(res.VarRoomId);
+                                        page.Navigation.PushModalAsync(new NavigationPage(ChatPage));
+                                    }
+                                    else
+                                    {
+
                                     }
 
                                 }
@@ -90,21 +119,13 @@ namespace WBA.Network
                                 {
                                     if (ChatPage != null)
                                     {
-
-                                        BROADCAST_ROOM_MESSAGE_RES res = new BROADCAST_ROOM_MESSAGE_RES();
-                                        res = BROADCAST_ROOM_MESSAGE_RES.Parser.ParseFrom(data.Data);
-
-                                        // AddMessage(res.VarName, res.VarMessage);
-
                                         ((MainChatView)ChatPage).UpdateMessage(data);
-
-                                        // MessagingCenter.Send<MainChatView, CompletePacket>((MainChatView)ChatPage, "maintchatview", data);
                                     }
                                 }
                                 break;
                             case (int)PROTOCOL.IdPktRoomListRes:
                                 {
-                                    MessagingCenter.Send<Community, CompletePacket>((Community)GetPageByTitle(page, "포럼"), "community", data);
+                                    ((Community)GetPageByTitle(page, "포럼")).UpdateMessage(data);
                                 }
                                 break;
                             case (int)PROTOCOL.IdPktEnterRoomRes:
@@ -114,11 +135,8 @@ namespace WBA.Network
 
                                     if (res.VarCode == ErrorCode.Success)
                                     {
-                                        Device.BeginInvokeOnMainThread(() =>
-                                        {
-                                            ChatPage = new MainChatView(res.VarRoomId);
-                                            page.Navigation.PushModalAsync(new NavigationPage(ChatPage));
-                                        });
+                                           ChatPage = new MainChatView(res.VarRoomId);
+                                           page.Navigation.PushModalAsync(new NavigationPage(ChatPage));
                                     }
                                 }
                                 break;
@@ -221,6 +239,8 @@ namespace WBA.Network
 
         static public void SendLogin(string id,string pwd)
         {
+            UserId = id;
+
             LOGIN_REQ person = new LOGIN_REQ
             {
                 VarId = id,

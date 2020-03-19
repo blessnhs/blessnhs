@@ -43,8 +43,16 @@ namespace WBA.MainTabbedPage
 
                 messageLabel.Text = res.VarCode.ToString();
             });
-
+                                 
             usernameEntry.Focus();
+
+            //이미 로그인 중이면 메세지 표시를 변경
+            if(NetProcess.IsSuccessAuth == true)
+            {
+                messageLabel.Text = "접속중";
+                usernameEntry.Text = NetProcess.UserId;
+                loginbutton.IsVisible = false;
+            }
         }
 
 

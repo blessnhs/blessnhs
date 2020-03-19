@@ -16,26 +16,26 @@ namespace WBA.MainTabbedPage
         protected override void OnAppearing()
         {
             base.OnAppearing();
+        }
 
-            MessagingCenter.Subscribe<Community, CompletePacket>(this, "community", (s, e) =>
+        public void UpdateMessage(CompletePacket packet)
+        {
+             viewModel.RoomModel.Clear();
+
+            ROOM_LIST_RES res = new ROOM_LIST_RES();
+            res = ROOM_LIST_RES.Parser.ParseFrom(packet.Data);
+
+            foreach (var room in res.VarRoomList)
             {
-                viewModel.RoomModel.Clear();
+                CommunityRoomInfoModel croom = new CommunityRoomInfoModel();
+                croom.Id = room.VarId;
+                croom.Name = room.VarName;
+                croom.CurrentCount = room.VarCurrentCount;
 
-                 ROOM_LIST_RES res = new ROOM_LIST_RES();
-                res = ROOM_LIST_RES.Parser.ParseFrom(e.Data);
+                viewModel.RoomModel.Add(croom);
+            }
 
-                foreach (var room in res.VarRoomList)
-                {
-                    CommunityRoomInfoModel croom = new CommunityRoomInfoModel();
-                    croom.Id =  room.VarId;
-                    croom.Name = room.VarName;
-                    croom.CurrentCount = room.VarCurrentCount;
-
-                    viewModel.RoomModel.Add(croom);
-                }
-
-                listView.ItemsSource = viewModel.RoomModel;
-            });
+            listView.ItemsSource = viewModel.RoomModel;
         }
 
         protected override void OnDisappearing()
@@ -81,7 +81,7 @@ namespace WBA.MainTabbedPage
             // wait in this proc, until user did his input 
             var tcs = new TaskCompletionSource<string>();
 
-            var lblTitle   = new Label { Text = "방 생성", HorizontalOptions = LayoutOptions.Center, FontAttributes = FontAttributes.Bold };
+            var lblTitle   = new Label { Text = "포럼 생성", HorizontalOptions = LayoutOptions.Center, FontAttributes = FontAttributes.Bold };
             var lblMessage = new Label { Text = "방 이름을 입력하세요:" };
             var txtInput   = new Entry { Text = "포럼1" };
 

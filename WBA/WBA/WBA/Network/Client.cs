@@ -276,7 +276,7 @@ namespace NetClient
                     // Begin sending the data to the remote device.
                     socket.BeginSend(TempBuffer, 0, PacketLength, 0,
                         new AsyncCallback(SendCallback), socket);
-                }
+                 }
                 catch (SocketException e)
                 {
                     // 10035 == WSAEWOULDBLOCK

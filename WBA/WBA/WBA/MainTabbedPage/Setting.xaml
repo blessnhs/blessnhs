@@ -38,7 +38,7 @@
                     <Entry x:Name="usernameEntry" Placeholder="username" />
                     <Label Text="비밀번호 숫자 4자리" />
                     <Entry x:Name="passwordEntry" IsPassword="true" />
-                    <Button Text="Login" Clicked="OnLoginButtonClicked" />
+                    <Button  x:Name="loginbutton" Text="Login" Clicked="OnLoginButtonClicked" />
                     <Label x:Name="messageLabel" />
                 </StackLayout>
             </Frame>
