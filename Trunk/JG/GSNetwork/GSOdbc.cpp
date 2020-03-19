@@ -179,7 +179,7 @@ bool COdbc::SQLErrorMsg(SQLHSTMT hstmt, LPCWSTR errfunction)
 	register int	i=1;
 	while ((rc2 = SQLGetDiagRec(SQL_HANDLE_STMT, hstmt, i, SqlState, &NativeError, Msg, sizeof(Msg), &MsgLen)) != SQL_NO_DATA)
 	{
-		printf( "*** fun[%s], state[%s], msg[%s], err[%d] ***\n", errfunction, SqlState, Msg, (int)NativeError);
+		wprintf( _T("*** fun[%s], state[%s], msg[%s], err[%d] ***\n"), errfunction, SqlState, Msg, (int)NativeError);
 		if(!strcmp((char *)SqlState, "08S01")){ result = true; }
 		i++;
 	}

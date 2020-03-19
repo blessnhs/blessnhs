@@ -16,6 +16,8 @@ public:
 	VOID Accept(GSCLIENT_PTR object);
 
 	BoardINI			  m_Ini;
+
+	BOOL DeleteAllConcurrentUser();
 	
 };
 

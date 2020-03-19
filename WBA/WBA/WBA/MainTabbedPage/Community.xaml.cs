@@ -83,7 +83,7 @@ namespace WBA.MainTabbedPage
 
             var lblTitle   = new Label { Text = "방 생성", HorizontalOptions = LayoutOptions.Center, FontAttributes = FontAttributes.Bold };
             var lblMessage = new Label { Text = "방 이름을 입력하세요:" };
-            var txtInput   = new Entry { Text = "토론1" };
+            var txtInput   = new Entry { Text = "포럼1" };
 
             var btnOk = new Button
             {

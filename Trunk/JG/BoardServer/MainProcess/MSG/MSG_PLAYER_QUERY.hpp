@@ -82,6 +82,62 @@ namespace Board	{
 	};
 
 	template<>
+	class MSG_PLAYER_QUERY<RequestDeleteAllConcurrentUser> : public IMESSAGE
+	{
+	public:
+		MSG_PLAYER_QUERY() { }
+		~MSG_PLAYER_QUERY() {}
+
+		GSCLIENT_PTR pSession;
+
+		boost::shared_ptr<RequestDeleteAllConcurrentUser> pRequst;
+
+		void Execute(LPVOID Param)
+		{
+			DBPROCESS_CER_PTR pProcess = DBPROCESSCONTAINER_CER.Search(MSG_TYPE_DB_1);
+			if (pProcess == NULL || pProcess->m_IsOpen == false)
+			{
+				return;
+			}
+
+			pProcess->DeleteAllConcurrentUser();
+		}
+
+		void Undo() {}
+	};
+
+	template<>
+	class MSG_PLAYER_QUERY<RequestLogout> : public IMESSAGE
+	{
+	public:
+		MSG_PLAYER_QUERY() { }
+		~MSG_PLAYER_QUERY() {}
+
+		GSCLIENT_PTR pSession;
+
+		boost::shared_ptr<RequestLogout> pRequst;
+
+		void Execute(LPVOID Param)
+		{
+			if (pSession == NULL)
+			{
+				return;
+			}
+
+			DBPROCESS_CER_PTR pProcess = DBPROCESSCONTAINER_CER.Search(pSession->GetMyDBTP());
+			if (pProcess == NULL || pProcess->m_IsOpen == false)
+			{
+				return;
+			}
+
+			pProcess->ProcedureUserLogout(pRequst->Account.c_str());
+		}
+
+		void Undo() {}
+	};
+
+
+	template<>
 	class MSG_PLAYER_QUERY<RequestPlayerAuth> : public IMESSAGE
 	{
 	public:
@@ -118,11 +174,26 @@ namespace Board	{
 			INT64 Index = 0;
 			WORD nRet = pProcess->ProcedureUserLogin(pRequst->Account.c_str(), pRequst->Passwd.c_str(), authentickey, Index);
 
-			if(nRet != _ERR_NONE || (PLAYERMGR.Search(pRequst->Account) != NULL))
+			if(nRet != _ERR_NONE )
 			{ 
 				res.set_var_code(LoginFailed);
 				SEND_PROTO_BUFFER(res, pSession)
 				return ;
+			}
+
+			//이미 접속중이면 이전 접속을 끊는다. 
+			auto existClient = PLAYERMGR.Search(pRequst->Account);
+			if (existClient != NULL)
+			{
+				GSCLIENT_PTR pPair = SERVER.GetClient(existClient->GetPair());
+				if (pPair != NULL)
+				{
+					pPair->Close();
+				}
+
+				res.set_var_code(LoginFailed);
+				SEND_PROTO_BUFFER(res, pSession)
+				return;
 			}
 
 			PlayerPtr pNewPlayer = PLAYERMGR.Create();

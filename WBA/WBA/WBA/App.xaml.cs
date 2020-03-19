@@ -18,7 +18,7 @@ namespace WBA
             {
                 NetProcess.start();
 
-                Device.StartTimer(new TimeSpan(0, 0, 1), () =>
+                Device.StartTimer(new TimeSpan(0, 0, 0, 0, 300), () =>
                 {
                     Device.BeginInvokeOnMainThread(() =>
                     {

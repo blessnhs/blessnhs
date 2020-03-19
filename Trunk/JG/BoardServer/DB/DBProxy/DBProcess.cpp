@@ -24,12 +24,12 @@ BOOL CDBProcessCer::Initalize(	WCHAR *m_szDSN,WCHAR *m_szUID,WCHAR *m_szPWD)
 	m_pDB = new COdbc;
 	if( m_pDB->Open2(m_szDSN, m_szUID, m_szPWD) == false )
 	{
-		wprintf(_T("fail -> %s(%d)\n"), __FUNCTION__,GetId());
+		wprintf(_T("fail -> %s(%d)\n"), __FUNCTION__, (int)GetId());
 		return false;
 	}
 	m_IsOpen = true;
 
-	wprintf(_T("success db (%d)\n"), __FUNCTION__, GetId());
+	wprintf(_T("connected db (%d)\n"), __FUNCTION__, (int)GetId());
 	return true;
 }
 
@@ -73,6 +73,62 @@ float CDBProcessCer::ProcedureVersion()
 	}
 
 	return sParmRet;
+}
+
+int	 CDBProcessCer::ProcedureUserLogout(const WCHAR* id)
+{
+	SQLRETURN		retcode = SQL_ERROR;
+	CDBHandle		dbhandle(m_pDB->m_hdbc, &(m_pDB->m_csDBHandle));
+	SQLHSTMT		hstmt = dbhandle.GetHandle();
+	TCHAR			szSQL[1024];
+	wsprintf(szSQL, _T("{call SP_ACCOUNT_LOGOUT (\'%s\')}"), id);
+	
+	retcode = SQLExecDirect(hstmt, szSQL, SQL_NTS);
+	if (retcode == SQL_ERROR)
+	{	// true is Disconnected...
+
+
+		if (m_pDB->SQLErrorMsg(hstmt, _T(__FUNCTION__)) == true)
+		{
+			wprintf(_T("database server Network Error... %s() \n"), __FUNCTION__);
+			m_pDB->Close();
+			m_pDB->ReConnect();
+			//odbc->SetRecconectFlag(true);
+		}
+		wprintf(_T("database server query Error... %s() \n"), __FUNCTION__);
+		return _ERR_NETWORK;
+	}
+	
+
+	return _ERR_NONE;
+}
+
+int  CDBProcessCer::DeleteAllConcurrentUser()
+{
+	SQLRETURN		retcode = SQL_ERROR;
+	CDBHandle		dbhandle(m_pDB->m_hdbc, &(m_pDB->m_csDBHandle));
+	SQLHSTMT		hstmt = dbhandle.GetHandle();
+	TCHAR			szSQL[1024];
+	wsprintf(szSQL, _T("{call SP_DELETE_ALL_CONCURRENT}"));
+
+	retcode = SQLExecDirect(hstmt, szSQL, SQL_NTS);
+	if (retcode == SQL_ERROR)
+	{	// true is Disconnected...
+
+
+		if (m_pDB->SQLErrorMsg(hstmt, _T(__FUNCTION__)) == true)
+		{
+			wprintf(_T("database server Network Error... %s() \n"), __FUNCTION__);
+			m_pDB->Close();
+			m_pDB->ReConnect();
+			//odbc->SetRecconectFlag(true);
+		}
+		wprintf(_T("database server query Error... %s() \n"), __FUNCTION__);
+		return _ERR_NETWORK;
+	}
+
+
+	return _ERR_NONE;
 }
 
 int		CDBProcessCer::ProcedureUserLogin(const WCHAR* id, const WCHAR* pw, std::wstring& szKey, INT64 &Index)

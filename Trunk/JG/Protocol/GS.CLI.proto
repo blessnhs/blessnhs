@@ -24,7 +24,7 @@ message CREATE_ROOM_RES
 {
     optional PROTOCOL   id                  = 1 [default = ID_PKT_CREATE_ROOM_RES ];
     optional string var_name                  = 2;
- 
+    optional int32  var_room_id               = 3; 
     optional  ErrorCode    var_code         = 4;
 }
 
@@ -32,6 +32,7 @@ message ENTER_ROOM_RES
 {
     optional PROTOCOL   id                  = 1 [default = ID_PKT_ENTER_ROOM_RES ];
     optional string var_name                  = 2;
+    optional int32  var_room_id               = 3; 
     optional  ErrorCode    var_code         = 4;
 }
  

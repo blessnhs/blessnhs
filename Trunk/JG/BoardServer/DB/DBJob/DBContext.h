@@ -33,7 +33,21 @@ public:
 	int Result;
 };
 
+class RequestLogout : public GSObject
+{
+public:
+	RequestLogout(void) {}
+	~RequestLogout(void) {}
 
+	std::wstring Account;
+};
+
+class RequestDeleteAllConcurrentUser : public GSObject
+{
+public:
+	RequestDeleteAllConcurrentUser(void) {}
+	~RequestDeleteAllConcurrentUser(void) {}
+};
 
 //sample
 class RPA : public GSObject

@@ -115,6 +115,7 @@ VOID BoardProcess::ROOM_CREATE(LPVOID Data, DWORD Length, boost::shared_ptr<GSCl
 
 	RoomPtr->InsertPlayer(pPlayer);
 
+	res.set_var_room_id(RoomPtr->GetId());
 	res.mutable_var_name()->assign(RoomPtr->m_Stock.Name);
 	SEND_PROTO_BUFFER(res, pOwner)
 
@@ -151,6 +152,7 @@ VOID BoardProcess::ROOM_ENTER(LPVOID Data, DWORD Length, boost::shared_ptr<GSCli
 
 	pPlayer->m_RoomNumber = RoomPtr->GetId();
 
+	res.set_var_room_id(RoomPtr->GetId());
 	res.set_var_name(RoomPtr->m_Stock.Name.c_str());
 	SEND_PROTO_BUFFER(res, pOwner)
 
