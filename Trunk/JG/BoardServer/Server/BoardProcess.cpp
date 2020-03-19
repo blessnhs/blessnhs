@@ -363,7 +363,7 @@ VOID BoardProcess::AUTO_START(LPVOID Data, DWORD Length, boost::shared_ptr<GSCli
 	//{
 	//	DECLARE_JSON_WRITER
 
-	//	std::wstring Name = _T("AutoRoom");
+	//	std::string Name = _T("AutoRoom");
 	//	ADD_JSON_WSTR_MEMBER("Name", Name)
 
 	//		ADD_JSON_MEMBER("MaxCount", 2)

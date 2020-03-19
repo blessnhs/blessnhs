@@ -15,10 +15,10 @@ public:
 
 	~RequestPlayerAuth(void) {}
 
-	std::wstring Account;
-	std::wstring Passwd;
-	std::wstring SessionKey;
-	std::wstring CharName[MAX_CHAR_CNT];
+	std::string Account;
+	std::string Passwd;
+	std::string SessionKey;
+	std::string CharName[MAX_CHAR_CNT];
 
 	DWORD Index;
 	int Result;

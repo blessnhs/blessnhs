@@ -52,7 +52,7 @@ template<template<class T> class CreationPolicy1,template<class T> class Creatio
 	SQLLEN			cbParmRet;
 	SQLRETURN		retcode = SQL_ERROR;
 	TCHAR			szsql[1024];
-	wsprintf(szsql, _T("SELECT * FROM Character(nolock) WHERE Account = \'%S\'"), Account);
+	sprintf(szsql, ("SELECT * FROM Character(nolock) WHERE Account = \'%s\'"), Account);
 	retcode = OdbcExecDirect(m_GameDB, hstmt, szsql);
 	if (retcode==SQL_ERROR){ return _ERR_NETWORK; }
 

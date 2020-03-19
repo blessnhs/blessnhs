@@ -18,12 +18,12 @@ public:
 		Account() {}
 		~Account() {}
 
-		std::wstring& GetName() { return m_Name;	}
-		void SetName(const std::wstring& _Name) { m_Name = _Name; }
+		std::string& GetName() { return m_Name;	}
+		void SetName(const std::string& _Name) { m_Name = _Name; }
 
 	public:
 
-		std::wstring m_Name;
+		std::string m_Name;
 	};
 
 	VOID SetChannel(DWORD _id);

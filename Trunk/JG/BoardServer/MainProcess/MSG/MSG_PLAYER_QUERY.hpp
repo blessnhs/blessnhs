@@ -170,7 +170,7 @@ namespace Board	{
 			}
 
 			// 로그인 절차 : 아이디의 접속확인 및 인증키값을 가져온다.
-			std::wstring authentickey;
+			std::string authentickey;
 			INT64 Index = 0;
 			WORD nRet = pProcess->ProcedureUserLogin(pRequst->Account.c_str(), pRequst->Passwd.c_str(), authentickey, Index);
 

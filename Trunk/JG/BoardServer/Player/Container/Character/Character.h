@@ -9,8 +9,8 @@ public:
 	Character();
 	~Character();
 
-	std::wstring& GetName();
-	void SetName(std::wstring& _Name);
+	std::string& GetName();
+	void SetName(std::string& _Name);
 
 	void SetReady(bool _ready);
 	bool GetReady();
@@ -23,7 +23,7 @@ public:
 
 private:
 
-	std::wstring		m_Name;
+	std::string			m_Name;
 
 	bool				m_Ready;
 	bool				m_AllComplete;

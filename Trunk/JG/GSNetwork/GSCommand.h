@@ -8,13 +8,13 @@ public:
 	GSCommand(void);
 	~GSCommand(void);
 
-	typedef VOID (*Func)(std::wstring);
+	typedef VOID (*Func)(std::string);
 
-	void AddCommand(std::wstring Name,Func);
-	VOID Call(std::wstring Name,std::wstring arg);
+	void AddCommand(std::string Name,Func);
+	VOID Call(std::string Name,std::string arg);
 
 protected:
 
-	std::map<std::wstring,Func> command;
+	std::map<std::string,Func> command;
 };
 

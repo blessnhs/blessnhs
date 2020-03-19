@@ -8,12 +8,12 @@ Character::Character()
 
 Character::~Character() {}
 
-std::wstring& Character::GetName()
+std::string& Character::GetName()
 {
 	return m_Name;	
 }
 
-void Character::SetName(std::wstring& _Name)
+void Character::SetName(std::string& _Name)
 {
 	m_Name =  _Name;
 }

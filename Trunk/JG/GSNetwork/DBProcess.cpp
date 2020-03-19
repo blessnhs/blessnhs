@@ -17,7 +17,7 @@ CDBProcess::~CDBProcess(void)
 {
 }
 
-BOOL CDBProcess::Initalize(	WCHAR *m_szDSNAcc,WCHAR *m_szDSNGame,WCHAR *m_szUID,WCHAR *m_szPWD)
+BOOL CDBProcess::Initalize(	CHAR *m_szDSNAcc,CHAR *m_szDSNGame,CHAR *m_szUID,CHAR *m_szPWD)
 {
 	m_AccountDB = new COdbc;
 	//if( m_AccountDB->Open(m_szDSNAcc, m_szUID, m_szPWD) == false )
@@ -37,7 +37,7 @@ BOOL CDBProcess::Initalize(	WCHAR *m_szDSNAcc,WCHAR *m_szDSNGame,WCHAR *m_szUID,
 	return true;
 }
 
-int CDBProcess::SelectCharacterInfo(const WCHAR *Account,RequestPlayerAuth &pRes)
+int CDBProcess::SelectCharacterInfo(const CHAR *Account,RequestPlayerAuth &pRes)
 {
 	if(m_GameDB->IsOpen()==false){ return _ERR_NETWORK; }
 
@@ -46,13 +46,13 @@ int CDBProcess::SelectCharacterInfo(const WCHAR *Account,RequestPlayerAuth &pRes
 	SQLSMALLINT		sParmRet=0;
 	SQLLEN			cbParmRet;
 	SQLRETURN		retcode = SQL_ERROR;
-	WCHAR			szsql[1024];
-	wsprintf(szsql, _T("SELECT * FROM Character WHERE Account = \'%s\'"), Account);
+	SQLCHAR			szsql[1024];
+	sprintf((char*)szsql, _T("SELECT * FROM Character WHERE Account = \'%s\'"), Account);
 	retcode = OdbcExecDirect(m_GameDB, hstmt, szsql);
 	if (retcode==SQL_ERROR){ return _ERR_NETWORK; }
 
-	WCHAR Name[MAX_CHAR_LENGTH];
-	WCHAR _Account[MAX_CHAR_LENGTH];
+	CHAR Name[MAX_CHAR_LENGTH];
+	CHAR _Account[MAX_CHAR_LENGTH];
 	DWORD Index;
 
 	int Cnt = 0;
@@ -62,8 +62,8 @@ int CDBProcess::SelectCharacterInfo(const WCHAR *Account,RequestPlayerAuth &pRes
 		if(retcode == SQL_SUCCESS || retcode == SQL_SUCCESS_WITH_INFO)
 		{
 			SQLGetData(hstmt, 1, SQL_C_LONG, &Index, 0, &cbParmRet);
-			SQLGetData(hstmt, 2, SQL_WCHAR, _Account, sizeof(_Account), &cbParmRet);
-			SQLGetData(hstmt, 3, SQL_WCHAR, Name, sizeof(Name), &cbParmRet);
+			SQLGetData(hstmt, 2, SQL_CHAR, _Account, sizeof(_Account), &cbParmRet);
+			SQLGetData(hstmt, 3, SQL_CHAR, Name, sizeof(Name), &cbParmRet);
 	
 			pRes.CharName[Cnt] = Name;
 			pRes.Account = _Account;
@@ -84,18 +84,18 @@ void CDBProcess::ClearConCurrentTable()
 	CDBHandle	dbhandle(m_AccountDB->m_hdbc, &(m_AccountDB->m_csDBHandle));
 	SQLHSTMT	hstmt = dbhandle.GetHandle();
 	SQLRETURN	retcode = SQL_ERROR;
-	TCHAR		szsql[1024]; memset(szsql, 0, sizeof(szsql));
+	SQLCHAR		szsql[1024]; memset(szsql, 0, sizeof(szsql));
 	SQLSMALLINT		sParmRet=0;
 	SQLLEN			cbParmRet=0;
 
-	wsprintf(szsql, _T("delete GW_CONCURRENTUSER"));
+	sprintf((char*)szsql, _T("delete GW_CONCURRENTUSER"));
 
 	retcode = OdbcExecDirect(m_AccountDB, hstmt, szsql);
 	if (retcode==SQL_ERROR)
 		return ;
 }
 
-void CDBProcess::ClosePlayer(WCHAR *Account)
+void CDBProcess::ClosePlayer(CHAR *Account)
 {
 	if(m_AccountDB->IsOpen()==false){ return ; }
 
@@ -104,11 +104,11 @@ void CDBProcess::ClosePlayer(WCHAR *Account)
 	CDBHandle	dbhandle(m_AccountDB->m_hdbc, &(m_AccountDB->m_csDBHandle));
 	SQLHSTMT	hstmt = dbhandle.GetHandle();
 	SQLRETURN	retcode = SQL_ERROR;
-	WCHAR		szsql[1024]; memset(szsql, 0, sizeof(szsql));
+	SQLCHAR		szsql[1024]; memset(szsql, 0, sizeof(szsql));
 	SQLSMALLINT		sParmRet=0;
 	SQLLEN			cbParmRet=0;
 
-	wsprintf(szsql, _T("delete GW_CONCURRENTUSER where szAccountid = \'%s\'"), Account);
+	sprintf((char*)szsql, _T("delete GW_CONCURRENTUSER where szAccountid = \'%s\'"), Account);
 
 	retcode = OdbcExecDirect(m_AccountDB, hstmt, szsql);
 	if (retcode==SQL_ERROR)
@@ -117,7 +117,7 @@ void CDBProcess::ClosePlayer(WCHAR *Account)
 }
 
 
-int		CDBProcess::ProcedureUserLogin(const WCHAR *Account,const WCHAR *SessionKey,int ChannelId)
+int		CDBProcess::ProcedureUserLogin(const CHAR *Account,const CHAR *SessionKey,int ChannelId)
 {
 	if(m_AccountDB->IsOpen()==false){ return 1; }
 	
@@ -126,11 +126,11 @@ int		CDBProcess::ProcedureUserLogin(const WCHAR *Account,const WCHAR *SessionKey
 	CDBHandle	dbhandle(m_AccountDB->m_hdbc, &(m_AccountDB->m_csDBHandle));
 	SQLHSTMT	hstmt = dbhandle.GetHandle();
 	SQLRETURN	retcode = SQL_ERROR;
-	WCHAR		szsql[1024]; memset(szsql, 0, sizeof(szsql));
+	SQLCHAR		szsql[1024]; memset(szsql, 0, sizeof(szsql));
 	SQLSMALLINT		sParmRet=0;
 	SQLLEN			cbParmRet=0;
 	
-	wsprintf(szsql, _T("{call SP_GW_GAME_LOGIN (\'%s\',\'%s\',%d,?)}"),Account,SessionKey, ChannelId);
+	sprintf((char*)szsql, _T("{call SP_GW_GAME_LOGIN (\'%s\',\'%s\',%d,?)}"),Account,SessionKey, ChannelId);
 	retcode = SQLBindParameter(hstmt, 1, SQL_PARAM_OUTPUT, SQL_C_SSHORT, SQL_SMALLINT, 0,0, &sParmRet,0, &cbParmRet );
 	if (retcode==SQL_ERROR)
 	{
@@ -154,7 +154,7 @@ int		CDBProcess::ProcedureUserLogin(const WCHAR *Account,const WCHAR *SessionKey
 	return sParmRet;
 }
 
-SQLRETURN CDBProcess::OdbcExecDirect(COdbc* odbc, SQLHSTMT	hstmt, WCHAR* query)
+SQLRETURN CDBProcess::OdbcExecDirect(COdbc* odbc, SQLHSTMT	hstmt, SQLCHAR* query)
 {
 	SQLRETURN	res;
 	res = SQLExecDirect(hstmt, query, SQL_NTS);
@@ -172,7 +172,7 @@ SQLRETURN CDBProcess::OdbcExecDirect(COdbc* odbc, SQLHSTMT	hstmt, WCHAR* query)
 		}
 
 		char err_str[256];
-		if( odbc->SQLErrorMsg(hstmt,_T(__FUNCTION__), err_str) == true ) 
+		if( odbc->SQLErrorMsg(hstmt,__FUNCTION__, err_str) == true ) 
 		{
 			while(!odbc->ReConnect())
 			{
@@ -189,25 +189,25 @@ SQLRETURN CDBProcess::OdbcExecDirect(COdbc* odbc, SQLHSTMT	hstmt, WCHAR* query)
 	return res;
 }
 
-bool CDBProcess::RecordAuthenticKeyFromDB(WCHAR* id, WCHAR* key, WCHAR* ip)
+bool CDBProcess::RecordAuthenticKeyFromDB(CHAR* id, CHAR* key, CHAR* ip)
 {
 	SQLRETURN		retcode = SQL_ERROR;
-	TCHAR			szsql[1024]; 
+	SQLCHAR			szsql[1024];
 	CDBHandle		dbhandle(m_AccountDB->m_hdbc, &(m_AccountDB->m_csDBHandle));
 	SQLHSTMT		hstmt = dbhandle.GetHandle();
 
-	wsprintf(szsql, _T("{call SP_GW_INSERT_UUID (\'%s\', \'%s\', \'%s\')}"), id, key, ip);
+	sprintf((char*)szsql, _T("{call SP_GW_INSERT_UUID (\'%s\', \'%s\', \'%s\')}"), id, key, ip);
 	retcode = SQLExecDirect (hstmt, szsql, SQL_NTS);
 	if (retcode==SQL_ERROR)
 	{
-		if( m_AccountDB->SQLErrorMsg(hstmt, _T(__FUNCTION__)) == true ) 
+		if( m_AccountDB->SQLErrorMsg(hstmt, __FUNCTION__) == true ) 
 		{	
-			wprintf(_T("database server Network Error... %s() \n"), __FUNCTION__);
+			printf(_T("database server Network Error... %s() \n"), __FUNCTION__);
 			m_AccountDB->Close();
 			m_AccountDB->ReConnect();
 			//odbc->SetRecconectFlag(true);
 		}
-		wprintf(_T("database server query Error... %s() \n"), __FUNCTION__);
+		printf(_T("database server query Error... %s() \n"), __FUNCTION__);
 
 		return false;
 	}
@@ -215,10 +215,10 @@ bool CDBProcess::RecordAuthenticKeyFromDB(WCHAR* id, WCHAR* key, WCHAR* ip)
 }
 
 
-WORD CDBProcess::GetAuthenticKeyFromDB(const WCHAR* id, const WCHAR* pw,WCHAR* out)
+WORD CDBProcess::GetAuthenticKeyFromDB(const CHAR* id, const CHAR* pw,CHAR* out)
 {
 	SQLRETURN		retcode = SQL_ERROR;
-	TCHAR			szSQL[1024]; 
+	SQLCHAR			szSQL[1024];
 	SQLCHAR			szSessionKey[MAX_SESSION_KEY_SIZE] = {0,};
 	SQLSMALLINT		sParmRet=0;
 	SQLLEN			cbParmRet=0;
@@ -226,7 +226,7 @@ WORD CDBProcess::GetAuthenticKeyFromDB(const WCHAR* id, const WCHAR* pw,WCHAR* o
 	SQLHSTMT		hstmt = dbhandle.GetHandle();
 
 
-	wsprintf(szSQL, _T("{call SP_GW_ACCOUNT_LOGIN (\'%s\', \'%s\', ? , ? )}"), id, pw);
+	sprintf((char*)szSQL, _T("{call SP_GW_ACCOUNT_LOGIN (\'%s\', \'%s\', ? , ? )}"), id, pw);
 	retcode = SQLBindParameter(hstmt, 1, SQL_PARAM_OUTPUT, SQL_C_SSHORT, SQL_SMALLINT, 0,0, &sParmRet,0, &cbParmRet );
 	retcode = SQLBindParameter(hstmt, 2, SQL_PARAM_OUTPUT, SQL_C_CHAR, SQL_CHAR, 64,0, szSessionKey, sizeof(szSessionKey), &cbParmRet );
 
@@ -237,14 +237,14 @@ WORD CDBProcess::GetAuthenticKeyFromDB(const WCHAR* id, const WCHAR* pw,WCHAR* o
 		{	// true is Disconnected...
 
 
-			if( m_AccountDB->SQLErrorMsg(hstmt, _T(__FUNCTION__)) == true ) 
+			if( m_AccountDB->SQLErrorMsg(hstmt, __FUNCTION__) == true ) 
 			{	
-				wprintf(_T("database server Network Error... %s() \n"), __FUNCTION__);
+				printf(_T("database server Network Error... %s() \n"), __FUNCTION__);
 				m_AccountDB->Close();
 				m_AccountDB->ReConnect();
 				//odbc->SetRecconectFlag(true);
 			}
-			wprintf(_T("database server query Error... %s() \n"), __FUNCTION__);
+			printf(_T("database server query Error... %s() \n"), __FUNCTION__);
 			return _ERR_NETWORK;
 		}
 	}
@@ -257,10 +257,13 @@ WORD CDBProcess::GetAuthenticKeyFromDB(const WCHAR* id, const WCHAR* pw,WCHAR* o
 	}
 	std::string szKey = (char*)(LPCTSTR)szSessionKey;
 
-	printf("recv session key = %s id = %S\n",(char*)(LPCTSTR)szSessionKey,id);
+	printf("recv session key = %s id = %s\n",(char*)(LPCTSTR)szSessionKey,id);
 	szKey = trim_right(szKey);
 
-	MultiByteToWideChar(CP_ACP,0, (char*)(LPCTSTR)szKey.c_str(), MAX_SESSION_KEY_SIZE, out, MAX_SESSION_KEY_SIZE);
+
+	_tcscpy(out, (char*)(LPCTSTR)szKey.c_str());
+
+	//MultiByteToWideChar(CP_ACP,0, (char*)(LPCTSTR)szKey.c_str(), MAX_SESSION_KEY_SIZE, out, MAX_SESSION_KEY_SIZE);
 
 	return _ERR_NONE;
 }

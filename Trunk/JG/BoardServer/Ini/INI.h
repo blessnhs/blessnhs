@@ -9,7 +9,7 @@ public:
 
 	VOID Load();
 
-	WCHAR Default_FrontIp[MAX_IP_ADDRESS];
+	CHAR Default_FrontIp[MAX_IP_ADDRESS];
 	WORD  Default_FrontPort;
 
 	DWORD Port ; 

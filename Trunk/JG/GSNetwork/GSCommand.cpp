@@ -12,12 +12,12 @@ GSCommand::~GSCommand(void)
 }
 
 
-void GSCommand::AddCommand(std::wstring Name,Func _func)
+void GSCommand::AddCommand(std::string Name,Func _func)
 {
 	command[Name] = _func;
 }
 
-VOID GSCommand::Call(std::wstring Name,std::wstring arg)
+VOID GSCommand::Call(std::string Name,std::string arg)
 {
 	Func _func = command[Name];
 	if(_func != NULL)

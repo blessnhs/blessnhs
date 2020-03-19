@@ -65,7 +65,7 @@ template<template<class T> class CreationPolicy> PlayerPtr PlayerContainer<Creat
 	return PlayerPtr(0);
 }
 
-template<template<class T> class CreationPolicy> PlayerPtr PlayerContainer<CreationPolicy>:: Search(wstring Account)
+template<template<class T> class CreationPolicy> PlayerPtr PlayerContainer<CreationPolicy>:: Search(string Account)
 {
 	for each( auto iter in m_PlayerMap)
 	{
@@ -95,12 +95,12 @@ template<template<class T> class CreationPolicy> void PlayerContainer<CreationPo
 	{
 		if(iter->second != NULL)
 		{
-			wstring Name = iter->second->m_Account.GetName();
+			string Name = iter->second->m_Account.GetName();
 			WORD SessionId= iter->second->GetPair();
 
 			GSCLIENT *pSession = SERVER.GetClient(SessionId);
 			if(!pSession)
-				printf("Lost GSCLIENT %S %d \n",Name.c_str(),SessionId);
+				printf("Lost GSCLIENT %s %d \n",Name.c_str(),SessionId);
 		}
 		iter++;
 	}
@@ -135,7 +135,7 @@ template<template<class T> class CreationPolicy> void PlayerContainer<CreationPo
 	{
 		if(iter->second != NULL)
 		{
-			printf("%S\n",iter->second->m_Account.GetName().c_str());
+			printf("%s\n",iter->second->m_Account.GetName().c_str());
 		}
 		++iter;
 	}

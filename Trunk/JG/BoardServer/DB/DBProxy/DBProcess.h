@@ -9,10 +9,10 @@ public:
 	CDBProcessCer(void);
 	~CDBProcessCer(void);
 	
-	BOOL Initalize(	WCHAR *m_szDSN,WCHAR *m_szUID,WCHAR *m_szPWD);
+	BOOL Initalize(	CHAR *m_szDSN,CHAR *m_szUID,CHAR *m_szPWD);
 
-	int	 ProcedureUserLogin(const WCHAR* id, const WCHAR* pw, std::wstring&szKey, INT64 &Index);
-	int	 ProcedureUserLogout(const WCHAR* id);
+	int	 ProcedureUserLogin(const CHAR* id, const CHAR* pw, std::string&szKey, INT64 &Index);
+	int	 ProcedureUserLogout(const CHAR* id);
 	int  DeleteAllConcurrentUser();
 
 	float ProcedureVersion();

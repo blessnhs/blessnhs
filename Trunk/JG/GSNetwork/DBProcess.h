@@ -14,18 +14,18 @@ public:
 	CDBProcess(void);
 	~CDBProcess(void);
 		
-	BOOL Initalize(	WCHAR *m_szDSNAcc,WCHAR *m_szDSNGame,WCHAR *m_szUID,WCHAR *m_szPWD);
+	BOOL Initalize(	CHAR *m_szDSNAcc,CHAR *m_szDSNGame,CHAR *m_szUID,CHAR *m_szPWD);
 
-	int	ProcedureUserLogin(const WCHAR *Account,const WCHAR *SessionKey,int ChannelId);
-	int SelectCharacterInfo(const WCHAR *Account,RequestPlayerAuth &pRes);
-	void ClosePlayer(WCHAR *Account);
+	int	ProcedureUserLogin(const CHAR *Account,const CHAR *SessionKey,int ChannelId);
+	int SelectCharacterInfo(const CHAR *Account,RequestPlayerAuth &pRes);
+	void ClosePlayer(CHAR *Account);
 	void ClearConCurrentTable();
 
-	WORD GetAuthenticKeyFromDB(const WCHAR* id, const WCHAR* pw, WCHAR* out);	
+	WORD GetAuthenticKeyFromDB(const CHAR* id, const CHAR* pw, CHAR* out);	
 
-	bool RecordAuthenticKeyFromDB( WCHAR* id,  WCHAR* key,  WCHAR* ip);
+	bool RecordAuthenticKeyFromDB( CHAR* id,  CHAR* key,  CHAR* ip);
 
-	SQLRETURN	OdbcExecDirect(COdbc* odbc, SQLHSTMT	hstmt, WCHAR* query);
+	SQLRETURN	OdbcExecDirect(COdbc* odbc, SQLHSTMT	hstmt, SQLCHAR* query);
 
 
 	COdbc*				m_AccountDB;

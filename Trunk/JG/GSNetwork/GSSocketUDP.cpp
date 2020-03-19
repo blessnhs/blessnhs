@@ -314,17 +314,8 @@ BOOL GSSocketUDP::GetRemoteAddressAfterAccept(LPTSTR remoteAddress, USHORT &remo
 		(sockaddr **) &Remote,
 		&RemoteLength);
 
-	//_tcscpy(remoteAddress, (LPTSTR)(inet_ntoa(Remote->sin_addr)));
-	CHAR	TempRemoteAddress[32] = {0,};
-	strcpy(TempRemoteAddress, inet_ntoa(Remote->sin_addr));
-
-	MultiByteToWideChar(CP_ACP,
-		0,
-		TempRemoteAddress,
-		-1,
-		remoteAddress,
-		32);
-
+	_tcscpy(remoteAddress, (LPTSTR)(inet_ntoa(Remote->sin_addr)));
+	
 	remotePort = ntohs(Remote->sin_port);
 
 	return TRUE;

@@ -65,9 +65,9 @@ public:
 	bool Open2(LPCTSTR odbcName, LPCTSTR loginName, LPCTSTR loginPwd);
 	void Close();
 	bool ReConnect();
-	bool SQLErrorMsg(SQLHSTMT hstmt, LPCWSTR errfunction, char* error_str);
+	bool SQLErrorMsg(SQLHSTMT hstmt, LPCSTR errfunction, char* error_str);
 	//bool SQLErrorMsg(SQLHSTMT hstmt, LPCSTR errfunction, int& error);
-	bool SQLErrorMsg(SQLHSTMT hstmt, LPCWSTR errfunction);
+	bool SQLErrorMsg(SQLHSTMT hstmt, LPCSTR errfunction);
 	bool SQLErrorMsg(SQLSMALLINT HandleType, SQLHANDLE Handle);
 
 	inline bool GetRecconectFlag(){ return m_bReconnectFlag; }
@@ -75,7 +75,7 @@ public:
 	
 private:
 	SQLHENV m_henv;
-	SQLWCHAR m_szConnect[MAX_CONNECT];
+	SQLCHAR m_szConnect[MAX_CONNECT];
 	bool m_bReconnectFlag;
 
 	bool Open(); 

@@ -26,9 +26,9 @@ public:
 
 	~RequestPlayerAuth(void) {}
 
-	std::wstring Account;
-	std::wstring Passwd;
-	std::wstring SessionKey;
+	std::string Account;
+	std::string Passwd;
+	std::string SessionKey;
 	DWORD Index;
 	int Result;
 };
@@ -39,7 +39,7 @@ public:
 	RequestLogout(void) {}
 	~RequestLogout(void) {}
 
-	std::wstring Account;
+	std::string Account;
 };
 
 class RequestDeleteAllConcurrentUser : public GSObject

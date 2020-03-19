@@ -8,14 +8,14 @@ BoardConstructor::BoardConstructor(void)
 {
 	SERVER.Initialize();
 	
-	wprintf(_T("Alloc Client Count %d\n"), SERVER.GetClientMgr().GetActiveSocketCount());
+	printf(("Alloc Client Count %d\n"), SERVER.GetClientMgr().GetActiveSocketCount());
 
 	BoardCommand _Command;
 	
 	while(TRUE)
 	{
-		WCHAR command[256];
-		wscanf_s(_T("%s"),command,sizeof(command));
+		CHAR command[256];
+		scanf_s("%s",command,sizeof(command));
 
 		printf("AliveCount %d\n", SERVER.GetClientMgr().GetActiveSocketCount());
 	}

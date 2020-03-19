@@ -8,10 +8,10 @@ public:
 	~BoardCommand(void) {}
 
 	void Initialize();
-	void Execute(std::wstring _str);
+	void Execute(std::string _str);
 
 
-	static VOID UserList(std::wstring);
+	static VOID UserList(std::string);
 
 
 };

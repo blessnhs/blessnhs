@@ -6,7 +6,7 @@
 class BoardLog : public GSLog<MultiThread> , public Singleton<BoardLog>
 {
 public:
-	BoardLog(LPCTSTR file_name = _T("BoardLogLog.txt"));
+	BoardLog(LPCTSTR file_name = ("BoardLogLog.txt"));
 	~BoardLog(void);
 };
 

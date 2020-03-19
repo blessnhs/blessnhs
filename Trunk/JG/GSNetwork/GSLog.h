@@ -112,7 +112,7 @@ public:
 		::WriteFile( handle_, time_log, ( DWORD )::_tcslen( time_log ) * sizeof(TCHAR),&write_len, NULL );
 		::WriteFile( handle_, msg, ( DWORD )::_tcslen( msg ) * sizeof(TCHAR),&write_len, NULL );
 
-		printf(("%S%S\n"),time_log,msg);
+		printf(("%s%s\n"),time_log,msg);
 
 		UnLock();
 

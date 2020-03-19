@@ -3,10 +3,10 @@
 
 	void BoardCommand::Initialize()
 	{
-		command[_T("ll")] = &BoardCommand::UserList;
+		command["ll"] = &BoardCommand::UserList;
 	}
 
-	void BoardCommand::Execute(std::wstring _str)
+	void BoardCommand::Execute(std::string _str)
 	{
 
 		int Pos = _str.find(':');
@@ -16,8 +16,8 @@
 			return ;
 		}
 
-		std::wstring Word = _str.substr(0,Pos);
-		std::wstring Arg  = _str.substr(Pos,_str.size()-Pos);
+		std::string Word = _str.substr(0,Pos);
+		std::string Arg  = _str.substr(Pos,_str.size()-Pos);
 
 		if(command.find(Word) != command.end())
 		{
@@ -25,7 +25,7 @@
 		}
 	}
 
-	VOID BoardCommand::UserList(std::wstring)
+	VOID BoardCommand::UserList(std::string)
 	{
 
 	}

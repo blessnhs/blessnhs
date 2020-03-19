@@ -26,7 +26,14 @@ VOID GSClientMgr::CheckAliveTime()
 		{
 			GSServer::GSServer *pServer = (GSServer::GSServer *)client.second->m_GSServer;
 
-			if (client.second->GetAliveTime() + (pServer->GetArgument().m_AliveTime * 1000) <= GetTickCount())
+			DWORD client_time = client.second->GetAliveTime();
+			DWORD server_check_time = pServer->GetArgument().m_AliveTime * 1000;
+			DWORD system_tick = GetTickCount();
+			int Diff = system_tick - (client_time + server_check_time);
+
+		//	printf("client %d diff %d\n", client.second->GetId(), Diff);
+
+			if ((client_time + server_check_time) <= system_tick)
 				if (client.second->GetType() == _PLAYER_)
 					//client.second->OnDisconnect(client.second);
 					client.second->Close();
@@ -78,8 +85,6 @@ BOOL GSClientMgr::DelClient(int id)
 		return FALSE;
 
 	m_Clients[id] = NULL;
-	//일단 보류
-	//	m_Clients.unsafe_erase(id);
 
 	return TRUE;
 }

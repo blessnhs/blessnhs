@@ -34,7 +34,7 @@ LONG WINAPI UnHandledExceptionFilter(struct _EXCEPTION_POINTERS *exceptionInfo)
 			GetLocalTime(&SystemTime);
 
 
-			WCHAR szName[MAX_PATH] = {0};
+			CHAR szName[MAX_PATH] = {0};
 			//GetModuleFileName((HMODULE)0x00400000, szName, sizeof(szName));
 			GetModuleFileName(GetModuleHandle(NULL), szName, sizeof(szName));
 

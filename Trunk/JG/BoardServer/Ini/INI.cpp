@@ -3,12 +3,12 @@
 
 VOID BoardINI::Load()
 {
-	Port = GetPrivateProfileInt(_T("SERVER"), _T("PORT"), 1982,_T("./Board.ini"));
-	MaxUser = GetPrivateProfileInt(_T("SERVER"), _T("MAXUSER"), 100,_T("./Board.ini"));
+	Port = GetPrivateProfileInt(("SERVER"), ("PORT"), 1982,("./Board.ini"));
+	MaxUser = GetPrivateProfileInt(("SERVER"), ("MAXUSER"), 100,("./Board.ini"));
 
-	Default_FrontPort = GetPrivateProfileInt(_T("SERVER"), _T("DEFAULT_FRONT_PORT"), 100,_T("./Board.ini"));
+	Default_FrontPort = GetPrivateProfileInt(("SERVER"), ("DEFAULT_FRONT_PORT"), 100,("./Board.ini"));
 
-	GetPrivateProfileString(_T("SERVER"), _T("DEFAULT_FRONT_IP"),_T("127.0.0.1"),Default_FrontIp,sizeof(Default_FrontIp),_T("./Board.ini"));
+	GetPrivateProfileString(("SERVER"), ("DEFAULT_FRONT_IP"),("127.0.0.1"),Default_FrontIp,sizeof(Default_FrontIp),("./Board.ini"));
 
-	printf("[ Board ] Port [ %d ] MaxUser [ %d ] Front Ip = %S:%d \n",Port,MaxUser,Default_FrontIp,Default_FrontPort);
+	printf("[ Board ] Port [ %d ] MaxUser [ %d ] Front Ip = %s:%d \n",Port,MaxUser,Default_FrontIp,Default_FrontPort);
 }
