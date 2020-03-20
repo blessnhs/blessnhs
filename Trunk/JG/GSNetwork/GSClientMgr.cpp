@@ -42,6 +42,7 @@ VOID GSClientMgr::CheckAliveTime()
 		}
 	}
 
+	int rcount = 0;
 	int count = m_remove_queue.unsafe_size();
 	for (int i = 0; i < count; i++)
 	{
@@ -52,8 +53,13 @@ VOID GSClientMgr::CheckAliveTime()
 			DWORD ClientTime = client->m_DeleteTime;
 			DWORD SYSTime = GetTickCount();
 			int count = client->GetTCPSocket()->m_SendRefCount;
-			if (ClientTime < SYSTime && count == 0)
+
+			int Diff = SYSTime - ClientTime;
+
+			//5분 넘으면 그냥 끊는다.
+			if ((ClientTime < SYSTime && count == 0) || (Diff > (1000 * 60 * 5)))
 			{
+				rcount++;
 				m_Clients[client->GetId()] = NULL;
 
 				((GSServer::GSServer*)m_GSServer)->SubPlayerCount(1);
@@ -63,7 +69,7 @@ VOID GSClientMgr::CheckAliveTime()
 		}
 	}
 
-	printf("m_remove_queue %d\n", count);
+	printf("m_remove_queue %d rcount %d \n", count, rcount);
 
 	printf("re insert queue %d\n", m_insert_queue.unsafe_size());
 	//다시 넣는다.  ㅠㅠ
