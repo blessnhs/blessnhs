@@ -17,9 +17,9 @@ public:
 	virtual ~GSSocket(VOID);
 
 public:
-	OVERLAPPED_EX	m_Accept_OLP;
-	OVERLAPPED_EX	m_Read_OLP;
-	OVERLAPPED_EX	m_Write_OLP;
+	OVERLAPPED_EX	*m_Accept_OLP;
+	OVERLAPPED_EX	*m_Read_OLP;
+	OVERLAPPED_EX	*m_Write_OLP;
 
 	int				m_ClientId;
 

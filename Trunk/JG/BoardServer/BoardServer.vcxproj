@@ -99,8 +99,8 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
     <OutDir>../BIN/debug</OutDir>
-    <IncludePath>../Common/boost_1_68_0;../GSPacket;../common/lib_json;../common/protobuf/include;../common/Protocol/Cpp;../Protocol/Cpp;$(IncludePath)</IncludePath>
-    <LibraryPath>../Common/boost_1_68_0/lib;../Common/lib_json;../Common/protobuf/lib;../Common/protobuf/Debug/lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>../Common/boost_1_68_0;../GSPacket;../common/lib_json;../common/protobuf/include;../common/Protocol/Cpp;../Protocol/Cpp;../Common/tbb/include;$(IncludePath)</IncludePath>
+    <LibraryPath>../Common/boost_1_68_0/lib;../Common/lib_json;../Common/protobuf/lib;../Common/protobuf/Debug/lib;../Common/tbb/lib/intel64/vc14;$(LibraryPath)</LibraryPath>
     <TargetName>$(ProjectName)_d_x64</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseBuild|x64'">
@@ -123,8 +123,8 @@
     <LinkIncremental>true</LinkIncremental>
     <OutDir>../BIN</OutDir>
     <TargetName>$(ProjectName)_x64</TargetName>
-    <IncludePath>../Common/boost_1_68_0;../GSPacket;../common/lib_json;../common/protobuf/include;../common/Protocol/Cpp;../Protocol/Cpp;$(IncludePath)</IncludePath>
-    <LibraryPath>../Common/boost_1_68_0/lib;../Common/lib_json;../Common/protobuf/lib;../Common/protobuf/Debug/lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>../Common/boost_1_68_0;../GSPacket;../common/lib_json;../common/protobuf/include;../common/Protocol/Cpp;../Protocol/Cpp;../Common/tbb/include;$(IncludePath)</IncludePath>
+    <LibraryPath>../Common/boost_1_68_0/lib;../Common/lib_json;../Common/protobuf/lib;../Common/protobuf/Debug/lib;../Common/tbb/lib/intel64/vc14;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -141,7 +141,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>ws2_32.lib;Mswsock.lib;json_d.lib;../Common/GSCore/GSNetwork_d.lib;../Common/protobuf/debug/lib/libprotobufd.lib;../Common/protobuf/debug/lib/libprotobuf-lited.lib;../Common/protobuf/debug/lib/libprotocd.lib;%(AdditionalDependencies);kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib</AdditionalDependencies>
+      <AdditionalDependencies>tbb_debug.lib;ws2_32.lib;Mswsock.lib;json_d.lib;../Common/GSCore/GSNetwork_d.lib;../Common/protobuf/debug/lib/libprotobufd.lib;../Common/protobuf/debug/lib/libprotobuf-lited.lib;../Common/protobuf/debug/lib/libprotocd.lib;%(AdditionalDependencies);kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseBuild|x64'">
@@ -233,7 +233,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>ws2_32.lib;Mswsock.lib;../Common/GSCore/GSNetwork.lib;../Common/protobuf/lib/libprotobuf.lib;../Common/protobuf/lib/libprotobuf-lite.lib;../Common/protobuf//lib/libprotoc.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>tbb.lib;ws2_32.lib;Mswsock.lib;../Common/GSCore/GSNetwork.lib;../Common/protobuf/lib/libprotobuf.lib;../Common/protobuf/lib/libprotobuf-lite.lib;../Common/protobuf//lib/libprotoc.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>

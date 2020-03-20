@@ -161,7 +161,7 @@ BOOL GSSocketUDP::InitializeReadFromForIocp(VOID)
 	WsaBuf.buf			= (CHAR*) m_Buffer;
 	WsaBuf.len			= MAX_BUFFER_LENGTH;
 
-	m_Read_OLP.ObjectId = m_ClientId;
+	m_Read_OLP->ObjectId = m_ClientId;
 
 	INT		ReturnValue = WSARecvFrom(m_Socket,
 		&WsaBuf,
@@ -170,7 +170,7 @@ BOOL GSSocketUDP::InitializeReadFromForIocp(VOID)
 		&ReadFlag,
 		(SOCKADDR*) &m_UdpRemoteInfo,
 		&RemoteAddressInfoSize,
-		&m_Read_OLP.Overlapped,
+		&m_Read_OLP->Overlapped,
 		NULL);
 
 	if (ReturnValue == SOCKET_ERROR && WSAGetLastError() != WSA_IO_PENDING && WSAGetLastError() != WSAEWOULDBLOCK)
@@ -204,7 +204,7 @@ BOOL			GSSocketUDP::ReadFromForEventSelect(LPSTR remoteAddress, USHORT &remotePo
 	WsaBuf.buf			= (CHAR*) m_Buffer;
 	WsaBuf.len			= MAX_BUFFER_LENGTH;
 
-	m_Read_OLP.ObjectId = m_ClientId;
+	m_Read_OLP->ObjectId = m_ClientId;
 
 	INT		ReturnValue = WSARecvFrom(m_Socket,
 		&WsaBuf,
@@ -213,7 +213,7 @@ BOOL			GSSocketUDP::ReadFromForEventSelect(LPSTR remoteAddress, USHORT &remotePo
 		&ReadFlag,
 		(SOCKADDR*) &m_UdpRemoteInfo,
 		&RemoteAddressInfoSize,
-		&m_Read_OLP.Overlapped,
+		&m_Read_OLP->Overlapped,
 		NULL);
 
 	if (ReturnValue == SOCKET_ERROR && WSAGetLastError() != WSA_IO_PENDING && WSAGetLastError() != WSAEWOULDBLOCK)
@@ -373,7 +373,7 @@ BOOL			GSSocketUDP::WriteTo2(LPSTR remoteAddress, USHORT remotePort, BYTE *data,
 	RemoteAddressInfo.sin_addr.S_un.S_addr	= inet_addr(remoteAddress);
 	RemoteAddressInfo.sin_port				= htons(remotePort);
 
-	m_Write_OLP.ObjectId = m_ClientId;
+	m_Write_OLP->ObjectId = m_ClientId;
 
 	INT		ReturnValue	= WSASendTo(m_Socket,
 		&WsaBuf,
@@ -382,7 +382,7 @@ BOOL			GSSocketUDP::WriteTo2(LPSTR remoteAddress, USHORT remotePort, BYTE *data,
 		WriteFlag,
 		(SOCKADDR*) &RemoteAddressInfo,
 		RemoteAddressInfoSize,
-		&m_Write_OLP.Overlapped,
+		&m_Write_OLP->Overlapped,
 		NULL);
 
 	if (ReturnValue == SOCKET_ERROR && WSAGetLastError() != WSA_IO_PENDING && WSAGetLastError() != WSAEWOULDBLOCK)

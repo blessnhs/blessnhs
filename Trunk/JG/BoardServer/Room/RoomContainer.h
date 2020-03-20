@@ -30,6 +30,18 @@ public:
 
 	VOID GetRoomList(google::protobuf::RepeatedPtrField<RoomInfo2> *List);
 
+	int RoomCount()
+	{
+		int count = 0;
+		for each (auto room in m_RoomMap)
+		{
+			if (room.second != NULL)
+				count++;
+		}
+
+		return count;
+	}
+
 	const concurrency::concurrent_unordered_map<DWORD, ROOM_PTR>& GetRoomMap() 
 	{
 		return m_RoomMap;

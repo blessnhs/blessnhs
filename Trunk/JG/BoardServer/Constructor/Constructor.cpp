@@ -9,6 +9,7 @@ BoardConstructor::BoardConstructor(void)
 	SERVER.Initialize();
 	
 	printf(("Alloc Client Count %d\n"), SERVER.GetClientMgr().GetActiveSocketCount());
+	printf("Server Start.................. \n");
 
 	BoardCommand _Command;
 	
@@ -17,7 +18,7 @@ BoardConstructor::BoardConstructor(void)
 		CHAR command[256];
 		scanf_s("%s",command,sizeof(command));
 
-		printf("AliveCount %d\n", SERVER.GetClientMgr().GetActiveSocketCount());
+		_Command.Execute(command);
 	}
 
 

@@ -114,6 +114,7 @@ public:
 
 private:
 
+
 	boost::shared_ptr<IProcess<int>>				m_Process;
 
 	BYTE											m_CreateType;			//tcp,udp
@@ -143,6 +144,10 @@ public:
 	void											SetPair(DWORD Player);
 
 	_LogContext										m_LoginContext;
+
+	//내가 삭제될 타임 종료후 iocp 메세지가 올수 있으므로 대기 했다가 제거
+	DWORD											m_DeleteTime;
+
 };
 
 #define GSCLIENT  GSClient

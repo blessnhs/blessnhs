@@ -15,6 +15,8 @@ GSServer::GSServer(void)
 
 	WSADATA WsaData;
 	WSAStartup(MAKEWORD(2, 2), &WsaData);	
+
+	m_ClientMgr.SetGSServer(this);
 }
 
 GSServer::~GSServer(void)
@@ -76,7 +78,9 @@ VOID GSServer::OnConnected(int client_id)
 	if (pClient == NULL)
 		return;
 
-	if (!GSIocp::RegIocpHandler(pClient->GetSocket()/*, reinterpret_cast<ULONG_PTR>(&m_EvtClientId)*/))
+	m_EvtClientId = client_id;
+
+	if (!GSIocp::RegIocpHandler(pClient->GetSocket(), reinterpret_cast<ULONG_PTR>(&m_EvtClientId)))
 		return;
 
 	if (!pClient->InitializeReadForIocp())
@@ -95,6 +99,7 @@ VOID GSServer::OnDisconnected(int client_id)
 		return;
 
 	pClient->OnDisconnect(pClient);
+
 }
 
 GSCLIENT_PTR GSServer::GetTcpListen()
@@ -158,7 +163,7 @@ BOOL GSServer::BeginTCP()
 		return FALSE;
 	}
 
-	if (!GSIocp::RegIocpHandler(m_pTCPListen->GetSocket()/*, (ULONG_PTR)((&m_pTCPListen))*/))
+	if (!GSIocp::RegIocpHandler(m_pTCPListen->GetSocket(), (ULONG_PTR)((&m_pTCPListen))))
 	{
 		GSServer::End();
 
@@ -203,7 +208,7 @@ BOOL GSServer::BeginUDP()
 			return FALSE;
 		}
 
-		if (!GSIocp::RegIocpHandler(UDPListenPort->GetSocket()/*, reinterpret_cast<ULONG_PTR>(UDPListenPort->GetUDPSocket().get())*/))
+		if (!GSIocp::RegIocpHandler(UDPListenPort->GetSocket(), reinterpret_cast<ULONG_PTR>(UDPListenPort->GetUDPSocket().get())))
 		{
 			GSServer::End();
 

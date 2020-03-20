@@ -3,7 +3,8 @@
 
 	void BoardCommand::Initialize()
 	{
-		command["ll"] = &BoardCommand::UserList;
+		command["l"] = &BoardCommand::UserList;
+		command["r"] = &BoardCommand::RoomList;
 	}
 
 	void BoardCommand::Execute(std::string _str)
@@ -27,6 +28,11 @@
 
 	VOID BoardCommand::UserList(std::string)
 	{
+		printf("Current Client Count %d\n", SERVER.GetClientMgr().GetActiveSocketCount());
+	}
 
+	VOID BoardCommand::RoomList(std::string)
+	{
+		printf("Current Room Count %d\n", ROOMMGR.RoomCount());
 	}
 

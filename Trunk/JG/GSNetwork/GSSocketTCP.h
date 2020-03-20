@@ -25,6 +25,9 @@ public:
 	VOID SetConnected(BOOL bConnected);
 	BOOL GetConnected(VOID);
 
+public:
+	atomic<int>										m_SendRefCount;
+
 };
 
 }	}	}

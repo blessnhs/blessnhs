@@ -51,8 +51,6 @@ BOOL GSBoard::Disconnect(GSCLIENT_PTR pSession)
 VOID GSBoard::Accept(GSCLIENT_PTR object)
 {
 	object->SetHandler<BoardProcess>();
-
-	printf("accept socket\n");
 }
 
 BOOL GSBoard::DeleteAllConcurrentUser()

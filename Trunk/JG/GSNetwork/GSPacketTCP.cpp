@@ -35,6 +35,7 @@ BOOL	GSPacketTCP::Termination(VOID)
 #ifndef CLIENT_MODULE
 	m_PacketList.clear();
 #endif
+
 	return GSSocketTCP::Termination();
 
 }
@@ -111,6 +112,7 @@ BOOL	GSPacketTCP::WritePacket(WORD MainProtocol,WORD SubProtocol, const BYTE *pa
 	if (!packet)
 		return FALSE;
 
+
 	WORD PacketLength = sizeof(WORD)  + 
 		sizeof(WORD)                  + 
 		sizeof(WORD)                  + 
@@ -168,6 +170,8 @@ BOOL GSPacketTCP::WriteComplete(VOID)
 {
 	CThreadSync Sync;
 
+	m_SendRefCount.fetch_sub(1);
+
 #ifndef CLIENT_MODULE
 	if(m_WrietQueue.unsafe_size() == 0) return FALSE;
 
@@ -175,6 +179,9 @@ BOOL GSPacketTCP::WriteComplete(VOID)
 
 	m_WrietQueue.try_pop(pWriteData);
 #endif	
+
+	
+
 	return TRUE;
 }
 

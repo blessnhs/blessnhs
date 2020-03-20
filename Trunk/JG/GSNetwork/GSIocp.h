@@ -29,7 +29,7 @@ public:
 	BOOL				Initialize(VOID);
 	BOOL				Termination(VOID);
 	
-	BOOL				RegIocpHandler(SOCKET socket/*, ULONG_PTR completionKey*/);
+	BOOL				RegIocpHandler(SOCKET socket, ULONG_PTR completionKey);
 
 	VOID				WorkerThread(VOID);
 	

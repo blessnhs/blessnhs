@@ -35,6 +35,12 @@ boost::shared_ptr<GSPacketUDP>	GSClient::GetUDPSocket()
 
 GSClient::~GSClient(void)
 {
+	if (GetTCPSocket()->m_SendRefCount > 0)
+	{
+		printf("alert remain send q %d\n", GetTCPSocket()->m_SendRefCount.fetch_add(0));
+	}
+	else
+		printf("~client ok %d\n",GetId());
 }
 
 BOOL  GSClient::Create(BYTE Type)
@@ -162,14 +168,14 @@ BOOL GSClient::WriteComplete(VOID)
 
 VOID GSClient::SetConnected(BOOL bConnected)
 {
-//	CThreadSync Sync;
+	CThreadSync Sync;
 
 	m_bConnected = bConnected;
 }
 
 BOOL GSClient::GetConnected(VOID)
 {
-//	CThreadSync Sync;
+	CThreadSync Sync;
 
 	return m_bConnected;
 }
@@ -360,7 +366,7 @@ void GSClient::OnDisconnect(boost::shared_ptr<GSClient> client)
 {
 	CThreadSync Sync;
 
-	if(m_TCPSocket->m_Accept_OLP.Overlapped.Internal != 0)
+	if(m_TCPSocket->m_Accept_OLP->Overlapped.Internal != 0)
 	{
 		DWORD Code = GetLastError();
 		if(Code == ERROR_NETNAME_DELETED)
@@ -460,6 +466,7 @@ VOID GSClient::Clear()
 	m_LoginContext.IsSendedAuth = false;
 	m_LoginContext.account[0] = NULL;
 	m_LoginContext.Time = 0;
+	m_DeleteTime = 0;
 }
 
 DWORD GSClient::GetDBStampTime()

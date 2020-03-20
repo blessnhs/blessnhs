@@ -12,7 +12,7 @@ public:
 
 
 	static VOID UserList(std::string);
-
+	static VOID RoomList(std::string);
 
 };
 	

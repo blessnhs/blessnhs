@@ -17,13 +17,13 @@ GSClientMgr::~GSClientMgr(void)
 
 VOID GSClientMgr::CheckAliveTime()
 {
-	concurrency::concurrent_queue<int> remove_queue;
+	//concurrency::concurrent_queue<int> remove_queue;
 
 	for each (auto client in m_Clients)
 	{
 		if (client.second == NULL)
 		{
-			remove_queue.push(client.first);
+		//	remove_queue.push(client.first);
 			continue;
 		}
 
@@ -42,32 +42,66 @@ VOID GSClientMgr::CheckAliveTime()
 		}
 	}
 
-	for (int i = 0; i < remove_queue.unsafe_size(); i++)
+	int count = m_remove_queue.unsafe_size();
+	for (int i = 0; i < count; i++)
 	{
-		int clientid;
-		if (remove_queue.try_pop(clientid) == true)
+		GSCLIENT_PTR client;
+		if (m_remove_queue.try_pop(client) == true)
 		{
-			m_Clients.unsafe_erase(clientid);
+
+			DWORD ClientTime = client->m_DeleteTime;
+			DWORD SYSTime = GetTickCount();
+			int count = client->GetTCPSocket()->m_SendRefCount;
+			if (ClientTime < SYSTime && count == 0)
+			{
+				m_Clients[client->GetId()] = NULL;
+
+				((GSServer::GSServer*)m_GSServer)->SubPlayerCount(1);
+			}
+			else
+				m_insert_queue.push(client);
 		}
 	}
+
+	printf("m_remove_queue %d\n", count);
+
+	printf("re insert queue %d\n", m_insert_queue.unsafe_size());
+	//다시 넣는다.  ㅠㅠ
+	for (int i = 0; i < m_insert_queue.unsafe_size(); i++)
+	{
+		GSCLIENT_PTR client;
+		if (m_insert_queue.try_pop(client) == true)
+		{
+			m_remove_queue.push(client);
+		}
+	}
+	printf("re m_insert_queue queue %d\n", m_insert_queue.unsafe_size());
+	printf("re m_remove_queue queue %d\n", m_remove_queue.unsafe_size());
+
+	
 }
 
 int GSClientMgr::GetActiveSocketCount()
 {
-	int Count = 0;
+	int count = 0;
+
 	for each (auto client in m_Clients)
 	{
 		if (client.second == NULL)
+		{
+			//	remove_queue.push(client.first);
 			continue;
+		}
 
 		if (client.second->GetConnected() == FALSE)
-		{
-			Count++;
-		}
+			continue;
+		
+		count++;
 	}
 
-	return Count;
+	return count;
 }
+
 int GSClientMgr::IncClientId()
 {
 	static atomic<int> intAtomic = 0;
@@ -95,7 +129,13 @@ BOOL GSClientMgr::DelClient(int id)
 	if (client == m_Clients.end())
 		return FALSE;
 
-	m_Clients[id] = NULL;
+	if (client->second == NULL)
+		return FALSE;
+
+	//삭제 처리는 8초후에 일괄로처리한다. 
+	client->second->m_DeleteTime = GetTickCount() + 80000;
+	m_remove_queue.push(client->second);
+	
 
 	return TRUE;
 }

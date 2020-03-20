@@ -6,17 +6,22 @@ namespace GSNetwork	{ namespace GSSocket	{
 
 GSSocket::GSSocket(VOID)
 {
-	memset(&m_Accept_OLP, 0, sizeof(m_Accept_OLP));
-	memset(&m_Read_OLP, 0, sizeof(m_Read_OLP));
-	memset(&m_Write_OLP, 0, sizeof(m_Write_OLP));
+	m_Accept_OLP = new OVERLAPPED_EX();
+	m_Read_OLP = new OVERLAPPED_EX();
+	m_Write_OLP = new OVERLAPPED_EX();
+
+
+	//memset(&m_Accept_OLP, 0, sizeof(m_Accept_OLP));
+	//memset(&m_Read_OLP, 0, sizeof(m_Read_OLP));
+	//memset(&m_Write_OLP, 0, sizeof(m_Write_OLP));
 
 	memset(m_Buffer, 0, sizeof(m_Buffer));
 
 	m_Socket							= NULL;
 
-	m_Accept_OLP.IoType					= IO_ACCEPT;
-	m_Read_OLP.IoType					= IO_READ;
-	m_Write_OLP.IoType					= IO_WRITE;
+	m_Accept_OLP->IoType				= IO_ACCEPT;
+	m_Read_OLP->IoType					= IO_READ;
+	m_Write_OLP->IoType					= IO_WRITE;
 
 	m_bConnected = FALSE;
 
@@ -30,7 +35,13 @@ BYTE *GSSocket::GetBuffer()
 
 GSSocket::~GSSocket(VOID)
 {
+	delete m_Accept_OLP;
+	delete m_Read_OLP;
+	delete m_Write_OLP;
 
+	m_Accept_OLP = NULL;
+	m_Read_OLP = NULL;
+	m_Write_OLP = NULL;
 }
 
 BOOL GSSocket::Initialize(VOID)
@@ -129,7 +140,7 @@ BOOL GSSocket::Accept(SOCKET listenSocket)
 		return FALSE;
 	}
 
-	m_Accept_OLP.ObjectId = m_ClientId;
+	m_Accept_OLP->ObjectId = m_ClientId;
 
 	//BOOL NoDelay = TRUE;
 	//setsockopt(m_Socket, IPPROTO_TCP, TCP_NODELAY, (const char FAR *)&NoDelay, sizeof(NoDelay));
@@ -141,7 +152,7 @@ BOOL GSSocket::Accept(SOCKET listenSocket)
 		sizeof(sockaddr_in) + 16, 
 		sizeof(sockaddr_in) + 16, 
 		NULL, 
-		&m_Accept_OLP.Overlapped))
+		&m_Accept_OLP->Overlapped))
 	{
 		int ErrorCode = WSAGetLastError();
 		if (ErrorCode != ERROR_IO_PENDING && ErrorCode != WSAEWOULDBLOCK)
@@ -169,7 +180,7 @@ BOOL GSSocket::Accept2(SOCKET listenSocket)
 		return FALSE;
 	}
 
-	m_Accept_OLP.ObjectId = m_ClientId;
+	m_Accept_OLP->ObjectId = m_ClientId;
 
 	//BOOL NoDelay = TRUE;
 	//setsockopt(m_Socket, IPPROTO_TCP, TCP_NODELAY, (const char FAR *)&NoDelay, sizeof(NoDelay));
@@ -181,7 +192,7 @@ BOOL GSSocket::Accept2(SOCKET listenSocket)
 		sizeof(sockaddr_in) + 16, 
 		sizeof(sockaddr_in) + 16, 
 		NULL, 
-		&m_Accept_OLP.Overlapped))
+		&m_Accept_OLP->Overlapped))
 	{
 		if (WSAGetLastError() != ERROR_IO_PENDING && WSAGetLastError() != WSAEWOULDBLOCK)
 		{
