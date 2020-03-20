@@ -173,11 +173,7 @@ BOOL GSSocketTCP::Write(BYTE *data, DWORD dataLength)
 
 	if (!data || dataLength <=0)
 		return FALSE;
-
-	if(GetConnected() == FALSE)
-		return FALSE;
-
-	m_SendRefCount.fetch_add(1);
+	
 
 	WSABUF	WsaBuf;
 	DWORD	WriteBytes	= 0;
@@ -202,6 +198,8 @@ BOOL GSSocketTCP::Write(BYTE *data, DWORD dataLength)
 
 		return FALSE;
 	}
+
+	m_SendRefCount.fetch_add(1);
 
 	return TRUE;
 }
