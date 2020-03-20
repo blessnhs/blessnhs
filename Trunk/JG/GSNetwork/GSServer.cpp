@@ -76,9 +76,7 @@ VOID GSServer::OnConnected(int client_id)
 	if (pClient == NULL)
 		return;
 
-	m_EvtClientId = client_id;
-
-	if (!GSIocp::RegIocpHandler(pClient->GetSocket(), reinterpret_cast<ULONG_PTR>(&m_EvtClientId)))
+	if (!GSIocp::RegIocpHandler(pClient->GetSocket()/*, reinterpret_cast<ULONG_PTR>(&m_EvtClientId)*/))
 		return;
 
 	if (!pClient->InitializeReadForIocp())
@@ -160,7 +158,7 @@ BOOL GSServer::BeginTCP()
 		return FALSE;
 	}
 
-	if (!GSIocp::RegIocpHandler(m_pTCPListen->GetSocket(), (ULONG_PTR)((&m_pTCPListen))))
+	if (!GSIocp::RegIocpHandler(m_pTCPListen->GetSocket()/*, (ULONG_PTR)((&m_pTCPListen))*/))
 	{
 		GSServer::End();
 
@@ -205,7 +203,7 @@ BOOL GSServer::BeginUDP()
 			return FALSE;
 		}
 
-		if (!GSIocp::RegIocpHandler(UDPListenPort->GetSocket(), reinterpret_cast<ULONG_PTR>(UDPListenPort->GetUDPSocket().get())))
+		if (!GSIocp::RegIocpHandler(UDPListenPort->GetSocket()/*, reinterpret_cast<ULONG_PTR>(UDPListenPort->GetUDPSocket().get())*/))
 		{
 			GSServer::End();
 
@@ -231,14 +229,9 @@ GSCLIENT_PTR	GSServer::GetClient(DWORD _Id)
 {
 	if(_Id < 0 ) return NULL;
 	
-	auto client = m_ClientMgr.m_Clients.find(_Id);
+	auto client = m_ClientMgr.GetClient(_Id);
 
-	if (client == m_ClientMgr.m_Clients.end())
-	{
-		return NULL;
-	}
-
-	return client->second;
+	return client;
 }
 
 int GSServer::IncClinetId()

@@ -57,7 +57,7 @@ void SysTimer::OnEvt(LPVOID Arg)
 			SysTimerJob* pNewJob = GetSysTimer().m_SysTimerJobPool.malloc();
 
 			pNewJob->Func = SysTimer::OnEvt;
-			pNewJob->SetExpineTime(GetTickCount() + 1000);
+			pNewJob->SetExpineTime(GetTickCount() + 5000);
 			pNewJob->SetId(SysTimer::SYS_TIMER);
 
 			GetSysTimer().AddTimerJob(pNewJob);

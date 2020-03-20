@@ -73,8 +73,6 @@ private:
 
 protected:
 	GSArgument													  m_Arguments;
-
-	int															  m_EvtClientId;
 };
 
 }	}

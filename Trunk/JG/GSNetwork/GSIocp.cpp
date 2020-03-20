@@ -82,12 +82,12 @@ BOOL GSIocp::Termination(VOID)
 	return TRUE;
 }
 
-BOOL GSIocp::RegIocpHandler(SOCKET socket, ULONG_PTR completionKey)
+BOOL GSIocp::RegIocpHandler(SOCKET socket/*, ULONG_PTR completionKey*/)
 {
-	if (!socket || !completionKey)
+	if (!socket)
 		return FALSE;
 
-	m_Handle = CreateIoCompletionPort((HANDLE) socket, m_Handle, completionKey, 0);
+	m_Handle = CreateIoCompletionPort((HANDLE) socket, m_Handle, /*completionKey*/NULL, 0);
 
 	if (!m_Handle)
 		return FALSE;
@@ -117,9 +117,6 @@ VOID GSIocp::WorkerThread()
 				(PULONG_PTR)&CompletionKey,
 				&Overlapped,
 				INFINITE);
-
-			if (!CompletionKey)
-				continue;
 
 			if(Overlapped == NULL) continue;
 

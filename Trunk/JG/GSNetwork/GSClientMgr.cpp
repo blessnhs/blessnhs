@@ -17,10 +17,15 @@ GSClientMgr::~GSClientMgr(void)
 
 VOID GSClientMgr::CheckAliveTime()
 {
+	concurrency::concurrent_queue<int> remove_queue;
+
 	for each (auto client in m_Clients)
 	{
 		if (client.second == NULL)
+		{
+			remove_queue.push(client.first);
 			continue;
+		}
 
 		if (client.second->GetConnected())
 		{
@@ -31,12 +36,18 @@ VOID GSClientMgr::CheckAliveTime()
 			DWORD system_tick = GetTickCount();
 			int Diff = system_tick - (client_time + server_check_time);
 
-		//	printf("client %d diff %d\n", client.second->GetId(), Diff);
-
 			if ((client_time + server_check_time) <= system_tick)
 				if (client.second->GetType() == _PLAYER_)
-					//client.second->OnDisconnect(client.second);
 					client.second->Close();
+		}
+	}
+
+	for (int i = 0; i < remove_queue.unsafe_size(); i++)
+	{
+		int clientid;
+		if (remove_queue.try_pop(clientid) == true)
+		{
+			m_Clients.unsafe_erase(clientid);
 		}
 	}
 }

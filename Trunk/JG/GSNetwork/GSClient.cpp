@@ -162,14 +162,14 @@ BOOL GSClient::WriteComplete(VOID)
 
 VOID GSClient::SetConnected(BOOL bConnected)
 {
-	CThreadSync Sync;
+//	CThreadSync Sync;
 
 	m_bConnected = bConnected;
 }
 
 BOOL GSClient::GetConnected(VOID)
 {
-	CThreadSync Sync;
+//	CThreadSync Sync;
 
 	return m_bConnected;
 }
@@ -315,7 +315,7 @@ VOID GSClient::ProcDisconnect(boost::shared_ptr<GSClient> pClient)
 
 	pServer->GetClientMgr().NewClient(pServer->GetTcpListen()->GetSocket(), pServer);
 	
-	printf("Disconnected socket %d %d\n",GetSocket(),pServer->GetTcpListen()->GetSocket());	
+//	printf("Disconnected socket %d %d\n",GetSocket(),pServer->GetTcpListen()->GetSocket());	
 }
 
 
