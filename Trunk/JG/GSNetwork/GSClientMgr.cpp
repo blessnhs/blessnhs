@@ -17,6 +17,8 @@ GSClientMgr::~GSClientMgr(void)
 
 VOID GSClientMgr::CheckAliveTime()
 {
+	GSServer::GSServer* pServer = (GSServer::GSServer*)m_GSServer;
+
 	for each (auto client in m_Clients)
 	{
 		if (client.second == NULL)
@@ -26,8 +28,6 @@ VOID GSClientMgr::CheckAliveTime()
 
 		if (client.second->GetConnected())
 		{
-			GSServer::GSServer *pServer = (GSServer::GSServer *)client.second->m_GSServer;
-
 			DWORD client_time = client.second->GetAliveTime();
 			DWORD server_check_time = pServer->GetArgument().m_AliveTime * 1000;
 			DWORD system_tick = GetTickCount();
@@ -61,8 +61,6 @@ VOID GSClientMgr::CheckAliveTime()
 				{
 					printf("DelClient is not 0 failed \n");
 				}
-
-				((GSServer::GSServer*)m_GSServer)->SubPlayerCount(1);
 			}
 			else
 				m_ReInsert_Queue.push(client);
@@ -83,8 +81,44 @@ VOID GSClientMgr::CheckAliveTime()
 			m_Remove_Queue.push(client);
 		}
 	}
+		
 	printf("\nre m_insert_queue queue %d\n", m_ReInsert_Queue.unsafe_size());
 	printf("re m_remove_queue queue %d\n", m_Remove_Queue.unsafe_size());
+	printf("\nconnect socket count %d GetActiveSocketCount %d ConnectableSocketCount %d\n", 
+		pServer->CurrentPlayerCount(), GetActiveSocketCount(), ConnectableSocketCount());
+}
+
+int  GSClientMgr::ConnectableSocketCount()
+{
+	GSServer::GSServer* pServer = (GSServer::GSServer*)m_GSServer;
+
+	int count = m_MaxClients - pServer->CurrentPlayerCount();
+
+	/*for each (auto client in m_Clients)
+	{
+		if (client.second == NULL)
+		{
+			int a = 0;
+			continue;
+		}
+
+		if (client.second->GetConnected() == TRUE)
+		{
+			int a = 0;
+
+			continue;
+		}
+
+		if (client.second->m_DeleteTime > 0)
+		{
+			int a = 0;
+			continue;
+		}
+
+		count++;
+	}*/
+
+	return count;
 }
 
 int GSClientMgr::GetActiveSocketCount()
@@ -197,10 +231,12 @@ BOOL GSClientMgr::NewClient(SOCKET ListenSocket, LPVOID pServer)
 		return FALSE;
 
 	int NewClient = 1;
-	if (GetActiveSocketCount() < 20)
+	if (ConnectableSocketCount() < 20)
 	{
 		NewClient = 100;
 		printf("New Alloc  %d \n", NewClient);
+
+		m_MaxClients += 100;
 	}
 
 	for (DWORD i = 0; i < NewClient; i++)
@@ -238,7 +274,7 @@ BOOL GSClientMgr::Begin(SOCKET ListenSocket,WORD MaxClients,LPVOID pServer)
 	if (!ListenSocket)
 		return FALSE;
 
-	DWORD MaxUser = MaxClients;
+	DWORD MaxUser = m_MaxClients = MaxClients;
 
 	for (DWORD i=0;i<MaxUser;i++)
 	{

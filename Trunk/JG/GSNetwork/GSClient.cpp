@@ -21,6 +21,7 @@ GSClient::GSClient(void)
 	m_DBStampTime			= 0;
 	m_PairPlayerId			= ULONG_MAX;
 	m_GSServer				= NULL;
+	m_DeleteTime			= 0;
 }
 
 boost::shared_ptr<GSPacketTCP>	GSClient::GetTCPSocket()
@@ -32,8 +33,6 @@ boost::shared_ptr<GSPacketUDP>	GSClient::GetUDPSocket()
 {
 	return m_UDPSocket;
 }
-
-int _debug_count = 0;
 
 GSClient::~GSClient(void)
 {
@@ -309,7 +308,7 @@ VOID GSClient::ProcDisconnect(boost::shared_ptr<GSClient> pClient)
 	}
 
 	pServer->Disconnect(pClient);
-
+	pServer->SubPlayerCount(1);
 	//상태값 초기화
 	SetConnected(FALSE);
 	Clear();
@@ -406,14 +405,16 @@ void GSClient::OnConnect(boost::shared_ptr<GSClient> pClient)
 	SetConnected(TRUE);
 	//printf("Accept Success Socket %d %d %d\n",GetSocket(),GetId(),GetMyTP());
 
-	//아래 함수를 로직 쓰레드로 던지게 되면 동기화 문제가 발생하여 
-	//바로 콜하는 것으로 대체
 
 	GSServer::GSServer *pServer = (GSServer::GSServer *)m_GSServer;
 
 	SetAliveTime(GetTickCount());
 
 	pServer->Accept(pClient);
+	pServer->AddPlayerCount(1); //접속자 수 카운트
+
+	//아래 함수를 로직 쓰레드로 던지게 되면 동기화 문제가 발생하여 
+	//바로 콜하는 것으로 대체
 
 	/*
 	GSServer::GSServer *pServer = (GSServer::GSServer *)m_GSServer;
@@ -463,9 +464,6 @@ VOID GSClient::Clear()
 	m_CheckAbuseMap.clear();
 	m_CheckCompleteMap.clear();
 
-	m_LoginContext.IsSendedAuth = false;
-	m_LoginContext.account[0] = NULL;
-	m_LoginContext.Time = 0;
 	m_DeleteTime = 0;
 }
 

@@ -90,11 +90,9 @@ public:
 
 	VOID											TakeMsg(boost::shared_ptr<GSClient> client);
 
-	bool											GetAbuseCheckTime(const std::wstring _str,DWORD _dwTime = 500);
 
 	bool											GetCompleteJob(const std::wstring _str);
 	void											SetCompleteJob(const std::wstring _str,bool Value);
-	void											ClearCompleteJob();
 	DWORD											GetDBStampTime();
 
 public:	
@@ -142,8 +140,6 @@ public:
 	DWORD											GetPair();
 
 	void											SetPair(DWORD Player);
-
-	_LogContext										m_LoginContext;
 
 	//내가 삭제될 타임 종료후 iocp 메세지가 올수 있으므로 대기 했다가 제거
 	DWORD											m_DeleteTime;

@@ -16,7 +16,13 @@ public:
 	virtual void OnEvt(IMessagePtr Arg) {}
 
 	VOID CheckAliveTime();
+
+	//연결되어있는 소켓 갯수
 	int  GetActiveSocketCount();
+	
+	// 연결이 가능한 소켓 갯수
+	int  ConnectableSocketCount();
+		
 
 	int IncClientId();
 
@@ -43,6 +49,7 @@ public:
 private:
 
 	LPVOID m_GSServer;
+	int    m_MaxClients;
 };
 
 }	}
