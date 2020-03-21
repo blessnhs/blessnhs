@@ -2,6 +2,7 @@
 
 #include "GSClient.h"
 #include <concurrent_unordered_map.h>
+#include <concurrent_unordered_set.h>
 
 namespace GSNetwork	{	namespace GSClientMgr	{
 
@@ -25,12 +26,13 @@ public:
 	VOID End();
 
 	GSCLIENT_PTR GetClient(int id);
-	BOOL DelClient(int id);
 	BOOL AddClient(GSCLIENT_PTR client);
+	BOOL BookDelClient(int id);
+	BOOL DelClient(int id);
 
 
-	concurrency::concurrent_queue<GSCLIENT_PTR>				 m_insert_queue;
-	concurrency::concurrent_queue<GSCLIENT_PTR>				 m_remove_queue;
+	concurrency::concurrent_queue<GSCLIENT_PTR>				 m_ReInsert_Queue;
+	concurrency::concurrent_queue<GSCLIENT_PTR>				 m_Remove_Queue;
 	concurrency::concurrent_unordered_map<int, GSCLIENT_PTR> m_Clients;
 
 	void SetGSServer(LPVOID pServer)

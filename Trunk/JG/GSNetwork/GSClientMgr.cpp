@@ -17,13 +17,10 @@ GSClientMgr::~GSClientMgr(void)
 
 VOID GSClientMgr::CheckAliveTime()
 {
-	//concurrency::concurrent_queue<int> remove_queue;
-
 	for each (auto client in m_Clients)
 	{
 		if (client.second == NULL)
 		{
-		//	remove_queue.push(client.first);
 			continue;
 		}
 
@@ -38,16 +35,17 @@ VOID GSClientMgr::CheckAliveTime()
 
 			if ((client_time + server_check_time) <= system_tick)
 				if (client.second->GetType() == _PLAYER_)
+				{
+					client.second->OnDisconnect(client.second);
 					client.second->Close();
+				}
 		}
 	}
 
-	int rcount = 0;
-	int count = m_remove_queue.unsafe_size();
-	for (int i = 0; i < count; i++)
+	for (int i = 0; i < m_Remove_Queue.unsafe_size(); i++)
 	{
 		GSCLIENT_PTR client;
-		if (m_remove_queue.try_pop(client) == true)
+		if (m_Remove_Queue.try_pop(client) == true)
 		{
 
 			DWORD ClientTime = client->m_DeleteTime;
@@ -56,35 +54,37 @@ VOID GSClientMgr::CheckAliveTime()
 
 			int Diff = SYSTime - ClientTime;
 
-			//5분 넘으면 그냥 끊는다.
-			if ((ClientTime < SYSTime && count == 0) || (Diff > (1000 * 60 * 5)))
+			//1분 넘으면 그냥 끊는다.
+			if ((ClientTime < SYSTime && count == 0) || (Diff > (1000 * 60 * 1)))
 			{
-				rcount++;
-				m_Clients[client->GetId()] = NULL;
+				if (DelClient(client->GetId()) == FALSE)
+				{
+					printf("DelClient is not 0 failed \n");
+				}
 
 				((GSServer::GSServer*)m_GSServer)->SubPlayerCount(1);
 			}
 			else
-				m_insert_queue.push(client);
+				m_ReInsert_Queue.push(client);
+
+			if ((ClientTime < SYSTime) && count != 0)
+			{
+				printf("count is not 0 %d \n", count);
+			}
 		}
 	}
 
-	printf("m_remove_queue %d rcount %d \n", count, rcount);
-
-	printf("re insert queue %d\n", m_insert_queue.unsafe_size());
 	//다시 넣는다.  ㅠㅠ
-	for (int i = 0; i < m_insert_queue.unsafe_size(); i++)
+	for (int i = 0; i < m_ReInsert_Queue.unsafe_size(); i++)
 	{
 		GSCLIENT_PTR client;
-		if (m_insert_queue.try_pop(client) == true)
+		if (m_ReInsert_Queue.try_pop(client) == true)
 		{
-			m_remove_queue.push(client);
+			m_Remove_Queue.push(client);
 		}
 	}
-	printf("re m_insert_queue queue %d\n", m_insert_queue.unsafe_size());
-	printf("re m_remove_queue queue %d\n", m_remove_queue.unsafe_size());
-
-	
+	printf("\nre m_insert_queue queue %d\n", m_ReInsert_Queue.unsafe_size());
+	printf("re m_remove_queue queue %d\n", m_Remove_Queue.unsafe_size());
 }
 
 int GSClientMgr::GetActiveSocketCount()
@@ -120,43 +120,79 @@ int GSClientMgr::IncClientId()
 
 GSCLIENT_PTR GSClientMgr::GetClient(int id)
 {
-	auto client = m_Clients.find(id);
+	for each (auto client in m_Clients)
+	{
+		if (client.second == NULL)
+		{
+			continue;
+		}
 
-	if (client == m_Clients.end())
-		return NULL;
+		if (client.second->GetId() == id)
+			return client.second;
+	}
 
-	return client->second;
+	return NULL;
 }
 
-BOOL GSClientMgr::DelClient(int id)
+BOOL GSClientMgr::AddClient(GSCLIENT_PTR newclient)
 {
-	auto client = m_Clients.find(id);
+	CThreadSync sync;
 
-	if (client == m_Clients.end())
+	bool find = false;
+
+	for each (auto client in m_Clients)
+	{
+		if (client.second == NULL)
+		{
+			m_Clients[client.first] = newclient;
+			return TRUE;
+		}
+	}
+
+	if (find == false)
+	{
+		m_Clients[newclient->GetId()] = newclient;
+		return TRUE;
+	}
+
+	return FALSE;
+}
+
+BOOL GSClientMgr::BookDelClient(int id)
+{
+	auto client = GetClient(id);
+
+	if (client == NULL)
 		return FALSE;
 
-	if (client->second == NULL)
-		return FALSE;
-
-	//삭제 처리는 8초후에 일괄로처리한다. 
-	client->second->m_DeleteTime = GetTickCount() + 80000;
-	m_remove_queue.push(client->second);
+	//삭제 처리는 5초후에 일괄로처리한다. 
+	client->m_DeleteTime = GetTickCount() + 50000;
+	m_Remove_Queue.push(client);
 	
 
 	return TRUE;
 }
 
-BOOL GSClientMgr::AddClient(GSCLIENT_PTR pClient)
+BOOL GSClientMgr::DelClient(int id)
 {
-	m_Clients[pClient->GetId()] = pClient;
+	for each (auto client in m_Clients)
+	{
+		if (client.second == NULL)
+		{
+			continue;
+		}
 
-	return TRUE;
+		if (client.second->GetId() == id)
+		{
+			m_Clients[client.first] = NULL;
+			return TRUE;
+		}
+	}
+	return FALSE;
 }
 
 BOOL GSClientMgr::NewClient(SOCKET ListenSocket, LPVOID pServer)
 {
-	CThreadSync Sync;
-
 	if (!ListenSocket)
 		return FALSE;
 
@@ -187,8 +223,11 @@ BOOL GSClientMgr::NewClient(SOCKET ListenSocket, LPVOID pServer)
 		}
 
 		pClient->SetType(_PLAYER_);
-		m_Clients[pClient->GetId()] = pClient;
-
+		
+		if (AddClient(pClient) == FALSE)
+		{
+			printf("NewClient failed \n");
+		}
 	}
 
 	return TRUE;

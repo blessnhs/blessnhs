@@ -33,14 +33,14 @@ boost::shared_ptr<GSPacketUDP>	GSClient::GetUDPSocket()
 	return m_UDPSocket;
 }
 
+int _debug_count = 0;
+
 GSClient::~GSClient(void)
 {
 	if (GetTCPSocket()->m_SendRefCount > 0)
 	{
 		printf("alert remain send q %d\n", GetTCPSocket()->m_SendRefCount.fetch_add(0));
 	}
-	else
-		printf("~client ok %d\n",GetId());
 }
 
 BOOL  GSClient::Create(BYTE Type)
@@ -317,7 +317,7 @@ VOID GSClient::ProcDisconnect(boost::shared_ptr<GSClient> pClient)
 	//이제는 소켓을 재사용하지 않기로 정함
 //	BOOL Result = Recycle(pServer->GetTcpListen()->GetSocket());
 
-	pServer->GetClientMgr().DelClient(pClient->GetId());
+	pServer->GetClientMgr().BookDelClient(pClient->GetId());
 
 	pServer->GetClientMgr().NewClient(pServer->GetTcpListen()->GetSocket(), pServer);
 	
