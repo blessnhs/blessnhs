@@ -82,10 +82,10 @@ VOID GSClientMgr::CheckAliveTime()
 		}
 	}
 		
-	printf("\nre m_insert_queue queue %d\n", m_ReInsert_Queue.unsafe_size());
-	printf("re m_remove_queue queue %d\n", m_Remove_Queue.unsafe_size());
-	printf("\nconnect socket count %d GetActiveSocketCount %d ConnectableSocketCount %d\n", 
-		pServer->CurrentPlayerCount(), GetActiveSocketCount(), ConnectableSocketCount());
+//	printf("\nre m_insert_queue queue %d\n", m_ReInsert_Queue.unsafe_size());
+//	printf("re m_remove_queue queue %d\n", m_Remove_Queue.unsafe_size());
+//	printf("\nconnect socket count %d GetActiveSocketCount %d ConnectableSocketCount %d\n", 
+//		pServer->CurrentPlayerCount(), GetActiveSocketCount(), ConnectableSocketCount());
 }
 
 int  GSClientMgr::ConnectableSocketCount()
@@ -234,7 +234,7 @@ BOOL GSClientMgr::NewClient(SOCKET ListenSocket, LPVOID pServer)
 	if (ConnectableSocketCount() < 20)
 	{
 		NewClient = 100;
-		printf("New Alloc  %d \n", NewClient);
+		printf("Resize Client  %d \n", NewClient);
 
 		m_MaxClients += 100;
 	}

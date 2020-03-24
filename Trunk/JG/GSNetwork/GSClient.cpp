@@ -10,6 +10,7 @@
 
 //namespace GSNetwork	{	namespace GSClient	{
 
+atomic<int>		DebugCount = 0;
 
 GSClient::GSClient(void)
 {
@@ -22,6 +23,8 @@ GSClient::GSClient(void)
 	m_PairPlayerId			= ULONG_MAX;
 	m_GSServer				= NULL;
 	m_DeleteTime			= 0;
+
+	DebugCount.fetch_add(1);
 }
 
 boost::shared_ptr<GSPacketTCP>	GSClient::GetTCPSocket()
@@ -40,6 +43,8 @@ GSClient::~GSClient(void)
 	{
 		printf("alert remain send q %d\n", GetTCPSocket()->m_SendRefCount.fetch_add(0));
 	}
+
+	DebugCount.fetch_sub(1);
 }
 
 BOOL  GSClient::Create(BYTE Type)

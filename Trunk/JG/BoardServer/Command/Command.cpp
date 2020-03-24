@@ -1,5 +1,8 @@
 #include "Stdafx.h"
 #include "command.h"
+#include <atomic>
+
+extern atomic<int>		DebugCount;
 
 	void BoardCommand::Initialize()
 	{
@@ -28,7 +31,7 @@
 
 	VOID BoardCommand::UserList(std::string)
 	{
-		printf("Current Client Count %d\n", SERVER.GetClientMgr().GetActiveSocketCount());
+		printf("Current Count %d connectable count %d Debug Count %d\n", SERVER.GetClientMgr().GetActiveSocketCount(), SERVER.GetClientMgr().ConnectableSocketCount(), DebugCount.fetch_add(0));
 	}
 
 	VOID BoardCommand::RoomList(std::string)

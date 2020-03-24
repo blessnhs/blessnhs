@@ -26,7 +26,10 @@ BOOL GSBoard::Disconnect(GSCLIENT_PTR pSession)
 		{
 			pRoom->RemovePlayer(pPlayer);
 			if (pRoom->GetCurrPlayer() == 0)
+			{
+				printf("delete room %d\n", pRoom->GetId());
 				ROOMMGR.Del(pRoom);
+			}
 		}
 
 		pPlayer->SetPair(ULONG_MAX);

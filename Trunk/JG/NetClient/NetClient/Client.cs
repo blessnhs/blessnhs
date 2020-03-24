@@ -1,6 +1,8 @@
-﻿using System;
+﻿using Google.Protobuf;
+using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
@@ -144,9 +146,16 @@ namespace NetClient
                 // Complete the connection.
                 client.EndConnect(ar);
 
-                Console.WriteLine("Socket connected to {0}",
-                    client.RemoteEndPoint.ToString());
+                VERSION_REQ person = new VERSION_REQ
+                {
+                   
+                };
+                using (MemoryStream stream = new MemoryStream())
+                {
+                    person.WriteTo(stream);
 
+                    WritePacket((int)PROTOCOL.IdPktVersionReq, stream.ToArray(), stream.ToArray().Length);
+                }
                 // Signal that the connection has been made.
                 connectDone.Set();
             }

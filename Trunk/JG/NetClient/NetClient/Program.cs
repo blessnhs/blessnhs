@@ -10,17 +10,21 @@ using UDPEchoClient;
 using Google.Protobuf;
 using NetClient;
 
-public static class Process
+public class Process
 {
-    static public Client client = new Client();
-    static public void start()
+    public Client client = new Client();
+    public void start(int id)
     {
+       int _id = id;
         client.StartClient("127.0.0.1", 20000);
 
         while (true)
         {
+            if (client.socket.Connected == false)
+                continue;
+
             client.Update();
-            Thread.Sleep(100);
+            Thread.Sleep(300);
 
             if(client.PacketQueue.Count > 0)
             {
@@ -35,12 +39,12 @@ public static class Process
                                 VERSION_RES res = new VERSION_RES();
                                 res = VERSION_RES.Parser.ParseFrom(data.Data);
 
-                                string read = Console.ReadLine();
+
                                 LOGIN_REQ person = new LOGIN_REQ
                                 {
                                     Id = PROTOCOL.IdPktLoginRes,
-                                    VarId = read,
-                                    VarPasswd = read,
+                                    VarId = "nhs" + _id,
+                                    VarPasswd = "nhs" + _id,
                                 };
                                 using (MemoryStream stream = new MemoryStream())
                                 {
@@ -50,6 +54,7 @@ public static class Process
                                 }
 
                             }
+ 
                             break;
                         case (int)PROTOCOL.IdPktLoginRes:
                             {
@@ -57,14 +62,10 @@ public static class Process
                                 res = LOGIN_RES.Parser.ParseFrom(data.Data);
 
                                 Console.WriteLine("IdPktLoginRes " + res.VarCode.ToString());
-
-                                string readkey = Console.ReadLine();
-                                if (readkey == "0")
                                 {
                                     CREATE_ROOM_REQ person = new CREATE_ROOM_REQ
                                     {
                                         VarName = "nhs1_createRoom",
-                                        VarPassword = "nhs1",
                                     };
                                     using (MemoryStream stream = new MemoryStream())
                                     {
@@ -73,21 +74,7 @@ public static class Process
                                         client.WritePacket((int)PROTOCOL.IdPktCreateRoomReq, stream.ToArray(), stream.ToArray().Length);
                                     }
                                 }
-                                else
-                                {
-                                    ENTER_ROOM_REQ person = new ENTER_ROOM_REQ
-                                    {
-                                        VarId = 1,
-                                        VarPassword = "1"
-                                    };
-                                    using (MemoryStream stream = new MemoryStream())
-                                    {
-                                        person.WriteTo(stream);
-
-                                        client.WritePacket((int)PROTOCOL.IdPktEnterRoomReq, stream.ToArray(), stream.ToArray().Length);
-                                    }
-
-                                }
+                              
 
 
                             }
@@ -98,6 +85,7 @@ public static class Process
                                 res = CREATE_ROOM_RES.Parser.ParseFrom(data.Data);
 
                                 Console.WriteLine("IdPktCreateRoomRes " + res.VarCode.ToString());
+                                return;
                             }
                             break;
                         case (int)PROTOCOL.IdPktNewUserInRoomNty:
@@ -115,11 +103,9 @@ public static class Process
 
                                 Console.WriteLine("IdPktBroadcastRoomMessageRes " + res.VarName + " " + res.VarMessage);
 
-                                string message = Console.ReadLine();
-
-                                BROADCAST_ROOM_MESSAGE_REQ req = new BROADCAST_ROOM_MESSAGE_REQ
+                             BROADCAST_ROOM_MESSAGE_REQ req = new BROADCAST_ROOM_MESSAGE_REQ
                                 {
-                                    VarMessage = message
+                                    VarMessage = "message"
                                 };
                                 using (MemoryStream stream = new MemoryStream())
                                 {
@@ -158,28 +144,19 @@ public class AsynchronousClient
 
    public static int Main(String[] args)
     {
-        Thread t3 = new Thread(delegate ()
-        {        
-            Process.start();
-        });
-        t3.Start();
-
-        string input = Console.ReadLine();
-
-        if(input == "version")
+      
+        for(int i=1;i<100;i++)
         {
-            VERSION_REQ person = new VERSION_REQ
-            {
-                Id = PROTOCOL.IdPktVersionReq,
-            };
-            using (MemoryStream stream = new MemoryStream())
-            {
-                person.WriteTo(stream);
-
-                Process.client.WritePacket((int)PROTOCOL.IdPktVersionReq, stream.ToArray(), stream.ToArray().Length);
-            }
+       
+                Process pro = new Process();
+                pro.start(i);
+            Thread.Sleep(300);
         }
 
+        Console.WriteLine("job end");
+
+
+        while (true) ;
         return 0;
     }
 
