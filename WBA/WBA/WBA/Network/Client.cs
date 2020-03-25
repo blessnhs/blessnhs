@@ -215,12 +215,13 @@ namespace NetClient
                     // There might be more data, so store the data received so far.
                     state.sb.Append(Encoding.ASCII.GetString(state.buffer, 0, bytesRead));
 
-                    Buffer.BlockCopy(state.buffer, 0, m_PacketBuffer, m_RemainLength, bytesRead);
-
-                    m_RemainLength += bytesRead;
-
                     lock (this)
                     {
+                        Buffer.BlockCopy(state.buffer, 0, m_PacketBuffer, m_RemainLength, bytesRead);
+
+                        m_RemainLength += bytesRead;
+
+                   
                         OnRecvThreadProc();
                     }
 

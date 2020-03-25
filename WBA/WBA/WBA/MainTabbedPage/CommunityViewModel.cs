@@ -1,10 +1,4 @@
-﻿using Android.Widget;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Text;
+﻿using System.Collections.ObjectModel;
 
 namespace WBA.MainTabbedPage
 {

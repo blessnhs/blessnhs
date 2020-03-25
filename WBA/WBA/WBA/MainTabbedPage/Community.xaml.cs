@@ -40,7 +40,6 @@ namespace WBA.MainTabbedPage
 
         protected override void OnDisappearing()
         {
-            MessagingCenter.Unsubscribe<Community, CompletePacket>(this, "community");
         }
 
         public Community()
