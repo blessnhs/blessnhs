@@ -1,0 +1,285 @@
+﻿using Google.Protobuf;
+using NetClient;
+using OMOK_T.Views;
+using System;
+using System.IO;
+using Xamarin.Essentials;
+using Xamarin.Forms;
+
+namespace OMOK_T.Network
+{
+    public static class NetProcess
+    {
+        static bool isSendVersion = false;
+        static public Client client = new Client();
+        static public void start()
+        {
+            //연결중이면 안한다. 
+            if (client.socket == null || client.socket.Connected == false)
+                client.StartClient("192.168.0.4", 20000);
+        }
+
+        static public bool IsSuccessAuth = false;
+        static public string UserId;
+
+        static Page RoomPage;
+
+        static public void Loop(MainPage page)
+        {
+            // while(true)
+            {
+                if (client.socket.Connected == false)
+                    return;
+
+                client.Update();
+
+                CompletePacket data;
+                if (client.PacketQueue.TryDequeue(out data) == true)
+                {
+                    try
+                    {
+                        switch (data.Protocol)
+                        {
+                            case (int)PROTOCOL.IdPktVersionRes:
+                                {
+                                    VERSION_RES res = new VERSION_RES();
+                                    res = VERSION_RES.Parser.ParseFrom(data.Data);
+
+                                    var currentVersion = VersionTracking.CurrentVersion;
+
+                                    float myversion = float.Parse(currentVersion);
+                                    const Double Eps = 0.000000000000001;
+
+                                    if (Math.Abs(res.VarVersion - myversion) > Eps)
+                                    {
+                                        Xamarin.Essentials.Browser.OpenAsync("https://play.google.com/store/apps/details?id=com.blessnhs.BAC");
+                                    }
+                                }
+                                break;
+                            case (int)PROTOCOL.IdPktLoginRes:
+                                {
+                                    LOGIN_RES res = new LOGIN_RES();
+                                    res = LOGIN_RES.Parser.ParseFrom(data.Data);
+
+                                    if (res.VarCode == ErrorCode.Success)
+                                        IsSuccessAuth = true;
+                                }
+                                break;
+                            case (int)PROTOCOL.IdPktCreateRoomRes:
+                                {
+                                    CREATE_ROOM_RES res = new CREATE_ROOM_RES();
+                                    res = CREATE_ROOM_RES.Parser.ParseFrom(data.Data);
+
+                                    if (res.VarCode == ErrorCode.Success)
+                                    {
+                                        User.Color = TileStatus.Black;
+                                        page.CurrentPage = page.Children[1];
+                                        User.IsMyTurn = true;
+                                    }
+                                    else
+                                    {
+
+                                    }
+
+                                }
+                                break;
+                            case (int)PROTOCOL.IdPktNewUserInRoomNty:
+                                {
+                                    NEW_USER_IN_ROOM_NTY res = new NEW_USER_IN_ROOM_NTY();
+                                    res = NEW_USER_IN_ROOM_NTY.Parser.ParseFrom(data.Data);
+                                }
+                                break;
+                            case (int)PROTOCOL.IdPktBroadcastRoomMessageRes:
+                                {
+                                    BROADCAST_ROOM_MESSAGE_RES res = new BROADCAST_ROOM_MESSAGE_RES();
+                                    res = BROADCAST_ROOM_MESSAGE_RES.Parser.ParseFrom(data.Data);
+
+                                    var Room = (Room)page.Children[1];
+
+                                    string[] header = res.VarMessage.Split(':');
+                                    if (header.Length > 2)
+                                    {
+                                        int x = Convert.ToInt32(header[0]);
+                                        int y = Convert.ToInt32(header[1]);
+
+                                        TileStatus color = TileStatus.Empty;
+
+                                        //draw stone
+                                        if (header[2] == "White")
+                                        {
+                                            color = TileStatus.White;
+                                            Room.UpdateStone(x, y, TileStatus.White);
+                                        }
+                                        else
+                                        {
+                                            color = TileStatus.Black;
+                                            Room.UpdateStone(x, y, TileStatus.Black);
+                                        }
+
+                                        //check turn
+                                        {
+                                            if(User.Color == color)
+                                            {
+                                                User.IsMyTurn = false;
+                                            }
+                                            else
+                                            {
+                                                User.IsMyTurn = true;
+                                            }
+                                        }
+
+                                    }
+                                }
+                                break;
+                            case (int)PROTOCOL.IdPktRoomListRes:
+                                {
+                                    var lobby = (Lobby)page.Children[0];
+
+                                    lobby.UpdateMessage(data);
+                                }
+                                break;
+                            case (int)PROTOCOL.IdPktEnterRoomRes:
+                                {
+                                    ENTER_ROOM_RES res = new ENTER_ROOM_RES();
+                                    res = ENTER_ROOM_RES.Parser.ParseFrom(data.Data);
+
+                                    if (res.VarCode == ErrorCode.Success)
+                                    {
+                                        User.Color = TileStatus.White;
+                                        page.CurrentPage = page.Children[1];
+                                        User.IsMyTurn = false;
+                                    }
+                                }
+                                break;
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.Write(ex.ToString());
+                    }
+
+                }
+
+            }
+        }
+
+        static public void SendVersion()
+        {
+            VERSION_REQ person = new VERSION_REQ
+            {
+            };
+            using (MemoryStream stream = new MemoryStream())
+            {
+                person.WriteTo(stream);
+
+                client.WritePacket((int)PROTOCOL.IdPktVersionReq, stream.ToArray(), stream.ToArray().Length);
+            }
+        }
+
+        static public void SendMakeRoom(string Name)
+        {
+            CREATE_ROOM_REQ person = new CREATE_ROOM_REQ
+            {
+                VarName = Name,
+            };
+            using (MemoryStream stream = new MemoryStream())
+            {
+                person.WriteTo(stream);
+
+                client.WritePacket((int)PROTOCOL.IdPktCreateRoomReq, stream.ToArray(), stream.ToArray().Length);
+            }
+        }
+
+        static public void SendEnterRoom(int id)
+        {
+            ENTER_ROOM_REQ person = new ENTER_ROOM_REQ
+            {
+                VarId = id,
+            };
+            using (MemoryStream stream = new MemoryStream())
+            {
+                person.WriteTo(stream);
+
+                client.WritePacket((int)PROTOCOL.IdPktEnterRoomReq, stream.ToArray(), stream.ToArray().Length);
+            }
+        }
+
+        static public void SendLeaveRoom(int id)
+        {
+            LEAVE_ROOM_REQ person = new LEAVE_ROOM_REQ
+            {
+                VarId = id,
+            };
+            using (MemoryStream stream = new MemoryStream())
+            {
+                person.WriteTo(stream);
+
+                client.WritePacket((int)PROTOCOL.IdPktLeaveRoomReq, stream.ToArray(), stream.ToArray().Length);
+            }
+        }
+
+        static public void SendReqRoomList()
+        {
+            if (client.socket.Connected == false)
+                return;
+
+            ROOM_LIST_REQ snd = new ROOM_LIST_REQ
+            {
+            };
+            using (MemoryStream stream = new MemoryStream())
+            {
+                snd.WriteTo(stream);
+
+                client.WritePacket((int)PROTOCOL.IdPktRoomListReq, stream.ToArray(), stream.ToArray().Length);
+            }
+        }
+
+        static public void SendMatch()
+        {
+            if (client.socket.Connected == false)
+                return;
+
+
+            MATCH_REQ person = new MATCH_REQ
+            {
+            };
+            using (MemoryStream stream = new MemoryStream())
+            {
+                person.WriteTo(stream);
+
+                client.WritePacket((int)PROTOCOL.IdPktMatchReq, stream.ToArray(), stream.ToArray().Length);
+            }
+        }
+
+        static public void SendLogin(string id, string pwd)
+        {
+            UserId = id;
+
+            LOGIN_REQ person = new LOGIN_REQ
+            {
+                VarId = id,
+                VarPasswd = pwd,
+            };
+            using (MemoryStream stream = new MemoryStream())
+            {
+                person.WriteTo(stream);
+
+                client.WritePacket((int)PROTOCOL.IdPktLoginReq, stream.ToArray(), stream.ToArray().Length);
+            }
+        }
+
+        static public void SendRoomMessage(string msg)
+        {
+            BROADCAST_ROOM_MESSAGE_REQ message = new BROADCAST_ROOM_MESSAGE_REQ
+            {
+                VarMessage = msg
+            };
+            using (MemoryStream stream = new MemoryStream())
+            {
+                message.WriteTo(stream);
+
+                client.WritePacket((int)PROTOCOL.IdPktBroadcastRoomMessageReq, stream.ToArray(), stream.ToArray().Length);
+            }
+        }
+    }
+}

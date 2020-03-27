@@ -48,3 +48,8 @@ message ROOM_LIST_REQ
     optional PROTOCOL   id                  = 1 [default = ID_PKT_ROOM_LIST_REQ ];
 }
 
+message MATCH_REQ
+{
+    optional PROTOCOL   id                  = 1 [default = ID_PKT_MATCH_REQ ];
+}
+

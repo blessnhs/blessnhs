@@ -88,4 +88,106 @@ template<template<class T> class CreationPolicy> VOID RoomContainer<CreationPoli
 	//	iter++;
 	//}
 }
+template<template<class T> class CreationPolicy> BOOL RoomContainer<CreationPolicy>::CreateMatchRoom(PLAYER_PTR target1, PLAYER_PTR target2)
+{
+	//방생성
+	/////////////////////////////////////////////////////////////////////////////
+	GSCLIENT_PTR pSession1 = SERVER.GetClient(target1->GetPair());
+	if (!pSession1)
+		return FALSE;
 
+	CREATE_ROOM_RES room_res;
+
+	ROOM_PTR RoomPtr = Create();
+	RoomPtr->m_Stock.Name = target1->m_Account.GetName() + "  VS " + target2->m_Account.GetName();
+
+	Add(RoomPtr);
+	RoomPtr->m_Stock.MAX_PLAYER = USHRT_MAX;
+
+	if (target1 != NULL)
+	{
+		target1->m_RoomNumber = RoomPtr->GetId();
+	}
+
+	RoomPtr->InsertPlayer(target1);
+
+	room_res.set_var_room_id(RoomPtr->GetId());
+	room_res.mutable_var_name()->assign(RoomPtr->m_Stock.Name);
+	SEND_PROTO_BUFFER(room_res, pSession1)
+
+	RoomPtr->SendNewUserInfo(target1);	//방에 있는 유저들에게 새로운 유저 정보전송
+
+
+
+	//방입장
+	/////////////////////////////////////////////////////////////////////////////{
+
+
+	GSCLIENT_PTR pSession2 = SERVER.GetClient(target2->GetPair());
+	if (!pSession2)
+	{
+		RoomPtr->RemovePlayer(target1);
+		Del(RoomPtr);
+		return FALSE;
+	}
+
+	ENTER_ROOM_RES enter_res;
+
+	//이미 입장 해 있다면 
+	if (RoomPtr->FindPlayer(target2) == TRUE)
+	{
+		RoomPtr->RemovePlayer(target1);
+		Del(RoomPtr);
+		return FALSE;
+	}
+
+	RoomPtr->InsertPlayer(target2);
+
+	target2->m_RoomNumber = RoomPtr->GetId();
+
+	enter_res.set_var_room_id(RoomPtr->GetId());
+	enter_res.set_var_name(RoomPtr->m_Stock.Name.c_str());
+	SEND_PROTO_BUFFER(enter_res, pSession2)
+
+	//새로 입장한 유저에게 방안의 유저 정보전송
+	for each (auto iter in RoomPtr->m_PlayerMap)
+	{
+		if (iter.second == NULL)
+			continue;
+
+		NEW_USER_IN_ROOM_NTY nty;
+
+		RoomUserInfo * userinfo = nty.mutable_var_room_user();
+
+		std::string name;
+		name.assign(iter.second->m_Account.GetName().begin(), iter.second->m_Account.GetName().end());
+
+		userinfo->mutable_var_name()->assign(name);
+		SEND_PROTO_BUFFER(nty, pSession2)
+	}
+
+	//방안의 유저들 에게 새로운 유저 정보를 전송
+	for each (auto iter in RoomPtr->m_PlayerMap)
+	{
+		if (iter.second == NULL)
+			continue;
+
+		GSCLIENT_PTR pPair = SERVER.GetClient(iter.second->GetPair());
+		if (pPair == NULL)
+			continue;
+
+
+		NEW_USER_IN_ROOM_NTY nty;
+
+		RoomUserInfo * userinfo = nty.mutable_var_room_user();
+
+		std::string name;
+		name.assign(target2->m_Account.GetName().begin(), target2->m_Account.GetName().end());
+
+		userinfo->mutable_var_name()->assign(name);
+		SEND_PROTO_BUFFER(nty, pPair)
+	}
+
+	return TRUE;
+	
+}

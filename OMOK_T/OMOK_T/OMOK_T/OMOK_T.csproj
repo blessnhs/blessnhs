@@ -1,0 +1,59 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <ProduceAssemblyReference>true</ProduceAssemblyReference>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DebugType>pdbonly</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Image\Background.png" />
+    <None Remove="Image\Black.png" />
+    <None Remove="Image\Cell.png" />
+    <None Remove="Image\White.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="..\..\..\Trunk\JG\Protocol\CSharp\CLIGS.cs" Link="Protocol\CLIGS.cs" />
+    <Compile Include="..\..\..\Trunk\JG\Protocol\CSharp\Enum.cs" Link="Protocol\Enum.cs" />
+    <Compile Include="..\..\..\Trunk\JG\Protocol\CSharp\GSCLI.cs" Link="Protocol\GSCLI.cs" />
+    <Compile Include="..\..\..\Trunk\JG\Protocol\CSharp\Structure.cs" Link="Protocol\Structure.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Image\Background.png" />
+    <EmbeddedResource Include="Image\Black.png" />
+    <EmbeddedResource Include="Image\Cell.png" />
+    <EmbeddedResource Include="Image\White.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Google.Protobuf" Version="3.11.4" />
+    <PackageReference Include="sqlite-net-pcl" Version="1.6.292" />
+    <PackageReference Include="Xamarin.Forms" Version="4.4.0.991265" />  
+    <PackageReference Include="Xamarin.Essentials" Version="1.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Protocol\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="OMOK_T.Android">
+      <HintPath>..\OMOK_T.Android\bin\Debug\OMOK_T.Android.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.Essentials">
+      <HintPath>C:\ProgramData\Xamarin\NuGet\xamarin.essentials\1.0.1\lib\xamarinios10\Xamarin.Essentials.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Views\Lobby.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+</Project>

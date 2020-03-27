@@ -15,6 +15,7 @@ BoardProcess::BoardProcess(void)
 	ADD_NET_FUNC(BoardProcess, ID_PKT_LEAVE_ROOM_REQ, ROOM_LEAVE);
 	ADD_NET_FUNC(BoardProcess, ID_PKT_BROADCAST_ROOM_MESSAGE_REQ, ROOM_CHAT);
 	ADD_NET_FUNC(BoardProcess, ID_PKT_ROOM_LIST_REQ, ROOM_LIST);
+	ADD_NET_FUNC(BoardProcess, ID_PKT_MATCH_REQ, MATCH);
 }
 
 
@@ -33,10 +34,12 @@ VOID BoardProcess::Process(LPVOID Data, DWORD Length, WORD MainProtocol, WORD Su
 			PlayerPtr pPlayer = PLAYERMGR.Search(Client->GetPair());
 			if (pPlayer == NULL)
 			{
-#ifdef _DEBUG_
-				printf("Not Login User d\n");
-#endif
+#ifdef _DEBUG
+#else
 				return;
+#endif
+
+
 			}
 		}
 
@@ -173,10 +176,14 @@ VOID BoardProcess::ROOM_ENTER(LPVOID Data, DWORD Length, boost::shared_ptr<GSCli
 		SEND_PROTO_BUFFER(nty, pOwner)
 	}
 	
-	//방안의 유저들 정보를 새로운 유저에게 전송
+
+	//방안의 유저들 에게 새로운 유저 정보를 전송
 	for each (auto iter in RoomPtr->m_PlayerMap)
 	{
-		GSCLIENT_PTR pPair = SERVER.GetClient(pPlayer->GetPair());
+		if (iter.second == NULL)
+			continue;
+	
+		GSCLIENT_PTR pPair = SERVER.GetClient(iter.second->GetPair());
 		if (pPair == NULL)
 			continue;
 
@@ -344,6 +351,46 @@ VOID BoardProcess::ROOM_LIST(LPVOID Data, DWORD Length, boost::shared_ptr<GSClie
 	}
 
 	SEND_PROTO_BUFFER(res, Client)
+}
+
+VOID BoardProcess::MATCH(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client)
+{
+	DECLARE_RECV_TYPE(MATCH_REQ, roomlistreq)
+
+	MATCH_RES res;
+
+	PlayerPtr pPlayer = PLAYERMGR.Search(Client->GetPair());
+	if (pPlayer == NULL)
+	{
+		return;
+	}
+
+	if (pPlayer->m_RoomNumber != 0)
+	{
+		return;
+	}
+
+	res.set_var_code(Success);
+	SEND_PROTO_BUFFER(res, Client)
+
+
+
+	for each(auto player in ROOMMGR.GetMatchMap())
+	{
+		if (player.second == NULL)
+			continue;
+
+		if (player.first == pPlayer->GetId())
+			continue;
+
+		ROOMMGR.CreateMatchRoom(player.second, pPlayer);
+
+		return;
+	}
+
+
+	//여기 있으면 큐에 아무도 없는것임
+	ROOMMGR.GetMatchMap()[pPlayer->GetId()] = pPlayer;
 }
 
 

@@ -24,7 +24,7 @@ namespace WBA.Network
         {
             //연결중이면 안한다. 
             if(client.socket == null || client.socket.Connected == false)
-                client.StartClient("192.168.0.4", 20000);
+                client.StartClient("192.168.0.12", 20000);
         }
 
         public static Page GetPageByTitle(MainPage page, string name)

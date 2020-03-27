@@ -64,3 +64,9 @@ message ROOM_LIST_RES
     optional  ErrorCode    var_code         = 2;
     repeated RoomInfo2 var_room_list 	     = 3;
 }
+
+message MATCH_RES
+{
+    optional PROTOCOL   id                  = 1 [default = ID_PKT_MATCH_RES ];
+    optional  ErrorCode    var_code         = 2;
+}

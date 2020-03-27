@@ -37,7 +37,7 @@
     <BundleAssemblies>false</BundleAssemblies>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
+    <DebugSymbols>false</DebugSymbols>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release</OutputPath>
@@ -45,7 +45,8 @@
     <WarningLevel>4</WarningLevel>
     <AndroidManagedSymbols>true</AndroidManagedSymbols>
     <AndroidUseSharedRuntime>false</AndroidUseSharedRuntime>
-    <AndroidSupportedAbis>armeabi-v7a;x86;arm64-v8a</AndroidSupportedAbis>
+    <AndroidSupportedAbis>armeabi-v7a;arm64-v8a</AndroidSupportedAbis>
+    <EmbedAssembliesIntoApk>true</EmbedAssembliesIntoApk>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Mono.Android" />
@@ -68,6 +69,15 @@
     </PackageReference>
     <PackageReference Include="Google.Apis.Storage.v1">
       <Version>1.43.0.1791</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.AppCenter.Analytics">
+      <Version>2.6.4</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.AppCenter.Crashes">
+      <Version>2.6.4</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.AppCenter.Distribute">
+      <Version>2.6.4</Version>
     </PackageReference>
     <PackageReference Include="Xam.Plugins.Notifier">
       <Version>3.0.1</Version>

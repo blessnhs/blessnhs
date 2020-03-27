@@ -59,6 +59,10 @@
               "target": "Package",
               "version": "[1.43.0.1791, )"
             },
+            "Google.Protobuf": {
+              "target": "Package",
+              "version": "[3.11.4, )"
+            },
             "NETStandard.Library": {
               "suppressParent": "All",
               "target": "Package",

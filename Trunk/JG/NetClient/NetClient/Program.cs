@@ -15,18 +15,21 @@ public class Process
     public Client client = new Client();
     public void start(int id)
     {
-       int _id = id;
-        client.StartClient("127.0.0.1", 20000);
+        int _id = id;
+        client.StartClient("192.168.0.4", 20000);
 
-        while (true)
+    }
+
+    public void loop(int _id)
+    {
         {
             if (client.socket.Connected == false)
-                continue;
+                return;
 
             client.Update();
             Thread.Sleep(300);
 
-            if(client.PacketQueue.Count > 0)
+            if (client.PacketQueue.Count > 0)
             {
                 CompletePacket data;
                 if (client.PacketQueue.TryDequeue(out data) == true)
@@ -54,7 +57,7 @@ public class Process
                                 }
 
                             }
- 
+
                             break;
                         case (int)PROTOCOL.IdPktLoginRes:
                             {
@@ -63,20 +66,17 @@ public class Process
 
                                 Console.WriteLine("IdPktLoginRes " + res.VarCode.ToString());
                                 {
-                                    CREATE_ROOM_REQ person = new CREATE_ROOM_REQ
+                                    MATCH_REQ person = new MATCH_REQ
                                     {
-                                        VarName = "nhs1_createRoom",
+
                                     };
                                     using (MemoryStream stream = new MemoryStream())
                                     {
                                         person.WriteTo(stream);
 
-                                        client.WritePacket((int)PROTOCOL.IdPktCreateRoomReq, stream.ToArray(), stream.ToArray().Length);
+                                        client.WritePacket((int)PROTOCOL.IdPktMatchReq, stream.ToArray(), stream.ToArray().Length);
                                     }
                                 }
-                              
-
-
                             }
                             break;
                         case (int)PROTOCOL.IdPktCreateRoomRes:
@@ -103,7 +103,7 @@ public class Process
 
                                 Console.WriteLine("IdPktBroadcastRoomMessageRes " + res.VarName + " " + res.VarMessage);
 
-                             BROADCAST_ROOM_MESSAGE_REQ req = new BROADCAST_ROOM_MESSAGE_REQ
+                                BROADCAST_ROOM_MESSAGE_REQ req = new BROADCAST_ROOM_MESSAGE_REQ
                                 {
                                     VarMessage = "message"
                                 };
@@ -131,11 +131,11 @@ public class Process
                             break;
                     }
                 }
-                    
+
             }
         }
-
     }
+
 }
 
 public class AsynchronousClient
@@ -144,19 +144,28 @@ public class AsynchronousClient
 
    public static int Main(String[] args)
     {
-      
-        for(int i=1;i<100;i++)
+
+        Process[] array = new Process[3];
+        for (int i=1;i<2;i++)
         {
-       
-                Process pro = new Process();
-                pro.start(i);
+            array[i - 1] = new Process();
+            array[i - 1].start(i);
             Thread.Sleep(300);
         }
 
         Console.WriteLine("job end");
 
 
-        while (true) ;
+        while (true)
+        {
+            for (int i = 1; i < 2; i++)
+            {
+                array[i - 1].loop(i);
+                Thread.Sleep(100);
+            }
+            Thread.Sleep(100);
+        };
+
         return 0;
     }
 

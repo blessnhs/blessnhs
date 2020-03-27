@@ -58,6 +58,18 @@
               "target": "Package",
               "version": "[1.43.0.1791, )"
             },
+            "Microsoft.AppCenter.Analytics": {
+              "target": "Package",
+              "version": "[2.6.4, )"
+            },
+            "Microsoft.AppCenter.Crashes": {
+              "target": "Package",
+              "version": "[2.6.4, )"
+            },
+            "Microsoft.AppCenter.Distribute": {
+              "target": "Package",
+              "version": "[2.6.4, )"
+            },
             "Xam.Plugins.Notifier": {
               "target": "Package",
               "version": "[3.0.1, )"
@@ -156,6 +168,10 @@
             "Google.Apis.Storage.v1": {
               "target": "Package",
               "version": "[1.43.0.1791, )"
+            },
+            "Google.Protobuf": {
+              "target": "Package",
+              "version": "[3.11.4, )"
             },
             "NETStandard.Library": {
               "suppressParent": "All",

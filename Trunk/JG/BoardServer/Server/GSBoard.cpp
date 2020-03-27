@@ -35,6 +35,9 @@ BOOL GSBoard::Disconnect(GSCLIENT_PTR pSession)
 		pPlayer->SetPair(ULONG_MAX);
 		PLAYERMGR.Del(pPlayer);
 
+		//매칭 큐에서 제거한다.
+		ROOMMGR.GetMatchMap()[pPlayer->GetId()] = NULL;
+
 
 		//로그아웃 쿼리를 날린다.
 		boost::shared_ptr<RequestLogout> pRequest = ALLOCATOR.Create<RequestLogout>();
@@ -82,7 +85,7 @@ BOOL GSBoard::Initialize()
 
 	GSArgument _arg;
 
-	_arg.m_AliveTime = 30; //sec
+	_arg.m_AliveTime = 3000; //sec
 	_arg.m_BindPort  = m_Ini.Port;
 	_arg.m_DBThreadCnt = 1;// dwThreadNum;
 	_arg.m_LogicThreadCnt = dwThreadNum;

@@ -1,7 +1,1 @@
-﻿C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets(372,5): warning MSB8004: Intermediate 디렉터리가 슬래시로 끝나지 않습니다. Intermediate 디렉터리의 적절한 평가를 허용하는 데 필요하므로 이 빌드 인스턴스에서 슬래시를 추가합니다.
-cl : 명령줄 warning D9035: 'Zc:forScope-' 옵션은 더 이상 사용되지 않으므로 이후 릴리스에서 제거될 예정입니다.
-  json_writer.cpp
-json_writer.cpp(119): warning C4267: '초기화 중': 'size_t'에서 'unsigned int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets(1369,5): warning MSB8012: TargetPath(D:\JG_OS\Trunk\JG\Common\lib_json\./lib_json.lib)이(가) Library의 OutputFile 속성 값(D:\JG_OS\Trunk\JG\Common\lib_json\json_d.lib)과 일치하지 않습니다. 이로 인해 프로젝트가 잘못 빌드될 수 있습니다. 이를 수정하려면 $(OutDir), $(TargetName) 및 $(TargetExt) 속성 값이 %(Lib.OutputFile)에 지정된 값과 일치해야 합니다.
-C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets(1371,5): warning MSB8012: TargetName(lib_json)이(가) Library의 OutputFile 속성 값(json_d)과 일치하지 않습니다. 이로 인해 프로젝트가 잘못 빌드될 수 있습니다. 이를 수정하려면 $(OutDir), $(TargetName) 및 $(TargetExt) 속성 값이 %(Lib.OutputFile)에 지정된 값과 일치해야 합니다.
-  lib_json.vcxproj -> D:\JG_OS\Trunk\JG\Common\lib_json\./lib_json.lib
+﻿d:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Microsoft\VC\v160\Microsoft.Cpp.WindowsSDK.targets(46,5): error MSB8036: Windows SDK 버전 10.0.15063.0을(를) 찾을 수 없습니다. 필요한 버전의 Windows SDK를 설치하거나, 솔루션을 마우스 오른쪽 단추로 클릭하고 [솔루션 대상 변경]을 선택하거나 프로젝트 속성 페이지에서 SDK 버전을 변경하세요.

@@ -47,10 +47,19 @@ public:
 		return m_RoomMap;
 	}
 
+	concurrency::concurrent_unordered_map<DWORD, PLAYER_PTR>& GetMatchMap()
+	{
+		return m_MatchMap;
+	}
+
+	BOOL CreateMatchRoom(PLAYER_PTR target1, PLAYER_PTR target2);
+
 
 protected:
 
 	concurrency::concurrent_unordered_map<DWORD,ROOM_PTR>		m_RoomMap;
+
+	concurrency::concurrent_unordered_map<DWORD, PLAYER_PTR>		m_MatchMap;
 
 	CRITICAL_SECTION											m_PublicLock;
 };

@@ -201,4 +201,7 @@
       <Filter>PROTO</Filter>
     </ClCompile>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="..\NetClient\NetClient.sln" />
+  </ItemGroup>
 </Project>
