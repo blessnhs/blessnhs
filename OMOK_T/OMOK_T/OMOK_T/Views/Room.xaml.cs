@@ -15,9 +15,21 @@ namespace OMOK_T
         const string timeFormat = @"%m\:ss";
         bool isGameInProgress;
         DateTime gameStartTime;
+     
+
         public Room()
         {
             InitializeComponent();
+
+            Device.StartTimer(TimeSpan.FromSeconds(1), () =>
+            {
+                if(User.IsMyTurn == true)
+                {
+                    timeLabel.Text = (DateTime.Now - User.MytrunStartTime).ToString(timeFormat);
+                }
+
+                return true;
+            });
 
             board.GameStarted += (sender, args) =>
             {
@@ -48,14 +60,23 @@ namespace OMOK_T
             PrepareForNewGame();
         }
 
+        public void UpdateBattleInfo()
+        {
+            if(User.Color == TileStatus.Black)
+            {
+                blackLabel.Text = User.MyNickName;
+                whiteLabel.Text = User.OppNickName;
+            }
+            else
+            {
+                whiteLabel.Text = User.MyNickName;
+                blackLabel.Text = User.OppNickName;
+            }
+        }
+
         void PrepareForNewGame()
         {
             board.NewGameInitialize();
-
-            congratulationsText.IsVisible = false;
-            consolationText.IsVisible = false;
-            playAgainButton.IsVisible = false;
-            playAgainButton.IsEnabled = false;
 
             timeLabel.Text = new TimeSpan().ToString(timeFormat);
             isGameInProgress = false;
@@ -71,25 +92,25 @@ namespace OMOK_T
 
             if (isLandscape)
             {
-                mainGrid.RowDefinitions[0].Height = 0;
-                mainGrid.RowDefinitions[1].Height = new GridLength(1, GridUnitType.Star);
+                mainGrid.RowDefinitions[0].Height = new GridLength(1, GridUnitType.Star);
+                mainGrid.RowDefinitions[1].Height = new GridLength(8, GridUnitType.Star);
+                mainGrid.RowDefinitions[2].Height = new GridLength(1, GridUnitType.Star);
 
-                mainGrid.ColumnDefinitions[0].Width = new GridLength(1, GridUnitType.Star);
-                mainGrid.ColumnDefinitions[1].Width = new GridLength(1, GridUnitType.Star);
 
-                Grid.SetRow(textStack, 1);
-                Grid.SetColumn(textStack, 0);
+                mainGrid.ColumnDefinitions[0].Width = new GridLength(5, GridUnitType.Star);
+                mainGrid.ColumnDefinitions[1].Width = new GridLength(5, GridUnitType.Star);
+
+                Grid.SetRow(textStackTop, 1);
+                Grid.SetColumn(textStackTop, 0);
             }
             else // portrait
             {
-                mainGrid.RowDefinitions[0].Height = new GridLength(3, GridUnitType.Star);
-                mainGrid.RowDefinitions[1].Height = new GridLength(5, GridUnitType.Star);
+                mainGrid.RowDefinitions[0].Height = new GridLength(1, GridUnitType.Star);
+                mainGrid.RowDefinitions[1].Height = new GridLength(8, GridUnitType.Star);
+                mainGrid.RowDefinitions[2].Height = new GridLength(1, GridUnitType.Star);
 
-                mainGrid.ColumnDefinitions[0].Width = 0;
-                mainGrid.ColumnDefinitions[1].Width = new GridLength(1, GridUnitType.Star);
-
-                Grid.SetRow(textStack, 0);
-                Grid.SetColumn(textStack, 1);
+                mainGrid.ColumnDefinitions[0].Width = new GridLength(5, GridUnitType.Star);
+                mainGrid.ColumnDefinitions[1].Width = new GridLength(5, GridUnitType.Star);
             }
         }
 
@@ -107,56 +128,15 @@ namespace OMOK_T
 
         async void DisplayWonAnimation()
         {
-            congratulationsText.Scale = 0;
-            congratulationsText.IsVisible = true;
 
-            // Because IsVisible has been false, the text might not have a size yet,
-            //  in which case Measure will return a size.
-            double congratulationsTextWidth = congratulationsText.Measure(Double.PositiveInfinity, Double.PositiveInfinity).Request.Width;
-
-            congratulationsText.Rotation = 0;
-            congratulationsText.RotateTo(3 * 360, 1000, Easing.CubicOut);
-
-            double maxScale = 0.9 * board.Width / congratulationsTextWidth;
-            await congratulationsText.ScaleTo(maxScale, 1000);
-
-            foreach (View view in congratulationsText.Children)
-            {
-                view.Rotation = 0;
-                view.RotateTo(180);
-                await view.ScaleTo(3, 100);
-                view.RotateTo(360);
-                await view.ScaleTo(1, 100);
-            }
-
-            await DisplayPlayAgainButton();
         }
 
         async void DisplayLostAnimation()
         {
-            consolationText.Scale = 0;
-            consolationText.IsVisible = true;
-
-            // (See above for rationale)
-            double consolationTextWidth = consolationText.Measure(Double.PositiveInfinity, Double.PositiveInfinity).Request.Width;
-
-            double maxScale = 0.9 * board.Width / consolationTextWidth;
-            await consolationText.ScaleTo(maxScale, 1000);
-            await Task.Delay(1000);
-            await DisplayPlayAgainButton();
         }
 
         async Task DisplayPlayAgainButton()
         {
-            playAgainButton.Scale = 0;
-            playAgainButton.IsVisible = true;
-            playAgainButton.IsEnabled = true;
-
-            // (See above for rationale)
-            double playAgainButtonWidth = playAgainButton.Measure(Double.PositiveInfinity, Double.PositiveInfinity).Request.Width;
-
-            double maxScale = board.Width / playAgainButtonWidth;
-            await playAgainButton.ScaleTo(maxScale, 1000, Easing.SpringOut);
         }
 
         void OnplayAgainButtonClicked(object sender, object EventArgs)
@@ -164,7 +144,7 @@ namespace OMOK_T
             PrepareForNewGame();
         }
 
-        public void UpdateStone(int x,int y, TileStatus status)
+        public bool UpdateStone(int x,int y, TileStatus status)
         {
             board.UpdateStone(x, y, status);
 
@@ -176,13 +156,33 @@ namespace OMOK_T
                         DisplayAlert("", "흑 승리하셨습니다..", "OK");
                     else
                         DisplayAlert("", "백 승리하셨습니다.", "OK");
+
+                    board.ClearBoardState();
+
+                    //이번엔 서로 진형을 변경한다. 
+                    TileStatus newColor = User.Color == TileStatus.Black ? TileStatus.White : TileStatus.Black;
+
+                    User.Color = newColor;
+
+                    UpdateBattleInfo();
+
+                    if (User.Color == TileStatus.Black)
+                        User.IsMyTurn = true;
+                    else
+                        User.IsMyTurn = false;
+
+                    User.MytrunStartTime = DateTime.Now;
+
+                    return true;
                 }
+
+                return false;
             }
             catch(Exception e)
             {
 
+                return false;
             }
-          
         }
     }
 }

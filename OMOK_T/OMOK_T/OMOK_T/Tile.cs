@@ -162,7 +162,7 @@ namespace OMOK_T
         	}
 
 #endif
-            if(User.IsMyTurn == false)
+            if(User.IsMyTurn == false || this.Status != TileStatus.Empty)
             {
                 return;
             }

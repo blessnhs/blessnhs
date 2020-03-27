@@ -11,24 +11,24 @@
     </ContentPage.Padding>
     <ContentView SizeChanged="OnMainContentViewSizeChanged">
         <Grid x:Name="mainGrid" ColumnSpacing="0" RowSpacing="0">
-
             <Grid.RowDefinitions>
-                <RowDefinition Height="2*" />
+                <RowDefinition Height="1*" />
                 <RowDefinition Height="8*" />
+                <RowDefinition Height="1*" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="0" />
-                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="5*" />
+                <ColumnDefinition Width="5*" />
             </Grid.ColumnDefinitions>
 
-            <StackLayout x:Name="textStack" Grid.Row="0" Grid.Column="1" Spacing="0">
-
+            <StackLayout x:Name="textStackTop" Grid.Row="0" Grid.Column="0" Spacing="0" Grid.ColumnSpan="2">
                 <Label x:Name="timeLabel" Text="0:00" VerticalOptions="CenterAndExpand" HorizontalTextAlignment="Center" />
             </StackLayout>
-            <ContentView Grid.Row="1" Grid.Column="1" SizeChanged="OnBoardContentViewSizeChanged">
+
+            <ContentView Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" SizeChanged="OnBoardContentViewSizeChanged">
                 <!--<Image x:Name="backgroundboard"></Image>-->
                 <!-- Single-cell Grid for Board and overlays. -->
-                <Grid RowSpacing="1">
+                <Grid RowSpacing="0">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
@@ -36,38 +36,17 @@
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
                     <local:Board x:Name="board" />
-                    <StackLayout x:Name="congratulationsText" Orientation="Horizontal" HorizontalOptions="Center" VerticalOptions="Center" Spacing="0">
-                        <Label Text="C" TextColor="Red" />
-                        <Label Text="O" TextColor="Red" />
-                        <Label Text="N" TextColor="Red" />
-                        <Label Text="G" TextColor="Red" />
-                        <Label Text="R" TextColor="Red" />
-                        <Label Text="A" TextColor="Red" />
-                        <Label Text="T" TextColor="Red" />
-                        <Label Text="U" TextColor="Red" />
-                        <Label Text="L" TextColor="Red" />
-                        <Label Text="A" TextColor="Red" />
-                        <Label Text="T" TextColor="Red" />
-                        <Label Text="I" TextColor="Red" />
-                        <Label Text="O" TextColor="Red" />
-                        <Label Text="N" TextColor="Red" />
-                        <Label Text="S" TextColor="Red" />
-                        <Label Text="!" TextColor="Red" />
-                    </StackLayout>
-                    <StackLayout x:Name="consolationText" Orientation="Horizontal" Spacing="0" HorizontalOptions="Center" VerticalOptions="Center">
-                        <Label Text="T" TextColor="Red" />
-                        <Label Text="O" TextColor="Red" />
-                        <Label Text="O" TextColor="Red" />
-                        <Label Text=" " TextColor="Red" />
-                        <Label Text="B" TextColor="Red" />
-                        <Label Text="A" TextColor="Red" />
-                        <Label Text="D" TextColor="Red" />
-                        <Label Text="!" TextColor="Red" />
-                    </StackLayout>
-                    <Button x:Name="playAgainButton" Text=" Play Another Game? " HorizontalOptions="Center" VerticalOptions="Center" Clicked="OnplayAgainButtonClicked"
-                            BorderColor="Black" BorderWidth="2" BackgroundColor="White" TextColor="Black" />
-                </Grid>
+              </Grid>
             </ContentView>
+
+            <StackLayout x:Name="textStackBottom1" Grid.Row="2" Grid.Column="0" Spacing="0">
+                <Label x:Name="blackLabel" Text="" VerticalOptions="CenterAndExpand" HorizontalTextAlignment="Center" />
+            </StackLayout>
+
+            <StackLayout x:Name="textStackBottom2" Grid.Row="2" Grid.Column="1" Spacing="0">
+                <Label x:Name="whiteLabel" Text="" VerticalOptions="CenterAndExpand" HorizontalTextAlignment="Center" />
+            </StackLayout>
+            
         </Grid>
     </ContentView>
 </ContentPage>

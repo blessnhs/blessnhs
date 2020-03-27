@@ -8,5 +8,10 @@ namespace OMOK_T
     {
         public static TileStatus Color;
         public static bool IsMyTurn = false;
+
+        public static DateTime MytrunStartTime = DateTime.Now;
+
+        public static string MyNickName;
+        public static string OppNickName;
     }
 }

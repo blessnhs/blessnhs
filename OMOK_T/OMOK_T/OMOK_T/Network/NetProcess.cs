@@ -63,6 +63,7 @@ namespace OMOK_T.Network
 
                                     if (res.VarCode == ErrorCode.Success)
                                         IsSuccessAuth = true;
+
                                 }
                                 break;
                             case (int)PROTOCOL.IdPktCreateRoomRes:
@@ -75,6 +76,7 @@ namespace OMOK_T.Network
                                         User.Color = TileStatus.Black;
                                         page.CurrentPage = page.Children[1];
                                         User.IsMyTurn = true;
+                                        User.MytrunStartTime = DateTime.Now;
                                     }
                                     else
                                     {
@@ -87,6 +89,16 @@ namespace OMOK_T.Network
                                 {
                                     NEW_USER_IN_ROOM_NTY res = new NEW_USER_IN_ROOM_NTY();
                                     res = NEW_USER_IN_ROOM_NTY.Parser.ParseFrom(data.Data);
+
+                                    if(res.VarRoomUser.VarName != User.MyNickName)
+                                    {
+                                        //상대방이름
+                                        //나갈때 초기화한다. 
+                                        User.OppNickName = res.VarRoomUser.VarName;
+
+                                        var Room = (Room)page.Children[1];
+                                        Room.UpdateBattleInfo();
+                                    }
                                 }
                                 break;
                             case (int)PROTOCOL.IdPktBroadcastRoomMessageRes:
@@ -104,17 +116,22 @@ namespace OMOK_T.Network
 
                                         TileStatus color = TileStatus.Empty;
 
+                                        bool isEndGame = false;
                                         //draw stone
                                         if (header[2] == "White")
                                         {
                                             color = TileStatus.White;
-                                            Room.UpdateStone(x, y, TileStatus.White);
+                                            isEndGame = Room.UpdateStone(x, y, TileStatus.White);
                                         }
                                         else
                                         {
                                             color = TileStatus.Black;
-                                            Room.UpdateStone(x, y, TileStatus.Black);
+                                            isEndGame = Room.UpdateStone(x, y, TileStatus.Black);
                                         }
+
+                                        //게임이 종료되면 새로 시작 한다. 새로 시작하면 블랙이 선이다.
+                                        if (isEndGame == true)
+                                            return ;
 
                                         //check turn
                                         {
@@ -125,6 +142,7 @@ namespace OMOK_T.Network
                                             else
                                             {
                                                 User.IsMyTurn = true;
+                                                User.MytrunStartTime = DateTime.Now;
                                             }
                                         }
 

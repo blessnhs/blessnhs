@@ -126,6 +126,8 @@ namespace OMOK_T.Views
         {
             string inputstring = await InputBox(this.Navigation);
 
+            User.MyNickName = inputstring;
+
             NetProcess.SendLogin(inputstring, inputstring);
         }
 

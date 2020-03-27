@@ -61,6 +61,18 @@ namespace OMOK_T
            NewGameInitialize();
         }
 
+        public void ClearBoardState()
+        {
+            for (int row = 0; row < ROWS; row++)
+            {
+                for (int col = 0; col < COLS; col++)
+                {
+                    tiles[row, col].Status = TileStatus.Empty;
+                }
+            }
+        }
+
+
         public void UpdateStone(int x,int y,TileStatus tileStatus)
         {
             var title = tiles[y, x];
