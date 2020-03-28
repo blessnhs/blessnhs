@@ -85,7 +85,7 @@ BOOL GSBoard::Initialize()
 
 	GSArgument _arg;
 
-	_arg.m_AliveTime = 3000; //sec
+	_arg.m_AliveTime = 60; //sec
 	_arg.m_BindPort  = m_Ini.Port;
 	_arg.m_DBThreadCnt = 1;// dwThreadNum;
 	_arg.m_LogicThreadCnt = dwThreadNum;
