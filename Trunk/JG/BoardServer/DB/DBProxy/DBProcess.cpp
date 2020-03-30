@@ -131,21 +131,30 @@ int  CDBProcessCer::DeleteAllConcurrentUser()
 	return _ERR_NONE;
 }
 
-int		CDBProcessCer::ProcedureUserLogin(const CHAR* id, const CHAR* pw, std::string& szKey, INT64 &Index)
+int		CDBProcessCer::ProcedureUserLogin(const CHAR* flatformid, const int flatformtype, const CHAR* name, const CHAR* picture_url, const CHAR* email,std::string& szKey, int& Rank, int& Score, int& Win, int& Lose, int& Draw, INT64& Index)
 {
 	SQLRETURN		retcode = SQL_ERROR;
 	SQLCHAR			szSQL[1024];
 	SQLCHAR			szSessionKey[MAX_SESSION_KEY_SIZE] = { 0, };
-	SQLSMALLINT		sParmRet = 0;
+	SQLSMALLINT		sDBReturn = 0;
 	SQLLEN			cbParmRet = 0;
 	CDBHandle		dbhandle(m_pDB->m_hdbc, &(m_pDB->m_csDBHandle));
 	SQLHSTMT		hstmt = dbhandle.GetHandle();
 
 
-	sprintf_s((char*)szSQL, sizeof(szSQL),"{call SP_ACCOUNT_LOGIN (\'%s\', \'%s\', ? , ? ,?)}", id, pw);
-	retcode = SQLBindParameter(hstmt, 1, SQL_PARAM_OUTPUT, SQL_C_SSHORT, SQL_SMALLINT, 0, 0, &sParmRet, 0, &cbParmRet);
+	sprintf_s((char*)szSQL, sizeof(szSQL),"{call SP_ACCOUNT_LOGIN (\'%s\', %d,\'%s\',\'%s\',\'%s\', ? , ? , ? , ? , ? , ? , ? , ?)}", flatformid, flatformtype,name, picture_url, email);
+	retcode = SQLBindParameter(hstmt, 1, SQL_PARAM_OUTPUT, SQL_C_SSHORT, SQL_SMALLINT, 0, 0, &sDBReturn, 0, &cbParmRet);
 	retcode = SQLBindParameter(hstmt, 2, SQL_PARAM_OUTPUT, SQL_C_CHAR, SQL_CHAR, 64, 0, szSessionKey, sizeof(szSessionKey), &cbParmRet);
-	retcode = SQLBindParameter(hstmt, 3, SQL_PARAM_OUTPUT, SQL_C_SBIGINT, SQL_INTEGER, 0, 0, &Index, 0, &cbParmRet);
+
+	retcode = SQLBindParameter(hstmt, 3, SQL_PARAM_OUTPUT, SQL_C_STINYINT, SQL_INTEGER, 0, 0, &Rank, 0, &cbParmRet);
+	retcode = SQLBindParameter(hstmt, 4, SQL_PARAM_OUTPUT, SQL_C_STINYINT, SQL_INTEGER, 0, 0, &Score, 0, &cbParmRet);
+	retcode = SQLBindParameter(hstmt, 5, SQL_PARAM_OUTPUT, SQL_C_STINYINT, SQL_INTEGER, 0, 0, &Win, 0, &cbParmRet);
+	retcode = SQLBindParameter(hstmt, 6, SQL_PARAM_OUTPUT, SQL_C_STINYINT, SQL_INTEGER, 0, 0, &Lose, 0, &cbParmRet);
+	retcode = SQLBindParameter(hstmt, 7, SQL_PARAM_OUTPUT, SQL_C_STINYINT, SQL_INTEGER, 0, 0, &Draw, 0, &cbParmRet);
+
+
+
+	retcode = SQLBindParameter(hstmt, 8, SQL_PARAM_OUTPUT, SQL_C_SBIGINT, SQL_INTEGER, 0, 0, &Index, 0, &cbParmRet);
 
 	if (retcode == SQL_SUCCESS)
 	{
@@ -166,15 +175,15 @@ int		CDBProcessCer::ProcedureUserLogin(const CHAR* id, const CHAR* pw, std::stri
 		}
 	}
 
-	if (sParmRet != 0) {
-		//if(sParmRet == 1){}	// 아이디, 패스워드오류
-		//if(sParmRet == 2){}	// 이미 로그인 되어있음
-		if (sParmRet == 2) { return _ERR_LOGINED; }
+	if (sDBReturn != 0) {
+		//if(sDBReturn == 1){}	// 아이디, 패스워드오류
+		//if(sDBReturn == 2){}	// 이미 로그인 되어있음
+		if (sDBReturn == 2) { return _ERR_LOGINED; }
 		return _ERR_NOTREGISTERED;
 	}
 	std::string dbKey = (char*)(LPCTSTR)szSessionKey;
 
-	printf("recv session key = %s id = %s\n", (char*)(LPCTSTR)szSessionKey, id);
+	printf("recv session key = %s id = %s\n", (char*)(LPCTSTR)szSessionKey, flatformid);
 	dbKey = trim_right(dbKey);
 
 	szKey = dbKey;

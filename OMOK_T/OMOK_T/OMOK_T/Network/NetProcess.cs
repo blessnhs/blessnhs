@@ -53,7 +53,11 @@ namespace OMOK_T.Network
                                     if (Math.Abs(res.VarVersion - myversion) > Eps)
                                     {
                                         Xamarin.Essentials.Browser.OpenAsync("https://play.google.com/store/apps/details?id=com.blessnhs.BAC");
+
+                                        return;
                                     }
+
+                                    NetProcess.SendLogin(User.Uid, User.Token);
                                 }
                                 break;
                             case (int)PROTOCOL.IdPktLoginRes:
@@ -269,14 +273,14 @@ namespace OMOK_T.Network
             }
         }
 
-        static public void SendLogin(string id, string pwd)
+        static public void SendLogin(string uid, string token)
         {
-            UserId = id;
+            UserId = uid;
 
             LOGIN_REQ person = new LOGIN_REQ
             {
-                VarId = id,
-                VarPasswd = pwd,
+               VarUid = uid,
+                VarToken = token,
             };
             using (MemoryStream stream = new MemoryStream())
             {

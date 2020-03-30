@@ -13,5 +13,11 @@ namespace OMOK_T
 
         public static string MyNickName;
         public static string OppNickName;
+        public static string PhotoPath;
+
+
+        //acount fire base
+        public static string Uid;
+        public static string Token;
     }
 }

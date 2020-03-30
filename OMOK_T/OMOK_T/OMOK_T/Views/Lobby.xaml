@@ -17,11 +17,7 @@
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
 
-                <Frame BorderColor="Gray" Grid.Row="0" Grid.Column="0" VerticalOptions="Start" Padding="0,0,0,0">
-                    <StackLayout BackgroundColor= "blue" >
-                        <Button x:Name="LoginButton" Text="로그인"  Clicked="OnLoginClicked" BackgroundColor="White"/>
-                    </StackLayout>
-                </Frame>
+                <Image  x:Name="mypicture" Grid.Row="0" Grid.Column="0" Aspect="AspectFit" ></Image>
                 
                 <Frame BorderColor="Gray" Grid.Row="0" Grid.Column="1" VerticalOptions="Start" Padding="0,0,0,0">
                     <StackLayout BackgroundColor= "blue" >

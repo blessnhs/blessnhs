@@ -70,13 +70,13 @@ VOID BoardProcess::LOGIN_PLAYER(LPVOID Data, DWORD Length, boost::shared_ptr<GSC
 {
 	DECLARE_RECV_TYPE(LOGIN_REQ,login)
 		
-	printf("result %d id %s pwd %s\n", _result_,login.var_id().c_str(), login.var_passwd().c_str());
+	printf("result %d id %s pwd %s\n", _result_,login.var_uid().c_str(), login.var_token().c_str());
 	
 
 	//로그인 쿼리를 날린다.
 	boost::shared_ptr<RequestPlayerAuth> pRequest = ALLOCATOR.Create<RequestPlayerAuth>();
-	pRequest->Account.assign(login.var_id().begin(), login.var_id().end());
-	pRequest->Passwd.assign(login.var_passwd().begin(), login.var_passwd().end());
+	pRequest->Uid.assign(login.var_uid().begin(), login.var_uid().end());
+	pRequest->Token.assign(login.var_token().begin(), login.var_token().end());
 
 	boost::shared_ptr<Board::MSG_PLAYER_QUERY<RequestPlayerAuth>>		PLAYER_MSG = ALLOCATOR.Create<Board::MSG_PLAYER_QUERY<RequestPlayerAuth>>();
 	PLAYER_MSG->pSession = Client;

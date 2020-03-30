@@ -26,8 +26,8 @@ public:
 
 	~RequestPlayerAuth(void) {}
 
-	std::string Account;
-	std::string Passwd;
+	std::string Uid;
+	std::string Token;
 	std::string SessionKey;
 	DWORD Index;
 	int Result;

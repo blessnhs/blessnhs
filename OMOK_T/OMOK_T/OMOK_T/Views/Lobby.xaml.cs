@@ -21,6 +21,15 @@ namespace OMOK_T.Views
         public Lobby()
         {
             InitializeComponent();
+
+            if(User.PhotoPath != null)
+                mypicture.Source = ImageSource.FromUri(new Uri(User.PhotoPath));
+        }
+
+        protected override void OnAppearing()
+        {
+            if (User.PhotoPath != null)
+                mypicture.Source = ImageSource.FromUri(new Uri(User.PhotoPath));
         }
 
         public void UpdateMessage(CompletePacket packet)

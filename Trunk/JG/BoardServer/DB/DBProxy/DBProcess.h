@@ -11,7 +11,10 @@ public:
 	
 	BOOL Initalize(	CHAR *m_szDSN,CHAR *m_szUID,CHAR *m_szPWD);
 
-	int	 ProcedureUserLogin(const CHAR* id, const CHAR* pw, std::string&szKey, INT64 &Index);
+	int	 ProcedureUserLogin(const CHAR* flatformid, const int flatformtype, const CHAR* name, const CHAR* picture_url, const CHAR* email, 
+		std::string&szKey,int &Rank, int& Score, int& Win, int& Lose, int& Draw,INT64 &Index);
+
+
 	int	 ProcedureUserLogout(const CHAR* id);
 	int  DeleteAllConcurrentUser();
 

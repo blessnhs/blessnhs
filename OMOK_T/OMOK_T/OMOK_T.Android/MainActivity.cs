@@ -37,7 +37,6 @@ namespace OMOK_T.Droid
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
 
-            LoadApplication(new App());
 
             FirebaseApp.InitializeApp(Application.Context);
             FirebaseAuth = FirebaseAuth.Instance;
@@ -53,8 +52,7 @@ namespace OMOK_T.Droid
 
 
             GoogleSignIn();
-
-        }
+       }
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
         {
             Xamarin.Essentials.Platform.OnRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -93,7 +91,13 @@ namespace OMOK_T.Droid
                     FirebaseUser user = authResult.User;
                     // 사용자 로그인 및 파이어베이스 등록 완료
 
-                    new AlertDialog.Builder(this).SetMessage(user.DisplayName + "로그인").Show();
+                    User.PhotoPath = user.PhotoUrl.ToString();
+
+                    User.Uid = signInResult.SignInAccount.Id;
+                    User.Token = signInResult.SignInAccount.IdToken;
+                                    
+
+                    new AlertDialog.Builder(this).SetMessage(user.DisplayName + " 로그인").Show();
                 }
                 catch (Exception ex)
                 {
@@ -104,6 +108,11 @@ namespace OMOK_T.Droid
             {
                 new AlertDialog.Builder(this).SetMessage("구글 로그인 실패").Show();
             }
+
+
+            LoadApplication(new App());
+
+
         }
     }
 
