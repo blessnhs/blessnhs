@@ -113,7 +113,7 @@ VOID BoardProcess::ROOM_CREATE(LPVOID Data, DWORD Length, boost::shared_ptr<GSCl
 
 	if (pPlayer != NULL)
 	{
-		pPlayer->SetRoom(RoomPtr->GetId());
+		pPlayer->m_Char[0].SetRoom(RoomPtr->GetId());
 	}
 
 	RoomPtr->InsertPlayer(pPlayer);
@@ -153,7 +153,7 @@ VOID BoardProcess::ROOM_ENTER(LPVOID Data, DWORD Length, boost::shared_ptr<GSCli
 	
 	RoomPtr->InsertPlayer(pPlayer);
 
-	pPlayer->SetRoom( RoomPtr->GetId() );
+	pPlayer->m_Char[0].SetRoom( RoomPtr->GetId() );
 
 	res.set_var_room_id(RoomPtr->GetId());
 	res.set_var_name(RoomPtr->m_Stock.Name.c_str());
@@ -206,7 +206,7 @@ VOID BoardProcess::ROOM_LEAVE(LPVOID Data, DWORD Length, boost::shared_ptr<GSCli
 		return;
 	}
 
-	ROOM_PTR RoomPtr = ROOMMGR.Search(pPlayer->GetRoom());
+	ROOM_PTR RoomPtr = ROOMMGR.Search(pPlayer->m_Char[0].GetRoom());
 	if (RoomPtr != NULL)
 	{
 		if (RoomPtr->FindPlayer(pPlayer) != USHRT_MAX)
@@ -217,7 +217,7 @@ VOID BoardProcess::ROOM_LEAVE(LPVOID Data, DWORD Length, boost::shared_ptr<GSCli
 			RoomPtr->SendToAll(res);
 
 			RoomPtr->RemovePlayer(pPlayer);
-			pPlayer->SetRoom(0);
+			pPlayer->m_Char[0].SetRoom(0);
 
 			if (RoomPtr->GetCurrPlayer() == 0)
 				ROOMMGR.Del(RoomPtr);
@@ -306,7 +306,7 @@ VOID BoardProcess::ROOM_CHAT(LPVOID Data, DWORD Length, boost::shared_ptr<GSClie
 		res.mutable_var_message()->assign(message.var_message());
 		res.mutable_var_name()->assign(pPlayer->m_Account.GetName());
 
-		ROOM_PTR pPtr = ROOMMGR.Search(pPlayer->GetRoom());
+		ROOM_PTR pPtr = ROOMMGR.Search(pPlayer->m_Char[0].GetRoom());
 		if (pPtr != NULL)
 		{
 			pPtr->SendToAll(res);
@@ -355,7 +355,7 @@ VOID BoardProcess::MATCH(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> 
 		return;
 	}
 
-	if (pPlayer->GetRoom() != 0)
+	if (pPlayer->m_Char[0].GetRoom() != 0)
 	{
 		return;
 	}

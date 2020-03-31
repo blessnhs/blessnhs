@@ -65,7 +65,7 @@ template<template<class T> class CreationPolicy> PlayerPtr PlayerContainer<Creat
 	return PlayerPtr(0);
 }
 
-template<template<class T> class CreationPolicy> PlayerPtr PlayerContainer<CreationPolicy>:: Search(string Account)
+template<template<class T> class CreationPolicy> PlayerPtr PlayerContainer<CreationPolicy>:: Search(string flatformid)
 {
 	for each( auto iter in m_PlayerMap)
 	{
@@ -73,7 +73,7 @@ template<template<class T> class CreationPolicy> PlayerPtr PlayerContainer<Creat
 		if (pPlayer == NULL)
 			continue;
 
-		if (pPlayer->m_Account.GetName() == Account)
+		if (pPlayer->m_Account.GetFlatformId() == flatformid)
 		{
 			return pPlayer;
 		}

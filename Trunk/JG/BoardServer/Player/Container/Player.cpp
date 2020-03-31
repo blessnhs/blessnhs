@@ -33,17 +33,7 @@ DWORD Player::GetChannel()
 void Player::Initialize()
 {
 	m_PairSessionId = 0;
-	m_RoomNumber    = 0;
 }
 
-VOID Player::SetRoom(DWORD _id)
-{
-	m_RoomNumber = _id;
-}
-
-DWORD Player::GetRoom()
-{
-	return m_RoomNumber;
-}
 
 

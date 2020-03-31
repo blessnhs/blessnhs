@@ -106,7 +106,7 @@ template<template<class T> class CreationPolicy> BOOL RoomContainer<CreationPoli
 
 	if (target1 != NULL)
 	{
-		target1->SetRoom( RoomPtr->GetId() );
+		target1->m_Char[0].SetRoom( RoomPtr->GetId() );
 	}
 
 	RoomPtr->InsertPlayer(target1);
@@ -143,7 +143,7 @@ template<template<class T> class CreationPolicy> BOOL RoomContainer<CreationPoli
 
 	RoomPtr->InsertPlayer(target2);
 
-	target2->SetRoom( RoomPtr->GetId() );
+	target2->m_Char[0].SetRoom( RoomPtr->GetId() );
 
 	enter_res.set_var_room_id(RoomPtr->GetId());
 	enter_res.set_var_name(RoomPtr->m_Stock.Name.c_str());

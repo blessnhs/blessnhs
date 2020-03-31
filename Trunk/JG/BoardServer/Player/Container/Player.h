@@ -6,42 +6,6 @@
 	
 typedef GSNetwork::GSObject::GSObject GSObject;
 
-class Score
-{
-public:
-	Score()
-	{
-
-	}
-
-	Score(int rank, int score, int win, int lose, int draw)
-	{
-		m_Rank = rank;
-		m_Score = score;
-		m_Win = win;
-		m_Lose = lose;
-		m_Draw = draw;
-
-	}
-	~Score() {}
-
-	void SetScore(int rank, int score, int win, int lose, int draw)
-	{
-		m_Rank = rank;
-		m_Score = score;
-		m_Win = win;
-		m_Lose = lose;
-		m_Draw = draw;
-
-	}
-
-private:
-	int m_Rank;
-	int m_Score;
-	int m_Win;
-	int m_Lose;
-	int m_Draw;
-};
 
 class Player : public GSObject 
 {
@@ -59,9 +23,21 @@ public:
 		std::string& GetName() { return m_Name;	}
 		void SetName(const std::string& _Name) { m_Name = _Name; }
 
+		std::string& GetFlatformId() { return m_FlatformId; }
+		void SetFlatformId(const std::string& _FlatformId) { m_FlatformId = _FlatformId; }
+
+		std::string& GetEMail() { return m_EMail; }
+		void SetEMail(const std::string& _EMail) { m_EMail = _EMail; }
+
+		std::string& GetPicture_url() { return m_Picture_url; }
+		void SetPicture_url(const std::string& _Picture_url) { m_Picture_url = _Picture_url; }
+
 	private:
 
 		std::string m_Name;
+		std::string m_FlatformId;
+		std::string m_EMail;
+		std::string m_Picture_url;
 	};
 
 	VOID SetChannel(DWORD _id);
@@ -73,20 +49,14 @@ public:
 
 	void Initialize();
 
-	VOID SetRoom(DWORD _id);
-	DWORD GetRoom();
 
 	Account		m_Account;
 	Character	m_Char[MAX_CHAR_CNT];
-
-	Score		m_Score;
 
 private:
 
 	DWORD       m_PairSessionId;
 	DWORD		m_ChannelId;
-	DWORD		m_RoomNumber;
-
 };
 
 typedef boost::shared_ptr<Player> PlayerPtr;

@@ -3,6 +3,44 @@
 #include <windows.h>
 #include <common.h>
 
+
+class Score
+{
+public:
+	Score()
+	{
+
+	}
+
+	Score(int rank, int score, int win, int lose, int draw)
+	{
+		m_Rank = rank;
+		m_Score = score;
+		m_Win = win;
+		m_Lose = lose;
+		m_Draw = draw;
+
+	}
+	~Score() {}
+
+	void SetScore(int rank, int score, int win, int lose, int draw)
+	{
+		m_Rank = rank;
+		m_Score = score;
+		m_Win = win;
+		m_Lose = lose;
+		m_Draw = draw;
+
+	}
+
+private:
+	int m_Rank;
+	int m_Score;
+	int m_Win;
+	int m_Lose;
+	int m_Draw;
+};
+
 class Character
 {
 public:
@@ -21,6 +59,10 @@ public:
 	void SetTeam(bool _team);
 	byte GetTeam();
 
+	VOID SetRoom(DWORD _id);
+	DWORD GetRoom();
+
+	Score& GetScore();
 private:
 
 	std::string			m_Name;
@@ -29,4 +71,9 @@ private:
 	bool				m_AllComplete;
 
 	BYTE				m_Team;
+
+	DWORD				m_RoomNumber;
+
+
+	Score				m_Score;
 };

@@ -4,6 +4,8 @@
 Character::Character()
 {
 	m_AllComplete = false;
+	m_RoomNumber = 0;
+
 }
 
 Character::~Character() {}
@@ -50,3 +52,18 @@ bool Character::GetReady()
 	return m_Ready;
 }
 
+
+VOID Character::SetRoom(DWORD _id)
+{
+	m_RoomNumber = _id;
+}
+
+DWORD Character::GetRoom()
+{
+	return m_RoomNumber;
+}
+
+Score& Character::GetScore()
+{
+	return m_Score;
+}

@@ -322,7 +322,7 @@ namespace Board	{
 			}
 
 			//이미 접속중이면 이전 접속을 끊는다. 
-			auto existClient = PLAYERMGR.Search(flatformid);
+			auto existClient = PLAYERMGR.Search(Index);
 			if (existClient != NULL)
 			{
 				GSCLIENT_PTR pPair = SERVER.GetClient(existClient->GetPair());
@@ -340,11 +340,13 @@ namespace Board	{
 	
 			pNewPlayer->Initialize();
 			pNewPlayer->m_Char[0].SetName(name);
-			pNewPlayer->m_Account.SetName(flatformid);
+			pNewPlayer->m_Account.SetFlatformId(flatformid);
+			pNewPlayer->m_Account.SetEMail(email);
+			pNewPlayer->m_Account.SetPicture_url(picture_url);
 			pNewPlayer->SetId(Index);
 			pNewPlayer->SetPair(pSession->GetId());
 			pSession->SetPair(Index);
-			pNewPlayer->m_Score.SetScore(rank, score, win, lose, draw);
+			pNewPlayer->m_Char[0].GetScore().SetScore(rank, score, win, lose, draw);
 			PLAYERMGR.Add(pNewPlayer);
 
 			res.set_var_code(Success);
