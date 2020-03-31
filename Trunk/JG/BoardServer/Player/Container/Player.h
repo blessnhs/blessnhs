@@ -6,7 +6,45 @@
 	
 typedef GSNetwork::GSObject::GSObject GSObject;
 
-class Player : public GSObject {
+class Score
+{
+public:
+	Score()
+	{
+
+	}
+
+	Score(int rank, int score, int win, int lose, int draw)
+	{
+		m_Rank = rank;
+		m_Score = score;
+		m_Win = win;
+		m_Lose = lose;
+		m_Draw = draw;
+
+	}
+	~Score() {}
+
+	void SetScore(int rank, int score, int win, int lose, int draw)
+	{
+		m_Rank = rank;
+		m_Score = score;
+		m_Win = win;
+		m_Lose = lose;
+		m_Draw = draw;
+
+	}
+
+private:
+	int m_Rank;
+	int m_Score;
+	int m_Win;
+	int m_Lose;
+	int m_Draw;
+};
+
+class Player : public GSObject 
+{
 public:
 
 	Player(void);
@@ -21,7 +59,7 @@ public:
 		std::string& GetName() { return m_Name;	}
 		void SetName(const std::string& _Name) { m_Name = _Name; }
 
-	public:
+	private:
 
 		std::string m_Name;
 	};
@@ -35,15 +73,20 @@ public:
 
 	void Initialize();
 
+	VOID SetRoom(DWORD _id);
+	DWORD GetRoom();
+
 	Account		m_Account;
 	Character	m_Char[MAX_CHAR_CNT];
 
+	Score		m_Score;
+
+private:
 
 	DWORD       m_PairSessionId;
-
 	DWORD		m_ChannelId;
-
 	DWORD		m_RoomNumber;
+
 };
 
 typedef boost::shared_ptr<Player> PlayerPtr;

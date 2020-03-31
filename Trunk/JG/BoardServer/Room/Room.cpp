@@ -56,7 +56,7 @@ bool Room::InsertPlayer(PLAYER_PTR Player)
 		{
 			m_PlayerMap[i] = Player;
 			Player->m_Char[0].SetTeam( WHITE );
-			Player->m_RoomNumber = GetId();
+			Player->SetRoom(GetId());
 			return true;
 		}
 	}

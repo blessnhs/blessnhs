@@ -301,20 +301,16 @@ namespace Board	{
 
 			flatformid.assign(http_out[1].begin(), http_out[1].end());
 			email.assign(http_out[2].begin(), http_out[2].end());
-			name.assign(http_out[3].begin(), http_out[3].end());
 			picture_url.assign(http_out[4].begin(), http_out[4].end());
 
-
-			name.resize(256);
+			name.resize(1024);
 			::WideCharToMultiByte(
 				CP_ACP,
 				0,
-				http_out[3].c_str(), static_cast<int>(http_out[3].size() + 3),
-				const_cast<char*>(name.c_str()), static_cast<int>(http_out[3].size() + 3),
+				http_out[3].c_str(),-1,
+				const_cast<char*>(name.c_str()), static_cast<int>(name.size()),
 				nullptr, nullptr
 			);
-
-
 
 			WORD nRet = pProcess->ProcedureUserLogin(flatformid.c_str(), 0/*0번은 구글 인증*/, name.c_str(),picture_url.c_str(),email.c_str(), authentickey, rank, score, win, lose, draw,Index);
 
@@ -325,35 +321,35 @@ namespace Board	{
 				return ;
 			}
 
-			////이미 접속중이면 이전 접속을 끊는다. 
-			//auto existClient = PLAYERMGR.Search(pRequst->Account);
-			//if (existClient != NULL)
-			//{
-			//	GSCLIENT_PTR pPair = SERVER.GetClient(existClient->GetPair());
-			//	if (pPair != NULL)
-			//	{
-			//		pPair->Close();
-			//	}
+			//이미 접속중이면 이전 접속을 끊는다. 
+			auto existClient = PLAYERMGR.Search(flatformid);
+			if (existClient != NULL)
+			{
+				GSCLIENT_PTR pPair = SERVER.GetClient(existClient->GetPair());
+				if (pPair != NULL)
+				{
+					pPair->Close();
+				}
 
-			//	res.set_var_code(LoginFailed);
-			//	SEND_PROTO_BUFFER(res, pSession)
-			//	return;
-			//}
+				res.set_var_code(LoginFailed);
+				SEND_PROTO_BUFFER(res, pSession)
+				return;
+			}
 
-			//PlayerPtr pNewPlayer = PLAYERMGR.Create();
+			PlayerPtr pNewPlayer = PLAYERMGR.Create();
 	
-			//pNewPlayer->Initialize();
-			//pNewPlayer->m_Char[0].SetName(pRequst->Account);
-			//pNewPlayer->m_Account.SetName(pRequst->Account);
-			//pNewPlayer->SetId(Index);
-			//pNewPlayer->SetPair(pSession->GetId());
-			//pSession->SetPair(Index);
-			//PLAYERMGR.Add(pNewPlayer);
+			pNewPlayer->Initialize();
+			pNewPlayer->m_Char[0].SetName(name);
+			pNewPlayer->m_Account.SetName(flatformid);
+			pNewPlayer->SetId(Index);
+			pNewPlayer->SetPair(pSession->GetId());
+			pSession->SetPair(Index);
+			pNewPlayer->m_Score.SetScore(rank, score, win, lose, draw);
+			PLAYERMGR.Add(pNewPlayer);
 
+			res.set_var_code(Success);
 
-			//res.set_var_code(Success);
-
-			//SEND_PROTO_BUFFER(res, pSession)
+			SEND_PROTO_BUFFER(res, pSession)
 		}
 
 

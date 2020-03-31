@@ -113,7 +113,7 @@ VOID BoardProcess::ROOM_CREATE(LPVOID Data, DWORD Length, boost::shared_ptr<GSCl
 
 	if (pPlayer != NULL)
 	{
-		pPlayer->m_RoomNumber = RoomPtr->GetId();
+		pPlayer->SetRoom(RoomPtr->GetId());
 	}
 
 	RoomPtr->InsertPlayer(pPlayer);
@@ -153,7 +153,7 @@ VOID BoardProcess::ROOM_ENTER(LPVOID Data, DWORD Length, boost::shared_ptr<GSCli
 	
 	RoomPtr->InsertPlayer(pPlayer);
 
-	pPlayer->m_RoomNumber = RoomPtr->GetId();
+	pPlayer->SetRoom( RoomPtr->GetId() );
 
 	res.set_var_room_id(RoomPtr->GetId());
 	res.set_var_name(RoomPtr->m_Stock.Name.c_str());
@@ -169,10 +169,7 @@ VOID BoardProcess::ROOM_ENTER(LPVOID Data, DWORD Length, boost::shared_ptr<GSCli
 
 		RoomUserInfo* userinfo = nty.mutable_var_room_user();
 
-		std::string name;
-		name.assign(iter.second->m_Account.GetName().begin(), iter.second->m_Account.GetName().end());
-
-		userinfo->mutable_var_name()->assign(name);
+		userinfo->mutable_var_name()->assign(iter.second->m_Char[0].GetName());
 		SEND_PROTO_BUFFER(nty, pOwner)
 	}
 	
@@ -191,10 +188,8 @@ VOID BoardProcess::ROOM_ENTER(LPVOID Data, DWORD Length, boost::shared_ptr<GSCli
 
 		RoomUserInfo* userinfo = nty.mutable_var_room_user();
 
-		std::string name;
-		name.assign(pPlayer->m_Account.GetName().begin(), pPlayer->m_Account.GetName().end());
 
-		userinfo->mutable_var_name()->assign(name);
+		userinfo->mutable_var_name()->assign(pPlayer->m_Char[0].GetName());
 		SEND_PROTO_BUFFER(nty, pPair)
 	}
 }
@@ -211,20 +206,18 @@ VOID BoardProcess::ROOM_LEAVE(LPVOID Data, DWORD Length, boost::shared_ptr<GSCli
 		return;
 	}
 
-	ROOM_PTR RoomPtr = ROOMMGR.Search(pPlayer->m_RoomNumber);
+	ROOM_PTR RoomPtr = ROOMMGR.Search(pPlayer->GetRoom());
 	if (RoomPtr != NULL)
 	{
 		if (RoomPtr->FindPlayer(pPlayer) != USHRT_MAX)
 		{
 			res.set_var_code(Success);
-			std::string name;
-			name.assign(pPlayer->m_Account.GetName().begin(), pPlayer->m_Account.GetName().end());
-			res.mutable_var_name()->assign(name);
+			res.mutable_var_name()->assign(pPlayer->m_Account.GetName());
 
 			RoomPtr->SendToAll(res);
 
 			RoomPtr->RemovePlayer(pPlayer);
-			pPlayer->m_RoomNumber = 0;
+			pPlayer->SetRoom(0);
 
 			if (RoomPtr->GetCurrPlayer() == 0)
 				ROOMMGR.Del(RoomPtr);
@@ -310,13 +303,10 @@ VOID BoardProcess::ROOM_CHAT(LPVOID Data, DWORD Length, boost::shared_ptr<GSClie
 	}
 
 	{
-		std::string name;
-		name.assign(pPlayer->m_Account.GetName().begin(), pPlayer->m_Account.GetName().end());
-
 		res.mutable_var_message()->assign(message.var_message());
-		res.mutable_var_name()->assign(name);
+		res.mutable_var_name()->assign(pPlayer->m_Account.GetName());
 
-		ROOM_PTR pPtr = ROOMMGR.Search(pPlayer->m_RoomNumber);
+		ROOM_PTR pPtr = ROOMMGR.Search(pPlayer->GetRoom());
 		if (pPtr != NULL)
 		{
 			pPtr->SendToAll(res);
@@ -365,7 +355,7 @@ VOID BoardProcess::MATCH(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> 
 		return;
 	}
 
-	if (pPlayer->m_RoomNumber != 0)
+	if (pPlayer->GetRoom() != 0)
 	{
 		return;
 	}

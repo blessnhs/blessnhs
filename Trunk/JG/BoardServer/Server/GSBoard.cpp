@@ -21,7 +21,7 @@ BOOL GSBoard::Disconnect(GSCLIENT_PTR pSession)
 	PlayerPtr pPlayer = PLAYERMGR.Search(pSession->GetPair());
 	if (pPlayer != NULL)
 	{
-		ROOM_PTR pRoom = ROOMMGR.Search(pPlayer->m_RoomNumber);
+		ROOM_PTR pRoom = ROOMMGR.Search(pPlayer->GetRoom());
 		if (pRoom)
 		{
 			pRoom->RemovePlayer(pPlayer);
