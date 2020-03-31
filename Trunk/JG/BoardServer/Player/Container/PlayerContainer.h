@@ -26,7 +26,7 @@ public:
 	bool Add(PlayerPtr &pObj);
 	bool Del(PlayerPtr &pObj);
 	PlayerPtr Search(DWORD Id);
-	PlayerPtr Search(string Account);
+	PlayerPtr Search(string flatformid);
 	PlayerPtr SearchBySocketId(DWORD Id);
 
 	void Print();
