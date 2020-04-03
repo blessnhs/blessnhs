@@ -99,7 +99,9 @@ template<template<class T> class CreationPolicy> BOOL RoomContainer<CreationPoli
 	CREATE_ROOM_RES room_res;
 
 	ROOM_PTR RoomPtr = Create();
-	RoomPtr->m_Stock.Name = target1->m_Account.GetName() + "  VS " + target2->m_Account.GetName();
+	RoomPtr->m_Stock.Name.append(target1->m_Account.GetName());
+	RoomPtr->m_Stock.Name.append("  VS  ");
+	RoomPtr->m_Stock.Name.append(target2->m_Account.GetName());
 
 	Add(RoomPtr);
 	RoomPtr->m_Stock.MAX_PLAYER = USHRT_MAX;
@@ -159,10 +161,8 @@ template<template<class T> class CreationPolicy> BOOL RoomContainer<CreationPoli
 
 		RoomUserInfo * userinfo = nty.mutable_var_room_user();
 
-		std::string name;
-		name.assign(iter.second->m_Account.GetName().begin(), iter.second->m_Account.GetName().end());
+		userinfo->set_var_name(iter.second->m_Account.GetName());
 
-		userinfo->mutable_var_name()->assign(name);
 		SEND_PROTO_BUFFER(nty, pSession2)
 	}
 
@@ -181,10 +181,8 @@ template<template<class T> class CreationPolicy> BOOL RoomContainer<CreationPoli
 
 		RoomUserInfo * userinfo = nty.mutable_var_room_user();
 
-		std::string name;
-		name.assign(target2->m_Account.GetName().begin(), target2->m_Account.GetName().end());
+		userinfo->set_var_name(target2->m_Account.GetName());
 
-		userinfo->mutable_var_name()->assign(name);
 		SEND_PROTO_BUFFER(nty, pPair)
 	}
 

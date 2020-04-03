@@ -10,11 +10,11 @@
 #include "GS.CLI.pb.h"
 #include "Enum.pb.h"
 
-#include "cpprest/containerstream.h"
-#include "cpprest/filestream.h"
-#include "cpprest/http_client.h"
-#include "cpprest/json.h"
-#include "cpprest/producerconsumerstream.h"
+#include <cpprest/containerstream.h>
+#include <cpprest/filestream.h>
+#include <cpprest/http_client.h>
+#include <cpprest/json.h>
+#include <cpprest/producerconsumerstream.h>
 #include <iostream>
 #include <sstream>
 
@@ -144,7 +144,7 @@ namespace Board	{
 				return;
 			}
 
-			pProcess->ProcedureUserLogout(pRequst->Account.c_str());
+			pProcess->ProcedureUserLogout(pRequst->Index);
 		}
 
 		void Undo() {}
@@ -343,6 +343,8 @@ namespace Board	{
 			pNewPlayer->m_Account.SetFlatformId(flatformid);
 			pNewPlayer->m_Account.SetEMail(email);
 			pNewPlayer->m_Account.SetPicture_url(picture_url);
+			pNewPlayer->m_Account.SetName(name);
+
 			pNewPlayer->SetId(Index);
 			pNewPlayer->SetPair(pSession->GetId());
 			pSession->SetPair(Index);
@@ -351,6 +353,7 @@ namespace Board	{
 
 			res.set_var_code(Success);
 
+			res.set_var_index(Index);
 			SEND_PROTO_BUFFER(res, pSession)
 		}
 

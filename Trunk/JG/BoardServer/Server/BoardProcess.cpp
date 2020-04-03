@@ -3,6 +3,8 @@
 #include "BoardProcess.h"
 #include "../Player/Container/PlayerContainer.h"
 #include "../Room/RoomContainer.h"
+#include "Base64.h"
+
 
 using namespace google;
 
@@ -125,6 +127,7 @@ VOID BoardProcess::ROOM_CREATE(LPVOID Data, DWORD Length, boost::shared_ptr<GSCl
 	RoomPtr->SendNewUserInfo(pPlayer);	//방에 있는 유저들에게 새로운 유저 정보전송
 }
 
+
 VOID BoardProcess::ROOM_ENTER(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> pOwner)
 {
 	DECLARE_RECV_TYPE(ENTER_ROOM_REQ, enterroom)
@@ -169,7 +172,8 @@ VOID BoardProcess::ROOM_ENTER(LPVOID Data, DWORD Length, boost::shared_ptr<GSCli
 
 		RoomUserInfo* userinfo = nty.mutable_var_room_user();
 
-		userinfo->mutable_var_name()->assign(iter.second->m_Char[0].GetName());
+		userinfo->set_var_name(iter.second->m_Account.GetName());
+
 		SEND_PROTO_BUFFER(nty, pOwner)
 	}
 	
@@ -188,8 +192,8 @@ VOID BoardProcess::ROOM_ENTER(LPVOID Data, DWORD Length, boost::shared_ptr<GSCli
 
 		RoomUserInfo* userinfo = nty.mutable_var_room_user();
 
+		userinfo->set_var_name(iter.second->m_Account.GetName());
 
-		userinfo->mutable_var_name()->assign(pPlayer->m_Char[0].GetName());
 		SEND_PROTO_BUFFER(nty, pPair)
 	}
 }
@@ -211,6 +215,7 @@ VOID BoardProcess::ROOM_LEAVE(LPVOID Data, DWORD Length, boost::shared_ptr<GSCli
 	{
 		if (RoomPtr->FindPlayer(pPlayer) != USHRT_MAX)
 		{
+			res.set_var_index(pPlayer->GetId());
 			res.set_var_code(Success);
 			res.mutable_var_name()->assign(pPlayer->m_Account.GetName());
 

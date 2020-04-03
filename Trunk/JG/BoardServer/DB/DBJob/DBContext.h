@@ -39,7 +39,7 @@ public:
 	RequestLogout(void) {}
 	~RequestLogout(void) {}
 
-	std::string Account;
+	DWORD Index;
 };
 
 class RequestDeleteAllConcurrentUser : public GSObject

@@ -15,7 +15,7 @@ public:
 		std::string&szKey,int &Rank, int& Score, int& Win, int& Lose, int& Draw,INT64 &Index);
 
 
-	int	 ProcedureUserLogout(const CHAR* id);
+	int	 ProcedureUserLogout(const DWORD id);
 	int  DeleteAllConcurrentUser();
 
 	float ProcedureVersion();

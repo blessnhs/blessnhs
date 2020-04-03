@@ -75,13 +75,13 @@ float CDBProcessCer::ProcedureVersion()
 	return sParmRet;
 }
 
-int	 CDBProcessCer::ProcedureUserLogout(const CHAR* id)
+int	 CDBProcessCer::ProcedureUserLogout(const DWORD id)
 {
 	SQLRETURN		retcode = SQL_ERROR;
 	CDBHandle		dbhandle(m_pDB->m_hdbc, &(m_pDB->m_csDBHandle));
 	SQLHSTMT		hstmt = dbhandle.GetHandle();
 	SQLCHAR			szSQL[1024];
-	sprintf_s((char*)szSQL, sizeof(szSQL) ,("{call SP_ACCOUNT_LOGOUT (\'%s\')}"), id);
+	sprintf_s((char*)szSQL, sizeof(szSQL) ,("{call SP_ACCOUNT_LOGOUT (\'%d\')}"), id);
 	
 	retcode = SQLExecDirect(hstmt, szSQL, SQL_NTS);
 	if (retcode == SQL_ERROR)
@@ -146,11 +146,11 @@ int		CDBProcessCer::ProcedureUserLogin(const CHAR* flatformid, const int flatfor
 	retcode = SQLBindParameter(hstmt, 1, SQL_PARAM_OUTPUT, SQL_C_SSHORT, SQL_SMALLINT, 0, 0, &sDBReturn, 0, &cbParmRet);
 	retcode = SQLBindParameter(hstmt, 2, SQL_PARAM_OUTPUT, SQL_C_CHAR, SQL_CHAR, 64, 0, szSessionKey, sizeof(szSessionKey), &cbParmRet);
 
-	retcode = SQLBindParameter(hstmt, 3, SQL_PARAM_OUTPUT, SQL_C_STINYINT, SQL_INTEGER, 0, 0, &Rank, 0, &cbParmRet);
-	retcode = SQLBindParameter(hstmt, 4, SQL_PARAM_OUTPUT, SQL_C_STINYINT, SQL_INTEGER, 0, 0, &Score, 0, &cbParmRet);
-	retcode = SQLBindParameter(hstmt, 5, SQL_PARAM_OUTPUT, SQL_C_STINYINT, SQL_INTEGER, 0, 0, &Win, 0, &cbParmRet);
-	retcode = SQLBindParameter(hstmt, 6, SQL_PARAM_OUTPUT, SQL_C_STINYINT, SQL_INTEGER, 0, 0, &Lose, 0, &cbParmRet);
-	retcode = SQLBindParameter(hstmt, 7, SQL_PARAM_OUTPUT, SQL_C_STINYINT, SQL_INTEGER, 0, 0, &Draw, 0, &cbParmRet);
+	retcode = SQLBindParameter(hstmt, 3, SQL_PARAM_OUTPUT, SQL_C_SLONG, SQL_INTEGER, 0, 0, &Rank, 0, &cbParmRet);
+	retcode = SQLBindParameter(hstmt, 4, SQL_PARAM_OUTPUT, SQL_C_SLONG, SQL_INTEGER, 0, 0, &Score, 0, &cbParmRet);
+	retcode = SQLBindParameter(hstmt, 5, SQL_PARAM_OUTPUT, SQL_C_SLONG, SQL_INTEGER, 0, 0, &Win, 0, &cbParmRet);
+	retcode = SQLBindParameter(hstmt, 6, SQL_PARAM_OUTPUT, SQL_C_SLONG, SQL_INTEGER, 0, 0, &Lose, 0, &cbParmRet);
+	retcode = SQLBindParameter(hstmt, 7, SQL_PARAM_OUTPUT, SQL_C_SLONG, SQL_INTEGER, 0, 0, &Draw, 0, &cbParmRet);
 
 
 

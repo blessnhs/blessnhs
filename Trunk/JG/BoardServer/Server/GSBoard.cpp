@@ -41,7 +41,7 @@ BOOL GSBoard::Disconnect(GSCLIENT_PTR pSession)
 
 		//로그아웃 쿼리를 날린다.
 		boost::shared_ptr<RequestLogout> pRequest = ALLOCATOR.Create<RequestLogout>();
-		pRequest->Account = pPlayer->m_Account.GetName();
+		pRequest->Index = pPlayer->GetId();
 
 		boost::shared_ptr<Board::MSG_PLAYER_QUERY<RequestLogout>>		PLAYER_MSG = ALLOCATOR.Create<Board::MSG_PLAYER_QUERY<RequestLogout>>();
 		PLAYER_MSG->pSession = pSession;
