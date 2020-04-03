@@ -31,7 +31,7 @@
     <ProjectGuid>{FC113D51-4CE0-4EE8-A319-21F86E357AEB}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>BoardServer</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -56,7 +56,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseBuild|x64'" Label="Configuration">
@@ -141,7 +141,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>tbb_debug.lib;ws2_32.lib;Mswsock.lib;json_d.lib;../Common/GSCore/GSNetwork_d.lib;../Common/protobuf/debug/lib/libprotobufd.lib;../Common/protobuf/debug/lib/libprotobuf-lited.lib;../Common/protobuf/debug/lib/libprotocd.lib;%(AdditionalDependencies);kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib</AdditionalDependencies>
+      <AdditionalDependencies>ws2_32.lib;Mswsock.lib;json_d.lib;../Common/GSCore/GSNetwork_d.lib;../Common/protobuf/debug/lib/libprotobufd.lib;../Common/protobuf/debug/lib/libprotobuf-lited.lib;../Common/protobuf/debug/lib/libprotocd.lib;%(AdditionalDependencies);kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseBuild|x64'">
@@ -308,8 +308,16 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="..\NetClient\NetClient.sln" />
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
+    <Import Project="..\packages\cpprestsdk.v141.2.10.12.1\build\native\cpprestsdk.v141.targets" Condition="Exists('..\packages\cpprestsdk.v141.2.10.12.1\build\native\cpprestsdk.v141.targets')" />
   </ImportGroup>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>이 프로젝트는 이 컴퓨터에 없는 NuGet 패키지를 참조합니다. 해당 패키지를 다운로드하려면 NuGet 패키지 복원을 사용하십시오. 자세한 내용은 http://go.microsoft.com/fwlink/?LinkID=322105를 참조하십시오. 누락된 파일은 {0}입니다.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\cpprestsdk.v141.2.10.12.1\build\native\cpprestsdk.v141.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\cpprestsdk.v141.2.10.12.1\build\native\cpprestsdk.v141.targets'))" />
+  </Target>
 </Project>

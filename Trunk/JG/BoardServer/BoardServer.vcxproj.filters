@@ -203,5 +203,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="..\NetClient\NetClient.sln" />
+    <None Include="packages.config" />
   </ItemGroup>
 </Project>
