@@ -104,7 +104,7 @@ namespace OMOK_T.Network
                                     string d_Name = Helper.ToStr(res.VarRoomUser.VarName.ToByteArray());
 
                                  
-                                    if (d_Name != User.MyNickName)
+                                  //  if (d_Name != User.MyNickName)
                                     {
                                         //상대방이름
                                         //나갈때 초기화한다. 
@@ -184,6 +184,7 @@ namespace OMOK_T.Network
                                     if(res.VarIndex == User.Id)
                                     {
                                         page.CurrentPage = page.Children[0];
+                                        Room.ClearBoard();
                                     }
 
                                 }
@@ -323,9 +324,11 @@ namespace OMOK_T.Network
 
         static public void SendRoomMessage(string msg)
         {
+            byte[] in_Msg = Helper.ToByteString(msg);
+
             BROADCAST_ROOM_MESSAGE_REQ message = new BROADCAST_ROOM_MESSAGE_REQ
             {
-                VarMessage = ByteString.CopyFrom(msg, Encoding.Unicode)
+                VarMessage = ByteString.CopyFrom(in_Msg)
             };
             using (MemoryStream stream = new MemoryStream())
             {

@@ -170,6 +170,11 @@ namespace OMOK_T
             return true;
         }
 
+        public void ClearBoard()
+        {
+            board.ClearBoardState();
+        }
+
         public bool UpdateStone(int x,int y, TileStatus status)
         {
             board.UpdateStone(x, y, status);
