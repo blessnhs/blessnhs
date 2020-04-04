@@ -132,22 +132,17 @@ namespace OMOK_T.Network
 
                                         eTeam color = eTeam.None;
 
-                                        bool isEndGame = false;
                                         //draw stone
                                         if (header[2] == "White")
                                         {
                                             color = eTeam.White;
-                                            isEndGame = Room.UpdateStone(x, y, eTeam.White);
+                                            Room.UpdateStone(x, y, eTeam.White);
                                         }
                                         else
                                         {
                                             color = eTeam.Black;
-                                            isEndGame = Room.UpdateStone(x, y, eTeam.Black);
+                                            Room.UpdateStone(x, y, eTeam.Black);
                                         }
-
-                                        //게임이 종료되면 새로 시작 한다. 새로 시작하면 블랙이 선이다.
-                                        if (isEndGame == true)
-                                            return ;
 
                                         //check turn
                                         {

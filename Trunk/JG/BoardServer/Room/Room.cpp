@@ -38,7 +38,7 @@ void Room::UpdateBoard(int x, int y, eTeam team)
 	if (x < 0 || y < 0)
 		return;
 
-	if (x <= ROWS || y <= COLS)
+	if (x >= ROWS || y >= COLS)
 		return;
 
 	m_Board[y][x] = team;

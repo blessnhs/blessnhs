@@ -153,6 +153,9 @@ template<template<class T> class CreationPolicy> BOOL RoomContainer<CreationPoli
 
 	RoomPtr->SetState(Game);
 
+	GetMatchMap()[target1->GetId()] = NULL;
+	GetMatchMap()[target2->GetId()] = NULL;
+
 	//새로 입장한 유저에게 방안의 유저 정보전송
 	for each (auto iter in RoomPtr->m_PlayerMap)
 	{

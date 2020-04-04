@@ -310,8 +310,11 @@ VOID BoardProcess::ROOM_CHAT(LPVOID Data, DWORD Length, boost::shared_ptr<GSClie
 	}
 
 	{
-		res.mutable_var_message()->assign(message.var_message());
-		res.mutable_var_name()->assign(pPlayer->m_Account.GetName());
+		res.set_var_message(message.var_message());
+		res.set_var_name(pPlayer->m_Account.GetName());
+		res.set_var_x(message.var_x());
+		res.set_var_y(message.var_y());
+		res.set_var_color(message.var_color());
 
 		ROOM_PTR pPtr = ROOMMGR.Search(pPlayer->m_Char[0].GetRoom());
 		if (pPtr != NULL)
