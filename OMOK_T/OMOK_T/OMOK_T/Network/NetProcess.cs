@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using System.Text;
+using System.Diagnostics;
 
 namespace OMOK_T.Network
 {
@@ -75,6 +76,8 @@ namespace OMOK_T.Network
                                         IsSuccessAuth = true;
                                         User.Id = res.VarIndex;
                                     }
+                                    else
+                                        ((Lobby)page.Children[0]).LoginInformation("로그인에 실패했습니다.");
                                 }
                                 break;
                             case (int)PROTOCOL.IdPktCreateRoomRes:
@@ -84,11 +87,11 @@ namespace OMOK_T.Network
 
                                     if (res.VarCode == ErrorCode.Success)
                                     {
-                                        User.Color = TileStatus.Black;
+                                        User.Color = eTeam.Black;
                                         page.CurrentPage = page.Children[1];
                                         User.IsMyTurn = true;
                                         User.MytrunStartTime = DateTime.Now;
-                                    }
+                                   }
                                     else
                                     {
 
@@ -100,15 +103,12 @@ namespace OMOK_T.Network
                                 {
                                     NEW_USER_IN_ROOM_NTY res = new NEW_USER_IN_ROOM_NTY();
                                     res = NEW_USER_IN_ROOM_NTY.Parser.ParseFrom(data.Data);
-
-                                    string d_Name = Helper.ToStr(res.VarRoomUser.VarName.ToByteArray());
-
-                                 
-                                  //  if (d_Name != User.MyNickName)
+     
+                                    if (User.Id != res.VarRoomUser.VarIndex)
                                     {
                                         //상대방이름
                                         //나갈때 초기화한다. 
-                                          User.OppNickName = d_Name;
+                                          User.OppNickName = Helper.ToStr(res.VarRoomUser.VarName.ToByteArray());
 
                                         var Room = (Room)page.Children[1];
                                         Room.UpdateBattleInfo();
@@ -130,19 +130,19 @@ namespace OMOK_T.Network
                                         int x = Convert.ToInt32(header[0]);
                                         int y = Convert.ToInt32(header[1]);
 
-                                        TileStatus color = TileStatus.Empty;
+                                        eTeam color = eTeam.None;
 
                                         bool isEndGame = false;
                                         //draw stone
                                         if (header[2] == "White")
                                         {
-                                            color = TileStatus.White;
-                                            isEndGame = Room.UpdateStone(x, y, TileStatus.White);
+                                            color = eTeam.White;
+                                            isEndGame = Room.UpdateStone(x, y, eTeam.White);
                                         }
                                         else
                                         {
-                                            color = TileStatus.Black;
-                                            isEndGame = Room.UpdateStone(x, y, TileStatus.Black);
+                                            color = eTeam.Black;
+                                            isEndGame = Room.UpdateStone(x, y, eTeam.Black);
                                         }
 
                                         //게임이 종료되면 새로 시작 한다. 새로 시작하면 블랙이 선이다.
@@ -184,7 +184,8 @@ namespace OMOK_T.Network
                                     if(res.VarIndex == User.Id)
                                     {
                                         page.CurrentPage = page.Children[0];
-                                        Room.ClearBoard();
+
+                                        ((Room)page.Children[1]).ClearBoard();
                                     }
 
                                 }
@@ -197,10 +198,19 @@ namespace OMOK_T.Network
 
                                     if (res.VarCode == ErrorCode.Success)
                                     {
-                                        User.Color = TileStatus.White;
+                                        User.Color = eTeam.White;
                                         page.CurrentPage = page.Children[1];
                                         User.IsMyTurn = false;
                                     }
+                                }
+                                break;
+
+                            case (int)PROTOCOL.IdPktGameResultNty:
+                                {
+                                    GAME_RESULT_NTY res = new GAME_RESULT_NTY();
+                                    res = GAME_RESULT_NTY.Parser.ParseFrom(data.Data);
+
+                                    ((Room)page.Children[1]).GameResult(res.VarColor);
                                 }
                                 break;
                         }
@@ -322,13 +332,15 @@ namespace OMOK_T.Network
             }
         }
 
-        static public void SendRoomMessage(string msg)
+        static public void SendRoomMessage(int x,int y,eTeam team,string msg)
         {
-            byte[] in_Msg = Helper.ToByteString(msg);
 
             BROADCAST_ROOM_MESSAGE_REQ message = new BROADCAST_ROOM_MESSAGE_REQ
             {
-                VarMessage = ByteString.CopyFrom(in_Msg)
+                VarMessage = ByteString.CopyFrom(Helper.ToByteString(msg)),
+                VarX = x,
+                VarY = y,
+                VarColor = team
             };
             using (MemoryStream stream = new MemoryStream())
             {

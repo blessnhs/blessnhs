@@ -67,13 +67,13 @@ namespace OMOK_T
             {
                 for (int col = 0; col < COLS; col++)
                 {
-                    tiles[row, col].Status = TileStatus.Empty;
+                    tiles[row, col].Status = eTeam.None;
                 }
             }
         }
 
 
-        public void UpdateStone(int x,int y,TileStatus tileStatus)
+        public void UpdateStone(int x,int y,eTeam tileStatus)
         {
             var title = tiles[y, x];
             if(title != null)
@@ -168,7 +168,7 @@ namespace OMOK_T
                 }
         }
 
-        void OnTileStatusChanged(object sender, TileStatus tileStatus)
+        void OnTileStatusChanged(object sender, eTeam tileStatus)
         {
             if (isGameEnded)
                 return;
@@ -181,7 +181,7 @@ namespace OMOK_T
                 // Fire the GameStarted event.
                 if (GameStarted != null)
                 {
-                 //   GameStarted(this, EventArgs.Empty);
+                 //   GameStarted(this, EventArgs.None);
                 }
             }
 
@@ -259,7 +259,7 @@ namespace OMOK_T
         }
 
 
-        public bool CheckPointer(int _y, int _x, TileStatus _stone)   // 현재 놓은 돌의 좌표와 색상(1or2) 정보를 받음
+        public bool CheckPointer(int _y, int _x, eTeam _stone)   // 현재 놓은 돌의 좌표와 색상(1or2) 정보를 받음
         {
             int x, y;
             int count;

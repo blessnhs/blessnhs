@@ -61,6 +61,11 @@ namespace OMOK_T.Views
                 NetProcess.SendEnterRoom(contact.Id);
         }
 
+        public void LoginInformation(string msg)
+        {
+            DisplayAlert("", msg, "OK");
+        }
+
         public static Task<string> InputBox(INavigation navigation)
         {
             // wait in this proc, until user did his input 

@@ -42,6 +42,11 @@ message BROADCAST_ROOM_MESSAGE_REQ
 {
     optional PROTOCOL   id                  = 1 [default = ID_PKT_BROADCAST_ROOM_MESSAGE_REQ ];
     required bytes     var_message         = 2;
+
+   required int32 	var_x 	           = 3;
+   required int32 	var_y 	           = 4;
+   required eTeam   var_color           = 5;
+
 }
 
 message ROOM_LIST_REQ

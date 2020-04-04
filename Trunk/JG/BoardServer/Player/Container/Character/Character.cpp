@@ -6,6 +6,9 @@ Character::Character()
 	m_AllComplete = false;
 	m_RoomNumber = 0;
 
+	m_Level = 0;
+	m_LevelPoint = 0;
+
 }
 
 Character::~Character() {}
@@ -66,4 +69,24 @@ DWORD Character::GetRoom()
 Score& Character::GetScore()
 {
 	return m_Score;
+}
+
+void Character::SetLevel(int _level)
+{
+	m_Level = _level;
+}
+
+byte Character::GetLevel()
+{
+	return m_Level;
+}
+
+void Character::SetLevelPoint(bool _level_point)
+{
+	m_LevelPoint = _level_point;
+}
+
+byte Character::GetLevelPoint()
+{
+	return m_LevelPoint;
 }

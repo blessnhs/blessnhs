@@ -75,12 +75,13 @@ enum PROTOCOL : int {
   ID_PKT_MATCH_REQ = 15,
   ID_PKT_MATCH_RES = 16,
   ID_PKT_GAME_START_NTY = 17,
+  ID_PKT_GAME_RESULT_NTY = 18,
   PROTOCOL_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<::PROTOBUF_NAMESPACE_ID::int32>::min(),
   PROTOCOL_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<::PROTOBUF_NAMESPACE_ID::int32>::max()
 };
 bool PROTOCOL_IsValid(int value);
 constexpr PROTOCOL PROTOCOL_MIN = ID_PKT_VERSION_REQ;
-constexpr PROTOCOL PROTOCOL_MAX = ID_PKT_GAME_START_NTY;
+constexpr PROTOCOL PROTOCOL_MAX = ID_PKT_GAME_RESULT_NTY;
 constexpr int PROTOCOL_ARRAYSIZE = PROTOCOL_MAX + 1;
 
 const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* PROTOCOL_descriptor();
@@ -125,6 +126,58 @@ inline bool ErrorCode_Parse(
   return ::PROTOBUF_NAMESPACE_ID::internal::ParseNamedEnum<ErrorCode>(
     ErrorCode_descriptor(), name, value);
 }
+enum eTeam : int {
+  None = 0,
+  WHITE = 1,
+  BLACK = 2,
+  eTeam_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<::PROTOBUF_NAMESPACE_ID::int32>::min(),
+  eTeam_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<::PROTOBUF_NAMESPACE_ID::int32>::max()
+};
+bool eTeam_IsValid(int value);
+constexpr eTeam eTeam_MIN = None;
+constexpr eTeam eTeam_MAX = BLACK;
+constexpr int eTeam_ARRAYSIZE = eTeam_MAX + 1;
+
+const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* eTeam_descriptor();
+template<typename T>
+inline const std::string& eTeam_Name(T enum_t_value) {
+  static_assert(::std::is_same<T, eTeam>::value ||
+    ::std::is_integral<T>::value,
+    "Incorrect type passed to function eTeam_Name.");
+  return ::PROTOBUF_NAMESPACE_ID::internal::NameOfEnum(
+    eTeam_descriptor(), enum_t_value);
+}
+inline bool eTeam_Parse(
+    const std::string& name, eTeam* value) {
+  return ::PROTOBUF_NAMESPACE_ID::internal::ParseNamedEnum<eTeam>(
+    eTeam_descriptor(), name, value);
+}
+enum State : int {
+  Prepare = 0,
+  Game = 1,
+  End = 2,
+  State_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<::PROTOBUF_NAMESPACE_ID::int32>::min(),
+  State_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<::PROTOBUF_NAMESPACE_ID::int32>::max()
+};
+bool State_IsValid(int value);
+constexpr State State_MIN = Prepare;
+constexpr State State_MAX = End;
+constexpr int State_ARRAYSIZE = State_MAX + 1;
+
+const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* State_descriptor();
+template<typename T>
+inline const std::string& State_Name(T enum_t_value) {
+  static_assert(::std::is_same<T, State>::value ||
+    ::std::is_integral<T>::value,
+    "Incorrect type passed to function State_Name.");
+  return ::PROTOBUF_NAMESPACE_ID::internal::NameOfEnum(
+    State_descriptor(), enum_t_value);
+}
+inline bool State_Parse(
+    const std::string& name, State* value) {
+  return ::PROTOBUF_NAMESPACE_ID::internal::ParseNamedEnum<State>(
+    State_descriptor(), name, value);
+}
 // ===================================================================
 
 
@@ -155,6 +208,16 @@ template <> struct is_proto_enum< ::ErrorCode> : ::std::true_type {};
 template <>
 inline const EnumDescriptor* GetEnumDescriptor< ::ErrorCode>() {
   return ::ErrorCode_descriptor();
+}
+template <> struct is_proto_enum< ::eTeam> : ::std::true_type {};
+template <>
+inline const EnumDescriptor* GetEnumDescriptor< ::eTeam>() {
+  return ::eTeam_descriptor();
+}
+template <> struct is_proto_enum< ::State> : ::std::true_type {};
+template <>
+inline const EnumDescriptor* GetEnumDescriptor< ::State>() {
+  return ::State_descriptor();
 }
 
 PROTOBUF_NAMESPACE_CLOSE

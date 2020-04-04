@@ -182,8 +182,9 @@ class RoomUserInfo :
 
   enum : int {
     kVarNameFieldNumber = 1,
+    kVarIndexFieldNumber = 2,
   };
-  // optional string var_name = 1;
+  // optional bytes var_name = 1;
   bool has_var_name() const;
   private:
   bool _internal_has_var_name() const;
@@ -193,7 +194,7 @@ class RoomUserInfo :
   void set_var_name(const std::string& value);
   void set_var_name(std::string&& value);
   void set_var_name(const char* value);
-  void set_var_name(const char* value, size_t size);
+  void set_var_name(const void* value, size_t size);
   std::string* mutable_var_name();
   std::string* release_var_name();
   void set_allocated_var_name(std::string* var_name);
@@ -201,6 +202,19 @@ class RoomUserInfo :
   const std::string& _internal_var_name() const;
   void _internal_set_var_name(const std::string& value);
   std::string* _internal_mutable_var_name();
+  public:
+
+  // optional int64 var_index = 2;
+  bool has_var_index() const;
+  private:
+  bool _internal_has_var_index() const;
+  public:
+  void clear_var_index();
+  ::PROTOBUF_NAMESPACE_ID::int64 var_index() const;
+  void set_var_index(::PROTOBUF_NAMESPACE_ID::int64 value);
+  private:
+  ::PROTOBUF_NAMESPACE_ID::int64 _internal_var_index() const;
+  void _internal_set_var_index(::PROTOBUF_NAMESPACE_ID::int64 value);
   public:
 
   // @@protoc_insertion_point(class_scope:RoomUserInfo)
@@ -211,6 +225,7 @@ class RoomUserInfo :
   ::PROTOBUF_NAMESPACE_ID::internal::HasBits<1> _has_bits_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr var_name_;
+  ::PROTOBUF_NAMESPACE_ID::int64 var_index_;
   friend struct ::TableStruct_Structure_2eproto;
 };
 // -------------------------------------------------------------------
@@ -333,7 +348,7 @@ class RoomInfo2 :
     kVarCurrentCountFieldNumber = 3,
     kVarMaxCountFieldNumber = 4,
   };
-  // optional string var_name = 2;
+  // optional bytes var_name = 2;
   bool has_var_name() const;
   private:
   bool _internal_has_var_name() const;
@@ -343,7 +358,7 @@ class RoomInfo2 :
   void set_var_name(const std::string& value);
   void set_var_name(std::string&& value);
   void set_var_name(const char* value);
-  void set_var_name(const char* value, size_t size);
+  void set_var_name(const void* value, size_t size);
   std::string* mutable_var_name();
   std::string* release_var_name();
   void set_allocated_var_name(std::string* var_name);
@@ -416,7 +431,7 @@ class RoomInfo2 :
 #endif  // __GNUC__
 // RoomUserInfo
 
-// optional string var_name = 1;
+// optional bytes var_name = 1;
 inline bool RoomUserInfo::_internal_has_var_name() const {
   bool value = (_has_bits_[0] & 0x00000001u) != 0;
   return value;
@@ -459,7 +474,7 @@ inline void RoomUserInfo::set_var_name(const char* value) {
   var_name_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
   // @@protoc_insertion_point(field_set_char:RoomUserInfo.var_name)
 }
-inline void RoomUserInfo::set_var_name(const char* value, size_t size) {
+inline void RoomUserInfo::set_var_name(const void* value, size_t size) {
   _has_bits_[0] |= 0x00000001u;
   var_name_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
@@ -485,6 +500,34 @@ inline void RoomUserInfo::set_allocated_var_name(std::string* var_name) {
   }
   var_name_.SetAllocatedNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), var_name);
   // @@protoc_insertion_point(field_set_allocated:RoomUserInfo.var_name)
+}
+
+// optional int64 var_index = 2;
+inline bool RoomUserInfo::_internal_has_var_index() const {
+  bool value = (_has_bits_[0] & 0x00000002u) != 0;
+  return value;
+}
+inline bool RoomUserInfo::has_var_index() const {
+  return _internal_has_var_index();
+}
+inline void RoomUserInfo::clear_var_index() {
+  var_index_ = PROTOBUF_LONGLONG(0);
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int64 RoomUserInfo::_internal_var_index() const {
+  return var_index_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int64 RoomUserInfo::var_index() const {
+  // @@protoc_insertion_point(field_get:RoomUserInfo.var_index)
+  return _internal_var_index();
+}
+inline void RoomUserInfo::_internal_set_var_index(::PROTOBUF_NAMESPACE_ID::int64 value) {
+  _has_bits_[0] |= 0x00000002u;
+  var_index_ = value;
+}
+inline void RoomUserInfo::set_var_index(::PROTOBUF_NAMESPACE_ID::int64 value) {
+  _internal_set_var_index(value);
+  // @@protoc_insertion_point(field_set:RoomUserInfo.var_index)
 }
 
 // -------------------------------------------------------------------
@@ -519,7 +562,7 @@ inline void RoomInfo2::set_var_id(::PROTOBUF_NAMESPACE_ID::int32 value) {
   // @@protoc_insertion_point(field_set:RoomInfo2.var_id)
 }
 
-// optional string var_name = 2;
+// optional bytes var_name = 2;
 inline bool RoomInfo2::_internal_has_var_name() const {
   bool value = (_has_bits_[0] & 0x00000001u) != 0;
   return value;
@@ -562,7 +605,7 @@ inline void RoomInfo2::set_var_name(const char* value) {
   var_name_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
   // @@protoc_insertion_point(field_set_char:RoomInfo2.var_name)
 }
-inline void RoomInfo2::set_var_name(const char* value, size_t size) {
+inline void RoomInfo2::set_var_name(const void* value, size_t size) {
   _has_bits_[0] |= 0x00000001u;
   var_name_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));

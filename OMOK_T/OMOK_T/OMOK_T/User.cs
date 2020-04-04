@@ -6,7 +6,7 @@ namespace OMOK_T
 {
     public static class User
     {
-        public static TileStatus Color;
+        public static eTeam Color;
         public static bool IsMyTurn = false;
 
         public static DateTime MytrunStartTime = DateTime.Now;

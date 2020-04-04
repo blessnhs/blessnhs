@@ -131,7 +131,7 @@ int  CDBProcessCer::DeleteAllConcurrentUser()
 	return _ERR_NONE;
 }
 
-int		CDBProcessCer::ProcedureUserLogin(const CHAR* flatformid, const int flatformtype, const CHAR* name, const CHAR* picture_url, const CHAR* email,std::string& szKey, int& Rank, int& Score, int& Win, int& Lose, int& Draw, INT64& Index)
+int		CDBProcessCer::ProcedureUserLogin(const CHAR* flatformid, const int flatformtype, const CHAR* name, const CHAR* picture_url, const CHAR* email,std::string& szKey, int& Rank, int& Score, int& Win, int& Lose, int& Draw, INT64& Index, int& Level, int& LevelPoint)
 {
 	SQLRETURN		retcode = SQL_ERROR;
 	SQLCHAR			szSQL[1024];
@@ -142,7 +142,7 @@ int		CDBProcessCer::ProcedureUserLogin(const CHAR* flatformid, const int flatfor
 	SQLHSTMT		hstmt = dbhandle.GetHandle();
 
 
-	sprintf_s((char*)szSQL, sizeof(szSQL),"{call SP_ACCOUNT_LOGIN (\'%s\', %d,\'%s\',\'%s\',\'%s\', ? , ? , ? , ? , ? , ? , ? , ?)}", flatformid, flatformtype,name, picture_url, email);
+	sprintf_s((char*)szSQL, sizeof(szSQL),"{call SP_ACCOUNT_LOGIN (\'%s\', %d,\'%s\',\'%s\',\'%s\', ? , ? , ? , ? , ? , ? , ? , ? , ? , ?)}", flatformid, flatformtype,name, picture_url, email);
 	retcode = SQLBindParameter(hstmt, 1, SQL_PARAM_OUTPUT, SQL_C_SSHORT, SQL_SMALLINT, 0, 0, &sDBReturn, 0, &cbParmRet);
 	retcode = SQLBindParameter(hstmt, 2, SQL_PARAM_OUTPUT, SQL_C_CHAR, SQL_CHAR, 64, 0, szSessionKey, sizeof(szSessionKey), &cbParmRet);
 
@@ -152,9 +152,11 @@ int		CDBProcessCer::ProcedureUserLogin(const CHAR* flatformid, const int flatfor
 	retcode = SQLBindParameter(hstmt, 6, SQL_PARAM_OUTPUT, SQL_C_SLONG, SQL_INTEGER, 0, 0, &Lose, 0, &cbParmRet);
 	retcode = SQLBindParameter(hstmt, 7, SQL_PARAM_OUTPUT, SQL_C_SLONG, SQL_INTEGER, 0, 0, &Draw, 0, &cbParmRet);
 
+	retcode = SQLBindParameter(hstmt, 8, SQL_PARAM_OUTPUT, SQL_C_SLONG, SQL_INTEGER, 0, 0, &Level, 0, &cbParmRet);
+	retcode = SQLBindParameter(hstmt, 9, SQL_PARAM_OUTPUT, SQL_C_SLONG, SQL_INTEGER, 0, 0, &LevelPoint, 0, &cbParmRet);
 
 
-	retcode = SQLBindParameter(hstmt, 8, SQL_PARAM_OUTPUT, SQL_C_SBIGINT, SQL_INTEGER, 0, 0, &Index, 0, &cbParmRet);
+	retcode = SQLBindParameter(hstmt, 10, SQL_PARAM_OUTPUT, SQL_C_SBIGINT, SQL_INTEGER, 0, 0, &Index, 0, &cbParmRet);
 
 	if (retcode == SQL_SUCCESS)
 	{

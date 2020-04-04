@@ -64,7 +64,7 @@ namespace OMOK_T
 
         public void UpdateBattleInfo()
         {
-            if(User.Color == TileStatus.Black)
+            if(User.Color == eTeam.Black)
             {
                 blackLabel.Text = User.MyNickName;
                 whiteLabel.Text = User.OppNickName;
@@ -151,9 +151,9 @@ namespace OMOK_T
             NetProcess.SendLeaveRoom(0);
         }
 
-        public bool UpdateTurnBackground(TileStatus status)
+        public bool UpdateTurnBackground(eTeam status)
         {
-            if(status == TileStatus.Black)
+            if(status == eTeam.Black)
             {
 
                 textStackBottom1.BackgroundColor = Color.Blue;
@@ -175,41 +175,46 @@ namespace OMOK_T
             board.ClearBoardState();
         }
 
-        public bool UpdateStone(int x,int y, TileStatus status)
+        public bool UpdateStone(int x,int y, eTeam status)
         {
             board.UpdateStone(x, y, status);
 
+            return true;
+        }
+
+        public bool GameResult(eTeam status)
+        {
             try
             {
-                if (board.CheckPointer(y, x, status) == true)
-                {
-                    if (status == TileStatus.Black)
-                        DisplayAlert("", "흑 승리하셨습니다..", "OK");
-                    else
-                        DisplayAlert("", "백 승리하셨습니다.", "OK");
+               
+               
+               if (status == eTeam.Black)
+                   DisplayAlert("", "흑 승리하셨습니다..", "OK");
+               else
+                   DisplayAlert("", "백 승리하셨습니다.", "OK");
 
-                    board.ClearBoardState();
+               board.ClearBoardState();
 
-                    //이번엔 서로 진형을 변경한다. 
-                    TileStatus newColor = User.Color == TileStatus.Black ? TileStatus.White : TileStatus.Black;
+               //이번엔 서로 진형을 변경한다. 
+               eTeam newColor = User.Color == eTeam.Black ? eTeam.White : eTeam.Black;
 
-                    User.Color = newColor;
+               User.Color = newColor;
 
-                    UpdateBattleInfo();
+               UpdateBattleInfo();
 
-                    if (User.Color == TileStatus.Black)
-                        User.IsMyTurn = true;
-                    else
-                        User.IsMyTurn = false;
+               if (User.Color == eTeam.Black)
+                   User.IsMyTurn = true;
+               else
+                   User.IsMyTurn = false;
 
-                    User.MytrunStartTime = DateTime.Now;
+               User.MytrunStartTime = DateTime.Now;
 
-                    return true;
-                }
+               return true;
+               
 
                 return false;
             }
-            catch(Exception e)
+            catch (Exception e)
             {
 
                 return false;

@@ -18,6 +18,8 @@
 #include <iostream>
 #include <sstream>
 
+#include "Base64.h"
+
 using namespace ::pplx;
 using namespace utility;
 using namespace concurrency::streams;
@@ -166,193 +168,100 @@ namespace Board	{
 
 		int GetGoogleAuth(string token)
 		{
-			// make uri
-			http_client client(U("https://oauth2.googleapis.com/"));
-			uri_builder builder(U("/tokeninfo"));
-			builder.append_query(U("id_token"),
-				token.c_str());
+			try
+			{
+
+				// make uri
+				http_client client(U("https://oauth2.googleapis.com/"));
+				uri_builder builder(U("/tokeninfo"));
+				builder.append_query(U("id_token"),
+					token.c_str());
 
 
-			// make task(request and get result)
-			auto requestTask = client.request(web::http::methods::GET, builder.to_string())
+				// make task(request and get result)
+				auto requestTask = client.request(web::http::methods::GET, builder.to_string())
 				// The following code executes when the response is available
 				.then([](http_response response) -> pplx::task<json::value>
+				{
+					std::wostringstream stream;
+					stream.str(std::wstring());
+					stream << L"Content type: " << response.headers().content_type() << std::endl;
+					stream << L"Content length: " << response.headers().content_length() << L"bytes" << std::endl;
+					std::wcout << stream.str();
+
+					// If the status is OK extract the body of the response into a JSON value
+					if (response.status_code() == status_codes::OK)
 					{
-						std::wostringstream stream;
-						stream.str(std::wstring());
-						stream << L"Content type: " << response.headers().content_type() << std::endl;
-						stream << L"Content length: " << response.headers().content_length() << L"bytes" << std::endl;
-						std::wcout << stream.str();
-
-						// If the status is OK extract the body of the response into a JSON value
-						if (response.status_code() == status_codes::OK)
-						{
-							return response.extract_json();
-						}
-						else
-						{
-							// return an empty JSON value
-							return pplx::task_from_result(json::value());
-						}
-						// Continue when the JSON value is available
-					}).then([](pplx::task<json::value> previousTask)
-						{
-							// Get the JSON value from the task and call the DisplayJSONValue method
-							try
-							{
-								std::vector<std::wstring> outValue;
-
-								json::value const& V = previousTask.get();
-								{
-									web::json::value _iss = V.at(U("iss"));
-									if (_iss.is_string())
-									{
-										outValue.push_back(_iss.as_string());
-									}
-
-									web::json::value _sub = V.at(U("sub"));
-									if (_sub.is_string())
-									{
-										outValue.push_back(_sub.as_string());
-									}
-
-									web::json::value _email = V.at(U("email"));
-									if (_email.is_string())
-									{
-										outValue.push_back(_email.as_string());
-									}
-
-									web::json::value _name = V.at(U("name"));
-									if (_name.is_string())
-									{
-										outValue.push_back(_T(_name.as_string()));
-									}
-
-									web::json::value _picture = V.at(U("picture"));
-									if (_picture.is_string())
-									{
-										outValue.push_back(_picture.as_string());
-									}
-
-									return outValue;
-								}
-							}
-							catch (http_exception const& e)
-							{
-								std::wcout << e.what() << std::endl;
-							}
-						});
-
+						return response.extract_json();
+					}
+					else
+					{
+						// return an empty JSON value
+						return pplx::task_from_result(json::value());
+					}
+					// Continue when the JSON value is available
+				}).then([](pplx::task<json::value> previousTask)
+				{
+					// Get the JSON value from the task and call the DisplayJSONValue method
 					try
 					{
-						requestTask.wait();
+						std::vector<std::wstring> outValue;
 
-						http_out = requestTask.get();
+						json::value const& V = previousTask.get();
+						{
+							web::json::value _iss = V.at(U("iss"));
+							if (_iss.is_string())
+							{
+								outValue.push_back(_iss.as_string());
+							}
 
+							web::json::value _sub = V.at(U("sub"));
+							if (_sub.is_string())
+							{
+								outValue.push_back(_sub.as_string());
+							}
+
+							web::json::value _email = V.at(U("email"));
+							if (_email.is_string())
+							{
+								outValue.push_back(_email.as_string());
+							}
+
+							web::json::value _name = V.at(U("name"));
+							if (_name.is_string())
+							{
+								outValue.push_back(_T(_name.as_string()));
+							}
+
+							web::json::value _picture = V.at(U("picture"));
+							if (_picture.is_string())
+							{
+								outValue.push_back(_picture.as_string());
+							}
+
+							return outValue;
+						}
 					}
-					catch (const std::exception & e)
+					catch (http_exception const& e)
 					{
-						printf("Error exception:%s\n", e.what());
+						std::wcout << e.what() << std::endl;
 					}
 
-					return 0;
+					return std::vector<std::wstring>();
+				});
+				
+				requestTask.wait();
 
-		}
+				http_out = requestTask.get();
 
-		DWORD convert_unicode_to_ansi_string(
-			__out std::string& ansi,
-			__in const wchar_t* unicode,
-			__in const size_t unicode_size
-		) {
-			DWORD error = 0;
-			do {
-				if ((nullptr == unicode) || (0 == unicode_size)) {
-					error = ERROR_INVALID_PARAMETER;
-					break;
-				}
-				ansi.clear();
-				//
-				// getting required cch.
-				//
-				int required_cch = ::WideCharToMultiByte(
-					CP_ACP,
-					0,
-					unicode, static_cast<int>(unicode_size),
-					nullptr, 0,
-					nullptr, nullptr
-				);
-				if (0 == required_cch) {
-					error = ::GetLastError();
-					break;
-				}
-				//
-				// allocate.
-				//
-				ansi.resize(required_cch);
-				//
-				// convert.
-				//
-				if (0 == ::WideCharToMultiByte(
-					CP_ACP,
-					0,
-					unicode, static_cast<int>(unicode_size),
-					const_cast<char*>(ansi.c_str()), static_cast<int>(ansi.size()),
-					nullptr, nullptr
-				)) {
-					error = ::GetLastError();
-					break;
-				}
-			} while (false);
-			return error;
-		}
-			   
-		DWORD convert_unicode_to_utf8_string(
-			__out std::string& utf8,
-			__in const wchar_t* unicode,
-			__in const size_t unicode_size
-		) {
-			DWORD error = 0;
-			do {
-				if ((nullptr == unicode) || (0 == unicode_size)) {
-					error = ERROR_INVALID_PARAMETER;
-					break;
-				}
-				utf8.clear();
-				//
-				// getting required cch.
-				//
-				int required_cch = ::WideCharToMultiByte(
-					CP_UTF8,
-					WC_ERR_INVALID_CHARS,
-					unicode, static_cast<int>(unicode_size),
-					nullptr, 0,
-					nullptr, nullptr
-				);
-				if (0 == required_cch) {
-					error = ::GetLastError();
-					break;
-				}
-				//
-				// allocate.
-				//
-				utf8.resize(required_cch);
-				//
-				// convert.
-				//
-				if (0 == ::WideCharToMultiByte(
-					CP_UTF8,
-					WC_ERR_INVALID_CHARS,
-					unicode, static_cast<int>(unicode_size),
-					const_cast<char*>(utf8.c_str()), static_cast<int>(utf8.size()),
-					nullptr, nullptr
-				)) {
-					error = ::GetLastError();
-					break;
-				}
-			} while (false);
-			return error;
-		}
+			}
+			catch (const std::exception & e)
+			{
+				printf("Error exception:%s\n", e.what());
+			}
 
+			return 0;
+		}
 
 		void Execute(LPVOID Param)
 		{
@@ -384,12 +293,6 @@ namespace Board	{
 				SEND_PROTO_BUFFER(res, pSession)
 				return;
 			}
-			
-			// 로그인 절차 : 아이디의 접속확인 및 인증키값을 가져온다.
-			std::string authentickey;
-			INT64 Index = 0;
-
-			int rank, score, win, lose, draw;
 
 			std::string flatformid, name, picture_url, email;
 
@@ -397,20 +300,14 @@ namespace Board	{
 			email.assign(http_out[2].begin(), http_out[2].end());
 			picture_url.assign(http_out[4].begin(), http_out[4].end());
 
-		/*	name.resize(1024);
-			::WideCharToMultiByte(
-				CP_ACP,
-				0,
-				http_out[3].c_str(),-1,
-				const_cast<char*>(name.c_str()), static_cast<int>(name.size()),
-				nullptr, nullptr
-			);*/
+			Base64::convert_unicode_to_ansi_string(name, http_out[3].c_str(), http_out[3].size());
 
-			convert_unicode_to_ansi_string(name, http_out[3].c_str(), http_out[3].size());
+			int rank, score, win, lose, draw, level, level_point;
 
-		//	name.assign(http_out[3].begin(), http_out[3].end());
-
-			WORD nRet = pProcess->ProcedureUserLogin(flatformid.c_str(), 0/*0번은 구글 인증*/, name.c_str(),picture_url.c_str(),email.c_str(), authentickey, rank, score, win, lose, draw,Index);
+			// 로그인 절차 : 아이디의 접속확인 및 인증키값을 가져온다.
+			std::string authentickey;
+			INT64 Index = 0;
+			WORD nRet = pProcess->ProcedureUserLogin(flatformid.c_str(), 0/*0번은 구글 인증*/, name.c_str(),picture_url.c_str(),email.c_str(), authentickey, rank, score, win, lose, draw,Index, level, level_point);
 
 			if(nRet != _ERR_NONE )
 			{ 
@@ -447,6 +344,8 @@ namespace Board	{
 			pNewPlayer->SetPair(pSession->GetId());
 			pSession->SetPair(Index);
 			pNewPlayer->m_Char[0].GetScore().SetScore(rank, score, win, lose, draw);
+			pNewPlayer->m_Char[0].SetLevel(level);
+			pNewPlayer->m_Char[0].SetLevelPoint(level_point);
 			PLAYERMGR.Add(pNewPlayer);
 
 			res.set_var_code(Success);

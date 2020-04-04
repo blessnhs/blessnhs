@@ -112,22 +112,21 @@ template<template<class T> class CreationPolicy> BOOL RoomContainer<CreationPoli
 	}
 
 	RoomPtr->InsertPlayer(target1);
+	RoomPtr->SetState(Prepare);
 
 	room_res.set_var_room_id(RoomPtr->GetId());
-	room_res.mutable_var_name()->assign(RoomPtr->m_Stock.Name);
+	room_res.set_var_name(RoomPtr->m_Stock.Name);
 	SEND_PROTO_BUFFER(room_res, pSession1)
 
 	RoomPtr->SendNewUserInfo(target1);	//방에 있는 유저들에게 새로운 유저 정보전송
 
 
-
 	//방입장
 	/////////////////////////////////////////////////////////////////////////////{
-
-
 	GSCLIENT_PTR pSession2 = SERVER.GetClient(target2->GetPair());
 	if (!pSession2)
 	{
+		printf("Match Fail Not Found player 2\n");
 		RoomPtr->RemovePlayer(target1);
 		Del(RoomPtr);
 		return FALSE;
@@ -138,6 +137,7 @@ template<template<class T> class CreationPolicy> BOOL RoomContainer<CreationPoli
 	//이미 입장 해 있다면 
 	if (RoomPtr->FindPlayer(target2) == TRUE)
 	{
+		printf("Match Fail Exist player 2\n");
 		RoomPtr->RemovePlayer(target1);
 		Del(RoomPtr);
 		return FALSE;
@@ -151,6 +151,8 @@ template<template<class T> class CreationPolicy> BOOL RoomContainer<CreationPoli
 	enter_res.set_var_name(RoomPtr->m_Stock.Name.c_str());
 	SEND_PROTO_BUFFER(enter_res, pSession2)
 
+	RoomPtr->SetState(Game);
+
 	//새로 입장한 유저에게 방안의 유저 정보전송
 	for each (auto iter in RoomPtr->m_PlayerMap)
 	{
@@ -161,6 +163,7 @@ template<template<class T> class CreationPolicy> BOOL RoomContainer<CreationPoli
 
 		RoomUserInfo * userinfo = nty.mutable_var_room_user();
 
+		userinfo->set_var_index(iter.second->GetId());
 		userinfo->set_var_name(iter.second->m_Account.GetName());
 
 		SEND_PROTO_BUFFER(nty, pSession2)
@@ -181,6 +184,7 @@ template<template<class T> class CreationPolicy> BOOL RoomContainer<CreationPoli
 
 		RoomUserInfo * userinfo = nty.mutable_var_room_user();
 
+		userinfo->set_var_index(iter.second->GetId());
 		userinfo->set_var_name(target2->m_Account.GetName());
 
 		SEND_PROTO_BUFFER(nty, pPair)

@@ -17,12 +17,6 @@
 using namespace std;
 typedef GSNetwork::GSObject::GSObject GSObject;
 
-	enum eTeam
-	{
-		WHITE = 0,
-		BLACK
-	};
-
 	struct RoomStock
 	{
 		string Name;
@@ -31,6 +25,9 @@ typedef GSNetwork::GSObject::GSObject GSObject;
 		WORD  GameType;
 	
 	};
+
+#define COLS  20         // 20
+#define	ROWS  20         // 20
 
 class Room : public GSObject 
 {
@@ -52,16 +49,10 @@ public:
 
 	bool IsAllComplete();
 
-	WORD GetCurrPlayer()
-	{
-		int count = 0;
-		for each (auto& player in m_PlayerMap)
-		{
-			if (player.second != NULL)
-				count++;
-		}
-		return count;
-	}
+	void SetState(State state);
+	State GetState();
+
+	WORD GetCurrPlayer();
 
 	template<class T>
 	void SendToAll(T &snd)
@@ -79,25 +70,21 @@ public:
 		}
 	}
 
-	void SendToAll(WORD MainId,BYTE *Data,WORD Length)
-	{
-		for each(auto iter in m_PlayerMap)
-		{
-			PlayerPtr pPlayer = iter.second;
-			if (pPlayer == NULL)
-				continue;
+	void SendToAll(WORD MainId, BYTE* Data, WORD Length);
 
-			GSCLIENT_PTR pSession = SERVER.GetClient(iter.second->GetPair());
-
-			if (pSession)
-				pSession->GetTCPSocket()->WritePacket(MainId, 0, Data, Length);
-		}
-	}
-
-	concurrency::concurrent_unordered_map<DWORD,PLAYER_PTR>		m_PlayerMap;
+	void UpdateBoard(int x, int y, eTeam team);
+	bool CheckGameResult(int _x, int _y, eTeam _stone);
+	
+	concurrency::concurrent_unordered_map<DWORD, PLAYER_PTR>		m_PlayerMap;
 
 private:
-	CRITICAL_SECTION											m_PublicLock;
+
+
+	CRITICAL_SECTION												m_PublicLock;
+
+	State															m_State;
+
+	eTeam															m_Board[COLS][ROWS];
 
 };
 

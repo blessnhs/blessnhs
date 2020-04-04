@@ -172,6 +172,7 @@ VOID BoardProcess::ROOM_ENTER(LPVOID Data, DWORD Length, boost::shared_ptr<GSCli
 
 		RoomUserInfo* userinfo = nty.mutable_var_room_user();
 
+		userinfo->set_var_index(iter.second->GetId());
 		userinfo->set_var_name(iter.second->m_Account.GetName());
 
 		SEND_PROTO_BUFFER(nty, pOwner)
@@ -192,6 +193,7 @@ VOID BoardProcess::ROOM_ENTER(LPVOID Data, DWORD Length, boost::shared_ptr<GSCli
 
 		RoomUserInfo* userinfo = nty.mutable_var_room_user();
 
+		userinfo->set_var_index(iter.second->GetId());
 		userinfo->set_var_name(iter.second->m_Account.GetName());
 
 		SEND_PROTO_BUFFER(nty, pPair)
@@ -314,7 +316,21 @@ VOID BoardProcess::ROOM_CHAT(LPVOID Data, DWORD Length, boost::shared_ptr<GSClie
 		ROOM_PTR pPtr = ROOMMGR.Search(pPlayer->m_Char[0].GetRoom());
 		if (pPtr != NULL)
 		{
+			pPtr->UpdateBoard(message.var_x(), message.var_y(), message.var_color());
+
 			pPtr->SendToAll(res);
+
+			if (pPtr->CheckGameResult(message.var_x(), message.var_y(), message.var_color()) == true)
+			{
+				GAME_RESULT_NTY result_nty;
+				result_nty.set_var_code(Success);
+				result_nty.set_var_index(pPlayer->GetId());
+				result_nty.set_var_name(pPlayer->m_Account.GetName());
+				result_nty.set_var_color(message.var_color());
+
+				pPtr->SendToAll(result_nty);
+			}
+
 		}
 	}
 
@@ -368,8 +384,6 @@ VOID BoardProcess::MATCH(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> 
 	res.set_var_code(Success);
 	SEND_PROTO_BUFFER(res, Client)
 
-
-
 	for each(auto player in ROOMMGR.GetMatchMap())
 	{
 		if (player.second == NULL)
@@ -379,10 +393,7 @@ VOID BoardProcess::MATCH(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> 
 			continue;
 
 		ROOMMGR.CreateMatchRoom(player.second, pPlayer);
-
-		return;
 	}
-
 
 	//여기 있으면 큐에 아무도 없는것임
 	ROOMMGR.GetMatchMap()[pPlayer->GetId()] = pPlayer;

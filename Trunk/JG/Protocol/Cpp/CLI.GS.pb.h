@@ -536,7 +536,7 @@ class CREATE_ROOM_REQ :
     kVarNameFieldNumber = 2,
     kIdFieldNumber = 1,
   };
-  // required string var_name = 2;
+  // required bytes var_name = 2;
   bool has_var_name() const;
   private:
   bool _internal_has_var_name() const;
@@ -546,7 +546,7 @@ class CREATE_ROOM_REQ :
   void set_var_name(const std::string& value);
   void set_var_name(std::string&& value);
   void set_var_name(const char* value);
-  void set_var_name(const char* value, size_t size);
+  void set_var_name(const void* value, size_t size);
   std::string* mutable_var_name();
   std::string* release_var_name();
   void set_allocated_var_name(std::string* var_name);
@@ -1006,9 +1006,12 @@ class BROADCAST_ROOM_MESSAGE_REQ :
 
   enum : int {
     kVarMessageFieldNumber = 2,
+    kVarXFieldNumber = 3,
+    kVarYFieldNumber = 4,
+    kVarColorFieldNumber = 5,
     kIdFieldNumber = 1,
   };
-  // required string var_message = 2;
+  // required bytes var_message = 2;
   bool has_var_message() const;
   private:
   bool _internal_has_var_message() const;
@@ -1018,7 +1021,7 @@ class BROADCAST_ROOM_MESSAGE_REQ :
   void set_var_message(const std::string& value);
   void set_var_message(std::string&& value);
   void set_var_message(const char* value);
-  void set_var_message(const char* value, size_t size);
+  void set_var_message(const void* value, size_t size);
   std::string* mutable_var_message();
   std::string* release_var_message();
   void set_allocated_var_message(std::string* var_message);
@@ -1026,6 +1029,45 @@ class BROADCAST_ROOM_MESSAGE_REQ :
   const std::string& _internal_var_message() const;
   void _internal_set_var_message(const std::string& value);
   std::string* _internal_mutable_var_message();
+  public:
+
+  // required int32 var_x = 3;
+  bool has_var_x() const;
+  private:
+  bool _internal_has_var_x() const;
+  public:
+  void clear_var_x();
+  ::PROTOBUF_NAMESPACE_ID::int32 var_x() const;
+  void set_var_x(::PROTOBUF_NAMESPACE_ID::int32 value);
+  private:
+  ::PROTOBUF_NAMESPACE_ID::int32 _internal_var_x() const;
+  void _internal_set_var_x(::PROTOBUF_NAMESPACE_ID::int32 value);
+  public:
+
+  // required int32 var_y = 4;
+  bool has_var_y() const;
+  private:
+  bool _internal_has_var_y() const;
+  public:
+  void clear_var_y();
+  ::PROTOBUF_NAMESPACE_ID::int32 var_y() const;
+  void set_var_y(::PROTOBUF_NAMESPACE_ID::int32 value);
+  private:
+  ::PROTOBUF_NAMESPACE_ID::int32 _internal_var_y() const;
+  void _internal_set_var_y(::PROTOBUF_NAMESPACE_ID::int32 value);
+  public:
+
+  // required .eTeam var_color = 5;
+  bool has_var_color() const;
+  private:
+  bool _internal_has_var_color() const;
+  public:
+  void clear_var_color();
+  ::eTeam var_color() const;
+  void set_var_color(::eTeam value);
+  private:
+  ::eTeam _internal_var_color() const;
+  void _internal_set_var_color(::eTeam value);
   public:
 
   // optional .PROTOCOL id = 1 [default = ID_PKT_BROADCAST_ROOM_MESSAGE_REQ];
@@ -1045,10 +1087,16 @@ class BROADCAST_ROOM_MESSAGE_REQ :
  private:
   class _Internal;
 
+  // helper for ByteSizeLong()
+  size_t RequiredFieldsByteSizeFallback() const;
+
   ::PROTOBUF_NAMESPACE_ID::internal::InternalMetadataWithArena _internal_metadata_;
   ::PROTOBUF_NAMESPACE_ID::internal::HasBits<1> _has_bits_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr var_message_;
+  ::PROTOBUF_NAMESPACE_ID::int32 var_x_;
+  ::PROTOBUF_NAMESPACE_ID::int32 var_y_;
+  int var_color_;
   int id_;
   friend struct ::TableStruct_CLI_2eGS_2eproto;
 };
@@ -1580,7 +1628,7 @@ inline void CREATE_ROOM_REQ::set_id(::PROTOCOL value) {
   // @@protoc_insertion_point(field_set:CREATE_ROOM_REQ.id)
 }
 
-// required string var_name = 2;
+// required bytes var_name = 2;
 inline bool CREATE_ROOM_REQ::_internal_has_var_name() const {
   bool value = (_has_bits_[0] & 0x00000001u) != 0;
   return value;
@@ -1623,7 +1671,7 @@ inline void CREATE_ROOM_REQ::set_var_name(const char* value) {
   var_name_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
   // @@protoc_insertion_point(field_set_char:CREATE_ROOM_REQ.var_name)
 }
-inline void CREATE_ROOM_REQ::set_var_name(const char* value, size_t size) {
+inline void CREATE_ROOM_REQ::set_var_name(const void* value, size_t size) {
   _has_bits_[0] |= 0x00000001u;
   var_name_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
@@ -1779,7 +1827,7 @@ inline void LEAVE_ROOM_REQ::set_var_id(::PROTOBUF_NAMESPACE_ID::int32 value) {
 
 // optional .PROTOCOL id = 1 [default = ID_PKT_BROADCAST_ROOM_MESSAGE_REQ];
 inline bool BROADCAST_ROOM_MESSAGE_REQ::_internal_has_id() const {
-  bool value = (_has_bits_[0] & 0x00000002u) != 0;
+  bool value = (_has_bits_[0] & 0x00000010u) != 0;
   return value;
 }
 inline bool BROADCAST_ROOM_MESSAGE_REQ::has_id() const {
@@ -1787,7 +1835,7 @@ inline bool BROADCAST_ROOM_MESSAGE_REQ::has_id() const {
 }
 inline void BROADCAST_ROOM_MESSAGE_REQ::clear_id() {
   id_ = 10;
-  _has_bits_[0] &= ~0x00000002u;
+  _has_bits_[0] &= ~0x00000010u;
 }
 inline ::PROTOCOL BROADCAST_ROOM_MESSAGE_REQ::_internal_id() const {
   return static_cast< ::PROTOCOL >(id_);
@@ -1798,7 +1846,7 @@ inline ::PROTOCOL BROADCAST_ROOM_MESSAGE_REQ::id() const {
 }
 inline void BROADCAST_ROOM_MESSAGE_REQ::_internal_set_id(::PROTOCOL value) {
   assert(::PROTOCOL_IsValid(value));
-  _has_bits_[0] |= 0x00000002u;
+  _has_bits_[0] |= 0x00000010u;
   id_ = value;
 }
 inline void BROADCAST_ROOM_MESSAGE_REQ::set_id(::PROTOCOL value) {
@@ -1806,7 +1854,7 @@ inline void BROADCAST_ROOM_MESSAGE_REQ::set_id(::PROTOCOL value) {
   // @@protoc_insertion_point(field_set:BROADCAST_ROOM_MESSAGE_REQ.id)
 }
 
-// required string var_message = 2;
+// required bytes var_message = 2;
 inline bool BROADCAST_ROOM_MESSAGE_REQ::_internal_has_var_message() const {
   bool value = (_has_bits_[0] & 0x00000001u) != 0;
   return value;
@@ -1849,7 +1897,7 @@ inline void BROADCAST_ROOM_MESSAGE_REQ::set_var_message(const char* value) {
   var_message_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
   // @@protoc_insertion_point(field_set_char:BROADCAST_ROOM_MESSAGE_REQ.var_message)
 }
-inline void BROADCAST_ROOM_MESSAGE_REQ::set_var_message(const char* value, size_t size) {
+inline void BROADCAST_ROOM_MESSAGE_REQ::set_var_message(const void* value, size_t size) {
   _has_bits_[0] |= 0x00000001u;
   var_message_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
@@ -1875,6 +1923,91 @@ inline void BROADCAST_ROOM_MESSAGE_REQ::set_allocated_var_message(std::string* v
   }
   var_message_.SetAllocatedNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), var_message);
   // @@protoc_insertion_point(field_set_allocated:BROADCAST_ROOM_MESSAGE_REQ.var_message)
+}
+
+// required int32 var_x = 3;
+inline bool BROADCAST_ROOM_MESSAGE_REQ::_internal_has_var_x() const {
+  bool value = (_has_bits_[0] & 0x00000002u) != 0;
+  return value;
+}
+inline bool BROADCAST_ROOM_MESSAGE_REQ::has_var_x() const {
+  return _internal_has_var_x();
+}
+inline void BROADCAST_ROOM_MESSAGE_REQ::clear_var_x() {
+  var_x_ = 0;
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 BROADCAST_ROOM_MESSAGE_REQ::_internal_var_x() const {
+  return var_x_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 BROADCAST_ROOM_MESSAGE_REQ::var_x() const {
+  // @@protoc_insertion_point(field_get:BROADCAST_ROOM_MESSAGE_REQ.var_x)
+  return _internal_var_x();
+}
+inline void BROADCAST_ROOM_MESSAGE_REQ::_internal_set_var_x(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  _has_bits_[0] |= 0x00000002u;
+  var_x_ = value;
+}
+inline void BROADCAST_ROOM_MESSAGE_REQ::set_var_x(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  _internal_set_var_x(value);
+  // @@protoc_insertion_point(field_set:BROADCAST_ROOM_MESSAGE_REQ.var_x)
+}
+
+// required int32 var_y = 4;
+inline bool BROADCAST_ROOM_MESSAGE_REQ::_internal_has_var_y() const {
+  bool value = (_has_bits_[0] & 0x00000004u) != 0;
+  return value;
+}
+inline bool BROADCAST_ROOM_MESSAGE_REQ::has_var_y() const {
+  return _internal_has_var_y();
+}
+inline void BROADCAST_ROOM_MESSAGE_REQ::clear_var_y() {
+  var_y_ = 0;
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 BROADCAST_ROOM_MESSAGE_REQ::_internal_var_y() const {
+  return var_y_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 BROADCAST_ROOM_MESSAGE_REQ::var_y() const {
+  // @@protoc_insertion_point(field_get:BROADCAST_ROOM_MESSAGE_REQ.var_y)
+  return _internal_var_y();
+}
+inline void BROADCAST_ROOM_MESSAGE_REQ::_internal_set_var_y(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  _has_bits_[0] |= 0x00000004u;
+  var_y_ = value;
+}
+inline void BROADCAST_ROOM_MESSAGE_REQ::set_var_y(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  _internal_set_var_y(value);
+  // @@protoc_insertion_point(field_set:BROADCAST_ROOM_MESSAGE_REQ.var_y)
+}
+
+// required .eTeam var_color = 5;
+inline bool BROADCAST_ROOM_MESSAGE_REQ::_internal_has_var_color() const {
+  bool value = (_has_bits_[0] & 0x00000008u) != 0;
+  return value;
+}
+inline bool BROADCAST_ROOM_MESSAGE_REQ::has_var_color() const {
+  return _internal_has_var_color();
+}
+inline void BROADCAST_ROOM_MESSAGE_REQ::clear_var_color() {
+  var_color_ = 0;
+  _has_bits_[0] &= ~0x00000008u;
+}
+inline ::eTeam BROADCAST_ROOM_MESSAGE_REQ::_internal_var_color() const {
+  return static_cast< ::eTeam >(var_color_);
+}
+inline ::eTeam BROADCAST_ROOM_MESSAGE_REQ::var_color() const {
+  // @@protoc_insertion_point(field_get:BROADCAST_ROOM_MESSAGE_REQ.var_color)
+  return _internal_var_color();
+}
+inline void BROADCAST_ROOM_MESSAGE_REQ::_internal_set_var_color(::eTeam value) {
+  assert(::eTeam_IsValid(value));
+  _has_bits_[0] |= 0x00000008u;
+  var_color_ = value;
+}
+inline void BROADCAST_ROOM_MESSAGE_REQ::set_var_color(::eTeam value) {
+  _internal_set_var_color(value);
+  // @@protoc_insertion_point(field_set:BROADCAST_ROOM_MESSAGE_REQ.var_color)
 }
 
 // -------------------------------------------------------------------

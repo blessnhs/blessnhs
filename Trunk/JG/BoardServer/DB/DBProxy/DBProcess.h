@@ -12,7 +12,7 @@ public:
 	BOOL Initalize(	CHAR *m_szDSN,CHAR *m_szUID,CHAR *m_szPWD);
 
 	int	 ProcedureUserLogin(const CHAR* flatformid, const int flatformtype, const CHAR* name, const CHAR* picture_url, const CHAR* email, 
-		std::string&szKey,int &Rank, int& Score, int& Win, int& Lose, int& Draw,INT64 &Index);
+		std::string&szKey,int &Rank, int& Score, int& Win, int& Lose, int& Draw,INT64 &Index, int& Level, int& LevelPoint);
 
 
 	int	 ProcedureUserLogout(const DWORD id);

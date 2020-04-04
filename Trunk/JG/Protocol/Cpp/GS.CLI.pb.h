@@ -49,7 +49,7 @@ struct TableStruct_GS_2eCLI_2eproto {
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::PROTOBUF_NAMESPACE_ID::internal::AuxillaryParseTableField aux[]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
-  static const ::PROTOBUF_NAMESPACE_ID::internal::ParseTable schema[9]
+  static const ::PROTOBUF_NAMESPACE_ID::internal::ParseTable schema[10]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::PROTOBUF_NAMESPACE_ID::internal::FieldMetadata field_metadata[];
   static const ::PROTOBUF_NAMESPACE_ID::internal::SerializationTable serialization_table[];
@@ -65,6 +65,9 @@ extern CREATE_ROOM_RESDefaultTypeInternal _CREATE_ROOM_RES_default_instance_;
 class ENTER_ROOM_RES;
 class ENTER_ROOM_RESDefaultTypeInternal;
 extern ENTER_ROOM_RESDefaultTypeInternal _ENTER_ROOM_RES_default_instance_;
+class GAME_RESULT_NTY;
+class GAME_RESULT_NTYDefaultTypeInternal;
+extern GAME_RESULT_NTYDefaultTypeInternal _GAME_RESULT_NTY_default_instance_;
 class LEAVE_ROOM_RES;
 class LEAVE_ROOM_RESDefaultTypeInternal;
 extern LEAVE_ROOM_RESDefaultTypeInternal _LEAVE_ROOM_RES_default_instance_;
@@ -87,6 +90,7 @@ PROTOBUF_NAMESPACE_OPEN
 template<> ::BROADCAST_ROOM_MESSAGE_RES* Arena::CreateMaybeMessage<::BROADCAST_ROOM_MESSAGE_RES>(Arena*);
 template<> ::CREATE_ROOM_RES* Arena::CreateMaybeMessage<::CREATE_ROOM_RES>(Arena*);
 template<> ::ENTER_ROOM_RES* Arena::CreateMaybeMessage<::ENTER_ROOM_RES>(Arena*);
+template<> ::GAME_RESULT_NTY* Arena::CreateMaybeMessage<::GAME_RESULT_NTY>(Arena*);
 template<> ::LEAVE_ROOM_RES* Arena::CreateMaybeMessage<::LEAVE_ROOM_RES>(Arena*);
 template<> ::LOGIN_RES* Arena::CreateMaybeMessage<::LOGIN_RES>(Arena*);
 template<> ::MATCH_RES* Arena::CreateMaybeMessage<::MATCH_RES>(Arena*);
@@ -380,9 +384,23 @@ class LOGIN_RES :
   // accessors -------------------------------------------------------
 
   enum : int {
+    kVarIndexFieldNumber = 3,
     kVarCodeFieldNumber = 2,
     kIdFieldNumber = 1,
   };
+  // optional int64 var_index = 3;
+  bool has_var_index() const;
+  private:
+  bool _internal_has_var_index() const;
+  public:
+  void clear_var_index();
+  ::PROTOBUF_NAMESPACE_ID::int64 var_index() const;
+  void set_var_index(::PROTOBUF_NAMESPACE_ID::int64 value);
+  private:
+  ::PROTOBUF_NAMESPACE_ID::int64 _internal_var_index() const;
+  void _internal_set_var_index(::PROTOBUF_NAMESPACE_ID::int64 value);
+  public:
+
   // optional .ErrorCode var_code = 2;
   bool has_var_code() const;
   private:
@@ -416,6 +434,7 @@ class LOGIN_RES :
   ::PROTOBUF_NAMESPACE_ID::internal::InternalMetadataWithArena _internal_metadata_;
   ::PROTOBUF_NAMESPACE_ID::internal::HasBits<1> _has_bits_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  ::PROTOBUF_NAMESPACE_ID::int64 var_index_;
   int var_code_;
   int id_;
   friend struct ::TableStruct_GS_2eCLI_2eproto;
@@ -540,7 +559,7 @@ class CREATE_ROOM_RES :
     kVarCodeFieldNumber = 4,
     kIdFieldNumber = 1,
   };
-  // optional string var_name = 2;
+  // optional bytes var_name = 2;
   bool has_var_name() const;
   private:
   bool _internal_has_var_name() const;
@@ -550,7 +569,7 @@ class CREATE_ROOM_RES :
   void set_var_name(const std::string& value);
   void set_var_name(std::string&& value);
   void set_var_name(const char* value);
-  void set_var_name(const char* value, size_t size);
+  void set_var_name(const void* value, size_t size);
   std::string* mutable_var_name();
   std::string* release_var_name();
   void set_allocated_var_name(std::string* var_name);
@@ -732,7 +751,7 @@ class ENTER_ROOM_RES :
     kVarCodeFieldNumber = 4,
     kIdFieldNumber = 1,
   };
-  // optional string var_name = 2;
+  // optional bytes var_name = 2;
   bool has_var_name() const;
   private:
   bool _internal_has_var_name() const;
@@ -742,7 +761,7 @@ class ENTER_ROOM_RES :
   void set_var_name(const std::string& value);
   void set_var_name(std::string&& value);
   void set_var_name(const char* value);
-  void set_var_name(const char* value, size_t size);
+  void set_var_name(const void* value, size_t size);
   std::string* mutable_var_name();
   std::string* release_var_name();
   void set_allocated_var_name(std::string* var_name);
@@ -919,11 +938,11 @@ class NEW_USER_IN_ROOM_NTY :
   // accessors -------------------------------------------------------
 
   enum : int {
-    kVarRoomUserFieldNumber = 3,
-    kVarCodeFieldNumber = 4,
+    kVarRoomUserFieldNumber = 2,
+    kVarCodeFieldNumber = 3,
     kIdFieldNumber = 1,
   };
-  // optional .RoomUserInfo var_room_user = 3;
+  // optional .RoomUserInfo var_room_user = 2;
   bool has_var_room_user() const;
   private:
   bool _internal_has_var_room_user() const;
@@ -938,7 +957,7 @@ class NEW_USER_IN_ROOM_NTY :
   ::RoomUserInfo* _internal_mutable_var_room_user();
   public:
 
-  // optional .ErrorCode var_code = 4;
+  // optional .ErrorCode var_code = 3;
   bool has_var_code() const;
   private:
   bool _internal_has_var_code() const;
@@ -1092,10 +1111,11 @@ class LEAVE_ROOM_RES :
 
   enum : int {
     kVarNameFieldNumber = 2,
+    kVarIndexFieldNumber = 4,
     kVarCodeFieldNumber = 3,
     kIdFieldNumber = 1,
   };
-  // optional string var_name = 2;
+  // optional bytes var_name = 2;
   bool has_var_name() const;
   private:
   bool _internal_has_var_name() const;
@@ -1105,7 +1125,7 @@ class LEAVE_ROOM_RES :
   void set_var_name(const std::string& value);
   void set_var_name(std::string&& value);
   void set_var_name(const char* value);
-  void set_var_name(const char* value, size_t size);
+  void set_var_name(const void* value, size_t size);
   std::string* mutable_var_name();
   std::string* release_var_name();
   void set_allocated_var_name(std::string* var_name);
@@ -1113,6 +1133,19 @@ class LEAVE_ROOM_RES :
   const std::string& _internal_var_name() const;
   void _internal_set_var_name(const std::string& value);
   std::string* _internal_mutable_var_name();
+  public:
+
+  // optional int64 var_index = 4;
+  bool has_var_index() const;
+  private:
+  bool _internal_has_var_index() const;
+  public:
+  void clear_var_index();
+  ::PROTOBUF_NAMESPACE_ID::int64 var_index() const;
+  void set_var_index(::PROTOBUF_NAMESPACE_ID::int64 value);
+  private:
+  ::PROTOBUF_NAMESPACE_ID::int64 _internal_var_index() const;
+  void _internal_set_var_index(::PROTOBUF_NAMESPACE_ID::int64 value);
   public:
 
   // optional .ErrorCode var_code = 3;
@@ -1149,6 +1182,7 @@ class LEAVE_ROOM_RES :
   ::PROTOBUF_NAMESPACE_ID::internal::HasBits<1> _has_bits_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr var_name_;
+  ::PROTOBUF_NAMESPACE_ID::int64 var_index_;
   int var_code_;
   int id_;
   friend struct ::TableStruct_GS_2eCLI_2eproto;
@@ -1271,9 +1305,12 @@ class BROADCAST_ROOM_MESSAGE_RES :
     kVarMessageFieldNumber = 3,
     kVarNameFieldNumber = 4,
     kVarCodeFieldNumber = 2,
+    kVarXFieldNumber = 5,
+    kVarYFieldNumber = 6,
+    kVarColorFieldNumber = 7,
     kIdFieldNumber = 1,
   };
-  // optional string var_message = 3;
+  // optional bytes var_message = 3;
   bool has_var_message() const;
   private:
   bool _internal_has_var_message() const;
@@ -1283,7 +1320,7 @@ class BROADCAST_ROOM_MESSAGE_RES :
   void set_var_message(const std::string& value);
   void set_var_message(std::string&& value);
   void set_var_message(const char* value);
-  void set_var_message(const char* value, size_t size);
+  void set_var_message(const void* value, size_t size);
   std::string* mutable_var_message();
   std::string* release_var_message();
   void set_allocated_var_message(std::string* var_message);
@@ -1293,7 +1330,7 @@ class BROADCAST_ROOM_MESSAGE_RES :
   std::string* _internal_mutable_var_message();
   public:
 
-  // optional string var_name = 4;
+  // optional bytes var_name = 4;
   bool has_var_name() const;
   private:
   bool _internal_has_var_name() const;
@@ -1303,7 +1340,7 @@ class BROADCAST_ROOM_MESSAGE_RES :
   void set_var_name(const std::string& value);
   void set_var_name(std::string&& value);
   void set_var_name(const char* value);
-  void set_var_name(const char* value, size_t size);
+  void set_var_name(const void* value, size_t size);
   std::string* mutable_var_name();
   std::string* release_var_name();
   void set_allocated_var_name(std::string* var_name);
@@ -1324,6 +1361,45 @@ class BROADCAST_ROOM_MESSAGE_RES :
   private:
   ::ErrorCode _internal_var_code() const;
   void _internal_set_var_code(::ErrorCode value);
+  public:
+
+  // optional int32 var_x = 5;
+  bool has_var_x() const;
+  private:
+  bool _internal_has_var_x() const;
+  public:
+  void clear_var_x();
+  ::PROTOBUF_NAMESPACE_ID::int32 var_x() const;
+  void set_var_x(::PROTOBUF_NAMESPACE_ID::int32 value);
+  private:
+  ::PROTOBUF_NAMESPACE_ID::int32 _internal_var_x() const;
+  void _internal_set_var_x(::PROTOBUF_NAMESPACE_ID::int32 value);
+  public:
+
+  // optional int32 var_y = 6;
+  bool has_var_y() const;
+  private:
+  bool _internal_has_var_y() const;
+  public:
+  void clear_var_y();
+  ::PROTOBUF_NAMESPACE_ID::int32 var_y() const;
+  void set_var_y(::PROTOBUF_NAMESPACE_ID::int32 value);
+  private:
+  ::PROTOBUF_NAMESPACE_ID::int32 _internal_var_y() const;
+  void _internal_set_var_y(::PROTOBUF_NAMESPACE_ID::int32 value);
+  public:
+
+  // optional .eTeam var_color = 7;
+  bool has_var_color() const;
+  private:
+  bool _internal_has_var_color() const;
+  public:
+  void clear_var_color();
+  ::eTeam var_color() const;
+  void set_var_color(::eTeam value);
+  private:
+  ::eTeam _internal_var_color() const;
+  void _internal_set_var_color(::eTeam value);
   public:
 
   // optional .PROTOCOL id = 1 [default = ID_PKT_BROADCAST_ROOM_MESSAGE_RES];
@@ -1349,6 +1425,9 @@ class BROADCAST_ROOM_MESSAGE_RES :
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr var_message_;
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr var_name_;
   int var_code_;
+  ::PROTOBUF_NAMESPACE_ID::int32 var_x_;
+  ::PROTOBUF_NAMESPACE_ID::int32 var_y_;
+  int var_color_;
   int id_;
   friend struct ::TableStruct_GS_2eCLI_2eproto;
 };
@@ -1682,6 +1761,213 @@ class MATCH_RES :
   int id_;
   friend struct ::TableStruct_GS_2eCLI_2eproto;
 };
+// -------------------------------------------------------------------
+
+class GAME_RESULT_NTY :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:GAME_RESULT_NTY) */ {
+ public:
+  GAME_RESULT_NTY();
+  virtual ~GAME_RESULT_NTY();
+
+  GAME_RESULT_NTY(const GAME_RESULT_NTY& from);
+  GAME_RESULT_NTY(GAME_RESULT_NTY&& from) noexcept
+    : GAME_RESULT_NTY() {
+    *this = ::std::move(from);
+  }
+
+  inline GAME_RESULT_NTY& operator=(const GAME_RESULT_NTY& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline GAME_RESULT_NTY& operator=(GAME_RESULT_NTY&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  inline const ::PROTOBUF_NAMESPACE_ID::UnknownFieldSet& unknown_fields() const {
+    return _internal_metadata_.unknown_fields();
+  }
+  inline ::PROTOBUF_NAMESPACE_ID::UnknownFieldSet* mutable_unknown_fields() {
+    return _internal_metadata_.mutable_unknown_fields();
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return GetMetadataStatic().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return GetMetadataStatic().reflection;
+  }
+  static const GAME_RESULT_NTY& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const GAME_RESULT_NTY* internal_default_instance() {
+    return reinterpret_cast<const GAME_RESULT_NTY*>(
+               &_GAME_RESULT_NTY_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    9;
+
+  friend void swap(GAME_RESULT_NTY& a, GAME_RESULT_NTY& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(GAME_RESULT_NTY* other) {
+    if (other == this) return;
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline GAME_RESULT_NTY* New() const final {
+    return CreateMaybeMessage<GAME_RESULT_NTY>(nullptr);
+  }
+
+  GAME_RESULT_NTY* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
+    return CreateMaybeMessage<GAME_RESULT_NTY>(arena);
+  }
+  void CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void CopyFrom(const GAME_RESULT_NTY& from);
+  void MergeFrom(const GAME_RESULT_NTY& from);
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  ::PROTOBUF_NAMESPACE_ID::uint8* _InternalSerialize(
+      ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  inline void SharedCtor();
+  inline void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(GAME_RESULT_NTY* other);
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "GAME_RESULT_NTY";
+  }
+  private:
+  inline ::PROTOBUF_NAMESPACE_ID::Arena* GetArenaNoVirtual() const {
+    return nullptr;
+  }
+  inline void* MaybeArenaPtr() const {
+    return nullptr;
+  }
+  public:
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+  private:
+  static ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadataStatic() {
+    ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&::descriptor_table_GS_2eCLI_2eproto);
+    return ::descriptor_table_GS_2eCLI_2eproto.file_level_metadata[kIndexInFileMessages];
+  }
+
+  public:
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kVarNameFieldNumber = 3,
+    kVarIndexFieldNumber = 2,
+    kVarCodeFieldNumber = 4,
+    kVarColorFieldNumber = 5,
+    kIdFieldNumber = 1,
+  };
+  // optional bytes var_name = 3;
+  bool has_var_name() const;
+  private:
+  bool _internal_has_var_name() const;
+  public:
+  void clear_var_name();
+  const std::string& var_name() const;
+  void set_var_name(const std::string& value);
+  void set_var_name(std::string&& value);
+  void set_var_name(const char* value);
+  void set_var_name(const void* value, size_t size);
+  std::string* mutable_var_name();
+  std::string* release_var_name();
+  void set_allocated_var_name(std::string* var_name);
+  private:
+  const std::string& _internal_var_name() const;
+  void _internal_set_var_name(const std::string& value);
+  std::string* _internal_mutable_var_name();
+  public:
+
+  // optional int64 var_index = 2;
+  bool has_var_index() const;
+  private:
+  bool _internal_has_var_index() const;
+  public:
+  void clear_var_index();
+  ::PROTOBUF_NAMESPACE_ID::int64 var_index() const;
+  void set_var_index(::PROTOBUF_NAMESPACE_ID::int64 value);
+  private:
+  ::PROTOBUF_NAMESPACE_ID::int64 _internal_var_index() const;
+  void _internal_set_var_index(::PROTOBUF_NAMESPACE_ID::int64 value);
+  public:
+
+  // optional .ErrorCode var_code = 4;
+  bool has_var_code() const;
+  private:
+  bool _internal_has_var_code() const;
+  public:
+  void clear_var_code();
+  ::ErrorCode var_code() const;
+  void set_var_code(::ErrorCode value);
+  private:
+  ::ErrorCode _internal_var_code() const;
+  void _internal_set_var_code(::ErrorCode value);
+  public:
+
+  // optional .eTeam var_color = 5;
+  bool has_var_color() const;
+  private:
+  bool _internal_has_var_color() const;
+  public:
+  void clear_var_color();
+  ::eTeam var_color() const;
+  void set_var_color(::eTeam value);
+  private:
+  ::eTeam _internal_var_color() const;
+  void _internal_set_var_color(::eTeam value);
+  public:
+
+  // optional .PROTOCOL id = 1 [default = ID_PKT_GAME_RESULT_NTY];
+  bool has_id() const;
+  private:
+  bool _internal_has_id() const;
+  public:
+  void clear_id();
+  ::PROTOCOL id() const;
+  void set_id(::PROTOCOL value);
+  private:
+  ::PROTOCOL _internal_id() const;
+  void _internal_set_id(::PROTOCOL value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:GAME_RESULT_NTY)
+ private:
+  class _Internal;
+
+  ::PROTOBUF_NAMESPACE_ID::internal::InternalMetadataWithArena _internal_metadata_;
+  ::PROTOBUF_NAMESPACE_ID::internal::HasBits<1> _has_bits_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr var_name_;
+  ::PROTOBUF_NAMESPACE_ID::int64 var_index_;
+  int var_code_;
+  int var_color_;
+  int id_;
+  friend struct ::TableStruct_GS_2eCLI_2eproto;
+};
 // ===================================================================
 
 
@@ -1785,7 +2071,7 @@ inline void VERSION_RES::set_var_code(::ErrorCode value) {
 
 // optional .PROTOCOL id = 1 [default = ID_PKT_LOGIN_RES];
 inline bool LOGIN_RES::_internal_has_id() const {
-  bool value = (_has_bits_[0] & 0x00000002u) != 0;
+  bool value = (_has_bits_[0] & 0x00000004u) != 0;
   return value;
 }
 inline bool LOGIN_RES::has_id() const {
@@ -1793,7 +2079,7 @@ inline bool LOGIN_RES::has_id() const {
 }
 inline void LOGIN_RES::clear_id() {
   id_ = 3;
-  _has_bits_[0] &= ~0x00000002u;
+  _has_bits_[0] &= ~0x00000004u;
 }
 inline ::PROTOCOL LOGIN_RES::_internal_id() const {
   return static_cast< ::PROTOCOL >(id_);
@@ -1804,7 +2090,7 @@ inline ::PROTOCOL LOGIN_RES::id() const {
 }
 inline void LOGIN_RES::_internal_set_id(::PROTOCOL value) {
   assert(::PROTOCOL_IsValid(value));
-  _has_bits_[0] |= 0x00000002u;
+  _has_bits_[0] |= 0x00000004u;
   id_ = value;
 }
 inline void LOGIN_RES::set_id(::PROTOCOL value) {
@@ -1814,7 +2100,7 @@ inline void LOGIN_RES::set_id(::PROTOCOL value) {
 
 // optional .ErrorCode var_code = 2;
 inline bool LOGIN_RES::_internal_has_var_code() const {
-  bool value = (_has_bits_[0] & 0x00000001u) != 0;
+  bool value = (_has_bits_[0] & 0x00000002u) != 0;
   return value;
 }
 inline bool LOGIN_RES::has_var_code() const {
@@ -1822,7 +2108,7 @@ inline bool LOGIN_RES::has_var_code() const {
 }
 inline void LOGIN_RES::clear_var_code() {
   var_code_ = 0;
-  _has_bits_[0] &= ~0x00000001u;
+  _has_bits_[0] &= ~0x00000002u;
 }
 inline ::ErrorCode LOGIN_RES::_internal_var_code() const {
   return static_cast< ::ErrorCode >(var_code_);
@@ -1833,12 +2119,40 @@ inline ::ErrorCode LOGIN_RES::var_code() const {
 }
 inline void LOGIN_RES::_internal_set_var_code(::ErrorCode value) {
   assert(::ErrorCode_IsValid(value));
-  _has_bits_[0] |= 0x00000001u;
+  _has_bits_[0] |= 0x00000002u;
   var_code_ = value;
 }
 inline void LOGIN_RES::set_var_code(::ErrorCode value) {
   _internal_set_var_code(value);
   // @@protoc_insertion_point(field_set:LOGIN_RES.var_code)
+}
+
+// optional int64 var_index = 3;
+inline bool LOGIN_RES::_internal_has_var_index() const {
+  bool value = (_has_bits_[0] & 0x00000001u) != 0;
+  return value;
+}
+inline bool LOGIN_RES::has_var_index() const {
+  return _internal_has_var_index();
+}
+inline void LOGIN_RES::clear_var_index() {
+  var_index_ = PROTOBUF_LONGLONG(0);
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int64 LOGIN_RES::_internal_var_index() const {
+  return var_index_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int64 LOGIN_RES::var_index() const {
+  // @@protoc_insertion_point(field_get:LOGIN_RES.var_index)
+  return _internal_var_index();
+}
+inline void LOGIN_RES::_internal_set_var_index(::PROTOBUF_NAMESPACE_ID::int64 value) {
+  _has_bits_[0] |= 0x00000001u;
+  var_index_ = value;
+}
+inline void LOGIN_RES::set_var_index(::PROTOBUF_NAMESPACE_ID::int64 value) {
+  _internal_set_var_index(value);
+  // @@protoc_insertion_point(field_set:LOGIN_RES.var_index)
 }
 
 // -------------------------------------------------------------------
@@ -1874,7 +2188,7 @@ inline void CREATE_ROOM_RES::set_id(::PROTOCOL value) {
   // @@protoc_insertion_point(field_set:CREATE_ROOM_RES.id)
 }
 
-// optional string var_name = 2;
+// optional bytes var_name = 2;
 inline bool CREATE_ROOM_RES::_internal_has_var_name() const {
   bool value = (_has_bits_[0] & 0x00000001u) != 0;
   return value;
@@ -1917,7 +2231,7 @@ inline void CREATE_ROOM_RES::set_var_name(const char* value) {
   var_name_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
   // @@protoc_insertion_point(field_set_char:CREATE_ROOM_RES.var_name)
 }
-inline void CREATE_ROOM_RES::set_var_name(const char* value, size_t size) {
+inline void CREATE_ROOM_RES::set_var_name(const void* value, size_t size) {
   _has_bits_[0] |= 0x00000001u;
   var_name_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
@@ -2035,7 +2349,7 @@ inline void ENTER_ROOM_RES::set_id(::PROTOCOL value) {
   // @@protoc_insertion_point(field_set:ENTER_ROOM_RES.id)
 }
 
-// optional string var_name = 2;
+// optional bytes var_name = 2;
 inline bool ENTER_ROOM_RES::_internal_has_var_name() const {
   bool value = (_has_bits_[0] & 0x00000001u) != 0;
   return value;
@@ -2078,7 +2392,7 @@ inline void ENTER_ROOM_RES::set_var_name(const char* value) {
   var_name_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
   // @@protoc_insertion_point(field_set_char:ENTER_ROOM_RES.var_name)
 }
-inline void ENTER_ROOM_RES::set_var_name(const char* value, size_t size) {
+inline void ENTER_ROOM_RES::set_var_name(const void* value, size_t size) {
   _has_bits_[0] |= 0x00000001u;
   var_name_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
@@ -2196,7 +2510,7 @@ inline void NEW_USER_IN_ROOM_NTY::set_id(::PROTOCOL value) {
   // @@protoc_insertion_point(field_set:NEW_USER_IN_ROOM_NTY.id)
 }
 
-// optional .RoomUserInfo var_room_user = 3;
+// optional .RoomUserInfo var_room_user = 2;
 inline bool NEW_USER_IN_ROOM_NTY::_internal_has_var_room_user() const {
   bool value = (_has_bits_[0] & 0x00000001u) != 0;
   PROTOBUF_ASSUME(!value || var_room_user_ != nullptr);
@@ -2252,7 +2566,7 @@ inline void NEW_USER_IN_ROOM_NTY::set_allocated_var_room_user(::RoomUserInfo* va
   // @@protoc_insertion_point(field_set_allocated:NEW_USER_IN_ROOM_NTY.var_room_user)
 }
 
-// optional .ErrorCode var_code = 4;
+// optional .ErrorCode var_code = 3;
 inline bool NEW_USER_IN_ROOM_NTY::_internal_has_var_code() const {
   bool value = (_has_bits_[0] & 0x00000002u) != 0;
   return value;
@@ -2287,7 +2601,7 @@ inline void NEW_USER_IN_ROOM_NTY::set_var_code(::ErrorCode value) {
 
 // optional .PROTOCOL id = 1 [default = ID_PKT_LEAVE_ROOM_RES];
 inline bool LEAVE_ROOM_RES::_internal_has_id() const {
-  bool value = (_has_bits_[0] & 0x00000004u) != 0;
+  bool value = (_has_bits_[0] & 0x00000008u) != 0;
   return value;
 }
 inline bool LEAVE_ROOM_RES::has_id() const {
@@ -2295,7 +2609,7 @@ inline bool LEAVE_ROOM_RES::has_id() const {
 }
 inline void LEAVE_ROOM_RES::clear_id() {
   id_ = 9;
-  _has_bits_[0] &= ~0x00000004u;
+  _has_bits_[0] &= ~0x00000008u;
 }
 inline ::PROTOCOL LEAVE_ROOM_RES::_internal_id() const {
   return static_cast< ::PROTOCOL >(id_);
@@ -2306,7 +2620,7 @@ inline ::PROTOCOL LEAVE_ROOM_RES::id() const {
 }
 inline void LEAVE_ROOM_RES::_internal_set_id(::PROTOCOL value) {
   assert(::PROTOCOL_IsValid(value));
-  _has_bits_[0] |= 0x00000004u;
+  _has_bits_[0] |= 0x00000008u;
   id_ = value;
 }
 inline void LEAVE_ROOM_RES::set_id(::PROTOCOL value) {
@@ -2314,7 +2628,7 @@ inline void LEAVE_ROOM_RES::set_id(::PROTOCOL value) {
   // @@protoc_insertion_point(field_set:LEAVE_ROOM_RES.id)
 }
 
-// optional string var_name = 2;
+// optional bytes var_name = 2;
 inline bool LEAVE_ROOM_RES::_internal_has_var_name() const {
   bool value = (_has_bits_[0] & 0x00000001u) != 0;
   return value;
@@ -2357,7 +2671,7 @@ inline void LEAVE_ROOM_RES::set_var_name(const char* value) {
   var_name_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
   // @@protoc_insertion_point(field_set_char:LEAVE_ROOM_RES.var_name)
 }
-inline void LEAVE_ROOM_RES::set_var_name(const char* value, size_t size) {
+inline void LEAVE_ROOM_RES::set_var_name(const void* value, size_t size) {
   _has_bits_[0] |= 0x00000001u;
   var_name_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
@@ -2387,7 +2701,7 @@ inline void LEAVE_ROOM_RES::set_allocated_var_name(std::string* var_name) {
 
 // optional .ErrorCode var_code = 3;
 inline bool LEAVE_ROOM_RES::_internal_has_var_code() const {
-  bool value = (_has_bits_[0] & 0x00000002u) != 0;
+  bool value = (_has_bits_[0] & 0x00000004u) != 0;
   return value;
 }
 inline bool LEAVE_ROOM_RES::has_var_code() const {
@@ -2395,7 +2709,7 @@ inline bool LEAVE_ROOM_RES::has_var_code() const {
 }
 inline void LEAVE_ROOM_RES::clear_var_code() {
   var_code_ = 0;
-  _has_bits_[0] &= ~0x00000002u;
+  _has_bits_[0] &= ~0x00000004u;
 }
 inline ::ErrorCode LEAVE_ROOM_RES::_internal_var_code() const {
   return static_cast< ::ErrorCode >(var_code_);
@@ -2406,12 +2720,40 @@ inline ::ErrorCode LEAVE_ROOM_RES::var_code() const {
 }
 inline void LEAVE_ROOM_RES::_internal_set_var_code(::ErrorCode value) {
   assert(::ErrorCode_IsValid(value));
-  _has_bits_[0] |= 0x00000002u;
+  _has_bits_[0] |= 0x00000004u;
   var_code_ = value;
 }
 inline void LEAVE_ROOM_RES::set_var_code(::ErrorCode value) {
   _internal_set_var_code(value);
   // @@protoc_insertion_point(field_set:LEAVE_ROOM_RES.var_code)
+}
+
+// optional int64 var_index = 4;
+inline bool LEAVE_ROOM_RES::_internal_has_var_index() const {
+  bool value = (_has_bits_[0] & 0x00000002u) != 0;
+  return value;
+}
+inline bool LEAVE_ROOM_RES::has_var_index() const {
+  return _internal_has_var_index();
+}
+inline void LEAVE_ROOM_RES::clear_var_index() {
+  var_index_ = PROTOBUF_LONGLONG(0);
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int64 LEAVE_ROOM_RES::_internal_var_index() const {
+  return var_index_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int64 LEAVE_ROOM_RES::var_index() const {
+  // @@protoc_insertion_point(field_get:LEAVE_ROOM_RES.var_index)
+  return _internal_var_index();
+}
+inline void LEAVE_ROOM_RES::_internal_set_var_index(::PROTOBUF_NAMESPACE_ID::int64 value) {
+  _has_bits_[0] |= 0x00000002u;
+  var_index_ = value;
+}
+inline void LEAVE_ROOM_RES::set_var_index(::PROTOBUF_NAMESPACE_ID::int64 value) {
+  _internal_set_var_index(value);
+  // @@protoc_insertion_point(field_set:LEAVE_ROOM_RES.var_index)
 }
 
 // -------------------------------------------------------------------
@@ -2420,7 +2762,7 @@ inline void LEAVE_ROOM_RES::set_var_code(::ErrorCode value) {
 
 // optional .PROTOCOL id = 1 [default = ID_PKT_BROADCAST_ROOM_MESSAGE_RES];
 inline bool BROADCAST_ROOM_MESSAGE_RES::_internal_has_id() const {
-  bool value = (_has_bits_[0] & 0x00000008u) != 0;
+  bool value = (_has_bits_[0] & 0x00000040u) != 0;
   return value;
 }
 inline bool BROADCAST_ROOM_MESSAGE_RES::has_id() const {
@@ -2428,7 +2770,7 @@ inline bool BROADCAST_ROOM_MESSAGE_RES::has_id() const {
 }
 inline void BROADCAST_ROOM_MESSAGE_RES::clear_id() {
   id_ = 11;
-  _has_bits_[0] &= ~0x00000008u;
+  _has_bits_[0] &= ~0x00000040u;
 }
 inline ::PROTOCOL BROADCAST_ROOM_MESSAGE_RES::_internal_id() const {
   return static_cast< ::PROTOCOL >(id_);
@@ -2439,7 +2781,7 @@ inline ::PROTOCOL BROADCAST_ROOM_MESSAGE_RES::id() const {
 }
 inline void BROADCAST_ROOM_MESSAGE_RES::_internal_set_id(::PROTOCOL value) {
   assert(::PROTOCOL_IsValid(value));
-  _has_bits_[0] |= 0x00000008u;
+  _has_bits_[0] |= 0x00000040u;
   id_ = value;
 }
 inline void BROADCAST_ROOM_MESSAGE_RES::set_id(::PROTOCOL value) {
@@ -2476,7 +2818,7 @@ inline void BROADCAST_ROOM_MESSAGE_RES::set_var_code(::ErrorCode value) {
   // @@protoc_insertion_point(field_set:BROADCAST_ROOM_MESSAGE_RES.var_code)
 }
 
-// optional string var_message = 3;
+// optional bytes var_message = 3;
 inline bool BROADCAST_ROOM_MESSAGE_RES::_internal_has_var_message() const {
   bool value = (_has_bits_[0] & 0x00000001u) != 0;
   return value;
@@ -2519,7 +2861,7 @@ inline void BROADCAST_ROOM_MESSAGE_RES::set_var_message(const char* value) {
   var_message_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
   // @@protoc_insertion_point(field_set_char:BROADCAST_ROOM_MESSAGE_RES.var_message)
 }
-inline void BROADCAST_ROOM_MESSAGE_RES::set_var_message(const char* value, size_t size) {
+inline void BROADCAST_ROOM_MESSAGE_RES::set_var_message(const void* value, size_t size) {
   _has_bits_[0] |= 0x00000001u;
   var_message_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
@@ -2547,7 +2889,7 @@ inline void BROADCAST_ROOM_MESSAGE_RES::set_allocated_var_message(std::string* v
   // @@protoc_insertion_point(field_set_allocated:BROADCAST_ROOM_MESSAGE_RES.var_message)
 }
 
-// optional string var_name = 4;
+// optional bytes var_name = 4;
 inline bool BROADCAST_ROOM_MESSAGE_RES::_internal_has_var_name() const {
   bool value = (_has_bits_[0] & 0x00000002u) != 0;
   return value;
@@ -2590,7 +2932,7 @@ inline void BROADCAST_ROOM_MESSAGE_RES::set_var_name(const char* value) {
   var_name_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
   // @@protoc_insertion_point(field_set_char:BROADCAST_ROOM_MESSAGE_RES.var_name)
 }
-inline void BROADCAST_ROOM_MESSAGE_RES::set_var_name(const char* value, size_t size) {
+inline void BROADCAST_ROOM_MESSAGE_RES::set_var_name(const void* value, size_t size) {
   _has_bits_[0] |= 0x00000002u;
   var_name_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
@@ -2616,6 +2958,91 @@ inline void BROADCAST_ROOM_MESSAGE_RES::set_allocated_var_name(std::string* var_
   }
   var_name_.SetAllocatedNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), var_name);
   // @@protoc_insertion_point(field_set_allocated:BROADCAST_ROOM_MESSAGE_RES.var_name)
+}
+
+// optional int32 var_x = 5;
+inline bool BROADCAST_ROOM_MESSAGE_RES::_internal_has_var_x() const {
+  bool value = (_has_bits_[0] & 0x00000008u) != 0;
+  return value;
+}
+inline bool BROADCAST_ROOM_MESSAGE_RES::has_var_x() const {
+  return _internal_has_var_x();
+}
+inline void BROADCAST_ROOM_MESSAGE_RES::clear_var_x() {
+  var_x_ = 0;
+  _has_bits_[0] &= ~0x00000008u;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 BROADCAST_ROOM_MESSAGE_RES::_internal_var_x() const {
+  return var_x_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 BROADCAST_ROOM_MESSAGE_RES::var_x() const {
+  // @@protoc_insertion_point(field_get:BROADCAST_ROOM_MESSAGE_RES.var_x)
+  return _internal_var_x();
+}
+inline void BROADCAST_ROOM_MESSAGE_RES::_internal_set_var_x(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  _has_bits_[0] |= 0x00000008u;
+  var_x_ = value;
+}
+inline void BROADCAST_ROOM_MESSAGE_RES::set_var_x(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  _internal_set_var_x(value);
+  // @@protoc_insertion_point(field_set:BROADCAST_ROOM_MESSAGE_RES.var_x)
+}
+
+// optional int32 var_y = 6;
+inline bool BROADCAST_ROOM_MESSAGE_RES::_internal_has_var_y() const {
+  bool value = (_has_bits_[0] & 0x00000010u) != 0;
+  return value;
+}
+inline bool BROADCAST_ROOM_MESSAGE_RES::has_var_y() const {
+  return _internal_has_var_y();
+}
+inline void BROADCAST_ROOM_MESSAGE_RES::clear_var_y() {
+  var_y_ = 0;
+  _has_bits_[0] &= ~0x00000010u;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 BROADCAST_ROOM_MESSAGE_RES::_internal_var_y() const {
+  return var_y_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 BROADCAST_ROOM_MESSAGE_RES::var_y() const {
+  // @@protoc_insertion_point(field_get:BROADCAST_ROOM_MESSAGE_RES.var_y)
+  return _internal_var_y();
+}
+inline void BROADCAST_ROOM_MESSAGE_RES::_internal_set_var_y(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  _has_bits_[0] |= 0x00000010u;
+  var_y_ = value;
+}
+inline void BROADCAST_ROOM_MESSAGE_RES::set_var_y(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  _internal_set_var_y(value);
+  // @@protoc_insertion_point(field_set:BROADCAST_ROOM_MESSAGE_RES.var_y)
+}
+
+// optional .eTeam var_color = 7;
+inline bool BROADCAST_ROOM_MESSAGE_RES::_internal_has_var_color() const {
+  bool value = (_has_bits_[0] & 0x00000020u) != 0;
+  return value;
+}
+inline bool BROADCAST_ROOM_MESSAGE_RES::has_var_color() const {
+  return _internal_has_var_color();
+}
+inline void BROADCAST_ROOM_MESSAGE_RES::clear_var_color() {
+  var_color_ = 0;
+  _has_bits_[0] &= ~0x00000020u;
+}
+inline ::eTeam BROADCAST_ROOM_MESSAGE_RES::_internal_var_color() const {
+  return static_cast< ::eTeam >(var_color_);
+}
+inline ::eTeam BROADCAST_ROOM_MESSAGE_RES::var_color() const {
+  // @@protoc_insertion_point(field_get:BROADCAST_ROOM_MESSAGE_RES.var_color)
+  return _internal_var_color();
+}
+inline void BROADCAST_ROOM_MESSAGE_RES::_internal_set_var_color(::eTeam value) {
+  assert(::eTeam_IsValid(value));
+  _has_bits_[0] |= 0x00000020u;
+  var_color_ = value;
+}
+inline void BROADCAST_ROOM_MESSAGE_RES::set_var_color(::eTeam value) {
+  _internal_set_var_color(value);
+  // @@protoc_insertion_point(field_set:BROADCAST_ROOM_MESSAGE_RES.var_color)
 }
 
 // -------------------------------------------------------------------
@@ -2778,9 +3205,201 @@ inline void MATCH_RES::set_var_code(::ErrorCode value) {
   // @@protoc_insertion_point(field_set:MATCH_RES.var_code)
 }
 
+// -------------------------------------------------------------------
+
+// GAME_RESULT_NTY
+
+// optional .PROTOCOL id = 1 [default = ID_PKT_GAME_RESULT_NTY];
+inline bool GAME_RESULT_NTY::_internal_has_id() const {
+  bool value = (_has_bits_[0] & 0x00000010u) != 0;
+  return value;
+}
+inline bool GAME_RESULT_NTY::has_id() const {
+  return _internal_has_id();
+}
+inline void GAME_RESULT_NTY::clear_id() {
+  id_ = 18;
+  _has_bits_[0] &= ~0x00000010u;
+}
+inline ::PROTOCOL GAME_RESULT_NTY::_internal_id() const {
+  return static_cast< ::PROTOCOL >(id_);
+}
+inline ::PROTOCOL GAME_RESULT_NTY::id() const {
+  // @@protoc_insertion_point(field_get:GAME_RESULT_NTY.id)
+  return _internal_id();
+}
+inline void GAME_RESULT_NTY::_internal_set_id(::PROTOCOL value) {
+  assert(::PROTOCOL_IsValid(value));
+  _has_bits_[0] |= 0x00000010u;
+  id_ = value;
+}
+inline void GAME_RESULT_NTY::set_id(::PROTOCOL value) {
+  _internal_set_id(value);
+  // @@protoc_insertion_point(field_set:GAME_RESULT_NTY.id)
+}
+
+// optional int64 var_index = 2;
+inline bool GAME_RESULT_NTY::_internal_has_var_index() const {
+  bool value = (_has_bits_[0] & 0x00000002u) != 0;
+  return value;
+}
+inline bool GAME_RESULT_NTY::has_var_index() const {
+  return _internal_has_var_index();
+}
+inline void GAME_RESULT_NTY::clear_var_index() {
+  var_index_ = PROTOBUF_LONGLONG(0);
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int64 GAME_RESULT_NTY::_internal_var_index() const {
+  return var_index_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int64 GAME_RESULT_NTY::var_index() const {
+  // @@protoc_insertion_point(field_get:GAME_RESULT_NTY.var_index)
+  return _internal_var_index();
+}
+inline void GAME_RESULT_NTY::_internal_set_var_index(::PROTOBUF_NAMESPACE_ID::int64 value) {
+  _has_bits_[0] |= 0x00000002u;
+  var_index_ = value;
+}
+inline void GAME_RESULT_NTY::set_var_index(::PROTOBUF_NAMESPACE_ID::int64 value) {
+  _internal_set_var_index(value);
+  // @@protoc_insertion_point(field_set:GAME_RESULT_NTY.var_index)
+}
+
+// optional bytes var_name = 3;
+inline bool GAME_RESULT_NTY::_internal_has_var_name() const {
+  bool value = (_has_bits_[0] & 0x00000001u) != 0;
+  return value;
+}
+inline bool GAME_RESULT_NTY::has_var_name() const {
+  return _internal_has_var_name();
+}
+inline void GAME_RESULT_NTY::clear_var_name() {
+  var_name_.ClearToEmptyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline const std::string& GAME_RESULT_NTY::var_name() const {
+  // @@protoc_insertion_point(field_get:GAME_RESULT_NTY.var_name)
+  return _internal_var_name();
+}
+inline void GAME_RESULT_NTY::set_var_name(const std::string& value) {
+  _internal_set_var_name(value);
+  // @@protoc_insertion_point(field_set:GAME_RESULT_NTY.var_name)
+}
+inline std::string* GAME_RESULT_NTY::mutable_var_name() {
+  // @@protoc_insertion_point(field_mutable:GAME_RESULT_NTY.var_name)
+  return _internal_mutable_var_name();
+}
+inline const std::string& GAME_RESULT_NTY::_internal_var_name() const {
+  return var_name_.GetNoArena();
+}
+inline void GAME_RESULT_NTY::_internal_set_var_name(const std::string& value) {
+  _has_bits_[0] |= 0x00000001u;
+  var_name_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), value);
+}
+inline void GAME_RESULT_NTY::set_var_name(std::string&& value) {
+  _has_bits_[0] |= 0x00000001u;
+  var_name_.SetNoArena(
+    &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:GAME_RESULT_NTY.var_name)
+}
+inline void GAME_RESULT_NTY::set_var_name(const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  _has_bits_[0] |= 0x00000001u;
+  var_name_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:GAME_RESULT_NTY.var_name)
+}
+inline void GAME_RESULT_NTY::set_var_name(const void* value, size_t size) {
+  _has_bits_[0] |= 0x00000001u;
+  var_name_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:GAME_RESULT_NTY.var_name)
+}
+inline std::string* GAME_RESULT_NTY::_internal_mutable_var_name() {
+  _has_bits_[0] |= 0x00000001u;
+  return var_name_.MutableNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline std::string* GAME_RESULT_NTY::release_var_name() {
+  // @@protoc_insertion_point(field_release:GAME_RESULT_NTY.var_name)
+  if (!_internal_has_var_name()) {
+    return nullptr;
+  }
+  _has_bits_[0] &= ~0x00000001u;
+  return var_name_.ReleaseNonDefaultNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline void GAME_RESULT_NTY::set_allocated_var_name(std::string* var_name) {
+  if (var_name != nullptr) {
+    _has_bits_[0] |= 0x00000001u;
+  } else {
+    _has_bits_[0] &= ~0x00000001u;
+  }
+  var_name_.SetAllocatedNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), var_name);
+  // @@protoc_insertion_point(field_set_allocated:GAME_RESULT_NTY.var_name)
+}
+
+// optional .ErrorCode var_code = 4;
+inline bool GAME_RESULT_NTY::_internal_has_var_code() const {
+  bool value = (_has_bits_[0] & 0x00000004u) != 0;
+  return value;
+}
+inline bool GAME_RESULT_NTY::has_var_code() const {
+  return _internal_has_var_code();
+}
+inline void GAME_RESULT_NTY::clear_var_code() {
+  var_code_ = 0;
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline ::ErrorCode GAME_RESULT_NTY::_internal_var_code() const {
+  return static_cast< ::ErrorCode >(var_code_);
+}
+inline ::ErrorCode GAME_RESULT_NTY::var_code() const {
+  // @@protoc_insertion_point(field_get:GAME_RESULT_NTY.var_code)
+  return _internal_var_code();
+}
+inline void GAME_RESULT_NTY::_internal_set_var_code(::ErrorCode value) {
+  assert(::ErrorCode_IsValid(value));
+  _has_bits_[0] |= 0x00000004u;
+  var_code_ = value;
+}
+inline void GAME_RESULT_NTY::set_var_code(::ErrorCode value) {
+  _internal_set_var_code(value);
+  // @@protoc_insertion_point(field_set:GAME_RESULT_NTY.var_code)
+}
+
+// optional .eTeam var_color = 5;
+inline bool GAME_RESULT_NTY::_internal_has_var_color() const {
+  bool value = (_has_bits_[0] & 0x00000008u) != 0;
+  return value;
+}
+inline bool GAME_RESULT_NTY::has_var_color() const {
+  return _internal_has_var_color();
+}
+inline void GAME_RESULT_NTY::clear_var_color() {
+  var_color_ = 0;
+  _has_bits_[0] &= ~0x00000008u;
+}
+inline ::eTeam GAME_RESULT_NTY::_internal_var_color() const {
+  return static_cast< ::eTeam >(var_color_);
+}
+inline ::eTeam GAME_RESULT_NTY::var_color() const {
+  // @@protoc_insertion_point(field_get:GAME_RESULT_NTY.var_color)
+  return _internal_var_color();
+}
+inline void GAME_RESULT_NTY::_internal_set_var_color(::eTeam value) {
+  assert(::eTeam_IsValid(value));
+  _has_bits_[0] |= 0x00000008u;
+  var_color_ = value;
+}
+inline void GAME_RESULT_NTY::set_var_color(::eTeam value) {
+  _internal_set_var_color(value);
+  // @@protoc_insertion_point(field_set:GAME_RESULT_NTY.var_color)
+}
+
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

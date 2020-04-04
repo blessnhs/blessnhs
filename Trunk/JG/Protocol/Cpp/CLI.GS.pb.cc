@@ -215,8 +215,14 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_CLI_2eGS_2eproto::offsets[] PR
   ~0u,  // no _weak_field_map_
   PROTOBUF_FIELD_OFFSET(::BROADCAST_ROOM_MESSAGE_REQ, id_),
   PROTOBUF_FIELD_OFFSET(::BROADCAST_ROOM_MESSAGE_REQ, var_message_),
-  1,
+  PROTOBUF_FIELD_OFFSET(::BROADCAST_ROOM_MESSAGE_REQ, var_x_),
+  PROTOBUF_FIELD_OFFSET(::BROADCAST_ROOM_MESSAGE_REQ, var_y_),
+  PROTOBUF_FIELD_OFFSET(::BROADCAST_ROOM_MESSAGE_REQ, var_color_),
+  4,
   0,
+  1,
+  2,
+  3,
   PROTOBUF_FIELD_OFFSET(::ROOM_LIST_REQ, _has_bits_),
   PROTOBUF_FIELD_OFFSET(::ROOM_LIST_REQ, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -238,9 +244,9 @@ static const ::PROTOBUF_NAMESPACE_ID::internal::MigrationSchema schemas[] PROTOB
   { 18, 25, sizeof(::CREATE_ROOM_REQ)},
   { 27, 34, sizeof(::ENTER_ROOM_REQ)},
   { 36, 43, sizeof(::LEAVE_ROOM_REQ)},
-  { 45, 52, sizeof(::BROADCAST_ROOM_MESSAGE_REQ)},
-  { 54, 60, sizeof(::ROOM_LIST_REQ)},
-  { 61, 67, sizeof(::MATCH_REQ)},
+  { 45, 55, sizeof(::BROADCAST_ROOM_MESSAGE_REQ)},
+  { 60, 66, sizeof(::ROOM_LIST_REQ)},
+  { 67, 73, sizeof(::MATCH_REQ)},
 };
 
 static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] = {
@@ -261,17 +267,19 @@ const char descriptor_table_protodef_CLI_2eGS_2eproto[] PROTOBUF_SECTION_VARIABL
   "\030\001 \001(\0162\t.PROTOCOL:\020ID_PKT_LOGIN_REQ\022\017\n\007v"
   "ar_uid\030\002 \002(\t\022\021\n\tvar_token\030\003 \002(\t\"R\n\017CREAT"
   "E_ROOM_REQ\022-\n\002id\030\001 \001(\0162\t.PROTOCOL:\026ID_PK"
-  "T_CREATE_ROOM_REQ\022\020\n\010var_name\030\002 \002(\t\"N\n\016E"
+  "T_CREATE_ROOM_REQ\022\020\n\010var_name\030\002 \002(\014\"N\n\016E"
   "NTER_ROOM_REQ\022,\n\002id\030\001 \001(\0162\t.PROTOCOL:\025ID"
   "_PKT_ENTER_ROOM_REQ\022\016\n\006var_id\030\002 \002(\005\"N\n\016L"
   "EAVE_ROOM_REQ\022,\n\002id\030\001 \001(\0162\t.PROTOCOL:\025ID"
-  "_PKT_LEAVE_ROOM_REQ\022\016\n\006var_id\030\002 \002(\005\"k\n\032B"
-  "ROADCAST_ROOM_MESSAGE_REQ\0228\n\002id\030\001 \001(\0162\t."
-  "PROTOCOL:!ID_PKT_BROADCAST_ROOM_MESSAGE_"
-  "REQ\022\023\n\013var_message\030\002 \002(\t\"<\n\rROOM_LIST_RE"
-  "Q\022+\n\002id\030\001 \001(\0162\t.PROTOCOL:\024ID_PKT_ROOM_LI"
-  "ST_REQ\"4\n\tMATCH_REQ\022\'\n\002id\030\001 \001(\0162\t.PROTOC"
-  "OL:\020ID_PKT_MATCH_REQB\002H\001"
+  "_PKT_LEAVE_ROOM_REQ\022\016\n\006var_id\030\002 \002(\005\"\244\001\n\032"
+  "BROADCAST_ROOM_MESSAGE_REQ\0228\n\002id\030\001 \001(\0162\t"
+  ".PROTOCOL:!ID_PKT_BROADCAST_ROOM_MESSAGE"
+  "_REQ\022\023\n\013var_message\030\002 \002(\014\022\r\n\005var_x\030\003 \002(\005"
+  "\022\r\n\005var_y\030\004 \002(\005\022\031\n\tvar_color\030\005 \002(\0162\006.eTe"
+  "am\"<\n\rROOM_LIST_REQ\022+\n\002id\030\001 \001(\0162\t.PROTOC"
+  "OL:\024ID_PKT_ROOM_LIST_REQ\"4\n\tMATCH_REQ\022\'\n"
+  "\002id\030\001 \001(\0162\t.PROTOCOL:\020ID_PKT_MATCH_REQB\002"
+  "H\001"
   ;
 static const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable*const descriptor_table_CLI_2eGS_2eproto_deps[2] = {
   &::descriptor_table_Enum_2eproto,
@@ -290,7 +298,7 @@ static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_CLI
 static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_CLI_2eGS_2eproto_once;
 static bool descriptor_table_CLI_2eGS_2eproto_initialized = false;
 const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_CLI_2eGS_2eproto = {
-  &descriptor_table_CLI_2eGS_2eproto_initialized, descriptor_table_protodef_CLI_2eGS_2eproto, "CLI.GS.proto", 664,
+  &descriptor_table_CLI_2eGS_2eproto_initialized, descriptor_table_protodef_CLI_2eGS_2eproto, "CLI.GS.proto", 722,
   &descriptor_table_CLI_2eGS_2eproto_once, descriptor_table_CLI_2eGS_2eproto_sccs, descriptor_table_CLI_2eGS_2eproto_deps, 8, 2,
   schemas, file_default_instances, TableStruct_CLI_2eGS_2eproto::offsets,
   file_level_metadata_CLI_2eGS_2eproto, 8, file_level_enum_descriptors_CLI_2eGS_2eproto, file_level_service_descriptors_CLI_2eGS_2eproto,
@@ -918,14 +926,11 @@ const char* CREATE_ROOM_REQ::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPAC
           }
         } else goto handle_unusual;
         continue;
-      // required string var_name = 2;
+      // required bytes var_name = 2;
       case 2:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 18)) {
           auto str = _internal_mutable_var_name();
           ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
-          #ifndef NDEBUG
-          ::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "CREATE_ROOM_REQ.var_name");
-          #endif  // !NDEBUG
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
@@ -964,13 +969,9 @@ failure:
       1, this->_internal_id(), target);
   }
 
-  // required string var_name = 2;
+  // required bytes var_name = 2;
   if (cached_has_bits & 0x00000001u) {
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::VerifyUTF8StringNamedField(
-      this->_internal_var_name().data(), static_cast<int>(this->_internal_var_name().length()),
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SERIALIZE,
-      "CREATE_ROOM_REQ.var_name");
-    target = stream->WriteStringMaybeAliased(
+    target = stream->WriteBytesMaybeAliased(
         2, this->_internal_var_name(), target);
   }
 
@@ -986,10 +987,10 @@ size_t CREATE_ROOM_REQ::ByteSizeLong() const {
 // @@protoc_insertion_point(message_byte_size_start:CREATE_ROOM_REQ)
   size_t total_size = 0;
 
-  // required string var_name = 2;
+  // required bytes var_name = 2;
   if (_internal_has_var_name()) {
     total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::BytesSize(
         this->_internal_var_name());
   }
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
@@ -1570,10 +1571,19 @@ class BROADCAST_ROOM_MESSAGE_REQ::_Internal {
  public:
   using HasBits = decltype(std::declval<BROADCAST_ROOM_MESSAGE_REQ>()._has_bits_);
   static void set_has_id(HasBits* has_bits) {
-    (*has_bits)[0] |= 2u;
+    (*has_bits)[0] |= 16u;
   }
   static void set_has_var_message(HasBits* has_bits) {
     (*has_bits)[0] |= 1u;
+  }
+  static void set_has_var_x(HasBits* has_bits) {
+    (*has_bits)[0] |= 2u;
+  }
+  static void set_has_var_y(HasBits* has_bits) {
+    (*has_bits)[0] |= 4u;
+  }
+  static void set_has_var_color(HasBits* has_bits) {
+    (*has_bits)[0] |= 8u;
   }
 };
 
@@ -1591,13 +1601,18 @@ BROADCAST_ROOM_MESSAGE_REQ::BROADCAST_ROOM_MESSAGE_REQ(const BROADCAST_ROOM_MESS
   if (from._internal_has_var_message()) {
     var_message_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.var_message_);
   }
-  id_ = from.id_;
+  ::memcpy(&var_x_, &from.var_x_,
+    static_cast<size_t>(reinterpret_cast<char*>(&id_) -
+    reinterpret_cast<char*>(&var_x_)) + sizeof(id_));
   // @@protoc_insertion_point(copy_constructor:BROADCAST_ROOM_MESSAGE_REQ)
 }
 
 void BROADCAST_ROOM_MESSAGE_REQ::SharedCtor() {
   ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&scc_info_BROADCAST_ROOM_MESSAGE_REQ_CLI_2eGS_2eproto.base);
   var_message_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  ::memset(&var_x_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&var_color_) -
+      reinterpret_cast<char*>(&var_x_)) + sizeof(var_color_));
   id_ = 10;
 }
 
@@ -1626,10 +1641,13 @@ void BROADCAST_ROOM_MESSAGE_REQ::Clear() {
   (void) cached_has_bits;
 
   cached_has_bits = _has_bits_[0];
-  if (cached_has_bits & 0x00000003u) {
-    if (cached_has_bits & 0x00000001u) {
-      var_message_.ClearNonDefaultToEmptyNoArena();
-    }
+  if (cached_has_bits & 0x00000001u) {
+    var_message_.ClearNonDefaultToEmptyNoArena();
+  }
+  if (cached_has_bits & 0x0000001eu) {
+    ::memset(&var_x_, 0, static_cast<size_t>(
+        reinterpret_cast<char*>(&var_color_) -
+        reinterpret_cast<char*>(&var_x_)) + sizeof(var_color_));
     id_ = 10;
   }
   _has_bits_.Clear();
@@ -1656,15 +1674,40 @@ const char* BROADCAST_ROOM_MESSAGE_REQ::_InternalParse(const char* ptr, ::PROTOB
           }
         } else goto handle_unusual;
         continue;
-      // required string var_message = 2;
+      // required bytes var_message = 2;
       case 2:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 18)) {
           auto str = _internal_mutable_var_message();
           ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
-          #ifndef NDEBUG
-          ::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "BROADCAST_ROOM_MESSAGE_REQ.var_message");
-          #endif  // !NDEBUG
           CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // required int32 var_x = 3;
+      case 3:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 24)) {
+          _Internal::set_has_var_x(&has_bits);
+          var_x_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // required int32 var_y = 4;
+      case 4:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 32)) {
+          _Internal::set_has_var_y(&has_bits);
+          var_y_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // required .eTeam var_color = 5;
+      case 5:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 40)) {
+          ::PROTOBUF_NAMESPACE_ID::uint64 val = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
+          CHK_(ptr);
+          if (PROTOBUF_PREDICT_TRUE(::eTeam_IsValid(val))) {
+            _internal_set_var_color(static_cast<::eTeam>(val));
+          } else {
+            ::PROTOBUF_NAMESPACE_ID::internal::WriteVarint(5, val, mutable_unknown_fields());
+          }
         } else goto handle_unusual;
         continue;
       default: {
@@ -1696,20 +1739,35 @@ failure:
 
   cached_has_bits = _has_bits_[0];
   // optional .PROTOCOL id = 1 [default = ID_PKT_BROADCAST_ROOM_MESSAGE_REQ];
-  if (cached_has_bits & 0x00000002u) {
+  if (cached_has_bits & 0x00000010u) {
     target = stream->EnsureSpace(target);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteEnumToArray(
       1, this->_internal_id(), target);
   }
 
-  // required string var_message = 2;
+  // required bytes var_message = 2;
   if (cached_has_bits & 0x00000001u) {
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::VerifyUTF8StringNamedField(
-      this->_internal_var_message().data(), static_cast<int>(this->_internal_var_message().length()),
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SERIALIZE,
-      "BROADCAST_ROOM_MESSAGE_REQ.var_message");
-    target = stream->WriteStringMaybeAliased(
+    target = stream->WriteBytesMaybeAliased(
         2, this->_internal_var_message(), target);
+  }
+
+  // required int32 var_x = 3;
+  if (cached_has_bits & 0x00000002u) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32ToArray(3, this->_internal_var_x(), target);
+  }
+
+  // required int32 var_y = 4;
+  if (cached_has_bits & 0x00000004u) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32ToArray(4, this->_internal_var_y(), target);
+  }
+
+  // required .eTeam var_color = 5;
+  if (cached_has_bits & 0x00000008u) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteEnumToArray(
+      5, this->_internal_var_color(), target);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
@@ -1720,15 +1778,65 @@ failure:
   return target;
 }
 
+size_t BROADCAST_ROOM_MESSAGE_REQ::RequiredFieldsByteSizeFallback() const {
+// @@protoc_insertion_point(required_fields_byte_size_fallback_start:BROADCAST_ROOM_MESSAGE_REQ)
+  size_t total_size = 0;
+
+  if (_internal_has_var_message()) {
+    // required bytes var_message = 2;
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::BytesSize(
+        this->_internal_var_message());
+  }
+
+  if (_internal_has_var_x()) {
+    // required int32 var_x = 3;
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32Size(
+        this->_internal_var_x());
+  }
+
+  if (_internal_has_var_y()) {
+    // required int32 var_y = 4;
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32Size(
+        this->_internal_var_y());
+  }
+
+  if (_internal_has_var_color()) {
+    // required .eTeam var_color = 5;
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::EnumSize(this->_internal_var_color());
+  }
+
+  return total_size;
+}
 size_t BROADCAST_ROOM_MESSAGE_REQ::ByteSizeLong() const {
 // @@protoc_insertion_point(message_byte_size_start:BROADCAST_ROOM_MESSAGE_REQ)
   size_t total_size = 0;
 
-  // required string var_message = 2;
-  if (_internal_has_var_message()) {
+  if (((_has_bits_[0] & 0x0000000f) ^ 0x0000000f) == 0) {  // All required fields are present.
+    // required bytes var_message = 2;
     total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::BytesSize(
         this->_internal_var_message());
+
+    // required int32 var_x = 3;
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32Size(
+        this->_internal_var_x());
+
+    // required int32 var_y = 4;
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32Size(
+        this->_internal_var_y());
+
+    // required .eTeam var_color = 5;
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::EnumSize(this->_internal_var_color());
+
+  } else {
+    total_size += RequiredFieldsByteSizeFallback();
   }
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
@@ -1736,7 +1844,7 @@ size_t BROADCAST_ROOM_MESSAGE_REQ::ByteSizeLong() const {
 
   // optional .PROTOCOL id = 1 [default = ID_PKT_BROADCAST_ROOM_MESSAGE_REQ];
   cached_has_bits = _has_bits_[0];
-  if (cached_has_bits & 0x00000002u) {
+  if (cached_has_bits & 0x00000010u) {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::EnumSize(this->_internal_id());
   }
@@ -1773,12 +1881,21 @@ void BROADCAST_ROOM_MESSAGE_REQ::MergeFrom(const BROADCAST_ROOM_MESSAGE_REQ& fro
   (void) cached_has_bits;
 
   cached_has_bits = from._has_bits_[0];
-  if (cached_has_bits & 0x00000003u) {
+  if (cached_has_bits & 0x0000001fu) {
     if (cached_has_bits & 0x00000001u) {
       _has_bits_[0] |= 0x00000001u;
       var_message_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.var_message_);
     }
     if (cached_has_bits & 0x00000002u) {
+      var_x_ = from.var_x_;
+    }
+    if (cached_has_bits & 0x00000004u) {
+      var_y_ = from.var_y_;
+    }
+    if (cached_has_bits & 0x00000008u) {
+      var_color_ = from.var_color_;
+    }
+    if (cached_has_bits & 0x00000010u) {
       id_ = from.id_;
     }
     _has_bits_[0] |= cached_has_bits;
@@ -1800,7 +1917,7 @@ void BROADCAST_ROOM_MESSAGE_REQ::CopyFrom(const BROADCAST_ROOM_MESSAGE_REQ& from
 }
 
 bool BROADCAST_ROOM_MESSAGE_REQ::IsInitialized() const {
-  if ((_has_bits_[0] & 0x00000001) != 0x00000001) return false;
+  if ((_has_bits_[0] & 0x0000000f) != 0x0000000f) return false;
   return true;
 }
 
@@ -1810,6 +1927,9 @@ void BROADCAST_ROOM_MESSAGE_REQ::InternalSwap(BROADCAST_ROOM_MESSAGE_REQ* other)
   swap(_has_bits_[0], other->_has_bits_[0]);
   var_message_.Swap(&other->var_message_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
     GetArenaNoVirtual());
+  swap(var_x_, other->var_x_);
+  swap(var_y_, other->var_y_);
+  swap(var_color_, other->var_color_);
   swap(id_, other->id_);
 }
 

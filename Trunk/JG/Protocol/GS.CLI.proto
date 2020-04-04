@@ -33,16 +33,16 @@ message CREATE_ROOM_RES
 message ENTER_ROOM_RES
 {
     optional PROTOCOL   id                  = 1 [default = ID_PKT_ENTER_ROOM_RES ];
-    optional bytes var_name                  = 2;
+    optional bytes var_name                   = 2;
     optional int32  var_room_id               = 3; 
     optional  ErrorCode    var_code         = 4;
 }
  
  message NEW_USER_IN_ROOM_NTY
 {
-    optional PROTOCOL   id                  = 1 [default = ID_PKT_NEW_USER_IN_ROOM_NTY ];
-    optional RoomUserInfo var_room_user     = 3;
-    optional  ErrorCode    var_code         = 4;
+    optional PROTOCOL   id                        = 1 [default = ID_PKT_NEW_USER_IN_ROOM_NTY ];
+    optional RoomUserInfo var_room_user     = 2;
+    optional  ErrorCode    var_code               = 3;
 }
 
 message LEAVE_ROOM_RES
@@ -58,7 +58,12 @@ message BROADCAST_ROOM_MESSAGE_RES
     optional PROTOCOL   id                  = 1 [default = ID_PKT_BROADCAST_ROOM_MESSAGE_RES ];
     optional  ErrorCode    var_code         = 2;
     optional bytes     var_message          = 3;
-    optional bytes     var_name	     = 4;
+    optional bytes     var_name	            = 4;
+
+
+    optional int32 	var_x 	           = 5;
+    optional int32 	var_y 	           = 6;
+    optional eTeam  var_color               = 7;
 }
 
 message ROOM_LIST_RES
@@ -73,3 +78,13 @@ message MATCH_RES
     optional PROTOCOL   id                  = 1 [default = ID_PKT_MATCH_RES ];
     optional  ErrorCode    var_code         = 2;
 }
+
+ message GAME_RESULT_NTY
+{
+    optional PROTOCOL   	id                        = 1 [default = ID_PKT_GAME_RESULT_NTY ];
+    optional  int64    		var_index	            = 2;
+    optional bytes 		var_name              = 3;
+    optional  ErrorCode    	var_code               = 4;
+    optional eTeam  		var_color               = 5;
+}
+

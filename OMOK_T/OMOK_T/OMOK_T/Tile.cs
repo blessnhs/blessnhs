@@ -7,16 +7,9 @@ using OMOK_T.Network;
 
 namespace OMOK_T
 {
-    public enum TileStatus
-    {
-        Empty,
-        Black,
-        White
-    }
-
     class Tile : Frame
     {
-        TileStatus tileStatus = TileStatus.Empty;
+        eTeam tileStatus = eTeam.None;
         Label label;
         Image whiteImage, blackImage,emptyImage;
         static ImageSource WhiteStoneImageSource;
@@ -24,7 +17,7 @@ namespace OMOK_T
         static ImageSource EmptyStoneImageSource;
         bool doNotFireEvent;
 
-        public event EventHandler<TileStatus> TileStatusChanged;
+        public event EventHandler<eTeam> TileStatusChanged;
 
         public int x, y;
 
@@ -101,7 +94,7 @@ namespace OMOK_T
 
         public int Col { private set; get; }
 
-        public TileStatus Status {
+        public eTeam Status {
             set {
          //       if (tileStatus != value)
                 {
@@ -109,15 +102,15 @@ namespace OMOK_T
 
                     switch (tileStatus)
                     {
-                        case TileStatus.Empty:
+                        case eTeam.None:
                             this.Content = emptyImage;
                             break;
 
-                        case TileStatus.White:
+                        case eTeam.White:
                             this.Content = whiteImage;
                             break;
 
-                        case TileStatus.Black:
+                        case eTeam.Black:
                             this.Content = blackImage;
                             break;
                         default:
@@ -134,7 +127,7 @@ namespace OMOK_T
         // Does not fire TileStatusChanged events.
         public void Initialize()
         {
-            this.Status = TileStatus.Empty;
+            this.Status = eTeam.None;
 
             this.Content = emptyImage;
         }
@@ -162,28 +155,28 @@ namespace OMOK_T
         	}
 
 #endif
-            if(User.IsMyTurn == false || this.Status != TileStatus.Empty)
+            if(User.IsMyTurn == false || this.Status != eTeam.None)
             {
                 return;
             }
 
             switch (User.Color) {
-            case TileStatus.Empty:
-                this.Status = TileStatus.Empty;
+            case eTeam.None:
+                this.Status = eTeam.None;
                 break;
 
-            case TileStatus.Black:
-                this.Status = TileStatus.Black;
+            case eTeam.Black:
+                this.Status = eTeam.Black;
                 break;
 
-            case TileStatus.White:
-                this.Status = TileStatus.White;
+            case eTeam.White:
+                this.Status = eTeam.White;
                 break;
             }
 
             string Message = x + ":" + y + ":" + User.Color.ToString();
 
-            NetProcess.SendRoomMessage(Message);
+            NetProcess.SendRoomMessage(x,y, User.Color,Message);
 
             User.IsMyTurn = false;
         }

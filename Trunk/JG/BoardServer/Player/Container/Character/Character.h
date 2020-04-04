@@ -63,6 +63,13 @@ public:
 	DWORD GetRoom();
 
 	Score& GetScore();
+
+	void SetLevel(int _level);
+	byte GetLevel();
+
+	void SetLevelPoint(bool _level_point);
+	byte GetLevelPoint();
+
 private:
 
 	std::string			m_Name;
@@ -73,7 +80,9 @@ private:
 	BYTE				m_Team;
 
 	DWORD				m_RoomNumber;
-
-
+	
 	Score				m_Score;
+
+	DWORD				m_Level;
+	DWORD				m_LevelPoint;
 };

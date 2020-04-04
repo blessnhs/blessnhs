@@ -17,8 +17,8 @@
                 <RowDefinition Height="1*" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="5*" />
-                <ColumnDefinition Width="5*" />
+                <ColumnDefinition Width="2*" />
+                <ColumnDefinition Width="8*" />
             </Grid.ColumnDefinitions>
 
             <StackLayout x:Name="textStackTop" Grid.Row="0" Grid.Column="0" Spacing="0" Grid.ColumnSpan="2">
