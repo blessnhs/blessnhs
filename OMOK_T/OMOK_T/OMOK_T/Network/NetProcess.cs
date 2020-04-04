@@ -5,6 +5,11 @@ using System;
 using System.IO;
 using Xamarin.Essentials;
 using Xamarin.Forms;
+using System;
+using System.Collections.Generic;
+using Xamarin.Forms;
+using Xamarin.Forms.Xaml;
+using System.Text;
 
 namespace OMOK_T.Network
 {
@@ -66,8 +71,10 @@ namespace OMOK_T.Network
                                     res = LOGIN_RES.Parser.ParseFrom(data.Data);
 
                                     if (res.VarCode == ErrorCode.Success)
+                                    {
                                         IsSuccessAuth = true;
-
+                                        User.Id = res.VarIndex;
+                                    }
                                 }
                                 break;
                             case (int)PROTOCOL.IdPktCreateRoomRes:
@@ -94,11 +101,14 @@ namespace OMOK_T.Network
                                     NEW_USER_IN_ROOM_NTY res = new NEW_USER_IN_ROOM_NTY();
                                     res = NEW_USER_IN_ROOM_NTY.Parser.ParseFrom(data.Data);
 
-                                    if(res.VarRoomUser.VarName != User.MyNickName)
+                                    string d_Name = Helper.ToStr(res.VarRoomUser.VarName.ToByteArray());
+
+                                 
+                                    if (d_Name != User.MyNickName)
                                     {
                                         //상대방이름
                                         //나갈때 초기화한다. 
-                                        User.OppNickName = res.VarRoomUser.VarName;
+                                          User.OppNickName = d_Name;
 
                                         var Room = (Room)page.Children[1];
                                         Room.UpdateBattleInfo();
@@ -112,7 +122,9 @@ namespace OMOK_T.Network
 
                                     var Room = (Room)page.Children[1];
 
-                                    string[] header = res.VarMessage.Split(':');
+                                    string d_VarMessage = Helper.ToStr(res.VarMessage.ToByteArray());
+
+                                    string[] header = d_VarMessage.Split(':');
                                     if (header.Length > 2)
                                     {
                                         int x = Convert.ToInt32(header[0]);
@@ -148,6 +160,9 @@ namespace OMOK_T.Network
                                                 User.IsMyTurn = true;
                                                 User.MytrunStartTime = DateTime.Now;
                                             }
+
+                                            Room.UpdateTurnBackground(color);
+
                                         }
 
                                     }
@@ -160,6 +175,20 @@ namespace OMOK_T.Network
                                     lobby.UpdateMessage(data);
                                 }
                                 break;
+
+                            case (int)PROTOCOL.IdPktLeaveRoomRes:
+                                {
+                                    LEAVE_ROOM_RES res = new LEAVE_ROOM_RES();
+                                    res = LEAVE_ROOM_RES.Parser.ParseFrom(data.Data);
+
+                                    if(res.VarIndex == User.Id)
+                                    {
+                                        page.CurrentPage = page.Children[0];
+                                    }
+
+                                }
+                                break;
+
                             case (int)PROTOCOL.IdPktEnterRoomRes:
                                 {
                                     ENTER_ROOM_RES res = new ENTER_ROOM_RES();
@@ -200,9 +229,11 @@ namespace OMOK_T.Network
 
         static public void SendMakeRoom(string Name)
         {
+            byte[] in_Name = Helper.ToByteString(Name);
+
             CREATE_ROOM_REQ person = new CREATE_ROOM_REQ
             {
-                VarName = Name,
+                VarName = ByteString.CopyFrom(in_Name),
             };
             using (MemoryStream stream = new MemoryStream())
             {
@@ -294,7 +325,7 @@ namespace OMOK_T.Network
         {
             BROADCAST_ROOM_MESSAGE_REQ message = new BROADCAST_ROOM_MESSAGE_REQ
             {
-                VarMessage = msg
+                VarMessage = ByteString.CopyFrom(msg, Encoding.Unicode)
             };
             using (MemoryStream stream = new MemoryStream())
             {

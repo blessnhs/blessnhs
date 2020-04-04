@@ -109,7 +109,8 @@ keytool.exe -list -v -keystore "%LocalAppData%\Xamarin\Mono for Android\debug.ke
 SHA1: E6:C1:16:4E:CC:F3:F8:B9:50:7C:4F:33:A8:6B:2A:1A:FE:1A:25:07
 SHA1: 뒷부분을 복사하여 '디버그 서명 인증서 SHA-1'에 붙여 넣습니다.
 
-​
+keytool.exe -list -v -keystore "%LocalAppData%\Xamarin\Mono for Android\keystore\NHS\NHS.keystore"
+​2F:24:2F:E2:A4:C7:72:F8:08:0F:ED:0D:83:DA:3C:75:22:38:B3:3F
 
 다음 단계로 넘어가면 google-services.json을 다운로드하라고 할 것입니다.
 

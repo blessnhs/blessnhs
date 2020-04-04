@@ -22,7 +22,11 @@
             </Grid.ColumnDefinitions>
 
             <StackLayout x:Name="textStackTop" Grid.Row="0" Grid.Column="0" Spacing="0" Grid.ColumnSpan="2">
-                <Label x:Name="timeLabel" Text="0:00" VerticalOptions="CenterAndExpand" HorizontalTextAlignment="Center" />
+                <Label x:Name="timeLabel" Text="0:00" HorizontalTextAlignment="Left" />
+            </StackLayout>
+            
+            <StackLayout  Grid.Row="0" Grid.Column="1" Spacing="0" Grid.ColumnSpan="2">
+                <Button x:Name="LeaveRoom" Text="나가기"  Clicked="OnLeaveClicked" BackgroundColor="White"/>
             </StackLayout>
 
             <ContentView Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" SizeChanged="OnBoardContentViewSizeChanged">

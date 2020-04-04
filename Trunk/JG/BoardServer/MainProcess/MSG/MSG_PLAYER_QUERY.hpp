@@ -259,6 +259,100 @@ namespace Board	{
 
 		}
 
+		DWORD convert_unicode_to_ansi_string(
+			__out std::string& ansi,
+			__in const wchar_t* unicode,
+			__in const size_t unicode_size
+		) {
+			DWORD error = 0;
+			do {
+				if ((nullptr == unicode) || (0 == unicode_size)) {
+					error = ERROR_INVALID_PARAMETER;
+					break;
+				}
+				ansi.clear();
+				//
+				// getting required cch.
+				//
+				int required_cch = ::WideCharToMultiByte(
+					CP_ACP,
+					0,
+					unicode, static_cast<int>(unicode_size),
+					nullptr, 0,
+					nullptr, nullptr
+				);
+				if (0 == required_cch) {
+					error = ::GetLastError();
+					break;
+				}
+				//
+				// allocate.
+				//
+				ansi.resize(required_cch);
+				//
+				// convert.
+				//
+				if (0 == ::WideCharToMultiByte(
+					CP_ACP,
+					0,
+					unicode, static_cast<int>(unicode_size),
+					const_cast<char*>(ansi.c_str()), static_cast<int>(ansi.size()),
+					nullptr, nullptr
+				)) {
+					error = ::GetLastError();
+					break;
+				}
+			} while (false);
+			return error;
+		}
+			   
+		DWORD convert_unicode_to_utf8_string(
+			__out std::string& utf8,
+			__in const wchar_t* unicode,
+			__in const size_t unicode_size
+		) {
+			DWORD error = 0;
+			do {
+				if ((nullptr == unicode) || (0 == unicode_size)) {
+					error = ERROR_INVALID_PARAMETER;
+					break;
+				}
+				utf8.clear();
+				//
+				// getting required cch.
+				//
+				int required_cch = ::WideCharToMultiByte(
+					CP_UTF8,
+					WC_ERR_INVALID_CHARS,
+					unicode, static_cast<int>(unicode_size),
+					nullptr, 0,
+					nullptr, nullptr
+				);
+				if (0 == required_cch) {
+					error = ::GetLastError();
+					break;
+				}
+				//
+				// allocate.
+				//
+				utf8.resize(required_cch);
+				//
+				// convert.
+				//
+				if (0 == ::WideCharToMultiByte(
+					CP_UTF8,
+					WC_ERR_INVALID_CHARS,
+					unicode, static_cast<int>(unicode_size),
+					const_cast<char*>(utf8.c_str()), static_cast<int>(utf8.size()),
+					nullptr, nullptr
+				)) {
+					error = ::GetLastError();
+					break;
+				}
+			} while (false);
+			return error;
+		}
+
 
 		void Execute(LPVOID Param)
 		{
@@ -303,14 +397,18 @@ namespace Board	{
 			email.assign(http_out[2].begin(), http_out[2].end());
 			picture_url.assign(http_out[4].begin(), http_out[4].end());
 
-			name.resize(1024);
+		/*	name.resize(1024);
 			::WideCharToMultiByte(
 				CP_ACP,
 				0,
 				http_out[3].c_str(),-1,
 				const_cast<char*>(name.c_str()), static_cast<int>(name.size()),
 				nullptr, nullptr
-			);
+			);*/
+
+			convert_unicode_to_ansi_string(name, http_out[3].c_str(), http_out[3].size());
+
+		//	name.assign(http_out[3].begin(), http_out[3].end());
 
 			WORD nRet = pProcess->ProcedureUserLogin(flatformid.c_str(), 0/*0번은 구글 인증*/, name.c_str(),picture_url.c_str(),email.c_str(), authentickey, rank, score, win, lose, draw,Index);
 

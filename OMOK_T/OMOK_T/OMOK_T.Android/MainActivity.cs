@@ -37,7 +37,6 @@ namespace OMOK_T.Droid
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
 
-
             FirebaseApp.InitializeApp(Application.Context);
             FirebaseAuth = FirebaseAuth.Instance;
 
@@ -79,6 +78,8 @@ namespace OMOK_T.Droid
             }
         }
 
+      
+
         async void ProcessSignInResult(Intent data)
         {
             GoogleSignInResult signInResult = Auth.GoogleSignInApi.GetSignInResultFromIntent(data);
@@ -95,7 +96,7 @@ namespace OMOK_T.Droid
 
                     User.Uid = signInResult.SignInAccount.Id;
                     User.Token = signInResult.SignInAccount.IdToken;
-                                    
+                    User.MyNickName = signInResult.SignInAccount.DisplayName;
 
                     new AlertDialog.Builder(this).SetMessage(user.DisplayName + " 로그인").Show();
                 }

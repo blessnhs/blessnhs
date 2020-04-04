@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using OMOK_T.Network;
+
 
 namespace OMOK_T
 {
@@ -142,6 +144,30 @@ namespace OMOK_T
         void OnplayAgainButtonClicked(object sender, object EventArgs)
         {
             PrepareForNewGame();
+        }
+
+        async void OnLeaveClicked(object sender, System.EventArgs e)
+        {
+            NetProcess.SendLeaveRoom(0);
+        }
+
+        public bool UpdateTurnBackground(TileStatus status)
+        {
+            if(status == TileStatus.Black)
+            {
+
+                textStackBottom1.BackgroundColor = Color.Blue;
+
+                textStackBottom2.BackgroundColor = Color.White;
+            }
+            else
+            {
+                textStackBottom1.BackgroundColor = Color.White;
+
+                textStackBottom2.BackgroundColor = Color.Blue;
+            }
+
+            return true;
         }
 
         public bool UpdateStone(int x,int y, TileStatus status)

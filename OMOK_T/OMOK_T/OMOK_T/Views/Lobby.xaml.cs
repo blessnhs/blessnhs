@@ -43,7 +43,7 @@ namespace OMOK_T.Views
             {
                 CommunityRoomInfoModel croom = new CommunityRoomInfoModel();
                 croom.Id = room.VarId;
-                croom.Name = room.VarName;
+                croom.Name = Helper.ToStr(room.VarName); 
                 croom.CurrentCount = room.VarCurrentCount;
 
                 viewModel.RoomModel.Add(croom);

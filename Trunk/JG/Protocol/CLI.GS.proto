@@ -21,7 +21,7 @@ message LOGIN_REQ
 message CREATE_ROOM_REQ
 {
     optional PROTOCOL   id                  = 1 [default = ID_PKT_CREATE_ROOM_REQ ];
-    required string var_name                  = 2;
+    required bytes var_name                  = 2;
    
 }
 
@@ -41,7 +41,7 @@ message LEAVE_ROOM_REQ
 message BROADCAST_ROOM_MESSAGE_REQ
 {
     optional PROTOCOL   id                  = 1 [default = ID_PKT_BROADCAST_ROOM_MESSAGE_REQ ];
-    required string     var_message         = 2;
+    required bytes     var_message         = 2;
 }
 
 message ROOM_LIST_REQ

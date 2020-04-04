@@ -21,7 +21,7 @@
                 
                 <Frame BorderColor="Gray" Grid.Row="0" Grid.Column="1" VerticalOptions="Start" Padding="0,0,0,0">
                     <StackLayout BackgroundColor= "blue" >
-                        <Button x:Name="MatchButton" Text="대전"  Clicked="OnMatchClicked" BackgroundColor="White"/>
+                        <Button x:Name="MatchButton" Text="대전" Clicked="OnMatchClicked" BackgroundColor="White"/>
                     </StackLayout>
                 </Frame>
 

@@ -19,5 +19,6 @@ namespace OMOK_T
         //acount fire base
         public static string Uid;
         public static string Token;
+        public static long Id;
     }
 }
