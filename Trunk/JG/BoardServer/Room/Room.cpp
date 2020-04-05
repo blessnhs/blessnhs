@@ -28,6 +28,13 @@ Room::Room(void)
 			m_Board[i][j] = None;
 }
 
+void Room::ClearBoard()
+{
+	for (int i = 0; i < COLS; i++)
+		for (int j = 0; j < ROWS; j++)
+			m_Board[i][j] = None;
+}
+
 Room::~Room(void)
 {
 	DeleteCriticalSection(&m_PublicLock);
@@ -230,6 +237,22 @@ WORD Room::GetCurrPlayer()
 			count++;
 	}
 	return count;
+}
+
+PLAYER_PTR Room::GetOtherPlayer(DWORD INDEX)
+{
+	for each (auto & player in m_PlayerMap)
+	{
+		if (player.second == NULL)
+			continue;
+
+		if (player.second->GetId() == INDEX)
+			continue;
+
+		return player.second;
+
+	}
+	return NULL;
 }
 
 

@@ -30,27 +30,15 @@ public:
 
 	VOID GetRoomList(google::protobuf::RepeatedPtrField<RoomInfo2> *List);
 
-	int RoomCount()
-	{
-		int count = 0;
-		for each (auto room in m_RoomMap)
-		{
-			if (room.second != NULL)
-				count++;
-		}
+	int RoomCount();
 
-		return count;
-	}
+	const concurrency::concurrent_unordered_map<DWORD, ROOM_PTR>& GetRoomMap();
 
-	const concurrency::concurrent_unordered_map<DWORD, ROOM_PTR>& GetRoomMap() 
-	{
-		return m_RoomMap;
-	}
+	concurrency::concurrent_unordered_map<DWORD, PLAYER_PTR>& GetMatchMap();
 
-	concurrency::concurrent_unordered_map<DWORD, PLAYER_PTR>& GetMatchMap()
-	{
-		return m_MatchMap;
-	}
+	void AddMatchMap(PLAYER_PTR player);
+	void DelMatchMap(PLAYER_PTR player);
+	bool IsExistMatchMap(PLAYER_PTR player);
 
 	BOOL CreateMatchRoom(PLAYER_PTR target1, PLAYER_PTR target2);
 
@@ -59,7 +47,7 @@ protected:
 
 	concurrency::concurrent_unordered_map<DWORD,ROOM_PTR>		m_RoomMap;
 
-	concurrency::concurrent_unordered_map<DWORD, PLAYER_PTR>		m_MatchMap;
+	concurrency::concurrent_unordered_map<DWORD, PLAYER_PTR>	m_MatchMap;
 
 	CRITICAL_SECTION											m_PublicLock;
 };

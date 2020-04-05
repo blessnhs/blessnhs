@@ -18,6 +18,8 @@ public:
 	int	 ProcedureUserLogout(const DWORD id);
 	int  DeleteAllConcurrentUser();
 
+	int UpdaetPlayerScore(INT64 Index,int Win, int Lose, int Draw);
+
 	float ProcedureVersion();
 
 	COdbc*				m_pDB;

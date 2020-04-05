@@ -376,6 +376,47 @@ namespace Board	{
 
 		void Undo(){}
 	};
+
+	template<>
+	class MSG_PLAYER_QUERY<RequestPlayerScore> : public IMESSAGE
+	{
+	public:
+		MSG_PLAYER_QUERY() {  }
+		~MSG_PLAYER_QUERY() {}
+
+		GSCLIENT_PTR		pSession;
+
+		DBPROCESS_CER_PTR   pProcess;
+
+		boost::shared_ptr<RequestPlayerScore> pRequst;
+
+		void Execute(LPVOID Param) 
+		{
+			if (pSession == NULL || pSession->GetConnected() == false)
+			{
+				return;
+			}
+
+			DBPROCESS_CER_PTR pProcess = DBPROCESSCONTAINER_CER.Search(pSession->GetMyDBTP());
+			if (pProcess == NULL || pProcess->m_IsOpen == false)
+			{
+				return;
+			}
+
+			if (pRequst == NULL)
+				return;
+
+			// 로그인 절차 : 아이디의 접속확인 및 인증키값을 가져온다.
+			int nRet = pProcess->UpdaetPlayerScore(pRequst->Index, pRequst->Win, pRequst->Lose, pRequst->Draw);
+			if (nRet != 0)
+			{
+				printf("UpdaetPlayerScore nRet is not 0\n");
+			}
+		}
+
+
+		void Undo() {}
+	};
 	
 }
 

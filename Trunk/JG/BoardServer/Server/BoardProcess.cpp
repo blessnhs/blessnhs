@@ -325,6 +325,8 @@ VOID BoardProcess::ROOM_CHAT(LPVOID Data, DWORD Length, boost::shared_ptr<GSClie
 
 			if (pPtr->CheckGameResult(message.var_x(), message.var_y(), message.var_color()) == true)
 			{
+				pPtr->ClearBoard();
+
 				GAME_RESULT_NTY result_nty;
 				result_nty.set_var_code(Success);
 				result_nty.set_var_index(pPlayer->GetId());
@@ -332,6 +334,42 @@ VOID BoardProcess::ROOM_CHAT(LPVOID Data, DWORD Length, boost::shared_ptr<GSClie
 				result_nty.set_var_color(message.var_color());
 
 				pPtr->SendToAll(result_nty);
+
+				//나중에 필요에 따라 프로시져를 하나로 통합해야 할것 같음
+
+				{
+					//승수 증가
+					boost::shared_ptr<RequestPlayerScore> pRequest = ALLOCATOR.Create<RequestPlayerScore>();
+					pRequest->Index = pPlayer->GetId();
+					pRequest->Win = 1;	pRequest->Lose = 0;	pRequest->Draw = 0;
+
+					boost::shared_ptr<Board::MSG_PLAYER_QUERY<RequestPlayerScore>>		PLAYER_MSG = ALLOCATOR.Create<Board::MSG_PLAYER_QUERY<RequestPlayerScore>>();
+					PLAYER_MSG->pSession = pOwner;
+					PLAYER_MSG->pRequst = pRequest;
+					PLAYER_MSG->Type = pOwner->GetMyDBTP();
+					PLAYER_MSG->SubType = ONQUERY;
+					MAINPROC.RegisterCommand(PLAYER_MSG);
+				}
+
+				//패배 증가
+				auto OppPlayer = pPtr->GetOtherPlayer(pPlayer->GetId());
+				if(OppPlayer != NULL)
+				{
+					GSCLIENT_PTR pSession = SERVER.GetClient(OppPlayer->GetPair());
+					if (pSession)
+					{
+						boost::shared_ptr<RequestPlayerScore> pRequest = ALLOCATOR.Create<RequestPlayerScore>();
+						pRequest->Index = OppPlayer->GetId();
+						pRequest->Win = 0;	pRequest->Lose = 1;	pRequest->Draw = 0;
+
+						boost::shared_ptr<Board::MSG_PLAYER_QUERY<RequestPlayerScore>>		PLAYER_MSG = ALLOCATOR.Create<Board::MSG_PLAYER_QUERY<RequestPlayerScore>>();
+						PLAYER_MSG->pSession = pSession;
+						PLAYER_MSG->pRequst = pRequest;
+						PLAYER_MSG->Type = pSession->GetMyDBTP();
+						PLAYER_MSG->SubType = ONQUERY;
+						MAINPROC.RegisterCommand(PLAYER_MSG);
+					}
+				}
 			}
 
 		}
@@ -384,6 +422,11 @@ VOID BoardProcess::MATCH(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> 
 		return;
 	}
 
+	if (ROOMMGR.IsExistMatchMap(pPlayer) == true)
+	{
+		return;
+	}
+
 	res.set_var_code(Success);
 	SEND_PROTO_BUFFER(res, Client)
 
@@ -396,10 +439,12 @@ VOID BoardProcess::MATCH(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> 
 			continue;
 
 		ROOMMGR.CreateMatchRoom(player.second, pPlayer);
+
+		return;
 	}
 
 	//여기 있으면 큐에 아무도 없는것임
-	ROOMMGR.GetMatchMap()[pPlayer->GetId()] = pPlayer;
+	ROOMMGR.AddMatchMap(pPlayer);
 }
 
 

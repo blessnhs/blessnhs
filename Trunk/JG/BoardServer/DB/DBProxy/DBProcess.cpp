@@ -75,13 +75,41 @@ float CDBProcessCer::ProcedureVersion()
 	return sParmRet;
 }
 
+int CDBProcessCer::UpdaetPlayerScore(INT64 Index,int Win, int Lose, int Draw)
+{
+	SQLRETURN		retcode = SQL_ERROR;
+	CDBHandle		dbhandle(m_pDB->m_hdbc, &(m_pDB->m_csDBHandle));
+	SQLHSTMT		hstmt = dbhandle.GetHandle();
+	SQLCHAR			szSQL[1024];
+	sprintf_s((char*)szSQL, sizeof(szSQL), ("{call SP_UPDATE_PLAYER_DATA (%d,%d,%d,%d)}"), Index,Win,Lose,Draw);
+
+	retcode = SQLExecDirect(hstmt, szSQL, SQL_NTS);
+	if (retcode == SQL_ERROR)
+	{	// true is Disconnected...
+
+
+		if (m_pDB->SQLErrorMsg(hstmt, __FUNCTION__) == true)
+		{
+			printf(("database server Network Error... %s() \n"), __FUNCTION__);
+			m_pDB->Close();
+			m_pDB->ReConnect();
+			//odbc->SetRecconectFlag(true);
+		}
+		printf(("database server query Error... %s() \n"), __FUNCTION__);
+		return _ERR_NETWORK;
+	}
+
+
+	return _ERR_NONE;
+}
+
 int	 CDBProcessCer::ProcedureUserLogout(const DWORD id)
 {
 	SQLRETURN		retcode = SQL_ERROR;
 	CDBHandle		dbhandle(m_pDB->m_hdbc, &(m_pDB->m_csDBHandle));
 	SQLHSTMT		hstmt = dbhandle.GetHandle();
 	SQLCHAR			szSQL[1024];
-	sprintf_s((char*)szSQL, sizeof(szSQL) ,("{call SP_ACCOUNT_LOGOUT (\'%d\')}"), id);
+	sprintf_s((char*)szSQL, sizeof(szSQL) ,("{call SP_ACCOUNT_LOGOUT (%d)}"), id);
 	
 	retcode = SQLExecDirect(hstmt, szSQL, SQL_NTS);
 	if (retcode == SQL_ERROR)

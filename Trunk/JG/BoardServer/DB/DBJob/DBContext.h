@@ -16,6 +16,18 @@ public:
 	float Version;
 };
 
+class RequestPlayerScore : public GSObject
+{
+public:
+	RequestPlayerScore(void) {}
+
+	~RequestPlayerScore(void) {}
+
+	int Win;
+	int Lose;
+	int Draw;
+	DWORD Index;
+};
 
 class RequestPlayerAuth : public GSObject
 {

@@ -53,6 +53,7 @@ public:
 	State GetState();
 
 	WORD GetCurrPlayer();
+	PLAYER_PTR GetOtherPlayer(DWORD INDEX);
 
 	template<class T>
 	void SendToAll(T &snd)
@@ -72,6 +73,7 @@ public:
 
 	void SendToAll(WORD MainId, BYTE* Data, WORD Length);
 
+	void ClearBoard();
 	void UpdateBoard(int x, int y, eTeam team);
 	bool CheckGameResult(int _x, int _y, eTeam _stone);
 	

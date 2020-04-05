@@ -36,7 +36,7 @@ BOOL GSBoard::Disconnect(GSCLIENT_PTR pSession)
 		PLAYERMGR.Del(pPlayer);
 
 		//매칭 큐에서 제거한다.
-		ROOMMGR.GetMatchMap()[pPlayer->GetId()] = NULL;
+		ROOMMGR.DelMatchMap(pPlayer);
 
 
 		//로그아웃 쿼리를 날린다.
