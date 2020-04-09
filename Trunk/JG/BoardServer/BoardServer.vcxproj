@@ -31,7 +31,7 @@
     <ProjectGuid>{FC113D51-4CE0-4EE8-A319-21F86E357AEB}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>BoardServer</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -141,7 +141,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>ws2_32.lib;Mswsock.lib;json_d.lib;../Common/GSCore/GSNetwork_d.lib;../Common/protobuf/debug/lib/libprotobufd.lib;../Common/protobuf/debug/lib/libprotobuf-lited.lib;../Common/protobuf/debug/lib/libprotocd.lib;%(AdditionalDependencies);kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib</AdditionalDependencies>
+      <AdditionalDependencies>tbb_debug.lib;ws2_32.lib;Mswsock.lib;json_d.lib;../Common/GSCore/GSNetwork_d.lib;../Common/protobuf/debug/lib/libprotobufd.lib;../Common/protobuf/debug/lib/libprotobuf-lited.lib;../Common/protobuf/debug/lib/libprotocd.lib;%(AdditionalDependencies);kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseBuild|x64'">

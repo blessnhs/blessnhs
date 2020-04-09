@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:OMOK"
+             x:Class="OMOK.Room">
+    <ContentPage.Padding>
+        <OnPlatform x:TypeArguments="Thickness">
+            <On Platform="iOS" Value="0, 20, 0, 0" />
+            <On Platform="Android, UWP" Value="0, 0, 0, 0" />
+        </OnPlatform>
+    </ContentPage.Padding>
+    <ContentView SizeChanged="OnMainContentViewSizeChanged">
+        <Grid x:Name="mainGrid" ColumnSpacing="0" RowSpacing="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*" />
+                <RowDefinition Height="8*" />
+                <RowDefinition Height="1*" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*" />
+                <ColumnDefinition Width="8*" />
+            </Grid.ColumnDefinitions>
+
+            <StackLayout x:Name="textStackTop" Grid.Row="0" Grid.Column="0" Spacing="0" Grid.ColumnSpan="2">
+                <Label x:Name="timeLabel" Text="0:00" HorizontalTextAlignment="Left" />
+            </StackLayout>
+            
+            <StackLayout  Grid.Row="0" Grid.Column="1" Spacing="0" Grid.ColumnSpan="2">
+                <Button x:Name="LeaveRoom" Text="나가기"  Clicked="OnLeaveClicked" BackgroundColor="White"/>
+            </StackLayout>
+
+            <ContentView Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" SizeChanged="OnBoardContentViewSizeChanged">
+                <!--<Image x:Name="backgroundboard"></Image>-->
+                <!-- Single-cell Grid for Board and overlays. -->
+                <Grid RowSpacing="0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <local:Board x:Name="board" />
+              </Grid>
+            </ContentView>
+
+            <StackLayout x:Name="textStackBottom1" Grid.Row="2" Grid.Column="0" Spacing="0">
+                <Label x:Name="blackLabel" Text="" VerticalOptions="CenterAndExpand" HorizontalTextAlignment="Center" />
+            </StackLayout>
+
+            <StackLayout x:Name="textStackBottom2" Grid.Row="2" Grid.Column="1" Spacing="0">
+                <Label x:Name="whiteLabel" Text="" VerticalOptions="CenterAndExpand" HorizontalTextAlignment="Center" />
+            </StackLayout>
+            
+        </Grid>
+    </ContentView>
+</ContentPage>
