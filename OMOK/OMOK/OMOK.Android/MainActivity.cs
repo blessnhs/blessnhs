@@ -12,6 +12,7 @@ using Firebase;
 using Android.Gms.Auth.Api.SignIn;
 using Android.Gms.Auth.Api;
 using Android.Content;
+using Android.Gms.Ads;
 
 namespace OMOK.Droid
 {
@@ -30,6 +31,8 @@ namespace OMOK.Droid
 
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
+
+            LoadApplication(new App());
 
             FirebaseApp.InitializeApp(Application.Context);
 
@@ -105,7 +108,9 @@ namespace OMOK.Droid
             {
                 new AlertDialog.Builder(this).SetMessage("구글 로그인 실패").Show();
             }
-            LoadApplication(new App());
+
+            //테스트 광고가 아닐 경우 APP ID를 넣어줘야 한다.
+            MobileAds.Initialize(ApplicationContext, "ca-app-pub-9541028236702321~9544639066");
 
         }
     }

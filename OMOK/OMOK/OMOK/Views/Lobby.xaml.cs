@@ -10,6 +10,7 @@ using OMOK.ViewModels;
 
 using NetClient;
 using OMOK.Network;
+using OMOK.CustomAdMobView;
 
 namespace OMOK.Views
 {
@@ -17,12 +18,14 @@ namespace OMOK.Views
     public partial class Lobby : ContentPage
     {
         CommunityViewModel viewModel = new CommunityViewModel();
-
+        iAd_IterstitialView iIterstitia;
         public Lobby()
         {
             InitializeComponent();
 
-            if(User.PhotoPath != null)
+            iIterstitia = DependencyService.Get<iAd_IterstitialView>();
+
+            if (User.PhotoPath != null)
                 mypicture.Source = ImageSource.FromUri(new Uri(User.PhotoPath));
         }
 
@@ -134,6 +137,8 @@ namespace OMOK.Views
         async void OnMatchClicked(object sender, System.EventArgs e)
         {
            NetProcess.SendMatch();
+
+            iIterstitia.ShowAd();
         }
 
         async void OnLoginClicked(object sender, System.EventArgs e)

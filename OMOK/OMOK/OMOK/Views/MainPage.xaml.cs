@@ -17,12 +17,12 @@ namespace OMOK.Views
 
             //소켓 연결
             {
-                NetProcess.start();
-
+ 
                 Device.StartTimer(new TimeSpan(0, 0, 0, 0, 300), () =>
                 {
                     Device.BeginInvokeOnMainThread(() =>
                     {
+                        NetProcess.start();
                         NetProcess.Loop(this);
                     });
                     return true; //if true repeat

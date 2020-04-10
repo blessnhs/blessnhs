@@ -1,7 +1,7 @@
 ﻿using System;
 
-using OMOK_T.Droid;
-using OMOK_T.CustomAdMobView;
+using OMOK.Droid;
+using OMOK.CustomAdMobView;
 
 using Android.Gms.Ads.Reward;
 using Android.Gms.Ads;
@@ -12,14 +12,14 @@ using Android.Util;
 //https://developers.google.com/admob/unity/test-ads
 
 [assembly: Dependency(typeof(InterstitiaAd_lViewRenderer))]
-namespace OMOK_T.Droid
+namespace OMOK.Droid
 {
     public class InterstitiaAd_lViewRenderer : AdListener, iAd_IterstitialView
     {
         InterstitialAd interstitialAd;
 
         //안드로이드 테스트 아이디 및 테스트 디바이스.
-        string AdUnitId = "ca-app-pub-3940256099942544/1033173712"; // 전면 광고
+        string AdUnitId = "ca-app-pub-9541028236702321/6067841759"; // 전면 광고
         string TestDeviceID = "C6023D05217C4D7DA3C30B4A5F2CB928";
 
         bool isShow = false;

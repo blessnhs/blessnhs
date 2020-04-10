@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel;
 
-using OMOK_T;
-using OMOK_T.Droid;
-using OMOK_T.CustomAdMobView;
+using OMOK;
+using OMOK.Droid;
+using OMOK.CustomAdMobView;
 
 using Android.Content;
 using Android.Gms.Ads;
@@ -14,14 +14,14 @@ using Xamarin.Forms.Platform.Android;
 //https://developers.google.com/admob/unity/test-ads
 
 [assembly: ExportRenderer(typeof(CtBannerView), typeof(AdMobBannerViewRenderer))]
-namespace OMOK_T.Droid
+namespace OMOK.Droid
 {
     public class AdMobBannerViewRenderer : ViewRenderer<CtBannerView, AdView>
     {
         public AdMobBannerViewRenderer(Context context) : base(context) { }
 
         // 안드로이드 용 테스트 아이디
-        public string AdUnitIdSet = "ca-app-pub-3940256099942544/6300978111";
+        public string AdUnitIdSet = "ca-app-pub-9541028236702321/8528793061";
 
         // 안드로이드 테스트 디바이스
         string TestDeviceID = "C6023D05217C4D7DA3C30B4A5F2CB928";

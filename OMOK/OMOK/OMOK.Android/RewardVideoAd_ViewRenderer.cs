@@ -1,7 +1,7 @@
 ﻿using System;
 
-using OMOK_T.Droid;
-using OMOK_T.CustomAdMobView;
+using OMOK.Droid;
+using OMOK.CustomAdMobView;
 
 using Android.Gms.Ads.Reward;
 using Android.Gms.Ads;
@@ -10,7 +10,7 @@ using Xamarin.Forms;
 using Android.Util;
 
 [assembly: Dependency(typeof(RewardVideoAd_ViewRenderer))]
-namespace OMOK_T.Droid
+namespace OMOK.Droid
 {
     public class RewardVideoAd_ViewRenderer : AdListener, iAd_RewardVideoView
     {
@@ -18,7 +18,7 @@ namespace OMOK_T.Droid
 
         //안드로이드 테스트 아이디 및 테스트 디바이스.
         //https://developers.google.com/admob/unity/test-ads
-        string AdUnitId = "ca-app-pub-3940256099942544/5224354917"; // 동영상 광고
+        string AdUnitId = "ca-app-pub-9541028236702321/8528793061"; // 동영상 광고
         string TestDeviceID = "C6023D05217C4D7DA3C30B4A5F2CB928";
 
         bool isShow = false;

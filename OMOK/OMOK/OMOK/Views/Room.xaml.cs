@@ -210,9 +210,6 @@ namespace OMOK
                User.MytrunStartTime = DateTime.Now;
 
                return true;
-               
-
-                return false;
             }
             catch (Exception e)
             {
