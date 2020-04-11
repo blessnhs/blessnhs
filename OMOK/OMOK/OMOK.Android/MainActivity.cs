@@ -13,6 +13,7 @@ using Android.Gms.Auth.Api.SignIn;
 using Android.Gms.Auth.Api;
 using Android.Content;
 using Android.Gms.Ads;
+using OMOK.Network;
 
 namespace OMOK.Droid
 {
@@ -33,6 +34,7 @@ namespace OMOK.Droid
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
 
             LoadApplication(new App());
+ 
 
             FirebaseApp.InitializeApp(Application.Context);
 
@@ -91,11 +93,13 @@ namespace OMOK.Droid
                     FirebaseUser user = authResult.User;
                     // 사용자 로그인 및 파이어베이스 등록 완료
 
-                    User.PhotoPath = signInResult.SignInAccount.PhotoUrl.ToString();
+                    User.myInfo.PhotoPath = signInResult.SignInAccount.PhotoUrl.ToString();
 
                     User.Uid = signInResult.SignInAccount.Id;
                     User.Token = signInResult.SignInAccount.IdToken;
-                    User.MyNickName = signInResult.SignInAccount.DisplayName;
+                    User.myInfo.NickName = signInResult.SignInAccount.DisplayName;
+
+                    NetProcess.SendLogin(User.Uid, User.Token);
 
                     new AlertDialog.Builder(this).SetMessage(signInResult.SignInAccount.DisplayName + " 로그인").Show();
                 }
@@ -110,7 +114,7 @@ namespace OMOK.Droid
             }
 
             //테스트 광고가 아닐 경우 APP ID를 넣어줘야 한다.
-            MobileAds.Initialize(ApplicationContext, "ca-app-pub-9541028236702321~9544639066");
+            MobileAds.Initialize(ApplicationContext, "YOUR ANDROID APP ID HERE");
 
         }
     }

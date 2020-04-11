@@ -170,14 +170,14 @@ template<template<class T> class CreationPolicy> BOOL RoomContainer<CreationPoli
 	ROOM_PTR RoomPtr = Create();
 	RoomPtr->m_Stock.Name.append(target1->m_Account.GetName());
 	RoomPtr->m_Stock.Name.append(" ");
-	RoomPtr->m_Stock.Name.append(std::to_string(target1->m_Char[0].GetLevel()));
+	RoomPtr->m_Stock.Name.append(std::to_string(19 - target1->m_Char[0].GetLevel()));
 	RoomPtr->m_Stock.Name.append("Бо");
 
 	RoomPtr->m_Stock.Name.append("  VS  ");
 
 	RoomPtr->m_Stock.Name.append(target2->m_Account.GetName());
 	RoomPtr->m_Stock.Name.append(" ");
-	RoomPtr->m_Stock.Name.append(std::to_string(target2->m_Char[0].GetLevel()));
+	RoomPtr->m_Stock.Name.append(std::to_string(19 - target2->m_Char[0].GetLevel()));
 	RoomPtr->m_Stock.Name.append("Бо");
 
 	Add(RoomPtr);
@@ -246,6 +246,7 @@ template<template<class T> class CreationPolicy> BOOL RoomContainer<CreationPoli
 
 		userinfo->set_var_index(iter.second->GetId());
 		userinfo->set_var_name(iter.second->m_Account.GetName());
+		userinfo->set_picture_uri(iter.second->m_Account.GetPicture_url());
 
 		SEND_PROTO_BUFFER(nty, pSession2)
 	}
@@ -265,8 +266,9 @@ template<template<class T> class CreationPolicy> BOOL RoomContainer<CreationPoli
 
 		RoomUserInfo * userinfo = nty.mutable_var_room_user();
 
-		userinfo->set_var_index(iter.second->GetId());
+		userinfo->set_var_index(target2->GetId());
 		userinfo->set_var_name(target2->m_Account.GetName());
+		userinfo->set_picture_uri(target2->m_Account.GetPicture_url());
 
 		SEND_PROTO_BUFFER(nty, pPair)
 	}

@@ -108,7 +108,8 @@ namespace OMOK.Network
                                     {
                                         //상대방이름
                                         //나갈때 초기화한다. 
-                                          User.OppNickName = Helper.ToStr(res.VarRoomUser.VarName.ToByteArray());
+                                        User.OppInfo.NickName = Helper.ToStr(res.VarRoomUser.VarName.ToByteArray());
+                                        User.OppInfo.PhotoPath = Helper.ToStr(res.VarRoomUser.PictureUri.ToByteArray());
 
                                         var Room = (Room)page.Children[1];
                                         Room.UpdateBattleInfo();

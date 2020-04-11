@@ -182,6 +182,7 @@ class RoomUserInfo :
 
   enum : int {
     kVarNameFieldNumber = 1,
+    kPictureUriFieldNumber = 3,
     kVarIndexFieldNumber = 2,
   };
   // optional bytes var_name = 1;
@@ -202,6 +203,26 @@ class RoomUserInfo :
   const std::string& _internal_var_name() const;
   void _internal_set_var_name(const std::string& value);
   std::string* _internal_mutable_var_name();
+  public:
+
+  // optional bytes picture_uri = 3;
+  bool has_picture_uri() const;
+  private:
+  bool _internal_has_picture_uri() const;
+  public:
+  void clear_picture_uri();
+  const std::string& picture_uri() const;
+  void set_picture_uri(const std::string& value);
+  void set_picture_uri(std::string&& value);
+  void set_picture_uri(const char* value);
+  void set_picture_uri(const void* value, size_t size);
+  std::string* mutable_picture_uri();
+  std::string* release_picture_uri();
+  void set_allocated_picture_uri(std::string* picture_uri);
+  private:
+  const std::string& _internal_picture_uri() const;
+  void _internal_set_picture_uri(const std::string& value);
+  std::string* _internal_mutable_picture_uri();
   public:
 
   // optional int64 var_index = 2;
@@ -225,6 +246,7 @@ class RoomUserInfo :
   ::PROTOBUF_NAMESPACE_ID::internal::HasBits<1> _has_bits_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr var_name_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr picture_uri_;
   ::PROTOBUF_NAMESPACE_ID::int64 var_index_;
   friend struct ::TableStruct_Structure_2eproto;
 };
@@ -504,7 +526,7 @@ inline void RoomUserInfo::set_allocated_var_name(std::string* var_name) {
 
 // optional int64 var_index = 2;
 inline bool RoomUserInfo::_internal_has_var_index() const {
-  bool value = (_has_bits_[0] & 0x00000002u) != 0;
+  bool value = (_has_bits_[0] & 0x00000004u) != 0;
   return value;
 }
 inline bool RoomUserInfo::has_var_index() const {
@@ -512,7 +534,7 @@ inline bool RoomUserInfo::has_var_index() const {
 }
 inline void RoomUserInfo::clear_var_index() {
   var_index_ = PROTOBUF_LONGLONG(0);
-  _has_bits_[0] &= ~0x00000002u;
+  _has_bits_[0] &= ~0x00000004u;
 }
 inline ::PROTOBUF_NAMESPACE_ID::int64 RoomUserInfo::_internal_var_index() const {
   return var_index_;
@@ -522,12 +544,83 @@ inline ::PROTOBUF_NAMESPACE_ID::int64 RoomUserInfo::var_index() const {
   return _internal_var_index();
 }
 inline void RoomUserInfo::_internal_set_var_index(::PROTOBUF_NAMESPACE_ID::int64 value) {
-  _has_bits_[0] |= 0x00000002u;
+  _has_bits_[0] |= 0x00000004u;
   var_index_ = value;
 }
 inline void RoomUserInfo::set_var_index(::PROTOBUF_NAMESPACE_ID::int64 value) {
   _internal_set_var_index(value);
   // @@protoc_insertion_point(field_set:RoomUserInfo.var_index)
+}
+
+// optional bytes picture_uri = 3;
+inline bool RoomUserInfo::_internal_has_picture_uri() const {
+  bool value = (_has_bits_[0] & 0x00000002u) != 0;
+  return value;
+}
+inline bool RoomUserInfo::has_picture_uri() const {
+  return _internal_has_picture_uri();
+}
+inline void RoomUserInfo::clear_picture_uri() {
+  picture_uri_.ClearToEmptyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline const std::string& RoomUserInfo::picture_uri() const {
+  // @@protoc_insertion_point(field_get:RoomUserInfo.picture_uri)
+  return _internal_picture_uri();
+}
+inline void RoomUserInfo::set_picture_uri(const std::string& value) {
+  _internal_set_picture_uri(value);
+  // @@protoc_insertion_point(field_set:RoomUserInfo.picture_uri)
+}
+inline std::string* RoomUserInfo::mutable_picture_uri() {
+  // @@protoc_insertion_point(field_mutable:RoomUserInfo.picture_uri)
+  return _internal_mutable_picture_uri();
+}
+inline const std::string& RoomUserInfo::_internal_picture_uri() const {
+  return picture_uri_.GetNoArena();
+}
+inline void RoomUserInfo::_internal_set_picture_uri(const std::string& value) {
+  _has_bits_[0] |= 0x00000002u;
+  picture_uri_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), value);
+}
+inline void RoomUserInfo::set_picture_uri(std::string&& value) {
+  _has_bits_[0] |= 0x00000002u;
+  picture_uri_.SetNoArena(
+    &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:RoomUserInfo.picture_uri)
+}
+inline void RoomUserInfo::set_picture_uri(const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  _has_bits_[0] |= 0x00000002u;
+  picture_uri_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:RoomUserInfo.picture_uri)
+}
+inline void RoomUserInfo::set_picture_uri(const void* value, size_t size) {
+  _has_bits_[0] |= 0x00000002u;
+  picture_uri_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:RoomUserInfo.picture_uri)
+}
+inline std::string* RoomUserInfo::_internal_mutable_picture_uri() {
+  _has_bits_[0] |= 0x00000002u;
+  return picture_uri_.MutableNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline std::string* RoomUserInfo::release_picture_uri() {
+  // @@protoc_insertion_point(field_release:RoomUserInfo.picture_uri)
+  if (!_internal_has_picture_uri()) {
+    return nullptr;
+  }
+  _has_bits_[0] &= ~0x00000002u;
+  return picture_uri_.ReleaseNonDefaultNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline void RoomUserInfo::set_allocated_picture_uri(std::string* picture_uri) {
+  if (picture_uri != nullptr) {
+    _has_bits_[0] |= 0x00000002u;
+  } else {
+    _has_bits_[0] &= ~0x00000002u;
+  }
+  picture_uri_.SetAllocatedNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), picture_uri);
+  // @@protoc_insertion_point(field_set_allocated:RoomUserInfo.picture_uri)
 }
 
 // -------------------------------------------------------------------

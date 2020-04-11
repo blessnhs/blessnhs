@@ -62,7 +62,9 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_Structure_2eproto::offsets[] P
   ~0u,  // no _weak_field_map_
   PROTOBUF_FIELD_OFFSET(::RoomUserInfo, var_name_),
   PROTOBUF_FIELD_OFFSET(::RoomUserInfo, var_index_),
+  PROTOBUF_FIELD_OFFSET(::RoomUserInfo, picture_uri_),
   0,
+  2,
   1,
   PROTOBUF_FIELD_OFFSET(::RoomInfo2, _has_bits_),
   PROTOBUF_FIELD_OFFSET(::RoomInfo2, _internal_metadata_),
@@ -79,8 +81,8 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_Structure_2eproto::offsets[] P
   3,
 };
 static const ::PROTOBUF_NAMESPACE_ID::internal::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
-  { 0, 7, sizeof(::RoomUserInfo)},
-  { 9, 18, sizeof(::RoomInfo2)},
+  { 0, 8, sizeof(::RoomUserInfo)},
+  { 11, 20, sizeof(::RoomInfo2)},
 };
 
 static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] = {
@@ -89,11 +91,12 @@ static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] =
 };
 
 const char descriptor_table_protodef_Structure_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
-  "\n\017Structure.proto\032\nEnum.proto\"3\n\014RoomUse"
+  "\n\017Structure.proto\032\nEnum.proto\"H\n\014RoomUse"
   "rInfo\022\020\n\010var_name\030\001 \001(\014\022\021\n\tvar_index\030\002 \001"
-  "(\003\"_\n\tRoomInfo2\022\016\n\006var_id\030\001 \001(\005\022\020\n\010var_n"
-  "ame\030\002 \001(\014\022\031\n\021var_current_count\030\003 \001(\005\022\025\n\r"
-  "var_max_count\030\004 \001(\005B\002H\001"
+  "(\003\022\023\n\013picture_uri\030\003 \001(\014\"_\n\tRoomInfo2\022\016\n\006"
+  "var_id\030\001 \001(\005\022\020\n\010var_name\030\002 \001(\014\022\031\n\021var_cu"
+  "rrent_count\030\003 \001(\005\022\025\n\rvar_max_count\030\004 \001(\005"
+  "B\002H\001"
   ;
 static const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable*const descriptor_table_Structure_2eproto_deps[1] = {
   &::descriptor_table_Enum_2eproto,
@@ -105,7 +108,7 @@ static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_Str
 static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_Structure_2eproto_once;
 static bool descriptor_table_Structure_2eproto_initialized = false;
 const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_Structure_2eproto = {
-  &descriptor_table_Structure_2eproto_initialized, descriptor_table_protodef_Structure_2eproto, "Structure.proto", 183,
+  &descriptor_table_Structure_2eproto_initialized, descriptor_table_protodef_Structure_2eproto, "Structure.proto", 204,
   &descriptor_table_Structure_2eproto_once, descriptor_table_Structure_2eproto_sccs, descriptor_table_Structure_2eproto_deps, 2, 1,
   schemas, file_default_instances, TableStruct_Structure_2eproto::offsets,
   file_level_metadata_Structure_2eproto, 2, file_level_enum_descriptors_Structure_2eproto, file_level_service_descriptors_Structure_2eproto,
@@ -125,6 +128,9 @@ class RoomUserInfo::_Internal {
     (*has_bits)[0] |= 1u;
   }
   static void set_has_var_index(HasBits* has_bits) {
+    (*has_bits)[0] |= 4u;
+  }
+  static void set_has_picture_uri(HasBits* has_bits) {
     (*has_bits)[0] |= 2u;
   }
 };
@@ -143,6 +149,10 @@ RoomUserInfo::RoomUserInfo(const RoomUserInfo& from)
   if (from._internal_has_var_name()) {
     var_name_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.var_name_);
   }
+  picture_uri_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  if (from._internal_has_picture_uri()) {
+    picture_uri_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.picture_uri_);
+  }
   var_index_ = from.var_index_;
   // @@protoc_insertion_point(copy_constructor:RoomUserInfo)
 }
@@ -150,6 +160,7 @@ RoomUserInfo::RoomUserInfo(const RoomUserInfo& from)
 void RoomUserInfo::SharedCtor() {
   ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&scc_info_RoomUserInfo_Structure_2eproto.base);
   var_name_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  picture_uri_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
   var_index_ = PROTOBUF_LONGLONG(0);
 }
 
@@ -160,6 +171,7 @@ RoomUserInfo::~RoomUserInfo() {
 
 void RoomUserInfo::SharedDtor() {
   var_name_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  picture_uri_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
 }
 
 void RoomUserInfo::SetCachedSize(int size) const {
@@ -178,8 +190,13 @@ void RoomUserInfo::Clear() {
   (void) cached_has_bits;
 
   cached_has_bits = _has_bits_[0];
-  if (cached_has_bits & 0x00000001u) {
-    var_name_.ClearNonDefaultToEmptyNoArena();
+  if (cached_has_bits & 0x00000003u) {
+    if (cached_has_bits & 0x00000001u) {
+      var_name_.ClearNonDefaultToEmptyNoArena();
+    }
+    if (cached_has_bits & 0x00000002u) {
+      picture_uri_.ClearNonDefaultToEmptyNoArena();
+    }
   }
   var_index_ = PROTOBUF_LONGLONG(0);
   _has_bits_.Clear();
@@ -207,6 +224,14 @@ const char* RoomUserInfo::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_I
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 16)) {
           _Internal::set_has_var_index(&has_bits);
           var_index_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // optional bytes picture_uri = 3;
+      case 3:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 26)) {
+          auto str = _internal_mutable_picture_uri();
+          ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
@@ -245,9 +270,15 @@ failure:
   }
 
   // optional int64 var_index = 2;
-  if (cached_has_bits & 0x00000002u) {
+  if (cached_has_bits & 0x00000004u) {
     target = stream->EnsureSpace(target);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt64ToArray(2, this->_internal_var_index(), target);
+  }
+
+  // optional bytes picture_uri = 3;
+  if (cached_has_bits & 0x00000002u) {
+    target = stream->WriteBytesMaybeAliased(
+        3, this->_internal_picture_uri(), target);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
@@ -267,7 +298,7 @@ size_t RoomUserInfo::ByteSizeLong() const {
   (void) cached_has_bits;
 
   cached_has_bits = _has_bits_[0];
-  if (cached_has_bits & 0x00000003u) {
+  if (cached_has_bits & 0x00000007u) {
     // optional bytes var_name = 1;
     if (cached_has_bits & 0x00000001u) {
       total_size += 1 +
@@ -275,8 +306,15 @@ size_t RoomUserInfo::ByteSizeLong() const {
           this->_internal_var_name());
     }
 
-    // optional int64 var_index = 2;
+    // optional bytes picture_uri = 3;
     if (cached_has_bits & 0x00000002u) {
+      total_size += 1 +
+        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::BytesSize(
+          this->_internal_picture_uri());
+    }
+
+    // optional int64 var_index = 2;
+    if (cached_has_bits & 0x00000004u) {
       total_size += 1 +
         ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int64Size(
           this->_internal_var_index());
@@ -315,12 +353,16 @@ void RoomUserInfo::MergeFrom(const RoomUserInfo& from) {
   (void) cached_has_bits;
 
   cached_has_bits = from._has_bits_[0];
-  if (cached_has_bits & 0x00000003u) {
+  if (cached_has_bits & 0x00000007u) {
     if (cached_has_bits & 0x00000001u) {
       _has_bits_[0] |= 0x00000001u;
       var_name_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.var_name_);
     }
     if (cached_has_bits & 0x00000002u) {
+      _has_bits_[0] |= 0x00000002u;
+      picture_uri_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.picture_uri_);
+    }
+    if (cached_has_bits & 0x00000004u) {
       var_index_ = from.var_index_;
     }
     _has_bits_[0] |= cached_has_bits;
@@ -350,6 +392,8 @@ void RoomUserInfo::InternalSwap(RoomUserInfo* other) {
   _internal_metadata_.Swap(&other->_internal_metadata_);
   swap(_has_bits_[0], other->_has_bits_[0]);
   var_name_.Swap(&other->var_name_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+    GetArenaNoVirtual());
+  picture_uri_.Swap(&other->picture_uri_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
     GetArenaNoVirtual());
   swap(var_index_, other->var_index_);
 }

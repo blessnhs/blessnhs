@@ -4,6 +4,21 @@ using System.Text;
 
 namespace OMOK
 {
+
+    public class PlayerInfo
+    {
+        public string NickName;
+        public string PhotoPath;
+
+        public int rank;
+        
+        public int win;
+        public int lose;
+        public int draw;
+        public int score;
+
+    }
+
     public static class User
     {
         public static eTeam Color;
@@ -11,10 +26,11 @@ namespace OMOK
 
         public static DateTime MytrunStartTime = DateTime.Now;
 
-        public static string MyNickName;
-        public static string OppNickName;
-        public static string PhotoPath;
+        //내 정보
+        public static PlayerInfo myInfo = new PlayerInfo();
 
+        //상대방 정보
+        public static PlayerInfo OppInfo = new PlayerInfo();
 
         //acount fire base
         public static string Uid;

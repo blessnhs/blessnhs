@@ -349,8 +349,15 @@ namespace Board	{
 			PLAYERMGR.Add(pNewPlayer);
 
 			res.set_var_code(Success);
-
 			res.set_var_index(Index);
+
+			res.set_var_win(win);
+			res.set_var_lose(lose);
+			res.set_var_draw(draw);
+			res.set_var_score(score);
+			res.set_var_rank(rank);
+
+
 			SEND_PROTO_BUFFER(res, pSession)
 		}
 

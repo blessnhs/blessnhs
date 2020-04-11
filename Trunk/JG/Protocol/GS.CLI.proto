@@ -7,9 +7,9 @@ option optimize_for = SPEED;
 
 message VERSION_RES
 {
-    optional PROTOCOL   id                  = 1 [default = ID_PKT_VERSION_RES  ];
-    optional  float   var_version         = 2;
-    optional  ErrorCode    var_code         = 3;
+    optional PROTOCOL   id                  	= 1 [default = ID_PKT_VERSION_RES  ];
+    optional  float   var_version         	= 2;
+    optional  ErrorCode    var_code         	= 3;
 }
 
 
@@ -20,6 +20,14 @@ message LOGIN_RES
     optional  ErrorCode    var_code         = 2;
 
     optional  int64      var_index         = 3;
+
+
+    optional int32	 var_win 		= 4;
+    optional int32	 var_lose 		= 5;
+    optional int32	 var_draw 		= 6;
+    optional int32	 var_score 		= 7;
+    optional int32	 var_rank		= 8;
+
 }
 
 message CREATE_ROOM_RES

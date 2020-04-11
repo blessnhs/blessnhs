@@ -51,11 +51,11 @@ namespace OMOK
 
                 if (hasWon)
                 {
-                    DisplayWonAnimation();
+               //     DisplayWonAnimation();
                 }
                 else
                 {
-                    DisplayLostAnimation();
+                  //  DisplayLostAnimation();
                 }
             };
 
@@ -66,13 +66,19 @@ namespace OMOK
         {
             if(User.Color == eTeam.Black)
             {
-                blackLabel.Text = User.MyNickName;
-                whiteLabel.Text = User.OppNickName;
+                blackLabel.Text = User.myInfo.NickName;
+                whiteLabel.Text = User.OppInfo.NickName;
+
+                bottom1picture.Source = ImageSource.FromUri(new Uri(User.myInfo.PhotoPath));
+                bottom2picture.Source = ImageSource.FromUri(new Uri(User.OppInfo.PhotoPath));
             }
             else
             {
-                whiteLabel.Text = User.MyNickName;
-                blackLabel.Text = User.OppNickName;
+                whiteLabel.Text = User.myInfo.NickName;
+                blackLabel.Text = User.OppInfo.NickName;
+
+                bottom1picture.Source = ImageSource.FromUri(new Uri(User.OppInfo.PhotoPath));
+                bottom2picture.Source = ImageSource.FromUri(new Uri(User.myInfo.PhotoPath));
             }
         }
 
@@ -128,18 +134,7 @@ namespace OMOK
             contentView.Padding = new Thickness(horzPadding, vertPadding);
         }
 
-        async void DisplayWonAnimation()
-        {
-
-        }
-
-        async void DisplayLostAnimation()
-        {
-        }
-
-        async Task DisplayPlayAgainButton()
-        {
-        }
+     
 
         void OnplayAgainButtonClicked(object sender, object EventArgs)
         {
@@ -156,7 +151,7 @@ namespace OMOK
             if(status == eTeam.Black)
             {
 
-                textStackBottom1.BackgroundColor = Color.Blue;
+                textStackBottom1.BackgroundColor = Color.Beige;
 
                 textStackBottom2.BackgroundColor = Color.White;
             }
@@ -164,7 +159,7 @@ namespace OMOK
             {
                 textStackBottom1.BackgroundColor = Color.White;
 
-                textStackBottom2.BackgroundColor = Color.Blue;
+                textStackBottom2.BackgroundColor = Color.Beige;
             }
 
             return true;

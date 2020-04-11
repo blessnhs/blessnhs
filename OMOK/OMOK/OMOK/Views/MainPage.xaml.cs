@@ -17,7 +17,7 @@ namespace OMOK.Views
 
             //소켓 연결
             {
- 
+
                 Device.StartTimer(new TimeSpan(0, 0, 0, 0, 300), () =>
                 {
                     Device.BeginInvokeOnMainThread(() =>

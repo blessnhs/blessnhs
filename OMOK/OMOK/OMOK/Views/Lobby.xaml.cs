@@ -19,20 +19,29 @@ namespace OMOK.Views
     {
         CommunityViewModel viewModel = new CommunityViewModel();
         iAd_IterstitialView iIterstitia;
+
+        public ImageSource SomeImage
+        {
+            get
+            {
+                var source = new Uri(User.myInfo.PhotoPath);
+                return source;
+            }
+        }
+
         public Lobby()
         {
             InitializeComponent();
 
             iIterstitia = DependencyService.Get<iAd_IterstitialView>();
 
-            if (User.PhotoPath != null)
-                mypicture.Source = ImageSource.FromUri(new Uri(User.PhotoPath));
+            mypicture.Source = null;
         }
 
         protected override void OnAppearing()
         {
-            if (User.PhotoPath != null)
-                mypicture.Source = ImageSource.FromUri(new Uri(User.PhotoPath));
+            if (User.myInfo.PhotoPath != null)
+                mypicture.Source = ImageSource.FromUri(new Uri(User.myInfo.PhotoPath));
         }
 
         public void UpdateMessage(CompletePacket packet)
@@ -53,6 +62,10 @@ namespace OMOK.Views
             }
 
             listView.ItemsSource = viewModel.RoomModel;
+
+            if (User.myInfo.PhotoPath != null && mypicture.Source == null)
+                mypicture.Source = ImageSource.FromUri(new Uri(User.myInfo.PhotoPath));
+
         }
 
         public void Handle_ItemSelected(object sender, Xamarin.Forms.SelectedItemChangedEventArgs e)
@@ -138,14 +151,14 @@ namespace OMOK.Views
         {
            NetProcess.SendMatch();
 
-            iIterstitia.ShowAd();
+ //           iIterstitia.ShowAd();
         }
 
         async void OnLoginClicked(object sender, System.EventArgs e)
         {
             string inputstring = await InputBox(this.Navigation);
 
-            User.MyNickName = inputstring;
+            User.myInfo.NickName = inputstring;
 
             NetProcess.SendLogin(inputstring, inputstring);
         }

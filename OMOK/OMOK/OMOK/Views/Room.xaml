@@ -13,7 +13,8 @@
         <Grid x:Name="mainGrid" ColumnSpacing="0" RowSpacing="0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="1*" />
-                <RowDefinition Height="8*" />
+                <RowDefinition Height="7*" />
+                <RowDefinition Height="1*" />
                 <RowDefinition Height="1*" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
@@ -43,14 +44,26 @@
               </Grid>
             </ContentView>
 
-            <StackLayout x:Name="textStackBottom1" Grid.Row="2" Grid.Column="0" Spacing="0">
+            <Image  x:Name="bottom1picture" Grid.Row="2" Grid.ColumnSpan="1" Grid.Column="0">
+                <Image.Source>
+                    <UriImageSource Uri="{Binding SomeImage}"/>
+                </Image.Source>
+            </Image>
+
+            <Image  x:Name="bottom2picture" Grid.Row="2" Grid.ColumnSpan="1" Grid.Column="1">
+                <Image.Source>
+                    <UriImageSource Uri="{Binding SomeImage}"/>
+                </Image.Source>
+            </Image>
+
+            <StackLayout x:Name="textStackBottom1" Grid.Row="3" Grid.Column="0" Spacing="0">
                 <Label x:Name="blackLabel" Text="" VerticalOptions="CenterAndExpand" HorizontalTextAlignment="Center" />
             </StackLayout>
 
-            <StackLayout x:Name="textStackBottom2" Grid.Row="2" Grid.Column="1" Spacing="0">
+            <StackLayout x:Name="textStackBottom2" Grid.Row="3" Grid.Column="1" Spacing="0">
                 <Label x:Name="whiteLabel" Text="" VerticalOptions="CenterAndExpand" HorizontalTextAlignment="Center" />
             </StackLayout>
-            
+
         </Grid>
     </ContentView>
 </ContentPage>
