@@ -96,3 +96,10 @@ message MATCH_RES
     optional eTeam  		var_color               = 5;
 }
 
+
+message RANK_RES
+{
+    optional PROTOCOL   id                        = 1 [default = ID_PKT_RANK_RES  ];
+    repeated Rank var_rank_list     = 2;
+    optional  ErrorCode    var_code               = 3;
+}

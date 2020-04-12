@@ -3,6 +3,9 @@
 #include "GSObject.h"
 #include "../DBJob/DBContext.h"
 
+#include "GS.CLI.pb.h"
+#include "Enum.pb.h"
+
 class CDBProcessCer : public GSNetwork::GSObject::GSObject
 {
 public:
@@ -17,6 +20,8 @@ public:
 
 	int	 ProcedureUserLogout(const DWORD id);
 	int  DeleteAllConcurrentUser();
+
+	int  RequestRank(std::list<Rank>& list);
 
 	int UpdaetPlayerScore(INT64 Index,int Win, int Lose, int Draw);
 

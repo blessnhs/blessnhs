@@ -48,13 +48,16 @@ struct TableStruct_Structure_2eproto {
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::PROTOBUF_NAMESPACE_ID::internal::AuxillaryParseTableField aux[]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
-  static const ::PROTOBUF_NAMESPACE_ID::internal::ParseTable schema[2]
+  static const ::PROTOBUF_NAMESPACE_ID::internal::ParseTable schema[3]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::PROTOBUF_NAMESPACE_ID::internal::FieldMetadata field_metadata[];
   static const ::PROTOBUF_NAMESPACE_ID::internal::SerializationTable serialization_table[];
   static const ::PROTOBUF_NAMESPACE_ID::uint32 offsets[];
 };
 extern const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_Structure_2eproto;
+class Rank;
+class RankDefaultTypeInternal;
+extern RankDefaultTypeInternal _Rank_default_instance_;
 class RoomInfo2;
 class RoomInfo2DefaultTypeInternal;
 extern RoomInfo2DefaultTypeInternal _RoomInfo2_default_instance_;
@@ -62,6 +65,7 @@ class RoomUserInfo;
 class RoomUserInfoDefaultTypeInternal;
 extern RoomUserInfoDefaultTypeInternal _RoomUserInfo_default_instance_;
 PROTOBUF_NAMESPACE_OPEN
+template<> ::Rank* Arena::CreateMaybeMessage<::Rank>(Arena*);
 template<> ::RoomInfo2* Arena::CreateMaybeMessage<::RoomInfo2>(Arena*);
 template<> ::RoomUserInfo* Arena::CreateMaybeMessage<::RoomUserInfo>(Arena*);
 PROTOBUF_NAMESPACE_CLOSE
@@ -442,6 +446,265 @@ class RoomInfo2 :
   ::PROTOBUF_NAMESPACE_ID::int32 var_max_count_;
   friend struct ::TableStruct_Structure_2eproto;
 };
+// -------------------------------------------------------------------
+
+class Rank :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:Rank) */ {
+ public:
+  Rank();
+  virtual ~Rank();
+
+  Rank(const Rank& from);
+  Rank(Rank&& from) noexcept
+    : Rank() {
+    *this = ::std::move(from);
+  }
+
+  inline Rank& operator=(const Rank& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline Rank& operator=(Rank&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  inline const ::PROTOBUF_NAMESPACE_ID::UnknownFieldSet& unknown_fields() const {
+    return _internal_metadata_.unknown_fields();
+  }
+  inline ::PROTOBUF_NAMESPACE_ID::UnknownFieldSet* mutable_unknown_fields() {
+    return _internal_metadata_.mutable_unknown_fields();
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return GetMetadataStatic().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return GetMetadataStatic().reflection;
+  }
+  static const Rank& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const Rank* internal_default_instance() {
+    return reinterpret_cast<const Rank*>(
+               &_Rank_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    2;
+
+  friend void swap(Rank& a, Rank& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(Rank* other) {
+    if (other == this) return;
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline Rank* New() const final {
+    return CreateMaybeMessage<Rank>(nullptr);
+  }
+
+  Rank* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
+    return CreateMaybeMessage<Rank>(arena);
+  }
+  void CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void CopyFrom(const Rank& from);
+  void MergeFrom(const Rank& from);
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  ::PROTOBUF_NAMESPACE_ID::uint8* _InternalSerialize(
+      ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  inline void SharedCtor();
+  inline void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(Rank* other);
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "Rank";
+  }
+  private:
+  inline ::PROTOBUF_NAMESPACE_ID::Arena* GetArenaNoVirtual() const {
+    return nullptr;
+  }
+  inline void* MaybeArenaPtr() const {
+    return nullptr;
+  }
+  public:
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+  private:
+  static ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadataStatic() {
+    ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&::descriptor_table_Structure_2eproto);
+    return ::descriptor_table_Structure_2eproto.file_level_metadata[kIndexInFileMessages];
+  }
+
+  public:
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kVarNameFieldNumber = 2,
+    kVarPicUriFieldNumber = 4,
+    kVarRankFieldNumber = 1,
+    kVarLevelFieldNumber = 3,
+    kVarIndexFieldNumber = 5,
+    kVarWinFieldNumber = 6,
+    kVarLoseFieldNumber = 7,
+    kVarDrawFieldNumber = 8,
+  };
+  // optional bytes var_name = 2;
+  bool has_var_name() const;
+  private:
+  bool _internal_has_var_name() const;
+  public:
+  void clear_var_name();
+  const std::string& var_name() const;
+  void set_var_name(const std::string& value);
+  void set_var_name(std::string&& value);
+  void set_var_name(const char* value);
+  void set_var_name(const void* value, size_t size);
+  std::string* mutable_var_name();
+  std::string* release_var_name();
+  void set_allocated_var_name(std::string* var_name);
+  private:
+  const std::string& _internal_var_name() const;
+  void _internal_set_var_name(const std::string& value);
+  std::string* _internal_mutable_var_name();
+  public:
+
+  // optional bytes var_pic_uri = 4;
+  bool has_var_pic_uri() const;
+  private:
+  bool _internal_has_var_pic_uri() const;
+  public:
+  void clear_var_pic_uri();
+  const std::string& var_pic_uri() const;
+  void set_var_pic_uri(const std::string& value);
+  void set_var_pic_uri(std::string&& value);
+  void set_var_pic_uri(const char* value);
+  void set_var_pic_uri(const void* value, size_t size);
+  std::string* mutable_var_pic_uri();
+  std::string* release_var_pic_uri();
+  void set_allocated_var_pic_uri(std::string* var_pic_uri);
+  private:
+  const std::string& _internal_var_pic_uri() const;
+  void _internal_set_var_pic_uri(const std::string& value);
+  std::string* _internal_mutable_var_pic_uri();
+  public:
+
+  // optional int32 var_rank = 1;
+  bool has_var_rank() const;
+  private:
+  bool _internal_has_var_rank() const;
+  public:
+  void clear_var_rank();
+  ::PROTOBUF_NAMESPACE_ID::int32 var_rank() const;
+  void set_var_rank(::PROTOBUF_NAMESPACE_ID::int32 value);
+  private:
+  ::PROTOBUF_NAMESPACE_ID::int32 _internal_var_rank() const;
+  void _internal_set_var_rank(::PROTOBUF_NAMESPACE_ID::int32 value);
+  public:
+
+  // optional int32 var_level = 3;
+  bool has_var_level() const;
+  private:
+  bool _internal_has_var_level() const;
+  public:
+  void clear_var_level();
+  ::PROTOBUF_NAMESPACE_ID::int32 var_level() const;
+  void set_var_level(::PROTOBUF_NAMESPACE_ID::int32 value);
+  private:
+  ::PROTOBUF_NAMESPACE_ID::int32 _internal_var_level() const;
+  void _internal_set_var_level(::PROTOBUF_NAMESPACE_ID::int32 value);
+  public:
+
+  // optional int64 var_index = 5;
+  bool has_var_index() const;
+  private:
+  bool _internal_has_var_index() const;
+  public:
+  void clear_var_index();
+  ::PROTOBUF_NAMESPACE_ID::int64 var_index() const;
+  void set_var_index(::PROTOBUF_NAMESPACE_ID::int64 value);
+  private:
+  ::PROTOBUF_NAMESPACE_ID::int64 _internal_var_index() const;
+  void _internal_set_var_index(::PROTOBUF_NAMESPACE_ID::int64 value);
+  public:
+
+  // optional int32 var_win = 6;
+  bool has_var_win() const;
+  private:
+  bool _internal_has_var_win() const;
+  public:
+  void clear_var_win();
+  ::PROTOBUF_NAMESPACE_ID::int32 var_win() const;
+  void set_var_win(::PROTOBUF_NAMESPACE_ID::int32 value);
+  private:
+  ::PROTOBUF_NAMESPACE_ID::int32 _internal_var_win() const;
+  void _internal_set_var_win(::PROTOBUF_NAMESPACE_ID::int32 value);
+  public:
+
+  // optional int32 var_lose = 7;
+  bool has_var_lose() const;
+  private:
+  bool _internal_has_var_lose() const;
+  public:
+  void clear_var_lose();
+  ::PROTOBUF_NAMESPACE_ID::int32 var_lose() const;
+  void set_var_lose(::PROTOBUF_NAMESPACE_ID::int32 value);
+  private:
+  ::PROTOBUF_NAMESPACE_ID::int32 _internal_var_lose() const;
+  void _internal_set_var_lose(::PROTOBUF_NAMESPACE_ID::int32 value);
+  public:
+
+  // optional int32 var_draw = 8;
+  bool has_var_draw() const;
+  private:
+  bool _internal_has_var_draw() const;
+  public:
+  void clear_var_draw();
+  ::PROTOBUF_NAMESPACE_ID::int32 var_draw() const;
+  void set_var_draw(::PROTOBUF_NAMESPACE_ID::int32 value);
+  private:
+  ::PROTOBUF_NAMESPACE_ID::int32 _internal_var_draw() const;
+  void _internal_set_var_draw(::PROTOBUF_NAMESPACE_ID::int32 value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:Rank)
+ private:
+  class _Internal;
+
+  ::PROTOBUF_NAMESPACE_ID::internal::InternalMetadataWithArena _internal_metadata_;
+  ::PROTOBUF_NAMESPACE_ID::internal::HasBits<1> _has_bits_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr var_name_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr var_pic_uri_;
+  ::PROTOBUF_NAMESPACE_ID::int32 var_rank_;
+  ::PROTOBUF_NAMESPACE_ID::int32 var_level_;
+  ::PROTOBUF_NAMESPACE_ID::int64 var_index_;
+  ::PROTOBUF_NAMESPACE_ID::int32 var_win_;
+  ::PROTOBUF_NAMESPACE_ID::int32 var_lose_;
+  ::PROTOBUF_NAMESPACE_ID::int32 var_draw_;
+  friend struct ::TableStruct_Structure_2eproto;
+};
 // ===================================================================
 
 
@@ -782,9 +1045,325 @@ inline void RoomInfo2::set_var_max_count(::PROTOBUF_NAMESPACE_ID::int32 value) {
   // @@protoc_insertion_point(field_set:RoomInfo2.var_max_count)
 }
 
+// -------------------------------------------------------------------
+
+// Rank
+
+// optional int32 var_rank = 1;
+inline bool Rank::_internal_has_var_rank() const {
+  bool value = (_has_bits_[0] & 0x00000004u) != 0;
+  return value;
+}
+inline bool Rank::has_var_rank() const {
+  return _internal_has_var_rank();
+}
+inline void Rank::clear_var_rank() {
+  var_rank_ = 0;
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 Rank::_internal_var_rank() const {
+  return var_rank_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 Rank::var_rank() const {
+  // @@protoc_insertion_point(field_get:Rank.var_rank)
+  return _internal_var_rank();
+}
+inline void Rank::_internal_set_var_rank(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  _has_bits_[0] |= 0x00000004u;
+  var_rank_ = value;
+}
+inline void Rank::set_var_rank(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  _internal_set_var_rank(value);
+  // @@protoc_insertion_point(field_set:Rank.var_rank)
+}
+
+// optional bytes var_name = 2;
+inline bool Rank::_internal_has_var_name() const {
+  bool value = (_has_bits_[0] & 0x00000001u) != 0;
+  return value;
+}
+inline bool Rank::has_var_name() const {
+  return _internal_has_var_name();
+}
+inline void Rank::clear_var_name() {
+  var_name_.ClearToEmptyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline const std::string& Rank::var_name() const {
+  // @@protoc_insertion_point(field_get:Rank.var_name)
+  return _internal_var_name();
+}
+inline void Rank::set_var_name(const std::string& value) {
+  _internal_set_var_name(value);
+  // @@protoc_insertion_point(field_set:Rank.var_name)
+}
+inline std::string* Rank::mutable_var_name() {
+  // @@protoc_insertion_point(field_mutable:Rank.var_name)
+  return _internal_mutable_var_name();
+}
+inline const std::string& Rank::_internal_var_name() const {
+  return var_name_.GetNoArena();
+}
+inline void Rank::_internal_set_var_name(const std::string& value) {
+  _has_bits_[0] |= 0x00000001u;
+  var_name_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), value);
+}
+inline void Rank::set_var_name(std::string&& value) {
+  _has_bits_[0] |= 0x00000001u;
+  var_name_.SetNoArena(
+    &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:Rank.var_name)
+}
+inline void Rank::set_var_name(const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  _has_bits_[0] |= 0x00000001u;
+  var_name_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:Rank.var_name)
+}
+inline void Rank::set_var_name(const void* value, size_t size) {
+  _has_bits_[0] |= 0x00000001u;
+  var_name_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:Rank.var_name)
+}
+inline std::string* Rank::_internal_mutable_var_name() {
+  _has_bits_[0] |= 0x00000001u;
+  return var_name_.MutableNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline std::string* Rank::release_var_name() {
+  // @@protoc_insertion_point(field_release:Rank.var_name)
+  if (!_internal_has_var_name()) {
+    return nullptr;
+  }
+  _has_bits_[0] &= ~0x00000001u;
+  return var_name_.ReleaseNonDefaultNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline void Rank::set_allocated_var_name(std::string* var_name) {
+  if (var_name != nullptr) {
+    _has_bits_[0] |= 0x00000001u;
+  } else {
+    _has_bits_[0] &= ~0x00000001u;
+  }
+  var_name_.SetAllocatedNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), var_name);
+  // @@protoc_insertion_point(field_set_allocated:Rank.var_name)
+}
+
+// optional int32 var_level = 3;
+inline bool Rank::_internal_has_var_level() const {
+  bool value = (_has_bits_[0] & 0x00000008u) != 0;
+  return value;
+}
+inline bool Rank::has_var_level() const {
+  return _internal_has_var_level();
+}
+inline void Rank::clear_var_level() {
+  var_level_ = 0;
+  _has_bits_[0] &= ~0x00000008u;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 Rank::_internal_var_level() const {
+  return var_level_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 Rank::var_level() const {
+  // @@protoc_insertion_point(field_get:Rank.var_level)
+  return _internal_var_level();
+}
+inline void Rank::_internal_set_var_level(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  _has_bits_[0] |= 0x00000008u;
+  var_level_ = value;
+}
+inline void Rank::set_var_level(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  _internal_set_var_level(value);
+  // @@protoc_insertion_point(field_set:Rank.var_level)
+}
+
+// optional bytes var_pic_uri = 4;
+inline bool Rank::_internal_has_var_pic_uri() const {
+  bool value = (_has_bits_[0] & 0x00000002u) != 0;
+  return value;
+}
+inline bool Rank::has_var_pic_uri() const {
+  return _internal_has_var_pic_uri();
+}
+inline void Rank::clear_var_pic_uri() {
+  var_pic_uri_.ClearToEmptyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline const std::string& Rank::var_pic_uri() const {
+  // @@protoc_insertion_point(field_get:Rank.var_pic_uri)
+  return _internal_var_pic_uri();
+}
+inline void Rank::set_var_pic_uri(const std::string& value) {
+  _internal_set_var_pic_uri(value);
+  // @@protoc_insertion_point(field_set:Rank.var_pic_uri)
+}
+inline std::string* Rank::mutable_var_pic_uri() {
+  // @@protoc_insertion_point(field_mutable:Rank.var_pic_uri)
+  return _internal_mutable_var_pic_uri();
+}
+inline const std::string& Rank::_internal_var_pic_uri() const {
+  return var_pic_uri_.GetNoArena();
+}
+inline void Rank::_internal_set_var_pic_uri(const std::string& value) {
+  _has_bits_[0] |= 0x00000002u;
+  var_pic_uri_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), value);
+}
+inline void Rank::set_var_pic_uri(std::string&& value) {
+  _has_bits_[0] |= 0x00000002u;
+  var_pic_uri_.SetNoArena(
+    &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:Rank.var_pic_uri)
+}
+inline void Rank::set_var_pic_uri(const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  _has_bits_[0] |= 0x00000002u;
+  var_pic_uri_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:Rank.var_pic_uri)
+}
+inline void Rank::set_var_pic_uri(const void* value, size_t size) {
+  _has_bits_[0] |= 0x00000002u;
+  var_pic_uri_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:Rank.var_pic_uri)
+}
+inline std::string* Rank::_internal_mutable_var_pic_uri() {
+  _has_bits_[0] |= 0x00000002u;
+  return var_pic_uri_.MutableNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline std::string* Rank::release_var_pic_uri() {
+  // @@protoc_insertion_point(field_release:Rank.var_pic_uri)
+  if (!_internal_has_var_pic_uri()) {
+    return nullptr;
+  }
+  _has_bits_[0] &= ~0x00000002u;
+  return var_pic_uri_.ReleaseNonDefaultNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline void Rank::set_allocated_var_pic_uri(std::string* var_pic_uri) {
+  if (var_pic_uri != nullptr) {
+    _has_bits_[0] |= 0x00000002u;
+  } else {
+    _has_bits_[0] &= ~0x00000002u;
+  }
+  var_pic_uri_.SetAllocatedNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), var_pic_uri);
+  // @@protoc_insertion_point(field_set_allocated:Rank.var_pic_uri)
+}
+
+// optional int64 var_index = 5;
+inline bool Rank::_internal_has_var_index() const {
+  bool value = (_has_bits_[0] & 0x00000010u) != 0;
+  return value;
+}
+inline bool Rank::has_var_index() const {
+  return _internal_has_var_index();
+}
+inline void Rank::clear_var_index() {
+  var_index_ = PROTOBUF_LONGLONG(0);
+  _has_bits_[0] &= ~0x00000010u;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int64 Rank::_internal_var_index() const {
+  return var_index_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int64 Rank::var_index() const {
+  // @@protoc_insertion_point(field_get:Rank.var_index)
+  return _internal_var_index();
+}
+inline void Rank::_internal_set_var_index(::PROTOBUF_NAMESPACE_ID::int64 value) {
+  _has_bits_[0] |= 0x00000010u;
+  var_index_ = value;
+}
+inline void Rank::set_var_index(::PROTOBUF_NAMESPACE_ID::int64 value) {
+  _internal_set_var_index(value);
+  // @@protoc_insertion_point(field_set:Rank.var_index)
+}
+
+// optional int32 var_win = 6;
+inline bool Rank::_internal_has_var_win() const {
+  bool value = (_has_bits_[0] & 0x00000020u) != 0;
+  return value;
+}
+inline bool Rank::has_var_win() const {
+  return _internal_has_var_win();
+}
+inline void Rank::clear_var_win() {
+  var_win_ = 0;
+  _has_bits_[0] &= ~0x00000020u;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 Rank::_internal_var_win() const {
+  return var_win_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 Rank::var_win() const {
+  // @@protoc_insertion_point(field_get:Rank.var_win)
+  return _internal_var_win();
+}
+inline void Rank::_internal_set_var_win(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  _has_bits_[0] |= 0x00000020u;
+  var_win_ = value;
+}
+inline void Rank::set_var_win(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  _internal_set_var_win(value);
+  // @@protoc_insertion_point(field_set:Rank.var_win)
+}
+
+// optional int32 var_lose = 7;
+inline bool Rank::_internal_has_var_lose() const {
+  bool value = (_has_bits_[0] & 0x00000040u) != 0;
+  return value;
+}
+inline bool Rank::has_var_lose() const {
+  return _internal_has_var_lose();
+}
+inline void Rank::clear_var_lose() {
+  var_lose_ = 0;
+  _has_bits_[0] &= ~0x00000040u;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 Rank::_internal_var_lose() const {
+  return var_lose_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 Rank::var_lose() const {
+  // @@protoc_insertion_point(field_get:Rank.var_lose)
+  return _internal_var_lose();
+}
+inline void Rank::_internal_set_var_lose(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  _has_bits_[0] |= 0x00000040u;
+  var_lose_ = value;
+}
+inline void Rank::set_var_lose(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  _internal_set_var_lose(value);
+  // @@protoc_insertion_point(field_set:Rank.var_lose)
+}
+
+// optional int32 var_draw = 8;
+inline bool Rank::_internal_has_var_draw() const {
+  bool value = (_has_bits_[0] & 0x00000080u) != 0;
+  return value;
+}
+inline bool Rank::has_var_draw() const {
+  return _internal_has_var_draw();
+}
+inline void Rank::clear_var_draw() {
+  var_draw_ = 0;
+  _has_bits_[0] &= ~0x00000080u;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 Rank::_internal_var_draw() const {
+  return var_draw_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 Rank::var_draw() const {
+  // @@protoc_insertion_point(field_get:Rank.var_draw)
+  return _internal_var_draw();
+}
+inline void Rank::_internal_set_var_draw(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  _has_bits_[0] |= 0x00000080u;
+  var_draw_ = value;
+}
+inline void Rank::set_var_draw(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  _internal_set_var_draw(value);
+  // @@protoc_insertion_point(field_set:Rank.var_draw)
+}
+
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 

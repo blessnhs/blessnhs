@@ -44,6 +44,12 @@ namespace OMOK.Views
                 mypicture.Source = ImageSource.FromUri(new Uri(User.myInfo.PhotoPath));
         }
 
+        public void UpdatePlayerInfo()
+        {
+            RecordButton.Text = User.myInfo.win + "승" + User.myInfo.lose + "패" + User.myInfo.draw + "무승부";
+            NameButton.Text = User.myInfo.NickName;
+        }
+
         public void UpdateMessage(CompletePacket packet)
         {
             viewModel.RoomModel.Clear();
@@ -153,6 +159,11 @@ namespace OMOK.Views
 
  //           iIterstitia.ShowAd();
         }
+        async void OnRankClicked(object sender, System.EventArgs e)
+        {
+            NetProcess.SendRank();
+        }
+        
 
         async void OnLoginClicked(object sender, System.EventArgs e)
         {

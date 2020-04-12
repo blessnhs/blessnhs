@@ -24,6 +24,10 @@ enum PROTOCOL
 
 	ID_PKT_GAME_START_NTY = 17;
 	ID_PKT_GAME_RESULT_NTY = 18;
+
+
+	ID_PKT_RANK_REQ = 19;
+	ID_PKT_RANK_RES = 20;
 };
 
 enum ErrorCode

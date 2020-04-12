@@ -22,8 +22,8 @@
                 <ColumnDefinition Width="8*" />
             </Grid.ColumnDefinitions>
 
-            <StackLayout x:Name="textStackTop" Grid.Row="0" Grid.Column="0" Spacing="0" Grid.ColumnSpan="2">
-                <Label x:Name="timeLabel" Text="0:00" HorizontalTextAlignment="Left" />
+            <StackLayout x:Name="textStackTop" Grid.Row="0" Grid.Column="0" Spacing="0" Grid.ColumnSpan="2" HorizontalOptions="Start" Margin="20,0,0,0">
+                <Label x:Name="timeLabel" Text="00" FontSize="Large" />
             </StackLayout>
             
             <StackLayout  Grid.Row="0" Grid.Column="1" Spacing="0" Grid.ColumnSpan="2">

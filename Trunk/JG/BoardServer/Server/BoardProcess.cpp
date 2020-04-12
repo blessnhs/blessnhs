@@ -18,6 +18,7 @@ BoardProcess::BoardProcess(void)
 	ADD_NET_FUNC(BoardProcess, ID_PKT_BROADCAST_ROOM_MESSAGE_REQ, ROOM_CHAT);
 	ADD_NET_FUNC(BoardProcess, ID_PKT_ROOM_LIST_REQ, ROOM_LIST);
 	ADD_NET_FUNC(BoardProcess, ID_PKT_MATCH_REQ, MATCH);
+	ADD_NET_FUNC(BoardProcess, ID_PKT_RANK_REQ, RANK);
 }
 
 
@@ -127,6 +128,18 @@ VOID BoardProcess::ROOM_CREATE(LPVOID Data, DWORD Length, boost::shared_ptr<GSCl
 	RoomPtr->SendNewUserInfo(pPlayer);	//방에 있는 유저들에게 새로운 유저 정보전송
 }
 
+VOID BoardProcess::RANK(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client)
+{
+	//로그인 쿼리를 날린다.
+	boost::shared_ptr<RequestRank> pRequest = ALLOCATOR.Create<RequestRank>();
+
+	boost::shared_ptr<Board::MSG_PLAYER_QUERY<RequestRank>>		PLAYER_MSG = ALLOCATOR.Create<Board::MSG_PLAYER_QUERY<RequestRank>>();
+	PLAYER_MSG->pSession = Client;
+	PLAYER_MSG->pRequst = pRequest;
+	PLAYER_MSG->Type = Client->GetMyDBTP();
+	PLAYER_MSG->SubType = ONQUERY;
+	MAINPROC.RegisterCommand(PLAYER_MSG);
+}
 
 VOID BoardProcess::ROOM_ENTER(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> pOwner)
 {

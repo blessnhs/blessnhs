@@ -59,3 +59,10 @@ message MATCH_REQ
     optional PROTOCOL   id                  = 1 [default = ID_PKT_MATCH_REQ ];
 }
 
+
+message RANK_REQ
+{
+    optional PROTOCOL   id                        = 1 [default = ID_PKT_RANK_REQ  ];
+}
+
+

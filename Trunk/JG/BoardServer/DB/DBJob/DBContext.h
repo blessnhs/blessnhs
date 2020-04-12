@@ -29,6 +29,14 @@ public:
 	DWORD Index;
 };
 
+class RequestRank : public GSObject
+{
+public:
+	RequestRank(void) {}
+	~RequestRank(void) {}
+};
+
+
 class RequestPlayerAuth : public GSObject
 {
 public:

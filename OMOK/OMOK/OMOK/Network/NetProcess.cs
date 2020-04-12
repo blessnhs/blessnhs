@@ -75,6 +75,13 @@ namespace OMOK.Network
                                     {
                                         IsSuccessAuth = true;
                                         User.Id = res.VarIndex;
+                                        User.myInfo.win = res.VarWin;
+                                        User.myInfo.lose = res.VarLose;
+                                        User.myInfo.draw = res.VarDraw;
+                                        User.myInfo.score = res.VarScore;
+                                        User.myInfo.rank = res.VarRank;
+
+                                        ((Lobby)page.Children[0]).UpdatePlayerInfo();
                                     }
                                     else
                                         ((Lobby)page.Children[0]).LoginInformation("로그인에 실패했습니다.");
@@ -183,6 +190,8 @@ namespace OMOK.Network
 
                                         ((Room)page.Children[1]).ClearBoard();
                                     }
+
+                                    ((Lobby)page.Children[0]).UpdatePlayerInfo();
 
                                 }
                                 break;
@@ -308,6 +317,23 @@ namespace OMOK.Network
                 person.WriteTo(stream);
 
                 client.WritePacket((int)PROTOCOL.IdPktMatchReq, stream.ToArray(), stream.ToArray().Length);
+            }
+        }
+
+        static public void SendRank()
+        {
+            if (client.socket.Connected == false)
+                return;
+
+
+            RANK_REQ person = new RANK_REQ
+            {
+            };
+            using (MemoryStream stream = new MemoryStream())
+            {
+                person.WriteTo(stream);
+
+                client.WritePacket((int)PROTOCOL.IdPktRankReq, stream.ToArray(), stream.ToArray().Length);
             }
         }
 

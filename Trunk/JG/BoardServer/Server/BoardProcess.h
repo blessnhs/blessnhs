@@ -35,6 +35,8 @@ public:
 
 	VOID MATCH(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client);
 
+	VOID RANK(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client);
+
 protected:
 
 	DECLARE_MSG_MAP(BoardProcess)

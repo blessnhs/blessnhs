@@ -27,7 +27,7 @@
 
                 <Frame BorderColor="Gray" Grid.Row="0" Grid.ColumnSpan="2" Grid.Column="1" VerticalOptions="Start" Padding="0,0,0,0">
                     <StackLayout BackgroundColor= "blue" >
-                        <Button x:Name="RecordButton" Text="10승0패0무" BackgroundColor="White"/>
+                        <Button x:Name="RecordButton" Text="" BackgroundColor="White"/>
                     </StackLayout>
                 </Frame>
 
@@ -61,7 +61,7 @@
                 </Frame>
 
                 <Frame BorderColor="Gray"  CornerRadius="5"  Grid.Row="2" Grid.Column="2" Padding="0,0,0,0">
-                    <Button x:Name="RankButton" Text="랭킹" Clicked="OnMatchClicked" BackgroundColor="White"/>
+                    <Button x:Name="RankButton" Text="랭킹" Clicked="OnRankClicked" BackgroundColor="White"/>
                 </Frame>
 
                 <Frame BorderColor="Gray"  CornerRadius="5"  Grid.Row="2" Grid.Column="3" Padding="0,0,0,0">

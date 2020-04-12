@@ -22,7 +22,7 @@ static constexpr ::PROTOBUF_NAMESPACE_ID::internal::MigrationSchema* schemas = n
 static constexpr ::PROTOBUF_NAMESPACE_ID::Message* const* file_default_instances = nullptr;
 
 const char descriptor_table_protodef_Enum_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
-  "\n\nEnum.proto*\220\004\n\010PROTOCOL\022\026\n\022ID_PKT_VERS"
+  "\n\nEnum.proto*\272\004\n\010PROTOCOL\022\026\n\022ID_PKT_VERS"
   "ION_REQ\020\000\022\026\n\022ID_PKT_VERSION_RES\020\001\022\024\n\020ID_"
   "PKT_LOGIN_REQ\020\002\022\024\n\020ID_PKT_LOGIN_RES\020\003\022\032\n"
   "\026ID_PKT_CREATE_ROOM_REQ\020\004\022\032\n\026ID_PKT_CREA"
@@ -35,12 +35,13 @@ const char descriptor_table_protodef_Enum_2eproto[] PROTOBUF_SECTION_VARIABLE(pr
   "KT_ROOM_LIST_REQ\020\r\022\030\n\024ID_PKT_ROOM_LIST_R"
   "ES\020\016\022\024\n\020ID_PKT_MATCH_REQ\020\017\022\024\n\020ID_PKT_MAT"
   "CH_RES\020\020\022\031\n\025ID_PKT_GAME_START_NTY\020\021\022\032\n\026I"
-  "D_PKT_GAME_RESULT_NTY\020\022*a\n\tErrorCode\022\013\n\007"
-  "Success\020\000\022\021\n\rDataBaseError\020\001\022\022\n\016LoginDup"
-  "licate\020\002\022\017\n\013SystemError\020\003\022\017\n\013LoginFailed"
-  "\020\004*\'\n\005eTeam\022\010\n\004None\020\000\022\t\n\005WHITE\020\001\022\t\n\005BLAC"
-  "K\020\002*\'\n\005State\022\013\n\007Prepare\020\000\022\010\n\004Game\020\001\022\007\n\003E"
-  "nd\020\002B\002H\001b\006proto3"
+  "D_PKT_GAME_RESULT_NTY\020\022\022\023\n\017ID_PKT_RANK_R"
+  "EQ\020\023\022\023\n\017ID_PKT_RANK_RES\020\024*a\n\tErrorCode\022\013"
+  "\n\007Success\020\000\022\021\n\rDataBaseError\020\001\022\022\n\016LoginD"
+  "uplicate\020\002\022\017\n\013SystemError\020\003\022\017\n\013LoginFail"
+  "ed\020\004*\'\n\005eTeam\022\010\n\004None\020\000\022\t\n\005WHITE\020\001\022\t\n\005BL"
+  "ACK\020\002*\'\n\005State\022\013\n\007Prepare\020\000\022\010\n\004Game\020\001\022\007\n"
+  "\003End\020\002B\002H\001b\006proto3"
   ;
 static const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable*const descriptor_table_Enum_2eproto_deps[1] = {
 };
@@ -49,7 +50,7 @@ static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_Enu
 static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_Enum_2eproto_once;
 static bool descriptor_table_Enum_2eproto_initialized = false;
 const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_Enum_2eproto = {
-  &descriptor_table_Enum_2eproto_initialized, descriptor_table_protodef_Enum_2eproto, "Enum.proto", 736,
+  &descriptor_table_Enum_2eproto_initialized, descriptor_table_protodef_Enum_2eproto, "Enum.proto", 778,
   &descriptor_table_Enum_2eproto_once, descriptor_table_Enum_2eproto_sccs, descriptor_table_Enum_2eproto_deps, 0, 0,
   schemas, file_default_instances, TableStruct_Enum_2eproto::offsets,
   file_level_metadata_Enum_2eproto, 0, file_level_enum_descriptors_Enum_2eproto, file_level_service_descriptors_Enum_2eproto,
@@ -82,6 +83,8 @@ bool PROTOCOL_IsValid(int value) {
     case 16:
     case 17:
     case 18:
+    case 19:
+    case 20:
       return true;
     default:
       return false;

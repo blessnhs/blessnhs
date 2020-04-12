@@ -40,7 +40,13 @@ namespace OMOK
 
                 Device.StartTimer(TimeSpan.FromSeconds(1), () =>
                 {
-                    timeLabel.Text = (DateTime.Now - gameStartTime).ToString(timeFormat);
+
+                    int remaintime = (30 - (int)(DateTime.Now - gameStartTime).TotalSeconds);
+
+                    if (remaintime < 0)
+                        remaintime = 0;
+
+                    timeLabel.Text = remaintime.ToString(timeFormat);
                     return isGameInProgress;
                 });
             };
@@ -187,6 +193,16 @@ namespace OMOK
                    DisplayAlert("", "흑 승리하셨습니다..", "OK");
                else
                    DisplayAlert("", "백 승리하셨습니다.", "OK");
+
+               if(User.Color == status)
+                {
+                    User.myInfo.win += 1;
+                }
+               else
+                {
+                    User.myInfo.lose += 1;
+                        
+                }
 
                board.ClearBoardState();
 

@@ -49,7 +49,7 @@ struct TableStruct_GS_2eCLI_2eproto {
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::PROTOBUF_NAMESPACE_ID::internal::AuxillaryParseTableField aux[]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
-  static const ::PROTOBUF_NAMESPACE_ID::internal::ParseTable schema[10]
+  static const ::PROTOBUF_NAMESPACE_ID::internal::ParseTable schema[11]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::PROTOBUF_NAMESPACE_ID::internal::FieldMetadata field_metadata[];
   static const ::PROTOBUF_NAMESPACE_ID::internal::SerializationTable serialization_table[];
@@ -80,6 +80,9 @@ extern MATCH_RESDefaultTypeInternal _MATCH_RES_default_instance_;
 class NEW_USER_IN_ROOM_NTY;
 class NEW_USER_IN_ROOM_NTYDefaultTypeInternal;
 extern NEW_USER_IN_ROOM_NTYDefaultTypeInternal _NEW_USER_IN_ROOM_NTY_default_instance_;
+class RANK_RES;
+class RANK_RESDefaultTypeInternal;
+extern RANK_RESDefaultTypeInternal _RANK_RES_default_instance_;
 class ROOM_LIST_RES;
 class ROOM_LIST_RESDefaultTypeInternal;
 extern ROOM_LIST_RESDefaultTypeInternal _ROOM_LIST_RES_default_instance_;
@@ -95,6 +98,7 @@ template<> ::LEAVE_ROOM_RES* Arena::CreateMaybeMessage<::LEAVE_ROOM_RES>(Arena*)
 template<> ::LOGIN_RES* Arena::CreateMaybeMessage<::LOGIN_RES>(Arena*);
 template<> ::MATCH_RES* Arena::CreateMaybeMessage<::MATCH_RES>(Arena*);
 template<> ::NEW_USER_IN_ROOM_NTY* Arena::CreateMaybeMessage<::NEW_USER_IN_ROOM_NTY>(Arena*);
+template<> ::RANK_RES* Arena::CreateMaybeMessage<::RANK_RES>(Arena*);
 template<> ::ROOM_LIST_RES* Arena::CreateMaybeMessage<::ROOM_LIST_RES>(Arena*);
 template<> ::VERSION_RES* Arena::CreateMaybeMessage<::VERSION_RES>(Arena*);
 PROTOBUF_NAMESPACE_CLOSE
@@ -2043,6 +2047,181 @@ class GAME_RESULT_NTY :
   int id_;
   friend struct ::TableStruct_GS_2eCLI_2eproto;
 };
+// -------------------------------------------------------------------
+
+class RANK_RES :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:RANK_RES) */ {
+ public:
+  RANK_RES();
+  virtual ~RANK_RES();
+
+  RANK_RES(const RANK_RES& from);
+  RANK_RES(RANK_RES&& from) noexcept
+    : RANK_RES() {
+    *this = ::std::move(from);
+  }
+
+  inline RANK_RES& operator=(const RANK_RES& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline RANK_RES& operator=(RANK_RES&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  inline const ::PROTOBUF_NAMESPACE_ID::UnknownFieldSet& unknown_fields() const {
+    return _internal_metadata_.unknown_fields();
+  }
+  inline ::PROTOBUF_NAMESPACE_ID::UnknownFieldSet* mutable_unknown_fields() {
+    return _internal_metadata_.mutable_unknown_fields();
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return GetMetadataStatic().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return GetMetadataStatic().reflection;
+  }
+  static const RANK_RES& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const RANK_RES* internal_default_instance() {
+    return reinterpret_cast<const RANK_RES*>(
+               &_RANK_RES_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    10;
+
+  friend void swap(RANK_RES& a, RANK_RES& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(RANK_RES* other) {
+    if (other == this) return;
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline RANK_RES* New() const final {
+    return CreateMaybeMessage<RANK_RES>(nullptr);
+  }
+
+  RANK_RES* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
+    return CreateMaybeMessage<RANK_RES>(arena);
+  }
+  void CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void CopyFrom(const RANK_RES& from);
+  void MergeFrom(const RANK_RES& from);
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  ::PROTOBUF_NAMESPACE_ID::uint8* _InternalSerialize(
+      ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  inline void SharedCtor();
+  inline void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(RANK_RES* other);
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "RANK_RES";
+  }
+  private:
+  inline ::PROTOBUF_NAMESPACE_ID::Arena* GetArenaNoVirtual() const {
+    return nullptr;
+  }
+  inline void* MaybeArenaPtr() const {
+    return nullptr;
+  }
+  public:
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+  private:
+  static ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadataStatic() {
+    ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&::descriptor_table_GS_2eCLI_2eproto);
+    return ::descriptor_table_GS_2eCLI_2eproto.file_level_metadata[kIndexInFileMessages];
+  }
+
+  public:
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kVarRankListFieldNumber = 2,
+    kVarCodeFieldNumber = 3,
+    kIdFieldNumber = 1,
+  };
+  // repeated .Rank var_rank_list = 2;
+  int var_rank_list_size() const;
+  private:
+  int _internal_var_rank_list_size() const;
+  public:
+  void clear_var_rank_list();
+  ::Rank* mutable_var_rank_list(int index);
+  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::Rank >*
+      mutable_var_rank_list();
+  private:
+  const ::Rank& _internal_var_rank_list(int index) const;
+  ::Rank* _internal_add_var_rank_list();
+  public:
+  const ::Rank& var_rank_list(int index) const;
+  ::Rank* add_var_rank_list();
+  const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::Rank >&
+      var_rank_list() const;
+
+  // optional .ErrorCode var_code = 3;
+  bool has_var_code() const;
+  private:
+  bool _internal_has_var_code() const;
+  public:
+  void clear_var_code();
+  ::ErrorCode var_code() const;
+  void set_var_code(::ErrorCode value);
+  private:
+  ::ErrorCode _internal_var_code() const;
+  void _internal_set_var_code(::ErrorCode value);
+  public:
+
+  // optional .PROTOCOL id = 1 [default = ID_PKT_RANK_RES];
+  bool has_id() const;
+  private:
+  bool _internal_has_id() const;
+  public:
+  void clear_id();
+  ::PROTOCOL id() const;
+  void set_id(::PROTOCOL value);
+  private:
+  ::PROTOCOL _internal_id() const;
+  void _internal_set_id(::PROTOCOL value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:RANK_RES)
+ private:
+  class _Internal;
+
+  ::PROTOBUF_NAMESPACE_ID::internal::InternalMetadataWithArena _internal_metadata_;
+  ::PROTOBUF_NAMESPACE_ID::internal::HasBits<1> _has_bits_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::Rank > var_rank_list_;
+  int var_code_;
+  int id_;
+  friend struct ::TableStruct_GS_2eCLI_2eproto;
+};
 // ===================================================================
 
 
@@ -3610,9 +3789,109 @@ inline void GAME_RESULT_NTY::set_var_color(::eTeam value) {
   // @@protoc_insertion_point(field_set:GAME_RESULT_NTY.var_color)
 }
 
+// -------------------------------------------------------------------
+
+// RANK_RES
+
+// optional .PROTOCOL id = 1 [default = ID_PKT_RANK_RES];
+inline bool RANK_RES::_internal_has_id() const {
+  bool value = (_has_bits_[0] & 0x00000002u) != 0;
+  return value;
+}
+inline bool RANK_RES::has_id() const {
+  return _internal_has_id();
+}
+inline void RANK_RES::clear_id() {
+  id_ = 20;
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline ::PROTOCOL RANK_RES::_internal_id() const {
+  return static_cast< ::PROTOCOL >(id_);
+}
+inline ::PROTOCOL RANK_RES::id() const {
+  // @@protoc_insertion_point(field_get:RANK_RES.id)
+  return _internal_id();
+}
+inline void RANK_RES::_internal_set_id(::PROTOCOL value) {
+  assert(::PROTOCOL_IsValid(value));
+  _has_bits_[0] |= 0x00000002u;
+  id_ = value;
+}
+inline void RANK_RES::set_id(::PROTOCOL value) {
+  _internal_set_id(value);
+  // @@protoc_insertion_point(field_set:RANK_RES.id)
+}
+
+// repeated .Rank var_rank_list = 2;
+inline int RANK_RES::_internal_var_rank_list_size() const {
+  return var_rank_list_.size();
+}
+inline int RANK_RES::var_rank_list_size() const {
+  return _internal_var_rank_list_size();
+}
+inline ::Rank* RANK_RES::mutable_var_rank_list(int index) {
+  // @@protoc_insertion_point(field_mutable:RANK_RES.var_rank_list)
+  return var_rank_list_.Mutable(index);
+}
+inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::Rank >*
+RANK_RES::mutable_var_rank_list() {
+  // @@protoc_insertion_point(field_mutable_list:RANK_RES.var_rank_list)
+  return &var_rank_list_;
+}
+inline const ::Rank& RANK_RES::_internal_var_rank_list(int index) const {
+  return var_rank_list_.Get(index);
+}
+inline const ::Rank& RANK_RES::var_rank_list(int index) const {
+  // @@protoc_insertion_point(field_get:RANK_RES.var_rank_list)
+  return _internal_var_rank_list(index);
+}
+inline ::Rank* RANK_RES::_internal_add_var_rank_list() {
+  return var_rank_list_.Add();
+}
+inline ::Rank* RANK_RES::add_var_rank_list() {
+  // @@protoc_insertion_point(field_add:RANK_RES.var_rank_list)
+  return _internal_add_var_rank_list();
+}
+inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::Rank >&
+RANK_RES::var_rank_list() const {
+  // @@protoc_insertion_point(field_list:RANK_RES.var_rank_list)
+  return var_rank_list_;
+}
+
+// optional .ErrorCode var_code = 3;
+inline bool RANK_RES::_internal_has_var_code() const {
+  bool value = (_has_bits_[0] & 0x00000001u) != 0;
+  return value;
+}
+inline bool RANK_RES::has_var_code() const {
+  return _internal_has_var_code();
+}
+inline void RANK_RES::clear_var_code() {
+  var_code_ = 0;
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline ::ErrorCode RANK_RES::_internal_var_code() const {
+  return static_cast< ::ErrorCode >(var_code_);
+}
+inline ::ErrorCode RANK_RES::var_code() const {
+  // @@protoc_insertion_point(field_get:RANK_RES.var_code)
+  return _internal_var_code();
+}
+inline void RANK_RES::_internal_set_var_code(::ErrorCode value) {
+  assert(::ErrorCode_IsValid(value));
+  _has_bits_[0] |= 0x00000001u;
+  var_code_ = value;
+}
+inline void RANK_RES::set_var_code(::ErrorCode value) {
+  _internal_set_var_code(value);
+  // @@protoc_insertion_point(field_set:RANK_RES.var_code)
+}
+
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

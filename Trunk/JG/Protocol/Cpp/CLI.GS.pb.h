@@ -49,7 +49,7 @@ struct TableStruct_CLI_2eGS_2eproto {
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::PROTOBUF_NAMESPACE_ID::internal::AuxillaryParseTableField aux[]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
-  static const ::PROTOBUF_NAMESPACE_ID::internal::ParseTable schema[8]
+  static const ::PROTOBUF_NAMESPACE_ID::internal::ParseTable schema[9]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::PROTOBUF_NAMESPACE_ID::internal::FieldMetadata field_metadata[];
   static const ::PROTOBUF_NAMESPACE_ID::internal::SerializationTable serialization_table[];
@@ -74,6 +74,9 @@ extern LOGIN_REQDefaultTypeInternal _LOGIN_REQ_default_instance_;
 class MATCH_REQ;
 class MATCH_REQDefaultTypeInternal;
 extern MATCH_REQDefaultTypeInternal _MATCH_REQ_default_instance_;
+class RANK_REQ;
+class RANK_REQDefaultTypeInternal;
+extern RANK_REQDefaultTypeInternal _RANK_REQ_default_instance_;
 class ROOM_LIST_REQ;
 class ROOM_LIST_REQDefaultTypeInternal;
 extern ROOM_LIST_REQDefaultTypeInternal _ROOM_LIST_REQ_default_instance_;
@@ -87,6 +90,7 @@ template<> ::ENTER_ROOM_REQ* Arena::CreateMaybeMessage<::ENTER_ROOM_REQ>(Arena*)
 template<> ::LEAVE_ROOM_REQ* Arena::CreateMaybeMessage<::LEAVE_ROOM_REQ>(Arena*);
 template<> ::LOGIN_REQ* Arena::CreateMaybeMessage<::LOGIN_REQ>(Arena*);
 template<> ::MATCH_REQ* Arena::CreateMaybeMessage<::MATCH_REQ>(Arena*);
+template<> ::RANK_REQ* Arena::CreateMaybeMessage<::RANK_REQ>(Arena*);
 template<> ::ROOM_LIST_REQ* Arena::CreateMaybeMessage<::ROOM_LIST_REQ>(Arena*);
 template<> ::VERSION_REQ* Arena::CreateMaybeMessage<::VERSION_REQ>(Arena*);
 PROTOBUF_NAMESPACE_CLOSE
@@ -1380,6 +1384,146 @@ class MATCH_REQ :
   int id_;
   friend struct ::TableStruct_CLI_2eGS_2eproto;
 };
+// -------------------------------------------------------------------
+
+class RANK_REQ :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:RANK_REQ) */ {
+ public:
+  RANK_REQ();
+  virtual ~RANK_REQ();
+
+  RANK_REQ(const RANK_REQ& from);
+  RANK_REQ(RANK_REQ&& from) noexcept
+    : RANK_REQ() {
+    *this = ::std::move(from);
+  }
+
+  inline RANK_REQ& operator=(const RANK_REQ& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline RANK_REQ& operator=(RANK_REQ&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  inline const ::PROTOBUF_NAMESPACE_ID::UnknownFieldSet& unknown_fields() const {
+    return _internal_metadata_.unknown_fields();
+  }
+  inline ::PROTOBUF_NAMESPACE_ID::UnknownFieldSet* mutable_unknown_fields() {
+    return _internal_metadata_.mutable_unknown_fields();
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return GetMetadataStatic().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return GetMetadataStatic().reflection;
+  }
+  static const RANK_REQ& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const RANK_REQ* internal_default_instance() {
+    return reinterpret_cast<const RANK_REQ*>(
+               &_RANK_REQ_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    8;
+
+  friend void swap(RANK_REQ& a, RANK_REQ& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(RANK_REQ* other) {
+    if (other == this) return;
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline RANK_REQ* New() const final {
+    return CreateMaybeMessage<RANK_REQ>(nullptr);
+  }
+
+  RANK_REQ* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
+    return CreateMaybeMessage<RANK_REQ>(arena);
+  }
+  void CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void CopyFrom(const RANK_REQ& from);
+  void MergeFrom(const RANK_REQ& from);
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  ::PROTOBUF_NAMESPACE_ID::uint8* _InternalSerialize(
+      ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  inline void SharedCtor();
+  inline void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(RANK_REQ* other);
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "RANK_REQ";
+  }
+  private:
+  inline ::PROTOBUF_NAMESPACE_ID::Arena* GetArenaNoVirtual() const {
+    return nullptr;
+  }
+  inline void* MaybeArenaPtr() const {
+    return nullptr;
+  }
+  public:
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+  private:
+  static ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadataStatic() {
+    ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&::descriptor_table_CLI_2eGS_2eproto);
+    return ::descriptor_table_CLI_2eGS_2eproto.file_level_metadata[kIndexInFileMessages];
+  }
+
+  public:
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kIdFieldNumber = 1,
+  };
+  // optional .PROTOCOL id = 1 [default = ID_PKT_RANK_REQ];
+  bool has_id() const;
+  private:
+  bool _internal_has_id() const;
+  public:
+  void clear_id();
+  ::PROTOCOL id() const;
+  void set_id(::PROTOCOL value);
+  private:
+  ::PROTOCOL _internal_id() const;
+  void _internal_set_id(::PROTOCOL value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:RANK_REQ)
+ private:
+  class _Internal;
+
+  ::PROTOBUF_NAMESPACE_ID::internal::InternalMetadataWithArena _internal_metadata_;
+  ::PROTOBUF_NAMESPACE_ID::internal::HasBits<1> _has_bits_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  int id_;
+  friend struct ::TableStruct_CLI_2eGS_2eproto;
+};
 // ===================================================================
 
 
@@ -2076,9 +2220,44 @@ inline void MATCH_REQ::set_id(::PROTOCOL value) {
   // @@protoc_insertion_point(field_set:MATCH_REQ.id)
 }
 
+// -------------------------------------------------------------------
+
+// RANK_REQ
+
+// optional .PROTOCOL id = 1 [default = ID_PKT_RANK_REQ];
+inline bool RANK_REQ::_internal_has_id() const {
+  bool value = (_has_bits_[0] & 0x00000001u) != 0;
+  return value;
+}
+inline bool RANK_REQ::has_id() const {
+  return _internal_has_id();
+}
+inline void RANK_REQ::clear_id() {
+  id_ = 19;
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline ::PROTOCOL RANK_REQ::_internal_id() const {
+  return static_cast< ::PROTOCOL >(id_);
+}
+inline ::PROTOCOL RANK_REQ::id() const {
+  // @@protoc_insertion_point(field_get:RANK_REQ.id)
+  return _internal_id();
+}
+inline void RANK_REQ::_internal_set_id(::PROTOCOL value) {
+  assert(::PROTOCOL_IsValid(value));
+  _has_bits_[0] |= 0x00000001u;
+  id_ = value;
+}
+inline void RANK_REQ::set_id(::PROTOCOL value) {
+  _internal_set_id(value);
+  // @@protoc_insertion_point(field_set:RANK_REQ.id)
+}
+
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

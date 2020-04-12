@@ -75,6 +75,64 @@ float CDBProcessCer::ProcedureVersion()
 	return sParmRet;
 }
 
+
+int  CDBProcessCer::RequestRank(std::list<Rank> &list)
+{
+
+	if (m_pDB->IsOpen() == false) { return _ERR_NETWORK; }
+
+	CDBHandle		dbhandle(m_pDB->m_hdbc, &(m_pDB->m_csDBHandle));
+	SQLHSTMT		hstmt = dbhandle.GetHandle();
+	SQLSMALLINT		sParmRet = 0;
+	SQLLEN			cbParmRet;
+	SQLRETURN		retcode = SQL_ERROR;
+	SQLCHAR			szSQL[1024];
+
+	sprintf_s((char*)szSQL, sizeof(szSQL), "SELECT * FROM Rank");
+	retcode = SQLExecDirect(hstmt, szSQL, SQL_NTS);
+	if (retcode == SQL_ERROR) { return _ERR_NETWORK; }
+
+	while (true)
+	{
+		retcode = SQLFetch(hstmt);
+		if (retcode == SQL_SUCCESS || retcode == SQL_SUCCESS_WITH_INFO)
+		{
+			Rank r;
+
+			INT64 Index;
+			int Rank;
+			char Name[256];
+			int Level;
+			char pic[512];
+			int win, lose, draw;
+
+			SQLGetData(hstmt, 1, SQL_C_SLONG, &Rank, 0, &cbParmRet);
+			SQLGetData(hstmt, 2, SQL_CHAR, Name, sizeof(Name), &cbParmRet);
+			SQLGetData(hstmt, 3, SQL_C_LONG, &Level, 0, &cbParmRet);
+			SQLGetData(hstmt, 4, SQL_CHAR, pic, sizeof(pic), &cbParmRet);
+
+			SQLGetData(hstmt, 5, SQL_C_SBIGINT, &Index, 0, &cbParmRet);
+			SQLGetData(hstmt, 6, SQL_C_SLONG, &win, 0, &cbParmRet);
+			SQLGetData(hstmt, 7, SQL_C_SLONG, &lose, 0, &cbParmRet);
+			SQLGetData(hstmt, 8, SQL_C_SLONG, &draw, 0, &cbParmRet);
+
+			r.set_var_rank(Rank);
+			r.set_var_name(Name);
+			r.set_var_level(Level);
+			r.set_var_pic_uri(pic);
+			r.set_var_index(Index);
+			r.set_var_win(win);
+			r.set_var_lose(lose);
+			r.set_var_draw(draw);
+
+			list.push_back(r);
+
+		}
+		else { break; }
+	}
+	return _ERR_NONE;
+}
+
 int CDBProcessCer::UpdaetPlayerScore(INT64 Index,int Win, int Lose, int Draw)
 {
 	SQLRETURN		retcode = SQL_ERROR;
