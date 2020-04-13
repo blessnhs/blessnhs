@@ -118,7 +118,7 @@ namespace Board	{
 				res.set_var_code(DataBaseError);
 
 				SEND_PROTO_BUFFER(res, pSession)
-					return;
+				return;
 			}
 
 			DBPROCESS_CER_PTR pProcess = DBPROCESSCONTAINER_CER.Search(pSession->GetMyDBTP());
@@ -127,7 +127,7 @@ namespace Board	{
 				res.set_var_code(DataBaseError);
 
 				SEND_PROTO_BUFFER(res, pSession)
-					return;
+				return;
 			}
 
 			std::list<Rank> list;

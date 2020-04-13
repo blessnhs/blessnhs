@@ -230,6 +230,18 @@ VOID BoardProcess::ROOM_LEAVE(LPVOID Data, DWORD Length, boost::shared_ptr<GSCli
 	{
 		if (RoomPtr->FindPlayer(pPlayer) != USHRT_MAX)
 		{
+			//승패 처리 간으한지의 여부 방안에 2명이 존재 했고 방이종료되지 않았으면 승패를 내본다.
+			if (RoomPtr->GetState() != State::End && RoomPtr->GetCurrPlayer() > 1)
+			{
+				RoomPtr->SetState(State::End);
+
+				auto OppPlayer = RoomPtr->GetOtherPlayer(pPlayer->GetId());
+				if (OppPlayer != NULL)
+				{
+					RoomPtr->RecoardResult(OppPlayer, pPlayer);
+				}
+			}
+
 			res.set_var_index(pPlayer->GetId());
 			res.set_var_code(Success);
 			res.mutable_var_name()->assign(pPlayer->m_Account.GetName());
@@ -245,6 +257,8 @@ VOID BoardProcess::ROOM_LEAVE(LPVOID Data, DWORD Length, boost::shared_ptr<GSCli
 
 		pPlayer->m_Char[0].SetAllComplete(FALSE);
 		pPlayer->m_Char[0].SetReady(FALSE);
+
+
 	}
 }
 
@@ -339,50 +353,14 @@ VOID BoardProcess::ROOM_CHAT(LPVOID Data, DWORD Length, boost::shared_ptr<GSClie
 			if (pPtr->CheckGameResult(message.var_x(), message.var_y(), message.var_color()) == true)
 			{
 				pPtr->ClearBoard();
+				pPtr->SetState(State::End);
 
-				GAME_RESULT_NTY result_nty;
-				result_nty.set_var_code(Success);
-				result_nty.set_var_index(pPlayer->GetId());
-				result_nty.set_var_name(pPlayer->m_Account.GetName());
-				result_nty.set_var_color(message.var_color());
-
-				pPtr->SendToAll(result_nty);
-
-				//나중에 필요에 따라 프로시져를 하나로 통합해야 할것 같음
-
-				{
-					//승수 증가
-					boost::shared_ptr<RequestPlayerScore> pRequest = ALLOCATOR.Create<RequestPlayerScore>();
-					pRequest->Index = pPlayer->GetId();
-					pRequest->Win = 1;	pRequest->Lose = 0;	pRequest->Draw = 0;
-
-					boost::shared_ptr<Board::MSG_PLAYER_QUERY<RequestPlayerScore>>		PLAYER_MSG = ALLOCATOR.Create<Board::MSG_PLAYER_QUERY<RequestPlayerScore>>();
-					PLAYER_MSG->pSession = pOwner;
-					PLAYER_MSG->pRequst = pRequest;
-					PLAYER_MSG->Type = pOwner->GetMyDBTP();
-					PLAYER_MSG->SubType = ONQUERY;
-					MAINPROC.RegisterCommand(PLAYER_MSG);
-				}
-
-				//패배 증가
 				auto OppPlayer = pPtr->GetOtherPlayer(pPlayer->GetId());
-				if(OppPlayer != NULL)
+				if (OppPlayer != NULL)
 				{
-					GSCLIENT_PTR pSession = SERVER.GetClient(OppPlayer->GetPair());
-					if (pSession)
-					{
-						boost::shared_ptr<RequestPlayerScore> pRequest = ALLOCATOR.Create<RequestPlayerScore>();
-						pRequest->Index = OppPlayer->GetId();
-						pRequest->Win = 0;	pRequest->Lose = 1;	pRequest->Draw = 0;
-
-						boost::shared_ptr<Board::MSG_PLAYER_QUERY<RequestPlayerScore>>		PLAYER_MSG = ALLOCATOR.Create<Board::MSG_PLAYER_QUERY<RequestPlayerScore>>();
-						PLAYER_MSG->pSession = pSession;
-						PLAYER_MSG->pRequst = pRequest;
-						PLAYER_MSG->Type = pSession->GetMyDBTP();
-						PLAYER_MSG->SubType = ONQUERY;
-						MAINPROC.RegisterCommand(PLAYER_MSG);
-					}
+					pPtr->RecoardResult(pPlayer, OppPlayer);
 				}
+			
 			}
 
 		}

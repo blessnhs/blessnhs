@@ -179,6 +179,15 @@ namespace OMOK.Network
                                 }
                                 break;
 
+                            case (int)PROTOCOL.IdPktRankRes:
+                                {
+                                    RANK_RES res = new RANK_RES();
+                                    res = RANK_RES.Parser.ParseFrom(data.Data);
+
+                                    ((Lobby)page.Children[0]).CreateRankPage(res.VarRankList);
+                                }
+                                break;
+
                             case (int)PROTOCOL.IdPktLeaveRoomRes:
                                 {
                                     LEAVE_ROOM_RES res = new LEAVE_ROOM_RES();

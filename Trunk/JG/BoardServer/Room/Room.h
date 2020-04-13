@@ -17,14 +17,14 @@
 using namespace std;
 typedef GSNetwork::GSObject::GSObject GSObject;
 
-	struct RoomStock
-	{
-		string Name;
-		string Passwd;
-		WORD  MAX_PLAYER;
-		WORD  GameType;
-	
-	};
+struct RoomStock
+{
+	string Name;
+	string Passwd;
+	WORD  MAX_PLAYER;
+	WORD  GameType;
+
+};
 
 #define COLS  20         // 20
 #define	ROWS  20         // 20
@@ -54,6 +54,9 @@ public:
 
 	WORD GetCurrPlayer();
 	PLAYER_PTR GetOtherPlayer(DWORD INDEX);
+	eTeam      GetTeamPlayer(DWORD INDEX);
+
+	void RecoardResult(PLAYER_PTR Winner, PLAYER_PTR Loser);
 
 	template<class T>
 	void SendToAll(T &snd)
@@ -76,6 +79,8 @@ public:
 	void ClearBoard();
 	void UpdateBoard(int x, int y, eTeam team);
 	bool CheckGameResult(int _x, int _y, eTeam _stone);
+
+	void SetRoomState(State state);
 	
 	concurrency::concurrent_unordered_map<DWORD, PLAYER_PTR>		m_PlayerMap;
 

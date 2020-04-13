@@ -26,6 +26,8 @@ Room::Room(void)
 	for (int i = 0; i < COLS; i++)
 		for (int j = 0; j < ROWS; j++)
 			m_Board[i][j] = None;
+
+	m_State = State::Prepare;
 }
 
 void Room::ClearBoard()
@@ -49,6 +51,11 @@ void Room::UpdateBoard(int x, int y, eTeam team)
 		return;
 
 	m_Board[y][x] = team;
+}
+
+void Room::SetRoomState(State state)
+{
+	m_State = state;
 }
 
 bool  Room::CheckGameResult(int _x, int _y, eTeam _stone)   // 현재 놓은 돌의 좌표와 색상(1or2) 정보를 받음
@@ -255,6 +262,86 @@ PLAYER_PTR Room::GetOtherPlayer(DWORD INDEX)
 	return NULL;
 }
 
+eTeam Room::GetTeamPlayer(DWORD INDEX)
+{
+	//매칭시 0번은 무조건 블랙 1번은 화이트로 처리하도록함
+	int pos = 0;
+	for each (auto & player in m_PlayerMap)
+	{
+		if (player.second == NULL)
+			continue;
+
+		if (player.second->GetId() != INDEX)
+		{
+			pos++;
+			continue;
+		}
+
+		if(pos == 0)
+			return eTeam::BLACK;
+		else
+			return eTeam::WHITE;
+
+		pos++;
+
+	}
+	return eTeam::None;
+}
+
+void Room::RecoardResult(PLAYER_PTR Winner, PLAYER_PTR Loser)
+{
+	GAME_RESULT_NTY result_nty;
+	result_nty.set_var_code(Success);
+
+
+	//나중에 필요에 따라 프로시져를 하나로 통합해야 할것 같음
+	//패배 증가
+	{
+		GSCLIENT_PTR pSession = SERVER.GetClient(Loser->GetPair());
+		if (!pSession)
+			return ;
+
+		boost::shared_ptr<RequestPlayerScore> pRequest = ALLOCATOR.Create<RequestPlayerScore>();
+		pRequest->Index = Loser->GetId();
+		pRequest->Win = 0;	pRequest->Lose = 1;	pRequest->Draw = 0;
+
+		boost::shared_ptr<Board::MSG_PLAYER_QUERY<RequestPlayerScore>>		PLAYER_MSG = ALLOCATOR.Create<Board::MSG_PLAYER_QUERY<RequestPlayerScore>>();
+		PLAYER_MSG->pSession = pSession;
+		PLAYER_MSG->pRequst = pRequest;
+		PLAYER_MSG->Type = pSession->GetMyDBTP();
+		PLAYER_MSG->SubType = ONQUERY;
+		MAINPROC.RegisterCommand(PLAYER_MSG);
+	}
+
+	//승수 증가
+	auto OppPlayer = GetOtherPlayer(Winner->GetId());
+	if (OppPlayer != NULL)
+	{
+		result_nty.set_var_index(OppPlayer->GetId());
+		result_nty.set_var_name(OppPlayer->m_Account.GetName());
+
+		eTeam color = GetTeamPlayer(OppPlayer->GetId());
+		result_nty.set_var_color(color);
+
+
+		GSCLIENT_PTR pSession = SERVER.GetClient(OppPlayer->GetPair());
+		if (pSession)
+		{
+			boost::shared_ptr<RequestPlayerScore> pRequest = ALLOCATOR.Create<RequestPlayerScore>();
+			pRequest->Index = OppPlayer->GetId();
+			pRequest->Win = 1;	pRequest->Lose = 0;	pRequest->Draw = 0;
+
+			boost::shared_ptr<Board::MSG_PLAYER_QUERY<RequestPlayerScore>>		PLAYER_MSG = ALLOCATOR.Create<Board::MSG_PLAYER_QUERY<RequestPlayerScore>>();
+			PLAYER_MSG->pSession = pSession;
+			PLAYER_MSG->pRequst = pRequest;
+			PLAYER_MSG->Type = pSession->GetMyDBTP();
+			PLAYER_MSG->SubType = ONQUERY;
+			MAINPROC.RegisterCommand(PLAYER_MSG);
+		}
+	}
+
+	SendToAll(result_nty);
+}
 
 void Room::SendToAll(WORD MainId, BYTE * Data, WORD Length)
 {

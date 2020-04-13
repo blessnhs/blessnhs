@@ -89,9 +89,6 @@ namespace OMOK.Droid
                 AuthCredential credential = GoogleAuthProvider.GetCredential(signInResult.SignInAccount.IdToken, null);
                 try
                 {
-                    IAuthResult authResult = await FirebaseAuth_.SignInWithCredentialAsync(credential);
-                    FirebaseUser user = authResult.User;
-                    // 사용자 로그인 및 파이어베이스 등록 완료
 
                     User.myInfo.PhotoPath = signInResult.SignInAccount.PhotoUrl.ToString();
 
@@ -100,6 +97,11 @@ namespace OMOK.Droid
                     User.myInfo.NickName = signInResult.SignInAccount.DisplayName;
 
                     NetProcess.SendLogin(User.Uid, User.Token);
+
+                    IAuthResult authResult = await FirebaseAuth_.SignInWithCredentialAsync(credential);
+                    FirebaseUser user = authResult.User;
+                    // 사용자 로그인 및 파이어베이스 등록 완료
+
 
                     new AlertDialog.Builder(this).SetMessage(signInResult.SignInAccount.DisplayName + " 로그인").Show();
                 }

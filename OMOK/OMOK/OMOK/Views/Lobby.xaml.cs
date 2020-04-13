@@ -11,6 +11,7 @@ using OMOK.ViewModels;
 using NetClient;
 using OMOK.Network;
 using OMOK.CustomAdMobView;
+using Google.Protobuf.Collections;
 
 namespace OMOK.Views
 {
@@ -48,6 +49,11 @@ namespace OMOK.Views
         {
             RecordButton.Text = User.myInfo.win + "승" + User.myInfo.lose + "패" + User.myInfo.draw + "무승부";
             NameButton.Text = User.myInfo.NickName;
+        }
+
+        public void CreateRankPage(RepeatedField<global::Rank> list)
+        {
+            Navigation.PushModalAsync(new Rank(list));
         }
 
         public void UpdateMessage(CompletePacket packet)

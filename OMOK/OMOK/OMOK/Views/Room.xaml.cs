@@ -68,6 +68,11 @@ namespace OMOK
             PrepareForNewGame();
         }
 
+        protected override void OnDisappearing()
+        {
+            NetProcess.SendLeaveRoom(0);
+        }
+
         public void UpdateBattleInfo()
         {
             if(User.Color == eTeam.Black)
