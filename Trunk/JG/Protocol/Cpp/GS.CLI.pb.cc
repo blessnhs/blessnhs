@@ -354,11 +354,23 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_GS_2eCLI_2eproto::offsets[] PR
   PROTOBUF_FIELD_OFFSET(::GAME_RESULT_NTY, var_name_),
   PROTOBUF_FIELD_OFFSET(::GAME_RESULT_NTY, var_code_),
   PROTOBUF_FIELD_OFFSET(::GAME_RESULT_NTY, var_color_),
-  4,
+  PROTOBUF_FIELD_OFFSET(::GAME_RESULT_NTY, var_index_1_),
+  PROTOBUF_FIELD_OFFSET(::GAME_RESULT_NTY, var_level_1_),
+  PROTOBUF_FIELD_OFFSET(::GAME_RESULT_NTY, var_level_point_1_),
+  PROTOBUF_FIELD_OFFSET(::GAME_RESULT_NTY, var_index_2_),
+  PROTOBUF_FIELD_OFFSET(::GAME_RESULT_NTY, var_level_2_),
+  PROTOBUF_FIELD_OFFSET(::GAME_RESULT_NTY, var_level_point_2_),
+  10,
   1,
   0,
   2,
   3,
+  4,
+  5,
+  6,
+  7,
+  8,
+  9,
   PROTOBUF_FIELD_OFFSET(::RANK_RES, _has_bits_),
   PROTOBUF_FIELD_OFFSET(::RANK_RES, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -381,8 +393,8 @@ static const ::PROTOBUF_NAMESPACE_ID::internal::MigrationSchema schemas[] PROTOB
   { 82, 94, sizeof(::BROADCAST_ROOM_MESSAGE_RES)},
   { 101, 109, sizeof(::ROOM_LIST_RES)},
   { 112, 119, sizeof(::MATCH_RES)},
-  { 121, 131, sizeof(::GAME_RESULT_NTY)},
-  { 136, 144, sizeof(::RANK_RES)},
+  { 121, 137, sizeof(::GAME_RESULT_NTY)},
+  { 148, 156, sizeof(::RANK_RES)},
 };
 
 static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] = {
@@ -433,13 +445,17 @@ const char descriptor_table_protodef_GS_2eCLI_2eproto[] PROTOBUF_SECTION_VARIABL
   "\022!\n\rvar_room_list\030\003 \003(\0132\n.RoomInfo2\"R\n\tM"
   "ATCH_RES\022\'\n\002id\030\001 \001(\0162\t.PROTOCOL:\020ID_PKT_"
   "MATCH_RES\022\034\n\010var_code\030\002 \001(\0162\n.ErrorCode\""
-  "\236\001\n\017GAME_RESULT_NTY\022-\n\002id\030\001 \001(\0162\t.PROTOC"
+  "\250\002\n\017GAME_RESULT_NTY\022-\n\002id\030\001 \001(\0162\t.PROTOC"
   "OL:\026ID_PKT_GAME_RESULT_NTY\022\021\n\tvar_index\030"
   "\002 \001(\003\022\020\n\010var_name\030\003 \001(\014\022\034\n\010var_code\030\004 \001("
   "\0162\n.ErrorCode\022\031\n\tvar_color\030\005 \001(\0162\006.eTeam"
-  "\"n\n\010RANK_RES\022&\n\002id\030\001 \001(\0162\t.PROTOCOL:\017ID_"
-  "PKT_RANK_RES\022\034\n\rvar_rank_list\030\002 \003(\0132\005.Ra"
-  "nk\022\034\n\010var_code\030\003 \001(\0162\n.ErrorCodeB\002H\001"
+  "\022\023\n\013var_index_1\030\006 \001(\003\022\023\n\013var_level_1\030\007 \001"
+  "(\005\022\031\n\021var_level_point_1\030\010 \001(\005\022\023\n\013var_ind"
+  "ex_2\030\t \001(\003\022\023\n\013var_level_2\030\n \001(\005\022\031\n\021var_l"
+  "evel_point_2\030\013 \001(\005\"n\n\010RANK_RES\022&\n\002id\030\001 \001"
+  "(\0162\t.PROTOCOL:\017ID_PKT_RANK_RES\022\034\n\rvar_ra"
+  "nk_list\030\002 \003(\0132\005.Rank\022\034\n\010var_code\030\003 \001(\0162\n"
+  ".ErrorCodeB\002H\001"
   ;
 static const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable*const descriptor_table_GS_2eCLI_2eproto_deps[2] = {
   &::descriptor_table_Enum_2eproto,
@@ -461,7 +477,7 @@ static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_GS_
 static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_GS_2eCLI_2eproto_once;
 static bool descriptor_table_GS_2eCLI_2eproto_initialized = false;
 const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_GS_2eCLI_2eproto = {
-  &descriptor_table_GS_2eCLI_2eproto_initialized, descriptor_table_protodef_GS_2eCLI_2eproto, "GS.CLI.proto", 1596,
+  &descriptor_table_GS_2eCLI_2eproto_initialized, descriptor_table_protodef_GS_2eCLI_2eproto, "GS.CLI.proto", 1734,
   &descriptor_table_GS_2eCLI_2eproto_once, descriptor_table_GS_2eCLI_2eproto_sccs, descriptor_table_GS_2eCLI_2eproto_deps, 11, 2,
   schemas, file_default_instances, TableStruct_GS_2eCLI_2eproto::offsets,
   file_level_metadata_GS_2eCLI_2eproto, 11, file_level_enum_descriptors_GS_2eCLI_2eproto, file_level_service_descriptors_GS_2eCLI_2eproto,
@@ -3380,7 +3396,7 @@ class GAME_RESULT_NTY::_Internal {
  public:
   using HasBits = decltype(std::declval<GAME_RESULT_NTY>()._has_bits_);
   static void set_has_id(HasBits* has_bits) {
-    (*has_bits)[0] |= 16u;
+    (*has_bits)[0] |= 1024u;
   }
   static void set_has_var_index(HasBits* has_bits) {
     (*has_bits)[0] |= 2u;
@@ -3393,6 +3409,24 @@ class GAME_RESULT_NTY::_Internal {
   }
   static void set_has_var_color(HasBits* has_bits) {
     (*has_bits)[0] |= 8u;
+  }
+  static void set_has_var_index_1(HasBits* has_bits) {
+    (*has_bits)[0] |= 16u;
+  }
+  static void set_has_var_level_1(HasBits* has_bits) {
+    (*has_bits)[0] |= 32u;
+  }
+  static void set_has_var_level_point_1(HasBits* has_bits) {
+    (*has_bits)[0] |= 64u;
+  }
+  static void set_has_var_index_2(HasBits* has_bits) {
+    (*has_bits)[0] |= 128u;
+  }
+  static void set_has_var_level_2(HasBits* has_bits) {
+    (*has_bits)[0] |= 256u;
+  }
+  static void set_has_var_level_point_2(HasBits* has_bits) {
+    (*has_bits)[0] |= 512u;
   }
 };
 
@@ -3420,8 +3454,8 @@ void GAME_RESULT_NTY::SharedCtor() {
   ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&scc_info_GAME_RESULT_NTY_GS_2eCLI_2eproto.base);
   var_name_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
   ::memset(&var_index_, 0, static_cast<size_t>(
-      reinterpret_cast<char*>(&var_color_) -
-      reinterpret_cast<char*>(&var_index_)) + sizeof(var_color_));
+      reinterpret_cast<char*>(&var_level_point_2_) -
+      reinterpret_cast<char*>(&var_index_)) + sizeof(var_level_point_2_));
   id_ = 18;
 }
 
@@ -3453,10 +3487,15 @@ void GAME_RESULT_NTY::Clear() {
   if (cached_has_bits & 0x00000001u) {
     var_name_.ClearNonDefaultToEmptyNoArena();
   }
-  if (cached_has_bits & 0x0000001eu) {
+  if (cached_has_bits & 0x000000feu) {
     ::memset(&var_index_, 0, static_cast<size_t>(
-        reinterpret_cast<char*>(&var_color_) -
-        reinterpret_cast<char*>(&var_index_)) + sizeof(var_color_));
+        reinterpret_cast<char*>(&var_index_2_) -
+        reinterpret_cast<char*>(&var_index_)) + sizeof(var_index_2_));
+  }
+  if (cached_has_bits & 0x00000700u) {
+    ::memset(&var_level_2_, 0, static_cast<size_t>(
+        reinterpret_cast<char*>(&var_level_point_2_) -
+        reinterpret_cast<char*>(&var_level_2_)) + sizeof(var_level_point_2_));
     id_ = 18;
   }
   _has_bits_.Clear();
@@ -3523,6 +3562,54 @@ const char* GAME_RESULT_NTY::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPAC
           }
         } else goto handle_unusual;
         continue;
+      // optional int64 var_index_1 = 6;
+      case 6:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 48)) {
+          _Internal::set_has_var_index_1(&has_bits);
+          var_index_1_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // optional int32 var_level_1 = 7;
+      case 7:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 56)) {
+          _Internal::set_has_var_level_1(&has_bits);
+          var_level_1_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // optional int32 var_level_point_1 = 8;
+      case 8:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 64)) {
+          _Internal::set_has_var_level_point_1(&has_bits);
+          var_level_point_1_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // optional int64 var_index_2 = 9;
+      case 9:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 72)) {
+          _Internal::set_has_var_index_2(&has_bits);
+          var_index_2_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // optional int32 var_level_2 = 10;
+      case 10:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 80)) {
+          _Internal::set_has_var_level_2(&has_bits);
+          var_level_2_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // optional int32 var_level_point_2 = 11;
+      case 11:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 88)) {
+          _Internal::set_has_var_level_point_2(&has_bits);
+          var_level_point_2_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
       default: {
       handle_unusual:
         if ((tag & 7) == 4 || tag == 0) {
@@ -3552,7 +3639,7 @@ failure:
 
   cached_has_bits = _has_bits_[0];
   // optional .PROTOCOL id = 1 [default = ID_PKT_GAME_RESULT_NTY];
-  if (cached_has_bits & 0x00000010u) {
+  if (cached_has_bits & 0x00000400u) {
     target = stream->EnsureSpace(target);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteEnumToArray(
       1, this->_internal_id(), target);
@@ -3584,6 +3671,42 @@ failure:
       5, this->_internal_var_color(), target);
   }
 
+  // optional int64 var_index_1 = 6;
+  if (cached_has_bits & 0x00000010u) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt64ToArray(6, this->_internal_var_index_1(), target);
+  }
+
+  // optional int32 var_level_1 = 7;
+  if (cached_has_bits & 0x00000020u) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32ToArray(7, this->_internal_var_level_1(), target);
+  }
+
+  // optional int32 var_level_point_1 = 8;
+  if (cached_has_bits & 0x00000040u) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32ToArray(8, this->_internal_var_level_point_1(), target);
+  }
+
+  // optional int64 var_index_2 = 9;
+  if (cached_has_bits & 0x00000080u) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt64ToArray(9, this->_internal_var_index_2(), target);
+  }
+
+  // optional int32 var_level_2 = 10;
+  if (cached_has_bits & 0x00000100u) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32ToArray(10, this->_internal_var_level_2(), target);
+  }
+
+  // optional int32 var_level_point_2 = 11;
+  if (cached_has_bits & 0x00000200u) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32ToArray(11, this->_internal_var_level_point_2(), target);
+  }
+
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields(), target, stream);
@@ -3601,7 +3724,7 @@ size_t GAME_RESULT_NTY::ByteSizeLong() const {
   (void) cached_has_bits;
 
   cached_has_bits = _has_bits_[0];
-  if (cached_has_bits & 0x0000001fu) {
+  if (cached_has_bits & 0x000000ffu) {
     // optional bytes var_name = 3;
     if (cached_has_bits & 0x00000001u) {
       total_size += 1 +
@@ -3628,8 +3751,52 @@ size_t GAME_RESULT_NTY::ByteSizeLong() const {
         ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::EnumSize(this->_internal_var_color());
     }
 
-    // optional .PROTOCOL id = 1 [default = ID_PKT_GAME_RESULT_NTY];
+    // optional int64 var_index_1 = 6;
     if (cached_has_bits & 0x00000010u) {
+      total_size += 1 +
+        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int64Size(
+          this->_internal_var_index_1());
+    }
+
+    // optional int32 var_level_1 = 7;
+    if (cached_has_bits & 0x00000020u) {
+      total_size += 1 +
+        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32Size(
+          this->_internal_var_level_1());
+    }
+
+    // optional int32 var_level_point_1 = 8;
+    if (cached_has_bits & 0x00000040u) {
+      total_size += 1 +
+        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32Size(
+          this->_internal_var_level_point_1());
+    }
+
+    // optional int64 var_index_2 = 9;
+    if (cached_has_bits & 0x00000080u) {
+      total_size += 1 +
+        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int64Size(
+          this->_internal_var_index_2());
+    }
+
+  }
+  if (cached_has_bits & 0x00000700u) {
+    // optional int32 var_level_2 = 10;
+    if (cached_has_bits & 0x00000100u) {
+      total_size += 1 +
+        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32Size(
+          this->_internal_var_level_2());
+    }
+
+    // optional int32 var_level_point_2 = 11;
+    if (cached_has_bits & 0x00000200u) {
+      total_size += 1 +
+        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32Size(
+          this->_internal_var_level_point_2());
+    }
+
+    // optional .PROTOCOL id = 1 [default = ID_PKT_GAME_RESULT_NTY];
+    if (cached_has_bits & 0x00000400u) {
       total_size += 1 +
         ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::EnumSize(this->_internal_id());
     }
@@ -3667,7 +3834,7 @@ void GAME_RESULT_NTY::MergeFrom(const GAME_RESULT_NTY& from) {
   (void) cached_has_bits;
 
   cached_has_bits = from._has_bits_[0];
-  if (cached_has_bits & 0x0000001fu) {
+  if (cached_has_bits & 0x000000ffu) {
     if (cached_has_bits & 0x00000001u) {
       _has_bits_[0] |= 0x00000001u;
       var_name_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.var_name_);
@@ -3682,6 +3849,27 @@ void GAME_RESULT_NTY::MergeFrom(const GAME_RESULT_NTY& from) {
       var_color_ = from.var_color_;
     }
     if (cached_has_bits & 0x00000010u) {
+      var_index_1_ = from.var_index_1_;
+    }
+    if (cached_has_bits & 0x00000020u) {
+      var_level_1_ = from.var_level_1_;
+    }
+    if (cached_has_bits & 0x00000040u) {
+      var_level_point_1_ = from.var_level_point_1_;
+    }
+    if (cached_has_bits & 0x00000080u) {
+      var_index_2_ = from.var_index_2_;
+    }
+    _has_bits_[0] |= cached_has_bits;
+  }
+  if (cached_has_bits & 0x00000700u) {
+    if (cached_has_bits & 0x00000100u) {
+      var_level_2_ = from.var_level_2_;
+    }
+    if (cached_has_bits & 0x00000200u) {
+      var_level_point_2_ = from.var_level_point_2_;
+    }
+    if (cached_has_bits & 0x00000400u) {
       id_ = from.id_;
     }
     _has_bits_[0] |= cached_has_bits;
@@ -3715,6 +3903,12 @@ void GAME_RESULT_NTY::InternalSwap(GAME_RESULT_NTY* other) {
   swap(var_index_, other->var_index_);
   swap(var_code_, other->var_code_);
   swap(var_color_, other->var_color_);
+  swap(var_index_1_, other->var_index_1_);
+  swap(var_level_1_, other->var_level_1_);
+  swap(var_level_point_1_, other->var_level_point_1_);
+  swap(var_index_2_, other->var_index_2_);
+  swap(var_level_2_, other->var_level_2_);
+  swap(var_level_point_2_, other->var_level_point_2_);
   swap(id_, other->id_);
 }
 

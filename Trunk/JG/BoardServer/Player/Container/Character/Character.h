@@ -3,14 +3,13 @@
 #include <windows.h>
 #include <common.h>
 
+#define MAX_LEVEL 18
+#define POINT 25
 
 class Score
 {
 public:
-	Score()
-	{
-
-	}
+	Score() {}
 
 	Score(int rank, int score, int win, int lose, int draw)
 	{
@@ -31,6 +30,23 @@ public:
 		m_Lose = lose;
 		m_Draw = draw;
 
+	}
+
+	void AddScorePoint(int point)
+	{
+		m_Score += point;
+	}
+
+	int GetScorePoint()
+	{
+		return m_Score;
+	}
+
+	int SetScorePoint(int point)
+	{
+		m_Score = point;
+
+		return m_Score;
 	}
 
 private:
@@ -67,8 +83,7 @@ public:
 	void SetLevel(int _level);
 	byte GetLevel();
 
-	void SetLevelPoint(bool _level_point);
-	byte GetLevelPoint();
+	void UpdateScore(int point);
 
 private:
 
@@ -84,5 +99,4 @@ private:
 	Score				m_Score;
 
 	DWORD				m_Level;
-	DWORD				m_LevelPoint;
 };

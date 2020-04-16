@@ -217,13 +217,14 @@ VOID BoardProcess::ROOM_LEAVE(LPVOID Data, DWORD Length, boost::shared_ptr<GSCli
 {
 	DECLARE_RECV_TYPE(LEAVE_ROOM_REQ, leaveroom)
 
-	LEAVE_ROOM_RES res;
 	
 	PlayerPtr pPlayer = PLAYERMGR.Search(pOwner->GetPair());
 	if (pPlayer == NULL)
 	{
 		return;
 	}
+
+	LEAVE_ROOM_RES res;
 
 	ROOM_PTR RoomPtr = ROOMMGR.Search(pPlayer->m_Char[0].GetRoom());
 	if (RoomPtr != NULL)
@@ -239,6 +240,7 @@ VOID BoardProcess::ROOM_LEAVE(LPVOID Data, DWORD Length, boost::shared_ptr<GSCli
 				if (OppPlayer != NULL)
 				{
 					RoomPtr->RecoardResult(OppPlayer, pPlayer);
+
 				}
 			}
 
@@ -344,7 +346,7 @@ VOID BoardProcess::ROOM_CHAT(LPVOID Data, DWORD Length, boost::shared_ptr<GSClie
 		res.set_var_color(message.var_color());
 
 		ROOM_PTR pPtr = ROOMMGR.Search(pPlayer->m_Char[0].GetRoom());
-		if (pPtr != NULL)
+		if (pPtr != NULL && pPtr->GetState() != State::End)
 		{
 			pPtr->UpdateBoard(message.var_x(), message.var_y(), message.var_color());
 

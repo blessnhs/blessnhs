@@ -19,7 +19,7 @@ VOID GSClientMgr::CheckAliveTime()
 {
 	GSServer::GSServer* pServer = (GSServer::GSServer*)m_GSServer;
 
-	for each (auto client in m_Clients)
+	for each (auto client in m_ClientsForLoop)
 	{
 		if (client.second == NULL)
 		{
@@ -85,7 +85,7 @@ VOID GSClientMgr::CheckAliveTime()
 //	printf("\nre m_insert_queue queue %d\n", m_ReInsert_Queue.unsafe_size());
 //	printf("re m_remove_queue queue %d\n", m_Remove_Queue.unsafe_size());
 //	printf("\nconnect socket count %d GetActiveSocketCount %d ConnectableSocketCount %d\n", 
-//		pServer->CurrentPlayerCount(), GetActiveSocketCount(), ConnectableSocketCount());
+//	pServer->CurrentPlayerCount(), GetActiveSocketCount(), ConnectableSocketCount());
 }
 
 int  GSClientMgr::ConnectableSocketCount()
@@ -94,30 +94,6 @@ int  GSClientMgr::ConnectableSocketCount()
 
 	int count = m_MaxClients - pServer->CurrentPlayerCount();
 
-	/*for each (auto client in m_Clients)
-	{
-		if (client.second == NULL)
-		{
-			int a = 0;
-			continue;
-		}
-
-		if (client.second->GetConnected() == TRUE)
-		{
-			int a = 0;
-
-			continue;
-		}
-
-		if (client.second->m_DeleteTime > 0)
-		{
-			int a = 0;
-			continue;
-		}
-
-		count++;
-	}*/
-
 	return count;
 }
 
@@ -125,7 +101,7 @@ int GSClientMgr::GetActiveSocketCount()
 {
 	int count = 0;
 
-	for each (auto client in m_Clients)
+	for each (auto client in m_ClientsForLoop)
 	{
 		if (client.second == NULL)
 		{
@@ -151,10 +127,10 @@ int GSClientMgr::IncClientId()
 	return idx;
 }
 
-
-GSCLIENT_PTR GSClientMgr::GetClient(int id)
+GSCLIENT_PTR GSClientMgr::GetClientLoop(int id)
 {
-	for each (auto client in m_Clients)
+
+	for each (auto client in m_ClientsForLoop)
 	{
 		if (client.second == NULL)
 		{
@@ -168,28 +144,64 @@ GSCLIENT_PTR GSClientMgr::GetClient(int id)
 	return NULL;
 }
 
-BOOL GSClientMgr::AddClient(GSCLIENT_PTR newclient)
-{
-	CThreadSync sync;
 
+GSCLIENT_PTR GSClientMgr::GetClient(int id)
+{
+	auto find = m_Clients.find(id);
+	if (find == m_Clients.end())
+		return NULL;
+
+	return m_Clients[id];
+
+}
+
+BOOL GSClientMgr::AddClientLoop(GSCLIENT_PTR newclient)
+{
 	bool find = false;
 
-	for each (auto client in m_Clients)
+	for each (auto client in m_ClientsForLoop)
 	{
 		if (client.second == NULL)
 		{
-			m_Clients[client.first] = newclient;
+			m_ClientsForLoop[client.first] = newclient;
 			return TRUE;
 		}
 	}
 
 	if (find == false)
 	{
-		m_Clients[newclient->GetId()] = newclient;
+		m_ClientsForLoop[newclient->GetId()] = newclient;
 		return TRUE;
 	}
+}
 
+BOOL GSClientMgr::DelClientLoop(int id)
+{
+	for each (auto client in m_ClientsForLoop)
+	{
+		if (client.second == NULL)
+		{
+			continue;
+		}
+
+		if (client.second->GetId() == id)
+		{
+			m_ClientsForLoop[client.first] = NULL;
+			return TRUE;
+		}
+	}
 	return FALSE;
+}
+
+BOOL GSClientMgr::AddClient(GSCLIENT_PTR newclient)
+{
+	CThreadSync sync;
+
+	m_Clients[newclient->GetId()] = newclient;
+
+	AddClientLoop(newclient);
+
+	return TRUE;
 }
 
 BOOL GSClientMgr::BookDelClient(int id)
@@ -209,20 +221,11 @@ BOOL GSClientMgr::BookDelClient(int id)
 
 BOOL GSClientMgr::DelClient(int id)
 {
-	for each (auto client in m_Clients)
-	{
-		if (client.second == NULL)
-		{
-			continue;
-		}
+	m_Clients[id] = NULL;
 
-		if (client.second->GetId() == id)
-		{
-			m_Clients[client.first] = NULL;
-			return TRUE;
-		}
-	}
-	return FALSE;
+	DelClientLoop(id);
+
+	return TRUE;
 }
 
 BOOL GSClientMgr::NewClient(SOCKET ListenSocket, LPVOID pServer)
@@ -296,8 +299,7 @@ BOOL GSClientMgr::Begin(SOCKET ListenSocket,WORD MaxClients,LPVOID pServer)
 		}
 
 		pClient->SetType(_PLAYER_);
-		m_Clients[pClient->GetId()] = pClient;
-
+		AddClient(pClient);
 	}
 
 	return TRUE;

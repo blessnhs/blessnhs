@@ -1,7 +1,4 @@
-﻿using System;
-using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
-using OMOK.Services;
+﻿using Xamarin.Forms;
 using OMOK.Views;
 
 
@@ -14,7 +11,6 @@ namespace OMOK
         {
             InitializeComponent();
 
-            DependencyService.Register<MockDataStore>();
             MainPage = new MainPage();
         }
 

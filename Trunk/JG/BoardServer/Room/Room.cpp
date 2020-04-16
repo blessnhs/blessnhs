@@ -301,9 +301,15 @@ void Room::RecoardResult(PLAYER_PTR Winner, PLAYER_PTR Loser)
 		if (!pSession)
 			return ;
 
+		Loser->m_Char[0].UpdateScore(-POINT);
+
 		boost::shared_ptr<RequestPlayerScore> pRequest = ALLOCATOR.Create<RequestPlayerScore>();
 		pRequest->Index = Loser->GetId();
-		pRequest->Win = 0;	pRequest->Lose = 1;	pRequest->Draw = 0;
+		pRequest->Win = 0;	pRequest->Lose = 1;	pRequest->Draw = 0; pRequest->Level = Loser->m_Char[0].GetLevel(); pRequest->Score = Loser->m_Char[0].GetScore().GetScorePoint();
+
+		result_nty.set_var_index_1(Loser->GetId()); 
+		result_nty.set_var_level_1(Loser->m_Char[0].GetLevel()); 
+		result_nty.set_var_level_point_1(Loser->m_Char[0].GetScore().GetScorePoint());
 
 		boost::shared_ptr<Board::MSG_PLAYER_QUERY<RequestPlayerScore>>		PLAYER_MSG = ALLOCATOR.Create<Board::MSG_PLAYER_QUERY<RequestPlayerScore>>();
 		PLAYER_MSG->pSession = pSession;
@@ -324,12 +330,18 @@ void Room::RecoardResult(PLAYER_PTR Winner, PLAYER_PTR Loser)
 		result_nty.set_var_color(color);
 
 
+		OppPlayer->m_Char[0].UpdateScore(POINT);
+
 		GSCLIENT_PTR pSession = SERVER.GetClient(OppPlayer->GetPair());
 		if (pSession)
 		{
 			boost::shared_ptr<RequestPlayerScore> pRequest = ALLOCATOR.Create<RequestPlayerScore>();
 			pRequest->Index = OppPlayer->GetId();
-			pRequest->Win = 1;	pRequest->Lose = 0;	pRequest->Draw = 0;
+			pRequest->Win = 1;	pRequest->Lose = 0;	pRequest->Draw = 0; pRequest->Level = OppPlayer->m_Char[0].GetLevel(); pRequest->Score = OppPlayer->m_Char[0].GetScore().GetScorePoint();
+
+			result_nty.set_var_index_2(OppPlayer->GetId());
+			result_nty.set_var_level_2(OppPlayer->m_Char[0].GetLevel());
+			result_nty.set_var_level_point_2(OppPlayer->m_Char[0].GetScore().GetScorePoint());
 
 			boost::shared_ptr<Board::MSG_PLAYER_QUERY<RequestPlayerScore>>		PLAYER_MSG = ALLOCATOR.Create<Board::MSG_PLAYER_QUERY<RequestPlayerScore>>();
 			PLAYER_MSG->pSession = pSession;

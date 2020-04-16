@@ -94,6 +94,15 @@ message MATCH_RES
     optional bytes 		var_name              = 3;
     optional  ErrorCode    	var_code               = 4;
     optional eTeam  		var_color               = 5;
+
+    optional  int64    		var_index_1	 = 6;
+    optional int32 		var_level_1                = 7;
+    optional int32 		var_level_point_1        = 8;
+
+    optional  int64    		var_index_2	 = 9;
+    optional int32 		var_level_2                = 10;
+    optional int32 		var_level_point_2        = 11;
+
 }
 
 

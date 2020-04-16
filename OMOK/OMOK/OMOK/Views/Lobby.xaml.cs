@@ -169,7 +169,10 @@ namespace OMOK.Views
         {
             NetProcess.SendRank();
         }
-        
+        async void OnSettingClicked(object sender, System.EventArgs e)
+        {
+            Navigation.PushModalAsync(new Setting());
+        }
 
         async void OnLoginClicked(object sender, System.EventArgs e)
         {

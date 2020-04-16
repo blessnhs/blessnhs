@@ -7,7 +7,6 @@ Character::Character()
 	m_RoomNumber = 0;
 
 	m_Level = 0;
-	m_LevelPoint = 0;
 
 }
 
@@ -81,12 +80,40 @@ byte Character::GetLevel()
 	return m_Level;
 }
 
-void Character::SetLevelPoint(bool _level_point)
+void Character::UpdateScore(int point)
 {
-	m_LevelPoint = _level_point;
-}
+	//승리 포인트이다.
+	if (point > 0)
+	{
+		//이미 최고레벨이면 처리 안한다. 
+		if (m_Level == MAX_LEVEL)
+		{
+			return;
+		}
 
-byte Character::GetLevelPoint()
-{
-	return m_LevelPoint;
+		if (m_Score.GetScorePoint() >= 75)
+		{
+			m_Level += 1;
+			m_Score.SetScorePoint(0);
+			return;
+		}
+
+		m_Score.AddScorePoint(point);
+
+	}
+	else
+	{
+		//감소 포인트 이다.
+		if (m_Score.GetScorePoint() == 0)
+		{
+			if(m_Level > 1)
+				m_Level -= 1;
+
+			return;
+		}
+
+		m_Score.AddScorePoint(point);
+
+	}
+
 }

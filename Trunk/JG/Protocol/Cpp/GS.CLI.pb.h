@@ -1959,6 +1959,12 @@ class GAME_RESULT_NTY :
     kVarIndexFieldNumber = 2,
     kVarCodeFieldNumber = 4,
     kVarColorFieldNumber = 5,
+    kVarIndex1FieldNumber = 6,
+    kVarLevel1FieldNumber = 7,
+    kVarLevelPoint1FieldNumber = 8,
+    kVarIndex2FieldNumber = 9,
+    kVarLevel2FieldNumber = 10,
+    kVarLevelPoint2FieldNumber = 11,
     kIdFieldNumber = 1,
   };
   // optional bytes var_name = 3;
@@ -2020,6 +2026,84 @@ class GAME_RESULT_NTY :
   void _internal_set_var_color(::eTeam value);
   public:
 
+  // optional int64 var_index_1 = 6;
+  bool has_var_index_1() const;
+  private:
+  bool _internal_has_var_index_1() const;
+  public:
+  void clear_var_index_1();
+  ::PROTOBUF_NAMESPACE_ID::int64 var_index_1() const;
+  void set_var_index_1(::PROTOBUF_NAMESPACE_ID::int64 value);
+  private:
+  ::PROTOBUF_NAMESPACE_ID::int64 _internal_var_index_1() const;
+  void _internal_set_var_index_1(::PROTOBUF_NAMESPACE_ID::int64 value);
+  public:
+
+  // optional int32 var_level_1 = 7;
+  bool has_var_level_1() const;
+  private:
+  bool _internal_has_var_level_1() const;
+  public:
+  void clear_var_level_1();
+  ::PROTOBUF_NAMESPACE_ID::int32 var_level_1() const;
+  void set_var_level_1(::PROTOBUF_NAMESPACE_ID::int32 value);
+  private:
+  ::PROTOBUF_NAMESPACE_ID::int32 _internal_var_level_1() const;
+  void _internal_set_var_level_1(::PROTOBUF_NAMESPACE_ID::int32 value);
+  public:
+
+  // optional int32 var_level_point_1 = 8;
+  bool has_var_level_point_1() const;
+  private:
+  bool _internal_has_var_level_point_1() const;
+  public:
+  void clear_var_level_point_1();
+  ::PROTOBUF_NAMESPACE_ID::int32 var_level_point_1() const;
+  void set_var_level_point_1(::PROTOBUF_NAMESPACE_ID::int32 value);
+  private:
+  ::PROTOBUF_NAMESPACE_ID::int32 _internal_var_level_point_1() const;
+  void _internal_set_var_level_point_1(::PROTOBUF_NAMESPACE_ID::int32 value);
+  public:
+
+  // optional int64 var_index_2 = 9;
+  bool has_var_index_2() const;
+  private:
+  bool _internal_has_var_index_2() const;
+  public:
+  void clear_var_index_2();
+  ::PROTOBUF_NAMESPACE_ID::int64 var_index_2() const;
+  void set_var_index_2(::PROTOBUF_NAMESPACE_ID::int64 value);
+  private:
+  ::PROTOBUF_NAMESPACE_ID::int64 _internal_var_index_2() const;
+  void _internal_set_var_index_2(::PROTOBUF_NAMESPACE_ID::int64 value);
+  public:
+
+  // optional int32 var_level_2 = 10;
+  bool has_var_level_2() const;
+  private:
+  bool _internal_has_var_level_2() const;
+  public:
+  void clear_var_level_2();
+  ::PROTOBUF_NAMESPACE_ID::int32 var_level_2() const;
+  void set_var_level_2(::PROTOBUF_NAMESPACE_ID::int32 value);
+  private:
+  ::PROTOBUF_NAMESPACE_ID::int32 _internal_var_level_2() const;
+  void _internal_set_var_level_2(::PROTOBUF_NAMESPACE_ID::int32 value);
+  public:
+
+  // optional int32 var_level_point_2 = 11;
+  bool has_var_level_point_2() const;
+  private:
+  bool _internal_has_var_level_point_2() const;
+  public:
+  void clear_var_level_point_2();
+  ::PROTOBUF_NAMESPACE_ID::int32 var_level_point_2() const;
+  void set_var_level_point_2(::PROTOBUF_NAMESPACE_ID::int32 value);
+  private:
+  ::PROTOBUF_NAMESPACE_ID::int32 _internal_var_level_point_2() const;
+  void _internal_set_var_level_point_2(::PROTOBUF_NAMESPACE_ID::int32 value);
+  public:
+
   // optional .PROTOCOL id = 1 [default = ID_PKT_GAME_RESULT_NTY];
   bool has_id() const;
   private:
@@ -2044,6 +2128,12 @@ class GAME_RESULT_NTY :
   ::PROTOBUF_NAMESPACE_ID::int64 var_index_;
   int var_code_;
   int var_color_;
+  ::PROTOBUF_NAMESPACE_ID::int64 var_index_1_;
+  ::PROTOBUF_NAMESPACE_ID::int32 var_level_1_;
+  ::PROTOBUF_NAMESPACE_ID::int32 var_level_point_1_;
+  ::PROTOBUF_NAMESPACE_ID::int64 var_index_2_;
+  ::PROTOBUF_NAMESPACE_ID::int32 var_level_2_;
+  ::PROTOBUF_NAMESPACE_ID::int32 var_level_point_2_;
   int id_;
   friend struct ::TableStruct_GS_2eCLI_2eproto;
 };
@@ -3605,7 +3695,7 @@ inline void MATCH_RES::set_var_code(::ErrorCode value) {
 
 // optional .PROTOCOL id = 1 [default = ID_PKT_GAME_RESULT_NTY];
 inline bool GAME_RESULT_NTY::_internal_has_id() const {
-  bool value = (_has_bits_[0] & 0x00000010u) != 0;
+  bool value = (_has_bits_[0] & 0x00000400u) != 0;
   return value;
 }
 inline bool GAME_RESULT_NTY::has_id() const {
@@ -3613,7 +3703,7 @@ inline bool GAME_RESULT_NTY::has_id() const {
 }
 inline void GAME_RESULT_NTY::clear_id() {
   id_ = 18;
-  _has_bits_[0] &= ~0x00000010u;
+  _has_bits_[0] &= ~0x00000400u;
 }
 inline ::PROTOCOL GAME_RESULT_NTY::_internal_id() const {
   return static_cast< ::PROTOCOL >(id_);
@@ -3624,7 +3714,7 @@ inline ::PROTOCOL GAME_RESULT_NTY::id() const {
 }
 inline void GAME_RESULT_NTY::_internal_set_id(::PROTOCOL value) {
   assert(::PROTOCOL_IsValid(value));
-  _has_bits_[0] |= 0x00000010u;
+  _has_bits_[0] |= 0x00000400u;
   id_ = value;
 }
 inline void GAME_RESULT_NTY::set_id(::PROTOCOL value) {
@@ -3787,6 +3877,174 @@ inline void GAME_RESULT_NTY::_internal_set_var_color(::eTeam value) {
 inline void GAME_RESULT_NTY::set_var_color(::eTeam value) {
   _internal_set_var_color(value);
   // @@protoc_insertion_point(field_set:GAME_RESULT_NTY.var_color)
+}
+
+// optional int64 var_index_1 = 6;
+inline bool GAME_RESULT_NTY::_internal_has_var_index_1() const {
+  bool value = (_has_bits_[0] & 0x00000010u) != 0;
+  return value;
+}
+inline bool GAME_RESULT_NTY::has_var_index_1() const {
+  return _internal_has_var_index_1();
+}
+inline void GAME_RESULT_NTY::clear_var_index_1() {
+  var_index_1_ = PROTOBUF_LONGLONG(0);
+  _has_bits_[0] &= ~0x00000010u;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int64 GAME_RESULT_NTY::_internal_var_index_1() const {
+  return var_index_1_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int64 GAME_RESULT_NTY::var_index_1() const {
+  // @@protoc_insertion_point(field_get:GAME_RESULT_NTY.var_index_1)
+  return _internal_var_index_1();
+}
+inline void GAME_RESULT_NTY::_internal_set_var_index_1(::PROTOBUF_NAMESPACE_ID::int64 value) {
+  _has_bits_[0] |= 0x00000010u;
+  var_index_1_ = value;
+}
+inline void GAME_RESULT_NTY::set_var_index_1(::PROTOBUF_NAMESPACE_ID::int64 value) {
+  _internal_set_var_index_1(value);
+  // @@protoc_insertion_point(field_set:GAME_RESULT_NTY.var_index_1)
+}
+
+// optional int32 var_level_1 = 7;
+inline bool GAME_RESULT_NTY::_internal_has_var_level_1() const {
+  bool value = (_has_bits_[0] & 0x00000020u) != 0;
+  return value;
+}
+inline bool GAME_RESULT_NTY::has_var_level_1() const {
+  return _internal_has_var_level_1();
+}
+inline void GAME_RESULT_NTY::clear_var_level_1() {
+  var_level_1_ = 0;
+  _has_bits_[0] &= ~0x00000020u;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 GAME_RESULT_NTY::_internal_var_level_1() const {
+  return var_level_1_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 GAME_RESULT_NTY::var_level_1() const {
+  // @@protoc_insertion_point(field_get:GAME_RESULT_NTY.var_level_1)
+  return _internal_var_level_1();
+}
+inline void GAME_RESULT_NTY::_internal_set_var_level_1(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  _has_bits_[0] |= 0x00000020u;
+  var_level_1_ = value;
+}
+inline void GAME_RESULT_NTY::set_var_level_1(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  _internal_set_var_level_1(value);
+  // @@protoc_insertion_point(field_set:GAME_RESULT_NTY.var_level_1)
+}
+
+// optional int32 var_level_point_1 = 8;
+inline bool GAME_RESULT_NTY::_internal_has_var_level_point_1() const {
+  bool value = (_has_bits_[0] & 0x00000040u) != 0;
+  return value;
+}
+inline bool GAME_RESULT_NTY::has_var_level_point_1() const {
+  return _internal_has_var_level_point_1();
+}
+inline void GAME_RESULT_NTY::clear_var_level_point_1() {
+  var_level_point_1_ = 0;
+  _has_bits_[0] &= ~0x00000040u;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 GAME_RESULT_NTY::_internal_var_level_point_1() const {
+  return var_level_point_1_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 GAME_RESULT_NTY::var_level_point_1() const {
+  // @@protoc_insertion_point(field_get:GAME_RESULT_NTY.var_level_point_1)
+  return _internal_var_level_point_1();
+}
+inline void GAME_RESULT_NTY::_internal_set_var_level_point_1(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  _has_bits_[0] |= 0x00000040u;
+  var_level_point_1_ = value;
+}
+inline void GAME_RESULT_NTY::set_var_level_point_1(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  _internal_set_var_level_point_1(value);
+  // @@protoc_insertion_point(field_set:GAME_RESULT_NTY.var_level_point_1)
+}
+
+// optional int64 var_index_2 = 9;
+inline bool GAME_RESULT_NTY::_internal_has_var_index_2() const {
+  bool value = (_has_bits_[0] & 0x00000080u) != 0;
+  return value;
+}
+inline bool GAME_RESULT_NTY::has_var_index_2() const {
+  return _internal_has_var_index_2();
+}
+inline void GAME_RESULT_NTY::clear_var_index_2() {
+  var_index_2_ = PROTOBUF_LONGLONG(0);
+  _has_bits_[0] &= ~0x00000080u;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int64 GAME_RESULT_NTY::_internal_var_index_2() const {
+  return var_index_2_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int64 GAME_RESULT_NTY::var_index_2() const {
+  // @@protoc_insertion_point(field_get:GAME_RESULT_NTY.var_index_2)
+  return _internal_var_index_2();
+}
+inline void GAME_RESULT_NTY::_internal_set_var_index_2(::PROTOBUF_NAMESPACE_ID::int64 value) {
+  _has_bits_[0] |= 0x00000080u;
+  var_index_2_ = value;
+}
+inline void GAME_RESULT_NTY::set_var_index_2(::PROTOBUF_NAMESPACE_ID::int64 value) {
+  _internal_set_var_index_2(value);
+  // @@protoc_insertion_point(field_set:GAME_RESULT_NTY.var_index_2)
+}
+
+// optional int32 var_level_2 = 10;
+inline bool GAME_RESULT_NTY::_internal_has_var_level_2() const {
+  bool value = (_has_bits_[0] & 0x00000100u) != 0;
+  return value;
+}
+inline bool GAME_RESULT_NTY::has_var_level_2() const {
+  return _internal_has_var_level_2();
+}
+inline void GAME_RESULT_NTY::clear_var_level_2() {
+  var_level_2_ = 0;
+  _has_bits_[0] &= ~0x00000100u;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 GAME_RESULT_NTY::_internal_var_level_2() const {
+  return var_level_2_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 GAME_RESULT_NTY::var_level_2() const {
+  // @@protoc_insertion_point(field_get:GAME_RESULT_NTY.var_level_2)
+  return _internal_var_level_2();
+}
+inline void GAME_RESULT_NTY::_internal_set_var_level_2(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  _has_bits_[0] |= 0x00000100u;
+  var_level_2_ = value;
+}
+inline void GAME_RESULT_NTY::set_var_level_2(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  _internal_set_var_level_2(value);
+  // @@protoc_insertion_point(field_set:GAME_RESULT_NTY.var_level_2)
+}
+
+// optional int32 var_level_point_2 = 11;
+inline bool GAME_RESULT_NTY::_internal_has_var_level_point_2() const {
+  bool value = (_has_bits_[0] & 0x00000200u) != 0;
+  return value;
+}
+inline bool GAME_RESULT_NTY::has_var_level_point_2() const {
+  return _internal_has_var_level_point_2();
+}
+inline void GAME_RESULT_NTY::clear_var_level_point_2() {
+  var_level_point_2_ = 0;
+  _has_bits_[0] &= ~0x00000200u;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 GAME_RESULT_NTY::_internal_var_level_point_2() const {
+  return var_level_point_2_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 GAME_RESULT_NTY::var_level_point_2() const {
+  // @@protoc_insertion_point(field_get:GAME_RESULT_NTY.var_level_point_2)
+  return _internal_var_level_point_2();
+}
+inline void GAME_RESULT_NTY::_internal_set_var_level_point_2(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  _has_bits_[0] |= 0x00000200u;
+  var_level_point_2_ = value;
+}
+inline void GAME_RESULT_NTY::set_var_level_point_2(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  _internal_set_var_level_point_2(value);
+  // @@protoc_insertion_point(field_set:GAME_RESULT_NTY.var_level_point_2)
 }
 
 // -------------------------------------------------------------------

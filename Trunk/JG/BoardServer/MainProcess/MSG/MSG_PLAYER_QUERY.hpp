@@ -357,12 +357,12 @@ namespace Board	{
 
 			Base64::convert_unicode_to_ansi_string(name, http_out[3].c_str(), http_out[3].size());
 
-			int rank, score, win, lose, draw, level, level_point;
+			int rank, score, win, lose, draw, level;
 
 			// 로그인 절차 : 아이디의 접속확인 및 인증키값을 가져온다.
 			std::string authentickey;
 			INT64 Index = 0;
-			WORD nRet = pProcess->ProcedureUserLogin(flatformid.c_str(), 0/*0번은 구글 인증*/, name.c_str(),picture_url.c_str(),email.c_str(), authentickey, rank, score, win, lose, draw,Index, level, level_point);
+			WORD nRet = pProcess->ProcedureUserLogin(flatformid.c_str(), 0/*0번은 구글 인증*/, name.c_str(),picture_url.c_str(),email.c_str(), authentickey, rank, score, win, lose, draw,Index, level);
 
 			if(nRet != _ERR_NONE )
 			{ 
@@ -400,7 +400,6 @@ namespace Board	{
 			pSession->SetPair(Index);
 			pNewPlayer->m_Char[0].GetScore().SetScore(rank, score, win, lose, draw);
 			pNewPlayer->m_Char[0].SetLevel(level);
-			pNewPlayer->m_Char[0].SetLevelPoint(level_point);
 			PLAYERMGR.Add(pNewPlayer);
 
 			res.set_var_code(Success);
@@ -469,7 +468,7 @@ namespace Board	{
 				return;
 
 			// 로그인 절차 : 아이디의 접속확인 및 인증키값을 가져온다.
-			int nRet = pProcess->UpdaetPlayerScore(pRequst->Index, pRequst->Win, pRequst->Lose, pRequst->Draw);
+			int nRet = pProcess->UpdaetPlayerScore(pRequst->Index, pRequst->Win, pRequst->Lose, pRequst->Draw, pRequst->Level, pRequst->Score);
 			if (nRet != 0)
 			{
 				printf("UpdaetPlayerScore nRet is not 0\n");

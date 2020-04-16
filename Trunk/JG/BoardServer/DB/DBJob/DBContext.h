@@ -27,6 +27,8 @@ public:
 	int Lose;
 	int Draw;
 	DWORD Index;
+	int Level;
+	int Score;
 };
 
 class RequestRank : public GSObject
