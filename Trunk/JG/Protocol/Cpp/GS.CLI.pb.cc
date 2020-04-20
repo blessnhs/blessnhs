@@ -247,7 +247,8 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_GS_2eCLI_2eproto::offsets[] PR
   PROTOBUF_FIELD_OFFSET(::LOGIN_RES, var_draw_),
   PROTOBUF_FIELD_OFFSET(::LOGIN_RES, var_score_),
   PROTOBUF_FIELD_OFFSET(::LOGIN_RES, var_rank_),
-  7,
+  PROTOBUF_FIELD_OFFSET(::LOGIN_RES, var_level_),
+  8,
   1,
   0,
   2,
@@ -255,6 +256,7 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_GS_2eCLI_2eproto::offsets[] PR
   4,
   5,
   6,
+  7,
   PROTOBUF_FIELD_OFFSET(::CREATE_ROOM_RES, _has_bits_),
   PROTOBUF_FIELD_OFFSET(::CREATE_ROOM_RES, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -385,16 +387,16 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_GS_2eCLI_2eproto::offsets[] PR
 };
 static const ::PROTOBUF_NAMESPACE_ID::internal::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
   { 0, 8, sizeof(::VERSION_RES)},
-  { 11, 24, sizeof(::LOGIN_RES)},
-  { 32, 41, sizeof(::CREATE_ROOM_RES)},
-  { 45, 54, sizeof(::ENTER_ROOM_RES)},
-  { 58, 66, sizeof(::NEW_USER_IN_ROOM_NTY)},
-  { 69, 78, sizeof(::LEAVE_ROOM_RES)},
-  { 82, 94, sizeof(::BROADCAST_ROOM_MESSAGE_RES)},
-  { 101, 109, sizeof(::ROOM_LIST_RES)},
-  { 112, 119, sizeof(::MATCH_RES)},
-  { 121, 137, sizeof(::GAME_RESULT_NTY)},
-  { 148, 156, sizeof(::RANK_RES)},
+  { 11, 25, sizeof(::LOGIN_RES)},
+  { 34, 43, sizeof(::CREATE_ROOM_RES)},
+  { 47, 56, sizeof(::ENTER_ROOM_RES)},
+  { 60, 68, sizeof(::NEW_USER_IN_ROOM_NTY)},
+  { 71, 80, sizeof(::LEAVE_ROOM_RES)},
+  { 84, 96, sizeof(::BROADCAST_ROOM_MESSAGE_RES)},
+  { 103, 111, sizeof(::ROOM_LIST_RES)},
+  { 114, 121, sizeof(::MATCH_RES)},
+  { 123, 139, sizeof(::GAME_RESULT_NTY)},
+  { 150, 158, sizeof(::RANK_RES)},
 };
 
 static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] = {
@@ -415,47 +417,47 @@ const char descriptor_table_protodef_GS_2eCLI_2eproto[] PROTOBUF_SECTION_VARIABL
   "\n\014GS.CLI.proto\032\nEnum.proto\032\017Structure.pr"
   "oto\"k\n\013VERSION_RES\022)\n\002id\030\001 \001(\0162\t.PROTOCO"
   "L:\022ID_PKT_VERSION_RES\022\023\n\013var_version\030\002 \001"
-  "(\002\022\034\n\010var_code\030\003 \001(\0162\n.ErrorCode\"\277\001\n\tLOG"
+  "(\002\022\034\n\010var_code\030\003 \001(\0162\n.ErrorCode\"\322\001\n\tLOG"
   "IN_RES\022\'\n\002id\030\001 \001(\0162\t.PROTOCOL:\020ID_PKT_LO"
   "GIN_RES\022\034\n\010var_code\030\002 \001(\0162\n.ErrorCode\022\021\n"
   "\tvar_index\030\003 \001(\003\022\017\n\007var_win\030\004 \001(\005\022\020\n\010var"
   "_lose\030\005 \001(\005\022\020\n\010var_draw\030\006 \001(\005\022\021\n\tvar_sco"
-  "re\030\007 \001(\005\022\020\n\010var_rank\030\010 \001(\005\"\205\001\n\017CREATE_RO"
-  "OM_RES\022-\n\002id\030\001 \001(\0162\t.PROTOCOL:\026ID_PKT_CR"
-  "EATE_ROOM_RES\022\020\n\010var_name\030\002 \001(\014\022\023\n\013var_r"
-  "oom_id\030\003 \001(\005\022\034\n\010var_code\030\004 \001(\0162\n.ErrorCo"
-  "de\"\203\001\n\016ENTER_ROOM_RES\022,\n\002id\030\001 \001(\0162\t.PROT"
-  "OCOL:\025ID_PKT_ENTER_ROOM_RES\022\020\n\010var_name\030"
-  "\002 \001(\014\022\023\n\013var_room_id\030\003 \001(\005\022\034\n\010var_code\030\004"
-  " \001(\0162\n.ErrorCode\"\216\001\n\024NEW_USER_IN_ROOM_NT"
-  "Y\0222\n\002id\030\001 \001(\0162\t.PROTOCOL:\033ID_PKT_NEW_USE"
-  "R_IN_ROOM_NTY\022$\n\rvar_room_user\030\002 \001(\0132\r.R"
-  "oomUserInfo\022\034\n\010var_code\030\003 \001(\0162\n.ErrorCod"
-  "e\"\201\001\n\016LEAVE_ROOM_RES\022,\n\002id\030\001 \001(\0162\t.PROTO"
-  "COL:\025ID_PKT_LEAVE_ROOM_RES\022\020\n\010var_name\030\002"
-  " \001(\014\022\034\n\010var_code\030\003 \001(\0162\n.ErrorCode\022\021\n\tva"
-  "r_index\030\004 \001(\003\"\324\001\n\032BROADCAST_ROOM_MESSAGE"
-  "_RES\0228\n\002id\030\001 \001(\0162\t.PROTOCOL:!ID_PKT_BROA"
-  "DCAST_ROOM_MESSAGE_RES\022\034\n\010var_code\030\002 \001(\016"
-  "2\n.ErrorCode\022\023\n\013var_message\030\003 \001(\014\022\020\n\010var"
-  "_name\030\004 \001(\014\022\r\n\005var_x\030\005 \001(\005\022\r\n\005var_y\030\006 \001("
-  "\005\022\031\n\tvar_color\030\007 \001(\0162\006.eTeam\"}\n\rROOM_LIS"
-  "T_RES\022+\n\002id\030\001 \001(\0162\t.PROTOCOL:\024ID_PKT_ROO"
-  "M_LIST_RES\022\034\n\010var_code\030\002 \001(\0162\n.ErrorCode"
-  "\022!\n\rvar_room_list\030\003 \003(\0132\n.RoomInfo2\"R\n\tM"
-  "ATCH_RES\022\'\n\002id\030\001 \001(\0162\t.PROTOCOL:\020ID_PKT_"
-  "MATCH_RES\022\034\n\010var_code\030\002 \001(\0162\n.ErrorCode\""
-  "\250\002\n\017GAME_RESULT_NTY\022-\n\002id\030\001 \001(\0162\t.PROTOC"
-  "OL:\026ID_PKT_GAME_RESULT_NTY\022\021\n\tvar_index\030"
-  "\002 \001(\003\022\020\n\010var_name\030\003 \001(\014\022\034\n\010var_code\030\004 \001("
-  "\0162\n.ErrorCode\022\031\n\tvar_color\030\005 \001(\0162\006.eTeam"
-  "\022\023\n\013var_index_1\030\006 \001(\003\022\023\n\013var_level_1\030\007 \001"
-  "(\005\022\031\n\021var_level_point_1\030\010 \001(\005\022\023\n\013var_ind"
-  "ex_2\030\t \001(\003\022\023\n\013var_level_2\030\n \001(\005\022\031\n\021var_l"
-  "evel_point_2\030\013 \001(\005\"n\n\010RANK_RES\022&\n\002id\030\001 \001"
-  "(\0162\t.PROTOCOL:\017ID_PKT_RANK_RES\022\034\n\rvar_ra"
-  "nk_list\030\002 \003(\0132\005.Rank\022\034\n\010var_code\030\003 \001(\0162\n"
-  ".ErrorCodeB\002H\001"
+  "re\030\007 \001(\005\022\020\n\010var_rank\030\010 \001(\005\022\021\n\tvar_level\030"
+  "\t \001(\005\"\205\001\n\017CREATE_ROOM_RES\022-\n\002id\030\001 \001(\0162\t."
+  "PROTOCOL:\026ID_PKT_CREATE_ROOM_RES\022\020\n\010var_"
+  "name\030\002 \001(\014\022\023\n\013var_room_id\030\003 \001(\005\022\034\n\010var_c"
+  "ode\030\004 \001(\0162\n.ErrorCode\"\203\001\n\016ENTER_ROOM_RES"
+  "\022,\n\002id\030\001 \001(\0162\t.PROTOCOL:\025ID_PKT_ENTER_RO"
+  "OM_RES\022\020\n\010var_name\030\002 \001(\014\022\023\n\013var_room_id\030"
+  "\003 \001(\005\022\034\n\010var_code\030\004 \001(\0162\n.ErrorCode\"\216\001\n\024"
+  "NEW_USER_IN_ROOM_NTY\0222\n\002id\030\001 \001(\0162\t.PROTO"
+  "COL:\033ID_PKT_NEW_USER_IN_ROOM_NTY\022$\n\rvar_"
+  "room_user\030\002 \001(\0132\r.RoomUserInfo\022\034\n\010var_co"
+  "de\030\003 \001(\0162\n.ErrorCode\"\201\001\n\016LEAVE_ROOM_RES\022"
+  ",\n\002id\030\001 \001(\0162\t.PROTOCOL:\025ID_PKT_LEAVE_ROO"
+  "M_RES\022\020\n\010var_name\030\002 \001(\014\022\034\n\010var_code\030\003 \001("
+  "\0162\n.ErrorCode\022\021\n\tvar_index\030\004 \001(\003\"\324\001\n\032BRO"
+  "ADCAST_ROOM_MESSAGE_RES\0228\n\002id\030\001 \001(\0162\t.PR"
+  "OTOCOL:!ID_PKT_BROADCAST_ROOM_MESSAGE_RE"
+  "S\022\034\n\010var_code\030\002 \001(\0162\n.ErrorCode\022\023\n\013var_m"
+  "essage\030\003 \001(\014\022\020\n\010var_name\030\004 \001(\014\022\r\n\005var_x\030"
+  "\005 \001(\005\022\r\n\005var_y\030\006 \001(\005\022\031\n\tvar_color\030\007 \001(\0162"
+  "\006.eTeam\"}\n\rROOM_LIST_RES\022+\n\002id\030\001 \001(\0162\t.P"
+  "ROTOCOL:\024ID_PKT_ROOM_LIST_RES\022\034\n\010var_cod"
+  "e\030\002 \001(\0162\n.ErrorCode\022!\n\rvar_room_list\030\003 \003"
+  "(\0132\n.RoomInfo2\"R\n\tMATCH_RES\022\'\n\002id\030\001 \001(\0162"
+  "\t.PROTOCOL:\020ID_PKT_MATCH_RES\022\034\n\010var_code"
+  "\030\002 \001(\0162\n.ErrorCode\"\250\002\n\017GAME_RESULT_NTY\022-"
+  "\n\002id\030\001 \001(\0162\t.PROTOCOL:\026ID_PKT_GAME_RESUL"
+  "T_NTY\022\021\n\tvar_index\030\002 \001(\003\022\020\n\010var_name\030\003 \001"
+  "(\014\022\034\n\010var_code\030\004 \001(\0162\n.ErrorCode\022\031\n\tvar_"
+  "color\030\005 \001(\0162\006.eTeam\022\023\n\013var_index_1\030\006 \001(\003"
+  "\022\023\n\013var_level_1\030\007 \001(\005\022\031\n\021var_level_point"
+  "_1\030\010 \001(\005\022\023\n\013var_index_2\030\t \001(\003\022\023\n\013var_lev"
+  "el_2\030\n \001(\005\022\031\n\021var_level_point_2\030\013 \001(\005\"n\n"
+  "\010RANK_RES\022&\n\002id\030\001 \001(\0162\t.PROTOCOL:\017ID_PKT"
+  "_RANK_RES\022\034\n\rvar_rank_list\030\002 \003(\0132\005.Rank\022"
+  "\034\n\010var_code\030\003 \001(\0162\n.ErrorCodeB\002H\001"
   ;
 static const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable*const descriptor_table_GS_2eCLI_2eproto_deps[2] = {
   &::descriptor_table_Enum_2eproto,
@@ -477,7 +479,7 @@ static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_GS_
 static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_GS_2eCLI_2eproto_once;
 static bool descriptor_table_GS_2eCLI_2eproto_initialized = false;
 const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_GS_2eCLI_2eproto = {
-  &descriptor_table_GS_2eCLI_2eproto_initialized, descriptor_table_protodef_GS_2eCLI_2eproto, "GS.CLI.proto", 1734,
+  &descriptor_table_GS_2eCLI_2eproto_initialized, descriptor_table_protodef_GS_2eCLI_2eproto, "GS.CLI.proto", 1753,
   &descriptor_table_GS_2eCLI_2eproto_once, descriptor_table_GS_2eCLI_2eproto_sccs, descriptor_table_GS_2eCLI_2eproto_deps, 11, 2,
   schemas, file_default_instances, TableStruct_GS_2eCLI_2eproto::offsets,
   file_level_metadata_GS_2eCLI_2eproto, 11, file_level_enum_descriptors_GS_2eCLI_2eproto, file_level_service_descriptors_GS_2eCLI_2eproto,
@@ -771,7 +773,7 @@ class LOGIN_RES::_Internal {
  public:
   using HasBits = decltype(std::declval<LOGIN_RES>()._has_bits_);
   static void set_has_id(HasBits* has_bits) {
-    (*has_bits)[0] |= 128u;
+    (*has_bits)[0] |= 256u;
   }
   static void set_has_var_code(HasBits* has_bits) {
     (*has_bits)[0] |= 2u;
@@ -794,6 +796,9 @@ class LOGIN_RES::_Internal {
   static void set_has_var_rank(HasBits* has_bits) {
     (*has_bits)[0] |= 64u;
   }
+  static void set_has_var_level(HasBits* has_bits) {
+    (*has_bits)[0] |= 128u;
+  }
 };
 
 LOGIN_RES::LOGIN_RES()
@@ -814,8 +819,8 @@ LOGIN_RES::LOGIN_RES(const LOGIN_RES& from)
 
 void LOGIN_RES::SharedCtor() {
   ::memset(&var_index_, 0, static_cast<size_t>(
-      reinterpret_cast<char*>(&var_rank_) -
-      reinterpret_cast<char*>(&var_index_)) + sizeof(var_rank_));
+      reinterpret_cast<char*>(&var_level_) -
+      reinterpret_cast<char*>(&var_index_)) + sizeof(var_level_));
   id_ = 3;
 }
 
@@ -845,10 +850,10 @@ void LOGIN_RES::Clear() {
   cached_has_bits = _has_bits_[0];
   if (cached_has_bits & 0x000000ffu) {
     ::memset(&var_index_, 0, static_cast<size_t>(
-        reinterpret_cast<char*>(&var_rank_) -
-        reinterpret_cast<char*>(&var_index_)) + sizeof(var_rank_));
-    id_ = 3;
+        reinterpret_cast<char*>(&var_level_) -
+        reinterpret_cast<char*>(&var_index_)) + sizeof(var_level_));
   }
+  id_ = 3;
   _has_bits_.Clear();
   _internal_metadata_.Clear();
 }
@@ -933,6 +938,14 @@ const char* LOGIN_RES::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
+      // optional int32 var_level = 9;
+      case 9:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 72)) {
+          _Internal::set_has_var_level(&has_bits);
+          var_level_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
       default: {
       handle_unusual:
         if ((tag & 7) == 4 || tag == 0) {
@@ -962,7 +975,7 @@ failure:
 
   cached_has_bits = _has_bits_[0];
   // optional .PROTOCOL id = 1 [default = ID_PKT_LOGIN_RES];
-  if (cached_has_bits & 0x00000080u) {
+  if (cached_has_bits & 0x00000100u) {
     target = stream->EnsureSpace(target);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteEnumToArray(
       1, this->_internal_id(), target);
@@ -1009,6 +1022,12 @@ failure:
   if (cached_has_bits & 0x00000040u) {
     target = stream->EnsureSpace(target);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32ToArray(8, this->_internal_var_rank(), target);
+  }
+
+  // optional int32 var_level = 9;
+  if (cached_has_bits & 0x00000080u) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32ToArray(9, this->_internal_var_level(), target);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
@@ -1077,13 +1096,20 @@ size_t LOGIN_RES::ByteSizeLong() const {
           this->_internal_var_rank());
     }
 
-    // optional .PROTOCOL id = 1 [default = ID_PKT_LOGIN_RES];
+    // optional int32 var_level = 9;
     if (cached_has_bits & 0x00000080u) {
       total_size += 1 +
-        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::EnumSize(this->_internal_id());
+        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32Size(
+          this->_internal_var_level());
     }
 
   }
+  // optional .PROTOCOL id = 1 [default = ID_PKT_LOGIN_RES];
+  if (cached_has_bits & 0x00000100u) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::EnumSize(this->_internal_id());
+  }
+
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
     return ::PROTOBUF_NAMESPACE_ID::internal::ComputeUnknownFieldsSize(
         _internal_metadata_, total_size, &_cached_size_);
@@ -1139,9 +1165,12 @@ void LOGIN_RES::MergeFrom(const LOGIN_RES& from) {
       var_rank_ = from.var_rank_;
     }
     if (cached_has_bits & 0x00000080u) {
-      id_ = from.id_;
+      var_level_ = from.var_level_;
     }
     _has_bits_[0] |= cached_has_bits;
+  }
+  if (cached_has_bits & 0x00000100u) {
+    _internal_set_id(from._internal_id());
   }
 }
 
@@ -1174,6 +1203,7 @@ void LOGIN_RES::InternalSwap(LOGIN_RES* other) {
   swap(var_draw_, other->var_draw_);
   swap(var_score_, other->var_score_);
   swap(var_rank_, other->var_rank_);
+  swap(var_level_, other->var_level_);
   swap(id_, other->id_);
 }
 

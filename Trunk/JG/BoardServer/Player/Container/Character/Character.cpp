@@ -114,6 +114,9 @@ void Character::UpdateScore(int point)
 
 		m_Score.AddScorePoint(point);
 
+		if (m_Score.GetScorePoint() < 0)
+			m_Score.SetScorePoint(0);
+
 	}
 
 }

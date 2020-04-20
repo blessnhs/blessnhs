@@ -39,5 +39,20 @@ namespace OMOK
 
             return System.Int64.Parse(thisString, System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
         }
+
+        public static string LevelConverter(int level)
+        {
+            int o = 19 - level;
+
+            if(o <= 0)
+            {
+               int l = Math.Abs(o) + 1;
+
+                return l + "단";
+            }
+           
+           return o + "급";
+            
+        }
     }
 }

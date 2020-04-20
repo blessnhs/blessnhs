@@ -410,7 +410,7 @@ namespace Board	{
 			res.set_var_draw(draw);
 			res.set_var_score(score);
 			res.set_var_rank(rank);
-
+			res.set_var_level(level);
 
 			SEND_PROTO_BUFFER(res, pSession)
 		}

@@ -80,6 +80,7 @@ namespace OMOK.Network
                                         User.myInfo.draw = res.VarDraw;
                                         User.myInfo.score = res.VarScore;
                                         User.myInfo.rank = res.VarRank;
+                                        User.myInfo.level = res.VarLevel;
 
                                         ((Lobby)page.Children[0]).UpdatePlayerInfo();
                                     }
@@ -130,7 +131,7 @@ namespace OMOK.Network
 
                                     var Room = (Room)page.Children[1];
 
-                                    string d_VarMessage = Helper.ToStr(res.VarMessage.ToByteArray());
+                                    string d_VarMessage = System.Text.Encoding.UTF8.GetString(res.VarMessage.ToByteArray());// //Helper.ToStr(res.VarMessage.ToByteArray());
 
                                     string[] header = d_VarMessage.Split(':');
                                     if (header.Length > 2)
@@ -224,7 +225,8 @@ namespace OMOK.Network
                                     GAME_RESULT_NTY res = new GAME_RESULT_NTY();
                                     res = GAME_RESULT_NTY.Parser.ParseFrom(data.Data);
 
-                                    ((Room)page.Children[1]).GameResult(res.VarColor);
+
+                                    ((Room)page.Children[1]).GameResult(res);
                                 }
                                 break;
                         }
@@ -366,9 +368,11 @@ namespace OMOK.Network
         static public void SendRoomMessage(int x,int y,eTeam team,string msg)
         {
 
+            var bytearray = System.Text.Encoding.UTF8.GetBytes(msg);
+
             BROADCAST_ROOM_MESSAGE_REQ message = new BROADCAST_ROOM_MESSAGE_REQ
             {
-                VarMessage = ByteString.CopyFrom(Helper.ToByteString(msg)),
+                VarMessage =  ByteString.CopyFrom(bytearray),
                 VarX = x,
                 VarY = y,
                 VarColor = team

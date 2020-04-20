@@ -395,6 +395,7 @@ class LOGIN_RES :
     kVarDrawFieldNumber = 6,
     kVarScoreFieldNumber = 7,
     kVarRankFieldNumber = 8,
+    kVarLevelFieldNumber = 9,
     kIdFieldNumber = 1,
   };
   // optional int64 var_index = 3;
@@ -488,6 +489,19 @@ class LOGIN_RES :
   void _internal_set_var_rank(::PROTOBUF_NAMESPACE_ID::int32 value);
   public:
 
+  // optional int32 var_level = 9;
+  bool has_var_level() const;
+  private:
+  bool _internal_has_var_level() const;
+  public:
+  void clear_var_level();
+  ::PROTOBUF_NAMESPACE_ID::int32 var_level() const;
+  void set_var_level(::PROTOBUF_NAMESPACE_ID::int32 value);
+  private:
+  ::PROTOBUF_NAMESPACE_ID::int32 _internal_var_level() const;
+  void _internal_set_var_level(::PROTOBUF_NAMESPACE_ID::int32 value);
+  public:
+
   // optional .PROTOCOL id = 1 [default = ID_PKT_LOGIN_RES];
   bool has_id() const;
   private:
@@ -515,6 +529,7 @@ class LOGIN_RES :
   ::PROTOBUF_NAMESPACE_ID::int32 var_draw_;
   ::PROTOBUF_NAMESPACE_ID::int32 var_score_;
   ::PROTOBUF_NAMESPACE_ID::int32 var_rank_;
+  ::PROTOBUF_NAMESPACE_ID::int32 var_level_;
   int id_;
   friend struct ::TableStruct_GS_2eCLI_2eproto;
 };
@@ -2415,7 +2430,7 @@ inline void VERSION_RES::set_var_code(::ErrorCode value) {
 
 // optional .PROTOCOL id = 1 [default = ID_PKT_LOGIN_RES];
 inline bool LOGIN_RES::_internal_has_id() const {
-  bool value = (_has_bits_[0] & 0x00000080u) != 0;
+  bool value = (_has_bits_[0] & 0x00000100u) != 0;
   return value;
 }
 inline bool LOGIN_RES::has_id() const {
@@ -2423,7 +2438,7 @@ inline bool LOGIN_RES::has_id() const {
 }
 inline void LOGIN_RES::clear_id() {
   id_ = 3;
-  _has_bits_[0] &= ~0x00000080u;
+  _has_bits_[0] &= ~0x00000100u;
 }
 inline ::PROTOCOL LOGIN_RES::_internal_id() const {
   return static_cast< ::PROTOCOL >(id_);
@@ -2434,7 +2449,7 @@ inline ::PROTOCOL LOGIN_RES::id() const {
 }
 inline void LOGIN_RES::_internal_set_id(::PROTOCOL value) {
   assert(::PROTOCOL_IsValid(value));
-  _has_bits_[0] |= 0x00000080u;
+  _has_bits_[0] |= 0x00000100u;
   id_ = value;
 }
 inline void LOGIN_RES::set_id(::PROTOCOL value) {
@@ -2637,6 +2652,34 @@ inline void LOGIN_RES::_internal_set_var_rank(::PROTOBUF_NAMESPACE_ID::int32 val
 inline void LOGIN_RES::set_var_rank(::PROTOBUF_NAMESPACE_ID::int32 value) {
   _internal_set_var_rank(value);
   // @@protoc_insertion_point(field_set:LOGIN_RES.var_rank)
+}
+
+// optional int32 var_level = 9;
+inline bool LOGIN_RES::_internal_has_var_level() const {
+  bool value = (_has_bits_[0] & 0x00000080u) != 0;
+  return value;
+}
+inline bool LOGIN_RES::has_var_level() const {
+  return _internal_has_var_level();
+}
+inline void LOGIN_RES::clear_var_level() {
+  var_level_ = 0;
+  _has_bits_[0] &= ~0x00000080u;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 LOGIN_RES::_internal_var_level() const {
+  return var_level_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 LOGIN_RES::var_level() const {
+  // @@protoc_insertion_point(field_get:LOGIN_RES.var_level)
+  return _internal_var_level();
+}
+inline void LOGIN_RES::_internal_set_var_level(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  _has_bits_[0] |= 0x00000080u;
+  var_level_ = value;
+}
+inline void LOGIN_RES::set_var_level(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  _internal_set_var_level(value);
+  // @@protoc_insertion_point(field_set:LOGIN_RES.var_level)
 }
 
 // -------------------------------------------------------------------

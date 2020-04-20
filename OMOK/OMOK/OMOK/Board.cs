@@ -8,8 +8,8 @@ namespace OMOK
     class Board : AbsoluteLayout
     {
         // Alternative sizes make the tiles a tad small.
-        const int COLS = 10;         // 16
-        const int ROWS = 10;         // 16
+        const int COLS = 16;         // 16
+        const int ROWS = 16;         // 16
 
         Tile[,] tiles = new Tile[ROWS, COLS];
         int flaggedTileCount;

@@ -188,42 +188,77 @@ namespace OMOK
             return true;
         }
 
-        public bool GameResult(eTeam status)
+        public bool GameResult(GAME_RESULT_NTY nty)
         {
             try
             {
-               
-               
-               if (status == eTeam.Black)
-                   DisplayAlert("", "흑 승리하셨습니다..", "OK");
-               else
-                   DisplayAlert("", "백 승리하셨습니다.", "OK");
+                string Message = "";
 
-               if(User.Color == status)
+                if(nty.VarIndex1 == User.Id)
+                {
+                    if(User.myInfo.level < nty.VarLevel1)
+                    {
+                        Message="축하합니다. 승급하셨습니다. " +  User.myInfo.level + " => " + nty.VarLevel1;
+                    }
+                    else if(User.myInfo.level > nty.VarLevel1)
+                    {
+                        Message = "강등되셨습니다. " + User.myInfo.level + " => " + nty.VarLevel1;
+                    }
+
+                    Message += "\n 포인트 " + User.myInfo.score + " => " + nty.VarLevelPoint1;
+
+                    User.myInfo.level = nty.VarLevel1;
+                    User.myInfo.score = nty.VarLevelPoint1;
+                }
+                else if (nty.VarIndex2 == User.Id)
+                {
+                    if (User.myInfo.level < nty.VarLevel2)
+                    {
+                        Message = "축하합니다. 승급하셨습니다. " + User.myInfo.level + " => " + nty.VarLevel2;
+                    }
+                    else if (User.myInfo.level > nty.VarLevel2)
+                    {
+                        Message = "강등되셨습니다. " + User.myInfo.level + " => " + nty.VarLevel2;
+                    }
+
+                    Message += "\n 포인트 " + User.myInfo.score + " => " + nty.VarLevelPoint2;
+
+                    User.myInfo.level = nty.VarLevel2;
+                    User.myInfo.score = nty.VarLevelPoint2;
+                }
+
+              
+
+                if (nty.VarIndex == User.Id)
+                    DisplayAlert("", "승리 하셨습니다..\n" + Message, "OK");
+                else
+                    DisplayAlert("", "패배 하셨습니다.\n" + Message, "OK");
+
+
+                if (User.Id == nty.VarIndex)
                 {
                     User.myInfo.win += 1;
                 }
                else
                 {
                     User.myInfo.lose += 1;
-                        
                 }
 
-               board.ClearBoardState();
+ //            board.ClearBoardState();
 
                //이번엔 서로 진형을 변경한다. 
-               eTeam newColor = User.Color == eTeam.Black ? eTeam.White : eTeam.Black;
+               //eTeam newColor = User.Color == eTeam.Black ? eTeam.White : eTeam.Black;
 
-               User.Color = newColor;
+               //User.Color = newColor;
 
-               UpdateBattleInfo();
+               //UpdateBattleInfo();
 
-               if (User.Color == eTeam.Black)
-                   User.IsMyTurn = true;
-               else
-                   User.IsMyTurn = false;
+               //if (User.Color == eTeam.Black)
+               //    User.IsMyTurn = true;
+               //else
+               //    User.IsMyTurn = false;
 
-               User.MytrunStartTime = DateTime.Now;
+               //User.MytrunStartTime = DateTime.Now;
 
                return true;
             }

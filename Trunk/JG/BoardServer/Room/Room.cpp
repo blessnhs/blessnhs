@@ -320,28 +320,26 @@ void Room::RecoardResult(PLAYER_PTR Winner, PLAYER_PTR Loser)
 	}
 
 	//½Â¼ö Áõ°¡
-	auto OppPlayer = GetOtherPlayer(Winner->GetId());
-	if (OppPlayer != NULL)
 	{
-		result_nty.set_var_index(OppPlayer->GetId());
-		result_nty.set_var_name(OppPlayer->m_Account.GetName());
+		result_nty.set_var_index(Winner->GetId());
+		result_nty.set_var_name(Winner->m_Account.GetName());
 
-		eTeam color = GetTeamPlayer(OppPlayer->GetId());
+		eTeam color = GetTeamPlayer(Winner->GetId());
 		result_nty.set_var_color(color);
 
 
-		OppPlayer->m_Char[0].UpdateScore(POINT);
+		Winner->m_Char[0].UpdateScore(POINT);
 
-		GSCLIENT_PTR pSession = SERVER.GetClient(OppPlayer->GetPair());
+		GSCLIENT_PTR pSession = SERVER.GetClient(Winner->GetPair());
 		if (pSession)
 		{
 			boost::shared_ptr<RequestPlayerScore> pRequest = ALLOCATOR.Create<RequestPlayerScore>();
-			pRequest->Index = OppPlayer->GetId();
-			pRequest->Win = 1;	pRequest->Lose = 0;	pRequest->Draw = 0; pRequest->Level = OppPlayer->m_Char[0].GetLevel(); pRequest->Score = OppPlayer->m_Char[0].GetScore().GetScorePoint();
+			pRequest->Index = Winner->GetId();
+			pRequest->Win = 1;	pRequest->Lose = 0;	pRequest->Draw = 0; pRequest->Level = Winner->m_Char[0].GetLevel(); pRequest->Score = Winner->m_Char[0].GetScore().GetScorePoint();
 
-			result_nty.set_var_index_2(OppPlayer->GetId());
-			result_nty.set_var_level_2(OppPlayer->m_Char[0].GetLevel());
-			result_nty.set_var_level_point_2(OppPlayer->m_Char[0].GetScore().GetScorePoint());
+			result_nty.set_var_index_2(Winner->GetId());
+			result_nty.set_var_level_2(Winner->m_Char[0].GetLevel());
+			result_nty.set_var_level_point_2(Winner->m_Char[0].GetScore().GetScorePoint());
 
 			boost::shared_ptr<Board::MSG_PLAYER_QUERY<RequestPlayerScore>>		PLAYER_MSG = ALLOCATOR.Create<Board::MSG_PLAYER_QUERY<RequestPlayerScore>>();
 			PLAYER_MSG->pSession = pSession;

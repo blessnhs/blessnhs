@@ -27,7 +27,7 @@ message LOGIN_RES
     optional int32	 var_draw 		= 6;
     optional int32	 var_score 		= 7;
     optional int32	 var_rank		= 8;
-
+    optional int32	 var_level		= 9;
 }
 
 message CREATE_ROOM_RES

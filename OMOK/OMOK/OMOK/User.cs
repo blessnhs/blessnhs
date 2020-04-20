@@ -17,6 +17,8 @@ namespace OMOK
         public int draw;
         public int score;
 
+        public int level;
+
     }
 
     public static class User

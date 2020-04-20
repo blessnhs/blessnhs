@@ -54,7 +54,7 @@ VOID GSClientMgr::CheckAliveTime()
 
 			int Diff = SYSTime - ClientTime;
 
-			//1분 넘으면 그냥 끊는다.
+			//1분 넘으면 그냥 삭제한다.
 			if ((ClientTime < SYSTime && count == 0) || (Diff > (1000 * 60 * 1)))
 			{
 				if (DelClient(client->GetId()) == FALSE)
