@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="OMOK.Views.Setting">
+    <Grid x:Name="mainGrid" ColumnSpacing="0" RowSpacing="1">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="6*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="5*" />
+            <ColumnDefinition Width="5*" />
+        </Grid.ColumnDefinitions>
+
+        <Image  x:Name="Profile" Grid.Row="0" Grid.ColumnSpan="1" Grid.Column="0"/>
+
+        <Frame BorderColor="Gray" Grid.Row="1" Grid.ColumnSpan="2" Grid.Column="0" VerticalOptions="Start">
+            <StackLayout BackgroundColor= "White" >
+                <Label x:Name="RankLabel" Text="" VerticalOptions="CenterAndExpand" HorizontalTextAlignment="Center" />
+            </StackLayout>
+        </Frame>
+
+        <Frame BorderColor="Gray" Grid.Row="2" Grid.ColumnSpan="2" Grid.Column="0" VerticalOptions="Start">
+            <StackLayout BackgroundColor= "White" >
+                <Label x:Name="RecordLabel" Text="" VerticalOptions="CenterAndExpand" HorizontalTextAlignment="Center" />
+            </StackLayout>
+        </Frame>
+
+        <Frame BorderColor="Gray" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2">
+            <StackLayout VerticalOptions="StartAndExpand">
+                <Label Text="문의 사항 및 버그 제보"/>
+            </StackLayout>
+        </Frame>
+
+        <Frame BorderColor="Gray" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2">
+            <StackLayout VerticalOptions="StartAndExpand">
+                <Editor Text="" HeightRequest="300" />
+                <Button  x:Name="sendbutton" Text="전송" Clicked="OnSendButtonClicked" />
+            </StackLayout>
+        </Frame>
+
+    </Grid>
+</ContentPage>

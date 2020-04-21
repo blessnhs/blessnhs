@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="OMOK.Views.Rank">
+    <ContentPage.Content>
+        <StackLayout>
+            <Grid x:Name="main_grid">
+                <Grid.RowDefinitions BackgroundColor="White">
+                    <RowDefinition Height="1*" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="9*" />
+                </Grid.ColumnDefinitions>
+            </Grid>
+
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
