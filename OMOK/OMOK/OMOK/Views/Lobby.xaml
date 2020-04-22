@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:AdFire="clr-namespace:OMOK.CustomAdMobView"
              x:Class="OMOK.Views.Lobby">
     <ContentPage.Content>
         <StackLayout>
@@ -8,7 +9,8 @@
             <Grid x:Name="main_grid">
                 <Grid.RowDefinitions BackgroundColor="White">
                     <RowDefinition Height="1*" />
-                    <RowDefinition Height="7*" />
+                    <RowDefinition Height="1*" />
+                    <RowDefinition Height="6*" />
                     <RowDefinition Height="1*" />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
@@ -18,26 +20,31 @@
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
 
-                <Image  x:Name="mypicture" Grid.Row="0" Grid.ColumnSpan="1" Grid.Column="0">
+                <StackLayout  Grid.Row="0" Grid.Column="0"  Grid.ColumnSpan="5"  >
+                    <AdFire:CtBannerView eBannerSize="Standardbanner"
+                             BackgroundColor="Black"/>
+                </StackLayout>
+
+                <Image  x:Name="mypicture" Grid.Row="1" Grid.ColumnSpan="1" Grid.Column="0">
                     <Image.Source>
                         <UriImageSource Uri="{Binding SomeImage}"/>
                     </Image.Source>
                 </Image>
                 <!--<Image  Aspect="AspectFit" ></Image>-->
 
-                <Frame BorderColor="Gray" Grid.Row="0" Grid.ColumnSpan="2" Grid.Column="1" VerticalOptions="Start" Padding="0,0,0,0">
+                <Frame BorderColor="Gray" Grid.Row="1" Grid.ColumnSpan="2" Grid.Column="1" VerticalOptions="Start" Padding="0,0,0,0">
                     <StackLayout BackgroundColor= "blue" >
                         <Button x:Name="RecordButton" Text="" BackgroundColor="White"/>
                     </StackLayout>
                 </Frame>
 
-                <Frame BorderColor="Gray" Grid.Row="0" Grid.ColumnSpan="2" Grid.Column="3" VerticalOptions="Start" Padding="0,0,0,0">
+                <Frame BorderColor="Gray" Grid.Row="1" Grid.ColumnSpan="2" Grid.Column="3" VerticalOptions="Start" Padding="0,0,0,0">
                     <StackLayout BackgroundColor= "blue" >
                         <Button x:Name="MatchButton" Text="대전신청" Clicked="OnMatchClicked" BackgroundColor="White"/>
                     </StackLayout>
                 </Frame>
 
-                <Frame BorderColor="Gray"  CornerRadius="5"  Grid.Row="1" Grid.Column="0"  Grid.ColumnSpan="4" Padding="0,0,0,0">
+                <Frame BorderColor="Gray"  CornerRadius="5"  Grid.Row="2" Grid.Column="0"  Grid.ColumnSpan="5" Padding="0,0,0,0">
                     <StackLayout BackgroundColor="White">
 
                         <ListView x:Name="listView" ItemSelected="Handle_ItemSelected"   ItemsSource="{Binding CommunityRoomInfo}" IsVisible="True">
@@ -51,20 +58,20 @@
                     </StackLayout>
                 </Frame>
 
-                <Frame BorderColor="Gray"  CornerRadius="5"  Grid.Row="2" Grid.Column="0" Padding="0,0,0,0">
+                <Frame BorderColor="Gray"  CornerRadius="5"  Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Padding="0,0,0,0">
                     <Button x:Name="NameButton" Text="이름" Clicked="OnMatchClicked" BackgroundColor="White"/>
                 </Frame>
 
 
-                <Frame BorderColor="Gray"  CornerRadius="5"  Grid.Row="2" Grid.Column="1" Padding="0,0,0,0">
+                <Frame BorderColor="Gray"  CornerRadius="5"  Grid.Row="3" Grid.Column="2" Padding="0,0,0,0">
                     <Button x:Name="HistroyButton" Text="기보" Clicked="OnMatchClicked" BackgroundColor="White"/>
                 </Frame>
 
-                <Frame BorderColor="Gray"  CornerRadius="5"  Grid.Row="2" Grid.Column="2" Padding="0,0,0,0">
+                <Frame BorderColor="Gray"  CornerRadius="5"  Grid.Row="3" Grid.Column="3" Padding="0,0,0,0">
                     <Button x:Name="RankButton" Text="랭킹" Clicked="OnRankClicked" BackgroundColor="White"/>
                 </Frame>
 
-                <Frame BorderColor="Gray"  CornerRadius="5"  Grid.Row="2" Grid.Column="3" Padding="0,0,0,0">
+                <Frame BorderColor="Gray"  CornerRadius="5"  Grid.Row="3" Grid.Column="4" Padding="0,0,0,0">
                     <Button x:Name="SettingButton" Text="설정" Clicked="OnSettingClicked" BackgroundColor="White"/>
                 </Frame>
 

@@ -53,13 +53,13 @@ namespace OMOK.Droid
 
             if (interstitialAd.IsLoaded)
                 interstitialAd.Show();
-            
+
             LoadAd();
         }
 
         public override void OnAdLoaded()
         {
-            if(!isShow)
+            if (!isShow)
             {
                 return;
             }

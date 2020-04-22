@@ -21,7 +21,7 @@ namespace OMOK.Droid
         public AdMobBannerViewRenderer(Context context) : base(context) { }
 
         // 안드로이드 용 테스트 아이디
-        public string AdUnitIdSet = "ca-app-pub-3940256099942544/6300978111";
+        public string AdUnitIdSet = "ca-app-pub-9541028236702321/8528793061";
 
         // 안드로이드 테스트 디바이스
         string TestDeviceID = "C6023D05217C4D7DA3C30B4A5F2CB928";
@@ -84,11 +84,11 @@ namespace OMOK.Droid
                     break;
             }
 
-            //adView.LoadAd(new AdRequest.Builder().Build());
+            adView.LoadAd(new AdRequest.Builder().Build());
 
             // 테스트 하기 위한 테스트용 기기 번호 넣은것.
-            AdRequest request = new AdRequest.Builder().AddTestDevice(TestDeviceID).Build();
-            adView.LoadAd(request);
+            // AdRequest request = new AdRequest.Builder().AddTestDevice(TestDeviceID).Build();
+            //  adView.LoadAd(request);
 
             return adView;
         }

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using OMOK.Network;
-
+using OMOK.CustomAdMobView;
 
 namespace OMOK
 {
@@ -17,11 +17,15 @@ namespace OMOK
         const string timeFormat = @"%m\:ss";
         bool isGameInProgress;
         DateTime gameStartTime;
-     
+
+        iAd_IterstitialView iIterstitia;
 
         public Room()
         {
             InitializeComponent();
+
+            iIterstitia = DependencyService.Get<iAd_IterstitialView>();
+
 
             Device.StartTimer(TimeSpan.FromSeconds(1), () =>
             {
@@ -155,6 +159,8 @@ namespace OMOK
         async void OnLeaveClicked(object sender, System.EventArgs e)
         {
             NetProcess.SendLeaveRoom(0);
+
+            iIterstitia.ShowAd();
         }
 
         public bool UpdateTurnBackground(eTeam status)
