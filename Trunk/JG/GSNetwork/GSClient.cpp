@@ -308,7 +308,7 @@ VOID GSClient::ProcDisconnect(boost::shared_ptr<GSClient> pClient)
 
 	if(GetConnected() == FALSE)
 	{
-		printf("Already Disconnected socket  %d %d\n",GetSocket(),GetId());
+		printf("Already Disconnected socket  %d %ld\n",GetSocket(),GetId());
 		return ;
 	}
 

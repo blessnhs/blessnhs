@@ -99,7 +99,10 @@ namespace OMOK.Network
                                         page.CurrentPage = page.Children[1];
                                         User.IsMyTurn = true;
                                         User.MytrunStartTime = DateTime.Now;
-                                   }
+
+                                        var Room = (Room)page.Children[1];
+                                        Room.UpdateTurnBackground(User.Color);
+                                    }
                                     else
                                     {
 
@@ -216,6 +219,10 @@ namespace OMOK.Network
                                         User.Color = eTeam.White;
                                         page.CurrentPage = page.Children[1];
                                         User.IsMyTurn = false;
+                                        User.MytrunStartTime = DateTime.Now;
+
+                                        var Room = (Room)page.Children[1];
+                                        Room.UpdateTurnBackground(User.Color);
                                     }
                                 }
                                 break;
