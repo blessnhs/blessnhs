@@ -37,18 +37,34 @@ namespace WBA.Droid
                      //   CrossLocalNotifications.Current.Show(data.Message, DateTime.Now.ToString(), data.Id, DateTime.Now);
 
                         var manager = (NotificationManager)GetSystemService(NotificationService);
-                        var notification = new Notification.Builder(this, "DE")
-                        .SetContentTitle(DateTime.Now.ToString() + "알림!")
-                        .SetContentText(data.Message)
-                        .SetSmallIcon(Resource.Drawable.xamagonBlue)
-                        .SetLargeIcon(BitmapFactory.DecodeResource(Resources, Resource.Drawable.xamagonBlue))
-                        .SetSmallIcon(Resource.Drawable.xamagonBlue)
-                        .Build();
 
-                        manager.Notify(data.Id, notification);
+                        if (Build.VERSION.SdkInt >= Build.VERSION_CODES.O)
+                        {
 
+                            var notification = new Notification.Builder(this, "DE")
+                                .SetContentTitle(DateTime.Now.ToString() + "알림!")
+                                .SetContentText(data.Message)
+                                .SetSmallIcon(Resource.Drawable.xamagonBlue)
+                                .SetLargeIcon(BitmapFactory.DecodeResource(Resources, Resource.Drawable.xamagonBlue))
+                                .SetSmallIcon(Resource.Drawable.xamagonBlue)
+                                .Build();
 
-                        //Notify update
+                            manager.Notify(data.Id, notification);
+                        }
+                        else
+                        {
+                            var notification = new Notification.Builder(this)
+                                                         .SetContentTitle(DateTime.Now.ToString() + "알림!")
+                                                         .SetContentText(data.Message)
+                                                         .SetSmallIcon(Resource.Drawable.xamagonBlue)
+                                                         .SetLargeIcon(BitmapFactory.DecodeResource(Resources, Resource.Drawable.xamagonBlue))
+                                                         .SetSmallIcon(Resource.Drawable.xamagonBlue)
+                                                         .Build();
+
+                            manager.Notify(data.Id, notification);
+                        }
+
+                            //Notify update
                         data.IsNotify = true;
                         SQLLiteDB.Upsert(data, false);
                     }

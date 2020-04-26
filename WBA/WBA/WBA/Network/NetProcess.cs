@@ -1,7 +1,4 @@
-﻿using Android.Content.PM;
-using Android.OS;
-using Android.Widget;
-using Google.Protobuf;
+﻿using Google.Protobuf;
 using Google.Protobuf.WellKnownTypes;
 using NetClient;
 using System;
@@ -23,8 +20,8 @@ namespace WBA.Network
         static public void start()
         {
             //연결중이면 안한다. 
-            if(client.socket == null || client.socket.Connected == false)
-                client.StartClient("192.168.0.12", 20000);
+       //     if(client.socket == null || client.socket.Connected == false)
+       //         client.StartClient("192.168.0.12", 20000);
         }
 
         public static Page GetPageByTitle(MainPage page, string name)
@@ -45,7 +42,8 @@ namespace WBA.Network
 
         static public void Loop(MainPage page)
         {
-           // while(true)
+            return;
+            // while(true)
             {
                 if (client.socket.Connected == false)
                     return;
@@ -64,20 +62,16 @@ namespace WBA.Network
                                     VERSION_RES res = new VERSION_RES();
                                     res = VERSION_RES.Parser.ParseFrom(data.Data);
 
+                                    var currentVersion = VersionTracking.CurrentVersion;
 
-                                    //get my version
+                                    float myversion = float.Parse(currentVersion);
+                                    const Double Eps = 0.000000000000001;
+
+                                    if (Math.Abs(res.VarVersion - myversion) > Eps)
                                     {
-                                        var context = global::Android.App.Application.Context;
+                                        Xamarin.Essentials.Browser.OpenAsync("https://play.google.com/store/apps/details?id=com.blessnhs.BAC");
 
-                                        PackageManager manager = context.PackageManager;
-                                        PackageInfo info = manager.GetPackageInfo(context.PackageName, 0);
-
-                                        float myversion = float.Parse(info.VersionName);
-                                        const Double Eps = 0.000000000000001;
-
-                                        if (Math.Abs(res.VarVersion - myversion) > Eps)
-      //                                      if (res.VarVersion.ToString() != info.VersionName)
-                                            Xamarin.Essentials.Browser.OpenAsync("https://play.google.com/store/apps/details?id=com.blessnhs.BAC");
+                                        return;
                                     }
                                 }
                                 break;
@@ -169,7 +163,7 @@ namespace WBA.Network
         {
             CREATE_ROOM_REQ person = new CREATE_ROOM_REQ
             {
-                VarName = Name,
+                 VarName = ByteString.CopyFrom(Helper.ToByteString(Name)),
             };
             using (MemoryStream stream = new MemoryStream())
             {
@@ -211,7 +205,7 @@ namespace WBA.Network
         {
             BROADCAST_ROOM_MESSAGE_REQ message = new BROADCAST_ROOM_MESSAGE_REQ
             {
-                VarMessage = msg
+                VarMessage = ByteString.CopyFrom(Helper.ToByteString(msg))
             };
             using (MemoryStream stream = new MemoryStream())
             {
@@ -223,7 +217,7 @@ namespace WBA.Network
 
         static public void SendReqRoomList()
         {
-            if (client.socket.Connected == false)
+            if (client.socket == null || client.socket.Connected == false)
                 return;
 
             ROOM_LIST_REQ person = new ROOM_LIST_REQ
@@ -243,8 +237,8 @@ namespace WBA.Network
 
             LOGIN_REQ person = new LOGIN_REQ
             {
-                VarId = id,
-                VarPasswd = pwd,
+    //            var = id,
+    //            VarPasswd = pwd,
             };
             using (MemoryStream stream = new MemoryStream())
             {
