@@ -106,7 +106,7 @@ VOID GSIocp::WorkerThread()
 
 	while (TRUE)
 	{
-//		__try
+		try
 		{
 		
 			SetEvent(m_BeginEvtHandle);
@@ -184,12 +184,12 @@ VOID GSIocp::WorkerThread()
 			}
 		
 		}
-/*		__except( ExceptionFilter(GetExceptionInformation(),"IOCP Handler") )
+		catch (...)
         {
-			if(Object != NULL)
+			/*if(Object != NULL)
 			{
 				OnDisconnected(Object);
-			}
+			}*/
 			printf("IOCP WORKER THREAD EXCEPTION DETECTED\n");
 			printf("IOCP WORKER THREAD EXCEPTION DETECTED\n");
 			printf("IOCP WORKER THREAD EXCEPTION DETECTED\n");
@@ -197,7 +197,7 @@ VOID GSIocp::WorkerThread()
 			printf("IOCP WORKER THREAD EXCEPTION DETECTED\n");
 			printf("IOCP WORKER THREAD EXCEPTION DETECTED\n");
 			printf("IOCP WORKER THREAD EXCEPTION DETECTED\n");
-		}*/
+		}
 	}
 }
 
