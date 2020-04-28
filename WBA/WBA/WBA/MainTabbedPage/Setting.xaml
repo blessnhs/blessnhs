@@ -5,8 +5,8 @@
              Title="설정">
 
     <StackLayout Orientation="Vertical" Spacing="10" Padding="20,20,20,20">
-
-        <Grid>
+        <ScrollView>
+            <Grid>
             <Grid.RowDefinitions BackgroundColor="White">
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
@@ -53,7 +53,8 @@
                 </StackLayout>
             </Frame>
 
-        </Grid>
+            </Grid>
+        </ScrollView>
     </StackLayout>
 
 </ContentPage>

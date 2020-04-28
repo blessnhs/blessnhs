@@ -29,7 +29,7 @@ namespace WBA.MainTabbedPage
             {
                 CommunityRoomInfoModel croom = new CommunityRoomInfoModel();
                 croom.Id = room.VarId;
-                croom.Name = room.VarName;
+                croom.Name = Helper.ToStr(room.VarName.ToByteArray());
                 croom.CurrentCount = room.VarCurrentCount;
 
                 viewModel.RoomModel.Add(croom);
@@ -71,8 +71,8 @@ namespace WBA.MainTabbedPage
         {
             string inputstring = await InputBox(this.Navigation);
 
-            if (inputstring != null)
-                NetProcess.SendMakeRoom(inputstring);
+        //    if (inputstring != null)
+        //        NetProcess.SendMakeRoom(inputstring);
         }
 
         public static Task<string> InputBox(INavigation navigation)

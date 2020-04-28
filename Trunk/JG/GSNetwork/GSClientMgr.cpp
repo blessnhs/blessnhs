@@ -173,6 +173,8 @@ BOOL GSClientMgr::AddClientLoop(GSCLIENT_PTR newclient)
 		m_ClientsForLoop[newclient->GetId()] = newclient;
 		return TRUE;
 	}
+
+	return FALSE;
 }
 
 BOOL GSClientMgr::DelClientLoop(int id)
