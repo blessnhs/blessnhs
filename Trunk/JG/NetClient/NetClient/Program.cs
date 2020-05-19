@@ -15,6 +15,9 @@ public class Process
     public Client client = new Client();
     public void start(int id)
     {
+
+
+
         int _id = id;
         client.StartClient("192.168.0.4", 20000);
 
@@ -46,8 +49,6 @@ public class Process
                                 LOGIN_REQ person = new LOGIN_REQ
                                 {
                                     Id = PROTOCOL.IdPktLoginRes,
-                                    VarId = "nhs" + _id,
-                                    VarPasswd = "nhs" + _id,
                                 };
                                 using (MemoryStream stream = new MemoryStream())
                                 {
@@ -105,7 +106,6 @@ public class Process
 
                                 BROADCAST_ROOM_MESSAGE_REQ req = new BROADCAST_ROOM_MESSAGE_REQ
                                 {
-                                    VarMessage = "message"
                                 };
                                 using (MemoryStream stream = new MemoryStream())
                                 {
@@ -119,7 +119,6 @@ public class Process
                             {
                                 BROADCAST_ROOM_MESSAGE_REQ req = new BROADCAST_ROOM_MESSAGE_REQ
                                 {
-                                    VarMessage = "test message"
                                 };
                                 using (MemoryStream stream = new MemoryStream())
                                 {
@@ -144,6 +143,18 @@ public class AsynchronousClient
 
    public static int Main(String[] args)
     {
+       {
+            string strHostName = "nhs8245.iptime.org:20000";
+            IPHostEntry host = Dns.GetHostEntry(strHostName);
+
+            Console.WriteLine($"GetHostEntry({strHostName}) returns:");
+
+            foreach (IPAddress address in host.AddressList)
+            {
+                Console.WriteLine($"    {address}");
+            }
+        }
+
 
         Process[] array = new Process[3];
         for (int i=1;i<2;i++)

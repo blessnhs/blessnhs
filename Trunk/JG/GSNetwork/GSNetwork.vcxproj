@@ -30,7 +30,7 @@
     <ProjectGuid>{5CC150A9-431C-400E-ADCA-287D34A466EC}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>GSNetwork</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.18362.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -49,7 +49,7 @@
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>MultiByte</CharacterSet>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseBuild|x64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
@@ -127,7 +127,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>../Common/GSCore/</OutDir>
-    <IntDir>../bin/</IntDir>
+    <IntDir>$(Platform)\$(Configuration)\</IntDir>
     <IncludePath>../Common/boost_1_68_0;$(IncludePath)</IncludePath>
     <LibraryPath>../Common/boost_1_68_0/lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>

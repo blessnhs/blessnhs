@@ -24,7 +24,7 @@ BOOL CDBProcessCer::Initalize(	CHAR *m_szDSN,CHAR *m_szUID,CHAR *m_szPWD)
 	m_pDB = new COdbc;
 	if( m_pDB->Open2(m_szDSN, m_szUID, m_szPWD) == false )
 	{
-		printf(("fail -> %s(%ul)\n"), GetId());
+		printf(("fail -> (%ul)\n"), GetId());
 		return false;
 	}
 	m_IsOpen = true;
