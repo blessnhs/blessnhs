@@ -31,7 +31,7 @@
             </StackLayout>
 
             <ContentView Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" SizeChanged="OnBoardContentViewSizeChanged">
-                <!--<Image x:Name="backgroundboard"></Image>-->
+                 <!--<Image x:Name="backgroundboard"></Image>-->
                 <!-- Single-cell Grid for Board and overlays. -->
                 <Grid RowSpacing="0">
                     <Grid.RowDefinitions>

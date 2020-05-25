@@ -11,6 +11,7 @@ using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using System.Text;
 using System.Diagnostics;
+using System.Net;
 
 namespace OMOK.Network
 {
@@ -18,11 +19,33 @@ namespace OMOK.Network
     {
         static bool isSendVersion = false;
         static public Client client = new Client();
+
+        public static string GetIPAddress(string hostname)
+        {
+            IPHostEntry host;
+            host = Dns.GetHostEntry(hostname);
+
+            foreach (IPAddress ip in host.AddressList)
+            {
+                if (ip.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork)
+                {
+                    //System.Diagnostics.Debug.WriteLine("LocalIPadress: " + ip);
+                    return ip.ToString();
+                }
+            }
+            return string.Empty;
+        }
+
+
         static public void start()
         {
+            string ip="127.0.0.1";
+
+            ip = GetIPAddress("blessnhs.iptime.org");
+
             //연결중이면 안한다. 
             if (client.socket == null || client.socket.Connected == false)
-                client.StartClient("192.168.0.4", 20000);
+                client.StartClient(ip, 20000);
         }
 
         static public bool IsSuccessAuth = false;
