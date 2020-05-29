@@ -86,7 +86,7 @@ namespace OMOK.Network
                                         return;
                                     }
 
-                                    NetProcess.SendLogin(User.Uid, User.Token);
+                                  //  NetProcess.SendLogin(User.Uid, User.Token);
                                 }
                                 break;
                             case (int)PROTOCOL.IdPktLoginRes:

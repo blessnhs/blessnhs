@@ -7,14 +7,46 @@ using OMOK.Network;
 
 namespace OMOK
 {
+    static class TitleResource
+    {
+        static ImageSource WhiteStoneImageSource = null;
+        static ImageSource BlackStoneImageSource = null;
+        static ImageSource EmptyStoneImageSource = null;
+        static ImageSource AimStoneImageSource = null;
+
+        public static ImageSource GetAimStoneImageSource()
+        {
+            if (AimStoneImageSource == null)
+                AimStoneImageSource = ImageSource.FromResource("OMOK.Image.Aim.png");
+            return AimStoneImageSource;
+        }
+
+        public static ImageSource GetWhiteStoneImageSource()
+        {
+            if(WhiteStoneImageSource == null)
+                WhiteStoneImageSource = ImageSource.FromResource("OMOK.Image.White.png");
+            return WhiteStoneImageSource;
+        }
+
+        public static ImageSource GetBlackStoneImageSource()
+        {
+            if (BlackStoneImageSource == null)
+                BlackStoneImageSource = ImageSource.FromResource("OMOK.Image.Black.png");
+            return BlackStoneImageSource;
+        }
+        public static ImageSource GetEmptyStoneImageSource()
+        {
+            if (EmptyStoneImageSource == null)
+                EmptyStoneImageSource = ImageSource.FromResource("OMOK.Image.Cell.png");
+            return EmptyStoneImageSource;
+        }
+    }
+
     class Tile : Frame
     {
         eTeam tileStatus = eTeam.None;
         Label label;
-        Image whiteImage, blackImage,emptyImage;
-        static ImageSource WhiteStoneImageSource;
-        static ImageSource BlackStoneImageSource;
-        static ImageSource EmptyStoneImageSource;
+        Image whiteImage, blackImage,emptyImage,aimImage;
         bool doNotFireEvent;
 
         public event EventHandler<eTeam> TileStatusChanged;
@@ -23,9 +55,6 @@ namespace OMOK
 
         static Tile()
         {
-            WhiteStoneImageSource = ImageSource.FromResource("OMOK.Image.White.png");
-            BlackStoneImageSource = ImageSource.FromResource("OMOK.Image.Black.png");
-            EmptyStoneImageSource = ImageSource.FromResource("OMOK.Image.Cell.png");
         }
 
         public Tile(int row, int col)
@@ -48,19 +77,25 @@ namespace OMOK
             };
 
             whiteImage = new Image {
-                Source = WhiteStoneImageSource,
+                Source = TitleResource.GetWhiteStoneImageSource(),
 
             };
 
             blackImage = new Image {
-                Source = BlackStoneImageSource
+                Source = TitleResource.GetBlackStoneImageSource()
             };
 
 
             emptyImage = new Image
             {
-                Source = EmptyStoneImageSource
+                Source = TitleResource.GetEmptyStoneImageSource()
             };
+
+            aimImage = new Image
+            {
+                Source = TitleResource.GetAimStoneImageSource()
+            };
+            
 
             TapGestureRecognizer singleTap = new TapGestureRecognizer {
                 NumberOfTapsRequired = 1
@@ -112,6 +147,9 @@ namespace OMOK
 
                         case eTeam.Black:
                             this.Content = blackImage;
+                            break;
+                        case eTeam.Aim:
+                            this.Content = aimImage;
                             break;
                         default:
 

@@ -366,6 +366,7 @@ namespace Board	{
 
 			if(nRet != _ERR_NONE )
 			{ 
+				printf("Login Fail Db Failed %d \n", nRet);
 				res.set_var_code(LoginFailed);
 				SEND_PROTO_BUFFER(res, pSession)
 				return ;
@@ -378,9 +379,12 @@ namespace Board	{
 				GSCLIENT_PTR pPair = SERVER.GetClient(existClient->GetPair());
 				if (pPair != NULL)
 				{
+					printf("1.Exist player client %d \n", Index);
+
 					pPair->Close();
 				}
 
+				printf("2.Exist player client %d \n", Index);
 				res.set_var_code(LoginFailed);
 				SEND_PROTO_BUFFER(res, pSession)
 				return;

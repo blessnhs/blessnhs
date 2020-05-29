@@ -11,6 +11,8 @@ namespace OMOK
         const int COLS = 16;         // 16
         const int ROWS = 16;         // 16
 
+        int x = COLS / 2, y = ROWS / 2;
+
         Tile[,] tiles = new Tile[ROWS, COLS];
         int flaggedTileCount;
         bool isGameInProgress;              // on first tap
@@ -70,6 +72,44 @@ namespace OMOK
                     tiles[row, col].Status = eTeam.None;
                 }
             }
+        }
+
+        eTeam prevsTATE = eTeam.None;
+
+        public void UpdateAim(int addx=0,int addy=0)
+        {
+            if (x + addx < 0)
+            {
+                return;
+            }
+
+            if (x + addy < 0)
+            {
+                return;
+            }
+
+            if (x + addx >= COLS)
+            {
+                return;
+            }
+
+            if (x + addy >= ROWS)
+            {
+                return;
+            }
+
+            int nx = x + addx;
+            int ny = y + addy;
+
+            tiles[y, x].Status = prevsTATE;
+
+            prevsTATE = tiles[ny, nx].Status;
+
+            tiles[ny, nx].Status = eTeam.Aim;
+
+    
+            x = nx;
+            y = ny;
         }
 
 

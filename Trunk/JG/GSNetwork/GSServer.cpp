@@ -78,6 +78,8 @@ VOID GSServer::OnConnected(int client_id)
 	if (pClient == NULL)
 		return;
 
+
+	printf("accept socket %d\n", client_id);
 	m_EvtClientId = client_id;
 
 	if (!GSIocp::RegIocpHandler(pClient->GetSocket(), reinterpret_cast<ULONG_PTR>(&m_EvtClientId)))
@@ -94,6 +96,9 @@ VOID GSServer::OnConnected(int client_id)
 
 VOID GSServer::OnDisconnected(int client_id)
 {
+
+	printf("OnDisconnected socket %d\n", client_id);
+
 	boost::shared_ptr<GSClient> pClient = GetClient(client_id);
 	if (pClient == NULL)
 		return;

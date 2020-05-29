@@ -81,6 +81,11 @@ namespace OMOK.Droid
             }
         }
 
+        protected override void OnDestroy()
+        {
+            FirebaseAuth_.SignOut();
+        }
+
         async void ProcessSignInResult(Intent data)
         {
             GoogleSignInResult signInResult = Auth.GoogleSignInApi.GetSignInResultFromIntent(data);

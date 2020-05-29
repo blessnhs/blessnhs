@@ -70,6 +70,8 @@ namespace OMOK
             };
 
             PrepareForNewGame();
+
+            board.UpdateAim();
         }
 
         protected override void OnDisappearing()
@@ -163,20 +165,45 @@ namespace OMOK
             iIterstitia.ShowAd();
         }
 
+        async void OnClickedLeft(object sender, System.EventArgs e)
+        {
+            board.UpdateAim(-1, 0);
+        }
+
+        async void OnClickedUp(object sender, System.EventArgs e)
+        {
+            board.UpdateAim(0, -1);
+        }
+
+        async void OnPutStone(object sender, System.EventArgs e)
+        {
+           
+        }
+
+        async void OnClickedDown(object sender, System.EventArgs e)
+        {
+            board.UpdateAim(0, 1);
+        }
+
+        async void OnClickedRight(object sender, System.EventArgs e)
+        {
+            board.UpdateAim(1, 0);
+        }
+
         public bool UpdateTurnBackground(eTeam status)
         {
             if(status == eTeam.Black)
             {
 
-                textStackBottom1.BackgroundColor = Color.Beige;
+                blackLabel.BackgroundColor = Color.Beige;
 
-                textStackBottom2.BackgroundColor = Color.White;
+                whiteLabel.BackgroundColor = Color.White;
             }
             else
             {
-                textStackBottom1.BackgroundColor = Color.White;
+                blackLabel.BackgroundColor = Color.White;
 
-                textStackBottom2.BackgroundColor = Color.Beige;
+                whiteLabel.BackgroundColor = Color.Beige;
             }
 
             return true;

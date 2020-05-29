@@ -50,7 +50,6 @@ BOOL GSBoard::Disconnect(GSCLIENT_PTR pSession)
 	PLAYER_MSG->SubType = ONQUERY;
 	MAINPROC.RegisterCommand(PLAYER_MSG);
 
-
 	return TRUE;
 }
 

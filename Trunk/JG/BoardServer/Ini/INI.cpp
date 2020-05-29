@@ -10,5 +10,5 @@ VOID BoardINI::Load()
 
 	GetPrivateProfileString(("SERVER"), ("DEFAULT_FRONT_IP"),("127.0.0.1"),Default_FrontIp,sizeof(Default_FrontIp),("./Board.ini"));
 
-	printf("[ Board ] Port [ %d ] MaxUser [ %d ] Front Ip = %s:%d \n",Port,MaxUser,Default_FrontIp,Default_FrontPort);
+	printf("[ Board ] Port [ %d ] MaxUser [ %d ] \n",Port,MaxUser);
 }
