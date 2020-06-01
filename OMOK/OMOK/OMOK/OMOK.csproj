@@ -11,7 +11,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Image\ABlack.png" />
     <None Remove="Image\Aim.png" />
+    <None Remove="Image\AWhite.png" />
     <None Remove="Image\Background.png" />
     <None Remove="Image\Black.png" />
     <None Remove="Image\Cell.png" />
@@ -26,7 +28,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="Image\ABlack.png" />
     <EmbeddedResource Include="Image\Aim.png" />
+    <EmbeddedResource Include="Image\AWhite.png" />
     <EmbeddedResource Include="Image\Background.png" />
     <EmbeddedResource Include="Image\Black.png" />
     <EmbeddedResource Include="Image\Cell.png" />

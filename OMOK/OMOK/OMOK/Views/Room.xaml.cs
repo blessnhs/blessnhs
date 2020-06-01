@@ -177,7 +177,23 @@ namespace OMOK
 
         async void OnPutStone(object sender, System.EventArgs e)
         {
-           
+            if (User.IsMyTurn == false)
+            {
+                return ; 
+            }
+
+
+            var status = board.GetTile(board.x, board.y).Status;
+
+            if (status != eTeam.None && status != eTeam.Aim)
+            {
+                return;
+            }
+
+
+            board.prevsTATE = User.Color;
+            string Message = board.x + ":" + board.y + ":" + User.Color.ToString();
+            NetProcess.SendRoomMessage(board.x, board.y, User.Color, Message);
         }
 
         async void OnClickedDown(object sender, System.EventArgs e)
@@ -216,6 +232,17 @@ namespace OMOK
 
         public bool UpdateStone(int x,int y, eTeam status)
         {
+            //if (User.IsMyTurn == false || board.GetTile(x,y).Status != eTeam.None)
+            //{
+            //    return false; 
+            //}
+
+            string Message = x + ":" + y + ":" + User.Color.ToString();
+
+            //NetProcess.SendRoomMessage(x, y, User.Color, Message);
+
+            User.IsMyTurn = false;
+
             board.UpdateStone(x, y, status);
 
             return true;

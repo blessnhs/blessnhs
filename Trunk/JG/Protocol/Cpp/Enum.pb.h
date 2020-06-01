@@ -132,12 +132,15 @@ enum eTeam : int {
   None = 0,
   WHITE = 1,
   BLACK = 2,
+  AIM = 3,
+  AWHITE = 4,
+  ABLACK = 5,
   eTeam_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<::PROTOBUF_NAMESPACE_ID::int32>::min(),
   eTeam_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<::PROTOBUF_NAMESPACE_ID::int32>::max()
 };
 bool eTeam_IsValid(int value);
 constexpr eTeam eTeam_MIN = None;
-constexpr eTeam eTeam_MAX = BLACK;
+constexpr eTeam eTeam_MAX = ABLACK;
 constexpr int eTeam_ARRAYSIZE = eTeam_MAX + 1;
 
 const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* eTeam_descriptor();

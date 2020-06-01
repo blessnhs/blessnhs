@@ -42,9 +42,12 @@ enum ErrorCode
 
 enum eTeam
 {
-	None= 0;
-	WHITE = 1;
-	BLACK = 2;
+	None	= 0;
+	WHITE	= 1;
+	BLACK	= 2;
+	AIM	= 3;
+	AWHITE	= 4;
+	ABLACK	= 5;
 };
 
 enum State

@@ -11,7 +11,7 @@ namespace OMOK
         const int COLS = 16;         // 16
         const int ROWS = 16;         // 16
 
-        int x = COLS / 2, y = ROWS / 2;
+        public int x = COLS / 2, y = ROWS / 2;
 
         Tile[,] tiles = new Tile[ROWS, COLS];
         int flaggedTileCount;
@@ -34,6 +34,7 @@ namespace OMOK
                     tiles[row, col] = tile;
                     tile.x = col;
                     tile.y = row;
+                    tile.parent = this;
                 }
 
             SizeChanged += (sender, args) =>
@@ -74,7 +75,7 @@ namespace OMOK
             }
         }
 
-        eTeam prevsTATE = eTeam.None;
+        public eTeam prevsTATE = eTeam.None;
 
         public void UpdateAim(int addx=0,int addy=0)
         {
@@ -100,25 +101,106 @@ namespace OMOK
 
             int nx = x + addx;
             int ny = y + addy;
-
+    
             tiles[y, x].Status = prevsTATE;
 
-            prevsTATE = tiles[ny, nx].Status;
+            if (tiles[ny, nx].Status == eTeam.Black)
+            {
+                tiles[ny, nx].Status = eTeam.Ablack;
+                prevsTATE = eTeam.Black;
+            }
+            else if (tiles[ny, nx].Status == eTeam.White)
+            {
+                tiles[ny, nx].Status = eTeam.Awhite;
+                prevsTATE = eTeam.White;
+            }
+            else
+            {
+               tiles[ny, nx].Status = eTeam.Aim;
+                prevsTATE = eTeam.None;
+            }
 
-            tiles[ny, nx].Status = eTeam.Aim;
 
-    
             x = nx;
             y = ny;
         }
 
-
-        public void UpdateStone(int x,int y,eTeam tileStatus)
+        public void UpdateAimSet(int addx = 0, int addy = 0)
         {
-            var title = tiles[y, x];
+            if (addx < 0)
+            {
+                return;
+            }
+
+            if (addy < 0)
+            {
+                return;
+            }
+
+            if (addx >= COLS)
+            {
+                return;
+            }
+
+            if (addy >= ROWS)
+            {
+                return;
+            }
+
+            int nx = addx;
+            int ny = addy;
+
+            tiles[y, x].Status = prevsTATE;
+
+            if (tiles[ny, nx].Status == eTeam.Black)
+            {
+                tiles[ny, nx].Status = eTeam.Ablack;
+                prevsTATE = eTeam.Black;
+            }
+            else if (tiles[ny, nx].Status == eTeam.White)
+            {
+                tiles[ny, nx].Status = eTeam.Awhite;
+                prevsTATE = eTeam.White;
+            }
+            else
+            {
+                tiles[ny, nx].Status = eTeam.Aim;
+                prevsTATE = eTeam.None;
+            }
+
+
+            x = nx;
+            y = ny;
+        }
+
+        public Tile GetTile(int x,int y)
+        {
+           return tiles[y, x];
+        }
+
+
+        public void UpdateStone(int cx,int cy,eTeam tileStatus)
+        {
+            var title = tiles[cy, cx];
             if(title != null)
             {
-                tiles[y, x].Status = tileStatus;
+                if(cy == y && cx == x)
+                {
+                    if (tileStatus == eTeam.Black)
+                    {
+                        tiles[cy, cx].Status = eTeam.Ablack;
+                        prevsTATE = eTeam.Black;
+                    }
+                    else if (tileStatus == eTeam.White)
+                    {
+                        tiles[cy, cx].Status = eTeam.Awhite;
+                        prevsTATE = eTeam.White;
+                    }
+                    else
+                        tiles[cy, cx].Status = tileStatus;
+                }
+                else
+                    tiles[cy, cx].Status = tileStatus;
             }
         }
 

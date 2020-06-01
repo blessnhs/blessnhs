@@ -11,6 +11,10 @@ namespace OMOK
     {
         static ImageSource WhiteStoneImageSource = null;
         static ImageSource BlackStoneImageSource = null;
+
+        static ImageSource AWhiteStoneImageSource = null;
+        static ImageSource ABlackStoneImageSource = null;
+
         static ImageSource EmptyStoneImageSource = null;
         static ImageSource AimStoneImageSource = null;
 
@@ -34,6 +38,21 @@ namespace OMOK
                 BlackStoneImageSource = ImageSource.FromResource("OMOK.Image.Black.png");
             return BlackStoneImageSource;
         }
+        
+        public static ImageSource GetAWhiteStoneImageSource()
+        {
+            if (AWhiteStoneImageSource == null)
+                AWhiteStoneImageSource = ImageSource.FromResource("OMOK.Image.AWhite.png");
+            return AWhiteStoneImageSource;
+        }
+
+        public static ImageSource GetABlackStoneImageSource()
+        {
+            if (ABlackStoneImageSource == null)
+                ABlackStoneImageSource = ImageSource.FromResource("OMOK.Image.ABlack.png");
+            return ABlackStoneImageSource;
+        }
+
         public static ImageSource GetEmptyStoneImageSource()
         {
             if (EmptyStoneImageSource == null)
@@ -46,12 +65,14 @@ namespace OMOK
     {
         eTeam tileStatus = eTeam.None;
         Label label;
-        Image whiteImage, blackImage,emptyImage,aimImage;
+        Image whiteImage, blackImage,emptyImage,aimImage , awhiteImage, ablackImage;
         bool doNotFireEvent;
 
         public event EventHandler<eTeam> TileStatusChanged;
 
         public int x, y;
+
+        public object parent;
 
         static Tile()
         {
@@ -83,6 +104,17 @@ namespace OMOK
 
             blackImage = new Image {
                 Source = TitleResource.GetBlackStoneImageSource()
+            };
+
+            awhiteImage = new Image
+            {
+                Source = TitleResource.GetAWhiteStoneImageSource(),
+
+            };
+
+            ablackImage = new Image
+            {
+                Source = TitleResource.GetABlackStoneImageSource()
             };
 
 
@@ -148,8 +180,17 @@ namespace OMOK
                         case eTeam.Black:
                             this.Content = blackImage;
                             break;
+
                         case eTeam.Aim:
                             this.Content = aimImage;
+                            break;
+
+                        case eTeam.Awhite:
+                            this.Content = awhiteImage;
+                            break;
+
+                        case eTeam.Ablack:
+                            this.Content = ablackImage;
                             break;
                         default:
 
@@ -179,44 +220,9 @@ namespace OMOK
 
         void OnSingleTap(object sender, object args)
         {
+            Board board = parent as Board;
 
-#if FIX_UWP_DOUBLE_TAPS
-
-            if (Device.RuntimePlatform == Device.UWP) {
-                if (lastTapSingle && DateTime.Now - lastTapTime < TimeSpan.FromMilliseconds (500)) {
-                    OnDoubleTap (sender, args);
-                    lastTapSingle = false;
-                } else {
-                    lastTapTime = DateTime.Now;
-                    lastTapSingle = true;
-                }
-        	}
-
-#endif
-            if(User.IsMyTurn == false || this.Status != eTeam.None)
-            {
-                return;
-            }
-
-            switch (User.Color) {
-            case eTeam.None:
-                this.Status = eTeam.None;
-                break;
-
-            case eTeam.Black:
-                this.Status = eTeam.Black;
-                break;
-
-            case eTeam.White:
-                this.Status = eTeam.White;
-                break;
-            }
-
-            string Message = x + ":" + y + ":" + User.Color.ToString();
-
-            NetProcess.SendRoomMessage(x,y, User.Color,Message);
-
-            User.IsMyTurn = false;
+            board.UpdateAimSet(x, y);
         }
 
         void OnDoubleTap (object sender, object args)
