@@ -14,6 +14,7 @@ using Android.Gms.Auth.Api;
 using Android.Content;
 using Android.Gms.Ads;
 using OMOK.Network;
+using System.Text;
 
 namespace OMOK.Droid
 {
@@ -33,14 +34,11 @@ namespace OMOK.Droid
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
 
-            LoadApplication(new App());
- 
-
             FirebaseApp.InitializeApp(Application.Context);
 
             FirebaseAuth_ = FirebaseAuth.Instance;
 
-            if(FirebaseAuth_ == null)
+            if (FirebaseAuth_ == null)
                 FirebaseAuth_ = new FirebaseAuth(FirebaseApp.Instance);
 
             GoogleSignInOptions signInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DefaultSignIn)
@@ -54,6 +52,9 @@ namespace OMOK.Droid
 
 
             GoogleSignIn();
+
+            LoadApplication(new App());
+          
         }
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
         {
@@ -108,7 +109,7 @@ namespace OMOK.Droid
                     // 사용자 로그인 및 파이어베이스 등록 완료
 
 
-                    new AlertDialog.Builder(this).SetMessage(signInResult.SignInAccount.DisplayName + " 로그인").Show();
+//                    new AlertDialog.Builder(this).SetMessage(signInResult.SignInAccount.DisplayName + t23).Show();
                 }
                 catch (Exception ex)
                 {

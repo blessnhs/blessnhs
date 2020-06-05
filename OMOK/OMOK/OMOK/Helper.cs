@@ -4,7 +4,7 @@ using System.Text;
 
 namespace OMOK
 {
-    static class Helper
+    public static class Helper
     {
         public static byte[] ToByteString(this string inStr, bool in64String = false)
         {
@@ -24,12 +24,17 @@ namespace OMOK
         {
             if (inByte == null || inByte.Length <= 0)
                 return "";
-#if UNITY_IOS
-        string m_receive = _cp949.GetString(inByte);
-#else
-            string m_receive = System.Text.Encoding.GetEncoding(949).GetString(inByte);
-#endif
-            return m_receive;
+
+            try
+            {
+                string m_receive = System.Text.Encoding.GetEncoding(949).GetString(inByte);
+                
+                return m_receive;
+            }
+            catch(Exception e)
+            {
+                return System.Text.Encoding.Default.GetString(inByte);
+            }
         }
 
         public static System.Int64 ToInteger64(this string thisString)

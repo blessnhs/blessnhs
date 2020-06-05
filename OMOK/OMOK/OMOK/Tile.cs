@@ -92,7 +92,7 @@ namespace OMOK
             label = new Label {
                 Text = " ",
                 TextColor = Color.Yellow,
-                BackgroundColor = Color.White,
+                BackgroundColor = Color.Yellow,
                 HorizontalTextAlignment = TextAlignment.Center,
                 VerticalTextAlignment = TextAlignment.Center,
             };

@@ -8,8 +8,8 @@ namespace OMOK
     class Board : AbsoluteLayout
     {
         // Alternative sizes make the tiles a tad small.
-        const int COLS = 16;         // 16
-        const int ROWS = 16;         // 16
+        const int COLS = 14;         // 16
+        const int ROWS = 14;         // 16
 
         public int x = COLS / 2, y = ROWS / 2;
 
@@ -23,8 +23,11 @@ namespace OMOK
         public event EventHandler GameStarted;
         public event EventHandler<bool> GameEnded;
 
+        bool onedraw = false;
+
         public Board()
         {
+
             for (int row = 0; row < ROWS; row++)
                 for (int col = 0; col < COLS; col++)
                 {
@@ -37,10 +40,15 @@ namespace OMOK
                     tile.parent = this;
                 }
 
-            SizeChanged += (sender, args) =>
+                SizeChanged += (sender, args) =>
                 {
-                    double tileWidth = this.Width / COLS;
-                    double tileHeight = this.Height / ROWS;
+                    if (onedraw != false)
+                        return;
+
+                    onedraw = true;
+
+                    double tileWidth =  this.Width / COLS;
+                    double tileHeight =  this.Height / ROWS;
 
                     foreach (Tile tile in tiles)
                     {
@@ -48,19 +56,10 @@ namespace OMOK
                                                          tile.Row * tileHeight,
                                                          tileWidth, tileHeight);
                         AbsoluteLayout.SetLayoutBounds(tile, bounds);
+
                     }
                 };
-
-            var image = new Image();
-
-            image.Source = ImageSource.FromResource("OMOK.Image.Background.png",
-                                            typeof(MainPage).GetTypeInfo().Assembly);
-
-            image.VerticalOptions = LayoutOptions.StartAndExpand;
-
-       //     this.Children.Add(image);
-
-
+         
            NewGameInitialize();
         }
 

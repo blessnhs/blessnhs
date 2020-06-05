@@ -135,19 +135,22 @@ namespace OMOK.Network
                                 break;
                             case (int)PROTOCOL.IdPktNewUserInRoomNty:
                                 {
+                                    var lobby = (Lobby)page.Children[0];
+                                    
                                     NEW_USER_IN_ROOM_NTY res = new NEW_USER_IN_ROOM_NTY();
                                     res = NEW_USER_IN_ROOM_NTY.Parser.ParseFrom(data.Data);
-     
-                                    if (User.Id != res.VarRoomUser.VarIndex)
+                                    var Room = (Room)page.Children[1];
                                     {
                                         //상대방이름
                                         //나갈때 초기화한다. 
-                                        User.OppInfo.NickName = Helper.ToStr(res.VarRoomUser.VarName.ToByteArray());
-                                        User.OppInfo.PhotoPath = Helper.ToStr(res.VarRoomUser.PictureUri.ToByteArray());
 
-                                        var Room = (Room)page.Children[1];
-                                        Room.UpdateBattleInfo();
+                                        User.OppInfo.PhotoPath = Encoding.UTF8.GetString(res.VarRoomUser.PictureUri.ToByteArray());
+
+                                        User.OppInfo.NickName = Helper.ToStr(res.VarRoomUser.VarName.ToByteArray());//Encoding.Default.GetString(res.VarRoomUser.VarName.ToByteArray());
                                     }
+
+                                    Room.UpdateBattleInfo();
+
                                 }
                                 break;
                             case (int)PROTOCOL.IdPktBroadcastRoomMessageRes:

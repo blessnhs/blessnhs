@@ -81,21 +81,30 @@ namespace OMOK
 
         public void UpdateBattleInfo()
         {
-            if(User.Color == eTeam.Black)
+            if (User.OppInfo.PhotoPath != null)
+                DisplayAlert("", User.OppInfo.PhotoPath , "OK");
+
+            if (User.Color == eTeam.Black)
             {
                 blackLabel.Text = User.myInfo.NickName;
                 whiteLabel.Text = User.OppInfo.NickName;
 
-                bottom1picture.Source = ImageSource.FromUri(new Uri(User.myInfo.PhotoPath));
-                bottom2picture.Source = ImageSource.FromUri(new Uri(User.OppInfo.PhotoPath));
+                if(User.myInfo.PhotoPath != null)
+                    bottom1picture.Source = ImageSource.FromUri(new Uri(User.myInfo.PhotoPath));
+
+                if (User.OppInfo.PhotoPath != null)
+                    bottom2picture.Source = ImageSource.FromUri(new Uri(User.OppInfo.PhotoPath));
             }
             else
             {
                 whiteLabel.Text = User.myInfo.NickName;
                 blackLabel.Text = User.OppInfo.NickName;
 
-                bottom1picture.Source = ImageSource.FromUri(new Uri(User.OppInfo.PhotoPath));
-                bottom2picture.Source = ImageSource.FromUri(new Uri(User.myInfo.PhotoPath));
+                if (User.OppInfo.PhotoPath != null)
+                    bottom1picture.Source = ImageSource.FromUri(new Uri(User.OppInfo.PhotoPath));
+
+                if (User.myInfo.PhotoPath != null)
+                    bottom2picture.Source = ImageSource.FromUri(new Uri(User.myInfo.PhotoPath));
             }
         }
 
