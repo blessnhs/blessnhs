@@ -33,6 +33,21 @@
 		return TRUE;
 	}
 
+	DBPROCESS_CER_PTR DBProcessContainer::GetFirstHandle()
+	{
+		auto iter = m_List.begin();
+		if (iter != m_List.end())
+		{
+			if (iter->second->m_pDB == NULL || iter->second->m_pDB->IsOpen() == false)
+			{
+				return DBPROCESS_CER_PTR();
+			}
+			return iter->second;
+		}
+
+		return DBPROCESS_CER_PTR();
+	}
+
 	DBPROCESS_CER_PTR DBProcessContainer::Search(DWORD Id)
 	{
 		std::map<DWORD,DBPROCESS_CER_PTR>::iterator iter = m_List.find(Id);

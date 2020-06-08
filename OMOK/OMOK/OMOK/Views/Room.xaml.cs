@@ -81,9 +81,6 @@ namespace OMOK
 
         public void UpdateBattleInfo()
         {
-            if (User.OppInfo.PhotoPath != null)
-                DisplayAlert("", User.OppInfo.PhotoPath , "OK");
-
             if (User.Color == eTeam.Black)
             {
                 blackLabel.Text = User.myInfo.NickName;

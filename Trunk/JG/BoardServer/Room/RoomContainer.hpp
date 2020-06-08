@@ -72,21 +72,29 @@ template<template<class T> class CreationPolicy> ROOM_PTR RoomContainer<Creation
 
 template<template<class T> class CreationPolicy> VOID RoomContainer<CreationPolicy>::GetRoomList(google::protobuf::RepeatedPtrField<RoomInfo2>*List)
 {
-	//auto iter = m_RoomMap.begin();
+	const int max_count = 10;
+	int currcount = 0;
 
-	//while(iter != m_RoomMap.end())
-	//{
-	//	if(iter->second != NULL)
-	//	{
-	//		RoomInfo2 *info = List->Add();
-	//		info->mutable_var_name()->assign( iter->second->m_Stock.Name );
-	//		info->set_var_id( iter->second->GetId() );
-	//		info->set_var_current_count(iter->second->GetCurrPlayer());
-	//		info->set_var_max_count(-1);
-	//	}
-	//	
-	//	iter++;
-	//}
+	auto iter = m_RoomMap.begin();
+
+	while(iter != m_RoomMap.end())
+	{
+		if(iter->second != NULL)
+		{
+			if (currcount > max_count)
+				break;
+
+			RoomInfo2 *info = List->Add();
+			info->mutable_var_name()->assign( iter->second->m_Stock.Name );
+			info->set_var_id( iter->second->GetId() );
+			info->set_var_current_count(iter->second->GetCurrPlayer());
+			info->set_var_max_count(-1);
+
+			currcount++;
+		}
+		
+		iter++;
+	}
 }
 
 template<template<class T> class CreationPolicy> int RoomContainer<CreationPolicy>::RoomCount()
@@ -195,8 +203,6 @@ template<template<class T> class CreationPolicy> BOOL RoomContainer<CreationPoli
 	room_res.set_var_name(RoomPtr->m_Stock.Name);
 	SEND_PROTO_BUFFER(room_res, pSession1)
 
-	RoomPtr->SendNewUserInfo(target1);	//방에 있는 유저들에게 새로운 유저 정보전송
-
 
 	//방입장
 	/////////////////////////////////////////////////////////////////////////////{
@@ -234,34 +240,10 @@ template<template<class T> class CreationPolicy> BOOL RoomContainer<CreationPoli
 	DelMatchMap(target1);
 	DelMatchMap(target2);
 
-	//새로 입장한 유저에게 방안의 유저 정보전송
-	for each (auto iter in RoomPtr->m_PlayerMap)
+
+
+	//1p에게는 2p유저 정보 전송
 	{
-		if (iter.second == NULL)
-			continue;
-
-		NEW_USER_IN_ROOM_NTY nty;
-
-		RoomUserInfo * userinfo = nty.mutable_var_room_user();
-
-		userinfo->set_var_index(iter.second->GetId());
-		userinfo->set_var_name(iter.second->m_Account.GetName());
-		userinfo->set_picture_uri(iter.second->m_Account.GetPicture_url());
-
-		SEND_PROTO_BUFFER(nty, pSession2)
-	}
-
-	//방안의 유저들 에게 새로운 유저 정보를 전송
-	for each (auto iter in RoomPtr->m_PlayerMap)
-	{
-		if (iter.second == NULL)
-			continue;
-
-		GSCLIENT_PTR pPair = SERVER.GetClient(iter.second->GetPair());
-		if (pPair == NULL)
-			continue;
-
-
 		NEW_USER_IN_ROOM_NTY nty;
 
 		RoomUserInfo * userinfo = nty.mutable_var_room_user();
@@ -270,7 +252,21 @@ template<template<class T> class CreationPolicy> BOOL RoomContainer<CreationPoli
 		userinfo->set_var_name(target2->m_Account.GetName());
 		userinfo->set_picture_uri(target2->m_Account.GetPicture_url());
 
-		SEND_PROTO_BUFFER(nty, pPair)
+		SEND_PROTO_BUFFER(nty, pSession1)
+	}
+
+	//2p에게는 1p유저 정보 전송
+	{
+
+		NEW_USER_IN_ROOM_NTY nty;
+
+		RoomUserInfo * userinfo = nty.mutable_var_room_user();
+
+		userinfo->set_var_index(target1->GetId());
+		userinfo->set_var_name(target1->m_Account.GetName());
+		userinfo->set_picture_uri(target1->m_Account.GetPicture_url());
+
+		SEND_PROTO_BUFFER(nty, pSession2)
 	}
 
 	return TRUE;

@@ -457,12 +457,8 @@ namespace Board	{
 
 		void Execute(LPVOID Param) 
 		{
-			if (pSession == NULL || pSession->GetConnected() == false)
-			{
-				return;
-			}
-
-			DBPROCESS_CER_PTR pProcess = DBPROCESSCONTAINER_CER.Search(pSession->GetMyDBTP());
+			//유저가종료되어도 승패는 기록되어야 하기에 디폴트 디비 핸들러를 사용한다.
+			DBPROCESS_CER_PTR pProcess = DBPROCESSCONTAINER_CER.GetFirstHandle();
 			if (pProcess == NULL || pProcess->m_IsOpen == false)
 			{
 				return;

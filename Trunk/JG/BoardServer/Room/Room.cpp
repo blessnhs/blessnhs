@@ -297,9 +297,6 @@ void Room::RecoardResult(PLAYER_PTR Winner, PLAYER_PTR Loser)
 	//나중에 필요에 따라 프로시져를 하나로 통합해야 할것 같음
 	//패배 증가
 	{
-		GSCLIENT_PTR pSession = SERVER.GetClient(Loser->GetPair());
-		if (!pSession)
-			return ;
 
 		Loser->m_Char[0].UpdateScore(-POINT);
 
@@ -312,9 +309,9 @@ void Room::RecoardResult(PLAYER_PTR Winner, PLAYER_PTR Loser)
 		result_nty.set_var_level_point_1(Loser->m_Char[0].GetScore().GetScorePoint());
 
 		boost::shared_ptr<Board::MSG_PLAYER_QUERY<RequestPlayerScore>>		PLAYER_MSG = ALLOCATOR.Create<Board::MSG_PLAYER_QUERY<RequestPlayerScore>>();
-		PLAYER_MSG->pSession = pSession;
+		PLAYER_MSG->pSession = NULL;
 		PLAYER_MSG->pRequst = pRequest;
-		PLAYER_MSG->Type = pSession->GetMyDBTP();
+		PLAYER_MSG->Type = 0;
 		PLAYER_MSG->SubType = ONQUERY;
 		MAINPROC.RegisterCommand(PLAYER_MSG);
 	}
@@ -330,8 +327,6 @@ void Room::RecoardResult(PLAYER_PTR Winner, PLAYER_PTR Loser)
 
 		Winner->m_Char[0].UpdateScore(POINT);
 
-		GSCLIENT_PTR pSession = SERVER.GetClient(Winner->GetPair());
-		if (pSession)
 		{
 			boost::shared_ptr<RequestPlayerScore> pRequest = ALLOCATOR.Create<RequestPlayerScore>();
 			pRequest->Index = Winner->GetId();
@@ -342,9 +337,9 @@ void Room::RecoardResult(PLAYER_PTR Winner, PLAYER_PTR Loser)
 			result_nty.set_var_level_point_2(Winner->m_Char[0].GetScore().GetScorePoint());
 
 			boost::shared_ptr<Board::MSG_PLAYER_QUERY<RequestPlayerScore>>		PLAYER_MSG = ALLOCATOR.Create<Board::MSG_PLAYER_QUERY<RequestPlayerScore>>();
-			PLAYER_MSG->pSession = pSession;
+			PLAYER_MSG->pSession = NULL;
 			PLAYER_MSG->pRequst = pRequest;
-			PLAYER_MSG->Type = pSession->GetMyDBTP();
+			PLAYER_MSG->Type = 0;
 			PLAYER_MSG->SubType = ONQUERY;
 			MAINPROC.RegisterCommand(PLAYER_MSG);
 		}

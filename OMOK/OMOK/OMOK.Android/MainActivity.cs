@@ -26,6 +26,7 @@ namespace OMOK.Droid
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
+        
             TabLayoutResource = Resource.Layout.Tabbar;
             ToolbarResource = Resource.Layout.Toolbar;
 
@@ -107,7 +108,6 @@ namespace OMOK.Droid
                     IAuthResult authResult = await FirebaseAuth_.SignInWithCredentialAsync(credential);
                     FirebaseUser user = authResult.User;
                     // 사용자 로그인 및 파이어베이스 등록 완료
-
 
 //                    new AlertDialog.Builder(this).SetMessage(signInResult.SignInAccount.DisplayName + t23).Show();
                 }

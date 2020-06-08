@@ -17,6 +17,8 @@ public:
 	virtual bool Del(DBPROCESS_CER_PTR &pObj);
 	virtual DBPROCESS_CER_PTR Search(DWORD Id);
 
+	DBPROCESS_CER_PTR GetFirstHandle();
+
 	void TryConnect();
 
 	void Initialize(INT Count);

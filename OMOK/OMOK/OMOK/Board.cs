@@ -65,6 +65,9 @@ namespace OMOK
 
         public void ClearBoardState()
         {
+            x = COLS / 2;
+            y = ROWS / 2;
+
             for (int row = 0; row < ROWS; row++)
             {
                 for (int col = 0; col < COLS; col++)

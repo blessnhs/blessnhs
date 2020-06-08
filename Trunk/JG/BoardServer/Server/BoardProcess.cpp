@@ -337,37 +337,32 @@ VOID BoardProcess::ROOM_CHAT(LPVOID Data, DWORD Length, boost::shared_ptr<GSClie
 	{
 		return;
 	}
+	
+	res.set_var_message(message.var_message());
+	res.set_var_name(pPlayer->m_Account.GetName());
+	res.set_var_x(message.var_x());
+	res.set_var_y(message.var_y());
+	res.set_var_color(message.var_color());
 
+	ROOM_PTR pPtr = ROOMMGR.Search(pPlayer->m_Char[0].GetRoom());
+	if (pPtr != NULL && pPtr->GetState() != State::End)
 	{
-		res.set_var_message(message.var_message());
-		res.set_var_name(pPlayer->m_Account.GetName());
-		res.set_var_x(message.var_x());
-		res.set_var_y(message.var_y());
-		res.set_var_color(message.var_color());
+		pPtr->UpdateBoard(message.var_x(), message.var_y(), message.var_color());
 
-		ROOM_PTR pPtr = ROOMMGR.Search(pPlayer->m_Char[0].GetRoom());
-		if (pPtr != NULL && pPtr->GetState() != State::End)
+		pPtr->SendToAll(res);
+
+		if (pPtr->CheckGameResult(message.var_x(), message.var_y(), message.var_color()) == true)
 		{
-			pPtr->UpdateBoard(message.var_x(), message.var_y(), message.var_color());
+			pPtr->ClearBoard();
+			pPtr->SetState(State::End);
 
-			pPtr->SendToAll(res);
-
-			if (pPtr->CheckGameResult(message.var_x(), message.var_y(), message.var_color()) == true)
+			auto OppPlayer = pPtr->GetOtherPlayer(pPlayer->GetId());
+			if (OppPlayer != NULL)
 			{
-				pPtr->ClearBoard();
-				pPtr->SetState(State::End);
-
-				auto OppPlayer = pPtr->GetOtherPlayer(pPlayer->GetId());
-				if (OppPlayer != NULL)
-				{
-					pPtr->RecoardResult(pPlayer, OppPlayer);
-				}
-			
+				pPtr->RecoardResult(pPlayer, OppPlayer);
 			}
-
 		}
 	}
-
 }
 
 VOID BoardProcess::ROOM_LIST(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client)
@@ -382,18 +377,7 @@ VOID BoardProcess::ROOM_LIST(LPVOID Data, DWORD Length, boost::shared_ptr<GSClie
 		return;
 	}
 
-	for each (auto& room in ROOMMGR.GetRoomMap())
-	{
-		if (room.second == NULL)
-			continue;
-
-		RoomInfo2* info = res.mutable_var_room_list()->Add();
-	
-		info->set_var_id(room.first);
-		info->set_var_name(room.second->m_Stock.Name);
-		info->set_var_current_count(room.second->GetCurrPlayer());
-		info->set_var_max_count(-1);
-	}
+	ROOMMGR.GetRoomList(res.mutable_var_room_list());
 
 	SEND_PROTO_BUFFER(res, Client)
 }

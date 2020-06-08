@@ -146,8 +146,10 @@ namespace OMOK.Network
 
                                         User.OppInfo.PhotoPath = Encoding.UTF8.GetString(res.VarRoomUser.PictureUri.ToByteArray());
 
-                                        User.OppInfo.NickName = Helper.ToStr(res.VarRoomUser.VarName.ToByteArray());//Encoding.Default.GetString(res.VarRoomUser.VarName.ToByteArray());
+                                        User.OppInfo.NickName = Helper.ToStr(res.VarRoomUser.VarName.ToByteArray());
                                     }
+
+                                    Room.ClearBoard();
 
                                     Room.UpdateBattleInfo();
 
