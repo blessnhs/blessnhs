@@ -20,18 +20,27 @@ namespace OMOK
 
         iAd_IterstitialView iIterstitia;
 
+
+
         public Room()
         {
             InitializeComponent();
 
-            iIterstitia = DependencyService.Get<iAd_IterstitialView>();
+            timeLabel.Text = (DateTime.Now - User.MytrunStartTime).ToString(timeFormat);
 
+            iIterstitia = DependencyService.Get<iAd_IterstitialView>();
 
             Device.StartTimer(TimeSpan.FromSeconds(1), () =>
             {
-                if(User.IsMyTurn == true)
+                if (User.IsMyTurn == true)
                 {
                     timeLabel.Text = (DateTime.Now - User.MytrunStartTime).ToString(timeFormat);
+
+                    if ((DateTime.Now - User.MytrunStartTime).TotalSeconds > 30)
+                    {
+                        string Message = -1 + ":" + -1 + ":" + User.Color.ToString();
+                        NetProcess.SendRoomMessage(-1, -1, User.Color, Message);
+                    }
                 }
 
                 return true;
@@ -61,17 +70,22 @@ namespace OMOK
 
                 if (hasWon)
                 {
-               //     DisplayWonAnimation();
+                    //     DisplayWonAnimation();
                 }
                 else
                 {
-                  //  DisplayLostAnimation();
+                    //  DisplayLostAnimation();
                 }
             };
 
             PrepareForNewGame();
 
             board.UpdateAim();
+        }
+
+        public bool CheckValid(int _x, int _y)
+        {
+            return board.CheckValid(_x, _y);
         }
 
         protected override void OnDisappearing()
@@ -86,7 +100,7 @@ namespace OMOK
                 blackLabel.Text = User.myInfo.NickName;
                 whiteLabel.Text = User.OppInfo.NickName;
 
-                if(User.myInfo.PhotoPath != null)
+                if (User.myInfo.PhotoPath != null)
                     bottom1picture.Source = ImageSource.FromUri(new Uri(User.myInfo.PhotoPath));
 
                 if (User.OppInfo.PhotoPath != null)
@@ -157,7 +171,7 @@ namespace OMOK
             contentView.Padding = new Thickness(horzPadding, vertPadding);
         }
 
-     
+
 
         void OnplayAgainButtonClicked(object sender, object EventArgs)
         {
@@ -185,7 +199,7 @@ namespace OMOK
         {
             if (User.IsMyTurn == false)
             {
-                return ; 
+                return;
             }
 
 
@@ -214,7 +228,7 @@ namespace OMOK
 
         public bool UpdateTurnBackground(eTeam status)
         {
-            if(status == eTeam.Black)
+            if (status == eTeam.Black)
             {
 
                 blackLabel.BackgroundColor = Color.Beige;
@@ -236,7 +250,7 @@ namespace OMOK
             board.ClearBoardState();
         }
 
-        public bool UpdateStone(int x,int y, eTeam status)
+        public bool UpdateStone(int x, int y, eTeam status)
         {
             //if (User.IsMyTurn == false || board.GetTile(x,y).Status != eTeam.None)
             //{
@@ -260,13 +274,13 @@ namespace OMOK
             {
                 string Message = "";
 
-                if(nty.VarIndex1 == User.Id)
+                if (nty.VarIndex1 == User.Id)
                 {
-                    if(User.myInfo.level < nty.VarLevel1)
+                    if (User.myInfo.level < nty.VarLevel1)
                     {
-                        Message="축하합니다. 승급하셨습니다. " +  User.myInfo.level + " => " + nty.VarLevel1;
+                        Message = "축하합니다. 승급하셨습니다. " + User.myInfo.level + " => " + nty.VarLevel1;
                     }
-                    else if(User.myInfo.level > nty.VarLevel1)
+                    else if (User.myInfo.level > nty.VarLevel1)
                     {
                         Message = "강등되셨습니다. " + User.myInfo.level + " => " + nty.VarLevel1;
                     }
@@ -293,7 +307,7 @@ namespace OMOK
                     User.myInfo.score = nty.VarLevelPoint2;
                 }
 
-              
+
 
                 if (nty.VarIndex == User.Id)
                     DisplayAlert("", "승리 하셨습니다..\n" + Message, "OK");
@@ -305,28 +319,28 @@ namespace OMOK
                 {
                     User.myInfo.win += 1;
                 }
-               else
+                else
                 {
                     User.myInfo.lose += 1;
                 }
 
- //            board.ClearBoardState();
+                //            board.ClearBoardState();
 
-               //이번엔 서로 진형을 변경한다. 
-               //eTeam newColor = User.Color == eTeam.Black ? eTeam.White : eTeam.Black;
+                //이번엔 서로 진형을 변경한다. 
+                //eTeam newColor = User.Color == eTeam.Black ? eTeam.White : eTeam.Black;
 
-               //User.Color = newColor;
+                //User.Color = newColor;
 
-               //UpdateBattleInfo();
+                //UpdateBattleInfo();
 
-               //if (User.Color == eTeam.Black)
-               //    User.IsMyTurn = true;
-               //else
-               //    User.IsMyTurn = false;
+                //if (User.Color == eTeam.Black)
+                //    User.IsMyTurn = true;
+                //else
+                //    User.IsMyTurn = false;
 
-               //User.MytrunStartTime = DateTime.Now;
+                //User.MytrunStartTime = DateTime.Now;
 
-               return true;
+                return true;
             }
             catch (Exception e)
             {

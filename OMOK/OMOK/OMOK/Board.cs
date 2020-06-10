@@ -25,6 +25,14 @@ namespace OMOK
 
         bool onedraw = false;
 
+        public bool CheckValid(int _x,int _y)
+        {
+            if (_x < 0 || _y < 0 || COLS <= _x || ROWS <= _y)
+                return false;
+
+            return true;
+        }
+
         public Board()
         {
 
@@ -86,7 +94,7 @@ namespace OMOK
                 return;
             }
 
-            if (x + addy < 0)
+            if (y + addy < 0)
             {
                 return;
             }
@@ -96,7 +104,7 @@ namespace OMOK
                 return;
             }
 
-            if (x + addy >= ROWS)
+            if (y + addy >= ROWS)
             {
                 return;
             }

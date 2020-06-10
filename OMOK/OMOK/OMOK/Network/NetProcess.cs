@@ -162,26 +162,29 @@ namespace OMOK.Network
 
                                     var Room = (Room)page.Children[1];
 
-                                    string d_VarMessage = System.Text.Encoding.UTF8.GetString(res.VarMessage.ToByteArray());// //Helper.ToStr(res.VarMessage.ToByteArray());
+                                    string Message = System.Text.Encoding.UTF8.GetString(res.VarMessage.ToByteArray());// //Helper.ToStr(res.VarMessage.ToByteArray());
 
-                                    string[] header = d_VarMessage.Split(':');
+                                    string[] header = Message.Split(':');
                                     if (header.Length > 2)
                                     {
-                                        int x = Convert.ToInt32(header[0]);
+                                       int x = Convert.ToInt32(header[0]);
                                         int y = Convert.ToInt32(header[1]);
 
-                                        eTeam color = eTeam.None;
+                                        eTeam color = res.VarColor;
 
-                                        //draw stone
-                                        if (header[2] == "White")
+                                        if (Room.CheckValid(x, y) == true) //시간만료면 false
                                         {
-                                            color = eTeam.White;
-                                            Room.UpdateStone(x, y, eTeam.White);
-                                        }
-                                        else
-                                        {
-                                            color = eTeam.Black;
-                                            Room.UpdateStone(x, y, eTeam.Black);
+                                            //draw stone
+                                            if (header[2] == "White")
+                                            {
+                                                color = eTeam.White;
+                                                Room.UpdateStone(x, y, eTeam.White);
+                                            }
+                                            else
+                                            {
+                                                color = eTeam.Black;
+                                                Room.UpdateStone(x, y, eTeam.Black);
+                                            }
                                         }
 
                                         //check turn

@@ -27,7 +27,7 @@ namespace OMOK
 
         public static ImageSource GetWhiteStoneImageSource()
         {
-            if(WhiteStoneImageSource == null)
+            if (WhiteStoneImageSource == null)
                 WhiteStoneImageSource = ImageSource.FromResource("OMOK.Image.White.png");
             return WhiteStoneImageSource;
         }
@@ -64,7 +64,6 @@ namespace OMOK
     class Tile : Frame
     {
         eTeam tileStatus = eTeam.None;
-        Label label;
         Image whiteImage, blackImage,emptyImage,aimImage , awhiteImage, ablackImage;
         bool doNotFireEvent;
 
@@ -88,14 +87,6 @@ namespace OMOK
             this.Margin = 1;
             this.Padding = 1;
             this.CornerRadius = 0;
-
-            label = new Label {
-                Text = " ",
-                TextColor = Color.Yellow,
-                BackgroundColor = Color.Yellow,
-                HorizontalTextAlignment = TextAlignment.Center,
-                VerticalTextAlignment = TextAlignment.Center,
-            };
 
             whiteImage = new Image {
                 Source = TitleResource.GetWhiteStoneImageSource(),
