@@ -49,7 +49,7 @@ namespace OMOK.Views
         public void UpdatePlayerInfo()
         {
             var level = Helper.LevelConverter(User.myInfo.level);
-            RecordButton.Text = User.myInfo.win + "승" + User.myInfo.lose + "패" + User.myInfo.draw + "무승부";
+            RecordLabel.Text = User.myInfo.win + "승" + User.myInfo.lose + "패" + User.myInfo.draw + "무승부";
             NameButton.Text = level + "\n" + User.myInfo.NickName;
         }
 
