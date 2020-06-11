@@ -20,7 +20,7 @@ namespace OMOK.Views
     {
         CommunityViewModel viewModel = new CommunityViewModel();
         iAd_IterstitialView iIterstitia;
-
+    
         public ImageSource SomeImage
         {
             get
@@ -35,6 +35,7 @@ namespace OMOK.Views
             InitializeComponent();
 
             iIterstitia = DependencyService.Get<iAd_IterstitialView>();
+      //      iIterstitia.ShowAd();
 
             mypicture.Source = null;
         }
@@ -163,8 +164,6 @@ namespace OMOK.Views
         async void OnMatchClicked(object sender, System.EventArgs e)
         {
            NetProcess.SendMatch();
-
- //           iIterstitia.ShowAd();
         }
         async void OnRankClicked(object sender, System.EventArgs e)
         {

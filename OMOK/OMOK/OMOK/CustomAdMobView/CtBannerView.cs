@@ -10,5 +10,6 @@ namespace OMOK.CustomAdMobView
     {
         public enum eBannerSizeLise { Standardbanner, LargeBanner, MediumRectangle, FullBanner, Leaderboard, SmartBannerPortrait }
         public eBannerSizeLise eBannerSize { get; set; }
+
     }
 }

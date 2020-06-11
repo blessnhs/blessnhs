@@ -36,16 +36,22 @@ namespace OMOK.Network
             return string.Empty;
         }
 
+        private static DateTime time = new DateTime();
 
         static public void start()
         {
             string ip="127.0.0.1";
 
             ip = GetIPAddress("blessnhs.iptime.org");
-
             //연결중이면 안한다. 
             if (client.socket == null || client.socket.Connected == false)
-                client.StartClient(ip, 20000);
+            {
+                if((DateTime.Now - time).TotalSeconds > 5)
+                {
+                    time = DateTime.Now;
+                    client.StartClient(ip, 20000);
+                }
+            }
         }
 
         static public bool IsSuccessAuth = false;
