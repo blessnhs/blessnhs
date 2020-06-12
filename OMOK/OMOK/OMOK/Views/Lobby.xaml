@@ -35,23 +35,17 @@
                     </Image.Source>
                 </Image>
 
-                <!--2row 2번째 내 전적 정보 -->
-                <Frame BorderColor="Gray"  Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" VerticalOptions="Start" Padding="0,0,0,0">
-                    <StackLayout BackgroundColor= "blue" >
-                        <Label x:Name="RecordLabel" Text="" BackgroundColor="White"/>
+                <!--2row 2번째 매칭 버튼 -->
+                <Frame BorderColor="Gray" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="4"   Grid.RowSpan="2" VerticalOptions="Start" Padding="0,0,0,0">
+                    <StackLayout>
+                        <Button x:Name="MatchButton" Text="실시간 매칭" Clicked="OnMatchClicked" BackgroundColor="White" FontSize="Large"/>
                     </StackLayout>
                 </Frame>
+            
 
-                <!--2row 3번째 매칭 버튼 -->
-                <Frame BorderColor="Gray" Grid.Column="3" Grid.Row="1" Grid.ColumnSpan="2"  VerticalOptions="Start" Padding="0,0,0,0">
-                    <StackLayout BackgroundColor= "blue" >
-                        <Button x:Name="MatchButton" Text="대전신청" Clicked="OnMatchClicked" BackgroundColor="White"/>
-                    </StackLayout>
-                </Frame>
-
-                <!--3row 0번째 방리스트 -->
+                <!--4row 0번째 방리스트 -->
                 <Frame BorderColor="Gray"   Grid.Column="0"  Grid.Row="2" CornerRadius="5"   Grid.ColumnSpan="5" Padding="0,0,0,0">
-                    <StackLayout BackgroundColor="White">
+                    <StackLayout BackgroundColor="#D5D1D1">
 
                         <ListView x:Name="listView" ItemSelected="Handle_ItemSelected"   ItemsSource="{Binding CommunityRoomInfo}" IsVisible="True">
                             <ListView.ItemTemplate>
@@ -64,22 +58,22 @@
                     </StackLayout>
                 </Frame>
 
-                <!--4row 0번째 이름 -->
+                <!--5row 0번째 이름 -->
                 <Frame BorderColor="Gray"  CornerRadius="5" Grid.Column="0"  Grid.Row="3"  Grid.ColumnSpan="2" Padding="0,0,0,0">
                     <Button x:Name="NameButton" Text="이름" Clicked="OnMatchClicked" BackgroundColor="White"/>
                 </Frame>
 
-                <!--4row 1번째 기보 -->
+                <!--5row 1번째 기보 -->
                 <Frame BorderColor="Gray"  CornerRadius="5"  Grid.Column="2" Grid.Row="3"  Padding="0,0,0,0">
                     <Button x:Name="HistroyButton" Text="기보" Clicked="OnMatchClicked" BackgroundColor="White"/>
                 </Frame>
 
-                <!--4row 2번째 랭킹 -->
+                <!--5row 2번째 랭킹 -->
                 <Frame BorderColor="Gray"  CornerRadius="5"  Grid.Column="3"  Grid.Row="3" Padding="0,0,0,0">
                     <Button x:Name="RankButton" Text="랭킹" Clicked="OnRankClicked" BackgroundColor="White"/>
                 </Frame>
 
-                <!--4row 3번째 설정 -->
+                <!--5row 3번째 설정 -->
                 <Frame BorderColor="Gray"  CornerRadius="5"   Grid.Column="4" Grid.Row="3" Padding="0,0,0,0">
                     <Button x:Name="SettingButton" Text="설정" Clicked="OnSettingClicked" BackgroundColor="White"/>
                 </Frame>

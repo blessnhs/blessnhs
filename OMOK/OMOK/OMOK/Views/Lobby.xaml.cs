@@ -49,8 +49,8 @@ namespace OMOK.Views
         public void UpdatePlayerInfo()
         {
             var level = Helper.LevelConverter(User.myInfo.level);
-            RecordLabel.Text = User.myInfo.win + "승" + User.myInfo.lose + "패" + User.myInfo.draw + "무승부";
-            NameButton.Text = level + "\n" + User.myInfo.NickName;
+            var Record = User.myInfo.win + "승" + User.myInfo.lose + "패";
+            NameButton.Text = level + User.myInfo.NickName + "\n" + Record;
         }
 
         public void CreateRankPage(RepeatedField<global::Rank> list)
