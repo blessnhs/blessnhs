@@ -19,10 +19,7 @@ bool GSProactorImpl::Create(int InputTheadCnt)
 	m_hKillEvent	= CreateEvent(NULL, TRUE, FALSE, NULL);
 	m_InputJobEvt	= CreateEvent(NULL, TRUE, FALSE, NULL);
 
-	for(int i=0;i< MAX_QUUEUE_SIZE;i++)
-		m_ExecuteJobEvt[i] = CreateEvent(NULL, TRUE, FALSE, NULL);
-
-	if (NULL == m_hKillEvent || NULL == m_InputJobEvt || NULL == m_ExecuteJobEvt)
+	if (NULL == m_hKillEvent || NULL == m_InputJobEvt)
 	{
 		printf("Create Kill Event failed (%d)\n", GetLastError());
 		return 1;
@@ -70,7 +67,15 @@ bool GSProactorImpl::Remove()
 
 bool GSProactorImpl::Register(int Type,IMessagePtr Msg)
 {
-	m_JobList[Type].push(Msg);
+	if (m_JobMap.find(Type) == m_JobMap.end())
+	{
+		m_JobMap[Type] = new Concurrency::concurrent_queue<IMessagePtr>();
+		m_ExecuteJobEvt[Type] = CreateEvent(NULL, TRUE, FALSE, NULL);
+	}
+
+	m_JobMap[Type]->push(Msg);
+
+
 	SetEvent(m_ExecuteJobEvt[Type]);
 	
 	return TRUE;
@@ -131,8 +136,14 @@ unsigned int __stdcall ExecuteThread(LPVOID parameter)
 
 bool GSProactorImpl::Handle_Event(int ProcId)
 {
+	if (m_JobMap.find(ProcId) == m_JobMap.end())
+	{
+		m_JobMap[ProcId] = new Concurrency::concurrent_queue<IMessagePtr>();
+		m_ExecuteJobEvt[ProcId] = CreateEvent(NULL, TRUE, FALSE, NULL);
+	}
+
 	IMessagePtr pJob;
-	if(m_JobList[ProcId].try_pop(pJob) == FALSE) 
+	if(m_JobMap[ProcId]->try_pop(pJob) == FALSE)
 	{
 		return false;
 	}

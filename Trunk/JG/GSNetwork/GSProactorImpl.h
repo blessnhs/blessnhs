@@ -5,8 +5,7 @@
 #include "ICommand.h"
 
 #include <concurrent_queue.h>
-
-#define MAX_QUUEUE_SIZE 6000
+#include <concurrent_unordered_map.h>
 
 namespace GSFrames	{	namespace GSProactorImpl	{
 
@@ -32,16 +31,14 @@ protected:
 	HANDLE			   m_hKillEvent;	
 	HANDLE			   m_hThread;
 
-	//GSQueue<IMessage>  m_JobList[255];
-	Concurrency::concurrent_queue<IMessagePtr> m_JobList[MAX_QUUEUE_SIZE];
-
+	concurrency::concurrent_unordered_map<int, Concurrency::concurrent_queue<IMessagePtr>*> m_JobMap;
+	concurrency::concurrent_unordered_map<int, HANDLE > m_ExecuteJobEvt;
 	GSProactorImpl		*m_ProactorImpl;
 
 	friend unsigned int __stdcall DistributionThread(LPVOID parameter);
 	friend unsigned int __stdcall ExecuteThread(LPVOID parameter);
 
 	HANDLE				m_InputJobEvt;
-	HANDLE				m_ExecuteJobEvt[MAX_QUUEUE_SIZE];
 
 	CRITICAL_SECTION m_Lock;
 };
