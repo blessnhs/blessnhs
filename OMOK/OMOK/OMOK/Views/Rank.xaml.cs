@@ -26,7 +26,7 @@ namespace OMOK.Views
             main_grid.Children.Add(PrevBtn, 0, 0);
 
             var titletext = "전체 랭크";
-            var titlelabelText = new Label { Text = titletext, TextColor = Xamarin.Forms.Color.FromRgb(0, 0, 0), HorizontalTextAlignment = TextAlignment.Center };
+            var titlelabelText = new Label { Text = titletext, TextColor = Xamarin.Forms.Color.FromRgb(0, 0, 0), HorizontalTextAlignment = TextAlignment.Center, FontSize = 25 };
             main_grid.Children.Add(titlelabelText, 1, 0);
     
 
@@ -37,7 +37,7 @@ namespace OMOK.Views
                 var img = new Image
                 {
                     Source = new Uri(Helper.ToStr(r.VarPicUri.ToByteArray())),
-                    BackgroundColor = Color.Black,
+                    BackgroundColor = Color.White,
                 };
 
                 main_grid.Children.Add(img,0, pos);
@@ -45,7 +45,9 @@ namespace OMOK.Views
                 var stackLayout = new StackLayout();
 
                 var text = r.VarRank + "위 " + Helper.ToStr(r.VarName.ToByteArray()) + " " + r.VarWin + "승" + r.VarLose + "패";
-                var labelText = new Label { Text = text, TextColor = Xamarin.Forms.Color.FromRgb(0, 0, 0) };
+
+                text.Replace('\n', ' ');
+                var labelText = new Label { Text = text, TextColor = Xamarin.Forms.Color.FromRgb(0, 0, 0) ,BackgroundColor= Color.AliceBlue };
 
                 stackLayout.Children.Add(labelText);
 

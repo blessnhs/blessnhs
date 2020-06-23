@@ -5,19 +5,13 @@ using System;
 using System.IO;
 using Xamarin.Essentials;
 using Xamarin.Forms;
-using System;
-using System.Collections.Generic;
-using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
 using System.Text;
-using System.Diagnostics;
 using System.Net;
 
 namespace OMOK.Network
 {
     public static class NetProcess
     {
-        static bool isSendVersion = false;
         static public Client client = new Client();
 
         public static string GetIPAddress(string hostname)
@@ -57,231 +51,183 @@ namespace OMOK.Network
         static public bool IsSuccessAuth = false;
         static public string UserId;
 
-        static Page RoomPage;
-
         static public void Loop(MainPage page)
         {
-            // while(true)
+            
+            if (client.socket.Connected == false)
+                return;
+
+            client.Update();
+
+            CompletePacket data;
+            if (client.PacketQueue.TryDequeue(out data) == true)
             {
-                if (client.socket.Connected == false)
-                    return;
-
-                client.Update();
-
-                CompletePacket data;
-                if (client.PacketQueue.TryDequeue(out data) == true)
+                try
                 {
-                    try
+                    switch (data.Protocol)
                     {
-                        switch (data.Protocol)
-                        {
-                            case (int)PROTOCOL.IdPktVersionRes:
+                        case (int)PROTOCOL.IdPktVersionRes:
+                            {
+                                VERSION_RES res = new VERSION_RES();
+                                res = VERSION_RES.Parser.ParseFrom(data.Data);
+
+                                var currentVersion = VersionTracking.CurrentVersion;
+
+                                float myversion = float.Parse(currentVersion);
+                                const Double Eps = 0.000000000000001;
+
+                                if (Math.Abs(res.VarVersion - myversion) > Eps)
                                 {
-                                    VERSION_RES res = new VERSION_RES();
-                                    res = VERSION_RES.Parser.ParseFrom(data.Data);
+                                    Xamarin.Essentials.Browser.OpenAsync("https://play.google.com/store/apps/details?id=com.blessnhs.BAC");
 
-                                    var currentVersion = VersionTracking.CurrentVersion;
-
-                                    float myversion = float.Parse(currentVersion);
-                                    const Double Eps = 0.000000000000001;
-
-                                    if (Math.Abs(res.VarVersion - myversion) > Eps)
-                                    {
-                                        Xamarin.Essentials.Browser.OpenAsync("https://play.google.com/store/apps/details?id=com.blessnhs.BAC");
-
-                                        return;
-                                    }
-
-                                  //  NetProcess.SendLogin(User.Uid, User.Token);
+                                    return;
                                 }
-                                break;
-                            case (int)PROTOCOL.IdPktLoginRes:
+                            }
+                            break;
+                        case (int)PROTOCOL.IdPktLoginRes:
+                            {
+                                LOGIN_RES res = new LOGIN_RES();
+                                res = LOGIN_RES.Parser.ParseFrom(data.Data);
+
+                                if (res.VarCode == ErrorCode.Success)
                                 {
-                                    LOGIN_RES res = new LOGIN_RES();
-                                    res = LOGIN_RES.Parser.ParseFrom(data.Data);
-
-                                    if (res.VarCode == ErrorCode.Success)
-                                    {
-                                        IsSuccessAuth = true;
-                                        User.Id = res.VarIndex;
-                                        User.myInfo.win = res.VarWin;
-                                        User.myInfo.lose = res.VarLose;
-                                        User.myInfo.draw = res.VarDraw;
-                                        User.myInfo.score = res.VarScore;
-                                        User.myInfo.rank = res.VarRank;
-                                        User.myInfo.level = res.VarLevel;
-
-                                        ((Lobby)page.Children[0]).UpdatePlayerInfo();
-                                    }
-                                    else
-                                        ((Lobby)page.Children[0]).LoginInformation("로그인에 실패했습니다.");
-                                }
-                                break;
-                            case (int)PROTOCOL.IdPktCreateRoomRes:
-                                {
-                                    CREATE_ROOM_RES res = new CREATE_ROOM_RES();
-                                    res = CREATE_ROOM_RES.Parser.ParseFrom(data.Data);
-
-                                    if (res.VarCode == ErrorCode.Success)
-                                    {
-                                        User.Color = eTeam.Black;
-                                        page.CurrentPage = page.Children[1];
-                                        User.IsMyTurn = true;
-                                        User.MytrunStartTime = DateTime.Now;
-
-                                        var Room = (Room)page.Children[1];
-                                        Room.UpdateTurnBackground(User.Color);
-                                    }
-                                    else
-                                    {
-
-                                    }
-
-                                }
-                                break;
-                            case (int)PROTOCOL.IdPktNewUserInRoomNty:
-                                {
-                                    var lobby = (Lobby)page.Children[0];
-                                    
-                                    NEW_USER_IN_ROOM_NTY res = new NEW_USER_IN_ROOM_NTY();
-                                    res = NEW_USER_IN_ROOM_NTY.Parser.ParseFrom(data.Data);
-                                    var Room = (Room)page.Children[1];
-                                    {
-                                        //상대방이름
-                                        //나갈때 초기화한다. 
-
-                                        User.OppInfo.PhotoPath = Encoding.UTF8.GetString(res.VarRoomUser.PictureUri.ToByteArray());
-
-                                        User.OppInfo.NickName = Helper.ToStr(res.VarRoomUser.VarName.ToByteArray());
-                                    }
-
-                                    Room.ClearBoard();
-
-                                    Room.UpdateBattleInfo();
-
-                                }
-                                break;
-                            case (int)PROTOCOL.IdPktBroadcastRoomMessageRes:
-                                {
-                                    BROADCAST_ROOM_MESSAGE_RES res = new BROADCAST_ROOM_MESSAGE_RES();
-                                    res = BROADCAST_ROOM_MESSAGE_RES.Parser.ParseFrom(data.Data);
-
-                                    var Room = (Room)page.Children[1];
-
-                                    string Message = System.Text.Encoding.UTF8.GetString(res.VarMessage.ToByteArray());// //Helper.ToStr(res.VarMessage.ToByteArray());
-
-                                    string[] header = Message.Split(':');
-                                    if (header.Length > 2)
-                                    {
-                                       int x = Convert.ToInt32(header[0]);
-                                        int y = Convert.ToInt32(header[1]);
-
-                                        eTeam color = res.VarColor;
-
-                                        if (Room.CheckValid(x, y) == true) //시간만료면 false
-                                        {
-                                            //draw stone
-                                            if (header[2] == "White")
-                                            {
-                                                color = eTeam.White;
-                                                Room.UpdateStone(x, y, eTeam.White);
-                                            }
-                                            else
-                                            {
-                                                color = eTeam.Black;
-                                                Room.UpdateStone(x, y, eTeam.Black);
-                                            }
-                                        }
-
-                                        //check turn
-                                        {
-                                            if(User.Color == color)
-                                            {
-                                                User.IsMyTurn = false;
-                                            }
-                                            else
-                                            {
-                                                User.IsMyTurn = true;
-                                                User.MytrunStartTime = DateTime.Now;
-                                            }
-
-                                            Room.UpdateTurnBackground(color);
-
-                                        }
-
-                                    }
-                                }
-                                break;
-                            case (int)PROTOCOL.IdPktRoomListRes:
-                                {
-                                    var lobby = (Lobby)page.Children[0];
-
-                                    lobby.UpdateMessage(data);
-                                }
-                                break;
-
-                            case (int)PROTOCOL.IdPktRankRes:
-                                {
-                                    RANK_RES res = new RANK_RES();
-                                    res = RANK_RES.Parser.ParseFrom(data.Data);
-
-                                    ((Lobby)page.Children[0]).CreateRankPage(res.VarRankList);
-                                }
-                                break;
-
-                            case (int)PROTOCOL.IdPktLeaveRoomRes:
-                                {
-                                    LEAVE_ROOM_RES res = new LEAVE_ROOM_RES();
-                                    res = LEAVE_ROOM_RES.Parser.ParseFrom(data.Data);
-
-                                    if(res.VarIndex == User.Id)
-                                    {
-                                        page.CurrentPage = page.Children[0];
-
-                                        ((Room)page.Children[1]).ClearBoard();
-                                    }
+                                    IsSuccessAuth = true;
+                                    User.Id = res.VarIndex;
+                                    User.myInfo.win = res.VarWin;
+                                    User.myInfo.lose = res.VarLose;
+                                    User.myInfo.draw = res.VarDraw;
+                                    User.myInfo.score = res.VarScore;
+                                    User.myInfo.rank = res.VarRank;
+                                    User.myInfo.level = res.VarLevel;
 
                                     ((Lobby)page.Children[0]).UpdatePlayerInfo();
-
                                 }
-                                break;
+                                else
+                                    ((Lobby)page.Children[0]).LoginInformation("로그인에 실패했습니다.");
+                            }
+                            break;
+                        case (int)PROTOCOL.IdPktCreateRoomRes:
+                            {
+                                CREATE_ROOM_RES res = new CREATE_ROOM_RES();
+                                res = CREATE_ROOM_RES.Parser.ParseFrom(data.Data);
 
-                            case (int)PROTOCOL.IdPktEnterRoomRes:
+                                if (res.VarCode == ErrorCode.Success)
                                 {
-                                    ENTER_ROOM_RES res = new ENTER_ROOM_RES();
-                                    res = ENTER_ROOM_RES.Parser.ParseFrom(data.Data);
+                                    User.Color = eTeam.Black;
+                                    page.CurrentPage = page.Children[1];
+                                    User.IsMyTurn = true;
+                                    User.MytrunStartTime = DateTime.Now;
 
-                                    if (res.VarCode == ErrorCode.Success)
-                                    {
-                                        User.Color = eTeam.White;
-                                        page.CurrentPage = page.Children[1];
-                                        User.IsMyTurn = false;
-                                        User.MytrunStartTime = DateTime.Now;
-
-                                        var Room = (Room)page.Children[1];
-                                        Room.UpdateTurnBackground(User.Color);
-                                    }
+                                    var Room = (Room)page.Children[1];
+                                    Room.UpdateTurnBackground(User.Color);
                                 }
-                                break;
-
-                            case (int)PROTOCOL.IdPktGameResultNty:
+                                else
                                 {
-                                    GAME_RESULT_NTY res = new GAME_RESULT_NTY();
-                                    res = GAME_RESULT_NTY.Parser.ParseFrom(data.Data);
 
-
-                                    ((Room)page.Children[1]).GameResult(res);
                                 }
-                                break;
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.Write(ex.ToString());
-                    }
 
+                            }
+                            break;
+                        case (int)PROTOCOL.IdPktNewUserInRoomNty:
+                            {
+                                var lobby = (Lobby)page.Children[0];
+                                
+                                NEW_USER_IN_ROOM_NTY res = new NEW_USER_IN_ROOM_NTY();
+                                res = NEW_USER_IN_ROOM_NTY.Parser.ParseFrom(data.Data);
+                                var Room = (Room)page.Children[1];
+                                {
+                                    //상대방이름
+                                    //나갈때 초기화한다. 
+
+                                    User.OppInfo.PhotoPath = Encoding.UTF8.GetString(res.VarRoomUser.PictureUri.ToByteArray());
+
+                                    User.OppInfo.NickName = Helper.ToStr(res.VarRoomUser.VarName.ToByteArray());
+                                }
+
+                                Room.ClearBoard();
+
+                                Room.UpdateBattleInfo();
+
+                            }
+                            break;
+                        case (int)PROTOCOL.IdPktBroadcastRoomMessageRes:
+                            {
+                                BROADCAST_ROOM_MESSAGE_RES res = new BROADCAST_ROOM_MESSAGE_RES();
+                                res = BROADCAST_ROOM_MESSAGE_RES.Parser.ParseFrom(data.Data);
+
+                                var Room = (Room)page.Children[1];
+
+                                Room.ProcReceivePutStoneMessage(res);
+
+                            }
+                            break;
+                        case (int)PROTOCOL.IdPktRoomListRes:
+                            {
+                                var lobby = (Lobby)page.Children[0];
+
+                                lobby.UpdateMessage(data);
+                            }
+                            break;
+
+                        case (int)PROTOCOL.IdPktRankRes:
+                            {
+                                RANK_RES res = new RANK_RES();
+                                res = RANK_RES.Parser.ParseFrom(data.Data);
+
+                                ((Lobby)page.Children[0]).CreateRankPage(res.VarRankList);
+                            }
+                            break;
+
+                        case (int)PROTOCOL.IdPktLeaveRoomRes:
+                            {
+                                LEAVE_ROOM_RES res = new LEAVE_ROOM_RES();
+                                res = LEAVE_ROOM_RES.Parser.ParseFrom(data.Data);
+
+                                if(res.VarIndex == User.Id)
+                                {
+                                    page.CurrentPage = page.Children[0];
+
+                                    ((Room)page.Children[1]).ClearBoard();
+                                }
+
+                                ((Lobby)page.Children[0]).UpdatePlayerInfo();
+
+                            }
+                            break;
+
+                        case (int)PROTOCOL.IdPktEnterRoomRes:
+                            {
+                                ENTER_ROOM_RES res = new ENTER_ROOM_RES();
+                                res = ENTER_ROOM_RES.Parser.ParseFrom(data.Data);
+
+                                if (res.VarCode == ErrorCode.Success)
+                                {
+                                    User.Color = eTeam.White;
+                                    page.CurrentPage = page.Children[1];
+                                    User.IsMyTurn = false;
+                                    User.MytrunStartTime = DateTime.Now;
+
+                                    var Room = (Room)page.Children[1];
+                                    Room.UpdateTurnBackground(User.Color);
+                                }
+                            }
+                            break;
+
+                        case (int)PROTOCOL.IdPktGameResultNty:
+                            {
+                                GAME_RESULT_NTY res = new GAME_RESULT_NTY();
+                                res = GAME_RESULT_NTY.Parser.ParseFrom(data.Data);
+
+
+                                ((Room)page.Children[1]).GameResult(res);
+                            }
+                            break;
+                    }
                 }
-
+                catch (Exception ex)
+                {
+                    Console.Write(ex.ToString());
+                }
             }
         }
 

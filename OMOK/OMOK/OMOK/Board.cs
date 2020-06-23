@@ -14,14 +14,6 @@ namespace OMOK
         public int x = COLS / 2, y = ROWS / 2;
 
         Tile[,] tiles = new Tile[ROWS, COLS];
-        int flaggedTileCount;
-        bool isGameInProgress;              // on first tap
-        bool isGameInitialized;             // on first double-tap
-        bool isGameEnded;
-
-        // Events to notify page.
-        public event EventHandler GameStarted;
-        public event EventHandler<bool> GameEnded;
 
         bool onedraw = false;
 
@@ -40,7 +32,6 @@ namespace OMOK
                 for (int col = 0; col < COLS; col++)
                 {
                     Tile tile = new Tile(row, col);
-                    tile.TileStatusChanged += OnTileStatusChanged;
                     this.Children.Add(tile);
                     tiles[row, col] = tile;
                     tile.x = col;
@@ -56,7 +47,7 @@ namespace OMOK
                     onedraw = true;
 
                     double tileWidth =  this.Width / COLS;
-                    double tileHeight =  this.Height / ROWS;
+                    double tileHeight = tileWidth;// this.Height / ROWS;
 
                     foreach (Tile tile in tiles)
                     {
@@ -220,27 +211,8 @@ namespace OMOK
             foreach (Tile tile in tiles)
                 tile.Initialize();
 
-            isGameInProgress = false;
-            isGameInitialized = false;
-            isGameEnded = false;
-            this.FlaggedTileCount = 0;
         }
 
-        public int FlaggedTileCount
-        {
-            set
-            {
-                if (flaggedTileCount != value)
-                {
-                    flaggedTileCount = value;
-                    OnPropertyChanged();
-                }
-            }
-            get
-            {
-                return flaggedTileCount;
-            }
-        }
 
         
         // Not called until the first tile is double-tapped.
@@ -299,97 +271,6 @@ namespace OMOK
                         callback(neighborRow, neighborCol);
                 }
         }
-
-        void OnTileStatusChanged(object sender, eTeam tileStatus)
-        {
-            if (isGameEnded)
-                return;
-
-            // With a first tile tapped, the game is now in progress.
-            if (!isGameInProgress)
-            {
-                isGameInProgress = true;
-
-                // Fire the GameStarted event.
-                if (GameStarted != null)
-                {
-                 //   GameStarted(this, EventArgs.None);
-                }
-            }
-
-            //// Update the "flagged" bug count before checking for a loss.
-            //int flaggedCount = 0;
-
-            //foreach (Tile tile in tiles)
-            //    if (tile.Status == TileStatus.Flagged)
-            //        flaggedCount++;
-
-            //this.FlaggedTileCount = flaggedCount;
-
-            //// Get the tile whose status has changed.
-            //Tile changedTile = (Tile)sender;
-
-            //// If it's exposed, some actions are required.
-            //if (tileStatus == TileStatus.Exposed)
-            //{
-            //    if (!isGameInitialized)
-            //    {
-            //        DefineNewBoard(changedTile.Row, changedTile.Col);
-            //        isGameInitialized = true;
-            //    }
-
-            //    if (changedTile.IsBug)
-            //    {
-            //        isGameInProgress = false;
-            //        isGameEnded = true;
-
-            //        // Fire the GameEnded event!
-            //        if (GameEnded != null)
-            //        {
-            //            GameEnded(this, false);
-            //        }
-            //        return;
-            //    }
-
-            //    // Auto expose for zero surrounding bugs.
-            //    if (changedTile.SurroundingBugCount == 0)
-            //    {
-            //        CycleThroughNeighbors(changedTile.Row, changedTile.Col,
-            //            (neighborRow, neighborCol) =>
-            //            {
-            //                // Expose all the neighbors.
-            //                tiles[neighborRow, neighborCol].Status = TileStatus.Exposed;
-            //            });
-            //    }
-            //}
-
-            //// Check for a win.
-            //bool hasWon = true;
-
-            //foreach (Tile til in tiles)
-            //{
-            //    if (til.IsBug && til.Status != TileStatus.Flagged)
-            //        hasWon = false;
-
-            //    if (!til.IsBug && til.Status != TileStatus.Exposed)
-            //        hasWon = false;
-            //}
-
-            //// If there's a win, celebrate!
-            //if (hasWon)
-            //{
-            //    isGameInProgress = false;
-            //    isGameEnded = true;
-
-            //    // Fire the GameEnded event!
-            //    if (GameEnded != null)
-            //    {
-            //        GameEnded(this, true);
-            //    }
-            //    return;
-            //}
-        }
-
 
         public bool CheckPointer(int _y, int _x, eTeam _stone)   // 현재 놓은 돌의 좌표와 색상(1or2) 정보를 받음
         {

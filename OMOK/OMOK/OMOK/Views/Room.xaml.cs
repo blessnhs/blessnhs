@@ -46,41 +46,55 @@ namespace OMOK
                 return true;
             });
 
-            board.GameStarted += (sender, args) =>
-            {
-                isGameInProgress = true;
-                gameStartTime = DateTime.Now;
-
-                Device.StartTimer(TimeSpan.FromSeconds(1), () =>
-                {
-
-                    int remaintime = (30 - (int)(DateTime.Now - gameStartTime).TotalSeconds);
-
-                    if (remaintime < 0)
-                        remaintime = 0;
-
-                    timeLabel.Text = remaintime.ToString(timeFormat);
-                    return isGameInProgress;
-                });
-            };
-
-            board.GameEnded += (sender, hasWon) =>
-            {
-                isGameInProgress = false;
-
-                if (hasWon)
-                {
-                    //     DisplayWonAnimation();
-                }
-                else
-                {
-                    //  DisplayLostAnimation();
-                }
-            };
-
             PrepareForNewGame();
 
             board.UpdateAim();
+        }
+
+        public void ProcReceivePutStoneMessage(BROADCAST_ROOM_MESSAGE_RES res)
+        {
+            string Message = System.Text.Encoding.UTF8.GetString(res.VarMessage.ToByteArray());// //Helper.ToStr(res.VarMessage.ToByteArray());
+
+            string[] header = Message.Split(':');
+            if (header.Length > 2)
+            {
+                int x = Convert.ToInt32(header[0]);
+                int y = Convert.ToInt32(header[1]);
+
+                eTeam color = res.VarColor;
+
+                if (CheckValid(x, y) == true) //시간만료면 false
+                {
+                    //draw stone
+                    if (header[2] == "White")
+                    {
+                        color = eTeam.White;
+                        UpdateStone(x, y, eTeam.White);
+                    }
+                    else
+                    {
+                        color = eTeam.Black;
+                        UpdateStone(x, y, eTeam.Black);
+                    }
+                }
+
+                //check turn
+                {
+                    if (User.Color == color)
+                    {
+                        User.IsMyTurn = false;
+                    }
+                    else
+                    {
+                        User.IsMyTurn = true;
+                        User.MytrunStartTime = DateTime.Now;
+                    }
+
+                    UpdateTurnBackground(color);
+
+                }
+
+            }
         }
 
         public bool CheckValid(int _x, int _y)
@@ -90,7 +104,7 @@ namespace OMOK
 
         protected override void OnDisappearing()
         {
-            NetProcess.SendLeaveRoom(0);
+         //   NetProcess.SendLeaveRoom(0);
         }
 
         public void UpdateBattleInfo()
@@ -135,28 +149,24 @@ namespace OMOK
 
             bool isLandscape = width > height;
 
-            if (isLandscape)
-            {
-                mainGrid.RowDefinitions[0].Height = new GridLength(1, GridUnitType.Star);
-                mainGrid.RowDefinitions[1].Height = new GridLength(8, GridUnitType.Star);
-                mainGrid.RowDefinitions[2].Height = new GridLength(1, GridUnitType.Star);
+           // if (isLandscape)
+           // {
+           //     mainGrid.RowDefinitions[0].Height = 0;
+           //     mainGrid.RowDefinitions[1].Height = new GridLength(1, GridUnitType.Star);
 
+           //     mainGrid.ColumnDefinitions[0].Width = new GridLength(1, GridUnitType.Star);
+           //     mainGrid.ColumnDefinitions[1].Width = new GridLength(1, GridUnitType.Star);
 
-                mainGrid.ColumnDefinitions[0].Width = new GridLength(5, GridUnitType.Star);
-                mainGrid.ColumnDefinitions[1].Width = new GridLength(5, GridUnitType.Star);
+           // }
+           // else // portrait
+           // {
+           //     mainGrid.RowDefinitions[0].Height = new GridLength(3, GridUnitType.Star);
+           //     mainGrid.RowDefinitions[1].Height = new GridLength(5, GridUnitType.Star);
 
-                Grid.SetRow(textStackTop, 1);
-                Grid.SetColumn(textStackTop, 0);
-            }
-            else // portrait
-            {
-                mainGrid.RowDefinitions[0].Height = new GridLength(1, GridUnitType.Star);
-                mainGrid.RowDefinitions[1].Height = new GridLength(8, GridUnitType.Star);
-                mainGrid.RowDefinitions[2].Height = new GridLength(1, GridUnitType.Star);
+           //     mainGrid.ColumnDefinitions[0].Width = 0;
+           //     mainGrid.ColumnDefinitions[1].Width = new GridLength(1, GridUnitType.Star);
 
-                mainGrid.ColumnDefinitions[0].Width = new GridLength(5, GridUnitType.Star);
-                mainGrid.ColumnDefinitions[1].Width = new GridLength(5, GridUnitType.Star);
-            }
+           //}
         }
 
         // Maintains a square aspect ratio for the board.
@@ -168,7 +178,7 @@ namespace OMOK
             double dimension = Math.Min(width, height);
             double horzPadding = (width - dimension) / 2;
             double vertPadding = (height - dimension) / 2;
-            contentView.Padding = new Thickness(horzPadding, vertPadding);
+         //   contentView.Padding = new Thickness(horzPadding, vertPadding);
         }
 
 
@@ -252,15 +262,6 @@ namespace OMOK
 
         public bool UpdateStone(int x, int y, eTeam status)
         {
-            //if (User.IsMyTurn == false || board.GetTile(x,y).Status != eTeam.None)
-            //{
-            //    return false; 
-            //}
-
-            string Message = x + ":" + y + ":" + User.Color.ToString();
-
-            //NetProcess.SendRoomMessage(x, y, User.Color, Message);
-
             User.IsMyTurn = false;
 
             board.UpdateStone(x, y, status);

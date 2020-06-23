@@ -65,9 +65,6 @@ namespace OMOK
     {
         eTeam tileStatus = eTeam.None;
         Image whiteImage, blackImage,emptyImage,aimImage , awhiteImage, ablackImage;
-        bool doNotFireEvent;
-
-        public event EventHandler<eTeam> TileStatusChanged;
 
         public int x, y;
 
@@ -82,41 +79,48 @@ namespace OMOK
             this.Row = row;
             this.Col = col;
 
-            //this.BackgroundColor = Color.Yellow;
-            this.OutlineColor = Color.Black;
+            this.BackgroundColor = Color.AliceBlue;
             this.Margin = 1;
             this.Padding = 1;
             this.CornerRadius = 0;
+            this.OutlineColor = Color.Black;
+            //     Padding = new Thickness(1);
 
             whiteImage = new Image {
                 Source = TitleResource.GetWhiteStoneImageSource(),
+                Aspect = Aspect.Fill,
 
             };
 
             blackImage = new Image {
-                Source = TitleResource.GetBlackStoneImageSource()
+                Source = TitleResource.GetBlackStoneImageSource(),
+                Aspect = Aspect.Fill,
             };
 
             awhiteImage = new Image
             {
                 Source = TitleResource.GetAWhiteStoneImageSource(),
+                Aspect = Aspect.Fill,
 
             };
 
             ablackImage = new Image
             {
-                Source = TitleResource.GetABlackStoneImageSource()
+                Source = TitleResource.GetABlackStoneImageSource(),
+                Aspect = Aspect.Fill,
             };
 
 
             emptyImage = new Image
             {
-                Source = TitleResource.GetEmptyStoneImageSource()
+                Source = TitleResource.GetEmptyStoneImageSource(),
+                Aspect = Aspect.Fill,
             };
 
             aimImage = new Image
             {
-                Source = TitleResource.GetAimStoneImageSource()
+                Source = TitleResource.GetAimStoneImageSource(),
+                Aspect = Aspect.Fill,
             };
             
 

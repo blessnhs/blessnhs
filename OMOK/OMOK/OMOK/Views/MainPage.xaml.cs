@@ -28,7 +28,7 @@ namespace OMOK.Views
                     return true; //if true repeat
                 });
 
-                Device.StartTimer(new TimeSpan(0, 0, 5), () =>
+                Device.StartTimer(new TimeSpan(0, 0, 15), () =>
                 {
                     Device.BeginInvokeOnMainThread(() =>
                     {
@@ -38,7 +38,6 @@ namespace OMOK.Views
                 });
 
             }
-            //Navigation.PushModalAsync(new NavigationPage(new Room()));
 
         }
     }
