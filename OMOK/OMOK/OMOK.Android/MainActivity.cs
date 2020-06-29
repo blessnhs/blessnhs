@@ -32,6 +32,9 @@ namespace OMOK.Droid
 
             base.OnCreate(savedInstanceState);
 
+            //테스트 광고가 아닐 경우 APP ID를 넣어줘야 한다.
+            MobileAds.Initialize(ApplicationContext, "YOUR ANDROID APP ID HERE");
+
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
 
@@ -121,9 +124,7 @@ namespace OMOK.Droid
                 new AlertDialog.Builder(this).SetMessage("구글 로그인 실패").Show();
             }
 
-            //테스트 광고가 아닐 경우 APP ID를 넣어줘야 한다.
-            MobileAds.Initialize(ApplicationContext, "YOUR ANDROID APP ID HERE");
-
+ 
         }
     }
 }

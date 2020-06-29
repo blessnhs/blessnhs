@@ -101,6 +101,8 @@ namespace OMOK.Network
                                     User.myInfo.level = res.VarLevel;
 
                                     ((Lobby)page.Children[0]).UpdatePlayerInfo();
+
+                                    User.state = PlayerState.Lobby;
                                 }
                                 else
                                     ((Lobby)page.Children[0]).LoginInformation("로그인에 실패했습니다.");
@@ -118,8 +120,11 @@ namespace OMOK.Network
                                     User.IsMyTurn = true;
                                     User.MytrunStartTime = DateTime.Now;
 
+                                    User.state = PlayerState.Room;
+
                                     var Room = (Room)page.Children[1];
                                     Room.UpdateTurnBackground(User.Color);
+                                    Room.RefreshAim();
                                 }
                                 else
                                 {
@@ -185,9 +190,14 @@ namespace OMOK.Network
 
                                 if(res.VarIndex == User.Id)
                                 {
+                                    User.state = PlayerState.Lobby;
+
                                     page.CurrentPage = page.Children[0];
 
                                     ((Room)page.Children[1]).ClearBoard();
+
+                                    ((Room)page.Children[1]).ShowLeaveAd();
+
                                 }
 
                                 ((Lobby)page.Children[0]).UpdatePlayerInfo();
@@ -207,8 +217,11 @@ namespace OMOK.Network
                                     User.IsMyTurn = false;
                                     User.MytrunStartTime = DateTime.Now;
 
+                                    User.state = PlayerState.Room;
+
                                     var Room = (Room)page.Children[1];
                                     Room.UpdateTurnBackground(User.Color);
+                                    Room.RefreshAim();
                                 }
                             }
                             break;

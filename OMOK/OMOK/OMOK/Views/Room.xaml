@@ -32,9 +32,10 @@
                 <ColumnDefinition Width="20*"/>
             </Grid.ColumnDefinitions>
 
-        <Label x:Name="timeLabel" Text="00" FontSize="Large" Grid.Row="0" Grid.Column="0" BackgroundColor="White" Margin="10,10,0,0"/>
+            <Label x:Name="timeLabel" Text="00" FontSize="Large" Grid.Row="0" Grid.Column="0" BackgroundColor="White" Margin="10,10,0,0"/>
+            <ProgressBar x:Name="ProgressRoom" Progress="0.0" Grid.Row="0" Grid.Column="1" BackgroundColor="White"/>
 
-        <Button x:Name="LeaveRoom" Text="나가기"  Grid.Row="0" Grid.Column="4" Clicked="OnLeaveClicked" BackgroundColor="#E6DEDE"/>
+            <Button x:Name="LeaveRoom" Text="나가기"  Grid.Row="0" Grid.Column="4" Clicked="OnLeaveClicked" BackgroundColor="#E6DEDE"/>
 
             <ContentView Grid.Row="1" Grid.Column="0"   Grid.ColumnSpan="5" SizeChanged="OnBoardContentViewSizeChanged"  BackgroundColor="White">
                 <!--<Image x:Name="backgroundboard"></Image>-->

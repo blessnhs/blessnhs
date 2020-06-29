@@ -41,6 +41,8 @@ namespace OMOK
 
                 SizeChanged += (sender, args) =>
                 {
+                    UpdateAim();
+
                     if (onedraw != false)
                         return;
 

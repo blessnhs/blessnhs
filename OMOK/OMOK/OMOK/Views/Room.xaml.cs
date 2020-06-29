@@ -8,6 +8,7 @@ using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using OMOK.Network;
 using OMOK.CustomAdMobView;
+using OMOK.Views;
 
 namespace OMOK
 {
@@ -26,6 +27,8 @@ namespace OMOK
         {
             InitializeComponent();
 
+            ProgressRoom.Progress = 0.0f;
+
             timeLabel.Text = (DateTime.Now - User.MytrunStartTime).ToString(timeFormat);
 
             iIterstitia = DependencyService.Get<iAd_IterstitialView>();
@@ -34,6 +37,8 @@ namespace OMOK
             {
                 if (User.IsMyTurn == true)
                 {
+                    var current = ((DateTime.Now - User.MytrunStartTime).TotalSeconds * 0.033);
+                    ProgressRoom.Progress = current;
                     timeLabel.Text = (DateTime.Now - User.MytrunStartTime).ToString(timeFormat);
 
                     if ((DateTime.Now - User.MytrunStartTime).TotalSeconds > 30)
@@ -47,8 +52,6 @@ namespace OMOK
             });
 
             PrepareForNewGame();
-
-            board.UpdateAim();
         }
 
         public void ProcReceivePutStoneMessage(BROADCAST_ROOM_MESSAGE_RES res)
@@ -97,6 +100,11 @@ namespace OMOK
             }
         }
 
+        public void RefreshAim()
+        {
+            board.UpdateAim();
+        }
+
         public bool CheckValid(int _x, int _y)
         {
             return board.CheckValid(_x, _y);
@@ -137,7 +145,7 @@ namespace OMOK
         {
             board.NewGameInitialize();
 
-            timeLabel.Text = new TimeSpan().ToString(timeFormat);
+       //     timeLabel.Text = new TimeSpan().ToString(timeFormat);
             isGameInProgress = false;
         }
 
@@ -188,11 +196,20 @@ namespace OMOK
             PrepareForNewGame();
         }
 
+        public void ShowLeaveAd()
+        {
+            iIterstitia.ShowAd();
+        }
+
         async void OnLeaveClicked(object sender, System.EventArgs e)
         {
-            NetProcess.SendLeaveRoom(0);
-
-            iIterstitia.ShowAd();
+            if (User.state == PlayerState.Room)
+                NetProcess.SendLeaveRoom(0);
+            else
+            {
+                MainPage parentpage = (MainPage)this.Parent;
+                parentpage.CurrentPage = parentpage.Children[0];
+            }
         }
 
         async void OnClickedLeft(object sender, System.EventArgs e)
