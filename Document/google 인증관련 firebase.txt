@@ -1,4 +1,4 @@
-자마린 안드로이드(Xamarin Android)에서 구글 계정으로 로그인 + 파이어베이스
+﻿자마린 안드로이드(Xamarin Android)에서 구글 계정으로 로그인 + 파이어베이스
 https://blog.naver.com/haruby511/221487754607
 프로파일
  HARUBY ・ 2019. 3. 14. 3:59
@@ -89,7 +89,7 @@ https://console.firebase.google.com/
 
 그 키 스토어를 직접 찾아서 그것의 SHA-1을 얻은 다음, 이 칸에 넣어 달라는 말을 아주 매우 심각하게 짧으면서도 함축적으로 적어 놓은 것입니다.
 
-​
+​C:\Program Files\Android\jdk\microsoft_dist_openjdk_1.8.0.25\bin
 
 자마린 안드로이드의 경우 이 키 스토어는 다음 경로에 있습니다.
 

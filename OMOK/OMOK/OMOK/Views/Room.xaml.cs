@@ -17,10 +17,8 @@ namespace OMOK
     {
         const string timeFormat = @"%m\:ss";
         bool isGameInProgress;
-        DateTime gameStartTime;
 
         iAd_IterstitialView iIterstitia;
-
 
 
         public Room()
@@ -232,7 +230,7 @@ namespace OMOK
 
             var status = board.GetTile(board.x, board.y).Status;
 
-            if (status != eTeam.None && status != eTeam.Aim)
+            if (status == eTeam.White || status == eTeam.Awhite || status == eTeam.Black || status == eTeam.Ablack)
             {
                 return;
             }
