@@ -165,6 +165,49 @@ template<template<class T> class CreationPolicy> void RoomContainer<CreationPoli
 }
 
 
+template<template<class T> class CreationPolicy> void RoomContainer<CreationPolicy>::LeaveRoomPlayer(PLAYER_PTR pPlayer)
+{
+	LEAVE_ROOM_RES res;
+
+	ROOM_PTR RoomPtr = Search(pPlayer->m_Char[0].GetRoom());
+	if (RoomPtr != NULL)
+	{
+		if (RoomPtr->FindPlayer(pPlayer) != USHRT_MAX)
+		{
+			//승패 처리 간으한지의 여부 방안에 2명이 존재 했고 방이종료되지 않았으면 승패를 내본다.
+			if (RoomPtr->GetState() != State::End && RoomPtr->GetCurrPlayer() > 1)
+			{
+				RoomPtr->SetState(State::End);
+
+				auto OppPlayer = RoomPtr->GetOtherPlayer(pPlayer->GetId());
+				if (OppPlayer != NULL)
+				{
+					RoomPtr->RecoardResult(OppPlayer, pPlayer);
+
+				}
+			}
+
+			res.set_var_index(pPlayer->GetId());
+			res.set_var_code(Success);
+			res.mutable_var_name()->assign(pPlayer->m_Account.GetName());
+
+			RoomPtr->SendToAll(res);
+
+			RoomPtr->RemovePlayer(pPlayer);
+			pPlayer->m_Char[0].SetRoom(0);
+
+			if (RoomPtr->GetCurrPlayer() == 0)
+				Del(RoomPtr);
+		}
+
+		pPlayer->m_Char[0].SetAllComplete(FALSE);
+		pPlayer->m_Char[0].SetReady(FALSE);
+
+
+	}
+}
+
+
 template<template<class T> class CreationPolicy> BOOL RoomContainer<CreationPolicy>::CreateMatchRoom(PLAYER_PTR target1, PLAYER_PTR target2)
 {
 	//방생성

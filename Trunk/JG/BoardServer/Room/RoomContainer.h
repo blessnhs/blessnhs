@@ -42,6 +42,8 @@ public:
 
 	BOOL CreateMatchRoom(PLAYER_PTR target1, PLAYER_PTR target2);
 
+	void LeaveRoomPlayer(PLAYER_PTR player);
+
 
 protected:
 

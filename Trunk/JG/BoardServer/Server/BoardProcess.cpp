@@ -73,6 +73,13 @@ VOID BoardProcess::VERSION(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient
 VOID BoardProcess::LOGIN_PLAYER(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client)
 {
 	DECLARE_RECV_TYPE(LOGIN_REQ,login)
+
+	if (_result_, login.var_uid().size() <= 0 || login.var_token().size() <= 0)
+		return;
+
+	if (_result_, login.var_uid().size() >= 2000 || login.var_token().size() >= 2000)
+		return;
+
 		
 	printf("result %d id %s pwd %s\n", _result_,login.var_uid().c_str(), login.var_token().c_str());
 	
@@ -271,44 +278,7 @@ VOID BoardProcess::ROOM_LEAVE(LPVOID Data, DWORD Length, boost::shared_ptr<GSCli
 		return;
 	}
 
-	LEAVE_ROOM_RES res;
-
-	ROOM_PTR RoomPtr = ROOMMGR.Search(pPlayer->m_Char[0].GetRoom());
-	if (RoomPtr != NULL)
-	{
-		if (RoomPtr->FindPlayer(pPlayer) != USHRT_MAX)
-		{
-			//승패 처리 간으한지의 여부 방안에 2명이 존재 했고 방이종료되지 않았으면 승패를 내본다.
-			if (RoomPtr->GetState() != State::End && RoomPtr->GetCurrPlayer() > 1)
-			{
-				RoomPtr->SetState(State::End);
-
-				auto OppPlayer = RoomPtr->GetOtherPlayer(pPlayer->GetId());
-				if (OppPlayer != NULL)
-				{
-					RoomPtr->RecoardResult(OppPlayer, pPlayer);
-
-				}
-			}
-
-			res.set_var_index(pPlayer->GetId());
-			res.set_var_code(Success);
-			res.mutable_var_name()->assign(pPlayer->m_Account.GetName());
-
-			RoomPtr->SendToAll(res);
-
-			RoomPtr->RemovePlayer(pPlayer);
-			pPlayer->m_Char[0].SetRoom(0);
-
-			if (RoomPtr->GetCurrPlayer() == 0)
-				ROOMMGR.Del(RoomPtr);
-		}
-
-		pPlayer->m_Char[0].SetAllComplete(FALSE);
-		pPlayer->m_Char[0].SetReady(FALSE);
-
-
-	}
+	
 }
 
 VOID BoardProcess::ROOM_START(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> pOwner)

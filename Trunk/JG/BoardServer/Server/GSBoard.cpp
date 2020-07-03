@@ -21,16 +21,7 @@ BOOL GSBoard::Disconnect(GSCLIENT_PTR pSession)
 	PlayerPtr pPlayer = PLAYERMGR.Search(pSession->GetPair());
 	if (pPlayer != NULL)
 	{
-		ROOM_PTR pRoom = ROOMMGR.Search(pPlayer->m_Char[0].GetRoom());
-		if (pRoom)
-		{
-			pRoom->RemovePlayer(pPlayer);
-			if (pRoom->GetCurrPlayer() == 0)
-			{
-				printf("delete room %d\n", pRoom->GetId());
-				ROOMMGR.Del(pRoom);
-			}
-		}
+		ROOMMGR.LeaveRoomPlayer(pPlayer);
 
 		pPlayer->SetPair(ULONG_MAX);
 		PLAYERMGR.Del(pPlayer);

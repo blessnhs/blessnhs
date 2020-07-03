@@ -225,6 +225,7 @@ namespace Board	{
 		{
 			try
 			{
+				printf("google auth begin \n");
 
 				// make uri
 				http_client client(U("https://oauth2.googleapis.com/"));
