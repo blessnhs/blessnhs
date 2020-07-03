@@ -67,11 +67,6 @@ message BROADCAST_ROOM_MESSAGE_RES
     optional  ErrorCode    var_code         = 2;
     optional bytes     var_message          = 3;
     optional bytes     var_name	            = 4;
-
-
-    optional int32 	var_x 	           = 5;
-    optional int32 	var_y 	           = 6;
-    optional eTeam  var_color               = 7;
 }
 
 message ROOM_LIST_RES
@@ -112,3 +107,17 @@ message RANK_RES
     repeated Rank var_rank_list     = 2;
     optional  ErrorCode    var_code               = 3;
 }
+
+message QNS_RES
+{
+    optional PROTOCOL   id                        = 1 [default = ID_PKT_QNS_RES   ];
+    optional  ErrorCode    var_code               = 3;
+}
+
+message ROOM_PASS_THROUGH_RES
+{
+    optional PROTOCOL   id                        = 1 [default = ID_PKT_ROOM_PASS_THROUGH_RES    ];
+    required bytes     var_message    	     = 2;
+    required int32       var_message_int         = 3;
+}
+

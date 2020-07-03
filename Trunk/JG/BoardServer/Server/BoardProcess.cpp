@@ -19,6 +19,7 @@ BoardProcess::BoardProcess(void)
 	ADD_NET_FUNC(BoardProcess, ID_PKT_ROOM_LIST_REQ, ROOM_LIST);
 	ADD_NET_FUNC(BoardProcess, ID_PKT_MATCH_REQ, MATCH);
 	ADD_NET_FUNC(BoardProcess, ID_PKT_RANK_REQ, RANK);
+	ADD_NET_FUNC(BoardProcess, ID_PKT_ROOM_PASS_THROUGH_REQ, ROOM_PASSTHROUGH);
 }
 
 
@@ -126,6 +127,52 @@ VOID BoardProcess::ROOM_CREATE(LPVOID Data, DWORD Length, boost::shared_ptr<GSCl
 	SEND_PROTO_BUFFER(res, pOwner)
 
 	RoomPtr->SendNewUserInfo(pPlayer);	//방에 있는 유저들에게 새로운 유저 정보전송
+}
+
+VOID BoardProcess::ROOM_PASSTHROUGH(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client)
+{
+	DECLARE_RECV_TYPE(ROOM_PASS_THROUGH_REQ, message)
+
+	PlayerPtr pPlayer = PLAYERMGR.Search(Client->GetPair());
+	if (pPlayer == NULL)
+	{
+		return;
+	}
+
+	if (message.var_message().length() > 1024 || message.var_message().length() <= 0)
+	{
+		return;
+	}
+
+	ROOM_PTR pPtr = ROOMMGR.Search(pPlayer->m_Char[0].GetRoom());
+	if (pPtr != NULL && pPtr->GetState() != State::End)
+	{
+		ROOM_PASS_THROUGH_RES res;
+
+		res.set_var_message(message.var_message());
+		res.set_var_message_int(message.var_message_int());
+
+		byte x, y, color;
+		pPtr->Get_X_Y_COLOR(x, y, color, message.var_message_int());
+
+		eTeam team_color = color == 0 ? WHITE : BLACK;
+
+		pPtr->UpdateBoard(x, y, team_color);
+
+		pPtr->SendToAll(res);
+
+		if (pPtr->CheckGameResult(x, y, team_color) == true)
+		{
+			pPtr->ClearBoard();
+			pPtr->SetState(State::End);
+
+			auto OppPlayer = pPtr->GetOtherPlayer(pPlayer->GetId());
+			if (OppPlayer != NULL)
+			{
+				pPtr->RecoardResult(pPlayer, OppPlayer);
+			}
+		}
+	}
 }
 
 VOID BoardProcess::RANK(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client)
@@ -340,28 +387,12 @@ VOID BoardProcess::ROOM_CHAT(LPVOID Data, DWORD Length, boost::shared_ptr<GSClie
 	
 	res.set_var_message(message.var_message());
 	res.set_var_name(pPlayer->m_Account.GetName());
-	res.set_var_x(message.var_x());
-	res.set_var_y(message.var_y());
-	res.set_var_color(message.var_color());
 
 	ROOM_PTR pPtr = ROOMMGR.Search(pPlayer->m_Char[0].GetRoom());
 	if (pPtr != NULL && pPtr->GetState() != State::End)
 	{
-		pPtr->UpdateBoard(message.var_x(), message.var_y(), message.var_color());
-
 		pPtr->SendToAll(res);
 
-		if (pPtr->CheckGameResult(message.var_x(), message.var_y(), message.var_color()) == true)
-		{
-			pPtr->ClearBoard();
-			pPtr->SetState(State::End);
-
-			auto OppPlayer = pPtr->GetOtherPlayer(pPlayer->GetId());
-			if (OppPlayer != NULL)
-			{
-				pPtr->RecoardResult(pPlayer, OppPlayer);
-			}
-		}
 	}
 }
 

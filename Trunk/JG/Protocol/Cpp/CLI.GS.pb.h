@@ -49,7 +49,7 @@ struct TableStruct_CLI_2eGS_2eproto {
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::PROTOBUF_NAMESPACE_ID::internal::AuxillaryParseTableField aux[]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
-  static const ::PROTOBUF_NAMESPACE_ID::internal::ParseTable schema[9]
+  static const ::PROTOBUF_NAMESPACE_ID::internal::ParseTable schema[11]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::PROTOBUF_NAMESPACE_ID::internal::FieldMetadata field_metadata[];
   static const ::PROTOBUF_NAMESPACE_ID::internal::SerializationTable serialization_table[];
@@ -74,12 +74,18 @@ extern LOGIN_REQDefaultTypeInternal _LOGIN_REQ_default_instance_;
 class MATCH_REQ;
 class MATCH_REQDefaultTypeInternal;
 extern MATCH_REQDefaultTypeInternal _MATCH_REQ_default_instance_;
+class QNS_REQ;
+class QNS_REQDefaultTypeInternal;
+extern QNS_REQDefaultTypeInternal _QNS_REQ_default_instance_;
 class RANK_REQ;
 class RANK_REQDefaultTypeInternal;
 extern RANK_REQDefaultTypeInternal _RANK_REQ_default_instance_;
 class ROOM_LIST_REQ;
 class ROOM_LIST_REQDefaultTypeInternal;
 extern ROOM_LIST_REQDefaultTypeInternal _ROOM_LIST_REQ_default_instance_;
+class ROOM_PASS_THROUGH_REQ;
+class ROOM_PASS_THROUGH_REQDefaultTypeInternal;
+extern ROOM_PASS_THROUGH_REQDefaultTypeInternal _ROOM_PASS_THROUGH_REQ_default_instance_;
 class VERSION_REQ;
 class VERSION_REQDefaultTypeInternal;
 extern VERSION_REQDefaultTypeInternal _VERSION_REQ_default_instance_;
@@ -90,8 +96,10 @@ template<> ::ENTER_ROOM_REQ* Arena::CreateMaybeMessage<::ENTER_ROOM_REQ>(Arena*)
 template<> ::LEAVE_ROOM_REQ* Arena::CreateMaybeMessage<::LEAVE_ROOM_REQ>(Arena*);
 template<> ::LOGIN_REQ* Arena::CreateMaybeMessage<::LOGIN_REQ>(Arena*);
 template<> ::MATCH_REQ* Arena::CreateMaybeMessage<::MATCH_REQ>(Arena*);
+template<> ::QNS_REQ* Arena::CreateMaybeMessage<::QNS_REQ>(Arena*);
 template<> ::RANK_REQ* Arena::CreateMaybeMessage<::RANK_REQ>(Arena*);
 template<> ::ROOM_LIST_REQ* Arena::CreateMaybeMessage<::ROOM_LIST_REQ>(Arena*);
+template<> ::ROOM_PASS_THROUGH_REQ* Arena::CreateMaybeMessage<::ROOM_PASS_THROUGH_REQ>(Arena*);
 template<> ::VERSION_REQ* Arena::CreateMaybeMessage<::VERSION_REQ>(Arena*);
 PROTOBUF_NAMESPACE_CLOSE
 
@@ -1010,9 +1018,6 @@ class BROADCAST_ROOM_MESSAGE_REQ :
 
   enum : int {
     kVarMessageFieldNumber = 2,
-    kVarXFieldNumber = 3,
-    kVarYFieldNumber = 4,
-    kVarColorFieldNumber = 5,
     kIdFieldNumber = 1,
   };
   // required bytes var_message = 2;
@@ -1035,45 +1040,6 @@ class BROADCAST_ROOM_MESSAGE_REQ :
   std::string* _internal_mutable_var_message();
   public:
 
-  // required int32 var_x = 3;
-  bool has_var_x() const;
-  private:
-  bool _internal_has_var_x() const;
-  public:
-  void clear_var_x();
-  ::PROTOBUF_NAMESPACE_ID::int32 var_x() const;
-  void set_var_x(::PROTOBUF_NAMESPACE_ID::int32 value);
-  private:
-  ::PROTOBUF_NAMESPACE_ID::int32 _internal_var_x() const;
-  void _internal_set_var_x(::PROTOBUF_NAMESPACE_ID::int32 value);
-  public:
-
-  // required int32 var_y = 4;
-  bool has_var_y() const;
-  private:
-  bool _internal_has_var_y() const;
-  public:
-  void clear_var_y();
-  ::PROTOBUF_NAMESPACE_ID::int32 var_y() const;
-  void set_var_y(::PROTOBUF_NAMESPACE_ID::int32 value);
-  private:
-  ::PROTOBUF_NAMESPACE_ID::int32 _internal_var_y() const;
-  void _internal_set_var_y(::PROTOBUF_NAMESPACE_ID::int32 value);
-  public:
-
-  // required .eTeam var_color = 5;
-  bool has_var_color() const;
-  private:
-  bool _internal_has_var_color() const;
-  public:
-  void clear_var_color();
-  ::eTeam var_color() const;
-  void set_var_color(::eTeam value);
-  private:
-  ::eTeam _internal_var_color() const;
-  void _internal_set_var_color(::eTeam value);
-  public:
-
   // optional .PROTOCOL id = 1 [default = ID_PKT_BROADCAST_ROOM_MESSAGE_REQ];
   bool has_id() const;
   private:
@@ -1091,16 +1057,10 @@ class BROADCAST_ROOM_MESSAGE_REQ :
  private:
   class _Internal;
 
-  // helper for ByteSizeLong()
-  size_t RequiredFieldsByteSizeFallback() const;
-
   ::PROTOBUF_NAMESPACE_ID::internal::InternalMetadataWithArena _internal_metadata_;
   ::PROTOBUF_NAMESPACE_ID::internal::HasBits<1> _has_bits_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr var_message_;
-  ::PROTOBUF_NAMESPACE_ID::int32 var_x_;
-  ::PROTOBUF_NAMESPACE_ID::int32 var_y_;
-  int var_color_;
   int id_;
   friend struct ::TableStruct_CLI_2eGS_2eproto;
 };
@@ -1521,6 +1481,348 @@ class RANK_REQ :
   ::PROTOBUF_NAMESPACE_ID::internal::InternalMetadataWithArena _internal_metadata_;
   ::PROTOBUF_NAMESPACE_ID::internal::HasBits<1> _has_bits_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  int id_;
+  friend struct ::TableStruct_CLI_2eGS_2eproto;
+};
+// -------------------------------------------------------------------
+
+class QNS_REQ :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:QNS_REQ) */ {
+ public:
+  QNS_REQ();
+  virtual ~QNS_REQ();
+
+  QNS_REQ(const QNS_REQ& from);
+  QNS_REQ(QNS_REQ&& from) noexcept
+    : QNS_REQ() {
+    *this = ::std::move(from);
+  }
+
+  inline QNS_REQ& operator=(const QNS_REQ& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline QNS_REQ& operator=(QNS_REQ&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  inline const ::PROTOBUF_NAMESPACE_ID::UnknownFieldSet& unknown_fields() const {
+    return _internal_metadata_.unknown_fields();
+  }
+  inline ::PROTOBUF_NAMESPACE_ID::UnknownFieldSet* mutable_unknown_fields() {
+    return _internal_metadata_.mutable_unknown_fields();
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return GetMetadataStatic().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return GetMetadataStatic().reflection;
+  }
+  static const QNS_REQ& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const QNS_REQ* internal_default_instance() {
+    return reinterpret_cast<const QNS_REQ*>(
+               &_QNS_REQ_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    9;
+
+  friend void swap(QNS_REQ& a, QNS_REQ& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(QNS_REQ* other) {
+    if (other == this) return;
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline QNS_REQ* New() const final {
+    return CreateMaybeMessage<QNS_REQ>(nullptr);
+  }
+
+  QNS_REQ* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
+    return CreateMaybeMessage<QNS_REQ>(arena);
+  }
+  void CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void CopyFrom(const QNS_REQ& from);
+  void MergeFrom(const QNS_REQ& from);
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  ::PROTOBUF_NAMESPACE_ID::uint8* _InternalSerialize(
+      ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  inline void SharedCtor();
+  inline void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(QNS_REQ* other);
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "QNS_REQ";
+  }
+  private:
+  inline ::PROTOBUF_NAMESPACE_ID::Arena* GetArenaNoVirtual() const {
+    return nullptr;
+  }
+  inline void* MaybeArenaPtr() const {
+    return nullptr;
+  }
+  public:
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+  private:
+  static ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadataStatic() {
+    ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&::descriptor_table_CLI_2eGS_2eproto);
+    return ::descriptor_table_CLI_2eGS_2eproto.file_level_metadata[kIndexInFileMessages];
+  }
+
+  public:
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kVarMessageFieldNumber = 2,
+    kIdFieldNumber = 1,
+  };
+  // required bytes var_message = 2;
+  bool has_var_message() const;
+  private:
+  bool _internal_has_var_message() const;
+  public:
+  void clear_var_message();
+  const std::string& var_message() const;
+  void set_var_message(const std::string& value);
+  void set_var_message(std::string&& value);
+  void set_var_message(const char* value);
+  void set_var_message(const void* value, size_t size);
+  std::string* mutable_var_message();
+  std::string* release_var_message();
+  void set_allocated_var_message(std::string* var_message);
+  private:
+  const std::string& _internal_var_message() const;
+  void _internal_set_var_message(const std::string& value);
+  std::string* _internal_mutable_var_message();
+  public:
+
+  // optional .PROTOCOL id = 1 [default = ID_PKT_QNS_REQ];
+  bool has_id() const;
+  private:
+  bool _internal_has_id() const;
+  public:
+  void clear_id();
+  ::PROTOCOL id() const;
+  void set_id(::PROTOCOL value);
+  private:
+  ::PROTOCOL _internal_id() const;
+  void _internal_set_id(::PROTOCOL value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:QNS_REQ)
+ private:
+  class _Internal;
+
+  ::PROTOBUF_NAMESPACE_ID::internal::InternalMetadataWithArena _internal_metadata_;
+  ::PROTOBUF_NAMESPACE_ID::internal::HasBits<1> _has_bits_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr var_message_;
+  int id_;
+  friend struct ::TableStruct_CLI_2eGS_2eproto;
+};
+// -------------------------------------------------------------------
+
+class ROOM_PASS_THROUGH_REQ :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:ROOM_PASS_THROUGH_REQ) */ {
+ public:
+  ROOM_PASS_THROUGH_REQ();
+  virtual ~ROOM_PASS_THROUGH_REQ();
+
+  ROOM_PASS_THROUGH_REQ(const ROOM_PASS_THROUGH_REQ& from);
+  ROOM_PASS_THROUGH_REQ(ROOM_PASS_THROUGH_REQ&& from) noexcept
+    : ROOM_PASS_THROUGH_REQ() {
+    *this = ::std::move(from);
+  }
+
+  inline ROOM_PASS_THROUGH_REQ& operator=(const ROOM_PASS_THROUGH_REQ& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline ROOM_PASS_THROUGH_REQ& operator=(ROOM_PASS_THROUGH_REQ&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  inline const ::PROTOBUF_NAMESPACE_ID::UnknownFieldSet& unknown_fields() const {
+    return _internal_metadata_.unknown_fields();
+  }
+  inline ::PROTOBUF_NAMESPACE_ID::UnknownFieldSet* mutable_unknown_fields() {
+    return _internal_metadata_.mutable_unknown_fields();
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return GetMetadataStatic().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return GetMetadataStatic().reflection;
+  }
+  static const ROOM_PASS_THROUGH_REQ& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const ROOM_PASS_THROUGH_REQ* internal_default_instance() {
+    return reinterpret_cast<const ROOM_PASS_THROUGH_REQ*>(
+               &_ROOM_PASS_THROUGH_REQ_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    10;
+
+  friend void swap(ROOM_PASS_THROUGH_REQ& a, ROOM_PASS_THROUGH_REQ& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(ROOM_PASS_THROUGH_REQ* other) {
+    if (other == this) return;
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline ROOM_PASS_THROUGH_REQ* New() const final {
+    return CreateMaybeMessage<ROOM_PASS_THROUGH_REQ>(nullptr);
+  }
+
+  ROOM_PASS_THROUGH_REQ* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
+    return CreateMaybeMessage<ROOM_PASS_THROUGH_REQ>(arena);
+  }
+  void CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void CopyFrom(const ROOM_PASS_THROUGH_REQ& from);
+  void MergeFrom(const ROOM_PASS_THROUGH_REQ& from);
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  ::PROTOBUF_NAMESPACE_ID::uint8* _InternalSerialize(
+      ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  inline void SharedCtor();
+  inline void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(ROOM_PASS_THROUGH_REQ* other);
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "ROOM_PASS_THROUGH_REQ";
+  }
+  private:
+  inline ::PROTOBUF_NAMESPACE_ID::Arena* GetArenaNoVirtual() const {
+    return nullptr;
+  }
+  inline void* MaybeArenaPtr() const {
+    return nullptr;
+  }
+  public:
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+  private:
+  static ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadataStatic() {
+    ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&::descriptor_table_CLI_2eGS_2eproto);
+    return ::descriptor_table_CLI_2eGS_2eproto.file_level_metadata[kIndexInFileMessages];
+  }
+
+  public:
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kVarMessageFieldNumber = 2,
+    kVarMessageIntFieldNumber = 3,
+    kIdFieldNumber = 1,
+  };
+  // required bytes var_message = 2;
+  bool has_var_message() const;
+  private:
+  bool _internal_has_var_message() const;
+  public:
+  void clear_var_message();
+  const std::string& var_message() const;
+  void set_var_message(const std::string& value);
+  void set_var_message(std::string&& value);
+  void set_var_message(const char* value);
+  void set_var_message(const void* value, size_t size);
+  std::string* mutable_var_message();
+  std::string* release_var_message();
+  void set_allocated_var_message(std::string* var_message);
+  private:
+  const std::string& _internal_var_message() const;
+  void _internal_set_var_message(const std::string& value);
+  std::string* _internal_mutable_var_message();
+  public:
+
+  // required int32 var_message_int = 3;
+  bool has_var_message_int() const;
+  private:
+  bool _internal_has_var_message_int() const;
+  public:
+  void clear_var_message_int();
+  ::PROTOBUF_NAMESPACE_ID::int32 var_message_int() const;
+  void set_var_message_int(::PROTOBUF_NAMESPACE_ID::int32 value);
+  private:
+  ::PROTOBUF_NAMESPACE_ID::int32 _internal_var_message_int() const;
+  void _internal_set_var_message_int(::PROTOBUF_NAMESPACE_ID::int32 value);
+  public:
+
+  // optional .PROTOCOL id = 1 [default = ID_PKT_ROOM_PASS_THROUGH_REQ];
+  bool has_id() const;
+  private:
+  bool _internal_has_id() const;
+  public:
+  void clear_id();
+  ::PROTOCOL id() const;
+  void set_id(::PROTOCOL value);
+  private:
+  ::PROTOCOL _internal_id() const;
+  void _internal_set_id(::PROTOCOL value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:ROOM_PASS_THROUGH_REQ)
+ private:
+  class _Internal;
+
+  // helper for ByteSizeLong()
+  size_t RequiredFieldsByteSizeFallback() const;
+
+  ::PROTOBUF_NAMESPACE_ID::internal::InternalMetadataWithArena _internal_metadata_;
+  ::PROTOBUF_NAMESPACE_ID::internal::HasBits<1> _has_bits_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr var_message_;
+  ::PROTOBUF_NAMESPACE_ID::int32 var_message_int_;
   int id_;
   friend struct ::TableStruct_CLI_2eGS_2eproto;
 };
@@ -1971,7 +2273,7 @@ inline void LEAVE_ROOM_REQ::set_var_id(::PROTOBUF_NAMESPACE_ID::int32 value) {
 
 // optional .PROTOCOL id = 1 [default = ID_PKT_BROADCAST_ROOM_MESSAGE_REQ];
 inline bool BROADCAST_ROOM_MESSAGE_REQ::_internal_has_id() const {
-  bool value = (_has_bits_[0] & 0x00000010u) != 0;
+  bool value = (_has_bits_[0] & 0x00000002u) != 0;
   return value;
 }
 inline bool BROADCAST_ROOM_MESSAGE_REQ::has_id() const {
@@ -1979,7 +2281,7 @@ inline bool BROADCAST_ROOM_MESSAGE_REQ::has_id() const {
 }
 inline void BROADCAST_ROOM_MESSAGE_REQ::clear_id() {
   id_ = 10;
-  _has_bits_[0] &= ~0x00000010u;
+  _has_bits_[0] &= ~0x00000002u;
 }
 inline ::PROTOCOL BROADCAST_ROOM_MESSAGE_REQ::_internal_id() const {
   return static_cast< ::PROTOCOL >(id_);
@@ -1990,7 +2292,7 @@ inline ::PROTOCOL BROADCAST_ROOM_MESSAGE_REQ::id() const {
 }
 inline void BROADCAST_ROOM_MESSAGE_REQ::_internal_set_id(::PROTOCOL value) {
   assert(::PROTOCOL_IsValid(value));
-  _has_bits_[0] |= 0x00000010u;
+  _has_bits_[0] |= 0x00000002u;
   id_ = value;
 }
 inline void BROADCAST_ROOM_MESSAGE_REQ::set_id(::PROTOCOL value) {
@@ -2067,91 +2369,6 @@ inline void BROADCAST_ROOM_MESSAGE_REQ::set_allocated_var_message(std::string* v
   }
   var_message_.SetAllocatedNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), var_message);
   // @@protoc_insertion_point(field_set_allocated:BROADCAST_ROOM_MESSAGE_REQ.var_message)
-}
-
-// required int32 var_x = 3;
-inline bool BROADCAST_ROOM_MESSAGE_REQ::_internal_has_var_x() const {
-  bool value = (_has_bits_[0] & 0x00000002u) != 0;
-  return value;
-}
-inline bool BROADCAST_ROOM_MESSAGE_REQ::has_var_x() const {
-  return _internal_has_var_x();
-}
-inline void BROADCAST_ROOM_MESSAGE_REQ::clear_var_x() {
-  var_x_ = 0;
-  _has_bits_[0] &= ~0x00000002u;
-}
-inline ::PROTOBUF_NAMESPACE_ID::int32 BROADCAST_ROOM_MESSAGE_REQ::_internal_var_x() const {
-  return var_x_;
-}
-inline ::PROTOBUF_NAMESPACE_ID::int32 BROADCAST_ROOM_MESSAGE_REQ::var_x() const {
-  // @@protoc_insertion_point(field_get:BROADCAST_ROOM_MESSAGE_REQ.var_x)
-  return _internal_var_x();
-}
-inline void BROADCAST_ROOM_MESSAGE_REQ::_internal_set_var_x(::PROTOBUF_NAMESPACE_ID::int32 value) {
-  _has_bits_[0] |= 0x00000002u;
-  var_x_ = value;
-}
-inline void BROADCAST_ROOM_MESSAGE_REQ::set_var_x(::PROTOBUF_NAMESPACE_ID::int32 value) {
-  _internal_set_var_x(value);
-  // @@protoc_insertion_point(field_set:BROADCAST_ROOM_MESSAGE_REQ.var_x)
-}
-
-// required int32 var_y = 4;
-inline bool BROADCAST_ROOM_MESSAGE_REQ::_internal_has_var_y() const {
-  bool value = (_has_bits_[0] & 0x00000004u) != 0;
-  return value;
-}
-inline bool BROADCAST_ROOM_MESSAGE_REQ::has_var_y() const {
-  return _internal_has_var_y();
-}
-inline void BROADCAST_ROOM_MESSAGE_REQ::clear_var_y() {
-  var_y_ = 0;
-  _has_bits_[0] &= ~0x00000004u;
-}
-inline ::PROTOBUF_NAMESPACE_ID::int32 BROADCAST_ROOM_MESSAGE_REQ::_internal_var_y() const {
-  return var_y_;
-}
-inline ::PROTOBUF_NAMESPACE_ID::int32 BROADCAST_ROOM_MESSAGE_REQ::var_y() const {
-  // @@protoc_insertion_point(field_get:BROADCAST_ROOM_MESSAGE_REQ.var_y)
-  return _internal_var_y();
-}
-inline void BROADCAST_ROOM_MESSAGE_REQ::_internal_set_var_y(::PROTOBUF_NAMESPACE_ID::int32 value) {
-  _has_bits_[0] |= 0x00000004u;
-  var_y_ = value;
-}
-inline void BROADCAST_ROOM_MESSAGE_REQ::set_var_y(::PROTOBUF_NAMESPACE_ID::int32 value) {
-  _internal_set_var_y(value);
-  // @@protoc_insertion_point(field_set:BROADCAST_ROOM_MESSAGE_REQ.var_y)
-}
-
-// required .eTeam var_color = 5;
-inline bool BROADCAST_ROOM_MESSAGE_REQ::_internal_has_var_color() const {
-  bool value = (_has_bits_[0] & 0x00000008u) != 0;
-  return value;
-}
-inline bool BROADCAST_ROOM_MESSAGE_REQ::has_var_color() const {
-  return _internal_has_var_color();
-}
-inline void BROADCAST_ROOM_MESSAGE_REQ::clear_var_color() {
-  var_color_ = 0;
-  _has_bits_[0] &= ~0x00000008u;
-}
-inline ::eTeam BROADCAST_ROOM_MESSAGE_REQ::_internal_var_color() const {
-  return static_cast< ::eTeam >(var_color_);
-}
-inline ::eTeam BROADCAST_ROOM_MESSAGE_REQ::var_color() const {
-  // @@protoc_insertion_point(field_get:BROADCAST_ROOM_MESSAGE_REQ.var_color)
-  return _internal_var_color();
-}
-inline void BROADCAST_ROOM_MESSAGE_REQ::_internal_set_var_color(::eTeam value) {
-  assert(::eTeam_IsValid(value));
-  _has_bits_[0] |= 0x00000008u;
-  var_color_ = value;
-}
-inline void BROADCAST_ROOM_MESSAGE_REQ::set_var_color(::eTeam value) {
-  _internal_set_var_color(value);
-  // @@protoc_insertion_point(field_set:BROADCAST_ROOM_MESSAGE_REQ.var_color)
 }
 
 // -------------------------------------------------------------------
@@ -2253,9 +2470,249 @@ inline void RANK_REQ::set_id(::PROTOCOL value) {
   // @@protoc_insertion_point(field_set:RANK_REQ.id)
 }
 
+// -------------------------------------------------------------------
+
+// QNS_REQ
+
+// optional .PROTOCOL id = 1 [default = ID_PKT_QNS_REQ];
+inline bool QNS_REQ::_internal_has_id() const {
+  bool value = (_has_bits_[0] & 0x00000002u) != 0;
+  return value;
+}
+inline bool QNS_REQ::has_id() const {
+  return _internal_has_id();
+}
+inline void QNS_REQ::clear_id() {
+  id_ = 21;
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline ::PROTOCOL QNS_REQ::_internal_id() const {
+  return static_cast< ::PROTOCOL >(id_);
+}
+inline ::PROTOCOL QNS_REQ::id() const {
+  // @@protoc_insertion_point(field_get:QNS_REQ.id)
+  return _internal_id();
+}
+inline void QNS_REQ::_internal_set_id(::PROTOCOL value) {
+  assert(::PROTOCOL_IsValid(value));
+  _has_bits_[0] |= 0x00000002u;
+  id_ = value;
+}
+inline void QNS_REQ::set_id(::PROTOCOL value) {
+  _internal_set_id(value);
+  // @@protoc_insertion_point(field_set:QNS_REQ.id)
+}
+
+// required bytes var_message = 2;
+inline bool QNS_REQ::_internal_has_var_message() const {
+  bool value = (_has_bits_[0] & 0x00000001u) != 0;
+  return value;
+}
+inline bool QNS_REQ::has_var_message() const {
+  return _internal_has_var_message();
+}
+inline void QNS_REQ::clear_var_message() {
+  var_message_.ClearToEmptyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline const std::string& QNS_REQ::var_message() const {
+  // @@protoc_insertion_point(field_get:QNS_REQ.var_message)
+  return _internal_var_message();
+}
+inline void QNS_REQ::set_var_message(const std::string& value) {
+  _internal_set_var_message(value);
+  // @@protoc_insertion_point(field_set:QNS_REQ.var_message)
+}
+inline std::string* QNS_REQ::mutable_var_message() {
+  // @@protoc_insertion_point(field_mutable:QNS_REQ.var_message)
+  return _internal_mutable_var_message();
+}
+inline const std::string& QNS_REQ::_internal_var_message() const {
+  return var_message_.GetNoArena();
+}
+inline void QNS_REQ::_internal_set_var_message(const std::string& value) {
+  _has_bits_[0] |= 0x00000001u;
+  var_message_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), value);
+}
+inline void QNS_REQ::set_var_message(std::string&& value) {
+  _has_bits_[0] |= 0x00000001u;
+  var_message_.SetNoArena(
+    &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:QNS_REQ.var_message)
+}
+inline void QNS_REQ::set_var_message(const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  _has_bits_[0] |= 0x00000001u;
+  var_message_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:QNS_REQ.var_message)
+}
+inline void QNS_REQ::set_var_message(const void* value, size_t size) {
+  _has_bits_[0] |= 0x00000001u;
+  var_message_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:QNS_REQ.var_message)
+}
+inline std::string* QNS_REQ::_internal_mutable_var_message() {
+  _has_bits_[0] |= 0x00000001u;
+  return var_message_.MutableNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline std::string* QNS_REQ::release_var_message() {
+  // @@protoc_insertion_point(field_release:QNS_REQ.var_message)
+  if (!_internal_has_var_message()) {
+    return nullptr;
+  }
+  _has_bits_[0] &= ~0x00000001u;
+  return var_message_.ReleaseNonDefaultNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline void QNS_REQ::set_allocated_var_message(std::string* var_message) {
+  if (var_message != nullptr) {
+    _has_bits_[0] |= 0x00000001u;
+  } else {
+    _has_bits_[0] &= ~0x00000001u;
+  }
+  var_message_.SetAllocatedNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), var_message);
+  // @@protoc_insertion_point(field_set_allocated:QNS_REQ.var_message)
+}
+
+// -------------------------------------------------------------------
+
+// ROOM_PASS_THROUGH_REQ
+
+// optional .PROTOCOL id = 1 [default = ID_PKT_ROOM_PASS_THROUGH_REQ];
+inline bool ROOM_PASS_THROUGH_REQ::_internal_has_id() const {
+  bool value = (_has_bits_[0] & 0x00000004u) != 0;
+  return value;
+}
+inline bool ROOM_PASS_THROUGH_REQ::has_id() const {
+  return _internal_has_id();
+}
+inline void ROOM_PASS_THROUGH_REQ::clear_id() {
+  id_ = 23;
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline ::PROTOCOL ROOM_PASS_THROUGH_REQ::_internal_id() const {
+  return static_cast< ::PROTOCOL >(id_);
+}
+inline ::PROTOCOL ROOM_PASS_THROUGH_REQ::id() const {
+  // @@protoc_insertion_point(field_get:ROOM_PASS_THROUGH_REQ.id)
+  return _internal_id();
+}
+inline void ROOM_PASS_THROUGH_REQ::_internal_set_id(::PROTOCOL value) {
+  assert(::PROTOCOL_IsValid(value));
+  _has_bits_[0] |= 0x00000004u;
+  id_ = value;
+}
+inline void ROOM_PASS_THROUGH_REQ::set_id(::PROTOCOL value) {
+  _internal_set_id(value);
+  // @@protoc_insertion_point(field_set:ROOM_PASS_THROUGH_REQ.id)
+}
+
+// required bytes var_message = 2;
+inline bool ROOM_PASS_THROUGH_REQ::_internal_has_var_message() const {
+  bool value = (_has_bits_[0] & 0x00000001u) != 0;
+  return value;
+}
+inline bool ROOM_PASS_THROUGH_REQ::has_var_message() const {
+  return _internal_has_var_message();
+}
+inline void ROOM_PASS_THROUGH_REQ::clear_var_message() {
+  var_message_.ClearToEmptyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline const std::string& ROOM_PASS_THROUGH_REQ::var_message() const {
+  // @@protoc_insertion_point(field_get:ROOM_PASS_THROUGH_REQ.var_message)
+  return _internal_var_message();
+}
+inline void ROOM_PASS_THROUGH_REQ::set_var_message(const std::string& value) {
+  _internal_set_var_message(value);
+  // @@protoc_insertion_point(field_set:ROOM_PASS_THROUGH_REQ.var_message)
+}
+inline std::string* ROOM_PASS_THROUGH_REQ::mutable_var_message() {
+  // @@protoc_insertion_point(field_mutable:ROOM_PASS_THROUGH_REQ.var_message)
+  return _internal_mutable_var_message();
+}
+inline const std::string& ROOM_PASS_THROUGH_REQ::_internal_var_message() const {
+  return var_message_.GetNoArena();
+}
+inline void ROOM_PASS_THROUGH_REQ::_internal_set_var_message(const std::string& value) {
+  _has_bits_[0] |= 0x00000001u;
+  var_message_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), value);
+}
+inline void ROOM_PASS_THROUGH_REQ::set_var_message(std::string&& value) {
+  _has_bits_[0] |= 0x00000001u;
+  var_message_.SetNoArena(
+    &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:ROOM_PASS_THROUGH_REQ.var_message)
+}
+inline void ROOM_PASS_THROUGH_REQ::set_var_message(const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  _has_bits_[0] |= 0x00000001u;
+  var_message_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:ROOM_PASS_THROUGH_REQ.var_message)
+}
+inline void ROOM_PASS_THROUGH_REQ::set_var_message(const void* value, size_t size) {
+  _has_bits_[0] |= 0x00000001u;
+  var_message_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:ROOM_PASS_THROUGH_REQ.var_message)
+}
+inline std::string* ROOM_PASS_THROUGH_REQ::_internal_mutable_var_message() {
+  _has_bits_[0] |= 0x00000001u;
+  return var_message_.MutableNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline std::string* ROOM_PASS_THROUGH_REQ::release_var_message() {
+  // @@protoc_insertion_point(field_release:ROOM_PASS_THROUGH_REQ.var_message)
+  if (!_internal_has_var_message()) {
+    return nullptr;
+  }
+  _has_bits_[0] &= ~0x00000001u;
+  return var_message_.ReleaseNonDefaultNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline void ROOM_PASS_THROUGH_REQ::set_allocated_var_message(std::string* var_message) {
+  if (var_message != nullptr) {
+    _has_bits_[0] |= 0x00000001u;
+  } else {
+    _has_bits_[0] &= ~0x00000001u;
+  }
+  var_message_.SetAllocatedNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), var_message);
+  // @@protoc_insertion_point(field_set_allocated:ROOM_PASS_THROUGH_REQ.var_message)
+}
+
+// required int32 var_message_int = 3;
+inline bool ROOM_PASS_THROUGH_REQ::_internal_has_var_message_int() const {
+  bool value = (_has_bits_[0] & 0x00000002u) != 0;
+  return value;
+}
+inline bool ROOM_PASS_THROUGH_REQ::has_var_message_int() const {
+  return _internal_has_var_message_int();
+}
+inline void ROOM_PASS_THROUGH_REQ::clear_var_message_int() {
+  var_message_int_ = 0;
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 ROOM_PASS_THROUGH_REQ::_internal_var_message_int() const {
+  return var_message_int_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 ROOM_PASS_THROUGH_REQ::var_message_int() const {
+  // @@protoc_insertion_point(field_get:ROOM_PASS_THROUGH_REQ.var_message_int)
+  return _internal_var_message_int();
+}
+inline void ROOM_PASS_THROUGH_REQ::_internal_set_var_message_int(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  _has_bits_[0] |= 0x00000002u;
+  var_message_int_ = value;
+}
+inline void ROOM_PASS_THROUGH_REQ::set_var_message_int(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  _internal_set_var_message_int(value);
+  // @@protoc_insertion_point(field_set:ROOM_PASS_THROUGH_REQ.var_message_int)
+}
+
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

@@ -362,3 +362,26 @@ void Room::SendToAll(WORD MainId, BYTE * Data, WORD Length)
 			pSession->GetTCPSocket()->WritePacket(MainId, 0, Data, Length);
 	}
 }
+
+void Room::SET_X_Y_COLOR(byte X, byte Y, byte COLOR, int &FLAG)
+{
+	FLAG = X & 0xFF;
+
+	int temp = Y & 0xFF;
+	temp = temp << 8;
+	FLAG = FLAG | temp;
+
+	int _color = FLAG >> 16;
+	_color = _color | COLOR;
+	_color = _color << 16;
+	FLAG = FLAG | _color;
+}
+
+bool Room::Get_X_Y_COLOR(byte &X, byte &Y, byte &Color, int FLAG)
+{
+	X = (byte)(FLAG & 0xFF);
+	Y = (byte)(FLAG >> 8);
+	Color = (byte)((FLAG >> 16) & 0x01);
+
+	return true;
+}

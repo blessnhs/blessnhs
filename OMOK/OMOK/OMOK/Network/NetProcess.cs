@@ -118,13 +118,13 @@ namespace OMOK.Network
                                     User.Color = eTeam.Black;
                                     page.CurrentPage = page.Children[1];
                                     User.IsMyTurn = true;
-                                    User.MytrunStartTime = DateTime.Now;
-
+                              
                                     User.state = PlayerState.Room;
 
                                     var Room = (Room)page.Children[1];
                                     Room.UpdateTurnBackground(User.Color);
                                     Room.RefreshAim();
+                                    Room.InitTimer();
                                 }
                                 else
                                 {
@@ -159,6 +159,13 @@ namespace OMOK.Network
                             {
                                 BROADCAST_ROOM_MESSAGE_RES res = new BROADCAST_ROOM_MESSAGE_RES();
                                 res = BROADCAST_ROOM_MESSAGE_RES.Parser.ParseFrom(data.Data);
+                               
+                            }
+                            break;
+                        case (int)PROTOCOL.IdPktRoomPassThroughRes:
+                            {
+                                ROOM_PASS_THROUGH_RES res = new ROOM_PASS_THROUGH_RES();
+                                res = ROOM_PASS_THROUGH_RES.Parser.ParseFrom(data.Data);
 
                                 var Room = (Room)page.Children[1];
 
@@ -215,13 +222,13 @@ namespace OMOK.Network
                                     User.Color = eTeam.White;
                                     page.CurrentPage = page.Children[1];
                                     User.IsMyTurn = false;
-                                    User.MytrunStartTime = DateTime.Now;
 
                                     User.state = PlayerState.Room;
 
                                     var Room = (Room)page.Children[1];
                                     Room.UpdateTurnBackground(User.Color);
                                     Room.RefreshAim();
+                                    Room.InitTimer();
                                 }
                             }
                             break;
@@ -368,7 +375,7 @@ namespace OMOK.Network
             }
         }
 
-        static public void SendRoomMessage(int x,int y,eTeam team,string msg)
+        static public void SendRoomMessage(string msg)
         {
 
             var bytearray = System.Text.Encoding.UTF8.GetBytes(msg);
@@ -376,9 +383,7 @@ namespace OMOK.Network
             BROADCAST_ROOM_MESSAGE_REQ message = new BROADCAST_ROOM_MESSAGE_REQ
             {
                 VarMessage =  ByteString.CopyFrom(bytearray),
-                VarX = x,
-                VarY = y,
-                VarColor = team
+              
             };
             using (MemoryStream stream = new MemoryStream())
             {
@@ -387,5 +392,30 @@ namespace OMOK.Network
                 client.WritePacket((int)PROTOCOL.IdPktBroadcastRoomMessageReq, stream.ToArray(), stream.ToArray().Length);
             }
         }
+
+
+        static public void SendPassThroughMessage(int x, int y, eTeam team, string msg="0")
+        {
+            var bytearray = System.Text.Encoding.UTF8.GetBytes(msg);
+
+            ROOM_PASS_THROUGH_REQ message = new ROOM_PASS_THROUGH_REQ
+            {
+                VarMessage = ByteString.CopyFrom(bytearray),
+            };
+
+            int flag = 0;
+
+            Helper.SET_X_Y_COLOR((sbyte)x, (sbyte)y, (byte)(team == eTeam.White ? 0 : 1),ref flag);
+
+            message.VarMessageInt = flag;
+
+            using (MemoryStream stream = new MemoryStream())
+            {
+                message.WriteTo(stream);
+
+                client.WritePacket((int)PROTOCOL.IdPktRoomPassThroughReq, stream.ToArray(), stream.ToArray().Length);
+            }
+        }
     }
 }
+

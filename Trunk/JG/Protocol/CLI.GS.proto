@@ -42,11 +42,6 @@ message BROADCAST_ROOM_MESSAGE_REQ
 {
     optional PROTOCOL   id                  = 1 [default = ID_PKT_BROADCAST_ROOM_MESSAGE_REQ ];
     required bytes     var_message         = 2;
-
-   required int32 	var_x 	           = 3;
-   required int32 	var_y 	           = 4;
-   required eTeam   var_color           = 5;
-
 }
 
 message ROOM_LIST_REQ
@@ -63,6 +58,19 @@ message MATCH_REQ
 message RANK_REQ
 {
     optional PROTOCOL   id                        = 1 [default = ID_PKT_RANK_REQ  ];
+}
+
+message QNS_REQ
+{
+    optional PROTOCOL   id                        = 1 [default = ID_PKT_QNS_REQ   ];
+    required bytes     var_message         = 2;
+}
+
+message ROOM_PASS_THROUGH_REQ
+{
+    optional PROTOCOL   id                        = 1 [default = ID_PKT_ROOM_PASS_THROUGH_REQ    ];
+    required bytes     var_message    	     = 2;
+    required int32       var_message_int         = 3;
 }
 
 

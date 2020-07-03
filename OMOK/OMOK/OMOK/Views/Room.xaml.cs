@@ -41,8 +41,7 @@ namespace OMOK
 
                     if ((DateTime.Now - User.MytrunStartTime).TotalSeconds > 30)
                     {
-                        string Message = -1 + ":" + -1 + ":" + User.Color.ToString();
-                        NetProcess.SendRoomMessage(-1, -1, User.Color, Message);
+                        NetProcess.SendPassThroughMessage(-1, -1, User.Color);
                     }
                 }
 
@@ -52,48 +51,43 @@ namespace OMOK
             PrepareForNewGame();
         }
 
-        public void ProcReceivePutStoneMessage(BROADCAST_ROOM_MESSAGE_RES res)
+        public void InitTimer()
         {
-            string Message = System.Text.Encoding.UTF8.GetString(res.VarMessage.ToByteArray());// //Helper.ToStr(res.VarMessage.ToByteArray());
+            User.MytrunStartTime = DateTime.Now;
+            ProgressRoom.Progress = 0.0f;
 
-            string[] header = Message.Split(':');
-            if (header.Length > 2)
+            timeLabel.Text = (DateTime.Now - User.MytrunStartTime).ToString(timeFormat);
+
+        }
+
+        public void ProcReceivePutStoneMessage(ROOM_PASS_THROUGH_RES res)
+        {
+
+            sbyte x = 0, y = 0;
+            byte icolor = 0;
+
+            Helper.Get_X_Y_COLOR(ref x, ref y, ref icolor, res.VarMessageInt);
+
+            eTeam color = icolor == 0 ? eTeam.White : eTeam.Black;
+
+            if (CheckValid(x, y) == true) //시간만료면 false
             {
-                int x = Convert.ToInt32(header[0]);
-                int y = Convert.ToInt32(header[1]);
+                UpdateStone(x, y, color);
+            }
 
-                eTeam color = res.VarColor;
-
-                if (CheckValid(x, y) == true) //시간만료면 false
+            //check turn
+            {
+                if (User.Color == color)
                 {
-                    //draw stone
-                    if (header[2] == "White")
-                    {
-                        color = eTeam.White;
-                        UpdateStone(x, y, eTeam.White);
-                    }
-                    else
-                    {
-                        color = eTeam.Black;
-                        UpdateStone(x, y, eTeam.Black);
-                    }
+                    User.IsMyTurn = false;
+                }
+                else
+                {
+                    User.IsMyTurn = true;
+                    User.MytrunStartTime = DateTime.Now;
                 }
 
-                //check turn
-                {
-                    if (User.Color == color)
-                    {
-                        User.IsMyTurn = false;
-                    }
-                    else
-                    {
-                        User.IsMyTurn = true;
-                        User.MytrunStartTime = DateTime.Now;
-                    }
-
-                    UpdateTurnBackground(color);
-
-                }
+                UpdateTurnBackground(color);
 
             }
         }
@@ -237,8 +231,7 @@ namespace OMOK
 
 
             board.prevsTATE = User.Color;
-            string Message = board.x + ":" + board.y + ":" + User.Color.ToString();
-            NetProcess.SendRoomMessage(board.x, board.y, User.Color, Message);
+            NetProcess.SendPassThroughMessage(board.x, board.y, User.Color);
         }
 
         async void OnClickedDown(object sender, System.EventArgs e)

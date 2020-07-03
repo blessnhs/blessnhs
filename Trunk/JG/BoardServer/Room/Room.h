@@ -84,6 +84,9 @@ public:
 	
 	concurrency::concurrent_unordered_map<DWORD, PLAYER_PTR>		m_PlayerMap;
 
+	void SET_X_Y_COLOR(byte X, byte Y, byte COLOR, int& FLAG);
+	bool Get_X_Y_COLOR(byte& X, byte& Y, byte& Color, int FLAG);
+
 private:
 
 
