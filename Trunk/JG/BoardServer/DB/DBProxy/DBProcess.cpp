@@ -161,6 +161,34 @@ int CDBProcessCer::UpdaetPlayerScore(INT64 Index,int Win, int Lose, int Draw,int
 	return _ERR_NONE;
 }
 
+int CDBProcessCer::UpdaetQNS(INT64 Index, std::string contents)
+{
+	SQLRETURN		retcode = SQL_ERROR;
+	CDBHandle		dbhandle(m_pDB->m_hdbc, &(m_pDB->m_csDBHandle));
+	SQLHSTMT		hstmt = dbhandle.GetHandle();
+	SQLCHAR			szSQL[1024];
+	sprintf_s((char*)szSQL, sizeof(szSQL), ("{call SP_ADD_QNS ('%s',%d)}"), contents.c_str(),Index);
+
+	retcode = SQLExecDirect(hstmt, szSQL, SQL_NTS);
+	if (retcode == SQL_ERROR)
+	{	// true is Disconnected...
+
+
+		if (m_pDB->SQLErrorMsg(hstmt, __FUNCTION__) == true)
+		{
+			printf(("database server Network Error... %s() \n"), __FUNCTION__);
+			m_pDB->Close();
+			m_pDB->ReConnect();
+			//odbc->SetRecconectFlag(true);
+		}
+		printf(("database server query Error... %s() \n"), __FUNCTION__);
+		return _ERR_NETWORK;
+	}
+
+
+	return _ERR_NONE;
+}
+
 int	 CDBProcessCer::ProcedureUserLogout(const DWORD id)
 {
 	SQLRETURN		retcode = SQL_ERROR;

@@ -18,6 +18,8 @@
 #include <iostream>
 #include <sstream>
 
+#include <boost/algorithm/string/replace.hpp>
+
 #include "Base64.h"
 
 using namespace ::pplx;
@@ -177,6 +179,41 @@ namespace Board	{
 		void Undo() {}
 	};
 
+
+	template<>
+	class MSG_PLAYER_QUERY<RequestQNS> : public IMESSAGE
+	{
+	public:
+		MSG_PLAYER_QUERY() { }
+		~MSG_PLAYER_QUERY() {}
+
+		GSCLIENT_PTR pSession;
+
+		boost::shared_ptr<RequestQNS> pRequst;
+
+		void Execute(LPVOID Param)
+		{
+			DBPROCESS_CER_PTR pProcess = DBPROCESSCONTAINER_CER.Search(pSession->GetMyDBTP());
+			if (pProcess == NULL || pProcess->m_IsOpen == false)
+			{
+				return;
+			}
+
+			boost::replace_all(pRequst->contents, "'", "''");
+
+			int ret = pProcess->UpdaetQNS(pRequst->Index, pRequst->contents);
+
+			ErrorCode code = ret == 0 ? ErrorCode::Success : ErrorCode::DataBaseError;
+
+			QNS_RES res;
+			res.set_var_code(code);
+
+			SEND_PROTO_BUFFER(res, pSession)
+		}
+
+		void Undo() {}
+	};
+
 	template<>
 	class MSG_PLAYER_QUERY<RequestLogout> : public IMESSAGE
 	{
@@ -325,6 +362,8 @@ namespace Board	{
 
 			if (pSession == NULL || pSession->GetConnected() == false)
 			{
+				printf("pSession isnull or disconnect", pSession);
+
 				res.set_var_code(DataBaseError);
 
 				SEND_PROTO_BUFFER(res, pSession)
@@ -334,6 +373,8 @@ namespace Board	{
 			DBPROCESS_CER_PTR pProcess = DBPROCESSCONTAINER_CER.Search(pSession->GetMyDBTP());
 			if (pProcess == NULL || pProcess->m_IsOpen == false)
 			{
+				printf("DBPROCESSCONTAINER_CER.Search wong %d \n", pSession->GetMyDBTP());
+
 				res.set_var_code(DataBaseError);
 
 				SEND_PROTO_BUFFER(res, pSession)
@@ -344,6 +385,7 @@ namespace Board	{
 
 			if(http_out.size() != 5)
 			{
+				printf("http_out wong %d \n", http_out.size());
 				res.set_var_code(DataBaseError);
 
 				SEND_PROTO_BUFFER(res, pSession)
@@ -352,11 +394,15 @@ namespace Board	{
 
 			std::string flatformid, name, picture_url, email;
 
+			printf("%s\n %s\n ", http_out[1].c_str(), http_out[2].c_str());
+
 			flatformid.assign(http_out[1].begin(), http_out[1].end());
 			email.assign(http_out[2].begin(), http_out[2].end());
 			picture_url.assign(http_out[4].begin(), http_out[4].end());
 
 			Base64::convert_unicode_to_ansi_string(name, http_out[3].c_str(), http_out[3].size());
+
+			printf("%s\n %s\n", http_out[3].c_str(), http_out[4].c_str());
 
 			int rank, score, win, lose, draw, level;
 

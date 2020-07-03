@@ -58,6 +58,9 @@
     <Filter Include="PROTO">
       <UniqueIdentifier>{c26e4cea-0fc7-4eb4-8dff-d438cf760093}</UniqueIdentifier>
     </Filter>
+    <Filter Include="PROTO\script">
+      <UniqueIdentifier>{b4c601b3-4939-4153-a32c-008bda0e37b6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Ini\INI.h">
@@ -204,5 +207,17 @@
   <ItemGroup>
     <None Include="..\NetClient\NetClient.sln" />
     <None Include="packages.config" />
+    <None Include="..\Protocol\CLI.GS.proto">
+      <Filter>PROTO\script</Filter>
+    </None>
+    <None Include="..\Protocol\Enum.proto">
+      <Filter>PROTO\script</Filter>
+    </None>
+    <None Include="..\Protocol\GS.CLI.proto">
+      <Filter>PROTO\script</Filter>
+    </None>
+    <None Include="..\Protocol\Structure.proto">
+      <Filter>PROTO\script</Filter>
+    </None>
   </ItemGroup>
 </Project>

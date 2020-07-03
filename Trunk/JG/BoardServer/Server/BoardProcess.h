@@ -39,6 +39,8 @@ public:
 
 	VOID ROOM_PASSTHROUGH(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client);
 
+	VOID QNS(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client);
+
 protected:
 
 	DECLARE_MSG_MAP(BoardProcess)

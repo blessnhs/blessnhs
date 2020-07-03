@@ -34,8 +34,6 @@ enum PROTOCOL
 
 	ID_PKT_ROOM_PASS_THROUGH_REQ = 23;
 	ID_PKT_ROOM_PASS_THROUGH_RES = 24;
-
-	
 };
 
 enum ErrorCode

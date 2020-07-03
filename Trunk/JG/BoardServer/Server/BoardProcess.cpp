@@ -20,6 +20,7 @@ BoardProcess::BoardProcess(void)
 	ADD_NET_FUNC(BoardProcess, ID_PKT_MATCH_REQ, MATCH);
 	ADD_NET_FUNC(BoardProcess, ID_PKT_RANK_REQ, RANK);
 	ADD_NET_FUNC(BoardProcess, ID_PKT_ROOM_PASS_THROUGH_REQ, ROOM_PASSTHROUGH);
+	ADD_NET_FUNC(BoardProcess, ID_PKT_QNS_REQ, QNS);
 }
 
 
@@ -134,6 +135,34 @@ VOID BoardProcess::ROOM_CREATE(LPVOID Data, DWORD Length, boost::shared_ptr<GSCl
 	SEND_PROTO_BUFFER(res, pOwner)
 
 	RoomPtr->SendNewUserInfo(pPlayer);	//방에 있는 유저들에게 새로운 유저 정보전송
+}
+
+VOID BoardProcess::QNS(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client)
+{
+	DECLARE_RECV_TYPE(QNS_REQ, message)
+
+	if (message.var_message().length() > 2048 || message.var_message().length() <= 0)
+	{
+		return;
+	}
+
+	PlayerPtr pPlayer = PLAYERMGR.Search(Client->GetPair());
+	if (pPlayer == NULL)
+	{
+		return;
+	}
+
+	//로그인 쿼리를 날린다.
+	boost::shared_ptr<RequestQNS> pRequest = ALLOCATOR.Create<RequestQNS>();
+	pRequest->Index = pPlayer->GetId();
+	pRequest->contents = message.var_message();
+
+	boost::shared_ptr<Board::MSG_PLAYER_QUERY<RequestQNS>>		PLAYER_MSG = ALLOCATOR.Create<Board::MSG_PLAYER_QUERY<RequestQNS>>();
+	PLAYER_MSG->pRequst = pRequest;
+	PLAYER_MSG->Type = Client->GetMyDBTP();
+	PLAYER_MSG->SubType = ONQUERY;
+	PLAYER_MSG->pSession = Client;
+	MAINPROC.RegisterCommand(PLAYER_MSG);
 }
 
 VOID BoardProcess::ROOM_PASSTHROUGH(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client)

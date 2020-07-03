@@ -55,6 +55,20 @@ public:
 	int Result;
 };
 
+class RequestQNS : public GSObject
+{
+public:
+	RequestQNS(void)
+	{
+	}
+
+	~RequestQNS(void) {}
+
+	std::string contents;
+	DWORD Index;
+	int Result;
+};
+
 class RequestLogout : public GSObject
 {
 public:
