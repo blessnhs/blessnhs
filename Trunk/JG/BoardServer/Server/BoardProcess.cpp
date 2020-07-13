@@ -299,7 +299,6 @@ VOID BoardProcess::ROOM_ENTER(LPVOID Data, DWORD Length, boost::shared_ptr<GSCli
 VOID BoardProcess::ROOM_LEAVE(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> pOwner)
 {
 	DECLARE_RECV_TYPE(LEAVE_ROOM_REQ, leaveroom)
-
 	
 	PlayerPtr pPlayer = PLAYERMGR.Search(pOwner->GetPair());
 	if (pPlayer == NULL)
@@ -307,7 +306,8 @@ VOID BoardProcess::ROOM_LEAVE(LPVOID Data, DWORD Length, boost::shared_ptr<GSCli
 		return;
 	}
 
-	
+	ROOMMGR.LeaveRoomPlayer(pPlayer);
+
 }
 
 VOID BoardProcess::ROOM_START(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> pOwner)

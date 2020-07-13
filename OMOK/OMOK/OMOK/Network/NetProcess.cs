@@ -34,9 +34,9 @@ namespace OMOK.Network
 
         static public void start()
         {
-            string ip="127.0.0.1";
+            string ip="192.168.0.9";
 
-            ip = GetIPAddress("blessnhs.iptime.org");
+        //    ip = GetIPAddress("blessnhs.iptime.org");
             //연결중이면 안한다. 
             if (client.socket == null || client.socket.Connected == false)
             {
@@ -115,6 +115,8 @@ namespace OMOK.Network
 
                                 if (res.VarCode == ErrorCode.Success)
                                 {
+                                    ((Lobby)page.Children[0]).CloseMatchInfoPopup();
+
                                     User.Color = eTeam.Black;
                                     page.CurrentPage = page.Children[1];
                                     User.IsMyTurn = true;
@@ -219,6 +221,8 @@ namespace OMOK.Network
 
                                 if (res.VarCode == ErrorCode.Success)
                                 {
+                                    ((Lobby)page.Children[0]).CloseMatchInfoPopup();
+
                                     User.Color = eTeam.White;
                                     page.CurrentPage = page.Children[1];
                                     User.IsMyTurn = false;
@@ -390,6 +394,23 @@ namespace OMOK.Network
                 message.WriteTo(stream);
 
                 client.WritePacket((int)PROTOCOL.IdPktBroadcastRoomMessageReq, stream.ToArray(), stream.ToArray().Length);
+            }
+        }
+
+        static public void SendQNS(string msg)
+        {
+            var bytearray = System.Text.Encoding.UTF8.GetBytes(msg);
+
+            QNS_REQ message = new QNS_REQ
+            {
+                VarMessage = ByteString.CopyFrom(bytearray),
+
+            };
+            using (MemoryStream stream = new MemoryStream())
+            {
+                message.WriteTo(stream);
+
+                client.WritePacket((int)PROTOCOL.IdPktQnsReq, stream.ToArray(), stream.ToArray().Length);
             }
         }
 

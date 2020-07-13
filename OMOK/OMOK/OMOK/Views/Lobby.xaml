@@ -60,7 +60,7 @@
 
                 <!--5row 0번째 이름 -->
                 <Frame BorderColor="Gray"  CornerRadius="5" Grid.Column="0"  Grid.Row="3"  Grid.ColumnSpan="2" Padding="0,0,0,0">
-                    <Button x:Name="NameButton" Text="이름" Clicked="OnMatchClicked" BackgroundColor="White"/>
+                    <Button x:Name="NameButton" Text="이름" Clicked="OnProfileClicked" BackgroundColor="White"/>
                 </Frame>
 
                 <!--5row 1번째 기보 -->

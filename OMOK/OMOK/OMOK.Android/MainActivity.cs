@@ -32,6 +32,8 @@ namespace OMOK.Droid
 
             base.OnCreate(savedInstanceState);
 
+            Rg.Plugins.Popup.Popup.Init(this, savedInstanceState);
+
             //테스트 광고가 아닐 경우 APP ID를 넣어줘야 한다.
             MobileAds.Initialize(ApplicationContext, "YOUR ANDROID APP ID HERE");
 

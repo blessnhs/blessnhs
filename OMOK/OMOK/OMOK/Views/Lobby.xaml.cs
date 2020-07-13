@@ -12,6 +12,7 @@ using NetClient;
 using OMOK.Network;
 using OMOK.CustomAdMobView;
 using Google.Protobuf.Collections;
+using Rg.Plugins.Popup.Extensions;
 
 namespace OMOK.Views
 {
@@ -96,6 +97,11 @@ namespace OMOK.Views
             DisplayAlert("", msg, "OK");
         }
 
+        public void CloseMatchInfoPopup()
+        {
+            Navigation.PopModalAsync();
+        }
+
         public static Task<string> InputBox(INavigation navigation)
         {
             // wait in this proc, until user did his input 
@@ -161,9 +167,17 @@ namespace OMOK.Views
             return tcs.Task;
         }
 
+        async void OnProfileClicked(object sender, System.EventArgs e)
+        {
+            await Navigation.PushPopupAsync(new LoginPopupPage());
+        }
+
         async void OnMatchClicked(object sender, System.EventArgs e)
         {
            NetProcess.SendMatch();
+
+           Navigation.PushModalAsync(new MatchInfoPage()/*_MachPage*/);
+
         }
         async void OnRankClicked(object sender, System.EventArgs e)
         {

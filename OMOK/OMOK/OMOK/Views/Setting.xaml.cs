@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OMOK.Network;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -25,8 +26,18 @@ namespace OMOK.Views
             RankLabel.Text = "현재 순위 " + User.myInfo.rank + " 위";
         }
 
+        
+         async void OnCloseButtonClicked(object sender, EventArgs e)
+        {
+            Navigation.PopModalAsync();
+        }
         async void OnSendButtonClicked(object sender, EventArgs e)
         {
+            NetProcess.SendQNS(contents.Text);
+
+            await DisplayAlert("", "전송하였습니다..\n", "OK");
+
+            contents.Text = "";
         }
     }
 

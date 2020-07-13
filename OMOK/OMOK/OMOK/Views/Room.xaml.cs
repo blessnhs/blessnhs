@@ -9,6 +9,7 @@ using Xamarin.Forms.Xaml;
 using OMOK.Network;
 using OMOK.CustomAdMobView;
 using OMOK.Views;
+using Rg.Plugins.Popup.Extensions;
 
 namespace OMOK
 {
@@ -181,13 +182,6 @@ namespace OMOK
          //   contentView.Padding = new Thickness(horzPadding, vertPadding);
         }
 
-
-
-        void OnplayAgainButtonClicked(object sender, object EventArgs)
-        {
-            PrepareForNewGame();
-        }
-
         public void ShowLeaveAd()
         {
             iIterstitia.ShowAd();
@@ -281,6 +275,10 @@ namespace OMOK
         {
             try
             {
+                Navigation.PushPopupAsync(new GameResultPage(nty));
+
+                User.IsMyTurn = false;
+
                 string Message = "";
 
                 if (nty.VarIndex1 == User.Id)
