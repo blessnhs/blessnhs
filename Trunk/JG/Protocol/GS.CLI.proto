@@ -121,3 +121,8 @@ message ROOM_PASS_THROUGH_RES
     required int32       var_message_int         = 3;
 }
 
+message CANCEL_MATCH_RES
+{
+    optional PROTOCOL   id                        = 1 [default = ID_PKT_CANCEL_MATCH_RES    ];
+}
+

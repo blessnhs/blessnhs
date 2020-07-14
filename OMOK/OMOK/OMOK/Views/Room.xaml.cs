@@ -279,49 +279,6 @@ namespace OMOK
 
                 User.IsMyTurn = false;
 
-                string Message = "";
-
-                if (nty.VarIndex1 == User.Id)
-                {
-                    if (User.myInfo.level < nty.VarLevel1)
-                    {
-                        Message = "축하합니다. 승급하셨습니다. " + User.myInfo.level + " => " + nty.VarLevel1;
-                    }
-                    else if (User.myInfo.level > nty.VarLevel1)
-                    {
-                        Message = "강등되셨습니다. " + User.myInfo.level + " => " + nty.VarLevel1;
-                    }
-
-                    Message += "\n 포인트 " + User.myInfo.score + " => " + nty.VarLevelPoint1;
-
-                    User.myInfo.level = nty.VarLevel1;
-                    User.myInfo.score = nty.VarLevelPoint1;
-                }
-                else if (nty.VarIndex2 == User.Id)
-                {
-                    if (User.myInfo.level < nty.VarLevel2)
-                    {
-                        Message = "축하합니다. 승급하셨습니다. " + User.myInfo.level + " => " + nty.VarLevel2;
-                    }
-                    else if (User.myInfo.level > nty.VarLevel2)
-                    {
-                        Message = "강등되셨습니다. " + User.myInfo.level + " => " + nty.VarLevel2;
-                    }
-
-                    Message += "\n 포인트 " + User.myInfo.score + " => " + nty.VarLevelPoint2;
-
-                    User.myInfo.level = nty.VarLevel2;
-                    User.myInfo.score = nty.VarLevelPoint2;
-                }
-
-
-
-                if (nty.VarIndex == User.Id)
-                    DisplayAlert("", "승리 하셨습니다..\n" + Message, "OK");
-                else
-                    DisplayAlert("", "패배 하셨습니다.\n" + Message, "OK");
-
-
                 if (User.Id == nty.VarIndex)
                 {
                     User.myInfo.win += 1;

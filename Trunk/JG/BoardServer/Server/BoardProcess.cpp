@@ -21,6 +21,8 @@ BoardProcess::BoardProcess(void)
 	ADD_NET_FUNC(BoardProcess, ID_PKT_RANK_REQ, RANK);
 	ADD_NET_FUNC(BoardProcess, ID_PKT_ROOM_PASS_THROUGH_REQ, ROOM_PASSTHROUGH);
 	ADD_NET_FUNC(BoardProcess, ID_PKT_QNS_REQ, QNS);
+	ADD_NET_FUNC(BoardProcess, ID_PKT_CANCEL_MATCH_REQ, CANCEL_MATCH);
+	
 }
 
 
@@ -135,6 +137,22 @@ VOID BoardProcess::ROOM_CREATE(LPVOID Data, DWORD Length, boost::shared_ptr<GSCl
 	SEND_PROTO_BUFFER(res, pOwner)
 
 	RoomPtr->SendNewUserInfo(pPlayer);	//방에 있는 유저들에게 새로운 유저 정보전송
+}
+
+VOID BoardProcess::CANCEL_MATCH(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client)
+{
+	DECLARE_RECV_TYPE(CANCEL_MATCH_REQ, message)
+
+	PlayerPtr pPlayer = PLAYERMGR.Search(Client->GetPair());
+	if (pPlayer == NULL)
+	{
+		return;
+	}
+
+	ROOMMGR.DelMatchMap(pPlayer);
+
+	CANCEL_MATCH_RES res;
+	SEND_PROTO_BUFFER(res, Client)
 }
 
 VOID BoardProcess::QNS(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client)

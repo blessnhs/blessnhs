@@ -394,15 +394,11 @@ namespace Board	{
 
 			std::string flatformid, name, picture_url, email;
 
-			printf("%s\n %s\n ", http_out[1].c_str(), http_out[2].c_str());
-
 			flatformid.assign(http_out[1].begin(), http_out[1].end());
 			email.assign(http_out[2].begin(), http_out[2].end());
 			picture_url.assign(http_out[4].begin(), http_out[4].end());
 
 			Base64::convert_unicode_to_ansi_string(name, http_out[3].c_str(), http_out[3].size());
-
-			printf("%s\n %s\n", http_out[3].c_str(), http_out[4].c_str());
 
 			int rank, score, win, lose, draw, level;
 

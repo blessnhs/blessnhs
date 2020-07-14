@@ -49,7 +49,7 @@ struct TableStruct_CLI_2eGS_2eproto {
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::PROTOBUF_NAMESPACE_ID::internal::AuxillaryParseTableField aux[]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
-  static const ::PROTOBUF_NAMESPACE_ID::internal::ParseTable schema[11]
+  static const ::PROTOBUF_NAMESPACE_ID::internal::ParseTable schema[12]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::PROTOBUF_NAMESPACE_ID::internal::FieldMetadata field_metadata[];
   static const ::PROTOBUF_NAMESPACE_ID::internal::SerializationTable serialization_table[];
@@ -59,6 +59,9 @@ extern const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table
 class BROADCAST_ROOM_MESSAGE_REQ;
 class BROADCAST_ROOM_MESSAGE_REQDefaultTypeInternal;
 extern BROADCAST_ROOM_MESSAGE_REQDefaultTypeInternal _BROADCAST_ROOM_MESSAGE_REQ_default_instance_;
+class CANCEL_MATCH_REQ;
+class CANCEL_MATCH_REQDefaultTypeInternal;
+extern CANCEL_MATCH_REQDefaultTypeInternal _CANCEL_MATCH_REQ_default_instance_;
 class CREATE_ROOM_REQ;
 class CREATE_ROOM_REQDefaultTypeInternal;
 extern CREATE_ROOM_REQDefaultTypeInternal _CREATE_ROOM_REQ_default_instance_;
@@ -91,6 +94,7 @@ class VERSION_REQDefaultTypeInternal;
 extern VERSION_REQDefaultTypeInternal _VERSION_REQ_default_instance_;
 PROTOBUF_NAMESPACE_OPEN
 template<> ::BROADCAST_ROOM_MESSAGE_REQ* Arena::CreateMaybeMessage<::BROADCAST_ROOM_MESSAGE_REQ>(Arena*);
+template<> ::CANCEL_MATCH_REQ* Arena::CreateMaybeMessage<::CANCEL_MATCH_REQ>(Arena*);
 template<> ::CREATE_ROOM_REQ* Arena::CreateMaybeMessage<::CREATE_ROOM_REQ>(Arena*);
 template<> ::ENTER_ROOM_REQ* Arena::CreateMaybeMessage<::ENTER_ROOM_REQ>(Arena*);
 template<> ::LEAVE_ROOM_REQ* Arena::CreateMaybeMessage<::LEAVE_ROOM_REQ>(Arena*);
@@ -1826,6 +1830,146 @@ class ROOM_PASS_THROUGH_REQ :
   int id_;
   friend struct ::TableStruct_CLI_2eGS_2eproto;
 };
+// -------------------------------------------------------------------
+
+class CANCEL_MATCH_REQ :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:CANCEL_MATCH_REQ) */ {
+ public:
+  CANCEL_MATCH_REQ();
+  virtual ~CANCEL_MATCH_REQ();
+
+  CANCEL_MATCH_REQ(const CANCEL_MATCH_REQ& from);
+  CANCEL_MATCH_REQ(CANCEL_MATCH_REQ&& from) noexcept
+    : CANCEL_MATCH_REQ() {
+    *this = ::std::move(from);
+  }
+
+  inline CANCEL_MATCH_REQ& operator=(const CANCEL_MATCH_REQ& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline CANCEL_MATCH_REQ& operator=(CANCEL_MATCH_REQ&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  inline const ::PROTOBUF_NAMESPACE_ID::UnknownFieldSet& unknown_fields() const {
+    return _internal_metadata_.unknown_fields();
+  }
+  inline ::PROTOBUF_NAMESPACE_ID::UnknownFieldSet* mutable_unknown_fields() {
+    return _internal_metadata_.mutable_unknown_fields();
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return GetMetadataStatic().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return GetMetadataStatic().reflection;
+  }
+  static const CANCEL_MATCH_REQ& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const CANCEL_MATCH_REQ* internal_default_instance() {
+    return reinterpret_cast<const CANCEL_MATCH_REQ*>(
+               &_CANCEL_MATCH_REQ_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    11;
+
+  friend void swap(CANCEL_MATCH_REQ& a, CANCEL_MATCH_REQ& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(CANCEL_MATCH_REQ* other) {
+    if (other == this) return;
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline CANCEL_MATCH_REQ* New() const final {
+    return CreateMaybeMessage<CANCEL_MATCH_REQ>(nullptr);
+  }
+
+  CANCEL_MATCH_REQ* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
+    return CreateMaybeMessage<CANCEL_MATCH_REQ>(arena);
+  }
+  void CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void CopyFrom(const CANCEL_MATCH_REQ& from);
+  void MergeFrom(const CANCEL_MATCH_REQ& from);
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  ::PROTOBUF_NAMESPACE_ID::uint8* _InternalSerialize(
+      ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  inline void SharedCtor();
+  inline void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(CANCEL_MATCH_REQ* other);
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "CANCEL_MATCH_REQ";
+  }
+  private:
+  inline ::PROTOBUF_NAMESPACE_ID::Arena* GetArenaNoVirtual() const {
+    return nullptr;
+  }
+  inline void* MaybeArenaPtr() const {
+    return nullptr;
+  }
+  public:
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+  private:
+  static ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadataStatic() {
+    ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&::descriptor_table_CLI_2eGS_2eproto);
+    return ::descriptor_table_CLI_2eGS_2eproto.file_level_metadata[kIndexInFileMessages];
+  }
+
+  public:
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kIdFieldNumber = 1,
+  };
+  // optional .PROTOCOL id = 1 [default = ID_PKT_CANCEL_MATCH_REQ];
+  bool has_id() const;
+  private:
+  bool _internal_has_id() const;
+  public:
+  void clear_id();
+  ::PROTOCOL id() const;
+  void set_id(::PROTOCOL value);
+  private:
+  ::PROTOCOL _internal_id() const;
+  void _internal_set_id(::PROTOCOL value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:CANCEL_MATCH_REQ)
+ private:
+  class _Internal;
+
+  ::PROTOBUF_NAMESPACE_ID::internal::InternalMetadataWithArena _internal_metadata_;
+  ::PROTOBUF_NAMESPACE_ID::internal::HasBits<1> _has_bits_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  int id_;
+  friend struct ::TableStruct_CLI_2eGS_2eproto;
+};
 // ===================================================================
 
 
@@ -2706,9 +2850,44 @@ inline void ROOM_PASS_THROUGH_REQ::set_var_message_int(::PROTOBUF_NAMESPACE_ID::
   // @@protoc_insertion_point(field_set:ROOM_PASS_THROUGH_REQ.var_message_int)
 }
 
+// -------------------------------------------------------------------
+
+// CANCEL_MATCH_REQ
+
+// optional .PROTOCOL id = 1 [default = ID_PKT_CANCEL_MATCH_REQ];
+inline bool CANCEL_MATCH_REQ::_internal_has_id() const {
+  bool value = (_has_bits_[0] & 0x00000001u) != 0;
+  return value;
+}
+inline bool CANCEL_MATCH_REQ::has_id() const {
+  return _internal_has_id();
+}
+inline void CANCEL_MATCH_REQ::clear_id() {
+  id_ = 25;
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline ::PROTOCOL CANCEL_MATCH_REQ::_internal_id() const {
+  return static_cast< ::PROTOCOL >(id_);
+}
+inline ::PROTOCOL CANCEL_MATCH_REQ::id() const {
+  // @@protoc_insertion_point(field_get:CANCEL_MATCH_REQ.id)
+  return _internal_id();
+}
+inline void CANCEL_MATCH_REQ::_internal_set_id(::PROTOCOL value) {
+  assert(::PROTOCOL_IsValid(value));
+  _has_bits_[0] |= 0x00000001u;
+  id_ = value;
+}
+inline void CANCEL_MATCH_REQ::set_id(::PROTOCOL value) {
+  _internal_set_id(value);
+  // @@protoc_insertion_point(field_set:CANCEL_MATCH_REQ.id)
+}
+
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------
