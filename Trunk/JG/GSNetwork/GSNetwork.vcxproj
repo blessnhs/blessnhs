@@ -236,6 +236,7 @@
     <ClInclude Include="Adapt.h" />
     <ClInclude Include="Base64.h" />
     <ClInclude Include="CommonSock.h" />
+    <ClInclude Include="ConsoleHelper.h" />
     <ClInclude Include="DBJob\ClearConcurrent.h" />
     <ClInclude Include="DBJob\ClosePlayer.h" />
     <ClInclude Include="DBJob\RequestPlayerAuth.h" />
@@ -325,6 +326,7 @@
     <ClCompile Include="Adapt.cpp" />
     <ClCompile Include="Base64.cpp" />
     <ClCompile Include="CommonSock.cpp" />
+    <ClCompile Include="ConsoleHelper.cpp" />
     <ClCompile Include="DBJob\ClearConcurrent.cpp" />
     <ClCompile Include="DBJob\ClosePlayer.cpp" />
     <ClCompile Include="DBJob\RequestPlayerAuth.cpp" />

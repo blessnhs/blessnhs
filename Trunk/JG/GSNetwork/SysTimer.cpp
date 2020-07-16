@@ -29,7 +29,7 @@ void SysTimer::Start(LPVOID pServer)
 	SysTimerJob *pJob = m_SysTimerJobPool.malloc();
 
 	pJob->Func = SysTimer::OnEvt;
-	pJob->SetExpineTime(GetTickCount() + 5000);
+	pJob->SetExpineTime(GetTickCount());
 	pJob->SetId(SysTimer::SYS_TIMER);
 
 	AddTimerJob(pJob);
@@ -57,7 +57,7 @@ void SysTimer::OnEvt(LPVOID Arg)
 			SysTimerJob* pNewJob = GetSysTimer().m_SysTimerJobPool.malloc();
 
 			pNewJob->Func = SysTimer::OnEvt;
-			pNewJob->SetExpineTime(GetTickCount() + 10000);
+			pNewJob->SetExpineTime(GetTickCount() + 1000);
 			pNewJob->SetId(SysTimer::SYS_TIMER);
 
 			GetSysTimer().AddTimerJob(pNewJob);

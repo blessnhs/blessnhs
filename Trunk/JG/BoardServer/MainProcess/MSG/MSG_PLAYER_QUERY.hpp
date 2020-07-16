@@ -422,7 +422,7 @@ namespace Board	{
 				GSCLIENT_PTR pPair = SERVER.GetClient(existClient->GetPair());
 				if (pPair != NULL)
 				{
-					printf("1.Exist player client %d \n", Index);
+					printf("1.Exist player client %lld \n", Index);
 
 					pPair->Close();
 				}

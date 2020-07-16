@@ -8,14 +8,10 @@ GSTimerQ::GSTimerQ(void)
 	SYSTEM_INFO SystemInfo; 
 	GetSystemInfo(&SystemInfo);
 	MaxThread = 256;//SystemInfo.dwNumberOfProcessors;
-
-
-	InitializeCriticalSection(&cs);
 }
 
 GSTimerQ::~GSTimerQ(void)
 {
-	DeleteCriticalSection(&cs);
 }
 
 VOID GSTimerQ::SendMessage(LPVOID Arg)
@@ -23,8 +19,6 @@ VOID GSTimerQ::SendMessage(LPVOID Arg)
 	GSTimerQ *pTimer = (GSTimerQ *)Arg;
 
 	CThreadSync Sync;
-
-//	EnterCriticalSection(&pTimer->cs);
 
 	std::map<DWORD,GSTimerJob*>::iterator iter = pTimer->m_TimeJobList.begin();
 	GSTimerJob *pJob = NULL;
@@ -49,8 +43,6 @@ VOID GSTimerQ::SendMessage(LPVOID Arg)
 		else
 			++iter;
 	}
-
-//	LeaveCriticalSection(&pTimer->cs);
 }
 
 VOID GSTimerQ::Expine(PVOID Arg)

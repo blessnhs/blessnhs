@@ -59,8 +59,8 @@ public:
 
 		TCHAR			time_log[ MAX_LOG_LEN+MAX_LOG_LEN ];
 
-		_stprintf_s( time_log, MAX_LOG_LEN, _T( "[ %04d%02d%02d%02d%02d%02d%03d ] %s "), 
-			sysTime.wYear, sysTime.wMonth, sysTime.wDay, sysTime.wHour, sysTime.wMinute, sysTime.wSecond, sysTime.wMilliseconds,file_name );
+		_stprintf_s( time_log, MAX_LOG_LEN, _T( "[ %04d-%02d-%02d %02d:%02d:%02d ] %s "), 
+			sysTime.wYear, sysTime.wMonth, sysTime.wDay, sysTime.wHour, sysTime.wMinute, sysTime.wSecond,file_name );
 
 
 		handle_=CreateFile(time_log, GENERIC_READ | GENERIC_WRITE, 0, 0,       

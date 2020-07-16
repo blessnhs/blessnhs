@@ -1,7 +1,10 @@
 #include "StdAfx.h"
 #include "GSClientMgr.h"
 #include "GSServer.h"
+#include "ConsoleHelper.h"
 #include <boost/make_shared.hpp>
+
+extern atomic<int>		DebugCount;
 
 namespace GSNetwork	{	namespace GSClientMgr	{
 
@@ -13,6 +16,8 @@ GSClientMgr::GSClientMgr(void)
 GSClientMgr::~GSClientMgr(void)
 {
 }
+
+
 
 
 VOID GSClientMgr::CheckAliveTime()
@@ -81,11 +86,28 @@ VOID GSClientMgr::CheckAliveTime()
 			m_Remove_Queue.push(client);
 		}
 	}
-		
+
+
+	//SYSTEMTIME		sysTime;
+	//::GetLocalTime(&sysTime);
+
+	//printf("[ %04d-%02d-%02d %02d:%02d:%02d ] Current User Count %d connectable count %d Debug Count %d\n",
+	//	sysTime.wYear, sysTime.wMonth, sysTime.wDay, sysTime.wHour, sysTime.wMinute, sysTime.wSecond, pServer->CurrentPlayerCount(), ConnectableSocketCount(), DebugCount.fetch_add(0));
+
 //	printf("\nre m_insert_queue queue %d\n", m_ReInsert_Queue.unsafe_size());
 //	printf("re m_remove_queue queue %d\n", m_Remove_Queue.unsafe_size());
 //	printf("\nconnect socket count %d GetActiveSocketCount %d ConnectableSocketCount %d\n", 
 //	pServer->CurrentPlayerCount(), GetActiveSocketCount(), ConnectableSocketCount());
+
+	{
+
+		char msg[256];
+		sprintf(msg,"[UserCount : %d] [Debug Count : %d]\n",
+			pServer->CurrentPlayerCount(), DebugCount.fetch_add(0));
+
+		ConsoleHelper::DebugConsoleString(0, msg);
+
+	}
 }
 
 int  GSClientMgr::ConnectableSocketCount()

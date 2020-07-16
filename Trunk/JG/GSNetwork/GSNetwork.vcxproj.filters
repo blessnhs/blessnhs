@@ -342,6 +342,9 @@
     <ClInclude Include="Base64.h">
       <Filter>Frame</Filter>
     </ClInclude>
+    <ClInclude Include="ConsoleHelper.h">
+      <Filter>Frame</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -561,6 +564,9 @@
       <Filter>Frame</Filter>
     </ClCompile>
     <ClCompile Include="Base64.cpp">
+      <Filter>Frame</Filter>
+    </ClCompile>
+    <ClCompile Include="ConsoleHelper.cpp">
       <Filter>Frame</Filter>
     </ClCompile>
   </ItemGroup>
