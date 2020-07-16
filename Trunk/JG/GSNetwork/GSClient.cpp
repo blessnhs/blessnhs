@@ -316,21 +316,18 @@ VOID GSClient::ProcDisconnect(boost::shared_ptr<GSClient> pClient)
 	//iocp worker thread와 로직 쓰레드와 처리가 다르기 때문이다.
 	//남은 것을 처리하고 마지막에 종료 시키려면 pServer->Disconnect(pClient); 로직쓰레드로 던져야 한다.
 	//
+	//컨텐츠 종료 처리
+	PROC_REG_CLOSE_JOB(pClient,pServer)
 
-	pServer->Disconnect(pClient);
+
+	//여기 부터는 소켓 정리
 	pServer->SubPlayerCount(1);
 	//상태값 초기화
 	SetConnected(FALSE);
-	Clear();
-
-	//이제는 소켓을 재사용하지 않기로 정함
-//	BOOL Result = Recycle(pServer->GetTcpListen()->GetSocket());
 
 	pServer->GetClientMgr().BookDelClient(pClient->GetId());
 
 	pServer->GetClientMgr().NewClient(pServer->GetTcpListen()->GetSocket(), pServer);
-	
-//	printf("Disconnected socket %d %d\n",GetSocket(),pServer->GetTcpListen()->GetSocket());	
 }
 
 
@@ -389,10 +386,6 @@ void GSClient::OnDisconnect(boost::shared_ptr<GSClient> client)
 
 			ProcDisconnect(client);
 
-//			Clear();
-//			SetConnected(FALSE);
-//			GSServer::GSServer *pServer = (GSServer::GSServer *)m_GSServer;
-//			Recycle(pServer->GetTcpListen()->GetSocket());
 			return ;
 		}
 	}

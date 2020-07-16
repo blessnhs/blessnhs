@@ -40,11 +40,10 @@ public:
 	pPlayerMsg->Result    = RESULT;\
 	MAINPROC.RegisterCommand(pPlayerMsg);
 
-#define PROC_REG_CLOSE_JOB(HANDLER,OBJ,SERVER)\
+#define PROC_REG_CLOSE_JOB(OBJ,SERVER)\
 	MSG_PLAYER_CLOSE_PTR pPlayerClose = ALLOCATOR.Create<MSG_PLAYER_CLOSE>();\
 	pPlayerClose->pClient	=	OBJ;\
 	pPlayerClose->pListen	=	SERVER->GetTcpListen();\
-	pPlayerClose->pHandler	=   HANDLER;\
 	pPlayerClose->Type	    =   OBJ->GetMyTP();\
 	pPlayerClose->SubType   =   ONCLOSE;\
 	MAINPROC.RegisterCommand(pPlayerClose);
