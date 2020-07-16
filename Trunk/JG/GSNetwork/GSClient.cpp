@@ -312,6 +312,11 @@ VOID GSClient::ProcDisconnect(boost::shared_ptr<GSClient> pClient)
 		return ;
 	}
 
+	//접속 종료시 로직 쓰레드에 있는 잡은 아래 함수에서 disconnect에서 유저를 빼면 처리가 안될수 있다.
+	//iocp worker thread와 로직 쓰레드와 처리가 다르기 때문이다.
+	//남은 것을 처리하고 마지막에 종료 시키려면 pServer->Disconnect(pClient); 로직쓰레드로 던져야 한다.
+	//
+
 	pServer->Disconnect(pClient);
 	pServer->SubPlayerCount(1);
 	//상태값 초기화
