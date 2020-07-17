@@ -8,6 +8,8 @@ extern atomic<int>		DebugCount;
 	{
 		command["l"] = &BoardCommand::UserList;
 		command["r"] = &BoardCommand::RoomList;
+		command["c"] = &BoardCommand::CheckUserList;
+		
 	}
 
 	void BoardCommand::Execute(std::string _str)
@@ -31,7 +33,7 @@ extern atomic<int>		DebugCount;
 
 	VOID BoardCommand::UserList(std::string)
 	{
-		printf("Current Count %d connectable count %d Debug Count %d\n", SERVER.GetClientMgr().GetActiveSocketCount(), SERVER.GetClientMgr().ConnectableSocketCount(), DebugCount.fetch_add(0));
+		printf("Current Count %d user count %d Debug Count %d\n", SERVER.GetClientMgr().GetActiveSocketCount(), PLAYERMGR.Count(), DebugCount.fetch_add(0));
 	}
 
 	VOID BoardCommand::RoomList(std::string)
@@ -39,3 +41,7 @@ extern atomic<int>		DebugCount;
 		printf("Current Room Count %d\n", ROOMMGR.RoomCount());
 	}
 
+	VOID BoardCommand::CheckUserList(std::string)
+	{
+		PLAYERMGR.CheckUserList();
+	}

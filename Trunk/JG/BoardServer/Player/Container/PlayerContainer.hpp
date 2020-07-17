@@ -1,3 +1,7 @@
+#include "../../Server/GSBoard.h"
+
+class GSCLIENT;
+
 template<template<class T> class CreationPolicy> PlayerContainer<CreationPolicy>::PlayerContainer()
 {
 	InitializeCriticalSection(&m_PublicLock);
@@ -82,6 +86,10 @@ template<template<class T> class CreationPolicy> PlayerPtr PlayerContainer<Creat
 	return PlayerPtr(0);
 }
 
+template<template<class T> class CreationPolicy> int PlayerContainer<CreationPolicy>::Count()
+{
+	return m_PlayerMap.size();
+}
 template<template<class T> class CreationPolicy> PlayerPtr PlayerContainer<CreationPolicy>::Create()
 {
 	return CreationPolicy<Player>().Create();
@@ -98,7 +106,7 @@ template<template<class T> class CreationPolicy> void PlayerContainer<CreationPo
 			string Name = iter->second->m_Account.GetName();
 			WORD SessionId= iter->second->GetPair();
 
-			GSCLIENT *pSession = SERVER.GetClient(SessionId);
+			GSCLIENT_PTR pSession = SERVER.GetClient(SessionId);
 			if(!pSession)
 				printf("Lost GSCLIENT %s %d \n",Name.c_str(),SessionId);
 		}

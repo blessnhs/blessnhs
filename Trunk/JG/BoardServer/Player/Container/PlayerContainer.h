@@ -33,6 +33,8 @@ public:
 
 	VOID CheckUserList();
 
+	int Count();
+
 	template<class TYPE>
 	VOID BroadCast(TYPE MSG);
 
