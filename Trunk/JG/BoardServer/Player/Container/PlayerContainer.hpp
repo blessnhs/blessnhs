@@ -88,7 +88,19 @@ template<template<class T> class CreationPolicy> PlayerPtr PlayerContainer<Creat
 
 template<template<class T> class CreationPolicy> int PlayerContainer<CreationPolicy>::Count()
 {
-	return m_PlayerMap.size();
+	int count = 0;
+	auto iter = m_PlayerMap.begin();
+
+	while (iter != m_PlayerMap.end())
+	{
+		if (iter->second != NULL)
+		{
+			count++;
+		}
+		iter++;
+	}
+
+	return count;
 }
 template<template<class T> class CreationPolicy> PlayerPtr PlayerContainer<CreationPolicy>::Create()
 {

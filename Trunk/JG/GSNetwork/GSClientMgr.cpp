@@ -99,15 +99,16 @@ VOID GSClientMgr::CheckAliveTime()
 //	printf("\nconnect socket count %d GetActiveSocketCount %d ConnectableSocketCount %d\n", 
 //	pServer->CurrentPlayerCount(), GetActiveSocketCount(), ConnectableSocketCount());
 
-	{
+	printf("[UserCount : %d] [Debug Count : %d]\n",
+		pServer->CurrentPlayerCount(), DebugCount.fetch_add(0));
+	/*{
 
 		char msg[256];
-		sprintf(msg,"[UserCount : %d] [Debug Count : %d]\n",
-			pServer->CurrentPlayerCount(), DebugCount.fetch_add(0));
+		
 
 		ConsoleHelper::DebugConsoleString(0, msg);
 
-	}
+	}*/
 }
 
 int  GSClientMgr::ConnectableSocketCount()

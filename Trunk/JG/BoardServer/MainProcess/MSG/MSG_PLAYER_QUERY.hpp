@@ -272,7 +272,7 @@ namespace Board	{
 
 
 				// make task(request and get result)
-				auto requestTask = client.request(web::http::methods::GET, builder.to_string())
+				auto requestTask = client.request(web::http::methods::POST, builder.to_string())
 				// The following code executes when the response is available
 				.then([](http_response response) -> pplx::task<json::value>
 				{
