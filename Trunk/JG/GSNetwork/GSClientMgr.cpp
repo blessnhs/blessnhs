@@ -257,13 +257,15 @@ BOOL GSClientMgr::NewClient(SOCKET ListenSocket, LPVOID pServer)
 	if (!ListenSocket)
 		return FALSE;
 
+	CThreadSync Sync;
+
 	int NewClient = 1;
 	if (ConnectableSocketCount() < 20)
 	{
 		NewClient = 100;
 		printf("Resize Client  %d \n", NewClient);
 
-		m_MaxClients += 100;
+		m_MaxClients += NewClient;
 	}
 
 	for (DWORD i = 0; i < NewClient; i++)
