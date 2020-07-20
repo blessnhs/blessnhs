@@ -2564,11 +2564,12 @@ class ROOM_PASS_THROUGH_RES :
   // accessors -------------------------------------------------------
 
   enum : int {
-    kVarMessageFieldNumber = 2,
-    kVarMessageIntFieldNumber = 3,
+    kVarMessageFieldNumber = 3,
+    kVarCodeFieldNumber = 2,
+    kVarMessageIntFieldNumber = 4,
     kIdFieldNumber = 1,
   };
-  // required bytes var_message = 2;
+  // required bytes var_message = 3;
   bool has_var_message() const;
   private:
   bool _internal_has_var_message() const;
@@ -2588,7 +2589,20 @@ class ROOM_PASS_THROUGH_RES :
   std::string* _internal_mutable_var_message();
   public:
 
-  // required int32 var_message_int = 3;
+  // optional .ErrorCode var_code = 2;
+  bool has_var_code() const;
+  private:
+  bool _internal_has_var_code() const;
+  public:
+  void clear_var_code();
+  ::ErrorCode var_code() const;
+  void set_var_code(::ErrorCode value);
+  private:
+  ::ErrorCode _internal_var_code() const;
+  void _internal_set_var_code(::ErrorCode value);
+  public:
+
+  // required int32 var_message_int = 4;
   bool has_var_message_int() const;
   private:
   bool _internal_has_var_message_int() const;
@@ -2625,6 +2639,7 @@ class ROOM_PASS_THROUGH_RES :
   ::PROTOBUF_NAMESPACE_ID::internal::HasBits<1> _has_bits_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr var_message_;
+  int var_code_;
   ::PROTOBUF_NAMESPACE_ID::int32 var_message_int_;
   int id_;
   friend struct ::TableStruct_GS_2eCLI_2eproto;
@@ -4613,7 +4628,7 @@ inline void QNS_RES::set_var_code(::ErrorCode value) {
 
 // optional .PROTOCOL id = 1 [default = ID_PKT_ROOM_PASS_THROUGH_RES];
 inline bool ROOM_PASS_THROUGH_RES::_internal_has_id() const {
-  bool value = (_has_bits_[0] & 0x00000004u) != 0;
+  bool value = (_has_bits_[0] & 0x00000008u) != 0;
   return value;
 }
 inline bool ROOM_PASS_THROUGH_RES::has_id() const {
@@ -4621,7 +4636,7 @@ inline bool ROOM_PASS_THROUGH_RES::has_id() const {
 }
 inline void ROOM_PASS_THROUGH_RES::clear_id() {
   id_ = 24;
-  _has_bits_[0] &= ~0x00000004u;
+  _has_bits_[0] &= ~0x00000008u;
 }
 inline ::PROTOCOL ROOM_PASS_THROUGH_RES::_internal_id() const {
   return static_cast< ::PROTOCOL >(id_);
@@ -4632,7 +4647,7 @@ inline ::PROTOCOL ROOM_PASS_THROUGH_RES::id() const {
 }
 inline void ROOM_PASS_THROUGH_RES::_internal_set_id(::PROTOCOL value) {
   assert(::PROTOCOL_IsValid(value));
-  _has_bits_[0] |= 0x00000004u;
+  _has_bits_[0] |= 0x00000008u;
   id_ = value;
 }
 inline void ROOM_PASS_THROUGH_RES::set_id(::PROTOCOL value) {
@@ -4640,7 +4655,36 @@ inline void ROOM_PASS_THROUGH_RES::set_id(::PROTOCOL value) {
   // @@protoc_insertion_point(field_set:ROOM_PASS_THROUGH_RES.id)
 }
 
-// required bytes var_message = 2;
+// optional .ErrorCode var_code = 2;
+inline bool ROOM_PASS_THROUGH_RES::_internal_has_var_code() const {
+  bool value = (_has_bits_[0] & 0x00000002u) != 0;
+  return value;
+}
+inline bool ROOM_PASS_THROUGH_RES::has_var_code() const {
+  return _internal_has_var_code();
+}
+inline void ROOM_PASS_THROUGH_RES::clear_var_code() {
+  var_code_ = 0;
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline ::ErrorCode ROOM_PASS_THROUGH_RES::_internal_var_code() const {
+  return static_cast< ::ErrorCode >(var_code_);
+}
+inline ::ErrorCode ROOM_PASS_THROUGH_RES::var_code() const {
+  // @@protoc_insertion_point(field_get:ROOM_PASS_THROUGH_RES.var_code)
+  return _internal_var_code();
+}
+inline void ROOM_PASS_THROUGH_RES::_internal_set_var_code(::ErrorCode value) {
+  assert(::ErrorCode_IsValid(value));
+  _has_bits_[0] |= 0x00000002u;
+  var_code_ = value;
+}
+inline void ROOM_PASS_THROUGH_RES::set_var_code(::ErrorCode value) {
+  _internal_set_var_code(value);
+  // @@protoc_insertion_point(field_set:ROOM_PASS_THROUGH_RES.var_code)
+}
+
+// required bytes var_message = 3;
 inline bool ROOM_PASS_THROUGH_RES::_internal_has_var_message() const {
   bool value = (_has_bits_[0] & 0x00000001u) != 0;
   return value;
@@ -4711,9 +4755,9 @@ inline void ROOM_PASS_THROUGH_RES::set_allocated_var_message(std::string* var_me
   // @@protoc_insertion_point(field_set_allocated:ROOM_PASS_THROUGH_RES.var_message)
 }
 
-// required int32 var_message_int = 3;
+// required int32 var_message_int = 4;
 inline bool ROOM_PASS_THROUGH_RES::_internal_has_var_message_int() const {
-  bool value = (_has_bits_[0] & 0x00000002u) != 0;
+  bool value = (_has_bits_[0] & 0x00000004u) != 0;
   return value;
 }
 inline bool ROOM_PASS_THROUGH_RES::has_var_message_int() const {
@@ -4721,7 +4765,7 @@ inline bool ROOM_PASS_THROUGH_RES::has_var_message_int() const {
 }
 inline void ROOM_PASS_THROUGH_RES::clear_var_message_int() {
   var_message_int_ = 0;
-  _has_bits_[0] &= ~0x00000002u;
+  _has_bits_[0] &= ~0x00000004u;
 }
 inline ::PROTOBUF_NAMESPACE_ID::int32 ROOM_PASS_THROUGH_RES::_internal_var_message_int() const {
   return var_message_int_;
@@ -4731,7 +4775,7 @@ inline ::PROTOBUF_NAMESPACE_ID::int32 ROOM_PASS_THROUGH_RES::var_message_int() c
   return _internal_var_message_int();
 }
 inline void ROOM_PASS_THROUGH_RES::_internal_set_var_message_int(::PROTOBUF_NAMESPACE_ID::int32 value) {
-  _has_bits_[0] |= 0x00000002u;
+  _has_bits_[0] |= 0x00000004u;
   var_message_int_ = value;
 }
 inline void ROOM_PASS_THROUGH_RES::set_var_message_int(::PROTOBUF_NAMESPACE_ID::int32 value) {

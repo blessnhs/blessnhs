@@ -31,20 +31,29 @@ namespace OMOK.Network
         }
 
         private static DateTime time = new DateTime();
+        private static bool sendLogin = false;
 
         static public void start()
         {
             string ip="192.168.0.9";
 
             ip = GetIPAddress("blessnhs.iptime.org");
+            if (GlobalVariable.ip != "")
+                ip = GlobalVariable.ip;
+
             //연결중이면 안한다. 
             if (client.socket == null || client.socket.Connected == false)
             {
-                if((DateTime.Now - time).TotalSeconds > 5)
+                if((DateTime.Now - time).TotalSeconds > 10)
                 {
                     time = DateTime.Now;
                     client.StartClient(ip, 20000);
                 }
+            }
+            else if(sendLogin == false && User.Uid != "" && User.Uid != null)
+            {
+                NetProcess.SendLogin(User.Uid, User.Token);
+                sendLogin = true;
             }
         }
 
@@ -124,6 +133,7 @@ namespace OMOK.Network
                                     User.state = PlayerState.Room;
 
                                     var Room = (Room)page.Children[1];
+                                    Room.ClearBoard();
                                     Room.UpdateTurnBackground(User.Color);
                                     Room.RefreshAim();
                                     Room.InitTimer();
@@ -151,8 +161,6 @@ namespace OMOK.Network
                                     User.OppInfo.NickName = Helper.ToStr(res.VarRoomUser.VarName.ToByteArray());
                                 }
 
-                                Room.ClearBoard();
-
                                 Room.UpdateBattleInfo();
 
                             }
@@ -168,11 +176,12 @@ namespace OMOK.Network
                             {
                                 ROOM_PASS_THROUGH_RES res = new ROOM_PASS_THROUGH_RES();
                                 res = ROOM_PASS_THROUGH_RES.Parser.ParseFrom(data.Data);
+                                if(res.VarCode == ErrorCode.Success)
+                                {
+                                    var Room = (Room)page.Children[1];
 
-                                var Room = (Room)page.Children[1];
-
-                                Room.ProcReceivePutStoneMessage(res);
-
+                                    Room.ProcReceivePutStoneMessage(res);
+                                }
                             }
                             break;
                         case (int)PROTOCOL.IdPktRoomListRes:
@@ -230,6 +239,7 @@ namespace OMOK.Network
                                     User.state = PlayerState.Room;
 
                                     var Room = (Room)page.Children[1];
+                                    Room.ClearBoard();
                                     Room.UpdateTurnBackground(User.Color);
                                     Room.RefreshAim();
                                     Room.InitTimer();

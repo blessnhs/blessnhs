@@ -39,6 +39,12 @@ namespace OMOK.Views
 
             contents.Text = "";
         }
+        async void OnOptionClicked(object sender, EventArgs e)
+        {
+            GlobalVariable.ip = ip.Text;
+            GlobalVariable.port = Convert.ToInt32(port.Text);
+        }
+        
     }
 
 }

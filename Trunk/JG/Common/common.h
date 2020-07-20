@@ -2,7 +2,7 @@
 
 #define MAX_BUFFER_LENGTH		1024 * 5
 #define MAX_ID_LENGTH			50
-#define MAX_CHAR_LENGTH			50
+#define MAX_CHAR_LENGTH			512
 #define MAX_CHAR_CNT			5
 #define MAX_PASSWD_LENGTH		20
 #define MAX_SESSION_KEY_SIZE	64

@@ -215,7 +215,6 @@ namespace OMOK
                 return;
             }
 
-
             var status = board.GetTile(board.x, board.y).Status;
 
             if (status == eTeam.White || status == eTeam.Awhite || status == eTeam.Black || status == eTeam.Ablack)

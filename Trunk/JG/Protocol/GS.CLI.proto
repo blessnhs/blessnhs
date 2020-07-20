@@ -117,8 +117,9 @@ message QNS_RES
 message ROOM_PASS_THROUGH_RES
 {
     optional PROTOCOL   id                        = 1 [default = ID_PKT_ROOM_PASS_THROUGH_RES    ];
-    required bytes     var_message    	     = 2;
-    required int32       var_message_int         = 3;
+    optional  ErrorCode    var_code         = 2;
+    required bytes     var_message    	     = 3;
+    required int32     var_message_int         = 4;
 }
 
 message CANCEL_MATCH_RES

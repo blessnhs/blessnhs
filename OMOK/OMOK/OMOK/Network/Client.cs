@@ -69,7 +69,6 @@ namespace NetClient
                     new AsyncCallback(ConnectCallback), socket);
              //   connectDone.WaitOne();
 
-
             }
             catch (Exception e)
             {

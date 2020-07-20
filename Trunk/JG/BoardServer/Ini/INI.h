@@ -15,6 +15,10 @@ public:
 	DWORD Port ; 
 	DWORD MaxUser ;
 
+	CHAR ODBC_NAME[MAX_CHAR_LENGTH];
+	CHAR ODBC_ID[MAX_CHAR_LENGTH];
+	CHAR ODBC_PWD[MAX_CHAR_LENGTH];
+
 };
 
 #define  INI Singleton<BoardINI>::Instance()

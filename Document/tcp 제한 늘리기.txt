@@ -1,0 +1,3 @@
+[HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters]
+"MaxUserPort"=dword:0000fffe
+"TcpWindowSize"=dword:00004470

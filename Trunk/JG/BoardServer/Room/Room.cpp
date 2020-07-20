@@ -42,6 +42,20 @@ Room::~Room(void)
 	DeleteCriticalSection(&m_PublicLock);
 }
 
+bool Room::GetBoard(int x, int y, eTeam &_team)
+{
+	if (x < 0 || y < 0)
+		return false;
+
+	if (x >= ROWS || y >= COLS)
+		return false;
+
+	_team = m_Board[y][x];
+
+	return true;
+
+}
+
 void Room::UpdateBoard(int x, int y, eTeam team)
 {
 	if (x < 0 || y < 0)

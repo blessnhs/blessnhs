@@ -78,6 +78,7 @@ public:
 
 	void ClearBoard();
 	void UpdateBoard(int x, int y, eTeam team);
+	bool GetBoard(int x, int y, eTeam& _team);
 	bool CheckGameResult(int _x, int _y, eTeam _stone);
 
 	void SetRoomState(State state);

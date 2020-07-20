@@ -100,17 +100,17 @@ VOID BoardProcess::LOGIN_PLAYER(LPVOID Data, DWORD Length, boost::shared_ptr<GSC
 	MAINPROC.RegisterCommand(PLAYER_MSG);
 }
 
-VOID BoardProcess::ROOM_CREATE(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> pOwner)
+VOID BoardProcess::ROOM_CREATE(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client)
 {
 	DECLARE_RECV_TYPE(CREATE_ROOM_REQ, createroom)
 	
 	CREATE_ROOM_RES res;
 
-	PlayerPtr pPlayer = PLAYERMGR.Search(pOwner->GetPair());
+	PlayerPtr pPlayer = PLAYERMGR.Search(Client->GetPair());
 	if (pPlayer == NULL)
 	{
 		res.set_var_code(SystemError);
-		SEND_PROTO_BUFFER(res, pOwner)
+		SEND_PROTO_BUFFER(res, Client)
 		return;
 	}
 
@@ -134,7 +134,7 @@ VOID BoardProcess::ROOM_CREATE(LPVOID Data, DWORD Length, boost::shared_ptr<GSCl
 
 	res.set_var_room_id(RoomPtr->GetId());
 	res.mutable_var_name()->assign(RoomPtr->m_Stock.Name);
-	SEND_PROTO_BUFFER(res, pOwner)
+	SEND_PROTO_BUFFER(res, Client)
 
 	RoomPtr->SendNewUserInfo(pPlayer);	//방에 있는 유저들에게 새로운 유저 정보전송
 }
@@ -202,6 +202,7 @@ VOID BoardProcess::ROOM_PASSTHROUGH(LPVOID Data, DWORD Length, boost::shared_ptr
 	if (pPtr != NULL && pPtr->GetState() != State::End)
 	{
 		ROOM_PASS_THROUGH_RES res;
+		res.set_var_code(Success);
 
 		res.set_var_message(message.var_message());
 		res.set_var_message_int(message.var_message_int());
@@ -210,6 +211,15 @@ VOID BoardProcess::ROOM_PASSTHROUGH(LPVOID Data, DWORD Length, boost::shared_ptr
 		pPtr->Get_X_Y_COLOR(x, y, color, message.var_message_int());
 
 		eTeam team_color = color == 0 ? WHITE : BLACK;
+
+		eTeam checkState;
+		bool valid = pPtr->GetBoard(x, y, checkState);
+		if (checkState != eTeam::None && valid == true)
+		{
+			res.set_var_code(SystemError);
+			SEND_PROTO_BUFFER(res, Client)
+			return;
+		}
 
 		pPtr->UpdateBoard(x, y, team_color);
 
@@ -242,7 +252,7 @@ VOID BoardProcess::RANK(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> C
 	MAINPROC.RegisterCommand(PLAYER_MSG);
 }
 
-VOID BoardProcess::ROOM_ENTER(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> pOwner)
+VOID BoardProcess::ROOM_ENTER(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client)
 {
 	DECLARE_RECV_TYPE(ENTER_ROOM_REQ, enterroom)
 
@@ -252,11 +262,11 @@ VOID BoardProcess::ROOM_ENTER(LPVOID Data, DWORD Length, boost::shared_ptr<GSCli
 	if (RoomPtr == NULL)
 	{
 		res.set_var_code(SystemError);
-		SEND_PROTO_BUFFER(res, pOwner)
+		SEND_PROTO_BUFFER(res, Client)
 		return;
 	}	
 	
-	PlayerPtr pPlayer = PLAYERMGR.Search(pOwner->GetPair());
+	PlayerPtr pPlayer = PLAYERMGR.Search(Client->GetPair());
 	if (pPlayer == NULL)
 	{
 		return;
@@ -274,7 +284,7 @@ VOID BoardProcess::ROOM_ENTER(LPVOID Data, DWORD Length, boost::shared_ptr<GSCli
 
 	res.set_var_room_id(RoomPtr->GetId());
 	res.set_var_name(RoomPtr->m_Stock.Name.c_str());
-	SEND_PROTO_BUFFER(res, pOwner)
+	SEND_PROTO_BUFFER(res, Client)
 
 	//새로 입장한 유저에게 방안의 유저 정보전송
 	for each (auto iter in RoomPtr->m_PlayerMap)
@@ -289,7 +299,7 @@ VOID BoardProcess::ROOM_ENTER(LPVOID Data, DWORD Length, boost::shared_ptr<GSCli
 		userinfo->set_var_index(iter.second->GetId());
 		userinfo->set_var_name(iter.second->m_Account.GetName());
 
-		SEND_PROTO_BUFFER(nty, pOwner)
+		SEND_PROTO_BUFFER(nty, Client)
 	}
 	
 
@@ -314,11 +324,11 @@ VOID BoardProcess::ROOM_ENTER(LPVOID Data, DWORD Length, boost::shared_ptr<GSCli
 	}
 }
 
-VOID BoardProcess::ROOM_LEAVE(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> pOwner)
+VOID BoardProcess::ROOM_LEAVE(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client)
 {
 	DECLARE_RECV_TYPE(LEAVE_ROOM_REQ, leaveroom)
 	
-	PlayerPtr pPlayer = PLAYERMGR.Search(pOwner->GetPair());
+	PlayerPtr pPlayer = PLAYERMGR.Search(Client->GetPair());
 	if (pPlayer == NULL)
 	{
 		return;
@@ -328,9 +338,9 @@ VOID BoardProcess::ROOM_LEAVE(LPVOID Data, DWORD Length, boost::shared_ptr<GSCli
 
 }
 
-VOID BoardProcess::ROOM_START(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> pOwner)
+VOID BoardProcess::ROOM_START(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client)
 {
-	//PlayerPtr pPlayer = PLAYERMGR.Search(pOwner->GetPair());
+	//PlayerPtr pPlayer = PLAYERMGR.Search(Client->GetPair());
 	//if (pPlayer == NULL)
 	//{
 	//	return;
@@ -350,9 +360,9 @@ VOID BoardProcess::ROOM_START(LPVOID Data, DWORD Length, boost::shared_ptr<GSCli
 	//}
 }
 
-VOID BoardProcess::ROOM_READY(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> pOwner)
+VOID BoardProcess::ROOM_READY(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client)
 {
-	//PlayerPtr pPlayer = PLAYERMGR.Search(pOwner->GetPair());
+	//PlayerPtr pPlayer = PLAYERMGR.Search(Client->GetPair());
 	//if (pPlayer == NULL)
 	//{
 	//	return;
@@ -385,13 +395,13 @@ VOID BoardProcess::ROOM_READY(LPVOID Data, DWORD Length, boost::shared_ptr<GSCli
 
 }
 
-VOID BoardProcess::ROOM_CHAT(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> pOwner)
+VOID BoardProcess::ROOM_CHAT(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client)
 {
 	DECLARE_RECV_TYPE(BROADCAST_ROOM_MESSAGE_REQ, message)
 
 	BROADCAST_ROOM_MESSAGE_RES res;
 
-	PlayerPtr pPlayer = PLAYERMGR.Search(pOwner->GetPair());
+	PlayerPtr pPlayer = PLAYERMGR.Search(Client->GetPair());
 	if (pPlayer == NULL)
 	{
 		return;
@@ -473,9 +483,9 @@ VOID BoardProcess::MATCH(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> 
 }
 
 
-VOID BoardProcess::AUTO_START(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> pOwner)
+VOID BoardProcess::AUTO_START(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client)
 {
-	//PlayerPtr pPlayer = PLAYERMGR.Search(pOwner->GetPair());
+	//PlayerPtr pPlayer = PLAYERMGR.Search(Client->GetPair());
 	//if (pPlayer == NULL)
 	//{
 	//	return;
@@ -497,7 +507,7 @@ VOID BoardProcess::AUTO_START(LPVOID Data, DWORD Length, boost::shared_ptr<GSCli
 	//		Json::FastWriter writer;
 	//	std::string outputConfig = writer.write(root2);
 
-	//	ROOM_CREATE((char*)outputConfig.c_str(), outputConfig.size(), pOwner);
+	//	ROOM_CREATE((char*)outputConfig.c_str(), outputConfig.size(), Client);
 	//}
 	//else
 	//{
@@ -505,14 +515,14 @@ VOID BoardProcess::AUTO_START(LPVOID Data, DWORD Length, boost::shared_ptr<GSCli
 	//	ADD_JSON_MEMBER("RoomNumber", (WORD)RoomPtr->GetId())
 	//		Json::FastWriter writer;
 	//	std::string outputConfig = writer.write(root2);
-	//	ROOM_ENTER((char*)outputConfig.c_str(), outputConfig.size(), pOwner);
+	//	ROOM_ENTER((char*)outputConfig.c_str(), outputConfig.size(), Client);
 	//}
 
 }
 
-VOID BoardProcess::ALL_COMPLETE(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> pOwner)
+VOID BoardProcess::ALL_COMPLETE(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client)
 {
-	//PlayerPtr pPlayer = PLAYERMGR.Search(pOwner->GetPair());
+	//PlayerPtr pPlayer = PLAYERMGR.Search(Client->GetPair());
 	//if (pPlayer == NULL)
 	//{
 	//	return;
