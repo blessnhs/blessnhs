@@ -62,8 +62,8 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Google.Protobuf, Version=3.11.4.0, Culture=neutral, PublicKeyToken=a7d26565bac4d604, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Google.Protobuf.3.11.4\lib\net45\Google.Protobuf.dll</HintPath>
+    <Reference Include="Google.Protobuf, Version=3.12.3.0, Culture=neutral, PublicKeyToken=a7d26565bac4d604, processorArchitecture=MSIL">
+      <HintPath>..\packages\Google.Protobuf.3.12.3\lib\net45\Google.Protobuf.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Buffers, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
@@ -89,19 +89,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\..\Protocol\CSharp\CLIGS.cs">
-      <Link>CLIGS.cs</Link>
-    </Compile>
-    <Compile Include="..\..\Protocol\CSharp\Enum.cs">
-      <Link>Enum.cs</Link>
-    </Compile>
-    <Compile Include="..\..\Protocol\CSharp\GSCLI.cs">
-      <Link>GSCLI.cs</Link>
-    </Compile>
-    <Compile Include="..\..\Protocol\CSharp\Structure.cs">
-      <Link>Structure.cs</Link>
-    </Compile>
     <Compile Include="Client.cs" />
+    <Compile Include="CLIGS.cs" />
+    <Compile Include="Enum.cs" />
+    <Compile Include="GSCLI.cs" />
+    <Compile Include="Structure.cs" />
     <Compile Include="UDP.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

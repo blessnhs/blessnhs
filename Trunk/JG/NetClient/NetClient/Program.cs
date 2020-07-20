@@ -9,28 +9,51 @@ using UDPEchoClient;
 
 using Google.Protobuf;
 using NetClient;
+using System.Collections.Generic;
+
 
 public class Process
 {
+
+    public static string GetIPAddress(string hostname)
+    {
+        IPHostEntry host;
+        host = Dns.GetHostEntry(hostname);
+
+        foreach (IPAddress ip in host.AddressList)
+        {
+            if (ip.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork)
+            {
+                //System.Diagnostics.Debug.WriteLine("LocalIPadress: " + ip);
+                return ip.ToString();
+            }
+        }
+        return string.Empty;
+    }
+
+
+    static int testcid = 0;
+
     public Client client = new Client();
     public void start(int id)
     {
+        var ip = GetIPAddress("blessnhs.iptime.org");
 
+         client.StartClient(ip, 20000);
 
-
-        int _id = id;
-        client.StartClient("192.168.0.4", 20000);
+        testcid = id;
 
     }
 
-    public void loop(int _id)
+
+    public void loop()
     {
         {
             if (client.socket.Connected == false)
                 return;
 
             client.Update();
-            Thread.Sleep(300);
+            Thread.Sleep(1);
 
             if (client.PacketQueue.Count > 0)
             {
@@ -44,11 +67,12 @@ public class Process
 
                                 VERSION_RES res = new VERSION_RES();
                                 res = VERSION_RES.Parser.ParseFrom(data.Data);
-
-
+                           
                                 LOGIN_REQ person = new LOGIN_REQ
                                 {
                                     Id = PROTOCOL.IdPktLoginRes,
+                                    VarToken = testcid.ToString(),
+                                    VarUid = testcid.ToString()
                                 };
                                 using (MemoryStream stream = new MemoryStream())
                                 {
@@ -104,28 +128,24 @@ public class Process
 
                                 Console.WriteLine("IdPktBroadcastRoomMessageRes " + res.VarName + " " + res.VarMessage);
 
-                                BROADCAST_ROOM_MESSAGE_REQ req = new BROADCAST_ROOM_MESSAGE_REQ
-                                {
-                                };
-                                using (MemoryStream stream = new MemoryStream())
-                                {
-                                    req.WriteTo(stream);
-
-                                    client.WritePacket((int)PROTOCOL.IdPktBroadcastRoomMessageReq, stream.ToArray(), stream.ToArray().Length);
-                                }
                             }
                             break;
                         case (int)PROTOCOL.IdPktEnterRoomRes:
                             {
-                                BROADCAST_ROOM_MESSAGE_REQ req = new BROADCAST_ROOM_MESSAGE_REQ
-                                {
-                                };
-                                using (MemoryStream stream = new MemoryStream())
-                                {
-                                    req.WriteTo(stream);
+                                //string str = "asdfasdfasdf";
 
-                                    client.WritePacket((int)PROTOCOL.IdPktBroadcastRoomMessageReq, stream.ToArray(), stream.ToArray().Length);
-                                }
+                                //BROADCAST_ROOM_MESSAGE_REQ req = new BROADCAST_ROOM_MESSAGE_REQ
+                                //{
+                                //};
+
+                                //req.VarMessage.CopyTo(Encoding.UTF8.GetBytes(str), 0);
+
+                                //using (MemoryStream stream = new MemoryStream())
+                                //{
+                                //    req.WriteTo(stream);
+
+                                //    client.WritePacket((int)PROTOCOL.IdPktBroadcastRoomMessageReq, stream.ToArray(), stream.ToArray().Length);
+                                //}
                             }
                             break;
                     }
@@ -141,41 +161,34 @@ public class AsynchronousClient
 {
   
 
-   public static int Main(String[] args)
-    {
-       {
-            string strHostName = "nhs8245.iptime.org:20000";
-            IPHostEntry host = Dns.GetHostEntry(strHostName);
-
-            Console.WriteLine($"GetHostEntry({strHostName}) returns:");
-
-            foreach (IPAddress address in host.AddressList)
-            {
-                Console.WriteLine($"    {address}");
-            }
-        }
-
-
-        Process[] array = new Process[3];
-        for (int i=1;i<2;i++)
-        {
-            array[i - 1] = new Process();
-            array[i - 1].start(i);
-            Thread.Sleep(300);
-        }
-
-        Console.WriteLine("job end");
-
+public static int Main(String[] args)
+{
+        int id = 1;
+        List<Process> array = new List<Process>();
 
         while (true)
         {
-            for (int i = 1; i < 2; i++)
+            var cli = new Process();
+            array.Add(cli);
+            cli.start(id++);
+            Thread.Sleep(1);
+
+
+            foreach( var elem in array)
             {
-                array[i - 1].loop(i);
-                Thread.Sleep(100);
+                if (elem.client.socket.Connected == false)
+                {
+                    array.Remove(elem);
+                    break;
+                }
+
+                elem.loop();
+                Thread.Sleep(5);
+
             }
-            Thread.Sleep(100);
-        };
+
+            Thread.Sleep(1);
+        }
 
         return 0;
     }
