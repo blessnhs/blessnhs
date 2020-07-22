@@ -5,7 +5,6 @@ namespace GSNetwork	{ namespace GSSocket	{	namespace GSSocketTCP	{
 
 GSSocketTCP::GSSocketTCP(void)
 {
-	m_SendRefCount = 0;
 }
 
 GSSocketTCP::~GSSocketTCP(void)
@@ -21,7 +20,6 @@ BOOL GSSocketTCP::Initialize(VOID)
 
 BOOL GSSocketTCP::Termination(VOID)
 {
-	m_SendRefCount = 0;
 	return GSSocket::Termination();
 }
 
@@ -71,6 +69,8 @@ BOOL GSSocketTCP::InitializeReadForIocp(VOID)
 	WsaBuf.buf			= (CHAR*) m_Buffer;
 	WsaBuf.len			= MAX_BUFFER_LENGTH;
 
+	m_OLP_REMAIN_COUNT_REC.fetch_add(1);
+
 	m_Read_OLP->ObjectId = m_ClientId;
 
 	INT		ReturnValue = WSARecv(m_Socket,
@@ -83,6 +83,7 @@ BOOL GSSocketTCP::InitializeReadForIocp(VOID)
 
 	if (ReturnValue == SOCKET_ERROR && WSAGetLastError() != WSA_IO_PENDING && WSAGetLastError() != WSAEWOULDBLOCK)
 	{
+		m_OLP_REMAIN_COUNT_REC.fetch_sub(1);
 		Termination();
 
 		return FALSE;
@@ -129,6 +130,8 @@ BOOL			GSSocketTCP::ReadForEventSelect(BYTE *data, DWORD &dataLength)
 	WsaBuf.buf			= (CHAR*) m_Buffer;
 	WsaBuf.len			= MAX_BUFFER_LENGTH;
 
+	m_OLP_REMAIN_COUNT_REC.fetch_add(1);
+
 	m_Read_OLP->ObjectId = m_ClientId;
 
 	INT		ReturnValue = WSARecv(m_Socket,
@@ -141,6 +144,7 @@ BOOL			GSSocketTCP::ReadForEventSelect(BYTE *data, DWORD &dataLength)
 
 	if (ReturnValue == SOCKET_ERROR && WSAGetLastError() != WSA_IO_PENDING && WSAGetLastError() != WSAEWOULDBLOCK)
 	{
+		m_OLP_REMAIN_COUNT_REC.fetch_sub(1);
 		Termination();
 
 		return FALSE;
@@ -182,6 +186,8 @@ BOOL GSSocketTCP::Write(BYTE *data, DWORD dataLength)
 	WsaBuf.buf			= (CHAR*) data;
 	WsaBuf.len			= dataLength;
 
+	m_OLP_REMAIN_COUNT_SND.fetch_add(1);
+
 	m_Write_OLP->ObjectId = m_ClientId;
 
 	INT		ReturnValue	= WSASend(m_Socket,
@@ -194,12 +200,11 @@ BOOL GSSocketTCP::Write(BYTE *data, DWORD dataLength)
 
 	if (ReturnValue == SOCKET_ERROR && WSAGetLastError() != WSA_IO_PENDING && WSAGetLastError() != WSAEWOULDBLOCK)
 	{
+		m_OLP_REMAIN_COUNT_SND.fetch_sub(1);
 		Termination();
 
 		return FALSE;
 	}
-
-	m_SendRefCount.fetch_add(1);
 
 	return TRUE;
 }

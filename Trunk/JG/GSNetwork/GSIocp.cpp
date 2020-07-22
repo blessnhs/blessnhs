@@ -129,7 +129,7 @@ VOID GSIocp::WorkerThread()
 			{
 				if(Object != NULL)
 				{
-					OnDisconnected(OverlappedEx->ObjectId);
+					OnDisconnected2(OverlappedEx->ObjectId, OverlappedEx->IoType);
 				}
 				continue;
 			}
@@ -144,12 +144,12 @@ VOID GSIocp::WorkerThread()
 				//	if(pCommon->GetSocketStatus() != STATUS_DISCONNECTED)
 					if(Object->GetConnected() ==  TRUE)
 					{
-						OnDisconnected(OverlappedEx->ObjectId);
+						OnDisconnected2(OverlappedEx->ObjectId, OverlappedEx->IoType);
 						continue;
 					}
 				}
 				
-				OnDisconnected(OverlappedEx->ObjectId);
+				OnDisconnected2(OverlappedEx->ObjectId, OverlappedEx->IoType);
 				continue;
 			}
 
@@ -159,7 +159,7 @@ VOID GSIocp::WorkerThread()
 					OnConnected(OverlappedEx->ObjectId);
 				else
 				{
-					OnDisconnected(OverlappedEx->ObjectId);
+					OnDisconnected2(OverlappedEx->ObjectId, OverlappedEx->IoType);
 				}
 
 				continue;
@@ -171,7 +171,7 @@ VOID GSIocp::WorkerThread()
 				{
 					if(NumberOfByteTransfered == 0)
 					{
-						OnDisconnected(OverlappedEx->ObjectId);
+						OnDisconnected2(OverlappedEx->ObjectId, OverlappedEx->IoType);
 						break;
 					}
 					OnRead(OverlappedEx->ObjectId, NumberOfByteTransfered);

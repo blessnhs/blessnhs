@@ -162,6 +162,7 @@ BOOL GSSocketUDP::InitializeReadFromForIocp(VOID)
 	WsaBuf.len			= MAX_BUFFER_LENGTH;
 
 	m_Read_OLP->ObjectId = m_ClientId;
+	m_OLP_REMAIN_COUNT_REC.fetch_add(1);
 
 	INT		ReturnValue = WSARecvFrom(m_Socket,
 		&WsaBuf,
@@ -175,6 +176,7 @@ BOOL GSSocketUDP::InitializeReadFromForIocp(VOID)
 
 	if (ReturnValue == SOCKET_ERROR && WSAGetLastError() != WSA_IO_PENDING && WSAGetLastError() != WSAEWOULDBLOCK)
 	{
+		m_OLP_REMAIN_COUNT_REC.fetch_sub(1);
 		Termination();
 
 		return FALSE;
@@ -203,8 +205,10 @@ BOOL			GSSocketUDP::ReadFromForEventSelect(LPSTR remoteAddress, USHORT &remotePo
 
 	WsaBuf.buf			= (CHAR*) m_Buffer;
 	WsaBuf.len			= MAX_BUFFER_LENGTH;
-
 	m_Read_OLP->ObjectId = m_ClientId;
+
+
+	m_OLP_REMAIN_COUNT_REC.fetch_add(1);
 
 	INT		ReturnValue = WSARecvFrom(m_Socket,
 		&WsaBuf,
@@ -218,6 +222,7 @@ BOOL			GSSocketUDP::ReadFromForEventSelect(LPSTR remoteAddress, USHORT &remotePo
 
 	if (ReturnValue == SOCKET_ERROR && WSAGetLastError() != WSA_IO_PENDING && WSAGetLastError() != WSAEWOULDBLOCK)
 	{
+		m_OLP_REMAIN_COUNT_REC.fetch_sub(1);
 		Termination();
 
 		return FALSE;
@@ -375,6 +380,8 @@ BOOL			GSSocketUDP::WriteTo2(LPSTR remoteAddress, USHORT remotePort, BYTE *data,
 
 	m_Write_OLP->ObjectId = m_ClientId;
 
+	m_OLP_REMAIN_COUNT_SND.fetch_add(1);
+
 	INT		ReturnValue	= WSASendTo(m_Socket,
 		&WsaBuf,
 		1,
@@ -387,6 +394,7 @@ BOOL			GSSocketUDP::WriteTo2(LPSTR remoteAddress, USHORT remotePort, BYTE *data,
 
 	if (ReturnValue == SOCKET_ERROR && WSAGetLastError() != WSA_IO_PENDING && WSAGetLastError() != WSAEWOULDBLOCK)
 	{
+		m_OLP_REMAIN_COUNT_SND.fetch_sub(1);
 		Termination();
 
 		return FALSE;

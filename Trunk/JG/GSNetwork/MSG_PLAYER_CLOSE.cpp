@@ -23,8 +23,6 @@ void MSG_PLAYER_CLOSE::Execute(LPVOID Param)
 {
 	if(pClient != NULL)
 	{
-		printf("Disconnect socket %d %d\n", pClient->GetSocket(),pClient->GetId());
-	
 		GSServer::GSServer* pServer = (GSServer::GSServer*)pClient->m_GSServer;
 
 		pServer->Disconnect(pClient);

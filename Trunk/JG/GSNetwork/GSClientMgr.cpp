@@ -55,7 +55,7 @@ VOID GSClientMgr::CheckAliveTime()
 
 			DWORD ClientTime = client->m_DeleteTime;
 			DWORD SYSTime = GetTickCount();
-			int count = client->GetTCPSocket()->m_SendRefCount;
+			int count = client->GetTCPSocket()->m_OLP_REMAIN_COUNT_ACC + client->GetTCPSocket()->m_OLP_REMAIN_COUNT_REC + client->GetTCPSocket()->m_OLP_REMAIN_COUNT_SND;
 
 			int Diff = SYSTime - ClientTime;
 
@@ -99,16 +99,18 @@ VOID GSClientMgr::CheckAliveTime()
 //	printf("\nconnect socket count %d GetActiveSocketCount %d ConnectableSocketCount %d\n", 
 //	pServer->CurrentPlayerCount(), GetActiveSocketCount(), ConnectableSocketCount());
 
-	printf("[UserCount : %d] [Debug Count : %d]\n",
-		pServer->CurrentPlayerCount(), DebugCount.fetch_add(0));
-	/*{
+	//printf("[UserCount : %d] [Debug Count : %d]\n",
+	//	pServer->CurrentPlayerCount(), DebugCount.fetch_add(0));
+	{
 
 		char msg[256];
 		
+		sprintf(msg,"[UserCount : %d] [Debug Count : %d]\n",
+				pServer->CurrentPlayerCount(), DebugCount.fetch_add(0));
 
 		ConsoleHelper::DebugConsoleString(0, msg);
 
-	}*/
+	}
 }
 
 int  GSClientMgr::ConnectableSocketCount()
@@ -237,7 +239,7 @@ BOOL GSClientMgr::BookDelClient(int id)
 		return FALSE;
 
 	//삭제 처리는 5초후에 일괄로처리한다. 
-	client->m_DeleteTime = GetTickCount() + 50000;
+	client->m_DeleteTime = GetTickCount() + 5000;
 	m_Remove_Queue.push(client);
 	
 

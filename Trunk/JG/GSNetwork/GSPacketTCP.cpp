@@ -170,8 +170,6 @@ BOOL GSPacketTCP::WriteComplete(VOID)
 {
 	CThreadSync Sync;
 
-	m_SendRefCount.fetch_sub(1);
-
 #ifndef CLIENT_MODULE
 	if(m_WrietQueue.unsafe_size() == 0) return FALSE;
 

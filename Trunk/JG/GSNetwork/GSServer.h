@@ -38,6 +38,8 @@ public:
 	virtual VOID												  OnConnected(int client_id);
 	virtual VOID												  OnDisconnected(int client_id);
 
+	virtual VOID 												  OnDisconnected2(int client_id, int type);
+
 	GSCLIENT_PTR												  GetTcpListen();
 	concurrency::concurrent_unordered_map<DWORD, GSCLIENT_PTR>	 &GetUDPListenPorts();
 	GSClientMgr::GSClientMgr									 &GetClientMgr();

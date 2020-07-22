@@ -15,8 +15,7 @@ typedef struct _OVERLAPPED_EX
 {
 	OVERLAPPED	Overlapped;
 	IO_TYPE		IoType;
-	int		ObjectId;
-
+	int			ObjectId;
 } OVERLAPPED_EX;
 
 class WRITE_PACKET_INFO

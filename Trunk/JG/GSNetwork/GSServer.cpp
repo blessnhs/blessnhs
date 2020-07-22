@@ -55,7 +55,11 @@ VOID GSServer::OnRead(int client_id, DWORD dataLength)
 {
 	boost::shared_ptr<GSClient> pClient = GetClient(client_id);
 	if (pClient == NULL)
+	{
 		return;
+	}
+
+	pClient->GetTCPSocket()->m_OLP_REMAIN_COUNT_REC.fetch_sub(1);
 
 	pClient->OnRecv(dataLength,pClient);
 
@@ -67,7 +71,11 @@ VOID GSServer::OnWrote(int client_id, DWORD dataLength)
 {
 	boost::shared_ptr<GSClient> pClient = GetClient(client_id);
 	if (pClient == NULL)
+	{
 		return;
+	}
+
+	pClient->GetTCPSocket()->m_OLP_REMAIN_COUNT_SND.fetch_sub(1);
 
 	pClient->WriteComplete();
 }
@@ -76,8 +84,11 @@ VOID GSServer::OnConnected(int client_id)
 {
 	boost::shared_ptr<GSClient> pClient = GetClient(client_id);
 	if (pClient == NULL)
+	{
 		return;
+	}
 
+	pClient->GetTCPSocket()->m_OLP_REMAIN_COUNT_ACC.fetch_sub(1);
 
 	m_EvtClientId = client_id;
 
@@ -90,6 +101,7 @@ VOID GSServer::OnConnected(int client_id)
 		return; 
 	}
 
+
 	pClient->OnConnect(pClient);
 }
 
@@ -97,10 +109,36 @@ VOID GSServer::OnDisconnected(int client_id)
 {
 	boost::shared_ptr<GSClient> pClient = GetClient(client_id);
 	if (pClient == NULL)
+	{
 		return;
+	}
 
 	pClient->OnDisconnect(pClient);
 
+}
+
+VOID GSServer::OnDisconnected2(int client_id, int type)
+{
+	boost::shared_ptr<GSClient> pClient = GetClient(client_id);
+	if (pClient == NULL)
+	{
+		return;
+	}
+
+	if (type == IO_TYPE::IO_ACCEPT)
+	{
+		pClient->GetTCPSocket()->m_OLP_REMAIN_COUNT_ACC.fetch_sub(1);
+	}
+	else if (type == IO_TYPE::IO_READ)
+	{
+		pClient->GetTCPSocket()->m_OLP_REMAIN_COUNT_REC.fetch_sub(1);
+	}
+	else if (type == IO_TYPE::IO_WRITE)
+	{
+		pClient->GetTCPSocket()->m_OLP_REMAIN_COUNT_SND.fetch_sub(1);
+	}
+
+	OnDisconnected(client_id);
 }
 
 GSCLIENT_PTR GSServer::GetTcpListen()

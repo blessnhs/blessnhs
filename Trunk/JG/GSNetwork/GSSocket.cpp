@@ -10,10 +10,9 @@ GSSocket::GSSocket(VOID)
 	m_Read_OLP = new OVERLAPPED_EX();
 	m_Write_OLP = new OVERLAPPED_EX();
 
-
-	//memset(&m_Accept_OLP, 0, sizeof(m_Accept_OLP));
-	//memset(&m_Read_OLP, 0, sizeof(m_Read_OLP));
-	//memset(&m_Write_OLP, 0, sizeof(m_Write_OLP));
+	m_OLP_REMAIN_COUNT_ACC = 0;
+	m_OLP_REMAIN_COUNT_REC = 0;
+	m_OLP_REMAIN_COUNT_SND = 0;
 
 	memset(m_Buffer, 0, sizeof(m_Buffer));
 
@@ -140,6 +139,8 @@ BOOL GSSocket::Accept(SOCKET listenSocket)
 		return FALSE;
 	}
 
+	m_OLP_REMAIN_COUNT_ACC.fetch_add(1);
+
 	m_Accept_OLP->ObjectId = m_ClientId;
 
 	//BOOL NoDelay = TRUE;
@@ -157,6 +158,7 @@ BOOL GSSocket::Accept(SOCKET listenSocket)
 		int ErrorCode = WSAGetLastError();
 		if (ErrorCode != ERROR_IO_PENDING && ErrorCode != WSAEWOULDBLOCK)
 		{
+			m_OLP_REMAIN_COUNT_ACC.fetch_sub(1);
 			Termination();
 
 			return FALSE;
@@ -180,6 +182,8 @@ BOOL GSSocket::Accept2(SOCKET listenSocket)
 		return FALSE;
 	}
 
+	m_OLP_REMAIN_COUNT_ACC.fetch_add(1);
+
 	m_Accept_OLP->ObjectId = m_ClientId;
 
 	//BOOL NoDelay = TRUE;
@@ -196,6 +200,7 @@ BOOL GSSocket::Accept2(SOCKET listenSocket)
 	{
 		if (WSAGetLastError() != ERROR_IO_PENDING && WSAGetLastError() != WSAEWOULDBLOCK)
 		{
+			m_OLP_REMAIN_COUNT_ACC.fetch_sub(1);
 			Termination();
 
 			return FALSE;

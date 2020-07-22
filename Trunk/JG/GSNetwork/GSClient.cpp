@@ -39,9 +39,10 @@ boost::shared_ptr<GSPacketUDP>	GSClient::GetUDPSocket()
 
 GSClient::~GSClient(void)
 {
-	if (GetTCPSocket()->m_SendRefCount > 0)
+	int count = GetTCPSocket()->m_OLP_REMAIN_COUNT_ACC + GetTCPSocket()->m_OLP_REMAIN_COUNT_REC + GetTCPSocket()->m_OLP_REMAIN_COUNT_SND;
+	if (count > 0)
 	{
-		printf("alert remain send q %d\n", GetTCPSocket()->m_SendRefCount.fetch_add(0));
+		printf("alert remain overlap event count acc %d recv %d send %d\n", GetTCPSocket()->m_OLP_REMAIN_COUNT_ACC.fetch_add(0), GetTCPSocket()->m_OLP_REMAIN_COUNT_REC.fetch_add(0), GetTCPSocket()->m_OLP_REMAIN_COUNT_SND.fetch_add(0));
 	}
 
 	DebugCount.fetch_sub(1);
@@ -316,6 +317,12 @@ VOID GSClient::ProcDisconnect(boost::shared_ptr<GSClient> pClient)
 	//iocp worker thread와 로직 쓰레드와 처리가 다르기 때문이다.
 	//남은 것을 처리하고 마지막에 종료 시키려면 pServer->Disconnect(pClient); 로직쓰레드로 던져야 한다.
 	//
+	//소켓을 close 시켜서 OnDisconnect가 떨어져도 player객체가 남아 있는 경우는 
+	//소켓을 종료 체크하는 alive 체크 함수 쓰레드와 ProcDisconnect쓰레드가 다른 경우 
+	//소켓 멤버를 clear()한 다음 유저 객체 초기화가 화출되어 유저를 못찾았을 가능성이 크다.
+
+
+
 	//컨텐츠 종료 처리
 	PROC_REG_CLOSE_JOB(pClient,pServer)
 
@@ -432,25 +439,6 @@ void GSClient::OnConnect(boost::shared_ptr<GSClient> pClient)
 	*/
 }
 
-VOID GSClient::RecevieComplete()
-{
-
-}
-
-VOID GSClient::CloseComplete()
-{
-
-}
-
-VOID GSClient::AcceptComplete()
-{
-
-}
-
-VOID GSClient::SendComplete()
-{
-
-}
 VOID GSClient::Clear()
 {
 	CThreadSync Sync;

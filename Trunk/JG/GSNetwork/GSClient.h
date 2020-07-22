@@ -40,11 +40,6 @@ public:
 
 	BOOL											Create(BYTE Type);
 
-	virtual VOID									RecevieComplete();
-	virtual VOID									CloseComplete();
-	virtual VOID									AcceptComplete() ;
-	virtual VOID									SendComplete() ;
-
 	VOID											Clear();
 
 
