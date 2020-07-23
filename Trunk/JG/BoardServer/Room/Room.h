@@ -88,6 +88,11 @@ public:
 	void SET_X_Y_COLOR(byte X, byte Y, byte COLOR, int& FLAG);
 	bool Get_X_Y_COLOR(byte& X, byte& Y, byte& Color, int FLAG);
 
+	DWORD GetTurnPlayerId();
+	void  IncTurnPlayerId();
+
+	string LevelConverter(int level);
+
 private:
 
 
@@ -96,6 +101,8 @@ private:
 	State															m_State;
 
 	eTeam															m_Board[COLS][ROWS];
+
+	int																m_TurnIndex;
 
 };
 

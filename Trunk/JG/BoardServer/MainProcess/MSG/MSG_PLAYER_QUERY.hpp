@@ -262,8 +262,6 @@ namespace Board	{
 		{
 			try
 			{
-				printf("google auth begin \n");
-
 				// make uri
 				http_client client(U("https://oauth2.googleapis.com/"));
 				uri_builder builder(U("/tokeninfo"));
@@ -276,12 +274,6 @@ namespace Board	{
 				// The following code executes when the response is available
 				.then([](http_response response) -> pplx::task<json::value>
 				{
-					std::wostringstream stream;
-					stream.str(std::wstring());
-					stream << L"Content type: " << response.headers().content_type() << std::endl;
-					stream << L"Content length: " << response.headers().content_length() << L"bytes" << std::endl;
-					std::wcout << stream.str();
-
 					// If the status is OK extract the body of the response into a JSON value
 					if (response.status_code() == status_codes::OK)
 					{
@@ -362,7 +354,7 @@ namespace Board	{
 
 			if (pSession == NULL || pSession->GetConnected() == false)
 			{
-				printf("pSession isnull or disconnect", pSession);
+//				printf("pSession is null or disconnect", pSession);
 
 				res.set_var_code(DataBaseError);
 

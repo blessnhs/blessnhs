@@ -40,19 +40,17 @@ template<template<class T> class CreationPolicy> ROOM_PTR RoomContainer<Creation
 
 template<template<class T> class CreationPolicy> ROOM_PTR RoomContainer<CreationPolicy>::SearchByGameType(WORD Type)
 {
-	auto iter = m_RoomMap.begin();
-
-	while(iter != m_RoomMap.end())
+	for each (auto room in m_RoomMap)
 	{
-		if(iter->second->m_Stock.GameType == Type)
+		if (room->second->m_Stock.GameType == Type)
 		{
-			if(iter->second->GetCurrPlayer() < iter->second->m_Stock.MAX_PLAYER)
+			if (room->second->GetCurrPlayer() < room->second->m_Stock.MAX_PLAYER)
 			{
-				return (iter->second) ;
+				return (room->second);
 			}
 		}
-		iter++;
 	}
+
 	return ROOM_PTR();
 }
 
@@ -75,25 +73,21 @@ template<template<class T> class CreationPolicy> VOID RoomContainer<CreationPoli
 	const int max_count = 10;
 	int currcount = 0;
 
-	auto iter = m_RoomMap.begin();
-
-	while(iter != m_RoomMap.end())
+	for each (auto room in m_RoomMap)
 	{
-		if(iter->second != NULL)
+		if (room.second != NULL)
 		{
 			if (currcount > max_count)
 				break;
 
-			RoomInfo2 *info = List->Add();
-			info->mutable_var_name()->assign( iter->second->m_Stock.Name );
-			info->set_var_id( iter->second->GetId() );
-			info->set_var_current_count(iter->second->GetCurrPlayer());
+			RoomInfo2* info = List->Add();
+			info->mutable_var_name()->assign(room.second->m_Stock.Name);
+			info->set_var_id(room.second->GetId());
+			info->set_var_current_count(room.second->GetCurrPlayer());
 			info->set_var_max_count(-1);
 
 			currcount++;
 		}
-		
-		iter++;
 	}
 }
 
@@ -221,14 +215,18 @@ template<template<class T> class CreationPolicy> BOOL RoomContainer<CreationPoli
 	ROOM_PTR RoomPtr = Create();
 	RoomPtr->m_Stock.Name.append(target1->m_Account.GetName());
 	RoomPtr->m_Stock.Name.append(" ");
-	RoomPtr->m_Stock.Name.append(std::to_string(19 - target1->m_Char[0].GetLevel()));
+	string lvstring = RoomPtr->LevelConverter(target1->m_Char[0].GetLevel());
+
+	RoomPtr->m_Stock.Name.append(lvstring);
 	RoomPtr->m_Stock.Name.append("Бо");
 
 	RoomPtr->m_Stock.Name.append("  VS  ");
 
 	RoomPtr->m_Stock.Name.append(target2->m_Account.GetName());
 	RoomPtr->m_Stock.Name.append(" ");
-	RoomPtr->m_Stock.Name.append(std::to_string(19 - target2->m_Char[0].GetLevel()));
+
+	string lvstring2 = RoomPtr->LevelConverter(target2->m_Char[0].GetLevel());
+	RoomPtr->m_Stock.Name.append(lvstring2);
 	RoomPtr->m_Stock.Name.append("Бо");
 
 	Add(RoomPtr);

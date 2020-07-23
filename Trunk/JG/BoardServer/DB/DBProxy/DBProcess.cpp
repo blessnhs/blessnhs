@@ -29,7 +29,6 @@ BOOL CDBProcessCer::Initalize(	CHAR *m_szDSN,CHAR *m_szUID,CHAR *m_szPWD)
 	}
 	m_IsOpen = true;
 
-	printf(("connected db (%lu)\n"), GetId());
 	return true;
 }
 

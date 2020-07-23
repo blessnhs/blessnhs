@@ -205,7 +205,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\NetClient\NetClient.sln" />
     <None Include="packages.config" />
     <None Include="..\Protocol\CLI.GS.proto">
       <Filter>PROTO\script</Filter>

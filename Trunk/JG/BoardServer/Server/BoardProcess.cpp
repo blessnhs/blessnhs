@@ -212,6 +212,7 @@ VOID BoardProcess::ROOM_PASSTHROUGH(LPVOID Data, DWORD Length, boost::shared_ptr
 
 		eTeam team_color = color == 0 ? WHITE : BLACK;
 
+		//해당위치에 돌이 이미 있다.
 		eTeam checkState;
 		bool valid = pPtr->GetBoard(x, y, checkState);
 		if (checkState != eTeam::None && valid == true)
@@ -220,6 +221,16 @@ VOID BoardProcess::ROOM_PASSTHROUGH(LPVOID Data, DWORD Length, boost::shared_ptr
 			SEND_PROTO_BUFFER(res, Client)
 			return;
 		}
+
+		int player1 = pPtr->GetTurnPlayerId();
+		int player2 = pPlayer->GetId();
+
+		if (player1 != player2)
+		{
+			return;
+		}
+
+		pPtr->IncTurnPlayerId();
 
 		pPtr->UpdateBoard(x, y, team_color);
 

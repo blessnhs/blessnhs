@@ -28,6 +28,8 @@ Room::Room(void)
 			m_Board[i][j] = None;
 
 	m_State = State::Prepare;
+
+	m_TurnIndex = 0;
 }
 
 void Room::ClearBoard()
@@ -35,6 +37,8 @@ void Room::ClearBoard()
 	for (int i = 0; i < COLS; i++)
 		for (int j = 0; j < ROWS; j++)
 			m_Board[i][j] = None;
+
+	m_TurnIndex = 0;
 }
 
 Room::~Room(void)
@@ -158,6 +162,23 @@ bool Room::RemovePlayer(PLAYER_PTR Player)
 	}
 
 	return FALSE;
+}
+
+string Room::LevelConverter(int level)
+{
+	int o = 19 - level;
+
+	if (o <= 0)
+	{
+		int l = std::abs(o) + 1;
+		if (l >= 9)
+			l = 9;
+
+		return l + "´Ü";
+	}
+
+	return o + "±Þ";
+
 }
 
 bool Room::InsertPlayer(PLAYER_PTR Player)
@@ -398,4 +419,27 @@ bool Room::Get_X_Y_COLOR(byte &X, byte &Y, byte &Color, int FLAG)
 	Color = (byte)((FLAG >> 16) & 0x01);
 
 	return true;
+}
+
+DWORD Room::GetTurnPlayerId()
+{
+	int turn = m_TurnIndex % m_PlayerMap.size();
+
+	if (m_PlayerMap.find(turn) == m_PlayerMap.end())
+	{
+		return -1;
+	}
+
+	auto player = m_PlayerMap[turn];
+	if (player != NULL)
+	{
+		return player->GetId();
+	}
+
+	return -1;
+}
+
+void  Room::IncTurnPlayerId()
+{
+	m_TurnIndex++;
 }
