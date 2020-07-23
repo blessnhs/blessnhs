@@ -1,3 +1,82 @@
 [HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters]
 "MaxUserPort"=dword:0000fffe
 "TcpWindowSize"=dword:00004470
+
+
+
+TcpNumConnections
+
+
+
+
+Windows의 TCP/IP 세션 관련하여 Max Port 및 TCP Connection 갯수 등을 확인하는 방법은 아래와 같다.
+레지스트리에 해당 항목이 없을 경우 default 값으로 설정된다고 보면 될 거 같다.
+
+HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\TCPIP\Parameters
+하위에 아래 항목을 확인
+
+MaxUserPort
+이 값은 시스템으로부터 응용 프로그램이 사용 가능한 포트를 요청할 때 사용되는 최대 포트 개수 입니다. 일반적으로 RPC 동적 할당 포트로 알려져 있으며 기본 값은 5000 입니다.
+Key: Tcpip\Parameters
+Value Type: REG_DWORD—maximum port number
+ValidRange: 5000–65534 (decimal)
+Default: 0x1388 (5000 decimal)
+
+TcpNumConnections
+이 값은 TCP 가 동시에 열 수 있는 최대 연결 수이고 기본 값이 0xFFFFFE 로 최대값으로 설정되어 있습니다.
+Key: Tcpip\Parameters
+Value Type: REG_DWORD—number
+Valid Range: 0–0xFFFFFE
+Default: 0xFFFFFE
+
+
+MaxFreeTcbs
+TCB는 TCP 세션이 생성될 때 커널 모드에 생성되는 하나의 block 입니다. 이 값은 캐쉬된 사용 가능한 TCB 개수를 조절합니다. 
+TCB 생성 시 메모리를 사용하기 떄문에 현재 컴퓨터의 메모리 크기와 연관이 있고 64MB 이상의 메모리를 사용하는 경우 2000 개가 기본값입니다.
+시스템이 TCP 연결 유지를 위해 생성하는 TCP Control Blocks(TCBs)의 숫자를 결정한다. 하나의 연결은 하나의 블록을 요구하기 때문에, 이 값은 TCP가 동시에 몇 개의 연결을 처리할 수 있느냐를 결정하게 된다. 모든 블록이 사용 중인 상황에서 새로운 연결이 들어오게 되면, TCP는 TIME_WAIT 상태인 연결 중에 하나를 강제로 끊어버리고, 블록을 해제한 후, 그 블록을 새로운 연결에 사용하게 된다. 
+보통 TCP는 TcpTimedWaitDelay에 지정되어 있는 시간이 지나지 않은 경우, 연결을 해제하지도 않고, 그 연결에 사용된 자원을 재사용하지도 않는다. 이 시간은 보통 TIME_WAIT 또는 2MSL (2 x maximum segment lifetime) 상태라고 불린다. 하지만 시스템이 매우 많은 연결을 받아들여 자원이 바닥날 상황에 이르면, TcpTimedWaitDelay에 지정된 시간이 아직 남아있는 경우에도 연결에 할당되어 있는 자원을 해제하게 된다.
+Key: Tcpip\Parameters
+Value Type: REG_DWORD—number
+Valid Range: 0–0xFFFFFFFF
+
+
+TcpTimedWaitDelay
+이 값은 TCP 연결이 종료되기 전 동일한 세션이 다시 사용될 것을 대기하기 위해서 Time_Wait 상태에 있는데 이 상태로 있는 시간을 결정합니다. 기본은 4분이며 30초까지 설정이 가능합니다.
+Key: Tcpip\Parameters
+Value Type: REG_DWORD—time in seconds
+ValidRange: 30-300 (decimal)
+Default: 0xF0 (240 decimal)
+
+MaxHashTableSize
+TCP Control block이 저장되는 해쉬 테이블의 크기를 결정한다. 
+TCP는 컨트롤 블록들을 빠르게 검색하기 위해 해쉬 테이블에다 저장한다. 만일 시스템이 동시에 생성할 수 있는 TCB의 숫자를 변경한다면(MaxFreeTcbs 값을 변경한다면), 이 항목의 값 또한 그에 비례해서 변경해줘야한다. 
+이 항목의 값은 반드시 2의 승수여야한다. 만일 2의 승수를 입력하지 않는다면, 시스템은 자동으로 입력한 수보다 큰 2의 승수 중에 가장 작은 것을 찾아 사용한다.  즉 128 * (시스템 cpu 개수)의 제곱
+예를 들어 cpu 4장이라면, 128 * 4^2 = 2048
+최대 값은 0x10000 (65,536)입니다. 연결 부하가 클 것으로 예상되는 대규모 서버에서는 최대 값을 설정하는것이 권장됩니다. 이 테이블은 페이지 안 되는 풀을 사용하므로 서버의 가용한 페이지 안 되는 풀이 많지 않거나 연결 부하가 크지 않은 경우에는 이 값을 너무 크게 설정하면 안 된다는 사실을 명심하십시오.
+ 
+레지스트리 위치: HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters
+유효한 범위: 64 ~ 65536
+값 이름 : MaxHashTableSize
+값 종류: DWORD
+기본값: 512
+추천 값: 2048
+
+KeepAliveTime
+TCP-HandShake를 통해 연결이 되면 해당 세션은 연결이 유지되어집니다.
+하지만, 일정 시간동안 Connection에 대해 실제 통신이 없는 경우 Session관리를 위해
+특정 시간이 지나면 해당 Session을 OS에서 끊게 됩니다.
+NT에서 해당 역활을 해주는 것은 KeepAliveInterval에 설정되어진 값에 의해 결정되게 됩니다.
+KeepAliveTime을 통해 해당 시간만큼 ACK(응답)이 없는 경우 Session이 종료되어집니다.
+ 
+레지스트리 위치: HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters
+유효한 범위: 0x1–0xFFFFFFFF ms
+값 이름 : KeepAliveTime 
+값 종류: DWORD
+기본값: 7,200,000 ms --> 2hr
+추천 값: 1800000 ms -->30분
+
+
+TCP 연결의 가용 포트를 늘리기 위해서는 일반적으로 다음 2가지 값을 설정하는 것을 권장드립니다.
+MaxUserPort : 65534 
+TcpTimedWaitDelay : 30 
+[출처] Windows TCP/IP MaxUserPort TcpNumConnections MaxFreeTcbs TcpTimedWaitDelay 정보|작성자 타키온

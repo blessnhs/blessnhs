@@ -76,6 +76,8 @@ namespace OMOK
                     tiles[row, col].Status = eTeam.None;
                 }
             }
+
+            prevsTATE = eTeam.None;
         }
 
         public eTeam prevsTATE = eTeam.None;

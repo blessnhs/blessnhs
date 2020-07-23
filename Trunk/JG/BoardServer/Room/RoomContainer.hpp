@@ -218,7 +218,6 @@ template<template<class T> class CreationPolicy> BOOL RoomContainer<CreationPoli
 	string lvstring = RoomPtr->LevelConverter(target1->m_Char[0].GetLevel());
 
 	RoomPtr->m_Stock.Name.append(lvstring);
-	RoomPtr->m_Stock.Name.append("Бо");
 
 	RoomPtr->m_Stock.Name.append("  VS  ");
 
@@ -227,7 +226,6 @@ template<template<class T> class CreationPolicy> BOOL RoomContainer<CreationPoli
 
 	string lvstring2 = RoomPtr->LevelConverter(target2->m_Char[0].GetLevel());
 	RoomPtr->m_Stock.Name.append(lvstring2);
-	RoomPtr->m_Stock.Name.append("Бо");
 
 	Add(RoomPtr);
 	RoomPtr->m_Stock.MAX_PLAYER = USHRT_MAX;

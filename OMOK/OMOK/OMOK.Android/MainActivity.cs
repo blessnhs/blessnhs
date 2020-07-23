@@ -108,7 +108,6 @@ namespace OMOK.Droid
                     User.Token = signInResult.SignInAccount.IdToken;
                     User.myInfo.NickName = signInResult.SignInAccount.DisplayName;
 
-                    NetProcess.SendLogin(User.Uid, User.Token);
 
                     IAuthResult authResult = await FirebaseAuth_.SignInWithCredentialAsync(credential);
                     FirebaseUser user = authResult.User;

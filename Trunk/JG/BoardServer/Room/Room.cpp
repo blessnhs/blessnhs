@@ -167,6 +167,7 @@ bool Room::RemovePlayer(PLAYER_PTR Player)
 string Room::LevelConverter(int level)
 {
 	int o = 19 - level;
+	string str, i;
 
 	if (o <= 0)
 	{
@@ -174,10 +175,19 @@ string Room::LevelConverter(int level)
 		if (l >= 9)
 			l = 9;
 
-		return l + "단";
+
+		i = std::to_string(l);
+
+		str.append(i);
+		str.append("단");
+		return str;
 	}
 
-	return o + "급";
+	i = std::to_string(o);
+
+	str.append(i);
+	str.append("급");
+	return str;
 
 }
 
