@@ -67,6 +67,9 @@
     <Filter Include="Network\Compress">
       <UniqueIdentifier>{75a33f72-6e6b-4712-9828-9cf283dfe8be}</UniqueIdentifier>
     </Filter>
+    <Filter Include="CrashHandler">
+      <UniqueIdentifier>{2be2ec76-981f-49f9-a4f9-d0bfa26a3b80}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt" />
@@ -345,6 +348,24 @@
     <ClInclude Include="ConsoleHelper.h">
       <Filter>Frame</Filter>
     </ClInclude>
+    <ClInclude Include="CrashHandler\CrashHandler.h">
+      <Filter>CrashHandler</Filter>
+    </ClInclude>
+    <ClInclude Include="CrashHandler\CrashRepoter.h">
+      <Filter>CrashHandler</Filter>
+    </ClInclude>
+    <ClInclude Include="CrashHandler\dump.h">
+      <Filter>CrashHandler</Filter>
+    </ClInclude>
+    <ClInclude Include="CrashHandler\SFCrashHandler.h">
+      <Filter>CrashHandler</Filter>
+    </ClInclude>
+    <ClInclude Include="CrashHandler\SFExceptionHandlerUtil.h">
+      <Filter>CrashHandler</Filter>
+    </ClInclude>
+    <ClInclude Include="CrashHandler\StackWalker.h">
+      <Filter>CrashHandler</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -568,6 +589,21 @@
     </ClCompile>
     <ClCompile Include="ConsoleHelper.cpp">
       <Filter>Frame</Filter>
+    </ClCompile>
+    <ClCompile Include="CrashHandler\CrashRepoter.cpp">
+      <Filter>CrashHandler</Filter>
+    </ClCompile>
+    <ClCompile Include="CrashHandler\dump.cpp">
+      <Filter>CrashHandler</Filter>
+    </ClCompile>
+    <ClCompile Include="CrashHandler\SFCrashHandler.cpp">
+      <Filter>CrashHandler</Filter>
+    </ClCompile>
+    <ClCompile Include="CrashHandler\SFExceptionHandlerUtil.cpp">
+      <Filter>CrashHandler</Filter>
+    </ClCompile>
+    <ClCompile Include="CrashHandler\StackWalker.cpp">
+      <Filter>CrashHandler</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

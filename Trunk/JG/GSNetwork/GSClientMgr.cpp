@@ -239,7 +239,7 @@ BOOL GSClientMgr::BookDelClient(int id)
 		return FALSE;
 
 	//삭제 처리는 5초후에 일괄로처리한다. 
-	client->m_DeleteTime = GetTickCount() + 5000;
+	client->m_DeleteTime = GetTickCount() + 0;
 	m_Remove_Queue.push(client);
 	
 

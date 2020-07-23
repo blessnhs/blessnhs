@@ -130,6 +130,7 @@
     <IntDir>$(Platform)\$(Configuration)\</IntDir>
     <IncludePath>../Common/boost_1_68_0;$(IncludePath)</IncludePath>
     <LibraryPath>../Common/boost_1_68_0/lib;$(LibraryPath)</LibraryPath>
+    <ReferencePath>$(VC_ReferencesPath_x64);</ReferencePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -215,9 +216,10 @@
       <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;SQLITE_CORE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>../common;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
-      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
       <SupportJustMyCode>true</SupportJustMyCode>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <BufferSecurityCheck>false</BufferSecurityCheck>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -225,6 +227,9 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
+    <Lib>
+      <AdditionalLibraryDirectories>../Common/boost_1_68_0/lib;</AdditionalLibraryDirectories>
+    </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
     <None Include="GSReactor.h.bak" />
@@ -237,6 +242,12 @@
     <ClInclude Include="Base64.h" />
     <ClInclude Include="CommonSock.h" />
     <ClInclude Include="ConsoleHelper.h" />
+    <ClInclude Include="CrashHandler\CrashHandler.h" />
+    <ClInclude Include="CrashHandler\CrashRepoter.h" />
+    <ClInclude Include="CrashHandler\dump.h" />
+    <ClInclude Include="CrashHandler\SFCrashHandler.h" />
+    <ClInclude Include="CrashHandler\SFExceptionHandlerUtil.h" />
+    <ClInclude Include="CrashHandler\StackWalker.h" />
     <ClInclude Include="DBJob\ClearConcurrent.h" />
     <ClInclude Include="DBJob\ClosePlayer.h" />
     <ClInclude Include="DBJob\RequestPlayerAuth.h" />
@@ -327,6 +338,11 @@
     <ClCompile Include="Base64.cpp" />
     <ClCompile Include="CommonSock.cpp" />
     <ClCompile Include="ConsoleHelper.cpp" />
+    <ClCompile Include="CrashHandler\CrashRepoter.cpp" />
+    <ClCompile Include="CrashHandler\dump.cpp" />
+    <ClCompile Include="CrashHandler\SFCrashHandler.cpp" />
+    <ClCompile Include="CrashHandler\SFExceptionHandlerUtil.cpp" />
+    <ClCompile Include="CrashHandler\StackWalker.cpp" />
     <ClCompile Include="DBJob\ClearConcurrent.cpp" />
     <ClCompile Include="DBJob\ClosePlayer.cpp" />
     <ClCompile Include="DBJob\RequestPlayerAuth.cpp" />
