@@ -22,6 +22,7 @@ BoardProcess::BoardProcess(void)
 	ADD_NET_FUNC(BoardProcess, ID_PKT_ROOM_PASS_THROUGH_REQ, ROOM_PASSTHROUGH);
 	ADD_NET_FUNC(BoardProcess, ID_PKT_QNS_REQ, QNS);
 	ADD_NET_FUNC(BoardProcess, ID_PKT_CANCEL_MATCH_REQ, CANCEL_MATCH);
+	ADD_NET_FUNC(BoardProcess, ID_PKT_NOTICE_REQ, NOTICE);
 	
 }
 
@@ -56,6 +57,21 @@ VOID BoardProcess::Process(LPVOID Data, DWORD Length, WORD MainProtocol, WORD Su
 	{
 		printf("handle exception %d\n",exception);
 	}
+}
+
+VOID BoardProcess::NOTICE(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client)
+{
+	DECLARE_RECV_TYPE(NOTICE_REQ, version)
+
+	//로그인 쿼리를 날린다.
+	boost::shared_ptr<RequestNotice> pRequest = ALLOCATOR.Create<RequestNotice>();
+
+	boost::shared_ptr<Board::MSG_PLAYER_QUERY<RequestNotice>>		PLAYER_MSG = ALLOCATOR.Create<Board::MSG_PLAYER_QUERY<RequestNotice>>();
+	PLAYER_MSG->pSession = Client;
+	PLAYER_MSG->pRequst = pRequest;
+	PLAYER_MSG->Type = Client->GetMyDBTP();
+	PLAYER_MSG->SubType = ONQUERY;
+	MAINPROC.RegisterCommand(PLAYER_MSG);
 }
 
 VOID BoardProcess::VERSION(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client)

@@ -49,7 +49,7 @@ struct TableStruct_CLI_2eGS_2eproto {
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::PROTOBUF_NAMESPACE_ID::internal::AuxillaryParseTableField aux[]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
-  static const ::PROTOBUF_NAMESPACE_ID::internal::ParseTable schema[12]
+  static const ::PROTOBUF_NAMESPACE_ID::internal::ParseTable schema[13]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::PROTOBUF_NAMESPACE_ID::internal::FieldMetadata field_metadata[];
   static const ::PROTOBUF_NAMESPACE_ID::internal::SerializationTable serialization_table[];
@@ -77,6 +77,9 @@ extern LOGIN_REQDefaultTypeInternal _LOGIN_REQ_default_instance_;
 class MATCH_REQ;
 class MATCH_REQDefaultTypeInternal;
 extern MATCH_REQDefaultTypeInternal _MATCH_REQ_default_instance_;
+class NOTICE_REQ;
+class NOTICE_REQDefaultTypeInternal;
+extern NOTICE_REQDefaultTypeInternal _NOTICE_REQ_default_instance_;
 class QNS_REQ;
 class QNS_REQDefaultTypeInternal;
 extern QNS_REQDefaultTypeInternal _QNS_REQ_default_instance_;
@@ -100,6 +103,7 @@ template<> ::ENTER_ROOM_REQ* Arena::CreateMaybeMessage<::ENTER_ROOM_REQ>(Arena*)
 template<> ::LEAVE_ROOM_REQ* Arena::CreateMaybeMessage<::LEAVE_ROOM_REQ>(Arena*);
 template<> ::LOGIN_REQ* Arena::CreateMaybeMessage<::LOGIN_REQ>(Arena*);
 template<> ::MATCH_REQ* Arena::CreateMaybeMessage<::MATCH_REQ>(Arena*);
+template<> ::NOTICE_REQ* Arena::CreateMaybeMessage<::NOTICE_REQ>(Arena*);
 template<> ::QNS_REQ* Arena::CreateMaybeMessage<::QNS_REQ>(Arena*);
 template<> ::RANK_REQ* Arena::CreateMaybeMessage<::RANK_REQ>(Arena*);
 template<> ::ROOM_LIST_REQ* Arena::CreateMaybeMessage<::ROOM_LIST_REQ>(Arena*);
@@ -1970,6 +1974,146 @@ class CANCEL_MATCH_REQ :
   int id_;
   friend struct ::TableStruct_CLI_2eGS_2eproto;
 };
+// -------------------------------------------------------------------
+
+class NOTICE_REQ :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:NOTICE_REQ) */ {
+ public:
+  NOTICE_REQ();
+  virtual ~NOTICE_REQ();
+
+  NOTICE_REQ(const NOTICE_REQ& from);
+  NOTICE_REQ(NOTICE_REQ&& from) noexcept
+    : NOTICE_REQ() {
+    *this = ::std::move(from);
+  }
+
+  inline NOTICE_REQ& operator=(const NOTICE_REQ& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline NOTICE_REQ& operator=(NOTICE_REQ&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  inline const ::PROTOBUF_NAMESPACE_ID::UnknownFieldSet& unknown_fields() const {
+    return _internal_metadata_.unknown_fields();
+  }
+  inline ::PROTOBUF_NAMESPACE_ID::UnknownFieldSet* mutable_unknown_fields() {
+    return _internal_metadata_.mutable_unknown_fields();
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return GetMetadataStatic().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return GetMetadataStatic().reflection;
+  }
+  static const NOTICE_REQ& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const NOTICE_REQ* internal_default_instance() {
+    return reinterpret_cast<const NOTICE_REQ*>(
+               &_NOTICE_REQ_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    12;
+
+  friend void swap(NOTICE_REQ& a, NOTICE_REQ& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(NOTICE_REQ* other) {
+    if (other == this) return;
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline NOTICE_REQ* New() const final {
+    return CreateMaybeMessage<NOTICE_REQ>(nullptr);
+  }
+
+  NOTICE_REQ* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
+    return CreateMaybeMessage<NOTICE_REQ>(arena);
+  }
+  void CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void CopyFrom(const NOTICE_REQ& from);
+  void MergeFrom(const NOTICE_REQ& from);
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  ::PROTOBUF_NAMESPACE_ID::uint8* _InternalSerialize(
+      ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  inline void SharedCtor();
+  inline void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(NOTICE_REQ* other);
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "NOTICE_REQ";
+  }
+  private:
+  inline ::PROTOBUF_NAMESPACE_ID::Arena* GetArenaNoVirtual() const {
+    return nullptr;
+  }
+  inline void* MaybeArenaPtr() const {
+    return nullptr;
+  }
+  public:
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+  private:
+  static ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadataStatic() {
+    ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&::descriptor_table_CLI_2eGS_2eproto);
+    return ::descriptor_table_CLI_2eGS_2eproto.file_level_metadata[kIndexInFileMessages];
+  }
+
+  public:
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kIdFieldNumber = 1,
+  };
+  // optional .PROTOCOL id = 1 [default = ID_PKT_CANCEL_MATCH_REQ];
+  bool has_id() const;
+  private:
+  bool _internal_has_id() const;
+  public:
+  void clear_id();
+  ::PROTOCOL id() const;
+  void set_id(::PROTOCOL value);
+  private:
+  ::PROTOCOL _internal_id() const;
+  void _internal_set_id(::PROTOCOL value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:NOTICE_REQ)
+ private:
+  class _Internal;
+
+  ::PROTOBUF_NAMESPACE_ID::internal::InternalMetadataWithArena _internal_metadata_;
+  ::PROTOBUF_NAMESPACE_ID::internal::HasBits<1> _has_bits_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  int id_;
+  friend struct ::TableStruct_CLI_2eGS_2eproto;
+};
 // ===================================================================
 
 
@@ -2883,9 +3027,44 @@ inline void CANCEL_MATCH_REQ::set_id(::PROTOCOL value) {
   // @@protoc_insertion_point(field_set:CANCEL_MATCH_REQ.id)
 }
 
+// -------------------------------------------------------------------
+
+// NOTICE_REQ
+
+// optional .PROTOCOL id = 1 [default = ID_PKT_CANCEL_MATCH_REQ];
+inline bool NOTICE_REQ::_internal_has_id() const {
+  bool value = (_has_bits_[0] & 0x00000001u) != 0;
+  return value;
+}
+inline bool NOTICE_REQ::has_id() const {
+  return _internal_has_id();
+}
+inline void NOTICE_REQ::clear_id() {
+  id_ = 25;
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline ::PROTOCOL NOTICE_REQ::_internal_id() const {
+  return static_cast< ::PROTOCOL >(id_);
+}
+inline ::PROTOCOL NOTICE_REQ::id() const {
+  // @@protoc_insertion_point(field_get:NOTICE_REQ.id)
+  return _internal_id();
+}
+inline void NOTICE_REQ::_internal_set_id(::PROTOCOL value) {
+  assert(::PROTOCOL_IsValid(value));
+  _has_bits_[0] |= 0x00000001u;
+  id_ = value;
+}
+inline void NOTICE_REQ::set_id(::PROTOCOL value) {
+  _internal_set_id(value);
+  // @@protoc_insertion_point(field_set:NOTICE_REQ.id)
+}
+
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

@@ -38,6 +38,16 @@ public:
 	~RequestRank(void) {}
 };
 
+class RequestNotice : public GSObject
+{
+public:
+	RequestNotice(void)
+	{
+	}
+
+	~RequestNotice(void) {}
+};
+
 
 class RequestPlayerAuth : public GSObject
 {

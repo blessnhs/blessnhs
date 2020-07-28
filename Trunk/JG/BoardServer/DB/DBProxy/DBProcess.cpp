@@ -160,6 +160,37 @@ int CDBProcessCer::UpdaetPlayerScore(INT64 Index,int Win, int Lose, int Draw,int
 	return _ERR_NONE;
 }
 
+
+int CDBProcessCer::NoticeInfoInfo(string& notice)
+{
+	SQLRETURN		retcode = SQL_ERROR;
+	CDBHandle		dbhandle(m_pDB->m_hdbc, &(m_pDB->m_csDBHandle));
+	SQLHSTMT		hstmt = dbhandle.GetHandle();
+	SQLCHAR			szsql[1024];
+	SQLLEN			cbParmRet;
+
+	sprintf_s((char*)szsql,1024, _T("SELECT Text FROM NOTICE"));
+	retcode = SQLExecDirect(hstmt, szsql, SQL_NTS);
+	if (retcode == SQL_ERROR) { return _ERR_NETWORK; }
+
+	CHAR contents[2048];
+
+	int Cnt = 0;
+	while (true)
+	{
+		retcode = SQLFetch(hstmt);
+		if (retcode == SQL_SUCCESS || retcode == SQL_SUCCESS_WITH_INFO)
+		{
+			SQLGetData(hstmt, 1, SQL_CHAR, contents, sizeof(contents), &cbParmRet);
+			notice = contents;
+			break;
+		}
+		else { break; }
+	}
+	return _ERR_NONE;
+
+}
+
 int CDBProcessCer::UpdaetQNS(INT64 Index, std::string contents)
 {
 	SQLRETURN		retcode = SQL_ERROR;

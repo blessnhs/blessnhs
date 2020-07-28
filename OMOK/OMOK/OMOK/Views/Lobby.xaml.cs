@@ -39,6 +39,21 @@ namespace OMOK.Views
       //      iIterstitia.ShowAd();
 
             mypicture.Source = null;
+
+
+            Device.StartTimer(TimeSpan.FromMilliseconds(50), () =>
+            {
+                if (NoticeLabel.TranslationX > -NoticeLabel.Width)
+                {
+                    NoticeLabel.TranslationX -= 5f;
+                }
+                else
+                {
+                    NoticeLabel.TranslationX = NoticeLabel.Width;
+                }
+
+                return true;
+            });
         }
 
         protected override void OnAppearing()
@@ -95,6 +110,12 @@ namespace OMOK.Views
         public void LoginInformation(string msg)
         {
             DisplayAlert("", msg, "OK");
+        }
+
+        public void SetNotice(string message)
+        {
+            NoticeLabel.Text = message;
+            NoticeLabel.TranslationX = 0;
         }
 
         public void CloseMatchInfoPopup()

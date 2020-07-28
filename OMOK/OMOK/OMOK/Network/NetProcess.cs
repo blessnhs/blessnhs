@@ -33,9 +33,11 @@ namespace OMOK.Network
         private static DateTime time = new DateTime();
         private static bool sendLogin = false;
 
+        private static DateTime notice_time = new DateTime();
+
         static public void start()
         {
-            string ip="192.168.0.9";
+            string ip = "192.168.0.9";
 
             ip = GetIPAddress("blessnhs.iptime.org");
             if (GlobalVariable.ip != "")
@@ -44,16 +46,22 @@ namespace OMOK.Network
             //연결중이면 안한다. 
             if (client.socket == null || client.socket.Connected == false)
             {
-                if((DateTime.Now - time).TotalSeconds > 10)
+                if ((DateTime.Now - time).TotalSeconds > 10)
                 {
                     time = DateTime.Now;
                     client.StartClient(ip, 20000);
                 }
             }
-            else if(sendLogin == false && User.Uid != "" && User.Uid != null)
+            else if (sendLogin == false && User.Uid != "" && User.Uid != null)
             {
                 NetProcess.SendLogin(User.Uid, User.Token);
                 sendLogin = true;
+            }
+
+            if ((DateTime.Now - notice_time).TotalSeconds > 60 * 3)
+            {
+                notice_time = DateTime.Now;
+                SendNociticeReq();
             }
         }
 
@@ -112,11 +120,25 @@ namespace OMOK.Network
                                     ((Lobby)page.Children[0]).UpdatePlayerInfo();
 
                                     User.state = PlayerState.Lobby;
+
+                                    SendNociticeReq();
                                 }
                                 else
                                     ((Lobby)page.Children[0]).LoginInformation("로그인에 실패했습니다.");
+
+
                             }
                             break;
+
+                        case (int)PROTOCOL.IdPktNoticeRes:
+                            {
+                                NOTICE_RES res = new NOTICE_RES();
+                                res = NOTICE_RES.Parser.ParseFrom(data.Data);
+
+                                ((Lobby)page.Children[0]).SetNotice(Helper.ToStr(res.VarMessage.ToByteArray()));
+                            }
+                            break;
+
                         case (int)PROTOCOL.IdPktCreateRoomRes:
                             {
                                 CREATE_ROOM_RES res = new CREATE_ROOM_RES();
@@ -275,6 +297,19 @@ namespace OMOK.Network
                 person.WriteTo(stream);
 
                 client.WritePacket((int)PROTOCOL.IdPktVersionReq, stream.ToArray(), stream.ToArray().Length);
+            }
+        }
+
+        static public void SendNociticeReq()
+        {
+            NOTICE_REQ person = new NOTICE_REQ
+            {
+            };
+            using (MemoryStream stream = new MemoryStream())
+            {
+                person.WriteTo(stream);
+
+                client.WritePacket((int)PROTOCOL.IdPktNoticeReq, stream.ToArray(), stream.ToArray().Length);
             }
         }
 

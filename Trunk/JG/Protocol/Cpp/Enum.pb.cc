@@ -22,7 +22,7 @@ static constexpr ::PROTOBUF_NAMESPACE_ID::internal::MigrationSchema* schemas = n
 static constexpr ::PROTOBUF_NAMESPACE_ID::Message* const* file_default_instances = nullptr;
 
 const char descriptor_table_protodef_Enum_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
-  "\n\nEnum.proto*\340\005\n\010PROTOCOL\022\026\n\022ID_PKT_VERS"
+  "\n\nEnum.proto*\216\006\n\010PROTOCOL\022\026\n\022ID_PKT_VERS"
   "ION_REQ\020\000\022\026\n\022ID_PKT_VERSION_RES\020\001\022\024\n\020ID_"
   "PKT_LOGIN_REQ\020\002\022\024\n\020ID_PKT_LOGIN_RES\020\003\022\032\n"
   "\026ID_PKT_CREATE_ROOM_REQ\020\004\022\032\n\026ID_PKT_CREA"
@@ -40,13 +40,14 @@ const char descriptor_table_protodef_Enum_2eproto[] PROTOBUF_SECTION_VARIABLE(pr
   "REQ\020\025\022\022\n\016ID_PKT_QNS_RES\020\026\022 \n\034ID_PKT_ROOM"
   "_PASS_THROUGH_REQ\020\027\022 \n\034ID_PKT_ROOM_PASS_"
   "THROUGH_RES\020\030\022\033\n\027ID_PKT_CANCEL_MATCH_REQ"
-  "\020\031\022\033\n\027ID_PKT_CANCEL_MATCH_RES\020\032*a\n\tError"
-  "Code\022\013\n\007Success\020\000\022\021\n\rDataBaseError\020\001\022\022\n\016"
-  "LoginDuplicate\020\002\022\017\n\013SystemError\020\003\022\017\n\013Log"
-  "inFailed\020\004*H\n\005eTeam\022\010\n\004None\020\000\022\t\n\005WHITE\020\001"
-  "\022\t\n\005BLACK\020\002\022\007\n\003AIM\020\003\022\n\n\006AWHITE\020\004\022\n\n\006ABLA"
-  "CK\020\005*\'\n\005State\022\013\n\007Prepare\020\000\022\010\n\004Game\020\001\022\007\n\003"
-  "End\020\002B\002H\001b\006proto3"
+  "\020\031\022\033\n\027ID_PKT_CANCEL_MATCH_RES\020\032\022\025\n\021ID_PK"
+  "T_NOTICE_REQ\020\033\022\025\n\021ID_PKT_NOTICE_RES\020\034*a\n"
+  "\tErrorCode\022\013\n\007Success\020\000\022\021\n\rDataBaseError"
+  "\020\001\022\022\n\016LoginDuplicate\020\002\022\017\n\013SystemError\020\003\022"
+  "\017\n\013LoginFailed\020\004*H\n\005eTeam\022\010\n\004None\020\000\022\t\n\005W"
+  "HITE\020\001\022\t\n\005BLACK\020\002\022\007\n\003AIM\020\003\022\n\n\006AWHITE\020\004\022\n"
+  "\n\006ABLACK\020\005*\'\n\005State\022\013\n\007Prepare\020\000\022\010\n\004Game"
+  "\020\001\022\007\n\003End\020\002B\002H\001b\006proto3"
   ;
 static const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable*const descriptor_table_Enum_2eproto_deps[1] = {
 };
@@ -55,7 +56,7 @@ static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_Enu
 static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_Enum_2eproto_once;
 static bool descriptor_table_Enum_2eproto_initialized = false;
 const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_Enum_2eproto = {
-  &descriptor_table_Enum_2eproto_initialized, descriptor_table_protodef_Enum_2eproto, "Enum.proto", 977,
+  &descriptor_table_Enum_2eproto_initialized, descriptor_table_protodef_Enum_2eproto, "Enum.proto", 1023,
   &descriptor_table_Enum_2eproto_once, descriptor_table_Enum_2eproto_sccs, descriptor_table_Enum_2eproto_deps, 0, 0,
   schemas, file_default_instances, TableStruct_Enum_2eproto::offsets,
   file_level_metadata_Enum_2eproto, 0, file_level_enum_descriptors_Enum_2eproto, file_level_service_descriptors_Enum_2eproto,
@@ -96,6 +97,8 @@ bool PROTOCOL_IsValid(int value) {
     case 24:
     case 25:
     case 26:
+    case 27:
+    case 28:
       return true;
     default:
       return false;

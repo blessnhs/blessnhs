@@ -6,6 +6,8 @@
 #include "GS.CLI.pb.h"
 #include "Enum.pb.h"
 
+using namespace std;
+
 class CDBProcessCer : public GSNetwork::GSObject::GSObject
 {
 public:
@@ -25,8 +27,8 @@ public:
 
 	int UpdaetPlayerScore(INT64 Index,int Win, int Lose, int Draw, int Level, int Score);
 
-	int UpdaetQNS(INT64 Index, std::string contents);
-
+	int UpdaetQNS(INT64 Index, string contents);
+	int NoticeInfoInfo(string& notice);
 	float ProcedureVersion();
 
 	COdbc*				m_pDB;

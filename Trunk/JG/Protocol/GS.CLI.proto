@@ -127,3 +127,10 @@ message CANCEL_MATCH_RES
     optional PROTOCOL   id                        = 1 [default = ID_PKT_CANCEL_MATCH_RES    ];
 }
 
+
+
+message NOTICE_RES
+{
+    optional PROTOCOL   id                        = 1 [default = ID_PKT_NOTICE_RES    ];
+    required bytes     var_message    	     = 2;
+}

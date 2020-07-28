@@ -78,3 +78,8 @@ message CANCEL_MATCH_REQ
 {
     optional PROTOCOL   id                        = 1 [default = ID_PKT_CANCEL_MATCH_REQ    ];
 }
+
+message NOTICE_REQ
+{
+    optional PROTOCOL   id                        = 1 [default = ID_PKT_NOTICE_REQ    ];
+}

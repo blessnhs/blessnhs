@@ -10,6 +10,9 @@ using OMOK.Network;
 using OMOK.CustomAdMobView;
 using OMOK.Views;
 using Rg.Plugins.Popup.Extensions;
+using ToastMessage;
+
+
 
 namespace OMOK
 {
@@ -28,6 +31,8 @@ namespace OMOK
 
             ProgressRoom.Progress = 0.0f;
 
+            timeLabel.IsEnabled = true;
+            timeLabel.IsRunning = true;
             timeLabel.Text = (DateTime.Now - User.MytrunStartTime).ToString(timeFormat);
 
             iIterstitia = DependencyService.Get<iAd_IterstitialView>();
@@ -39,6 +44,9 @@ namespace OMOK
                     var current = ((DateTime.Now - User.MytrunStartTime).TotalSeconds * 0.033);
                     ProgressRoom.Progress = current;
                     timeLabel.Text = (DateTime.Now - User.MytrunStartTime).ToString(timeFormat);
+                    DependencyService.Get<Toast>().Show(timeLabel.Text);
+
+                    //   ToastNotification.TostMessage(timeLabel.Text);
 
                     if ((DateTime.Now - User.MytrunStartTime).TotalSeconds > 30)
                     {
@@ -242,15 +250,19 @@ namespace OMOK
             if (status == eTeam.Black)
             {
 
-                blackLabel.BackgroundColor = Color.Beige;
-
+                blackLabel.BackgroundColor = Color.YellowGreen;
                 whiteLabel.BackgroundColor = Color.White;
+
+                bottom1picture.BackgroundColor = Color.YellowGreen;
+                bottom2picture.BackgroundColor = Color.White;
             }
             else
             {
                 blackLabel.BackgroundColor = Color.White;
+                whiteLabel.BackgroundColor = Color.YellowGreen;
 
-                whiteLabel.BackgroundColor = Color.Beige;
+                bottom2picture.BackgroundColor = Color.YellowGreen;
+                bottom1picture.BackgroundColor = Color.White;
             }
 
             return true;
@@ -266,6 +278,8 @@ namespace OMOK
             User.IsMyTurn = false;
 
             board.UpdateStone(x, y, status);
+
+            board.UpdateAimSet(x, y);
 
             return true;
         }

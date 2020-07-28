@@ -9,9 +9,8 @@
             <On Platform="Android, UWP" Value="0, 0, 0, 0" />
         </OnPlatform>
     </ContentPage.Padding>
-
+  
     <ContentView SizeChanged="OnMainContentViewSizeChanged">
-
         <Grid x:Name="mainGrid" ColumnSpacing="0" RowSpacing="0" >
             <Grid.RowDefinitions>
                 <RowDefinition Height="1*" />
@@ -32,7 +31,10 @@
                 <ColumnDefinition Width="20*"/>
             </Grid.ColumnDefinitions>
 
-            <Label x:Name="timeLabel" Text="00" FontSize="Large" Grid.Row="0" Grid.Column="0" BackgroundColor="White" Margin="10,10,0,0"/>
+            <StackLayout IsClippedToBounds="True" Grid.Row="0" Grid.Column="0"  Margin="10,10,0,0">
+                <local:AnimatedText Text="00" x:Name="timeLabel"/>
+            </StackLayout>
+            
             <ProgressBar x:Name="ProgressRoom" Progress="0.0" Grid.Row="0" Grid.Column="1" BackgroundColor="White"/>
 
             <Button x:Name="LeaveRoom" Text="나가기"  Grid.Row="0" Grid.Column="4" Clicked="OnLeaveClicked" BackgroundColor="#E6DEDE"/>
@@ -69,6 +71,8 @@
                 <Image.Source>
                     <UriImageSource Uri="{Binding SomeImage}"/>
                 </Image.Source>
+
+   
             </Image>
 
             <Label x:Name="blackLabel" Text=""  Grid.Row="8" Grid.Column="0" VerticalOptions="CenterAndExpand" HorizontalTextAlignment="Center" />

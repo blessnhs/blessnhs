@@ -43,6 +43,8 @@ public:
 
 	VOID CANCEL_MATCH(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client);
 
+	VOID NOTICE(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client);
+
 protected:
 
 	DECLARE_MSG_MAP(BoardProcess)

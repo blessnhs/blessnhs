@@ -49,7 +49,7 @@ struct TableStruct_GS_2eCLI_2eproto {
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::PROTOBUF_NAMESPACE_ID::internal::AuxillaryParseTableField aux[]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
-  static const ::PROTOBUF_NAMESPACE_ID::internal::ParseTable schema[14]
+  static const ::PROTOBUF_NAMESPACE_ID::internal::ParseTable schema[15]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::PROTOBUF_NAMESPACE_ID::internal::FieldMetadata field_metadata[];
   static const ::PROTOBUF_NAMESPACE_ID::internal::SerializationTable serialization_table[];
@@ -83,6 +83,9 @@ extern MATCH_RESDefaultTypeInternal _MATCH_RES_default_instance_;
 class NEW_USER_IN_ROOM_NTY;
 class NEW_USER_IN_ROOM_NTYDefaultTypeInternal;
 extern NEW_USER_IN_ROOM_NTYDefaultTypeInternal _NEW_USER_IN_ROOM_NTY_default_instance_;
+class NOTICE_RES;
+class NOTICE_RESDefaultTypeInternal;
+extern NOTICE_RESDefaultTypeInternal _NOTICE_RES_default_instance_;
 class QNS_RES;
 class QNS_RESDefaultTypeInternal;
 extern QNS_RESDefaultTypeInternal _QNS_RES_default_instance_;
@@ -108,6 +111,7 @@ template<> ::LEAVE_ROOM_RES* Arena::CreateMaybeMessage<::LEAVE_ROOM_RES>(Arena*)
 template<> ::LOGIN_RES* Arena::CreateMaybeMessage<::LOGIN_RES>(Arena*);
 template<> ::MATCH_RES* Arena::CreateMaybeMessage<::MATCH_RES>(Arena*);
 template<> ::NEW_USER_IN_ROOM_NTY* Arena::CreateMaybeMessage<::NEW_USER_IN_ROOM_NTY>(Arena*);
+template<> ::NOTICE_RES* Arena::CreateMaybeMessage<::NOTICE_RES>(Arena*);
 template<> ::QNS_RES* Arena::CreateMaybeMessage<::QNS_RES>(Arena*);
 template<> ::RANK_RES* Arena::CreateMaybeMessage<::RANK_RES>(Arena*);
 template<> ::ROOM_LIST_RES* Arena::CreateMaybeMessage<::ROOM_LIST_RES>(Arena*);
@@ -2784,6 +2788,168 @@ class CANCEL_MATCH_RES :
   int id_;
   friend struct ::TableStruct_GS_2eCLI_2eproto;
 };
+// -------------------------------------------------------------------
+
+class NOTICE_RES :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:NOTICE_RES) */ {
+ public:
+  NOTICE_RES();
+  virtual ~NOTICE_RES();
+
+  NOTICE_RES(const NOTICE_RES& from);
+  NOTICE_RES(NOTICE_RES&& from) noexcept
+    : NOTICE_RES() {
+    *this = ::std::move(from);
+  }
+
+  inline NOTICE_RES& operator=(const NOTICE_RES& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline NOTICE_RES& operator=(NOTICE_RES&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  inline const ::PROTOBUF_NAMESPACE_ID::UnknownFieldSet& unknown_fields() const {
+    return _internal_metadata_.unknown_fields();
+  }
+  inline ::PROTOBUF_NAMESPACE_ID::UnknownFieldSet* mutable_unknown_fields() {
+    return _internal_metadata_.mutable_unknown_fields();
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return GetMetadataStatic().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return GetMetadataStatic().reflection;
+  }
+  static const NOTICE_RES& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const NOTICE_RES* internal_default_instance() {
+    return reinterpret_cast<const NOTICE_RES*>(
+               &_NOTICE_RES_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    14;
+
+  friend void swap(NOTICE_RES& a, NOTICE_RES& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(NOTICE_RES* other) {
+    if (other == this) return;
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline NOTICE_RES* New() const final {
+    return CreateMaybeMessage<NOTICE_RES>(nullptr);
+  }
+
+  NOTICE_RES* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
+    return CreateMaybeMessage<NOTICE_RES>(arena);
+  }
+  void CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void CopyFrom(const NOTICE_RES& from);
+  void MergeFrom(const NOTICE_RES& from);
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  ::PROTOBUF_NAMESPACE_ID::uint8* _InternalSerialize(
+      ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  inline void SharedCtor();
+  inline void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(NOTICE_RES* other);
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "NOTICE_RES";
+  }
+  private:
+  inline ::PROTOBUF_NAMESPACE_ID::Arena* GetArenaNoVirtual() const {
+    return nullptr;
+  }
+  inline void* MaybeArenaPtr() const {
+    return nullptr;
+  }
+  public:
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+  private:
+  static ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadataStatic() {
+    ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&::descriptor_table_GS_2eCLI_2eproto);
+    return ::descriptor_table_GS_2eCLI_2eproto.file_level_metadata[kIndexInFileMessages];
+  }
+
+  public:
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kVarMessageFieldNumber = 2,
+    kIdFieldNumber = 1,
+  };
+  // required bytes var_message = 2;
+  bool has_var_message() const;
+  private:
+  bool _internal_has_var_message() const;
+  public:
+  void clear_var_message();
+  const std::string& var_message() const;
+  void set_var_message(const std::string& value);
+  void set_var_message(std::string&& value);
+  void set_var_message(const char* value);
+  void set_var_message(const void* value, size_t size);
+  std::string* mutable_var_message();
+  std::string* release_var_message();
+  void set_allocated_var_message(std::string* var_message);
+  private:
+  const std::string& _internal_var_message() const;
+  void _internal_set_var_message(const std::string& value);
+  std::string* _internal_mutable_var_message();
+  public:
+
+  // optional .PROTOCOL id = 1 [default = ID_PKT_NOTICE_RES];
+  bool has_id() const;
+  private:
+  bool _internal_has_id() const;
+  public:
+  void clear_id();
+  ::PROTOCOL id() const;
+  void set_id(::PROTOCOL value);
+  private:
+  ::PROTOCOL _internal_id() const;
+  void _internal_set_id(::PROTOCOL value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:NOTICE_RES)
+ private:
+  class _Internal;
+
+  ::PROTOBUF_NAMESPACE_ID::internal::InternalMetadataWithArena _internal_metadata_;
+  ::PROTOBUF_NAMESPACE_ID::internal::HasBits<1> _has_bits_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr var_message_;
+  int id_;
+  friend struct ::TableStruct_GS_2eCLI_2eproto;
+};
 // ===================================================================
 
 
@@ -4816,9 +4982,115 @@ inline void CANCEL_MATCH_RES::set_id(::PROTOCOL value) {
   // @@protoc_insertion_point(field_set:CANCEL_MATCH_RES.id)
 }
 
+// -------------------------------------------------------------------
+
+// NOTICE_RES
+
+// optional .PROTOCOL id = 1 [default = ID_PKT_NOTICE_RES];
+inline bool NOTICE_RES::_internal_has_id() const {
+  bool value = (_has_bits_[0] & 0x00000002u) != 0;
+  return value;
+}
+inline bool NOTICE_RES::has_id() const {
+  return _internal_has_id();
+}
+inline void NOTICE_RES::clear_id() {
+  id_ = 28;
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline ::PROTOCOL NOTICE_RES::_internal_id() const {
+  return static_cast< ::PROTOCOL >(id_);
+}
+inline ::PROTOCOL NOTICE_RES::id() const {
+  // @@protoc_insertion_point(field_get:NOTICE_RES.id)
+  return _internal_id();
+}
+inline void NOTICE_RES::_internal_set_id(::PROTOCOL value) {
+  assert(::PROTOCOL_IsValid(value));
+  _has_bits_[0] |= 0x00000002u;
+  id_ = value;
+}
+inline void NOTICE_RES::set_id(::PROTOCOL value) {
+  _internal_set_id(value);
+  // @@protoc_insertion_point(field_set:NOTICE_RES.id)
+}
+
+// required bytes var_message = 2;
+inline bool NOTICE_RES::_internal_has_var_message() const {
+  bool value = (_has_bits_[0] & 0x00000001u) != 0;
+  return value;
+}
+inline bool NOTICE_RES::has_var_message() const {
+  return _internal_has_var_message();
+}
+inline void NOTICE_RES::clear_var_message() {
+  var_message_.ClearToEmptyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline const std::string& NOTICE_RES::var_message() const {
+  // @@protoc_insertion_point(field_get:NOTICE_RES.var_message)
+  return _internal_var_message();
+}
+inline void NOTICE_RES::set_var_message(const std::string& value) {
+  _internal_set_var_message(value);
+  // @@protoc_insertion_point(field_set:NOTICE_RES.var_message)
+}
+inline std::string* NOTICE_RES::mutable_var_message() {
+  // @@protoc_insertion_point(field_mutable:NOTICE_RES.var_message)
+  return _internal_mutable_var_message();
+}
+inline const std::string& NOTICE_RES::_internal_var_message() const {
+  return var_message_.GetNoArena();
+}
+inline void NOTICE_RES::_internal_set_var_message(const std::string& value) {
+  _has_bits_[0] |= 0x00000001u;
+  var_message_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), value);
+}
+inline void NOTICE_RES::set_var_message(std::string&& value) {
+  _has_bits_[0] |= 0x00000001u;
+  var_message_.SetNoArena(
+    &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:NOTICE_RES.var_message)
+}
+inline void NOTICE_RES::set_var_message(const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  _has_bits_[0] |= 0x00000001u;
+  var_message_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:NOTICE_RES.var_message)
+}
+inline void NOTICE_RES::set_var_message(const void* value, size_t size) {
+  _has_bits_[0] |= 0x00000001u;
+  var_message_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:NOTICE_RES.var_message)
+}
+inline std::string* NOTICE_RES::_internal_mutable_var_message() {
+  _has_bits_[0] |= 0x00000001u;
+  return var_message_.MutableNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline std::string* NOTICE_RES::release_var_message() {
+  // @@protoc_insertion_point(field_release:NOTICE_RES.var_message)
+  if (!_internal_has_var_message()) {
+    return nullptr;
+  }
+  _has_bits_[0] &= ~0x00000001u;
+  return var_message_.ReleaseNonDefaultNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline void NOTICE_RES::set_allocated_var_message(std::string* var_message) {
+  if (var_message != nullptr) {
+    _has_bits_[0] |= 0x00000001u;
+  } else {
+    _has_bits_[0] &= ~0x00000001u;
+  }
+  var_message_.SetAllocatedNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), var_message);
+  // @@protoc_insertion_point(field_set_allocated:NOTICE_RES.var_message)
+}
+
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

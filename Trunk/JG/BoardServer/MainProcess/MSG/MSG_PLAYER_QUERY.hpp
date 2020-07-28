@@ -246,6 +246,44 @@ namespace Board	{
 
 
 	template<>
+	class MSG_PLAYER_QUERY<RequestNotice> : public IMESSAGE
+	{
+	public:
+		MSG_PLAYER_QUERY() { }
+		~MSG_PLAYER_QUERY() {}
+
+		GSCLIENT_PTR pSession;
+
+		boost::shared_ptr<RequestNotice> pRequst;
+
+		void Execute(LPVOID Param)
+		{
+			if (pSession == NULL)
+			{
+				return;
+			}
+
+			DBPROCESS_CER_PTR pProcess = DBPROCESSCONTAINER_CER.Search(pSession->GetMyDBTP());
+			if (pProcess == NULL || pProcess->m_IsOpen == false)
+			{
+				return;
+			}
+
+			string notice;
+
+			pProcess->NoticeInfoInfo(notice);
+
+			NOTICE_RES res;
+			res.set_var_message(notice.c_str());
+
+			SEND_PROTO_BUFFER(res, pSession)
+		}
+
+		void Undo() {}
+	};
+
+
+	template<>
 	class MSG_PLAYER_QUERY<RequestPlayerAuth> : public IMESSAGE
 	{
 	public:
