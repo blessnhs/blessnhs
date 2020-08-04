@@ -66,7 +66,7 @@
 
                 <!--5row 1번째 기보 -->
                 <Frame BorderColor="Gray"  CornerRadius="5"  Grid.Column="2" Grid.Row="3"  Padding="0,0,0,0">
-                    <Button x:Name="HistroyButton" Text="기보" Clicked="OnMatchClicked" BackgroundColor="White"/>
+                    <Button x:Name="HistroyButton" Text="기보" Clicked="OnHistoryClicked" BackgroundColor="White"/>
                 </Frame>
 
                 <!--5row 2번째 랭킹 -->

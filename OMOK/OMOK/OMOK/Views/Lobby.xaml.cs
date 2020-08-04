@@ -200,6 +200,14 @@ namespace OMOK.Views
            Navigation.PushModalAsync(new MatchInfoPage()/*_MachPage*/);
 
         }
+
+        
+        async void OnHistoryClicked(object sender, System.EventArgs e)
+        {
+            Navigation.PushModalAsync(new RecordHistory()/*_MachPage*/);
+
+        }
+
         async void OnRankClicked(object sender, System.EventArgs e)
         {
             NetProcess.SendRank();

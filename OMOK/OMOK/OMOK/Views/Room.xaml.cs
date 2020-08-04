@@ -295,10 +295,16 @@ namespace OMOK
                 if (User.Id == nty.VarIndex)
                 {
                     User.myInfo.win += 1;
+
+                    SQLite.InsertResultLog(DateTime.Now, User.OppInfo.NickName, 1);
+
                 }
                 else
                 {
                     User.myInfo.lose += 1;
+
+                    SQLite.InsertResultLog(DateTime.Now, User.OppInfo.NickName, 0);
+
                 }
 
                 //            board.ClearBoardState();
