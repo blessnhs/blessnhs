@@ -99,10 +99,6 @@ VOID BoardProcess::LOGIN_PLAYER(LPVOID Data, DWORD Length, boost::shared_ptr<GSC
 	if (_result_, login.var_uid().size() >= 2000 || login.var_token().size() >= 2000)
 		return;
 
-		
-	printf("result %d id %s pwd %s\n", _result_,login.var_uid().c_str(), login.var_token().c_str());
-	
-
 	//로그인 쿼리를 날린다.
 	boost::shared_ptr<RequestPlayerAuth> pRequest = ALLOCATOR.Create<RequestPlayerAuth>();
 	pRequest->Uid.assign(login.var_uid().begin(), login.var_uid().end());
