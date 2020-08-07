@@ -1,38 +1,53 @@
 #include "CrashRepoter.h"
 #include "Dump.h"
 #include <iostream>
-#include <boost/filesystem/path.hpp>
-#include <boost/filesystem/operations.hpp>
-#include <boost/filesystem/fstream.hpp>
-
+#include <time.h>
 #pragma comment(lib, "Dbghelp.lib")
+
+const std::string currentDateTime() {
+	time_t     now = time(0);
+	struct tm  tstruct;
+	char       buf[80];
+	tstruct = *localtime(&now);
+	// Visit http://en.cppreference.com/w/cpp/chrono/c/strftime
+	// for more information about date/time format
+	strftime(buf, sizeof(buf), "%Y_%m_%d_%X", &tstruct);
+
+	return buf;
+}
+
+std::string replace_all(
+	__in const std::string &message,
+	__in const std::string &pattern,
+	__in const std::string &replace
+) {
+	std::string result = message;
+	std::string::size_type pos = 0;
+	std::string::size_type offset = 0;
+	while ((pos = result.find(pattern, offset)) != std::string::npos)
+	{
+		result.replace(result.begin() + pos, result.begin() + pos + pattern.size(), replace);
+		offset = pos + replace.size();
+	}
+	return result;
+}
+
 
 std::pair<std::string, std::string> CrashHandler::GenerateDumpFilePath()
 {
-	time_t rawtime;
-	struct tm * timeinfo;
-	char buffer[80];
+	char path_c[1024];
+	GetCurrentDirectory(512, path_c);
 
-	time(&rawtime);
-	timeinfo = localtime(&rawtime);
+	string filename = currentDateTime();
 
-	strftime(buffer, sizeof(buffer), "%Y%m%d_%H%M%S", timeinfo);
-	std::string str(buffer);
+	filename = replace_all(filename, ":", "_");
 
-    const string&& filename(buffer);
+	string path = path_c;
 
-    boost::filesystem::path path = boost::filesystem::current_path();
-    path.append("dumps");
-    path.append(filename);
+	string file1 = path + "\\" + filename + ".dmp";
+	string file2 = path + "\\" + filename + ".txt";
 
-    path.replace_extension("dmp");
-    const string&& dump = path.generic_string<std::string>();
-    path.replace_extension("txt");
-    const string&& cs = path.generic_string<std::string>();
-
-    boost::filesystem::create_directory(path.branch_path().generic_string<std::string>());
-
-    return std::make_pair(dump, cs);
+    return std::make_pair(file1, file2);
 }
 
     #pragma region OutdatedCrashHandler
@@ -53,28 +68,18 @@ std::pair<std::string, std::string> CrashHandler::GenerateDumpFilePath()
             return ::UnhandledExceptionFilter(exptrs);
         }
 */
+		char path_c[1024];
+		GetCurrentDirectory(512, path_c);
 
-		time_t rawtime;
-		struct tm * timeinfo;
-		char buffer[80];
+		string filename = currentDateTime();
 
-		time(&rawtime);
-		timeinfo = localtime(&rawtime);
+		filename = replace_all(filename, ":", "_");
 
-		strftime(buffer, sizeof(buffer), "%Y%m%d_%H%M%S", timeinfo);
+		string path = path_c;
 
-        const string&& filename(buffer);
+		string dump = path + "\\" + filename + ".dmp";
+		string cs = path + "\\" + filename + ".text";
 
-        boost::filesystem::path path = boost::filesystem::current_path();
-        path.append("dumps");
-        path.append(filename);
-
-        path.replace_extension("dmp");
-        const string&& dump = path.generic_string<std::string>();
-        path.replace_extension("txt");
-        const string&& cs = path.generic_string<std::string>();
-
-        boost::filesystem::create_directory(path.branch_path().generic_string<std::string>());
 
         const auto ph =  ::GetCurrentProcess();
         const auto pid = ::GetCurrentProcessId();

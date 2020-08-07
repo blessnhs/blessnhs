@@ -20,7 +20,7 @@ public:
 	std::string&szKey,int &Rank, int& Score, int& Win, int& Lose, int& Draw,INT64 &Index, int& Level);
 
 
-	int	 ProcedureUserLogout(const DWORD id);
+	int	 ProcedureUserLogout(const INT64 id);
 	int  DeleteAllConcurrentUser();
 
 	int  RequestRank(std::list<Rank>& list);
@@ -35,6 +35,8 @@ public:
 	bool				m_IsOpen;
 
 	CRITICAL_SECTION	m_CS;
+
+	MongoDB				*m_DB;
 
 };
 

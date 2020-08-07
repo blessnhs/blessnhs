@@ -1,6 +1,5 @@
 #pragma once
 
-#include <windows.h>
 #include <common.h>
 
 #define MAX_LEVEL 18

@@ -2091,7 +2091,7 @@ class NOTICE_REQ :
   enum : int {
     kIdFieldNumber = 1,
   };
-  // optional .PROTOCOL id = 1 [default = ID_PKT_CANCEL_MATCH_REQ];
+  // optional .PROTOCOL id = 1 [default = ID_PKT_NOTICE_REQ];
   bool has_id() const;
   private:
   bool _internal_has_id() const;
@@ -3031,7 +3031,7 @@ inline void CANCEL_MATCH_REQ::set_id(::PROTOCOL value) {
 
 // NOTICE_REQ
 
-// optional .PROTOCOL id = 1 [default = ID_PKT_CANCEL_MATCH_REQ];
+// optional .PROTOCOL id = 1 [default = ID_PKT_NOTICE_REQ];
 inline bool NOTICE_REQ::_internal_has_id() const {
   bool value = (_has_bits_[0] & 0x00000001u) != 0;
   return value;
@@ -3040,7 +3040,7 @@ inline bool NOTICE_REQ::has_id() const {
   return _internal_has_id();
 }
 inline void NOTICE_REQ::clear_id() {
-  id_ = 25;
+  id_ = 27;
   _has_bits_[0] &= ~0x00000001u;
 }
 inline ::PROTOCOL NOTICE_REQ::_internal_id() const {

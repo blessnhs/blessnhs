@@ -420,9 +420,8 @@ const char descriptor_table_protodef_CLI_2eGS_2eproto[] PROTOBUF_SECTION_VARIABL
   "ROOM_PASS_THROUGH_REQ\022\023\n\013var_message\030\002 \002"
   "(\014\022\027\n\017var_message_int\030\003 \002(\005\"B\n\020CANCEL_MA"
   "TCH_REQ\022.\n\002id\030\001 \001(\0162\t.PROTOCOL:\027ID_PKT_C"
-  "ANCEL_MATCH_REQ\"<\n\nNOTICE_REQ\022.\n\002id\030\001 \001("
-  "\0162\t.PROTOCOL:\027ID_PKT_CANCEL_MATCH_REQB\002H"
-  "\001"
+  "ANCEL_MATCH_REQ\"6\n\nNOTICE_REQ\022(\n\002id\030\001 \001("
+  "\0162\t.PROTOCOL:\021ID_PKT_NOTICE_REQB\002H\001"
   ;
 static const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable*const descriptor_table_CLI_2eGS_2eproto_deps[2] = {
   &::descriptor_table_Enum_2eproto,
@@ -446,7 +445,7 @@ static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_CLI
 static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_CLI_2eGS_2eproto_once;
 static bool descriptor_table_CLI_2eGS_2eproto_initialized = false;
 const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_CLI_2eGS_2eproto = {
-  &descriptor_table_CLI_2eGS_2eproto_initialized, descriptor_table_protodef_CLI_2eGS_2eproto, "CLI.GS.proto", 1041,
+  &descriptor_table_CLI_2eGS_2eproto_initialized, descriptor_table_protodef_CLI_2eGS_2eproto, "CLI.GS.proto", 1035,
   &descriptor_table_CLI_2eGS_2eproto_once, descriptor_table_CLI_2eGS_2eproto_sccs, descriptor_table_CLI_2eGS_2eproto_deps, 13, 2,
   schemas, file_default_instances, TableStruct_CLI_2eGS_2eproto::offsets,
   file_level_metadata_CLI_2eGS_2eproto, 13, file_level_enum_descriptors_CLI_2eGS_2eproto, file_level_service_descriptors_CLI_2eGS_2eproto,
@@ -3346,7 +3345,7 @@ NOTICE_REQ::NOTICE_REQ(const NOTICE_REQ& from)
 }
 
 void NOTICE_REQ::SharedCtor() {
-  id_ = 25;
+  id_ = 27;
 }
 
 NOTICE_REQ::~NOTICE_REQ() {
@@ -3372,7 +3371,7 @@ void NOTICE_REQ::Clear() {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  id_ = 25;
+  id_ = 27;
   _has_bits_.Clear();
   _internal_metadata_.Clear();
 }
@@ -3385,7 +3384,7 @@ const char* NOTICE_REQ::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID:
     ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
     CHK_(ptr);
     switch (tag >> 3) {
-      // optional .PROTOCOL id = 1 [default = ID_PKT_CANCEL_MATCH_REQ];
+      // optional .PROTOCOL id = 1 [default = ID_PKT_NOTICE_REQ];
       case 1:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 8)) {
           ::PROTOBUF_NAMESPACE_ID::uint64 val = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
@@ -3425,7 +3424,7 @@ failure:
   (void) cached_has_bits;
 
   cached_has_bits = _has_bits_[0];
-  // optional .PROTOCOL id = 1 [default = ID_PKT_CANCEL_MATCH_REQ];
+  // optional .PROTOCOL id = 1 [default = ID_PKT_NOTICE_REQ];
   if (cached_has_bits & 0x00000001u) {
     target = stream->EnsureSpace(target);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteEnumToArray(
@@ -3448,7 +3447,7 @@ size_t NOTICE_REQ::ByteSizeLong() const {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  // optional .PROTOCOL id = 1 [default = ID_PKT_CANCEL_MATCH_REQ];
+  // optional .PROTOCOL id = 1 [default = ID_PKT_NOTICE_REQ];
   cached_has_bits = _has_bits_[0];
   if (cached_has_bits & 0x00000001u) {
     total_size += 1 +

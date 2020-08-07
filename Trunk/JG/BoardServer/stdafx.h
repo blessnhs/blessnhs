@@ -5,12 +5,18 @@
 
 #pragma once
 
+#define USE_MSSQL
+
 #include "targetver.h"
 
 #include <stdio.h>
 #include <tchar.h>
 
+//위 순서를 바꾸면 대란이 일어남
+//Mongocxx library와 windows간의 종속성 문제로 순서를 변경하면 안됨
+#include "MongoDB.h"
 #include <windows.h>
+
 #include <iostream>
 #include <vector>
 #include <map>

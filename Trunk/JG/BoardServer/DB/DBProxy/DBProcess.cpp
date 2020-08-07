@@ -11,16 +11,22 @@ CDBProcessCer::CDBProcessCer(void)
 {
 	m_IsOpen = false;
 	InitializeCriticalSection(&m_CS);
+
+	m_DB = new MongoDB("Board");
+	
 }
 
 CDBProcessCer::~CDBProcessCer(void)
 {
 	DeleteCriticalSection(&m_CS);
+
+	delete m_DB;
 }
 
 
 BOOL CDBProcessCer::Initalize(	CHAR *m_szDSN,CHAR *m_szUID,CHAR *m_szPWD)
 {
+#ifndef USE_MSSQL
 	m_pDB = new COdbc;
 	if( m_pDB->Open2(m_szDSN, m_szUID, m_szPWD) == false )
 	{
@@ -28,7 +34,9 @@ BOOL CDBProcessCer::Initalize(	CHAR *m_szDSN,CHAR *m_szUID,CHAR *m_szPWD)
 		return false;
 	}
 	m_IsOpen = true;
-
+#endif
+	m_pDB = new COdbc;
+	m_IsOpen = true;
 	return true;
 }
 
@@ -39,6 +47,7 @@ CDBProcessCer &GetDBProcess()
 }
 float CDBProcessCer::ProcedureVersion()
 {
+#ifndef USE_MSSQL
 	SQLRETURN		retcode = SQL_ERROR;
 	SQLCHAR			szSQL[1024];
 	SQLCHAR			szSessionKey[MAX_SESSION_KEY_SIZE] = { 0, };
@@ -72,12 +81,16 @@ float CDBProcessCer::ProcedureVersion()
 	}
 
 	return sParmRet;
+#else
+	return m_DB->ProcedureVersion(1);
+#endif
+
 }
 
 
 int  CDBProcessCer::RequestRank(std::list<Rank> &list)
 {
-
+#ifndef USE_MSSQL
 	if (m_pDB->IsOpen() == false) { return _ERR_NETWORK; }
 
 	CDBHandle		dbhandle(m_pDB->m_hdbc, &(m_pDB->m_csDBHandle));
@@ -130,10 +143,17 @@ int  CDBProcessCer::RequestRank(std::list<Rank> &list)
 		else { break; }
 	}
 	return _ERR_NONE;
+#else
+	m_DB->RequestRank(list);
+	return _ERR_NONE;
+#endif
+	
 }
 
 int CDBProcessCer::UpdaetPlayerScore(INT64 Index,int Win, int Lose, int Draw,int Level,int Score)
 {
+#ifndef USE_MSSQL
+
 	SQLRETURN		retcode = SQL_ERROR;
 	CDBHandle		dbhandle(m_pDB->m_hdbc, &(m_pDB->m_csDBHandle));
 	SQLHSTMT		hstmt = dbhandle.GetHandle();
@@ -155,14 +175,19 @@ int CDBProcessCer::UpdaetPlayerScore(INT64 Index,int Win, int Lose, int Draw,int
 		printf(("database server query Error... %s() \n"), __FUNCTION__);
 		return _ERR_NETWORK;
 	}
-
-
 	return _ERR_NONE;
+#else
+	return m_DB->UpdaetPlayerScore(Index, Win, Lose, Draw, Level, Score);
+#endif
+	
+
 }
 
 
 int CDBProcessCer::NoticeInfoInfo(string& notice)
 {
+#ifndef USE_MSSQL
+
 	SQLRETURN		retcode = SQL_ERROR;
 	CDBHandle		dbhandle(m_pDB->m_hdbc, &(m_pDB->m_csDBHandle));
 	SQLHSTMT		hstmt = dbhandle.GetHandle();
@@ -188,11 +213,14 @@ int CDBProcessCer::NoticeInfoInfo(string& notice)
 		else { break; }
 	}
 	return _ERR_NONE;
-
+#else
+	return m_DB->NoticeInfoInfo(notice);
+#endif
 }
 
 int CDBProcessCer::UpdaetQNS(INT64 Index, std::string contents)
 {
+#ifndef USE_MSSQL
 	SQLRETURN		retcode = SQL_ERROR;
 	CDBHandle		dbhandle(m_pDB->m_hdbc, &(m_pDB->m_csDBHandle));
 	SQLHSTMT		hstmt = dbhandle.GetHandle();
@@ -214,18 +242,21 @@ int CDBProcessCer::UpdaetQNS(INT64 Index, std::string contents)
 		printf(("database server query Error... %s() \n"), __FUNCTION__);
 		return _ERR_NETWORK;
 	}
-
-
 	return _ERR_NONE;
+#else
+	return m_DB->UpdaetQNS(Index, contents);
+#endif
+	
 }
 
-int	 CDBProcessCer::ProcedureUserLogout(const DWORD id)
+int	 CDBProcessCer::ProcedureUserLogout(const INT64 Index)
 {
+#ifndef USE_MSSQL
 	SQLRETURN		retcode = SQL_ERROR;
 	CDBHandle		dbhandle(m_pDB->m_hdbc, &(m_pDB->m_csDBHandle));
 	SQLHSTMT		hstmt = dbhandle.GetHandle();
 	SQLCHAR			szSQL[1024];
-	sprintf_s((char*)szSQL, sizeof(szSQL) ,("{call SP_ACCOUNT_LOGOUT (%d)}"), id);
+	sprintf_s((char*)szSQL, sizeof(szSQL) ,("{call SP_ACCOUNT_LOGOUT (%d)}"), Index);
 	
 	retcode = SQLExecDirect(hstmt, szSQL, SQL_NTS);
 	if (retcode == SQL_ERROR)
@@ -242,13 +273,16 @@ int	 CDBProcessCer::ProcedureUserLogout(const DWORD id)
 		printf(("database server query Error... %s() \n"), __FUNCTION__);
 		return _ERR_NETWORK;
 	}
-	
-
 	return _ERR_NONE;
+#else
+	return m_DB->ProcedureUserLogout(Index);
+#endif
+
 }
 
 int  CDBProcessCer::DeleteAllConcurrentUser()
 {
+#ifndef USE_MSSQL
 	SQLRETURN		retcode = SQL_ERROR;
 	CDBHandle		dbhandle(m_pDB->m_hdbc, &(m_pDB->m_csDBHandle));
 	SQLHSTMT		hstmt = dbhandle.GetHandle();
@@ -270,13 +304,16 @@ int  CDBProcessCer::DeleteAllConcurrentUser()
 		printf(("database server query Error... %s() \n"), __FUNCTION__);
 		return _ERR_NETWORK;
 	}
-
-
 	return _ERR_NONE;
+}
+#else
+	return m_DB->DeleteAllConcurrentUser();
+#endif
 }
 
 int		CDBProcessCer::ProcedureUserLogin(const CHAR* flatformid, const int flatformtype, const CHAR* name, const CHAR* picture_url, const CHAR* email,std::string& szKey, int& Rank, int& Score, int& Win, int& Lose, int& Draw, INT64& Index, int& Level)
 {
+#ifndef USE_MSSQL
 	SQLRETURN		retcode = SQL_ERROR;
 	SQLCHAR			szSQL[1024];
 	SQLCHAR			szSessionKey[MAX_SESSION_KEY_SIZE] = { 0, };
@@ -332,6 +369,9 @@ int		CDBProcessCer::ProcedureUserLogin(const CHAR* flatformid, const int flatfor
 	dbKey = trim_right(dbKey);
 
 	szKey = dbKey;
-
 	return _ERR_NONE;
+#else
+	return m_DB->ProcedureUserLogin(flatformid, flatformtype, name, picture_url, email, szKey, Rank, Score, Win, Lose, Draw, Index, Level);
+#endif
+	
 }

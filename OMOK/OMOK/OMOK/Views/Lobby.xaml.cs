@@ -43,7 +43,7 @@ namespace OMOK.Views
 
             Device.StartTimer(TimeSpan.FromMilliseconds(50), () =>
             {
-                if (NoticeLabel.TranslationX > -NoticeLabel.Width)
+                if (NoticeLabel.TranslationX > -(NoticeLabel.Width + (NoticeLabel.Width * 0.2)))
                 {
                     NoticeLabel.TranslationX -= 5f;
                 }

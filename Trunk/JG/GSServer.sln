@@ -8,7 +8,10 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BoardServer", "BoardServer\BoardServer.vcxproj", "{FC113D51-4CE0-4EE8-A319-21F86E357AEB}"
 	ProjectSection(ProjectDependencies) = postProject
 		{5CC150A9-431C-400E-ADCA-287D34A466EC} = {5CC150A9-431C-400E-ADCA-287D34A466EC}
+		{D83663D1-4312-4F66-9CC3-895CEA218CE9} = {D83663D1-4312-4F66-9CC3-895CEA218CE9}
 	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MongoDB", "MongoDB\MongoDB.vcxproj", "{D83663D1-4312-4F66-9CC3-895CEA218CE9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -90,6 +93,38 @@ Global
 		{FC113D51-4CE0-4EE8-A319-21F86E357AEB}.ReleaseBuild|x64.Build.0 = ReleaseBuild|x64
 		{FC113D51-4CE0-4EE8-A319-21F86E357AEB}.ReleaseBuild|x86.ActiveCfg = ReleaseBuild|Win32
 		{FC113D51-4CE0-4EE8-A319-21F86E357AEB}.ReleaseBuild|x86.Build.0 = ReleaseBuild|Win32
+		{D83663D1-4312-4F66-9CC3-895CEA218CE9}.Debug|Mixed Platforms.ActiveCfg = Debug|Win32
+		{D83663D1-4312-4F66-9CC3-895CEA218CE9}.Debug|Mixed Platforms.Build.0 = Debug|Win32
+		{D83663D1-4312-4F66-9CC3-895CEA218CE9}.Debug|Win32.ActiveCfg = Debug|Win32
+		{D83663D1-4312-4F66-9CC3-895CEA218CE9}.Debug|Win32.Build.0 = Debug|Win32
+		{D83663D1-4312-4F66-9CC3-895CEA218CE9}.Debug|x64.ActiveCfg = Debug|x64
+		{D83663D1-4312-4F66-9CC3-895CEA218CE9}.Debug|x64.Build.0 = Debug|x64
+		{D83663D1-4312-4F66-9CC3-895CEA218CE9}.Debug|x86.ActiveCfg = Debug|Win32
+		{D83663D1-4312-4F66-9CC3-895CEA218CE9}.Debug|x86.Build.0 = Debug|Win32
+		{D83663D1-4312-4F66-9CC3-895CEA218CE9}.dummy|Mixed Platforms.ActiveCfg = Debug|Win32
+		{D83663D1-4312-4F66-9CC3-895CEA218CE9}.dummy|Mixed Platforms.Build.0 = Debug|Win32
+		{D83663D1-4312-4F66-9CC3-895CEA218CE9}.dummy|Win32.ActiveCfg = Debug|Win32
+		{D83663D1-4312-4F66-9CC3-895CEA218CE9}.dummy|Win32.Build.0 = Debug|Win32
+		{D83663D1-4312-4F66-9CC3-895CEA218CE9}.dummy|x64.ActiveCfg = Debug|x64
+		{D83663D1-4312-4F66-9CC3-895CEA218CE9}.dummy|x64.Build.0 = Debug|x64
+		{D83663D1-4312-4F66-9CC3-895CEA218CE9}.dummy|x86.ActiveCfg = Debug|Win32
+		{D83663D1-4312-4F66-9CC3-895CEA218CE9}.dummy|x86.Build.0 = Debug|Win32
+		{D83663D1-4312-4F66-9CC3-895CEA218CE9}.Release|Mixed Platforms.ActiveCfg = Release|Win32
+		{D83663D1-4312-4F66-9CC3-895CEA218CE9}.Release|Mixed Platforms.Build.0 = Release|Win32
+		{D83663D1-4312-4F66-9CC3-895CEA218CE9}.Release|Win32.ActiveCfg = Release|Win32
+		{D83663D1-4312-4F66-9CC3-895CEA218CE9}.Release|Win32.Build.0 = Release|Win32
+		{D83663D1-4312-4F66-9CC3-895CEA218CE9}.Release|x64.ActiveCfg = Release|x64
+		{D83663D1-4312-4F66-9CC3-895CEA218CE9}.Release|x64.Build.0 = Release|x64
+		{D83663D1-4312-4F66-9CC3-895CEA218CE9}.Release|x86.ActiveCfg = Release|Win32
+		{D83663D1-4312-4F66-9CC3-895CEA218CE9}.Release|x86.Build.0 = Release|Win32
+		{D83663D1-4312-4F66-9CC3-895CEA218CE9}.ReleaseBuild|Mixed Platforms.ActiveCfg = Release|Win32
+		{D83663D1-4312-4F66-9CC3-895CEA218CE9}.ReleaseBuild|Mixed Platforms.Build.0 = Release|Win32
+		{D83663D1-4312-4F66-9CC3-895CEA218CE9}.ReleaseBuild|Win32.ActiveCfg = Release|Win32
+		{D83663D1-4312-4F66-9CC3-895CEA218CE9}.ReleaseBuild|Win32.Build.0 = Release|Win32
+		{D83663D1-4312-4F66-9CC3-895CEA218CE9}.ReleaseBuild|x64.ActiveCfg = Release|x64
+		{D83663D1-4312-4F66-9CC3-895CEA218CE9}.ReleaseBuild|x64.Build.0 = Release|x64
+		{D83663D1-4312-4F66-9CC3-895CEA218CE9}.ReleaseBuild|x86.ActiveCfg = Release|Win32
+		{D83663D1-4312-4F66-9CC3-895CEA218CE9}.ReleaseBuild|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

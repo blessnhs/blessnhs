@@ -95,6 +95,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BannerAd_ViewRenderer.cs" />
+    <Compile Include="Dependency.cs" />
     <Compile Include="InterstitiaAd_lViewRenderer.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
