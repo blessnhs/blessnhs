@@ -20,7 +20,7 @@ GSClient::GSClient(void)
 	m_WillBeTerminated		= FALSE;
 	m_DBStamp				= 0;
 	m_DBStampTime			= 0;
-	m_PairPlayerId			= ULONG_MAX;
+	m_PairPlayerId			= 0;
 	m_GSServer				= NULL;
 	m_DeleteTime			= 0;
 
@@ -74,12 +74,12 @@ BOOL  GSClient::Create(BYTE Type)
 	return TRUE;
 }
 
-DWORD GSClient::GetPair()
+INT64 GSClient::GetPair()
 {
 	return m_PairPlayerId;
 }
 
-void GSClient::SetPair(DWORD Player)
+void GSClient::SetPair(INT64 Player)
 {
 	m_PairPlayerId = Player;
 }

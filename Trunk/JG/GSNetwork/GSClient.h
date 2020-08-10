@@ -132,9 +132,9 @@ private:
 public:
 	LPVOID											m_GSServer;
 
-	DWORD											GetPair();
+	INT64											GetPair();
 
-	void											SetPair(DWORD Player);
+	void											SetPair(INT64 Player);
 
 	//내가 삭제될 타임 종료후 iocp 메세지가 올수 있으므로 대기 했다가 제거
 	DWORD											m_DeleteTime;
