@@ -112,6 +112,9 @@ BOOL	GSPacketTCP::WritePacket(WORD MainProtocol,WORD SubProtocol, const BYTE *pa
 	if (!packet)
 		return FALSE;
 
+//	if (GetConnected() == false)
+//		return FALSE;
+
 
 	WORD PacketLength = sizeof(WORD)  + 
 		sizeof(WORD)                  + 

@@ -374,13 +374,14 @@ namespace Board	{
 				});
 				
 				requestTask.wait();
-
+	
 				http_out = requestTask.get();
 
 			}
 			catch (const std::exception & e)
 			{
 				printf("Error exception:%s\n", e.what());
+				return -1;
 			}
 
 			return 0;
@@ -411,7 +412,27 @@ namespace Board	{
 				return;
 			}
 
-			GetGoogleAuth(pRequst->Token.c_str());
+			if (pRequst->Token.size() == 0 || pRequst->Token.size() < 10)
+			{
+				printf("DBPROCESSCONTAINER_CER.Search token size error %d \n", pRequst->Token.size());
+
+				res.set_var_code(DataBaseError);
+
+				SEND_PROTO_BUFFER(res, pSession)
+				return;
+			}
+
+			//실패할수 있으니 반복
+			for (int i = 0; i < 10; i++)
+			{
+				GetGoogleAuth(pRequst->Token.c_str());
+
+				if (http_out.size() == 5)
+					break;
+
+				printf("retry google auth\n");
+			}
+
 
 			if(http_out.size() != 5)
 			{

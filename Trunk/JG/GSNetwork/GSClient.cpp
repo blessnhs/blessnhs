@@ -324,8 +324,14 @@ VOID GSClient::ProcDisconnect(boost::shared_ptr<GSClient> pClient)
 
 
 	//컨텐츠 종료 처리
-	PROC_REG_CLOSE_JOB(pClient,pServer)
 
+	//로직 스레드가 아니라 바로 db tp로 던진다.
+	//google auth에서 딜레이가 걸려서 아래 종료 처리 함수가 먼저 실행되면( concurrent 삭제 및 playermgr 제거 ,roommgr 제거)
+	//concurrent 함수에서 데이터를 지울수가 없다.
+	//그래서 closejob 실행되고 login 함수가 실행되면 순서가 엇갈려 유저가 남게 된다.
+	//그러나 완벽하지 않다 logic -> dbthread 2단계이기 때문
+	//고민하다가 그냥 logic tp로 던지고 유저 체크 함수를 만듬 (alive check usermgr)
+	PROC_REG_CLOSE_JOB(pClient,pServer)
 
 	//여기 부터는 소켓 정리
 	pServer->SubPlayerCount(1);
