@@ -4,13 +4,13 @@
 
 #include <boost/pool/object_pool.hpp>
 
-#include "SysTimerJob.h"
+#include "ContentsTimerJob.h"
 
-class SysTimer : public GSFrames::GSTimerQ::GSTimerQ  
+class ContentsTimer : public GSFrames::GSTimerQ::GSTimerQ
 {
 public:
-	SysTimer();
-	~SysTimer();
+	ContentsTimer();
+	~ContentsTimer();
 
 	enum {
 		SYS_TIMER  = 1,
@@ -18,11 +18,9 @@ public:
 
 	static void CALLBACK OnEvt(LPVOID Arg);
 
-	void Start(LPVOID pServer);
+	void Start();
 
-	boost::object_pool<SysTimerJob>									m_SysTimerJobPool;
-
-	LPVOID pGSServer;
+	boost::object_pool<ContentsTimerJob>									m_TimerJobPool;
 };
 
-extern SysTimer &GetSysTimer();
+extern ContentsTimer &GetContentsTimer();

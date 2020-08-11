@@ -1,76 +1,59 @@
 #include "stdafx.h"
-#include "SysTimer.h"
-#include "SysTimerJob.h"
+#include "ContentsTimer.h"
+#include "ContentsTimerJob.h"
 
-#include "MSG_PLAYER_PACKET.h"
-#include "MSG_PLAYER_TIME.h"
-#include "GSServer.h"
-#include "GSMainProcess.h"
+
 #include "GSAllocator.h"
 #include <boost/shared_ptr.hpp>
-#include "GSClientMgr.h"
 
 
 class GSAllocator;
 
-SysTimer::SysTimer()
+ContentsTimer::ContentsTimer()
 {
 	Initialize();
 }
 
-SysTimer::~SysTimer()
+ContentsTimer::~ContentsTimer()
 {
 }
 
-void SysTimer::Start(LPVOID pServer)
+void ContentsTimer::Start()
 {
-	pGSServer = pServer;
+	ContentsTimerJob *pJob = m_TimerJobPool.malloc();
 
-	SysTimerJob *pJob = m_SysTimerJobPool.malloc();
-
-	pJob->Func = SysTimer::OnEvt;
+	pJob->Func = ContentsTimer::OnEvt;
 	pJob->SetExpineTime(GetTickCount());
-	pJob->SetId(SysTimer::SYS_TIMER);
+	pJob->SetId(ContentsTimer::SYS_TIMER);
 
 	AddTimerJob(pJob);
 }
 
-void SysTimer::OnEvt(LPVOID Arg)
+void ContentsTimer::OnEvt(LPVOID Arg)
 {
-	SysTimerJob *pJob = (SysTimerJob *)Arg;
+	ContentsTimerJob *pJob = (ContentsTimerJob *)Arg;
 
 	switch(pJob->GetId())
 	{
-		case SysTimer::SYS_TIMER:
+		case ContentsTimer::SYS_TIMER:
 		{
-			GSNetwork::MSG_PLAYER_TIME_PTR	    pPlayerTime = ALLOCATOR.Create<GSNetwork::MSG_PLAYER_TIME>();
+			PLAYERMGR.CheckUserList();
 
-			GSNetwork::GSServer::GSServer *Server = (GSNetwork::GSServer::GSServer *)GetSysTimer().pGSServer;
-			
-			pPlayerTime->pHandler= &Server->GetClientMgr();
-			pPlayerTime->Type	 = MSG_TYPE_USER;
-			pPlayerTime->SubType = ONTIME;
-			pPlayerTime->pServer = Server;
-
-			MAINPROC.RegisterCommand(pPlayerTime);
-			
-			SysTimerJob* pNewJob = GetSysTimer().m_SysTimerJobPool.malloc();
-
-			pNewJob->Func = SysTimer::OnEvt;
+			ContentsTimerJob* pNewJob = GetContentsTimer().m_TimerJobPool.malloc();
+			pNewJob->Func = ContentsTimer::OnEvt;
 			pNewJob->SetExpineTime(GetTickCount() + 1000);
-			pNewJob->SetId(SysTimer::SYS_TIMER);
-
-			GetSysTimer().AddTimerJob(pNewJob);
+			pNewJob->SetId(ContentsTimer::SYS_TIMER);
+			GetContentsTimer().AddTimerJob(pNewJob);
 		}
 		break;
 	}
 
 	if(pJob != NULL)
-		GetSysTimer().m_SysTimerJobPool.destroy(pJob);
+		GetContentsTimer().m_TimerJobPool.destroy(pJob);
 }
 
-SysTimer &GetSysTimer()
+ContentsTimer &GetContentsTimer()
 {
-	static SysTimer gTimer;
+	static ContentsTimer gTimer;
 	return gTimer;
 }

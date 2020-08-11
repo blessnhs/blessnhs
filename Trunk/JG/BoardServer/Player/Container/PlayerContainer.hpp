@@ -1,4 +1,5 @@
 #include "../../Server/GSBoard.h"
+#include "../../Room/RoomContainer.h"
 
 class GSCLIENT;
 
@@ -109,20 +110,39 @@ template<template<class T> class CreationPolicy> PlayerPtr PlayerContainer<Creat
 
 template<template<class T> class CreationPolicy> void PlayerContainer<CreationPolicy>::CheckUserList()
 {
-	auto iter = m_PlayerMap.begin();
-
-	while(iter != m_PlayerMap.end())
+	for (auto iter = m_PlayerMap.begin(); iter != m_PlayerMap.end(); iter++)
 	{
-		if(iter->second != NULL)
-		{
-			string Name = iter->second->m_Account.GetName();
-			WORD SessionId= iter->second->GetPair();
+		if (iter->second == NULL)
+			continue;
 
-			GSCLIENT_PTR pSession = SERVER.GetClient(SessionId);
-			if(!pSession)
-				printf("Lost GSCLIENT %s %d \n",Name.c_str(),SessionId);
+		WORD SessionId = iter->second->GetPair();
+
+		GSCLIENT_PTR pSession = SERVER.GetClient(SessionId);
+		if (pSession == NULL)
+		{
+			PlayerPtr pPlayer = iter->second;
+			if (pPlayer != NULL)
+			{
+				ROOMMGR.LeaveRoomPlayer(pPlayer);
+
+				pPlayer->SetPair(ULONG_MAX);
+				PLAYERMGR.Del(pPlayer);
+
+				//매칭 큐에서 제거한다.
+				ROOMMGR.DelMatchMap(pPlayer);
+			}
+
+			//로그아웃 쿼리를 날린다.
+			boost::shared_ptr<RequestLogout> pRequest = ALLOCATOR.Create<RequestLogout>();
+			pRequest->Index = pPlayer->GetId();
+
+			boost::shared_ptr<Board::MSG_PLAYER_QUERY<RequestLogout>>		PLAYER_MSG = ALLOCATOR.Create<Board::MSG_PLAYER_QUERY<RequestLogout>>();
+			PLAYER_MSG->pRequst = pRequest;
+			PLAYER_MSG->Type = 0;				//그냥 디폴트
+			PLAYER_MSG->SubType = ONQUERY;
+			MAINPROC.RegisterCommand(PLAYER_MSG);
 		}
-		iter++;
+		
 	}
 }
 

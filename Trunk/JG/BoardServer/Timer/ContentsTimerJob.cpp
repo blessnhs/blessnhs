@@ -1,10 +1,10 @@
 #include "stdafx.h"
-#include "SysTimerJob.h"
+#include "ContentsTimerJob.h"
 
-SysTimerJob::SysTimerJob()
+ContentsTimerJob::ContentsTimerJob()
 {
 }
-SysTimerJob::~SysTimerJob()
+ContentsTimerJob::~ContentsTimerJob()
 {
 }
 

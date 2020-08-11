@@ -2,11 +2,11 @@
 
 #include "GSTimerJob.h"
 
-class SysTimerJob : public GSFrames::GSTimerJob::GSTimerJob 
+class ContentsTimerJob : public GSFrames::GSTimerJob::GSTimerJob
 {
 public:
-	SysTimerJob();
-	~SysTimerJob();
+	ContentsTimerJob();
+	~ContentsTimerJob();
 
 
 };

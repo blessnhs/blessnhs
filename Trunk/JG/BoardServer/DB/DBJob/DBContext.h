@@ -61,7 +61,7 @@ public:
 	std::string Uid;
 	std::string Token;
 	std::string SessionKey;
-	DWORD Index;
+	INT64 Index;
 	int Result;
 };
 
@@ -75,7 +75,7 @@ public:
 	~RequestQNS(void) {}
 
 	std::string contents;
-	DWORD Index;
+	INT64 Index;
 	int Result;
 };
 
@@ -85,7 +85,7 @@ public:
 	RequestLogout(void) {}
 	~RequestLogout(void) {}
 
-	DWORD Index;
+	INT64 Index;
 };
 
 class RequestDeleteAllConcurrentUser : public GSObject

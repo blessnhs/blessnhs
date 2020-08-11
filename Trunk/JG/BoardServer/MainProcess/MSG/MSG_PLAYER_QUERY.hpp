@@ -227,12 +227,7 @@ namespace Board	{
 
 		void Execute(LPVOID Param)
 		{
-			if (pSession == NULL)
-			{
-				return;
-			}
-
-			DBPROCESS_CER_PTR pProcess = DBPROCESSCONTAINER_CER.Search(pSession->GetMyDBTP());
+			DBPROCESS_CER_PTR pProcess = DBPROCESSCONTAINER_CER.GetFirstHandle();
 			if (pProcess == NULL || pProcess->m_IsOpen == false)
 			{
 				return;
