@@ -356,7 +356,7 @@ void Room::RecoardResult(PLAYER_PTR Winner, PLAYER_PTR Loser)
 		boost::shared_ptr<Board::MSG_PLAYER_QUERY<RequestPlayerScore>>		PLAYER_MSG = ALLOCATOR.Create<Board::MSG_PLAYER_QUERY<RequestPlayerScore>>();
 		PLAYER_MSG->pSession = NULL;
 		PLAYER_MSG->pRequst = pRequest;
-		PLAYER_MSG->Type = 0;
+		PLAYER_MSG->Type = MSG_TYPE_DB_1;
 		PLAYER_MSG->SubType = ONQUERY;
 		MAINPROC.RegisterCommand(PLAYER_MSG);
 	}
@@ -384,7 +384,7 @@ void Room::RecoardResult(PLAYER_PTR Winner, PLAYER_PTR Loser)
 			boost::shared_ptr<Board::MSG_PLAYER_QUERY<RequestPlayerScore>>		PLAYER_MSG = ALLOCATOR.Create<Board::MSG_PLAYER_QUERY<RequestPlayerScore>>();
 			PLAYER_MSG->pSession = NULL;
 			PLAYER_MSG->pRequst = pRequest;
-			PLAYER_MSG->Type = 0;
+			PLAYER_MSG->Type = MSG_TYPE_DB_1;
 			PLAYER_MSG->SubType = ONQUERY;
 			MAINPROC.RegisterCommand(PLAYER_MSG);
 		}

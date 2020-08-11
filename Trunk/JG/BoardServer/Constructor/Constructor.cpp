@@ -4,6 +4,7 @@
 #include "../Command/Command.h"
 #include "../Server/GSBoard.h"
 #include "CrashHandler/SFCrashHandler.h"
+#include "../Timer/ContentsTimer.h"
 
 BoardConstructor::BoardConstructor(void)
 {
@@ -13,6 +14,8 @@ BoardConstructor::BoardConstructor(void)
 	handler.SetFHPtr(nullptr);
 
 	SERVER.Initialize();
+
+	GetContentsTimer().Start();
 	
 	printf(("Alloc Client Count %d\n"), SERVER.GetClientMgr().ConnectableSocketCount());
 	printf("Server Start.................. \n");

@@ -61,6 +61,9 @@
     <Filter Include="PROTO\script">
       <UniqueIdentifier>{b4c601b3-4939-4153-a32c-008bda0e37b6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="TIMER">
+      <UniqueIdentifier>{e90add6f-368d-47b6-a8cc-9a74498a004f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Ini\INI.h">
@@ -135,6 +138,12 @@
     <ClInclude Include="..\Protocol\Cpp\Structure.pb.h">
       <Filter>PROTO</Filter>
     </ClInclude>
+    <ClInclude Include="Timer\ContentsTimer.h">
+      <Filter>TIMER</Filter>
+    </ClInclude>
+    <ClInclude Include="Timer\ContentsTimerJob.h">
+      <Filter>TIMER</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BoardServer.cpp">
@@ -202,6 +211,12 @@
     </ClCompile>
     <ClCompile Include="..\Protocol\Cpp\Structure.pb.cc">
       <Filter>PROTO</Filter>
+    </ClCompile>
+    <ClCompile Include="Timer\ContentsTimer.cpp">
+      <Filter>TIMER</Filter>
+    </ClCompile>
+    <ClCompile Include="Timer\ContentsTimerJob.cpp">
+      <Filter>TIMER</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

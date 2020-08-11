@@ -265,6 +265,8 @@
     <ClInclude Include="Server\BoardProcess.h" />
     <ClInclude Include="Server\GSBoard.h" />
     <ClInclude Include="stdafx.h" />
+    <ClInclude Include="Timer\ContentsTimer.h" />
+    <ClInclude Include="Timer\ContentsTimerJob.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Protocol\Cpp\CLI.GS.pb.cc">
@@ -309,6 +311,8 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='ReleaseBuild|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="Timer\ContentsTimer.cpp" />
+    <ClCompile Include="Timer\ContentsTimerJob.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Protocol\CLI.GS.proto">

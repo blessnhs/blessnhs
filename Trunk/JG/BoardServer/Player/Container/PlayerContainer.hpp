@@ -117,6 +117,8 @@ template<template<class T> class CreationPolicy> void PlayerContainer<CreationPo
 
 		WORD SessionId = iter->second->GetPair();
 
+
+		//미아가 된 player들
 		GSCLIENT_PTR pSession = SERVER.GetClient(SessionId);
 		if (pSession == NULL)
 		{
@@ -138,7 +140,7 @@ template<template<class T> class CreationPolicy> void PlayerContainer<CreationPo
 
 			boost::shared_ptr<Board::MSG_PLAYER_QUERY<RequestLogout>>		PLAYER_MSG = ALLOCATOR.Create<Board::MSG_PLAYER_QUERY<RequestLogout>>();
 			PLAYER_MSG->pRequst = pRequest;
-			PLAYER_MSG->Type = 0;				//그냥 디폴트
+			PLAYER_MSG->Type = MSG_TYPE_DB_1;				//그냥 디폴트
 			PLAYER_MSG->SubType = ONQUERY;
 			MAINPROC.RegisterCommand(PLAYER_MSG);
 		}

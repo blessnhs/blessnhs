@@ -77,7 +77,7 @@ namespace Board	{
 				return;
 			}
 
-			DBPROCESS_CER_PTR pProcess = DBPROCESSCONTAINER_CER.Search(pSession->GetMyDBTP());
+			DBPROCESS_CER_PTR pProcess = DBPROCESSCONTAINER_CER.Search(Type);
 			if (pProcess == NULL || pProcess->m_IsOpen == false)
 			{
 				res.set_var_code(DataBaseError);
@@ -123,7 +123,7 @@ namespace Board	{
 				return;
 			}
 
-			DBPROCESS_CER_PTR pProcess = DBPROCESSCONTAINER_CER.Search(pSession->GetMyDBTP());
+			DBPROCESS_CER_PTR pProcess = DBPROCESSCONTAINER_CER.Search(Type);
 			if (pProcess == NULL || pProcess->m_IsOpen == false)
 			{
 				res.set_var_code(DataBaseError);
@@ -167,7 +167,7 @@ namespace Board	{
 
 		void Execute(LPVOID Param)
 		{
-			DBPROCESS_CER_PTR pProcess = DBPROCESSCONTAINER_CER.Search(MSG_TYPE_DB_1);
+			DBPROCESS_CER_PTR pProcess = DBPROCESSCONTAINER_CER.Search(Type);
 			if (pProcess == NULL || pProcess->m_IsOpen == false)
 			{
 				return;
@@ -193,7 +193,7 @@ namespace Board	{
 
 		void Execute(LPVOID Param)
 		{
-			DBPROCESS_CER_PTR pProcess = DBPROCESSCONTAINER_CER.Search(pSession->GetMyDBTP());
+			DBPROCESS_CER_PTR pProcess = DBPROCESSCONTAINER_CER.Search(Type);
 			if (pProcess == NULL || pProcess->m_IsOpen == false)
 			{
 				return;
@@ -227,7 +227,7 @@ namespace Board	{
 
 		void Execute(LPVOID Param)
 		{
-			DBPROCESS_CER_PTR pProcess = DBPROCESSCONTAINER_CER.GetFirstHandle();
+			DBPROCESS_CER_PTR pProcess = DBPROCESSCONTAINER_CER.Search(Type);
 			if (pProcess == NULL || pProcess->m_IsOpen == false)
 			{
 				return;
@@ -258,7 +258,7 @@ namespace Board	{
 				return;
 			}
 
-			DBPROCESS_CER_PTR pProcess = DBPROCESSCONTAINER_CER.Search(pSession->GetMyDBTP());
+			DBPROCESS_CER_PTR pProcess = DBPROCESSCONTAINER_CER.Search(Type);
 			if (pProcess == NULL || pProcess->m_IsOpen == false)
 			{
 				return;
@@ -396,7 +396,7 @@ namespace Board	{
 				return;
 			}
 
-			DBPROCESS_CER_PTR pProcess = DBPROCESSCONTAINER_CER.Search(pSession->GetMyDBTP());
+			DBPROCESS_CER_PTR pProcess = DBPROCESSCONTAINER_CER.Search(Type);
 			if (pProcess == NULL || pProcess->m_IsOpen == false)
 			{
 				printf("DBPROCESSCONTAINER_CER.Search wong %d \n", pSession->GetMyDBTP());
@@ -547,7 +547,7 @@ namespace Board	{
 		void Execute(LPVOID Param) 
 		{
 			//유저가종료되어도 승패는 기록되어야 하기에 디폴트 디비 핸들러를 사용한다.
-			DBPROCESS_CER_PTR pProcess = DBPROCESSCONTAINER_CER.GetFirstHandle();
+			DBPROCESS_CER_PTR pProcess = DBPROCESSCONTAINER_CER.Search(Type);
 			if (pProcess == NULL || pProcess->m_IsOpen == false)
 			{
 				return;
