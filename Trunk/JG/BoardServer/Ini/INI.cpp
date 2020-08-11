@@ -16,5 +16,5 @@ VOID BoardINI::Load()
 
 	printf("[ Board ] Port [ %d ] MaxUser [ %d ] \n",Port,MaxUser);
 
-	printf("ODBC SYSTEM32 NAME [%s] ID [%s] PWD [%s] \n", ODBC_NAME, ODBC_ID, ODBC_PWD);
+	//printf("ODBC SYSTEM32 NAME [%s] ID [%s] PWD [%s] \n", ODBC_NAME, ODBC_ID, ODBC_PWD);
 }

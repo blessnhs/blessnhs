@@ -14,7 +14,7 @@ public:
 	CDBProcessCer(void);
 	~CDBProcessCer(void);
 	
-	BOOL Initalize(	CHAR *m_szDSN,CHAR *m_szUID,CHAR *m_szPWD);
+	BOOL Initalize();
 
 	int	 ProcedureUserLogin(const CHAR* flatformid, const int flatformtype, const CHAR* name, const CHAR* picture_url, const CHAR* email, 
 	std::string&szKey,int &Rank, int& Score, int& Win, int& Lose, int& Draw,INT64 &Index, int& Level);
@@ -31,7 +31,6 @@ public:
 	int NoticeInfoInfo(string& notice);
 	float ProcedureVersion();
 
-	COdbc*				m_pDB;
 	bool				m_IsOpen;
 
 	CRITICAL_SECTION	m_CS;

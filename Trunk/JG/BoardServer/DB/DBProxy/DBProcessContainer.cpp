@@ -3,11 +3,7 @@
 
 	DBProcessContainer::DBProcessContainer(void)
 	{
-#ifndef USE_MSSQL
-		printf(*"MSSQL Activate \n");
-#else
 		printf("MongoDB Activate \n");
-#endif
 	}
 
 	DBProcessContainer::~DBProcessContainer(void)
@@ -43,14 +39,7 @@
 		auto iter = m_List.begin();
 		if (iter != m_List.end())
 		{
-#ifndef USE_MSSQL
-			if (iter->second->m_pDB == NULL || iter->second->m_pDB->IsOpen() == false)
-			{
-				return DBPROCESS_CER_PTR();
-			}
-#else
 			return iter->second;
-#endif
 		}
 
 		return DBPROCESS_CER_PTR();
@@ -61,14 +50,7 @@
 		std::map<DWORD,DBPROCESS_CER_PTR>::iterator iter = m_List.find(Id);
 		if(iter != m_List.end())
 		{
-#ifndef USE_MSSQL
-			if (iter->second->m_pDB == NULL || iter->second->m_pDB->IsOpen() == false)
-			{
-				return DBPROCESS_CER_PTR();
-			}
-#else
 			return iter->second;
-#endif
 		}
 
 		return DBPROCESS_CER_PTR();
@@ -97,7 +79,7 @@
 		{
 			DBPROCESS_CER_PTR process = iter->second;
 
-			process->Initalize(INI.ODBC_NAME, INI.ODBC_ID, INI.ODBC_PWD);
+			process->Initalize();
 
 			iter++;
 		}
