@@ -28,18 +28,20 @@ BOOL GSBoard::Disconnect(GSCLIENT_PTR pSession)
 
 		//매칭 큐에서 제거한다.
 		ROOMMGR.DelMatchMap(pPlayer);
+
+		//로그아웃 쿼리를 날린다.
+		boost::shared_ptr<RequestLogout> pRequest = ALLOCATOR.Create<RequestLogout>();
+		pRequest->Index = pSession->GetPair();
+
+		boost::shared_ptr<Board::MSG_PLAYER_QUERY<RequestLogout>>		PLAYER_MSG = ALLOCATOR.Create<Board::MSG_PLAYER_QUERY<RequestLogout>>();
+		PLAYER_MSG->pSession = pSession;
+		PLAYER_MSG->pRequst = pRequest;
+		PLAYER_MSG->Type = pSession->GetMyDBTP();
+		PLAYER_MSG->SubType = ONQUERY;
+		MAINPROC.RegisterCommand(PLAYER_MSG);
 	}
 
-	//로그아웃 쿼리를 날린다.
-	boost::shared_ptr<RequestLogout> pRequest = ALLOCATOR.Create<RequestLogout>();
-	pRequest->Index = pSession->GetPair();
 
-	boost::shared_ptr<Board::MSG_PLAYER_QUERY<RequestLogout>>		PLAYER_MSG = ALLOCATOR.Create<Board::MSG_PLAYER_QUERY<RequestLogout>>();
-	PLAYER_MSG->pSession = pSession;
-	PLAYER_MSG->pRequst = pRequest;
-	PLAYER_MSG->Type = pSession->GetMyDBTP();
-	PLAYER_MSG->SubType = ONQUERY;
-	MAINPROC.RegisterCommand(PLAYER_MSG);
 
 	return TRUE;
 }
