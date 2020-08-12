@@ -66,7 +66,7 @@
 
                 <!--5row 1번째 기보 -->
                 <Frame BorderColor="Gray"  CornerRadius="5"  Grid.Column="2" Grid.Row="3"  Padding="0,0,0,0">
-                    <Button x:Name="HistroyButton" Text="기보" Clicked="OnHistoryClicked" BackgroundColor="White"/>
+                    <Button x:Name="HistroyButton" Text="기록" Clicked="OnHistoryClicked" BackgroundColor="White"/>
                 </Frame>
 
                 <!--5row 2번째 랭킹 -->
@@ -81,7 +81,7 @@
 
                 <!--5row 0번째 이름 -->
                 <Frame Grid.Column="0"  Grid.Row="4"  Grid.ColumnSpan="5" Padding="0,0,0,0" HeightRequest="30">
-                    <Label x:Name="NoticeLabel" Text="공지입니다." BackgroundColor="White" FontSize="Large" TextColor="Black" MaxLines="200"/>
+                    <Label x:Name="NoticeLabel" Text="서버 정검 시간은 새벽4시 입니다." BackgroundColor="White" FontSize="Large" TextColor="Black" WidthRequest="256" MaxLines="20" LineBreakMode="CharacterWrap"/>
                 </Frame>
 
             </Grid>

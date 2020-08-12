@@ -49,12 +49,7 @@ namespace OMOK
 
             var table = db.Table<ResultLog>();
 
-            List<ResultLog> list = new List<ResultLog>();
-
-            foreach (var s in table)
-            {
-                list.Add(s);
-            }
+            var list = db.Query<ResultLog>("select * from ResultLog order by time desc");
 
             return list;
         }

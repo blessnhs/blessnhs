@@ -29,6 +29,11 @@ namespace OMOK
         {
             InitializeComponent();
 
+            Button PrevBtn = new Button { Text = "◁", HorizontalOptions = LayoutOptions.Start };
+            PrevBtn.Clicked += (sender, e) => {
+                Navigation.PopModalAsync();
+            };
+
             ProgressRoom.Progress = 0.0f;
 
             timeLabel.IsEnabled = true;
