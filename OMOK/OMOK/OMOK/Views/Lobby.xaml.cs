@@ -215,7 +215,11 @@ namespace OMOK.Views
         {
             Navigation.PushModalAsync(new Setting());
         }
-
+        async void OnSingleMatchClicked(object sender, System.EventArgs e)
+        {
+            Navigation.PushModalAsync(new SingleMatch());
+        }
+        
         async void OnLoginClicked(object sender, System.EventArgs e)
         {
             string inputstring = await InputBox(this.Navigation);

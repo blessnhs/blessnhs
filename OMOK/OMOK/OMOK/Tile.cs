@@ -61,7 +61,7 @@ namespace OMOK
         }
     }
 
-    class Tile : Frame
+    public class Tile : Frame
     {
         eTeam tileStatus = eTeam.None;
         Image whiteImage, blackImage,emptyImage,aimImage , awhiteImage, ablackImage;
@@ -216,8 +216,16 @@ namespace OMOK
         void OnSingleTap(object sender, object args)
         {
             Board board = parent as Board;
+            if(board != null)
+            {
+                board.UpdateAimSet(x, y);
+            }
+            else
+            {
+                AIBoard board2 = parent as AIBoard;
 
-            board.UpdateAimSet(x, y);
+                board2.SingleMatchUpdate(x, y);
+            }
         }
 
         void OnDoubleTap (object sender, object args)
