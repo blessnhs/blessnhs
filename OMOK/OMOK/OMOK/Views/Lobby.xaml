@@ -77,14 +77,14 @@
 
                 <!--5row 3번째 설정 -->
                 <Frame BorderColor="Gray"  CornerRadius="5"   Grid.Column="4" Grid.Row="3" Padding="0,0,0,0">
-                    <Button x:Name="SettingButton" Text="설정" Clicked="OnSettingClicked" BackgroundColor="White"/>
+                    <Button x:Name="SingleMatch" Text="A I" Clicked="OnSingleMatchClicked" BackgroundColor="White"/>
                 </Frame>
-   
+                
                 <!--5row 3번째 설정 -->
                 <Frame BorderColor="Gray"  CornerRadius="5"   Grid.Column="5" Grid.Row="3" Padding="0,0,0,0">
-                    <Button x:Name="SingleMatch" Text="싱글매치" Clicked="OnSingleMatchClicked" BackgroundColor="White"/>
+                    <Button x:Name="SettingButton" Text="설정" Clicked="OnSettingClicked" BackgroundColor="White"/>
                 </Frame>
-
+ 
                 <!--5row 0번째 이름 -->
                 <Frame Grid.Column="0"  Grid.Row="4"  Grid.ColumnSpan="6" Padding="0,0,0,0" HeightRequest="30">
                     <Label x:Name="NoticeLabel" Text="서버 정검 시간은 새벽4시 입니다." BackgroundColor="White" FontSize="Large" TextColor="Black" WidthRequest="256" MaxLines="20" LineBreakMode="CharacterWrap"/>

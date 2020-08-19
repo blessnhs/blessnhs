@@ -23,8 +23,8 @@ namespace OMOK
         public static  UndoInfo[] uInfo = new UndoInfo[ConstValue.SIZE * ConstValue.SIZE];
         public static UndoInfo[] rInfo = new UndoInfo[ConstValue.SIZE * ConstValue.SIZE];
 
-        public COMOKRULE orule;
-        public COMOKRULE pRule;
+        public COMOKRULE orule = new COMOKRULE();
+        public COMOKRULE pRule = new COMOKRULE();
         public COMOK()
         {
             x = y = (int)ConstValue.CENTER;

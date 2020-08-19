@@ -25,6 +25,10 @@ namespace OMOK
 
         public int level;
 
+        public int ai_rule = 1;
+        public int ai_mode = 1;
+        public bool ai_set_flag = false;
+
     }
 
     public static class User

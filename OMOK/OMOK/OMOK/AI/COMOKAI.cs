@@ -21,7 +21,7 @@ namespace OMOK
 
         public Point l = new Point();  //left top, right bottom;
         public Point r = new Point();
-        public COMOKRULE pRule;
+        public COMOKRULE pRule = new COMOKRULE();
         public delegate int fp4(int a, int b, int c,int d);
         public delegate bool fp3(int a, int b, int c);
 

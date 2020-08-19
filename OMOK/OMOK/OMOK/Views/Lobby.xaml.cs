@@ -196,14 +196,14 @@ namespace OMOK.Views
         {
            NetProcess.SendMatch();
 
-           Navigation.PushModalAsync(new MatchInfoPage()/*_MachPage*/);
+            await Navigation.PushModalAsync(new MatchInfoPage()/*_MachPage*/);
 
         }
 
         
         async void OnHistoryClicked(object sender, System.EventArgs e)
         {
-            Navigation.PushModalAsync(new RecordHistory()/*_MachPage*/);
+            await Navigation.PushModalAsync(new RecordHistory()/*_MachPage*/);
 
         }
 
@@ -213,12 +213,12 @@ namespace OMOK.Views
         }
         async void OnSettingClicked(object sender, System.EventArgs e)
         {
-            Navigation.PushModalAsync(new Setting());
+            await Navigation.PushModalAsync(new Setting());
         }
         async void OnSingleMatchClicked(object sender, System.EventArgs e)
         {
-            Navigation.PushModalAsync(new SingleMatch());
-        }
+            await Navigation.PushModalAsync(new SingleMatch());
+       }
         
         async void OnLoginClicked(object sender, System.EventArgs e)
         {

@@ -1,4 +1,6 @@
 ﻿using OMOK.CustomAdMobView;
+using OMOK.Popup;
+using Rg.Plugins.Popup.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -90,7 +92,7 @@ namespace OMOK.Views
         // 아니면 한쪽 돌만 연속으로 pass한 것인지 
         // 판단하기 위하여 stoneState는 배열을 사용함. 
         // 무승부임을 알리는게 의외로 복잡하다. 
-        bool isComputer;
+        public bool isComputer;
         bool passTriggerOn;
         int passCount;
         int[] stoneState = new int[2];
@@ -117,6 +119,11 @@ namespace OMOK.Views
             if (mode == 5) UpdateStone(x, y, eTeam.White);
             else UpdateStone(x, y, eTeam.Black);
 
+          
+            if(mode == 1)
+                User.Color = eTeam.Black;
+            else
+                User.Color = eTeam.White;
         }
 
         // 흑과 백의 둘 차례를 바꾼다. 
@@ -141,7 +148,7 @@ namespace OMOK.Views
                 var ret = pOmok[curStone].placement(x, y, curStone);
                 pOmok[curStone].getXY(ref x, ref y);
                 UpdateStone(x, y, curStone == 0 ? eTeam.Black : eTeam.White);
-
+ 
                 return ret;
 
             }
@@ -196,7 +203,7 @@ namespace OMOK.Views
             //return 0;
         }
 
-        void playgameloop(int mode)
+        bool playgameloop(int mode)
         {
 
             int result = checkKey(mode);
@@ -204,7 +211,12 @@ namespace OMOK.Views
             switch (result)
             {
                 //// 키보드로부터 ESC키가 눌리면 게임을 종료한다. 
-                //case FINISH: return false;
+                case 15:
+                    {
+                        Navigation.PushPopupAsync(new AIGameResult(curStone));
+                        return false;
+                    }
+                   
                 //// 오목이 되었으면 승자를 알리고, 계속할건지 물어본다. 
                 //case FIVEMOK: return pDraw().endMsg(curStone);
                 //// 착수가 불가능한 곳은 그 이유를 알린다. 
@@ -235,6 +247,8 @@ namespace OMOK.Views
                     break;
                 default: break;
             }
+
+            return true;
         }
 
         // main함수에서 이 함수를 호출하면 게임이 시작된다. 
@@ -247,28 +261,76 @@ namespace OMOK.Views
             initGame(mode);
         }
 
+        public void UpdateBattleInfo()
+        {
+            if (User.Color == eTeam.Black)
+            {
+                blackLabel.Text = User.myInfo.NickName;
+                whiteLabel.Text = "알파목";
 
+                if (User.myInfo.PhotoPath != null)
+                    bottom1picture.Source = ImageSource.FromUri(new Uri(User.myInfo.PhotoPath));
+
+                if (User.OppInfo.PhotoPath != null)
+                    bottom2picture.Source = ImageSource.FromUri(new Uri(User.OppInfo.PhotoPath));
+            }
+            else
+            {
+                whiteLabel.Text = User.myInfo.NickName;
+                blackLabel.Text = "알파목"; 
+
+                if (User.OppInfo.PhotoPath != null)
+                    bottom1picture.Source = ImageSource.FromUri(new Uri(User.OppInfo.PhotoPath));
+
+                if (User.myInfo.PhotoPath != null)
+                    bottom2picture.Source = ImageSource.FromUri(new Uri(User.myInfo.PhotoPath));
+            }
+        }
+
+
+        bool isbegin = false;
+    
         public SingleMatch()
         {
             InitializeComponent();
 
+            Navigation.PushPopupAsync(new AISelect());
+
             board.parent = this;
 
-            User.Color = eTeam.White;
-
+            board.ClearBoardState();
 
             iIterstitia = DependencyService.Get<iAd_IterstitialView>();
-
-            Device.StartTimer(TimeSpan.FromSeconds(5), () =>
+  
+            Device.StartTimer(TimeSpan.FromSeconds(1), () =>
             {
-                playgameloop(2);
+                if(User.myInfo.ai_set_flag == true)
+                {
+                    playGame(User.myInfo.ai_rule, User.myInfo.ai_mode);
+                    isbegin = true;
+                    User.myInfo.ai_set_flag = false;
+
+                    UpdateBattleInfo();
+
+                }
+
+                if (isbegin == true)
+                {
+                    isbegin = playgameloop(User.myInfo.ai_mode);
+
+
+                    if (isbegin == false) //종료
+                    {
+                        board.ClearBoardState();
+                        User.myInfo.ai_set_flag = true;
+                        isbegin = false;
+                    }
+                }
 
                 return true;
             });
 
             PrepareForNewGame();
-
-            playGame(2, 2);
 
         }
 
@@ -285,32 +347,6 @@ namespace OMOK.Views
         protected override void OnDisappearing()
         {
             //   NetProcess.SendLeaveRoom(0);
-        }
-
-        public void UpdateBattleInfo()
-        {
-            if (User.Color == eTeam.Black)
-            {
-                blackLabel.Text = User.myInfo.NickName;
-                whiteLabel.Text = User.OppInfo.NickName;
-
-                if (User.myInfo.PhotoPath != null)
-                    bottom1picture.Source = ImageSource.FromUri(new Uri(User.myInfo.PhotoPath));
-
-                if (User.OppInfo.PhotoPath != null)
-                    bottom2picture.Source = ImageSource.FromUri(new Uri(User.OppInfo.PhotoPath));
-            }
-            else
-            {
-                whiteLabel.Text = User.myInfo.NickName;
-                blackLabel.Text = User.OppInfo.NickName;
-
-                if (User.OppInfo.PhotoPath != null)
-                    bottom1picture.Source = ImageSource.FromUri(new Uri(User.OppInfo.PhotoPath));
-
-                if (User.myInfo.PhotoPath != null)
-                    bottom2picture.Source = ImageSource.FromUri(new Uri(User.myInfo.PhotoPath));
-            }
         }
 
         void PrepareForNewGame()
@@ -368,8 +404,7 @@ namespace OMOK.Views
 
         async void OnLeaveClicked(object sender, System.EventArgs e)
         {
-           MainPage parentpage = (MainPage)this.Parent;
-           parentpage.CurrentPage = parentpage.Children[0];
+            Navigation.PopModalAsync();
         }
 
         async void OnClickedLeft(object sender, System.EventArgs e)
@@ -384,11 +419,6 @@ namespace OMOK.Views
 
         async void OnPutStone(object sender, System.EventArgs e)
         {
-            if (User.IsMyTurn == false)
-            {
-                return;
-            }
-
             var status = board.GetTile(board.x, board.y).Status;
 
             if (status == eTeam.White || status == eTeam.Awhite || status == eTeam.Black || status == eTeam.Ablack)
@@ -396,8 +426,10 @@ namespace OMOK.Views
                 return;
             }
 
+            aix = board.x;
+            aiy = board.y;
 
-            board.prevsTATE = User.Color;
+            board.UpdateStone(board.x, board.y, eTeam.Black);
         }
 
         async void OnClickedDown(object sender, System.EventArgs e)
@@ -443,6 +475,7 @@ namespace OMOK.Views
         public bool UpdateStone(int x, int y, eTeam status)
         {
             board.UpdateStone(x, y, status);
+            board.UpdateAimSet(x, y);
 
             return true;
         }

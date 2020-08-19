@@ -180,7 +180,7 @@ namespace OMOK
 
         public virtual bool IsForbidden(int x, int y, int nStone)
         {
-            return true;           
+            return false;           
         }
 
         // 오목을 검사하는 것과 같이 6목 이상인지 검사한다. 
