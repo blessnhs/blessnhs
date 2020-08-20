@@ -202,7 +202,28 @@ namespace OMOK.Views
             //return 0;
         }
 
-        bool playgameloop(int mode)
+        public bool CheckAILoop()
+        {
+            isbegin = playgameloop(User.myInfo.ai_mode);
+            isbegin = playgameloop(User.myInfo.ai_mode);
+            if (isbegin == false) //종료
+            {
+                board.ClearBoardState();
+                User.myInfo.ai_set_flag = true;
+                isbegin = true;
+
+                playGame(User.myInfo.ai_rule, User.myInfo.ai_mode);
+                isbegin = true;
+                User.myInfo.ai_set_flag = false;
+
+                UpdateBattleInfo();
+
+                isbegin = playgameloop(User.myInfo.ai_mode);
+            }
+            return true;
+        }
+
+        public bool playgameloop(int mode)
         {
 
             int result = checkKey(mode);
@@ -284,7 +305,7 @@ namespace OMOK.Views
         }
 
 
-        bool isbegin = false;
+        public bool isbegin = false;
     
         public SingleMatch()
         {
@@ -293,42 +314,15 @@ namespace OMOK.Views
             // Subscribe to a message (which the ViewModel has also subscribed to) to display an alert
             MessagingCenter.Subscribe<SingleMatch, string>(this, "Start", async (sender, arg) =>
             {
-                Device.StartTimer(TimeSpan.FromSeconds(1), () =>
-                {
-                    Device.BeginInvokeOnMainThread(() =>
-                    {
-                        if (User.myInfo.ai_set_flag == true)
-                        {
-                            PrepareForNewGame();
+                PrepareForNewGame();
 
-                            playGame(User.myInfo.ai_rule, User.myInfo.ai_mode);
-                            isbegin = true;
-                            User.myInfo.ai_set_flag = false;
+                playGame(User.myInfo.ai_rule, User.myInfo.ai_mode);
+                isbegin = true;
+                User.myInfo.ai_set_flag = false;
 
-                            UpdateBattleInfo();
-                        }
+                UpdateBattleInfo();
 
-                        if (isbegin == true)
-                        {
-                            isbegin = playgameloop(User.myInfo.ai_mode);
-
-
-                            if (isbegin == false) //종료
-                            {
-                                board.ClearBoardState();
-                                User.myInfo.ai_set_flag = true;
-                                isbegin = false;
-
-                                blackLabel.Text = "";
-                                whiteLabel.Text = "";
-
-                            }
-                        }
-                    
-                    });
-
-                    return true;
-                });
+                isbegin = playgameloop(User.myInfo.ai_mode);
             });
 
             Navigation.PushPopupAsync(new AISelect(this));
@@ -434,6 +428,8 @@ namespace OMOK.Views
             aiy = board.y;
 
             board.UpdateStone(board.x, board.y, eTeam.Black);
+
+            CheckAILoop();
         }
 
         async void OnClickedDown(object sender, System.EventArgs e)
