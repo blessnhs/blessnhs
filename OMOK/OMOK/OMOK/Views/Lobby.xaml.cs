@@ -215,6 +215,7 @@ namespace OMOK.Views
         {
             await Navigation.PushModalAsync(new Setting());
         }
+
         async void OnSingleMatchClicked(object sender, System.EventArgs e)
         {
             await Navigation.PushModalAsync(new SingleMatch());

@@ -1,4 +1,5 @@
-﻿using Rg.Plugins.Popup.Extensions;
+﻿using OMOK.Views;
+using Rg.Plugins.Popup.Extensions;
 using Rg.Plugins.Popup.Pages;
 using System;
 using System.Collections.Generic;
@@ -18,9 +19,13 @@ namespace OMOK
         public int game_rule = 1;
         public int mode = 1;
 
-        public AISelect()
+        SingleMatch _parent;
+
+        public AISelect(SingleMatch parent)
         {
             InitializeComponent();
+
+            _parent = parent;
         }
 
         private void Gomoku_CheckedChanged(object sender, CheckedChangedEventArgs e)
@@ -50,11 +55,14 @@ namespace OMOK
 
         private async void CloseButtonClicked(object sender, EventArgs e)
         {
-            await Navigation.PopAllPopupAsync();
-
             User.myInfo.ai_mode = mode;
             User.myInfo.ai_rule = game_rule;
             User.myInfo.ai_set_flag = true;
+
+            await Navigation.PopAllPopupAsync();
+
+            MessagingCenter.Send<SingleMatch, string>(_parent, "Start", "Start");
+
 
         }
 

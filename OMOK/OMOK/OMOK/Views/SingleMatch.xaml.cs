@@ -76,7 +76,6 @@ namespace OMOK.Views
     public partial class SingleMatch : ContentPage
     {
         const string timeFormat = @"%m\:ss";
-        bool isGameInProgress;
 
         iAd_IterstitialView iIterstitia;
 
@@ -121,9 +120,9 @@ namespace OMOK.Views
 
           
             if(mode == 1)
-                User.Color = eTeam.Black;
-            else
                 User.Color = eTeam.White;
+            else
+                User.Color = eTeam.Black;
         }
 
         // 흑과 백의 둘 차례를 바꾼다. 
@@ -276,10 +275,7 @@ namespace OMOK.Views
             }
             else
             {
-                whiteLabel.Text = User.myInfo.NickName;
-                blackLabel.Text = "알파목"; 
-
-                if (User.OppInfo.PhotoPath != null)
+                 if (User.OppInfo.PhotoPath != null)
                     bottom1picture.Source = ImageSource.FromUri(new Uri(User.OppInfo.PhotoPath));
 
                 if (User.myInfo.PhotoPath != null)
@@ -294,45 +290,55 @@ namespace OMOK.Views
         {
             InitializeComponent();
 
-            Navigation.PushPopupAsync(new AISelect());
-
-            board.parent = this;
-
-            board.ClearBoardState();
-
-            iIterstitia = DependencyService.Get<iAd_IterstitialView>();
-  
-            Device.StartTimer(TimeSpan.FromSeconds(1), () =>
+            // Subscribe to a message (which the ViewModel has also subscribed to) to display an alert
+            MessagingCenter.Subscribe<SingleMatch, string>(this, "Start", async (sender, arg) =>
             {
-                if(User.myInfo.ai_set_flag == true)
+                Device.StartTimer(TimeSpan.FromSeconds(1), () =>
                 {
-                    playGame(User.myInfo.ai_rule, User.myInfo.ai_mode);
-                    isbegin = true;
-                    User.myInfo.ai_set_flag = false;
-
-                    UpdateBattleInfo();
-
-                }
-
-                if (isbegin == true)
-                {
-                    isbegin = playgameloop(User.myInfo.ai_mode);
-
-
-                    if (isbegin == false) //종료
+                    Device.BeginInvokeOnMainThread(() =>
                     {
-                        board.ClearBoardState();
-                        User.myInfo.ai_set_flag = true;
-                        isbegin = false;
-                    }
-                }
+                        if (User.myInfo.ai_set_flag == true)
+                        {
+                            PrepareForNewGame();
 
-                return true;
+                            playGame(User.myInfo.ai_rule, User.myInfo.ai_mode);
+                            isbegin = true;
+                            User.myInfo.ai_set_flag = false;
+
+                            UpdateBattleInfo();
+                        }
+
+                        if (isbegin == true)
+                        {
+                            isbegin = playgameloop(User.myInfo.ai_mode);
+
+
+                            if (isbegin == false) //종료
+                            {
+                                board.ClearBoardState();
+                                User.myInfo.ai_set_flag = true;
+                                isbegin = false;
+
+                                blackLabel.Text = "";
+                                whiteLabel.Text = "";
+
+                            }
+                        }
+                    
+                    });
+
+                    return true;
+                });
             });
 
-            PrepareForNewGame();
+            Navigation.PushPopupAsync(new AISelect(this));
+
+            board.parent = this; 
+
+            iIterstitia = DependencyService.Get<iAd_IterstitialView>();
 
         }
+
 
         public void RefreshAim()
         {
@@ -353,8 +359,6 @@ namespace OMOK.Views
         {
             board.NewGameInitialize();
 
-            //     timeLabel.Text = new TimeSpan().ToString(timeFormat);
-            isGameInProgress = false;
         }
 
         void OnMainContentViewSizeChanged(object sender, EventArgs args)
@@ -404,7 +408,7 @@ namespace OMOK.Views
 
         async void OnLeaveClicked(object sender, System.EventArgs e)
         {
-            Navigation.PopModalAsync();
+            var page = await Navigation.PopModalAsync();
         }
 
         async void OnClickedLeft(object sender, System.EventArgs e)
