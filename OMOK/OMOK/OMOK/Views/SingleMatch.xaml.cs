@@ -1,4 +1,5 @@
-﻿using OMOK.CustomAdMobView;
+﻿using OMOK.Control;
+using OMOK.CustomAdMobView;
 using OMOK.Popup;
 using Rg.Plugins.Popup.Extensions;
 using System;
@@ -305,11 +306,35 @@ namespace OMOK.Views
 
 
         public bool isbegin = false;
+
+        public void InitBoardGrid()
+        {
+            grid.BackgroundColor = Color.Black;
+            grid.ColumnSpacing = 2;
+            grid.RowSpacing = 2;
+
+            for (int i = 0; i < ConstValue.SIZE; i++)
+            {
+                grid.ColumnDefinitions.Add(new ColumnDefinition()
+                {
+                    Width = new GridLength(1, GridUnitType.Star)
+                });
+            }
+
+            for (int i = 0; i < ConstValue.SIZE; i++)
+            {
+                grid.RowDefinitions.Add(new RowDefinition()
+                {
+                    Height = new GridLength(1, GridUnitType.Star)
+                });
+            }
+        }
     
         public SingleMatch()
         {
             InitializeComponent();
 
+            InitBoardGrid();
             //// Subscribe to a message (which the ViewModel has also subscribed to) to display an alert
             //MessagingCenter.Subscribe<SingleMatch, string>(this, "Start", async (sender, arg) =>
             //{
@@ -349,7 +374,6 @@ namespace OMOK.Views
 
                             if (isbegin == false) //종료
                             {
-                                board.ClearBoardState();
                                 User.myInfo.ai_set_flag = true;
                                 isbegin = false;
 
@@ -367,22 +391,77 @@ namespace OMOK.Views
 
             Navigation.PushPopupAsync(new AISelect(this));
 
-            board.parent = this; 
-
             iIterstitia = DependencyService.Get<iAd_IterstitialView>();
 
         }
 
+        protected override void OnSizeAllocated(double width, double height)
+        {
+            base.OnSizeAllocated(width, height);
+
+            if (grid.ColumnDefinitions.Count == 0 || grid.RowDefinitions.Count == 0)
+                return;
+
+            var totalColSpacing = (grid.ColumnDefinitions.Count - 1) * grid.ColumnSpacing;
+            var totalRowSpacing = (grid.RowDefinitions.Count - 1) * grid.RowSpacing;
+
+            var cellWidth = (width - totalColSpacing) / grid.ColumnDefinitions.Count;
+
+            grid.HeightRequest = (cellWidth * grid.RowDefinitions.Count) + totalRowSpacing;
+        }
+
+        int aimx = ConstValue.SIZE / 2, aimy = ConstValue.SIZE / 2;
+        Button PrevButton = null;
+
+        public void UpdateAim(int addx = 0, int addy = 0)
+        {
+            var view = grid.Children[addy * ConstValue.SIZE + addx];
+
+            Button btn = view as Button;
+
+            btn.BorderWidth = 3;
+            btn.BorderColor = Color.AliceBlue;
+
+            if (PrevButton != null)
+            {
+                PrevButton.BorderWidth = 0;
+                PrevButton.BorderColor = Color.AliceBlue;
+            }
+
+            PrevButton = btn;
+        }
+
+        public void ClearBoardState()
+        {
+            grid.Children.Clear();
+            for (int y = 0; y < ConstValue.SIZE; y++)
+            {
+                for (int x = 0; x < ConstValue.SIZE; x++)
+                {
+                    Button btn = new Button()
+                    {
+                        BackgroundColor = Color.FromHex("#E89E35"),
+                    };
+
+                    grid.Children.Add(btn,x,y);
+
+
+                    btn.Clicked += async (sender, args) =>
+                    {
+                        UpdateAim(aimx, aimy);
+                    };
+                }
+            }
+
+            UpdateAim(aimx,aimy);
+
+        }
 
         public void RefreshAim()
         {
-            board.UpdateAim();
+            UpdateAim(aimx, aimy);
         }
 
-        public bool CheckValid(int _x, int _y)
-        {
-            return board.CheckValid(_x, _y);
-        }
 
         protected override void OnAppearing()
         {
@@ -393,13 +472,7 @@ namespace OMOK.Views
         {
             //   NetProcess.SendLeaveRoom(0);
         }
-
-        void PrepareForNewGame()
-        {
-            board.NewGameInitialize();
-
-        }
-
+          
         void OnMainContentViewSizeChanged(object sender, EventArgs args)
         {
             ContentView contentView = (ContentView)sender;
@@ -448,7 +521,7 @@ namespace OMOK.Views
    
         async void OnRetryClicked(object sender, System.EventArgs e)
         {
-            board.ClearBoardState();
+            ClearBoardState();
             User.myInfo.ai_set_flag = true;
             isbegin = true;
 
@@ -467,39 +540,45 @@ namespace OMOK.Views
 
         async void OnClickedLeft(object sender, System.EventArgs e)
         {
-            board.UpdateAim(-1, 0);
+            aimx -= 1;
+
+            UpdateAim(aimx, aimy);
         }
 
         async void OnClickedUp(object sender, System.EventArgs e)
         {
-            board.UpdateAim(0, -1);
+            aimy -= 1;
+            UpdateAim(aimx, aimy);
         }
 
         async void OnPutStone(object sender, System.EventArgs e)
         {
-            var status = board.GetTile(board.x, board.y).Status;
 
-            if (status == eTeam.White || status == eTeam.Awhite || status == eTeam.Black || status == eTeam.Ablack)
-            {
+            var view = grid.Children[aimy * ConstValue.SIZE + aimx];
+
+            Button btn = view as Button;
+
+            if (btn.BackgroundColor == Color.AntiqueWhite || btn.BackgroundColor == Color.FromHex("#E3189F"))
                 return;
-            }
+         
+            aix = aimx;
+            aiy = aimy;
 
-            aix = board.x;
-            aiy = board.y;
-
-            board.UpdateStone(board.x, board.y, eTeam.Black);
+            UpdateStone(aimx, aimy, eTeam.Black);
 
 //            CheckAILoop();
         }
 
         async void OnClickedDown(object sender, System.EventArgs e)
         {
-            board.UpdateAim(0, 1);
+            aimy += 1;
+            UpdateAim(aimx, aimy);
         }
 
         async void OnClickedRight(object sender, System.EventArgs e)
         {
-            board.UpdateAim(1, 0);
+            aimx += 1;
+            UpdateAim(aimx, aimy);
         }
 
         public bool UpdateTurnBackground(eTeam status)
@@ -525,17 +604,27 @@ namespace OMOK.Views
             return true;
         }
 
-        public void ClearBoard()
-        {
-            board.ClearBoardState();
-        }
 
         public int aix = 0, aiy = 0;
 
         public bool UpdateStone(int x, int y, eTeam status)
         {
-            board.UpdateStone(x, y, status);
-            board.UpdateAimSet(x, y);
+            var view = grid.Children[y * ConstValue.SIZE + x];
+
+            Button btn = view as Button;
+            
+            btn.CornerRadius = (int)(btn.Bounds.Width / 2);
+
+            if (status == eTeam.Black)
+            {
+                btn.BackgroundColor = Color.FromHex("#E3189F");
+            }
+            else
+            {
+                btn.BackgroundColor = Color.AntiqueWhite;
+            }
+
+             UpdateAim(aimx, aimy);
 
             return true;
         }

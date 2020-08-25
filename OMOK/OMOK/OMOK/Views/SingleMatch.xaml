@@ -1,12 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:local="clr-namespace:OMOK"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
              x:Class="OMOK.Views.SingleMatch">
-    <ContentView SizeChanged="OnMainContentViewSizeChanged">
+    <ContentView>
+        
         <Grid x:Name="mainGrid" ColumnSpacing="0" RowSpacing="0" >
             <Grid.RowDefinitions>
                 <RowDefinition Height="1*" />
-                <RowDefinition Height="5*" />
+                <RowDefinition Height="10*" />
                 <RowDefinition Height="1*" />
                 <RowDefinition Height="1*" />
                 <RowDefinition Height="1*" />
@@ -22,33 +23,17 @@
                 <ColumnDefinition Width="20*"/>
                 <ColumnDefinition Width="20*"/>
             </Grid.ColumnDefinitions>
+  
+            <Button Text="시작 하기"  Grid.Row="0" Grid.Column="3" Clicked="OnRetryClicked" BackgroundColor="#E6DEDE" Margin="0,0,0,0"/>
+            <Button x:Name="LeaveRoom" Text="나가기"  Grid.Row="0" Grid.Column="4" Clicked="OnLeaveClicked" BackgroundColor="#E6DEDE" Margin="0,0,0,0"/>
 
-            <StackLayout IsClippedToBounds="True" Grid.Row="0" Grid.Column="0"  Margin="10,10,0,0">
-                <local:AnimatedText Text="00" x:Name="timeLabel"/>
-            </StackLayout>
-
-            <ProgressBar x:Name="ProgressRoom" Progress="0.0" Grid.Row="0" Grid.Column="1" BackgroundColor="White"/>
-
-            <Button Text="시작 하기"  Grid.Row="0" Grid.Column="3" Clicked="OnRetryClicked" BackgroundColor="#E6DEDE"/>
-            <Button x:Name="LeaveRoom" Text="나가기"  Grid.Row="0" Grid.Column="4" Clicked="OnLeaveClicked" BackgroundColor="#E6DEDE"/>
-
-            <ContentView Grid.Row="1" Grid.Column="0"   Grid.ColumnSpan="5" SizeChanged="OnBoardContentViewSizeChanged"  BackgroundColor="White">
+            <StackLayout Grid.Row="1" Grid.Column="0"   Grid.ColumnSpan="5"  BackgroundColor="White" Padding="0,0,0,0">
                 <!--<Image x:Name="backgroundboard"></Image>-->
                 <!-- Single-cell Grid for Board and overlays. -->
-                <Grid ColumnSpacing="0" RowSpacing="0">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="*" />
-                    </Grid.RowDefinitions>
-
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
-
-                    <local:AIBoard x:Name="board" />
-
+                <Grid  x:Name="grid" ColumnSpacing="0" RowSpacing="0">
                 </Grid>
 
-            </ContentView>
+            </StackLayout>
 
             <Label Text="흑"  Grid.Row="6" Grid.Column="0" BackgroundColor="Black" VerticalOptions="CenterAndExpand" HorizontalTextAlignment="Center" FontSize="Large" TextColor="White" />
 
