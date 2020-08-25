@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using ToastMessage;
 using Xamarin.Forms;
@@ -146,7 +147,9 @@ namespace OMOK.Views
             {
                 var ret = pOmok[curStone].placement(x, y, curStone);
                 pOmok[curStone].getXY(ref x, ref y);
-                UpdateStone(x, y, curStone == 0 ? eTeam.Black : eTeam.White);
+
+                if(ret != 11) //삼삼
+                    UpdateStone(x, y, curStone == 0 ? eTeam.Black : eTeam.White);
  
                 return ret;
 
@@ -205,20 +208,11 @@ namespace OMOK.Views
         public bool CheckAILoop()
         {
             isbegin = playgameloop(User.myInfo.ai_mode);
+     
             isbegin = playgameloop(User.myInfo.ai_mode);
             if (isbegin == false) //종료
             {
-                board.ClearBoardState();
-                User.myInfo.ai_set_flag = true;
-                isbegin = true;
-
-                playGame(User.myInfo.ai_rule, User.myInfo.ai_mode);
-                isbegin = true;
-                User.myInfo.ai_set_flag = false;
-
-                UpdateBattleInfo();
-
-                isbegin = playgameloop(User.myInfo.ai_mode);
+               
             }
             return true;
         }
@@ -236,13 +230,18 @@ namespace OMOK.Views
                         Navigation.PushPopupAsync(new AIGameResult(curStone));
                         return false;
                     }
-                   
+
+                case /*SASA*/11:
+                    {
+
+                    }
+                    break;
                 //// 오목이 되었으면 승자를 알리고, 계속할건지 물어본다. 
                 //case FIVEMOK: return pDraw().endMsg(curStone);
                 //// 착수가 불가능한 곳은 그 이유를 알린다. 
                 //case OCCUPIED:
                 //case SAMSAM:
-                //case SASA:
+
                 //case SIXMOK:
                 //case NOTUNDO:
                 //    pDraw().errMsg(result);
@@ -311,18 +310,59 @@ namespace OMOK.Views
         {
             InitializeComponent();
 
+            //// Subscribe to a message (which the ViewModel has also subscribed to) to display an alert
+            //MessagingCenter.Subscribe<SingleMatch, string>(this, "Start", async (sender, arg) =>
+            //{
+            //    PrepareForNewGame();
+
+            //    playGame(User.myInfo.ai_rule, User.myInfo.ai_mode);
+            //    isbegin = true;
+            //    User.myInfo.ai_set_flag = false;
+
+            //    UpdateBattleInfo();
+
+            //    isbegin = playgameloop(User.myInfo.ai_mode);
+            //});
+
             // Subscribe to a message (which the ViewModel has also subscribed to) to display an alert
             MessagingCenter.Subscribe<SingleMatch, string>(this, "Start", async (sender, arg) =>
             {
-                PrepareForNewGame();
+                Device.StartTimer(TimeSpan.FromSeconds(1), () =>
+                {
+                    Device.BeginInvokeOnMainThread(() =>
+                    {
+                        //if (User.myInfo.ai_set_flag == true)
+                        //{
+                        //    PrepareForNewGame();
 
-                playGame(User.myInfo.ai_rule, User.myInfo.ai_mode);
-                isbegin = true;
-                User.myInfo.ai_set_flag = false;
+                        //    playGame(User.myInfo.ai_rule, User.myInfo.ai_mode);
+                        //    isbegin = true;
+                        //    User.myInfo.ai_set_flag = false;
 
-                UpdateBattleInfo();
+                        //    UpdateBattleInfo();
+                        //}
 
-                isbegin = playgameloop(User.myInfo.ai_mode);
+                        if (isbegin == true)
+                        {
+                            isbegin = playgameloop(User.myInfo.ai_mode);
+
+
+                            if (isbegin == false) //종료
+                            {
+                                board.ClearBoardState();
+                                User.myInfo.ai_set_flag = true;
+                                isbegin = false;
+
+                                blackLabel.Text = "";
+                                whiteLabel.Text = "";
+
+                            }
+                        }
+
+                    });
+
+                    return true;
+                });
             });
 
             Navigation.PushPopupAsync(new AISelect(this));
@@ -342,6 +382,11 @@ namespace OMOK.Views
         public bool CheckValid(int _x, int _y)
         {
             return board.CheckValid(_x, _y);
+        }
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
         }
 
         protected override void OnDisappearing()
@@ -400,6 +445,21 @@ namespace OMOK.Views
             iIterstitia.ShowAd();
         }
 
+   
+        async void OnRetryClicked(object sender, System.EventArgs e)
+        {
+            board.ClearBoardState();
+            User.myInfo.ai_set_flag = true;
+            isbegin = true;
+
+            playGame(User.myInfo.ai_rule, User.myInfo.ai_mode);
+            isbegin = true;
+            User.myInfo.ai_set_flag = false;
+
+            UpdateBattleInfo();
+
+            isbegin = playgameloop(User.myInfo.ai_mode);
+        }
         async void OnLeaveClicked(object sender, System.EventArgs e)
         {
             var page = await Navigation.PopModalAsync();
@@ -429,7 +489,7 @@ namespace OMOK.Views
 
             board.UpdateStone(board.x, board.y, eTeam.Black);
 
-            CheckAILoop();
+//            CheckAILoop();
         }
 
         async void OnClickedDown(object sender, System.EventArgs e)
