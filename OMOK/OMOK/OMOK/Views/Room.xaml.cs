@@ -11,8 +11,8 @@ using OMOK.CustomAdMobView;
 using OMOK.Views;
 using Rg.Plugins.Popup.Extensions;
 using ToastMessage;
-
-
+using OMOK.Control;
+using Xamarin.Essentials;
 
 namespace OMOK
 {
@@ -20,7 +20,6 @@ namespace OMOK
     public partial class Room : ContentPage
     {
         const string timeFormat = @"%m\:ss";
-        bool isGameInProgress;
 
         iAd_IterstitialView iIterstitia;
 
@@ -44,25 +43,33 @@ namespace OMOK
 
             Device.StartTimer(TimeSpan.FromSeconds(1), () =>
             {
-                if (User.IsMyTurn == true)
+                Device.BeginInvokeOnMainThread(() =>
                 {
-                    var current = ((DateTime.Now - User.MytrunStartTime).TotalSeconds * 0.033);
-                    ProgressRoom.Progress = current;
-                    timeLabel.Text = (DateTime.Now - User.MytrunStartTime).ToString(timeFormat);
-                    DependencyService.Get<Toast>().Show(timeLabel.Text);
-
-                    //   ToastNotification.TostMessage(timeLabel.Text);
-
-                    if ((DateTime.Now - User.MytrunStartTime).TotalSeconds > 30)
+                    try
                     {
-                        NetProcess.SendPassThroughMessage(-1, -1, User.Color);
+                        if (User.IsMyTurn == true)
+                        {
+                            var current = ((DateTime.Now - User.MytrunStartTime).TotalSeconds * 0.033);
+                            ProgressRoom.Progress = current;
+                            timeLabel.Text = (DateTime.Now - User.MytrunStartTime).ToString(timeFormat);
+                            DependencyService.Get<Toast>().Show(timeLabel.Text);
+
+                            //   ToastNotification.TostMessage(timeLabel.Text);
+
+                            if ((DateTime.Now - User.MytrunStartTime).TotalSeconds > 30)
+                            {
+                                NetProcess.SendPassThroughMessage(-1, -1, User.Color);
+                            }
+                        }
                     }
-                }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e.ToString());
+                    }
+                });
 
                 return true;
             });
-
-            PrepareForNewGame();
         }
 
         public void InitTimer()
@@ -106,14 +113,37 @@ namespace OMOK
             }
         }
 
-        public void RefreshAim()
+        int aimx = ConstValue.SIZE / 2, aimy = ConstValue.SIZE / 2;
+        BoardLayout prevLayout = null;
+
+        public void UpdateAim(int x, int y)
         {
-            board.UpdateAim();
+            var view = grid.Children[y * ConstValue.SIZE + x];
+
+            BoardLayout lo = view as BoardLayout;
+
+            lo.BackgroundColor = Color.FromHex("#CA7D10");
+
+            if (prevLayout != null)
+            {
+                prevLayout.BackgroundColor = Color.FromHex("#F7E48B");
+
+            }
+
+            prevLayout = lo;
         }
 
         public bool CheckValid(int _x, int _y)
         {
-            return board.CheckValid(_x, _y);
+            if (_x < 0 || _y < 0 || ConstValue.SIZE <= _x || ConstValue.SIZE <= _y)
+                return false;
+
+            return true;
+        }
+
+        public void RefreshAim()
+        {
+            UpdateAim(aimx, aimy);
         }
 
         protected override void OnDisappearing()
@@ -147,52 +177,54 @@ namespace OMOK
             }
         }
 
-        void PrepareForNewGame()
+        public void ClearBoardState()
         {
-            board.NewGameInitialize();
+            grid.Children.Clear();
+            for (int y = 0; y < ConstValue.SIZE; y++)
+            {
+                for (int x = 0; x < ConstValue.SIZE; x++)
+                {
+                    BoardLayout slo = new BoardLayout();
 
-       //     timeLabel.Text = new TimeSpan().ToString(timeFormat);
-            isGameInProgress = false;
-        }
+                    slo.Margin = new Thickness(1, 1, 1, 1);
+                    slo.Padding = new Thickness(1, 1, 1, 1);
+                    slo.Orientation = StackOrientation.Vertical;
+                    slo.BackgroundColor = Color.FromHex("#F7E48B");
+                    slo.IdField = x + ":" + y;
+                    slo.GestureRecognizers.Add(
+                          new TapGestureRecognizer()
+                          {
+                              Command = new Command(() => {
 
-        void OnMainContentViewSizeChanged(object sender, EventArgs args)
-        {
-            ContentView contentView = (ContentView)sender;
-            double width = contentView.Width;
-            double height = contentView.Height;
+                                  if (prevLayout != null)
+                                      prevLayout.BackgroundColor = Color.FromHex("#F7E48B");
 
-            bool isLandscape = width > height;
+                                  slo.BackgroundColor = Color.FloralWhite;
 
-           // if (isLandscape)
-           // {
-           //     mainGrid.RowDefinitions[0].Height = 0;
-           //     mainGrid.RowDefinitions[1].Height = new GridLength(1, GridUnitType.Star);
+                                  var words = slo.IdField.Split(':');
 
-           //     mainGrid.ColumnDefinitions[0].Width = new GridLength(1, GridUnitType.Star);
-           //     mainGrid.ColumnDefinitions[1].Width = new GridLength(1, GridUnitType.Star);
+                                  aimx = Convert.ToInt32(words[0]);
+                                  aimy = Convert.ToInt32(words[1]);
 
-           // }
-           // else // portrait
-           // {
-           //     mainGrid.RowDefinitions[0].Height = new GridLength(3, GridUnitType.Star);
-           //     mainGrid.RowDefinitions[1].Height = new GridLength(5, GridUnitType.Star);
 
-           //     mainGrid.ColumnDefinitions[0].Width = 0;
-           //     mainGrid.ColumnDefinitions[1].Width = new GridLength(1, GridUnitType.Star);
+                                  UpdateAim(aimx, aimy);
 
-           //}
-        }
+                                  prevLayout = slo;
 
-        // Maintains a square aspect ratio for the board.
-        void OnBoardContentViewSizeChanged(object sender, EventArgs args)
-        {
-            ContentView contentView = (ContentView)sender;
-            double width = contentView.Width;
-            double height = contentView.Height;
-            double dimension = Math.Min(width, height);
-            double horzPadding = (width - dimension) / 2;
-            double vertPadding = (height - dimension) / 2;
-         //   contentView.Padding = new Thickness(horzPadding, vertPadding);
+                              })
+                          });
+                    grid.Children.Add(slo, x, y);
+                }
+            }
+
+
+            aimx = ConstValue.SIZE / 2;
+            aimy = ConstValue.SIZE / 2;
+
+            prevLayout = null;
+
+            UpdateAim(aimx, aimy);
+
         }
 
         public void ShowLeaveAd()
@@ -200,7 +232,7 @@ namespace OMOK
             iIterstitia.ShowAd();
         }
 
-        async void OnLeaveClicked(object sender, System.EventArgs e)
+        void OnLeaveClicked(object sender, System.EventArgs e)
         {
             if (User.state == PlayerState.Room)
                 NetProcess.SendLeaveRoom(0);
@@ -211,43 +243,60 @@ namespace OMOK
             }
         }
 
-        async void OnClickedLeft(object sender, System.EventArgs e)
+        void OnClickedLeft(object sender, System.EventArgs e)
         {
-            board.UpdateAim(-1, 0);
+            if (0 > aimx)
+                return;
+
+            aimx -= 1;
+
+            UpdateAim(aimx, aimy);
         }
 
-        async void OnClickedUp(object sender, System.EventArgs e)
+        void OnClickedUp(object sender, System.EventArgs e)
         {
-            board.UpdateAim(0, -1);
+            if (0 > aimy)
+                return;
+
+            aimy -= 1;
+            UpdateAim(aimx, aimy);
         }
 
-        async void OnPutStone(object sender, System.EventArgs e)
+        void OnPutStone(object sender, System.EventArgs e)
         {
             if (User.IsMyTurn == false)
             {
                 return;
             }
 
-            var status = board.GetTile(board.x, board.y).Status;
+            var view = grid.Children[aimy * ConstValue.SIZE + aimx];
 
-            if (status == eTeam.White || status == eTeam.Awhite || status == eTeam.Black || status == eTeam.Ablack)
-            {
+            BoardLayout lo = view as BoardLayout;
+
+            int cnt = lo.Children.Count();
+
+            if (cnt > 0)
                 return;
-            }
 
-
-            board.prevsTATE = User.Color;
-            NetProcess.SendPassThroughMessage(board.x, board.y, User.Color);
+            NetProcess.SendPassThroughMessage(aimx, aimy, User.Color);
         }
 
-        async void OnClickedDown(object sender, System.EventArgs e)
+        void OnClickedDown(object sender, System.EventArgs e)
         {
-            board.UpdateAim(0, 1);
+            if (ConstValue.SIZE - 1 <= aimy)
+                return;
+
+            aimy += 1;
+            UpdateAim(aimx, aimy);
         }
 
-        async void OnClickedRight(object sender, System.EventArgs e)
+        void OnClickedRight(object sender, System.EventArgs e)
         {
-            board.UpdateAim(1, 0);
+            if (ConstValue.SIZE - 1 <= aimx)
+                return;
+
+            aimx += 1;
+            UpdateAim(aimx, aimy);
         }
 
         public bool UpdateTurnBackground(eTeam status)
@@ -275,16 +324,43 @@ namespace OMOK
 
         public void ClearBoard()
         {
-            board.ClearBoardState();
+            ClearBoardState();
         }
 
         public bool UpdateStone(int x, int y, eTeam status)
         {
             User.IsMyTurn = false;
 
-            board.UpdateStone(x, y, status);
+            var view = grid.Children[y * ConstValue.SIZE + x];
 
-            board.UpdateAimSet(x, y);
+            BoardLayout slo = view as BoardLayout;
+
+            if (status == eTeam.White)
+            {
+                slo.Children.Add(new GradientButton()
+                {
+                    StartColor = Color.White,
+                    EndColor = Color.FromHex("#E1D8D8"),
+                    StartTouchColor = Color.Blue,
+                    EndTouchColor = Color.Wheat,
+                    IdField = x + ":" + y,
+                    CornerRadius = (int)Bounds.Width / 2,
+                    HeightRequest = slo.Bounds.Height - 2
+                });
+            }
+            else
+            {
+                slo.Children.Add(new GradientButton()
+                {
+                    StartColor = Color.DarkBlue,
+                    EndColor = Color.Black,
+                    StartTouchColor = Color.Blue,
+                    EndTouchColor = Color.Wheat,
+                    IdField = x + ":" + y,
+                    CornerRadius = (int)Bounds.Width / 2,
+                    HeightRequest = slo.Bounds.Height - 2
+                });
+            }
 
             return true;
         }

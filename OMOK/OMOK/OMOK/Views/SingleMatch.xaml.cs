@@ -147,8 +147,6 @@ namespace OMOK.Views
 
         int CheckKey(int mode)
         {
-            int ch, dx, dy; ;
-
             if (isComputer)
             {
                 var ret = pOmok[curStone].placement(x, y, curStone);
@@ -160,16 +158,21 @@ namespace OMOK.Views
                 return ret;
 
             }
-            else if (aix != 0 || aiy != 0)
+            else if (aix != -1 && aiy != -1)
             {
                 x = aix;
                 y = aiy;
 
-                aix = aiy = 0;
-
-                UpdateStone(x, y, curStone == 0 ? eTeam.Black : eTeam.White);
+                aix = aiy = -1;
 
                 var ret = pOmok[curStone].placement(x, y, curStone);
+                if (ret != 11) //삼삼
+                    UpdateStone(x, y, curStone == 0 ? eTeam.Black : eTeam.White);
+                else
+                {
+
+                }
+
                 return ret;
             }
             else return 0;
@@ -336,10 +339,10 @@ namespace OMOK.Views
         public SingleMatch()
         {
             InitializeComponent();
+            ClearBoardState();
 
             InitBoardGrid();
 
-            ClearBoardState();
             MessagingCenter.Subscribe<SingleMatch, string>(this, "Start", async (sender, arg) =>
             {
                 Device.StartTimer(TimeSpan.FromSeconds(1), () =>
@@ -348,25 +351,28 @@ namespace OMOK.Views
                     {
                         try 
                         {
-                            if (User.myInfo.ai_set_flag == true)
+                            lock (this)
                             {
-                                PlayGame(User.myInfo.ai_rule, User.myInfo.ai_mode);
-                                isbegin = true;
-                                User.myInfo.ai_set_flag = false;
-
-                                UpdateBattleInfo();
-                            }
-
-                            if (isbegin == true)
-                            {
-                                isbegin = PlaygameLoop(User.myInfo.ai_mode);
-
-
-                                if (isbegin == false) //종료
+                                if (User.myInfo.ai_set_flag == true)
                                 {
-                                    User.myInfo.ai_set_flag = true;
-                                    isbegin = false;
+                                    PlayGame(User.myInfo.ai_rule, User.myInfo.ai_mode);
+                                    isbegin = true;
+                                    User.myInfo.ai_set_flag = false;
 
+                                    UpdateBattleInfo();
+                                }
+
+                                if (isbegin == true)
+                                {
+                                    isbegin = PlaygameLoop(User.myInfo.ai_mode);
+
+
+                                    if (isbegin == false) //종료
+                                    {
+                                        User.myInfo.ai_set_flag = true;
+                                        isbegin = false;
+
+                                    }
                                 }
                             }
                         }
@@ -544,7 +550,7 @@ namespace OMOK.Views
 
             UpdateBattleInfo();
 
-            isbegin = PlaygameLoop(User.myInfo.ai_mode);
+         //   isbegin = PlaygameLoop(User.myInfo.ai_mode);
         }
         async void OnLeaveClicked(object sender, System.EventArgs e)
         {
@@ -553,6 +559,9 @@ namespace OMOK.Views
 
         async void OnClickedLeft(object sender, System.EventArgs e)
         {
+            if (0 > aimx)
+                return;
+
             aimx -= 1;
 
             UpdateAim(aimx, aimy);
@@ -560,6 +569,9 @@ namespace OMOK.Views
 
         async void OnClickedUp(object sender, System.EventArgs e)
         {
+            if (0 > aimy)
+                return;
+
             aimy -= 1;
             UpdateAim(aimx, aimy);
         }
@@ -570,21 +582,33 @@ namespace OMOK.Views
             var view = grid.Children[aimy * ConstValue.SIZE + aimx];
 
             BoardLayout lo = view as BoardLayout;
-         
+
+
+            int cnt = lo.Children.Count();
+
+            if (cnt > 0)
+                return;
+
             aix = aimx;
             aiy = aimy;
 
-            UpdateStone(aimx, aimy, User.Color);
+       //     UpdateStone(aimx, aimy, User.Color);
         }
 
         async void OnClickedDown(object sender, System.EventArgs e)
         {
+            if (ConstValue.SIZE - 1 <= aimy)
+                return;
+
             aimy += 1;
             UpdateAim(aimx, aimy);
         }
 
         async void OnClickedRight(object sender, System.EventArgs e)
         {
+            if (ConstValue.SIZE - 1 <= aimx)
+                return;
+
             aimx += 1;
             UpdateAim(aimx, aimy);
         }
@@ -613,7 +637,7 @@ namespace OMOK.Views
         }
 
 
-        public int aix = 0, aiy = 0;
+        public int aix = -1, aiy = -1;
 
         public bool UpdateStone(int x, int y, eTeam status)
         {

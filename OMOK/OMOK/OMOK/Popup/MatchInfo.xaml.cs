@@ -20,6 +20,7 @@ namespace OMOK
         {
             InitializeComponent();
 
+
             AnimatedTextControl.IsRunning = true;
         }
         public void ClosePopup()

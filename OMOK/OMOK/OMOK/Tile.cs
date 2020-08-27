@@ -220,12 +220,6 @@ namespace OMOK
             {
                 board.UpdateAimSet(x, y);
             }
-            else
-            {
-                AIBoard board2 = parent as AIBoard;
-
-                board2.SingleMatchUpdate(x, y);
-            }
         }
 
         void OnDoubleTap (object sender, object args)
