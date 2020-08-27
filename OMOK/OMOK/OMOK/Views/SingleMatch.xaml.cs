@@ -15,6 +15,10 @@ using Xamarin.Forms.Xaml;
 
 namespace OMOK.Views
 {
+    class BoardLayout : StackLayout
+    {
+        public string IdField;
+    }
 
     public class COMOKFACTORY
     {
@@ -283,25 +287,25 @@ namespace OMOK.Views
 
         public void UpdateBattleInfo()
         {
-            if (User.Color == eTeam.Black)
-            {
-                blackLabel.Text = User.myInfo.NickName;
-                whiteLabel.Text = "알파목";
+            //if (User.Color == eTeam.Black)
+            //{
+            //    blackLabel.Text = User.myInfo.NickName;
+            //    whiteLabel.Text = "알파목";
 
-                if (User.myInfo.PhotoPath != null)
-                    bottom1picture.Source = ImageSource.FromUri(new Uri(User.myInfo.PhotoPath));
+            //    if (User.myInfo.PhotoPath != null)
+            //        bottom1picture.Source = ImageSource.FromUri(new Uri(User.myInfo.PhotoPath));
 
-                if (User.OppInfo.PhotoPath != null)
-                    bottom2picture.Source = ImageSource.FromUri(new Uri(User.OppInfo.PhotoPath));
-            }
-            else
-            {
-                 if (User.OppInfo.PhotoPath != null)
-                    bottom1picture.Source = ImageSource.FromUri(new Uri(User.OppInfo.PhotoPath));
+            //    if (User.OppInfo.PhotoPath != null)
+            //        bottom2picture.Source = ImageSource.FromUri(new Uri(User.OppInfo.PhotoPath));
+            //}
+            //else
+            //{
+            //     if (User.OppInfo.PhotoPath != null)
+            //        bottom1picture.Source = ImageSource.FromUri(new Uri(User.OppInfo.PhotoPath));
 
-                if (User.myInfo.PhotoPath != null)
-                    bottom2picture.Source = ImageSource.FromUri(new Uri(User.myInfo.PhotoPath));
-            }
+            //    if (User.myInfo.PhotoPath != null)
+            //        bottom2picture.Source = ImageSource.FromUri(new Uri(User.myInfo.PhotoPath));
+            //}
         }
 
 
@@ -310,9 +314,7 @@ namespace OMOK.Views
         public void InitBoardGrid()
         {
             grid.BackgroundColor = Color.Black;
-            grid.ColumnSpacing = 2;
-            grid.RowSpacing = 2;
-
+       
             for (int i = 0; i < ConstValue.SIZE; i++)
             {
                 grid.ColumnDefinitions.Add(new ColumnDefinition()
@@ -335,6 +337,8 @@ namespace OMOK.Views
             InitializeComponent();
 
             InitBoardGrid();
+
+            ClearBoardState();
             //// Subscribe to a message (which the ViewModel has also subscribed to) to display an alert
             //MessagingCenter.Subscribe<SingleMatch, string>(this, "Start", async (sender, arg) =>
             //{
@@ -377,9 +381,6 @@ namespace OMOK.Views
                                 User.myInfo.ai_set_flag = true;
                                 isbegin = false;
 
-                                blackLabel.Text = "";
-                                whiteLabel.Text = "";
-
                             }
                         }
 
@@ -411,24 +412,23 @@ namespace OMOK.Views
         }
 
         int aimx = ConstValue.SIZE / 2, aimy = ConstValue.SIZE / 2;
-        Button PrevButton = null;
-
-        public void UpdateAim(int addx = 0, int addy = 0)
+        BoardLayout prevLayout = null;
+  
+        public void UpdateAim(int x, int y)
         {
-            var view = grid.Children[addy * ConstValue.SIZE + addx];
+            var view = grid.Children[y * ConstValue.SIZE + x];
 
-            Button btn = view as Button;
+            BoardLayout lo = view as BoardLayout;
 
-            btn.BorderWidth = 3;
-            btn.BorderColor = Color.AliceBlue;
+            lo.BackgroundColor = Color.Aqua;
 
-            if (PrevButton != null)
+            if (prevLayout != null)
             {
-                PrevButton.BorderWidth = 0;
-                PrevButton.BorderColor = Color.AliceBlue;
+                prevLayout.BackgroundColor = Color.Yellow;
+
             }
 
-            PrevButton = btn;
+            prevLayout = lo;
         }
 
         public void ClearBoardState()
@@ -438,24 +438,64 @@ namespace OMOK.Views
             {
                 for (int x = 0; x < ConstValue.SIZE; x++)
                 {
-                    Button btn = new Button()
-                    {
-                        BackgroundColor = Color.FromHex("#E89E35"),
-                    };
+                    BoardLayout slo = new BoardLayout();
 
-                    grid.Children.Add(btn,x,y);
+                    slo.Margin = new Thickness(1, 1, 1, 1);
+                    slo.Padding = new Thickness(1, 1, 1, 1);
+                    slo.Orientation = StackOrientation.Vertical;
+                    slo.BackgroundColor = Color.Yellow;
+                    slo.IdField = x + ":" + y;
+                    slo.GestureRecognizers.Add(
+                          new TapGestureRecognizer()
+                          {
+                              Command = new Command(() => {
+
+                                  if (prevLayout != null)
+                                      prevLayout.BackgroundColor = Color.Yellow;
+
+                                  slo.BackgroundColor = Color.Aqua;
+
+                                  var words = slo.IdField.Split(':');
+
+                                  aimx = Convert.ToInt32(words[0]);
+                                  aimy = Convert.ToInt32(words[1]);
 
 
-                    btn.Clicked += async (sender, args) =>
-                    {
-                        UpdateAim(aimx, aimy);
-                    };
+                                  UpdateAim(aimx, aimy);
+
+                                  //slo.Children.Add(new GradientButton()
+                                  //{
+                                  //    StartColor = Color.Yellow,
+                                  //    EndColor = Color.DarkGreen,
+                                  //    StartTouchColor = Color.Blue,
+                                  //    EndTouchColor = Color.Wheat,
+                                  //    IdField = j + ":" + i,
+                                  //    CornerRadius = (int)Bounds.Width / 2,
+                                  //    HeightRequest = slo.Bounds.Height - 3
+                                  //}); ;
+
+                                  prevLayout = slo;
+
+                              })
+                          });
+                    grid.Children.Add(slo, x, y);
                 }
             }
+
+
+            aimx = ConstValue.SIZE / 2;
+            aimy = ConstValue.SIZE / 2;
+
+            prevLayout = null;
 
             UpdateAim(aimx,aimy);
 
         }
+
+        private void SetCurrentaimLayout(int x,int y)
+        {
+            var view = grid.Children[y * ConstValue.SIZE + x];
+      }
 
         public void RefreshAim()
         {
@@ -556,15 +596,15 @@ namespace OMOK.Views
 
             var view = grid.Children[aimy * ConstValue.SIZE + aimx];
 
-            Button btn = view as Button;
+            BoardLayout lo = view as BoardLayout;
 
-            if (btn.BackgroundColor == Color.AntiqueWhite || btn.BackgroundColor == Color.FromHex("#E3189F"))
-                return;
+            //if (lo.Children.Count() > 1)
+            //    return;
          
             aix = aimx;
             aiy = aimy;
 
-            UpdateStone(aimx, aimy, eTeam.Black);
+            UpdateStone(aimx, aimy, User.Color);
 
 //            CheckAILoop();
         }
@@ -583,23 +623,23 @@ namespace OMOK.Views
 
         public bool UpdateTurnBackground(eTeam status)
         {
-            if (status == eTeam.Black)
-            {
+            //if (status == eTeam.Black)
+            //{
 
-                blackLabel.BackgroundColor = Color.YellowGreen;
-                whiteLabel.BackgroundColor = Color.White;
+            //    blackLabel.BackgroundColor = Color.YellowGreen;
+            //    whiteLabel.BackgroundColor = Color.White;
 
-                bottom1picture.BackgroundColor = Color.YellowGreen;
-                bottom2picture.BackgroundColor = Color.White;
-            }
-            else
-            {
-                blackLabel.BackgroundColor = Color.White;
-                whiteLabel.BackgroundColor = Color.YellowGreen;
+            //    bottom1picture.BackgroundColor = Color.YellowGreen;
+            //    bottom2picture.BackgroundColor = Color.White;
+            //}
+            //else
+            //{
+            //    blackLabel.BackgroundColor = Color.White;
+            //    whiteLabel.BackgroundColor = Color.YellowGreen;
 
-                bottom2picture.BackgroundColor = Color.YellowGreen;
-                bottom1picture.BackgroundColor = Color.White;
-            }
+            //    bottom2picture.BackgroundColor = Color.YellowGreen;
+            //    bottom1picture.BackgroundColor = Color.White;
+            //}
 
             return true;
         }
@@ -611,20 +651,43 @@ namespace OMOK.Views
         {
             var view = grid.Children[y * ConstValue.SIZE + x];
 
-            Button btn = view as Button;
-            
-            btn.CornerRadius = (int)(btn.Bounds.Width / 2);
+            BoardLayout slo = view as BoardLayout;
 
-            if (status == eTeam.Black)
+
+            if(status == eTeam.White)
             {
-                btn.BackgroundColor = Color.FromHex("#E3189F");
+                slo.Children.Add(new GradientButton()
+                {
+                    StartColor = Color.White,
+                    EndColor = Color.Silver,
+                    StartTouchColor = Color.Blue,
+                    EndTouchColor = Color.Wheat,
+                    IdField = x + ":" + y,
+                    CornerRadius = (int)Bounds.Width / 2,
+                    HeightRequest = slo.Bounds.Height - 2
+                });
             }
             else
             {
-                btn.BackgroundColor = Color.AntiqueWhite;
+                slo.Children.Add(new GradientButton()
+                {
+                    StartColor = Color.Blue,
+                    EndColor = Color.Black,
+                    StartTouchColor = Color.Blue,
+                    EndTouchColor = Color.Wheat,
+                    IdField = x + ":" + y,
+                    CornerRadius = (int)Bounds.Width / 2,
+                    HeightRequest = slo.Bounds.Height - 2
+                });
             }
 
-             UpdateAim(aimx, aimy);
+          
+
+            aimx = x;
+            aimy = y;
+
+
+            UpdateAim(aimx, aimy);
 
             return true;
         }
