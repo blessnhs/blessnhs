@@ -152,7 +152,7 @@ namespace OMOK.Views
                 var ret = pOmok[curStone].placement(x, y, curStone);
                 pOmok[curStone].getXY(ref x, ref y);
 
-                if(ret != 11) //삼삼
+                if(ret != 11) //삼삼   //내부 체크는 1,1부터 시작 하나 그래픽 ui는 0,0부터 시작
                     UpdateStone(x, y, curStone == 0 ? eTeam.Black : eTeam.White);
  
                 return ret;
@@ -160,8 +160,9 @@ namespace OMOK.Views
             }
             else if (aix != -1 && aiy != -1)
             {
-                x = aix;
-                y = aiy;
+                //내부 좌표는 1,1 시작 ui이는 0,0 시작이라 변환
+                x = aix + 1;
+                y = aiy + 1;
 
                 aix = aiy = -1;
 
@@ -578,11 +579,9 @@ namespace OMOK.Views
 
         async void OnPutStone(object sender, System.EventArgs e)
         {
-
             var view = grid.Children[aimy * ConstValue.SIZE + aimx];
 
             BoardLayout lo = view as BoardLayout;
-
 
             int cnt = lo.Children.Count();
 
@@ -591,9 +590,7 @@ namespace OMOK.Views
 
             aix = aimx;
             aiy = aimy;
-
-       //     UpdateStone(aimx, aimy, User.Color);
-        }
+       }
 
         async void OnClickedDown(object sender, System.EventArgs e)
         {
@@ -641,6 +638,11 @@ namespace OMOK.Views
 
         public bool UpdateStone(int x, int y, eTeam status)
         {
+            //내부 체크는 1,1부터 시작 하나 그래픽 ui는 0,0부터 시작
+
+            x -= 1;
+            y -= 1;
+
             var view = grid.Children[y * ConstValue.SIZE + x];
 
             BoardLayout slo = view as BoardLayout;
@@ -651,19 +653,19 @@ namespace OMOK.Views
                 slo.Children.Add(new GradientButton()
                 {
                     StartColor = Color.White,
-                    EndColor = Color.FromHex("#E1D8D8"),
+                    EndColor = Color.Red,
                     StartTouchColor = Color.Blue,
                     EndTouchColor = Color.Wheat,
                     IdField = x + ":" + y,
                     CornerRadius = (int)Bounds.Width / 2,
                     HeightRequest = slo.Bounds.Height - 2
-                });
+                }); ;
             }
             else
             {
                 slo.Children.Add(new GradientButton()
                 {
-                    StartColor = Color.White,
+                    StartColor = Color.Blue,
                     EndColor = Color.Black,
                     StartTouchColor = Color.Blue,
                     EndTouchColor = Color.Wheat,

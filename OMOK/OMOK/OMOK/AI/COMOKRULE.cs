@@ -7,7 +7,7 @@ namespace OMOK
     public static class ConstValue
     {
         public static int SIZE = 15;
-        public static int CENTER = ((SIZE) / 2);
+        public static int CENTER = ((SIZE + 2) / 2);
         public static int FINISH = -1;
         public static int TIED = 2;
     }

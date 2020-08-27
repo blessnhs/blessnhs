@@ -19,14 +19,14 @@ namespace OMOK
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class Room : ContentPage
     {
-        const string timeFormat = @"%m\:ss";
-
+ 
         iAd_IterstitialView iIterstitia;
-
 
         public Room()
         {
             InitializeComponent();
+
+            ClearBoardState();
 
             Button PrevBtn = new Button { Text = "◁", HorizontalOptions = LayoutOptions.Start };
             PrevBtn.Clicked += (sender, e) => {
@@ -36,8 +36,7 @@ namespace OMOK
             ProgressRoom.Progress = 0.0f;
 
             timeLabel.IsEnabled = true;
-            timeLabel.IsRunning = true;
-            timeLabel.Text = (DateTime.Now - User.MytrunStartTime).ToString(timeFormat);
+            timeLabel.Text = "00";
 
             iIterstitia = DependencyService.Get<iAd_IterstitialView>();
 
@@ -51,7 +50,9 @@ namespace OMOK
                         {
                             var current = ((DateTime.Now - User.MytrunStartTime).TotalSeconds * 0.033);
                             ProgressRoom.Progress = current;
-                            timeLabel.Text = (DateTime.Now - User.MytrunStartTime).ToString(timeFormat);
+
+                            int remainseconds = 30 - (int)((DateTime.Now - User.MytrunStartTime).TotalSeconds);
+                            timeLabel.Text = remainseconds.ToString();
                             DependencyService.Get<Toast>().Show(timeLabel.Text);
 
                             //   ToastNotification.TostMessage(timeLabel.Text);
@@ -77,7 +78,7 @@ namespace OMOK
             User.MytrunStartTime = DateTime.Now;
             ProgressRoom.Progress = 0.0f;
 
-            timeLabel.Text = (DateTime.Now - User.MytrunStartTime).ToString(timeFormat);
+            timeLabel.Text = "00";
 
         }
 

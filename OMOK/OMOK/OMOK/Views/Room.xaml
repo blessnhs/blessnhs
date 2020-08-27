@@ -26,11 +26,11 @@
                 <ColumnDefinition Width="20*"/>
             </Grid.ColumnDefinitions>
 
-            <StackLayout IsClippedToBounds="True" Grid.Row="0" Grid.Column="0"  Margin="10,10,0,0">
-                <local:AnimatedText Text="00" x:Name="timeLabel"/>
+            <StackLayout IsClippedToBounds="True" Grid.Row="0" Grid.Column="0"  Margin="20,10,1,1">
+                <Label Text="00" x:Name="timeLabel" FontSize="Large"/>
             </StackLayout>
             
-            <ProgressBar x:Name="ProgressRoom" Progress="0.0" Grid.Row="0" Grid.Column="1" BackgroundColor="White"/>
+            <ProgressBar x:Name="ProgressRoom" Progress="0.0" Grid.Row="0" Grid.Column="1" />
 
             <Button x:Name="LeaveRoom" Text="나가기"  Grid.Row="0" Grid.Column="4" Clicked="OnLeaveClicked" BackgroundColor="#E6DEDE"/>
 
