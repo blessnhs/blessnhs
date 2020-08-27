@@ -4,6 +4,7 @@ using OMOK.Popup;
 using Rg.Plugins.Popup.Extensions;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -106,7 +107,7 @@ namespace OMOK.Views
         COMOK []pOmok = new COMOK[2];
 
 
-        void initGame(int mode)
+        void InitGame(int mode)
         {
             x = y = ConstValue.CENTER;
             passTriggerOn = false;
@@ -132,7 +133,7 @@ namespace OMOK.Views
         }
 
         // 흑과 백의 둘 차례를 바꾼다. 
-        void changeStone(int mode)
+        void ChangeStone(int mode)
         {
             // 흑백 둘이니 더해서 2로 나누면 교환이 된다. 
             if (mode == 4) curStone = (int)V1.BLACK_STONE;
@@ -144,7 +145,7 @@ namespace OMOK.Views
             if (passTriggerOn) passCount++;
         }
 
-        int checkKey(int mode)
+        int CheckKey(int mode)
         {
             int ch, dx, dy; ;
 
@@ -212,9 +213,9 @@ namespace OMOK.Views
 
         public bool CheckAILoop()
         {
-            isbegin = playgameloop(User.myInfo.ai_mode);
+            isbegin = PlaygameLoop(User.myInfo.ai_mode);
      
-            isbegin = playgameloop(User.myInfo.ai_mode);
+            isbegin = PlaygameLoop(User.myInfo.ai_mode);
             if (isbegin == false) //종료
             {
                
@@ -222,10 +223,10 @@ namespace OMOK.Views
             return true;
         }
 
-        public bool playgameloop(int mode)
+        public bool PlaygameLoop(int mode)
         {
 
-            int result = checkKey(mode);
+            int result = CheckKey(mode);
             if (isComputer) pOmok[curStone].getXY(ref x, ref y);
             switch (result)
             {
@@ -263,11 +264,11 @@ namespace OMOK.Views
                         if (mode == 1 || mode == 2)
                             stoneState[(curStone + 1) % 2]++;
 
-                        changeStone(mode);
+                        ChangeStone(mode);
                     }
                     break;
                 case 16:    //CHANGE
-                    changeStone(mode);
+                    ChangeStone(mode);
                     break;
                 default: break;
             }
@@ -276,36 +277,36 @@ namespace OMOK.Views
         }
 
         // main함수에서 이 함수를 호출하면 게임이 시작된다. 
-        void playGame(int type, int mode)
+        void PlayGame(int type, int mode)
         {
             pOmok[0] = factory.GetInstance(type * 10 + 0, mode);
             pOmok[1] = factory.GetInstance(type * 10 + 1, mode);
 
 
-            initGame(mode);
+            InitGame(mode);
         }
 
         public void UpdateBattleInfo()
         {
-            //if (User.Color == eTeam.Black)
-            //{
-            //    blackLabel.Text = User.myInfo.NickName;
-            //    whiteLabel.Text = "알파목";
+           if (User.Color == eTeam.Black)
+           {
+               blackLabel.Text = User.myInfo.NickName;
+               whiteLabel.Text = "알파목";
 
-            //    if (User.myInfo.PhotoPath != null)
-            //        bottom1picture.Source = ImageSource.FromUri(new Uri(User.myInfo.PhotoPath));
+               if (User.myInfo.PhotoPath != null)
+                   bottom1picture.Source = ImageSource.FromUri(new Uri(User.myInfo.PhotoPath));
 
-            //    if (User.OppInfo.PhotoPath != null)
-            //        bottom2picture.Source = ImageSource.FromUri(new Uri(User.OppInfo.PhotoPath));
-            //}
-            //else
-            //{
-            //     if (User.OppInfo.PhotoPath != null)
-            //        bottom1picture.Source = ImageSource.FromUri(new Uri(User.OppInfo.PhotoPath));
+               if (User.OppInfo.PhotoPath != null)
+                   bottom2picture.Source = ImageSource.FromUri(new Uri(User.OppInfo.PhotoPath));
+           }
+           else
+           {
+                if (User.OppInfo.PhotoPath != null)
+                   bottom1picture.Source = ImageSource.FromUri(new Uri(User.OppInfo.PhotoPath));
 
-            //    if (User.myInfo.PhotoPath != null)
-            //        bottom2picture.Source = ImageSource.FromUri(new Uri(User.myInfo.PhotoPath));
-            //}
+               if (User.myInfo.PhotoPath != null)
+                   bottom2picture.Source = ImageSource.FromUri(new Uri(User.myInfo.PhotoPath));
+           }
         }
 
 
@@ -331,7 +332,7 @@ namespace OMOK.Views
                 });
             }
         }
-    
+
         public SingleMatch()
         {
             InitializeComponent();
@@ -339,51 +340,40 @@ namespace OMOK.Views
             InitBoardGrid();
 
             ClearBoardState();
-            //// Subscribe to a message (which the ViewModel has also subscribed to) to display an alert
-            //MessagingCenter.Subscribe<SingleMatch, string>(this, "Start", async (sender, arg) =>
-            //{
-            //    PrepareForNewGame();
-
-            //    playGame(User.myInfo.ai_rule, User.myInfo.ai_mode);
-            //    isbegin = true;
-            //    User.myInfo.ai_set_flag = false;
-
-            //    UpdateBattleInfo();
-
-            //    isbegin = playgameloop(User.myInfo.ai_mode);
-            //});
-
-            // Subscribe to a message (which the ViewModel has also subscribed to) to display an alert
             MessagingCenter.Subscribe<SingleMatch, string>(this, "Start", async (sender, arg) =>
             {
                 Device.StartTimer(TimeSpan.FromSeconds(1), () =>
                 {
                     Device.BeginInvokeOnMainThread(() =>
                     {
-                        //if (User.myInfo.ai_set_flag == true)
-                        //{
-                        //    PrepareForNewGame();
-
-                        //    playGame(User.myInfo.ai_rule, User.myInfo.ai_mode);
-                        //    isbegin = true;
-                        //    User.myInfo.ai_set_flag = false;
-
-                        //    UpdateBattleInfo();
-                        //}
-
-                        if (isbegin == true)
+                        try 
                         {
-                            isbegin = playgameloop(User.myInfo.ai_mode);
-
-
-                            if (isbegin == false) //종료
+                            if (User.myInfo.ai_set_flag == true)
                             {
-                                User.myInfo.ai_set_flag = true;
-                                isbegin = false;
+                                PlayGame(User.myInfo.ai_rule, User.myInfo.ai_mode);
+                                isbegin = true;
+                                User.myInfo.ai_set_flag = false;
 
+                                UpdateBattleInfo();
+                            }
+
+                            if (isbegin == true)
+                            {
+                                isbegin = PlaygameLoop(User.myInfo.ai_mode);
+
+
+                                if (isbegin == false) //종료
+                                {
+                                    User.myInfo.ai_set_flag = true;
+                                    isbegin = false;
+
+                                }
                             }
                         }
-
+                        catch(Exception e)
+                        {
+                            Console.WriteLine(e.ToString());
+                        }
                     });
 
                     return true;
@@ -463,17 +453,6 @@ namespace OMOK.Views
 
                                   UpdateAim(aimx, aimy);
 
-                                  //slo.Children.Add(new GradientButton()
-                                  //{
-                                  //    StartColor = Color.Yellow,
-                                  //    EndColor = Color.DarkGreen,
-                                  //    StartTouchColor = Color.Blue,
-                                  //    EndTouchColor = Color.Wheat,
-                                  //    IdField = j + ":" + i,
-                                  //    CornerRadius = (int)Bounds.Width / 2,
-                                  //    HeightRequest = slo.Bounds.Height - 3
-                                  //}); ;
-
                                   prevLayout = slo;
 
                               })
@@ -491,12 +470,6 @@ namespace OMOK.Views
             UpdateAim(aimx,aimy);
 
         }
-
-        private void SetCurrentaimLayout(int x,int y)
-        {
-            var view = grid.Children[y * ConstValue.SIZE + x];
-      }
-
         public void RefreshAim()
         {
             UpdateAim(aimx, aimy);
@@ -510,7 +483,7 @@ namespace OMOK.Views
 
         protected override void OnDisappearing()
         {
-            //   NetProcess.SendLeaveRoom(0);
+           
         }
           
         void OnMainContentViewSizeChanged(object sender, EventArgs args)
@@ -565,13 +538,13 @@ namespace OMOK.Views
             User.myInfo.ai_set_flag = true;
             isbegin = true;
 
-            playGame(User.myInfo.ai_rule, User.myInfo.ai_mode);
+            PlayGame(User.myInfo.ai_rule, User.myInfo.ai_mode);
             isbegin = true;
             User.myInfo.ai_set_flag = false;
 
             UpdateBattleInfo();
 
-            isbegin = playgameloop(User.myInfo.ai_mode);
+            isbegin = PlaygameLoop(User.myInfo.ai_mode);
         }
         async void OnLeaveClicked(object sender, System.EventArgs e)
         {
@@ -597,16 +570,11 @@ namespace OMOK.Views
             var view = grid.Children[aimy * ConstValue.SIZE + aimx];
 
             BoardLayout lo = view as BoardLayout;
-
-            //if (lo.Children.Count() > 1)
-            //    return;
          
             aix = aimx;
             aiy = aimy;
 
             UpdateStone(aimx, aimy, User.Color);
-
-//            CheckAILoop();
         }
 
         async void OnClickedDown(object sender, System.EventArgs e)
@@ -623,23 +591,23 @@ namespace OMOK.Views
 
         public bool UpdateTurnBackground(eTeam status)
         {
-            //if (status == eTeam.Black)
-            //{
+            if (status == eTeam.Black)
+            {
 
-            //    blackLabel.BackgroundColor = Color.YellowGreen;
-            //    whiteLabel.BackgroundColor = Color.White;
+                blackLabel.BackgroundColor = Color.YellowGreen;
+                whiteLabel.BackgroundColor = Color.White;
 
-            //    bottom1picture.BackgroundColor = Color.YellowGreen;
-            //    bottom2picture.BackgroundColor = Color.White;
-            //}
-            //else
-            //{
-            //    blackLabel.BackgroundColor = Color.White;
-            //    whiteLabel.BackgroundColor = Color.YellowGreen;
+                bottom1picture.BackgroundColor = Color.YellowGreen;
+                bottom2picture.BackgroundColor = Color.White;
+            }
+            else
+            {
+                blackLabel.BackgroundColor = Color.White;
+                whiteLabel.BackgroundColor = Color.YellowGreen;
 
-            //    bottom2picture.BackgroundColor = Color.YellowGreen;
-            //    bottom1picture.BackgroundColor = Color.White;
-            //}
+                bottom2picture.BackgroundColor = Color.YellowGreen;
+                bottom1picture.BackgroundColor = Color.White;
+            }
 
             return true;
         }
