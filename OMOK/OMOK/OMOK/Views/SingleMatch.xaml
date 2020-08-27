@@ -19,7 +19,9 @@
             <ColumnDefinition Width="20*"/>
         </Grid.ColumnDefinitions>
 
-        <Button Text="다시 하기"   Grid.Row="0" Grid.Column="0" Clicked="OnRetryClicked" BackgroundColor="#E6DEDE" Margin="0,0,0,0" ContentLayout="Top"/>
+        <Button Text="시작 하기"   Grid.Row="0" Grid.Column="0" Clicked="OnRetryClicked" BackgroundColor="#E6DEDE" Margin="0,0,0,0" ContentLayout="Top"/>
+        <Button Text="룰 설정"   Grid.Row="0" Grid.Column="1" Clicked="OnSettingClicked" BackgroundColor="#E6DEDE" Margin="0,0,0,0" ContentLayout="Top"/>
+        
         <Button x:Name="LeaveRoom" Text="나가기"  Grid.Row="0" Grid.Column="4" Clicked="OnLeaveClicked" BackgroundColor="#E6DEDE" Margin="0,0,0,0" ContentLayout="Top,2"/>
 
         <Grid x:Name="grid" RowSpacing="1" ColumnSpacing="1" BackgroundColor="#43343E" Padding="10,20,10,20"  Grid.Row="1" Grid.Column="0"   Grid.ColumnSpan="5" >

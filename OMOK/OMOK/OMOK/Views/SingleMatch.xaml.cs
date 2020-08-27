@@ -387,7 +387,6 @@ namespace OMOK.Views
                 });
             });
 
-            Navigation.PushPopupAsync(new AISelect(this));
 
             iIterstitia = DependencyService.Get<iAd_IterstitialView>();
 
@@ -417,7 +416,7 @@ namespace OMOK.Views
 
             BoardLayout lo = view as BoardLayout;
 
-            lo.BackgroundColor = Color.FromHex("#CA7D10");
+            lo.BackgroundColor = Color.Red;
 
             if (prevLayout != null)
             {
@@ -538,8 +537,13 @@ namespace OMOK.Views
             iIterstitia.ShowAd();
         }
 
-   
-        async void OnRetryClicked(object sender, System.EventArgs e)
+        
+        void OnSettingClicked(object sender, System.EventArgs e)
+        {
+            Navigation.PushPopupAsync(new AISelect(this));
+        }
+
+        void OnRetryClicked(object sender, System.EventArgs e)
         {
             ClearBoardState();
             User.myInfo.ai_set_flag = true;
@@ -551,8 +555,7 @@ namespace OMOK.Views
 
             UpdateBattleInfo();
 
-         //   isbegin = PlaygameLoop(User.myInfo.ai_mode);
-        }
+         }
         async void OnLeaveClicked(object sender, System.EventArgs e)
         {
             var page = await Navigation.PopModalAsync();

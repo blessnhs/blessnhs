@@ -65,7 +65,7 @@ namespace OMOK.Views
         {
             var level = Helper.LevelConverter(User.myInfo.level);
             var Record = User.myInfo.win + "승" + User.myInfo.lose + "패";
-            NameButton.Text = level + User.myInfo.NickName + "\n" + Record;
+            NameButton.Text = level + " " + User.myInfo.NickName + "\n" + Record;
         }
 
         public void CreateRankPage(RepeatedField<global::Rank> list)
@@ -216,9 +216,11 @@ namespace OMOK.Views
             await Navigation.PushModalAsync(new Setting());
         }
 
+        private SingleMatch _singleMatch = new SingleMatch();
+
         async void OnSingleMatchClicked(object sender, System.EventArgs e)
         {
-            await Navigation.PushModalAsync(new SingleMatch());
+            await Navigation.PushModalAsync(_singleMatch);
        }
         
         async void OnLoginClicked(object sender, System.EventArgs e)
