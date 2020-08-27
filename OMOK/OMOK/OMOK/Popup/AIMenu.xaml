@@ -12,9 +12,9 @@
     <Frame  VerticalOptions="Center"  HorizontalOptions="Center" >
         <StackLayout Padding="20, 20, 20, 20">
 
-            <Label Text="기본 룰 설정" FontSize="Large" Padding="0,0,0,30" />
+            <Label Text="기본 룰 설정" FontSize="Large" Padding="0,0,0,0"  TextColor="Black"/>
 
-            <Frame OutlineColor="Black">
+            <Frame OutlineColor="Black" Padding="0,0,10,10">
                 <StackLayout VerticalOptions="Center" HorizontalOptions="Start">
                     <RadioButton Text="고 모 쿠"  CheckedChanged="Gomoku_CheckedChanged" GroupName="rule" IsChecked="True"/>
                     <RadioButton Text="일    반" CheckedChanged="Normal_CheckedChanged" GroupName="rule"/>
@@ -22,9 +22,9 @@
                 </StackLayout>
             </Frame>
 
-            <Frame OutlineColor="Black" >
+            <Frame OutlineColor="Black" Padding="0,0,10,15">
                 <StackLayout VerticalOptions="Center" HorizontalOptions="Center">
-                    <RadioButton Text="흑 AI   vs 백 유저" CheckedChanged="mode1_CheckedChanged" GroupName="mode"/>
+                    <RadioButton Text="흑 AI vs 백 유저" CheckedChanged="mode1_CheckedChanged" GroupName="mode"/>
                     <RadioButton Text="흑 유저 vs 백 AI" CheckedChanged="mode2_CheckedChanged" GroupName="mode" IsChecked="True"/>
                 </StackLayout>
             </Frame>

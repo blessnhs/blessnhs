@@ -14,6 +14,7 @@
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="10*" />
+                    
                 </Grid.ColumnDefinitions>
             </Grid>
         </StackLayout>

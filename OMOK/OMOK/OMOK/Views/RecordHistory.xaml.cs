@@ -23,10 +23,6 @@ namespace OMOK.Views
             };
             main_grid.Children.Add(PrevBtn, 0, 0);
 
-            var titletext = "히스토리";
-            var titlelabelText = new Label { Text = titletext, TextColor = Xamarin.Forms.Color.FromRgb(0, 0, 0), HorizontalTextAlignment = TextAlignment.Center, FontSize = 25 };
-            main_grid.Children.Add(titlelabelText, 1, 0);
-
             var list = SQLite.ReadResultLog();
 
             int pos = 1;

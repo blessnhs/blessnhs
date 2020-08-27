@@ -410,11 +410,11 @@ namespace OMOK.Views
 
             BoardLayout lo = view as BoardLayout;
 
-            lo.BackgroundColor = Color.Aqua;
+            lo.BackgroundColor = Color.FromHex("#CA7D10");
 
             if (prevLayout != null)
             {
-                prevLayout.BackgroundColor = Color.Yellow;
+                prevLayout.BackgroundColor = Color.FromHex("#F7E48B");
 
             }
 
@@ -433,7 +433,7 @@ namespace OMOK.Views
                     slo.Margin = new Thickness(1, 1, 1, 1);
                     slo.Padding = new Thickness(1, 1, 1, 1);
                     slo.Orientation = StackOrientation.Vertical;
-                    slo.BackgroundColor = Color.Yellow;
+                    slo.BackgroundColor = Color.FromHex("#F7E48B");
                     slo.IdField = x + ":" + y;
                     slo.GestureRecognizers.Add(
                           new TapGestureRecognizer()
@@ -441,9 +441,9 @@ namespace OMOK.Views
                               Command = new Command(() => {
 
                                   if (prevLayout != null)
-                                      prevLayout.BackgroundColor = Color.Yellow;
+                                      prevLayout.BackgroundColor = Color.FromHex("#F7E48B");
 
-                                  slo.BackgroundColor = Color.Aqua;
+                                  slo.BackgroundColor = Color.FloralWhite;
 
                                   var words = slo.IdField.Split(':');
 
@@ -627,7 +627,7 @@ namespace OMOK.Views
                 slo.Children.Add(new GradientButton()
                 {
                     StartColor = Color.White,
-                    EndColor = Color.Silver,
+                    EndColor = Color.FromHex("#E1D8D8"),
                     StartTouchColor = Color.Blue,
                     EndTouchColor = Color.Wheat,
                     IdField = x + ":" + y,
@@ -639,7 +639,7 @@ namespace OMOK.Views
             {
                 slo.Children.Add(new GradientButton()
                 {
-                    StartColor = Color.Blue,
+                    StartColor = Color.White,
                     EndColor = Color.Black,
                     StartTouchColor = Color.Blue,
                     EndTouchColor = Color.Wheat,

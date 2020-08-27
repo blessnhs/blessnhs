@@ -62,32 +62,32 @@
 
                 <!--5row 0번째 이름 -->
                 <Frame BorderColor="Gray"  CornerRadius="5" Grid.Column="0"  Grid.Row="3"  Grid.ColumnSpan="2" Padding="0,0,0,0">
-                    <Button x:Name="NameButton" Text="이름" Clicked="OnProfileClicked" BackgroundColor="White"/>
+                    <Button x:Name="NameButton" Text="이름" Clicked="OnProfileClicked" FontAttributes="Bold" BackgroundColor="White"/>
                 </Frame>
 
                 <!--5row 1번째 기보 -->
                 <Frame BorderColor="Gray"  CornerRadius="5"  Grid.Column="2" Grid.Row="3"  Padding="0,0,0,0">
-                    <Button x:Name="HistroyButton" Text="기록" Clicked="OnHistoryClicked" BackgroundColor="White"/>
+                    <Button x:Name="HistroyButton" Text="기록" Clicked="OnHistoryClicked" FontAttributes="Bold" BackgroundColor="White"/>
                 </Frame>
 
                 <!--5row 2번째 랭킹 -->
                 <Frame BorderColor="Gray"  CornerRadius="5"  Grid.Column="3"  Grid.Row="3" Padding="0,0,0,0">
-                    <Button x:Name="RankButton" Text="랭킹" Clicked="OnRankClicked" BackgroundColor="White"/>
+                    <Button x:Name="RankButton" Text="랭킹" Clicked="OnRankClicked" FontAttributes="Bold" BackgroundColor="White"/>
                 </Frame>
 
                 <!--5row 3번째 설정 -->
                 <Frame BorderColor="Gray"  CornerRadius="5"   Grid.Column="4" Grid.Row="3" Padding="0,0,0,0">
-                    <Button x:Name="SingleMatch" Text="A I" Clicked="OnSingleMatchClicked" BackgroundColor="White"/>
+                    <Button x:Name="SingleMatch" Text="A I" Clicked="OnSingleMatchClicked" FontAttributes="Bold" BackgroundColor="White"/>
                 </Frame>
                 
                 <!--5row 3번째 설정 -->
                 <Frame BorderColor="Gray"  CornerRadius="5"   Grid.Column="5" Grid.Row="3" Padding="0,0,0,0">
-                    <Button x:Name="SettingButton" Text="설정" Clicked="OnSettingClicked" BackgroundColor="White"/>
+                    <Button x:Name="SettingButton" Text="설정" Clicked="OnSettingClicked" FontAttributes="Bold" BackgroundColor="White"/>
                 </Frame>
  
                 <!--5row 0번째 이름 -->
-                <Frame Grid.Column="0"  Grid.Row="4"  Grid.ColumnSpan="6" Padding="0,0,0,0" HeightRequest="30">
-                    <Label x:Name="NoticeLabel" Text="서버 정검 시간은 새벽4시 입니다." BackgroundColor="White" FontSize="Large" TextColor="Black" WidthRequest="256" MaxLines="20" LineBreakMode="CharacterWrap"/>
+                <Frame Grid.Column="0"  Grid.Row="4"  Grid.ColumnSpan="6" Padding="0,0,0,0" HeightRequest="30" BackgroundColor="#D9D4D4">
+                    <Label x:Name="NoticeLabel" Text="서버 정검 시간은 새벽4시 입니다." FontAttributes="Bold"  FontSize="Large" TextColor="Black" WidthRequest="256" MaxLines="20" LineBreakMode="CharacterWrap"/>
                 </Frame>
 
             </Grid>
