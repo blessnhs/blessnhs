@@ -344,49 +344,46 @@ namespace OMOK.Views
 
             InitBoardGrid();
 
-            MessagingCenter.Subscribe<SingleMatch, string>(this, "Start", async (sender, arg) =>
+            Device.StartTimer(TimeSpan.FromSeconds(1), () =>
             {
-                Device.StartTimer(TimeSpan.FromSeconds(1), () =>
+                Device.BeginInvokeOnMainThread(() =>
                 {
-                    Device.BeginInvokeOnMainThread(() =>
+                    try 
                     {
-                        try 
+                        lock (this)
                         {
-                            lock (this)
+                            if (User.myInfo.ai_set_flag == true)
                             {
-                                if (User.myInfo.ai_set_flag == true)
+                                ClearBoardState();
+
+                                PlayGame(User.myInfo.ai_rule, User.myInfo.ai_mode);
+                                isbegin = true;
+                                User.myInfo.ai_set_flag = false;
+
+                                UpdateBattleInfo();
+                            }
+
+                            if (isbegin == true)
+                            {
+                                isbegin = PlaygameLoop(User.myInfo.ai_mode);
+
+
+                                if (isbegin == false) //종료
                                 {
-                                    PlayGame(User.myInfo.ai_rule, User.myInfo.ai_mode);
-                                    isbegin = true;
-                                    User.myInfo.ai_set_flag = false;
+                                    isbegin = false;
 
-                                    UpdateBattleInfo();
-                                }
-
-                                if (isbegin == true)
-                                {
-                                    isbegin = PlaygameLoop(User.myInfo.ai_mode);
-
-
-                                    if (isbegin == false) //종료
-                                    {
-                                        User.myInfo.ai_set_flag = true;
-                                        isbegin = false;
-
-                                    }
                                 }
                             }
                         }
-                        catch(Exception e)
-                        {
-                            Console.WriteLine(e.ToString());
-                        }
-                    });
-
-                    return true;
+                    }
+                    catch(Exception e)
+                    {
+                        Console.WriteLine(e.ToString());
+                    }
                 });
-            });
 
+                return true;
+            });
 
             iIterstitia = DependencyService.Get<iAd_IterstitialView>();
 
@@ -545,17 +542,8 @@ namespace OMOK.Views
 
         void OnRetryClicked(object sender, System.EventArgs e)
         {
-            ClearBoardState();
             User.myInfo.ai_set_flag = true;
-            isbegin = true;
-
-            PlayGame(User.myInfo.ai_rule, User.myInfo.ai_mode);
-            isbegin = true;
-            User.myInfo.ai_set_flag = false;
-
-            UpdateBattleInfo();
-
-         }
+        }
         async void OnLeaveClicked(object sender, System.EventArgs e)
         {
             var page = await Navigation.PopModalAsync();
@@ -655,7 +643,7 @@ namespace OMOK.Views
             {
                 slo.Children.Add(new GradientButton()
                 {
-                    StartColor = Color.White,
+                    StartColor = Color.DarkKhaki,
                     EndColor = Color.Red,
                     StartTouchColor = Color.Blue,
                     EndTouchColor = Color.Wheat,
