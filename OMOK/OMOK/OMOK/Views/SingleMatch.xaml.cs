@@ -237,6 +237,22 @@ namespace OMOK.Views
                 //// 키보드로부터 ESC키가 눌리면 게임을 종료한다. 
                 case 15:
                     {
+                        bool isWin = false;
+                        if(curStone == 0) //흑
+                        {
+                            if(User.Color == eTeam.Black)
+                            {
+                                isWin = true;
+                            }
+                        }
+                        else
+                        {
+                            if (User.Color == eTeam.White)
+                            {
+                                isWin = true;
+                            }
+                        }
+
                         Navigation.PushPopupAsync(new AIGameResult(curStone));
                         return false;
                     }
@@ -366,7 +382,6 @@ namespace OMOK.Views
                             if (isbegin == true)
                             {
                                 isbegin = PlaygameLoop(User.myInfo.ai_mode);
-
 
                                 if (isbegin == false) //종료
                                 {
@@ -643,14 +658,14 @@ namespace OMOK.Views
             {
                 slo.Children.Add(new GradientButton()
                 {
-                    StartColor = Color.DarkKhaki,
-                    EndColor = Color.Red,
+                    StartColor = Color.White,
+                    EndColor = Color.FromHex("#FF00D2FF"),
                     StartTouchColor = Color.Blue,
                     EndTouchColor = Color.Wheat,
                     IdField = x + ":" + y,
                     CornerRadius = (int)Bounds.Width / 2,
                     HeightRequest = slo.Bounds.Height - 2
-                }); ;
+                }); ; ;
             }
             else
             {

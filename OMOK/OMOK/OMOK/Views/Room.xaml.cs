@@ -341,19 +341,19 @@ namespace OMOK
                 slo.Children.Add(new GradientButton()
                 {
                     StartColor = Color.White,
-                    EndColor = Color.FromHex("#E1D8D8"),
+                    EndColor = Color.FromHex("#FF00D2FF"),
                     StartTouchColor = Color.Blue,
                     EndTouchColor = Color.Wheat,
                     IdField = x + ":" + y,
                     CornerRadius = (int)Bounds.Width / 2,
                     HeightRequest = slo.Bounds.Height - 2
-                });
+                }); ; ;
             }
             else
             {
                 slo.Children.Add(new GradientButton()
                 {
-                    StartColor = Color.DarkBlue,
+                    StartColor = Color.Blue,
                     EndColor = Color.Black,
                     StartTouchColor = Color.Blue,
                     EndTouchColor = Color.Wheat,
