@@ -123,7 +123,7 @@ namespace OMOK
 
             BoardLayout lo = view as BoardLayout;
 
-            lo.BackgroundColor = Color.FromHex("#CA7D10");
+            lo.BackgroundColor = Color.DarkGray;
 
             if (prevLayout != null)
             {
@@ -187,8 +187,8 @@ namespace OMOK
                 {
                     BoardLayout slo = new BoardLayout();
 
-                    slo.Margin = new Thickness(1, 1, 1, 1);
-                    slo.Padding = new Thickness(1, 1, 1, 1);
+                    slo.Margin = new Thickness(0, 0, 0, 0);
+                    slo.Padding = new Thickness(0, 0, 0, 0);
                     slo.Orientation = StackOrientation.Vertical;
                     slo.BackgroundColor = Color.FromHex("#F7E48B");
                     slo.IdField = x + ":" + y;
@@ -338,28 +338,22 @@ namespace OMOK
 
             if (status == eTeam.White)
             {
-                slo.Children.Add(new GradientButton()
+                slo.Children.Add(new Button()
                 {
-                    StartColor = Color.White,
-                    EndColor = Color.FromHex("#FF00D2FF"),
-                    StartTouchColor = Color.Blue,
-                    EndTouchColor = Color.Wheat,
-                    IdField = x + ":" + y,
+                    BackgroundColor = Color.White,
                     CornerRadius = (int)Bounds.Width / 2,
-                    HeightRequest = slo.Bounds.Height - 2
+                    HeightRequest = slo.Bounds.Height,
+                    BorderWidth = 1,
+                    BorderColor = Color.Black
                 }); ; ;
             }
             else
             {
-                slo.Children.Add(new GradientButton()
+                slo.Children.Add(new Button()
                 {
-                    StartColor = Color.Blue,
-                    EndColor = Color.Black,
-                    StartTouchColor = Color.Blue,
-                    EndTouchColor = Color.Wheat,
-                    IdField = x + ":" + y,
+                    BackgroundColor = Color.Black,
                     CornerRadius = (int)Bounds.Width / 2,
-                    HeightRequest = slo.Bounds.Height - 2
+                    HeightRequest = slo.Bounds.Height,
                 });
             }
 

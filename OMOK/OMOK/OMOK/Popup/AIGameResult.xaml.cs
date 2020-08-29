@@ -14,11 +14,11 @@ namespace OMOK.Popup
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class AIGameResult : PopupPage
     {
-        public AIGameResult(int Result)
+        public AIGameResult(bool Result)
         {
             InitializeComponent();
 
-            if (Result == 0)
+            if (Result == true)
                 Label1.Text = "승리 하셨습니다.";
             else
                 Label1.Text = "패배 하였습니다.";

@@ -84,8 +84,6 @@ namespace OMOK.Views
     {
         const string timeFormat = @"%m\:ss";
 
-        iAd_IterstitialView iIterstitia;
-
         //현재 착점을 할 돌
         int curStone;
         // omok의 x, y와 같은 좌표를 유지한다. 
@@ -253,7 +251,7 @@ namespace OMOK.Views
                             }
                         }
 
-                        Navigation.PushPopupAsync(new AIGameResult(curStone));
+                        Navigation.PushPopupAsync(new AIGameResult(isWin));
                         return false;
                     }
 
@@ -353,12 +351,16 @@ namespace OMOK.Views
             }
         }
 
+        iAd_IterstitialView iIterstitia;
+        
         public SingleMatch()
         {
             InitializeComponent();
             ClearBoardState();
 
             InitBoardGrid();
+
+            iIterstitia = DependencyService.Get<iAd_IterstitialView>();
 
             Device.StartTimer(TimeSpan.FromSeconds(1), () =>
             {
@@ -428,7 +430,7 @@ namespace OMOK.Views
 
             BoardLayout lo = view as BoardLayout;
 
-            lo.BackgroundColor = Color.Red;
+            lo.BackgroundColor = Color.DarkGray;
 
             if (prevLayout != null)
             {
@@ -448,8 +450,8 @@ namespace OMOK.Views
                 {
                     BoardLayout slo = new BoardLayout();
 
-                    slo.Margin = new Thickness(1, 1, 1, 1);
-                    slo.Padding = new Thickness(1, 1, 1, 1);
+                    slo.Margin = new Thickness(0, 0, 0, 0);
+                    slo.Padding = new Thickness(0, 0, 0, 0);
                     slo.Orientation = StackOrientation.Vertical;
                     slo.BackgroundColor = Color.FromHex("#F7E48B");
                     slo.IdField = x + ":" + y;
@@ -555,8 +557,15 @@ namespace OMOK.Views
             Navigation.PushPopupAsync(new AISelect(this));
         }
 
+        int retrycount = 0;
+
         void OnRetryClicked(object sender, System.EventArgs e)
         {
+            if(retrycount != 0)
+                iIterstitia.ShowAd();
+
+            retrycount++;
+
             User.myInfo.ai_set_flag = true;
         }
         async void OnLeaveClicked(object sender, System.EventArgs e)
@@ -656,28 +665,22 @@ namespace OMOK.Views
 
             if(status == eTeam.White)
             {
-                slo.Children.Add(new GradientButton()
+                slo.Children.Add(new Button()
                 {
-                    StartColor = Color.White,
-                    EndColor = Color.FromHex("#FF00D2FF"),
-                    StartTouchColor = Color.Blue,
-                    EndTouchColor = Color.Wheat,
-                    IdField = x + ":" + y,
+                    BackgroundColor = Color.White,
                     CornerRadius = (int)Bounds.Width / 2,
-                    HeightRequest = slo.Bounds.Height - 2
+                    HeightRequest = slo.Bounds.Height,
+                    BorderWidth = 1,
+                    BorderColor = Color.Black
                 }); ; ;
             }
             else
             {
-                slo.Children.Add(new GradientButton()
+                slo.Children.Add(new Button()
                 {
-                    StartColor = Color.Blue,
-                    EndColor = Color.Black,
-                    StartTouchColor = Color.Blue,
-                    EndTouchColor = Color.Wheat,
-                    IdField = x + ":" + y,
+                    BackgroundColor = Color.Black,
                     CornerRadius = (int)Bounds.Width / 2,
-                    HeightRequest = slo.Bounds.Height - 2
+                    HeightRequest = slo.Bounds.Height,
                 });
             }
 
