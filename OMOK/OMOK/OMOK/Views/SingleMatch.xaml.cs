@@ -306,25 +306,28 @@ namespace OMOK.Views
 
         public void UpdateBattleInfo()
         {
-           if (User.Color == eTeam.Black)
-           {
-               blackLabel.Text = User.myInfo.NickName;
-               whiteLabel.Text = "알파목";
+            if (User.Color == eTeam.Black)
+            {
+                blackLabel.Text = User.myInfo.NickName;
+                whiteLabel.Text = "알파목";
 
-               if (User.myInfo.PhotoPath != null)
-                   bottom1picture.Source = ImageSource.FromUri(new Uri(User.myInfo.PhotoPath));
+                bottom2picture.Source = null;
 
-               if (User.OppInfo.PhotoPath != null)
-                   bottom2picture.Source = ImageSource.FromUri(new Uri(User.OppInfo.PhotoPath));
-           }
-           else
-           {
-                if (User.OppInfo.PhotoPath != null)
-                   bottom1picture.Source = ImageSource.FromUri(new Uri(User.OppInfo.PhotoPath));
+                if (User.myInfo.PhotoPath != null)
+                    bottom1picture.Source = ImageSource.FromUri(new Uri(User.myInfo.PhotoPath));
 
-               if (User.myInfo.PhotoPath != null)
-                   bottom2picture.Source = ImageSource.FromUri(new Uri(User.myInfo.PhotoPath));
-           }
+                
+
+                return;
+            }
+
+            blackLabel.Text = "알파목";
+            whiteLabel.Text = User.myInfo.NickName;
+
+            bottom1picture.Source = null;
+
+            if (User.myInfo.PhotoPath != null)
+                bottom2picture.Source = ImageSource.FromUri(new Uri(User.myInfo.PhotoPath));
         }
 
 
@@ -459,6 +462,9 @@ namespace OMOK.Views
                           new TapGestureRecognizer()
                           {
                               Command = new Command(() => {
+
+                                  if (isbegin == false)
+                                      return;
 
                                   if (prevLayout != null)
                                       prevLayout.BackgroundColor = Color.FromHex("#F7E48B");

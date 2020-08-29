@@ -156,7 +156,9 @@ namespace OMOK.Network
 
                                     var Room = (Room)page.Children[1];
                                     Room.ClearBoard();
-                                    Room.UpdateTurnBackground(User.Color);
+
+                                    //방 생성자는 무조건 흑이며 후에 입장자는 백이다.
+                                    Room.UpdateTurnBackground(eTeam.Black);
                                     Room.RefreshAim();
                                     Room.InitTimer();
                                 }
@@ -262,7 +264,9 @@ namespace OMOK.Network
 
                                     var Room = (Room)page.Children[1];
                                     Room.ClearBoard();
-                                    Room.UpdateTurnBackground(User.Color);
+
+                                    //방 생성자는 무조건 흑이므로 흑에 표시
+                                    Room.UpdateTurnBackground(eTeam.Black);
                                     Room.RefreshAim();
                                     Room.InitTimer();
                                 }

@@ -109,7 +109,8 @@ namespace OMOK
                     User.MytrunStartTime = DateTime.Now;
                 }
 
-                UpdateTurnBackground(color);
+                //순서는 반대로 흑이 했다면 다음은 백이 할차례
+                UpdateTurnBackground(icolor == 0 ? eTeam.Black : eTeam.White);
 
             }
         }
