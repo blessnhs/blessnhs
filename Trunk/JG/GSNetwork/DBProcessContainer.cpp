@@ -35,7 +35,7 @@ namespace GSNetwork	{	namespace DBProcessContainer	{
 		return TRUE;
 	}
 
-	DBPROCESS_PTR DBProcessContainer::Search(DWORD Id)
+	DBPROCESS_PTR DBProcessContainer::Search(INT64 Id)
 	{
 		std::map<DWORD,DBPROCESS_PTR>::iterator iter = m_List.find(Id);
 		if(iter != m_List.end())

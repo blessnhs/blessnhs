@@ -14,15 +14,22 @@ template<template<class T> class CreationPolicy> PlayerContainer<CreationPolicy>
 
 template<template<class T> class CreationPolicy> bool PlayerContainer<CreationPolicy>::Add(PlayerPtr &pObj)
 {
-	/*auto iter = m_PlayerMap.find(pObj->GetId());
+	m_PlayerMap[pObj->GetId()] = pObj;
 
-	if(iter == m_PlayerMap.end())
-	{*/
-		m_PlayerMap[pObj->GetId()] = pObj;
-		return true;;
-	//}
 
-	return false;
+	bool find = false;
+	for (auto iter = m_PlayerMapForLoop.begin(); iter != m_PlayerMapForLoop.end(); iter++)
+	{
+		if (iter->second == NULL)
+		{
+			m_PlayerMapForLoop[iter->first] = pObj;
+			return true;
+		}
+	}
+
+	m_PlayerMapForLoop[pObj->GetId()] = pObj;
+
+	return true;
 }
 
 template<template<class T> class CreationPolicy> bool PlayerContainer<CreationPolicy>::Del(PlayerPtr &pObj)
@@ -37,11 +44,28 @@ template<template<class T> class CreationPolicy> bool PlayerContainer<CreationPo
 
 	m_PlayerMap[pObj->GetId()] = NULL;
 
+	///////////////////////////////////////////////////
+
+	bool find = false;
+	for (auto iter = m_PlayerMapForLoop.begin(); iter != m_PlayerMapForLoop.end(); iter++)
+	{
+		if (iter->second != NULL)
+		{
+			if (iter->second->GetId() == pObj->GetId())
+			{
+				m_PlayerMapForLoop[iter->first] = NULL;
+				return true;
+			}
+			
+		}
+	}
+
+
 	return true;
 }
 
 
-template<template<class T> class CreationPolicy> PlayerPtr PlayerContainer<CreationPolicy>::Search(DWORD Id)
+template<template<class T> class CreationPolicy> PlayerPtr PlayerContainer<CreationPolicy>::Search(INT64 Id)
 {
 	auto iter = m_PlayerMap.find(Id);
 
@@ -90,9 +114,9 @@ template<template<class T> class CreationPolicy> PlayerPtr PlayerContainer<Creat
 template<template<class T> class CreationPolicy> int PlayerContainer<CreationPolicy>::Count()
 {
 	int count = 0;
-	auto iter = m_PlayerMap.begin();
+	auto iter = m_PlayerMapForLoop.begin();
 
-	while (iter != m_PlayerMap.end())
+	while (iter != m_PlayerMapForLoop.end())
 	{
 		if (iter->second != NULL)
 		{
@@ -110,13 +134,12 @@ template<template<class T> class CreationPolicy> PlayerPtr PlayerContainer<Creat
 
 template<template<class T> class CreationPolicy> void PlayerContainer<CreationPolicy>::CheckUserList()
 {
-	for (auto iter = m_PlayerMap.begin(); iter != m_PlayerMap.end(); iter++)
+	for (auto iter = m_PlayerMapForLoop.begin(); iter != m_PlayerMapForLoop.end(); iter++)
 	{
 		if (iter->second == NULL)
 			continue;
 
 		WORD SessionId = iter->second->GetPair();
-
 
 		//미아가 된 player들
 		GSCLIENT_PTR pSession = SERVER.GetClient(SessionId);
@@ -175,8 +198,8 @@ template<template<class T> class CreationPolicy> void PlayerContainer<CreationPo
 
 template<template<class T> class CreationPolicy> void PlayerContainer<CreationPolicy>::Print()
 {
-	auto iter = m_PlayerMap.begin();
-	while(iter != m_PlayerMap.end())
+	auto iter = m_PlayerMapForLoop.begin();
+	while(iter != m_PlayerMapForLoop.end())
 	{
 		if(iter->second != NULL)
 		{
@@ -187,17 +210,17 @@ template<template<class T> class CreationPolicy> void PlayerContainer<CreationPo
 
 	printf("\nasocket count %d\n",SERVER.GetClientMgr().GetActiveSocketCount());
 
-	printf("Total Count %d\n",m_PlayerMap.size());
+	printf("Total Count %d\n", m_PlayerMapForLoop.size());
 }
 
 template<template<class T> class CreationPolicy> void PlayerContainer<CreationPolicy>::BroadCast(DWORD MainId,DWORD SudbId,byte *Message,WORD Length)
 {
-	auto iter = m_PlayerMap.begin();
-	while(iter != m_PlayerMap.end())
+	auto iter = m_PlayerMapForLoop.begin();
+	while(iter != m_PlayerMapForLoop.end())
 	{
 		if(iter->second != NULL)
 		{
-			GSCLIENT *pPair =JGSERVER.GetClient(iter->second->GetPair());
+			GSCLIENT *pPair = SERVER.GetClient(iter->second->GetPair());
 			if(pPair != NULL)
 			{
 				pPair->GetTCPSocket()->WritePacket(MainId,SudbId,Message,Length);
@@ -210,12 +233,12 @@ template<template<class T> class CreationPolicy> void PlayerContainer<CreationPo
 
 template<template<class T> class CreationPolicy> template<class TYPE> void PlayerContainer<CreationPolicy>::BroadCast(TYPE MSG)
 {
-	auto iter = m_PlayerMap.begin();
-	while(iter != m_PlayerMap.end())
+	auto iter = m_PlayerMapForLoop.begin();
+	while(iter != m_PlayerMapForLoop.end())
 	{
 		if(iter->second != NULL)
 		{
-			GSCLIENT *pPair =IOCP.GetSessionMgr()->GetSession(iter->second->GetPair());
+			GSCLIENT* pPair = SERVER.GetClient(iter->second->GetPair());
 			if(pPair != NULL)
 			{
 				Sender::Send(pPair,MSG);

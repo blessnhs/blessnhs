@@ -5,9 +5,21 @@ template<template<class T> class CreationPolicy> bool RoomContainer<CreationPoli
 	if(iter == m_RoomMap.end())
 	{
 		m_RoomMap[pObj->GetId()] = pObj;
-		return true;;
+
+		bool find = false;
+		for (auto iter = m_RoomMapForLoop.begin(); iter != m_RoomMapForLoop.end(); iter++)
+		{
+			if (iter->second == NULL)
+			{
+				m_RoomMapForLoop[iter->first] = pObj;
+				return true;
+			}
+		}
+
+		m_RoomMapForLoop[pObj->GetId()] = pObj;
 	}
 
+	
 
 	return false;
 }
@@ -23,11 +35,27 @@ template<template<class T> class CreationPolicy> bool RoomContainer<CreationPoli
 
 	m_RoomMap[pObj->GetId()] = NULL;
 
-	return true;
+
+	bool find = false;
+	for (auto iter = m_RoomMapForLoop.begin(); iter != m_RoomMapForLoop.end(); iter++)
+	{
+		if (iter->second != NULL)
+		{
+			if (iter->second->GetId() == pObj->GetId())
+			{
+				m_RoomMapForLoop[iter->first] = NULL;
+				return true;
+			}
+
+		}
+	}
+
+
+	return false;
 }
 
 
-template<template<class T> class CreationPolicy> ROOM_PTR RoomContainer<CreationPolicy>::Search(DWORD Id)
+template<template<class T> class CreationPolicy> ROOM_PTR RoomContainer<CreationPolicy>::Search(INT64 Id)
 {
 	auto iter = m_RoomMap.find(Id);
 
@@ -57,6 +85,8 @@ template<template<class T> class CreationPolicy> ROOM_PTR RoomContainer<Creation
 
 template<template<class T> class CreationPolicy> ROOM_PTR RoomContainer<CreationPolicy>::Create()
 {
+	EnterCriticalSection(&m_PublicLock);
+
 	static atomic<int> intAtomic = 1;
 
 	ROOM_PTR PTR =  CreationPolicy<ROOM>().Create();
@@ -64,6 +94,8 @@ template<template<class T> class CreationPolicy> ROOM_PTR RoomContainer<Creation
 	PTR->SetId(intAtomic);
 
 	intAtomic.fetch_add(1);
+
+	LeaveCriticalSection(&m_PublicLock);
 
 	return PTR;
 }
@@ -73,7 +105,7 @@ template<template<class T> class CreationPolicy> VOID RoomContainer<CreationPoli
 	const int max_count = 10;
 	int currcount = 0;
 
-	for each (auto room in m_RoomMap)
+	for each (auto room in m_RoomMapForLoop)
 	{
 		if (room.second != NULL)
 		{
@@ -94,7 +126,7 @@ template<template<class T> class CreationPolicy> VOID RoomContainer<CreationPoli
 template<template<class T> class CreationPolicy> int RoomContainer<CreationPolicy>::RoomCount()
 {
 	int count = 0;
-	for each (auto room in m_RoomMap)
+	for each (auto room in m_RoomMapForLoop)
 	{
 		if (room.second != NULL)
 			count++;
@@ -108,7 +140,7 @@ template<template<class T> class CreationPolicy>  const concurrency::concurrent_
 	return m_RoomMap;
 }
 
-template<template<class T> class CreationPolicy> concurrency::concurrent_unordered_map<DWORD, PLAYER_PTR>& RoomContainer<CreationPolicy>::GetMatchMap()
+template<template<class T> class CreationPolicy> concurrency::concurrent_unordered_map<INT64, PLAYER_PTR>& RoomContainer<CreationPolicy>::GetMatchMap()
 {
 	return m_MatchMap;
 }

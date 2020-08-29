@@ -24,7 +24,7 @@ public:
 
 	bool Add(ROOM_PTR &pObj);
 	bool Del(ROOM_PTR &pObj);
-	ROOM_PTR Search(DWORD Id);
+	ROOM_PTR Search(INT64 Id);
 
 	ROOM_PTR SearchByGameType(WORD Type);
 
@@ -34,7 +34,7 @@ public:
 
 	const concurrency::concurrent_unordered_map<DWORD, ROOM_PTR>& GetRoomMap();
 
-	concurrency::concurrent_unordered_map<DWORD, PLAYER_PTR>& GetMatchMap();
+	concurrency::concurrent_unordered_map<INT64, PLAYER_PTR>& GetMatchMap();
 
 	void AddMatchMap(PLAYER_PTR player);
 	void DelMatchMap(PLAYER_PTR player);
@@ -48,8 +48,9 @@ public:
 protected:
 
 	concurrency::concurrent_unordered_map<DWORD,ROOM_PTR>		m_RoomMap;
+	concurrency::concurrent_unordered_map<DWORD, ROOM_PTR>		m_RoomMapForLoop;
 
-	concurrency::concurrent_unordered_map<DWORD, PLAYER_PTR>	m_MatchMap;
+	concurrency::concurrent_unordered_map<INT64, PLAYER_PTR>	m_MatchMap;
 
 	CRITICAL_SECTION											m_PublicLock;
 };

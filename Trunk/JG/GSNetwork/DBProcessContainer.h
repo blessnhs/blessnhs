@@ -17,7 +17,7 @@ public:
 
 	virtual bool Add(DBPROCESS_PTR &pObj);
 	virtual bool Del(DBPROCESS_PTR &pObj);
-	virtual DBPROCESS_PTR Search(DWORD Id);
+	virtual DBPROCESS_PTR Search(INT64 Id);
 
 	void TryConnect();
 

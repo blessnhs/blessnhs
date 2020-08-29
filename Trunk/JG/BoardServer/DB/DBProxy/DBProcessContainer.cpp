@@ -45,7 +45,7 @@
 		return DBPROCESS_CER_PTR();
 	}
 
-	DBPROCESS_CER_PTR DBProcessContainer::Search(DWORD Id)
+	DBPROCESS_CER_PTR DBProcessContainer::Search(INT64 Id)
 	{
 		std::map<DWORD,DBPROCESS_CER_PTR>::iterator iter = m_List.find(Id);
 		if(iter != m_List.end())

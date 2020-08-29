@@ -13,7 +13,7 @@ public:
 
 	virtual bool Add(T &pObj) = 0;
 	virtual bool Del(T &pObj) = 0;
-	virtual T Search(DWORD Id) = 0;
+	virtual T Search(INT64 Id) = 0;
 };
 
 
