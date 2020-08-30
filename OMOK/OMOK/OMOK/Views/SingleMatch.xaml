@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:AdFire="clr-namespace:OMOK.CustomAdMobView"
              x:Class="OMOK.Views.SingleMatch">
 
     <Grid x:Name="mainGrid" ColumnSpacing="0" RowSpacing="0" >
@@ -19,13 +19,17 @@
             <ColumnDefinition Width="20*"/>
         </Grid.ColumnDefinitions>
 
-        <Button Text="시작 하기"   Grid.Row="0" Grid.Column="0" Clicked="OnRetryClicked" BackgroundColor="#E6DEDE" Margin="0,0,0,0" ContentLayout="Top"/>
+        <Button Text="시작"   Grid.Row="0" Grid.Column="0" Clicked="OnRetryClicked" BackgroundColor="#E6DEDE" Margin="0,0,2,0" ContentLayout="Top"/>
         <Button Text="룰 설정"   Grid.Row="0" Grid.Column="1" Clicked="OnSettingClicked" BackgroundColor="#E6DEDE" Margin="0,0,0,0" ContentLayout="Top"/>
-        
+
+        <Frame  Padding="5,5,5,0" BorderColor="White" Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="2">
+            <AdFire:CtBannerView eBannerSize="Standardbanner"   BackgroundColor="White" x:Name="banner"/>
+        </Frame>
+
+
         <Button x:Name="LeaveRoom" Text="나가기"  Grid.Row="0" Grid.Column="4" Clicked="OnLeaveClicked" BackgroundColor="#E6DEDE" Margin="0,0,0,0" ContentLayout="Top,2"/>
 
         <Grid x:Name="grid" RowSpacing="2" ColumnSpacing="2" BackgroundColor="#43343E" Padding="10,20,10,20"  Grid.Row="1" Grid.Column="0"   Grid.ColumnSpan="5" >
-
         </Grid>
 
 

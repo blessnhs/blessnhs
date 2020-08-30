@@ -128,6 +128,8 @@ namespace OMOK.Views
                 User.Color = eTeam.White;
             else
                 User.Color = eTeam.Black;
+
+            UpdateTurnBackground(eTeam.Black);
         }
 
         // 흑과 백의 둘 차례를 바꾼다. 
@@ -287,6 +289,8 @@ namespace OMOK.Views
                     break;
                 case 16:    //CHANGE
                     ChangeStone(mode);
+
+                    UpdateTurnBackground(curStone == 0 ? eTeam.Black : eTeam.White);
                     break;
                 default: break;
             }
@@ -426,7 +430,7 @@ namespace OMOK.Views
 
         int aimx = ConstValue.SIZE / 2, aimy = ConstValue.SIZE / 2;
         BoardLayout prevLayout = null;
-  
+    
         public void UpdateAim(int x, int y)
         {
             var view = grid.Children[y * ConstValue.SIZE + x];
@@ -437,7 +441,10 @@ namespace OMOK.Views
 
             if (prevLayout != null)
             {
-                prevLayout.BackgroundColor = Color.FromHex("#F7E48B");
+                if(LastLayout == prevLayout)
+                    prevLayout.BackgroundColor = Color.Red;
+                else
+                    prevLayout.BackgroundColor = Color.FromHex("#F7E48B");
 
             }
 
@@ -579,7 +586,7 @@ namespace OMOK.Views
             var page = await Navigation.PopModalAsync();
         }
 
-        async void OnClickedLeft(object sender, System.EventArgs e)
+        void OnClickedLeft(object sender, System.EventArgs e)
         {
             if (0 > aimx)
                 return;
@@ -589,7 +596,7 @@ namespace OMOK.Views
             UpdateAim(aimx, aimy);
         }
 
-        async void OnClickedUp(object sender, System.EventArgs e)
+        void OnClickedUp(object sender, System.EventArgs e)
         {
             if (0 > aimy)
                 return;
@@ -598,7 +605,7 @@ namespace OMOK.Views
             UpdateAim(aimx, aimy);
         }
 
-        async void OnPutStone(object sender, System.EventArgs e)
+        void OnPutStone(object sender, System.EventArgs e)
         {
             var view = grid.Children[aimy * ConstValue.SIZE + aimx];
 
@@ -613,7 +620,7 @@ namespace OMOK.Views
             aiy = aimy;
        }
 
-        async void OnClickedDown(object sender, System.EventArgs e)
+        void OnClickedDown(object sender, System.EventArgs e)
         {
             if (ConstValue.SIZE - 1 <= aimy)
                 return;
@@ -622,7 +629,7 @@ namespace OMOK.Views
             UpdateAim(aimx, aimy);
         }
 
-        async void OnClickedRight(object sender, System.EventArgs e)
+        void OnClickedRight(object sender, System.EventArgs e)
         {
             if (ConstValue.SIZE - 1 <= aimx)
                 return;
@@ -657,6 +664,8 @@ namespace OMOK.Views
 
         public int aix = -1, aiy = -1;
 
+        BoardLayout LastLayout = null;
+   
         public bool UpdateStone(int x, int y, eTeam status)
         {
             //내부 체크는 1,1부터 시작 하나 그래픽 ui는 0,0부터 시작
@@ -690,13 +699,14 @@ namespace OMOK.Views
                 });
             }
 
-          
-
-            aimx = x;
-            aimy = y;
+            slo.BackgroundColor = Color.Red;
 
 
-            UpdateAim(aimx, aimy);
+            //포커스 처리
+            if (LastLayout != null)
+                LastLayout.BackgroundColor = Color.FromHex("#F7E48B");
+
+            LastLayout = slo;
 
             return true;
         }

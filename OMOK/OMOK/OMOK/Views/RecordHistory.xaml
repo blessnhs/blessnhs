@@ -2,13 +2,17 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:AdFire="clr-namespace:OMOK.CustomAdMobView"
              mc:Ignorable="d"
              x:Class="OMOK.Views.RecordHistory">
     <ContentPage.Content>
         <ScrollView>
         <StackLayout Margin="20,20,20,20">
-            <Grid x:Name="main_grid">
+                <Frame  Padding="5,5,5,0" HeightRequest="60" BorderColor="White">
+                    <AdFire:CtBannerView eBannerSize="Standardbanner"   BackgroundColor="White" x:Name="banner"/>
+                </Frame>
+                
+                <Grid x:Name="main_grid">
                 <Grid.RowDefinitions BackgroundColor="White">
                     <RowDefinition Height="auto" />
                 </Grid.RowDefinitions>

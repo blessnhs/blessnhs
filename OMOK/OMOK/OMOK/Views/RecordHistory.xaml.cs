@@ -33,11 +33,11 @@ namespace OMOK.Views
                 var text = pos.ToString() + ". " + r.Time.ToString("yyyy-MM-dd HH:mm") + " " + r.MyName + " vs " + r.OpponentName + " " + (r.Result == 1 ? "승" : "패");
 
                 text.Replace('\n', ' ');
-                var labelText = new Label { Text = text, TextColor = Xamarin.Forms.Color.FromRgb(0, 0, 0), BackgroundColor = Color.AliceBlue };
+                var labelText = new Label { Padding = new Thickness(0,10,0,0),   Text = text, TextColor = Xamarin.Forms.Color.FromRgb(0, 0, 0), HorizontalTextAlignment = TextAlignment.Start };
 
                 stackLayout.Children.Add(labelText);
 
-                var frame = new Frame { BorderColor = Color.Black, Padding = new Thickness(3, 3, 3, 3) };
+                var frame = new Frame { BorderColor = Color.Black, Padding = new Thickness(0,0,0,0) };
                 frame.Content = stackLayout;
 
                 main_grid.Children.Add(frame, 0, pos++);
