@@ -267,6 +267,7 @@
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="Timer\ContentsTimer.h" />
     <ClInclude Include="Timer\ContentsTimerJob.h" />
+    <ClInclude Include="Timer\RankTimerJob.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Protocol\Cpp\CLI.GS.pb.cc">
@@ -313,6 +314,7 @@
     </ClCompile>
     <ClCompile Include="Timer\ContentsTimer.cpp" />
     <ClCompile Include="Timer\ContentsTimerJob.cpp" />
+    <ClCompile Include="Timer\RankTimerJob.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Protocol\CLI.GS.proto">

@@ -372,7 +372,7 @@ public:
 		return -1;
 	}
 
-	int		ProcedureUserLogin(const char* flatformid, const int flatformtype, const char* name, const char* picture_url, const char* email, std::string& szKey, int& Rank, int& Score, int& Win, int& Lose, int& Draw, INT64& Index, int& Level)
+	int		ProcedureUserLogin(const char* flatformid, const int flatformtype, const char* name, const char* picture_url, const char* email, const char* locale, std::string& szKey, int& Rank, int& Score, int& Win, int& Lose, int& Draw, INT64& Index, int& Level)
 	{
 		mongocxx::collection collection = db["ACCOUNT"];
 		bsoncxx::stdx::optional<bsoncxx::document::value> maybe_result =
@@ -463,6 +463,7 @@ public:
 					<< "Lose" << 0
 					<< "Draw" << 0
 					<< "Level" << 0
+					<< "Locale" << locale
 					<< "INDEX" << index
 					<< bsoncxx::builder::stream::finalize;
 

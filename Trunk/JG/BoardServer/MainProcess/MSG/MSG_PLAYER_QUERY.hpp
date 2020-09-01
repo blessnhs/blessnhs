@@ -99,6 +99,34 @@ namespace Board	{
 		void Undo() {}
 	};
 
+	template<>
+	class MSG_PLAYER_QUERY<CalcRank> : public IMESSAGE
+	{
+	public:
+		MSG_PLAYER_QUERY() { }
+		~MSG_PLAYER_QUERY() {}
+
+	
+		boost::shared_ptr<CalcRank> pRequst;
+
+		void Execute(LPVOID Param)
+		{
+			DBPROCESS_CER_PTR pProcess = DBPROCESSCONTAINER_CER.Search(Type);
+			if (pProcess == NULL || pProcess->m_IsOpen == false)
+			{
+				return;
+			}
+
+			std::list<Rank> list;
+			// 로그인 절차 : 아이디의 접속확인 및 인증키값을 가져온다.
+			pProcess->CalcRank();
+
+		}
+
+
+		void Undo() {}
+	};
+
 
 	template<>
 	class MSG_PLAYER_QUERY<RequestRank> : public IMESSAGE
@@ -356,7 +384,12 @@ namespace Board	{
 							{
 								outValue.push_back(_picture.as_string());
 							}
-
+							web::json::value _locale = V.at(U("locale"));
+							if (_locale.is_string())
+							{
+								outValue.push_back(_T(_locale.as_string()));
+							}
+						
 							return outValue;
 						}
 					}
@@ -422,14 +455,14 @@ namespace Board	{
 			{
 				GetGoogleAuth(pRequst->Token.c_str());
 
-				if (http_out.size() == 5)
+				if (http_out.size() == 6)
 					break;
 
 				printf("retry google auth\n");
 			}
 
 
-			if(http_out.size() != 5)
+			if(http_out.size() != 6)
 			{
 				printf("http_out wong %d \n", http_out.size());
 				res.set_var_code(DataBaseError);
@@ -438,11 +471,13 @@ namespace Board	{
 				return;
 			}
 
-			std::string flatformid, name, picture_url, email;
+			std::string flatformid, name, picture_url, email,locale;
 
 			flatformid.assign(http_out[1].begin(), http_out[1].end());
 			email.assign(http_out[2].begin(), http_out[2].end());
 			picture_url.assign(http_out[4].begin(), http_out[4].end());
+			locale.assign(http_out[5].begin(), http_out[5].end());
+
 
 			Base64::convert_unicode_to_ansi_string(name, http_out[3].c_str(), http_out[3].size());
 
@@ -451,7 +486,7 @@ namespace Board	{
 			// 로그인 절차 : 아이디의 접속확인 및 인증키값을 가져온다.
 			std::string authentickey;
 			INT64 Index = 0;
-			WORD nRet = pProcess->ProcedureUserLogin(flatformid.c_str(), 0/*0번은 구글 인증*/, name.c_str(),picture_url.c_str(),email.c_str(), authentickey, rank, score, win, lose, draw,Index, level);
+			WORD nRet = pProcess->ProcedureUserLogin(flatformid.c_str(), 0/*0번은 구글 인증*/, name.c_str(),picture_url.c_str(),email.c_str(), locale.c_str(), authentickey, rank, score, win, lose, draw,Index, level);
 
 			if(nRet != _ERR_NONE )
 			{ 
@@ -504,6 +539,7 @@ namespace Board	{
 			res.set_var_score(score);
 			res.set_var_rank(rank);
 			res.set_var_level(level);
+			res.set_var_locale(locale);
 
 			SEND_PROTO_BUFFER(res, pSession)
 		}

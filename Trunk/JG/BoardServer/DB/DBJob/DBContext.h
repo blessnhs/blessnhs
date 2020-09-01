@@ -38,6 +38,14 @@ public:
 	~RequestRank(void) {}
 };
 
+class CalcRank : public GSObject
+{
+public:
+	CalcRank(void) {}
+	~CalcRank(void) {}
+};
+
+
 class RequestNotice : public GSObject
 {
 public:

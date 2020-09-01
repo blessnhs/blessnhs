@@ -64,6 +64,9 @@
     <Filter Include="TIMER">
       <UniqueIdentifier>{e90add6f-368d-47b6-a8cc-9a74498a004f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="TIMER\Timer">
+      <UniqueIdentifier>{4b81a360-44e9-4410-9b48-27c82016cd23}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Ini\INI.h">
@@ -138,11 +141,14 @@
     <ClInclude Include="..\Protocol\Cpp\Structure.pb.h">
       <Filter>PROTO</Filter>
     </ClInclude>
-    <ClInclude Include="Timer\ContentsTimer.h">
-      <Filter>TIMER</Filter>
-    </ClInclude>
     <ClInclude Include="Timer\ContentsTimerJob.h">
       <Filter>TIMER</Filter>
+    </ClInclude>
+    <ClInclude Include="Timer\RankTimerJob.h">
+      <Filter>TIMER</Filter>
+    </ClInclude>
+    <ClInclude Include="Timer\ContentsTimer.h">
+      <Filter>TIMER\Timer</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -212,11 +218,14 @@
     <ClCompile Include="..\Protocol\Cpp\Structure.pb.cc">
       <Filter>PROTO</Filter>
     </ClCompile>
-    <ClCompile Include="Timer\ContentsTimer.cpp">
-      <Filter>TIMER</Filter>
-    </ClCompile>
     <ClCompile Include="Timer\ContentsTimerJob.cpp">
       <Filter>TIMER</Filter>
+    </ClCompile>
+    <ClCompile Include="Timer\RankTimerJob.cpp">
+      <Filter>TIMER</Filter>
+    </ClCompile>
+    <ClCompile Include="Timer\ContentsTimer.cpp">
+      <Filter>TIMER\Timer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

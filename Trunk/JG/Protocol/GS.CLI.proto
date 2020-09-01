@@ -28,6 +28,7 @@ message LOGIN_RES
     optional int32	 var_score 		= 7;
     optional int32	 var_rank		= 8;
     optional int32	 var_level		= 9;
+    optional bytes    var_locale                  = 10;
 }
 
 message CREATE_ROOM_RES

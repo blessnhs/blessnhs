@@ -404,6 +404,7 @@ class LOGIN_RES :
   // accessors -------------------------------------------------------
 
   enum : int {
+    kVarLocaleFieldNumber = 10,
     kVarIndexFieldNumber = 3,
     kVarCodeFieldNumber = 2,
     kVarWinFieldNumber = 4,
@@ -414,6 +415,26 @@ class LOGIN_RES :
     kVarLevelFieldNumber = 9,
     kIdFieldNumber = 1,
   };
+  // optional bytes var_locale = 10;
+  bool has_var_locale() const;
+  private:
+  bool _internal_has_var_locale() const;
+  public:
+  void clear_var_locale();
+  const std::string& var_locale() const;
+  void set_var_locale(const std::string& value);
+  void set_var_locale(std::string&& value);
+  void set_var_locale(const char* value);
+  void set_var_locale(const void* value, size_t size);
+  std::string* mutable_var_locale();
+  std::string* release_var_locale();
+  void set_allocated_var_locale(std::string* var_locale);
+  private:
+  const std::string& _internal_var_locale() const;
+  void _internal_set_var_locale(const std::string& value);
+  std::string* _internal_mutable_var_locale();
+  public:
+
   // optional int64 var_index = 3;
   bool has_var_index() const;
   private:
@@ -538,6 +559,7 @@ class LOGIN_RES :
   ::PROTOBUF_NAMESPACE_ID::internal::InternalMetadataWithArena _internal_metadata_;
   ::PROTOBUF_NAMESPACE_ID::internal::HasBits<1> _has_bits_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr var_locale_;
   ::PROTOBUF_NAMESPACE_ID::int64 var_index_;
   int var_code_;
   ::PROTOBUF_NAMESPACE_ID::int32 var_win_;
@@ -3053,7 +3075,7 @@ inline void VERSION_RES::set_var_code(::ErrorCode value) {
 
 // optional .PROTOCOL id = 1 [default = ID_PKT_LOGIN_RES];
 inline bool LOGIN_RES::_internal_has_id() const {
-  bool value = (_has_bits_[0] & 0x00000100u) != 0;
+  bool value = (_has_bits_[0] & 0x00000200u) != 0;
   return value;
 }
 inline bool LOGIN_RES::has_id() const {
@@ -3061,7 +3083,7 @@ inline bool LOGIN_RES::has_id() const {
 }
 inline void LOGIN_RES::clear_id() {
   id_ = 3;
-  _has_bits_[0] &= ~0x00000100u;
+  _has_bits_[0] &= ~0x00000200u;
 }
 inline ::PROTOCOL LOGIN_RES::_internal_id() const {
   return static_cast< ::PROTOCOL >(id_);
@@ -3072,7 +3094,7 @@ inline ::PROTOCOL LOGIN_RES::id() const {
 }
 inline void LOGIN_RES::_internal_set_id(::PROTOCOL value) {
   assert(::PROTOCOL_IsValid(value));
-  _has_bits_[0] |= 0x00000100u;
+  _has_bits_[0] |= 0x00000200u;
   id_ = value;
 }
 inline void LOGIN_RES::set_id(::PROTOCOL value) {
@@ -3082,7 +3104,7 @@ inline void LOGIN_RES::set_id(::PROTOCOL value) {
 
 // optional .ErrorCode var_code = 2;
 inline bool LOGIN_RES::_internal_has_var_code() const {
-  bool value = (_has_bits_[0] & 0x00000002u) != 0;
+  bool value = (_has_bits_[0] & 0x00000004u) != 0;
   return value;
 }
 inline bool LOGIN_RES::has_var_code() const {
@@ -3090,7 +3112,7 @@ inline bool LOGIN_RES::has_var_code() const {
 }
 inline void LOGIN_RES::clear_var_code() {
   var_code_ = 0;
-  _has_bits_[0] &= ~0x00000002u;
+  _has_bits_[0] &= ~0x00000004u;
 }
 inline ::ErrorCode LOGIN_RES::_internal_var_code() const {
   return static_cast< ::ErrorCode >(var_code_);
@@ -3101,7 +3123,7 @@ inline ::ErrorCode LOGIN_RES::var_code() const {
 }
 inline void LOGIN_RES::_internal_set_var_code(::ErrorCode value) {
   assert(::ErrorCode_IsValid(value));
-  _has_bits_[0] |= 0x00000002u;
+  _has_bits_[0] |= 0x00000004u;
   var_code_ = value;
 }
 inline void LOGIN_RES::set_var_code(::ErrorCode value) {
@@ -3111,7 +3133,7 @@ inline void LOGIN_RES::set_var_code(::ErrorCode value) {
 
 // optional int64 var_index = 3;
 inline bool LOGIN_RES::_internal_has_var_index() const {
-  bool value = (_has_bits_[0] & 0x00000001u) != 0;
+  bool value = (_has_bits_[0] & 0x00000002u) != 0;
   return value;
 }
 inline bool LOGIN_RES::has_var_index() const {
@@ -3119,7 +3141,7 @@ inline bool LOGIN_RES::has_var_index() const {
 }
 inline void LOGIN_RES::clear_var_index() {
   var_index_ = PROTOBUF_LONGLONG(0);
-  _has_bits_[0] &= ~0x00000001u;
+  _has_bits_[0] &= ~0x00000002u;
 }
 inline ::PROTOBUF_NAMESPACE_ID::int64 LOGIN_RES::_internal_var_index() const {
   return var_index_;
@@ -3129,7 +3151,7 @@ inline ::PROTOBUF_NAMESPACE_ID::int64 LOGIN_RES::var_index() const {
   return _internal_var_index();
 }
 inline void LOGIN_RES::_internal_set_var_index(::PROTOBUF_NAMESPACE_ID::int64 value) {
-  _has_bits_[0] |= 0x00000001u;
+  _has_bits_[0] |= 0x00000002u;
   var_index_ = value;
 }
 inline void LOGIN_RES::set_var_index(::PROTOBUF_NAMESPACE_ID::int64 value) {
@@ -3139,7 +3161,7 @@ inline void LOGIN_RES::set_var_index(::PROTOBUF_NAMESPACE_ID::int64 value) {
 
 // optional int32 var_win = 4;
 inline bool LOGIN_RES::_internal_has_var_win() const {
-  bool value = (_has_bits_[0] & 0x00000004u) != 0;
+  bool value = (_has_bits_[0] & 0x00000008u) != 0;
   return value;
 }
 inline bool LOGIN_RES::has_var_win() const {
@@ -3147,7 +3169,7 @@ inline bool LOGIN_RES::has_var_win() const {
 }
 inline void LOGIN_RES::clear_var_win() {
   var_win_ = 0;
-  _has_bits_[0] &= ~0x00000004u;
+  _has_bits_[0] &= ~0x00000008u;
 }
 inline ::PROTOBUF_NAMESPACE_ID::int32 LOGIN_RES::_internal_var_win() const {
   return var_win_;
@@ -3157,7 +3179,7 @@ inline ::PROTOBUF_NAMESPACE_ID::int32 LOGIN_RES::var_win() const {
   return _internal_var_win();
 }
 inline void LOGIN_RES::_internal_set_var_win(::PROTOBUF_NAMESPACE_ID::int32 value) {
-  _has_bits_[0] |= 0x00000004u;
+  _has_bits_[0] |= 0x00000008u;
   var_win_ = value;
 }
 inline void LOGIN_RES::set_var_win(::PROTOBUF_NAMESPACE_ID::int32 value) {
@@ -3167,7 +3189,7 @@ inline void LOGIN_RES::set_var_win(::PROTOBUF_NAMESPACE_ID::int32 value) {
 
 // optional int32 var_lose = 5;
 inline bool LOGIN_RES::_internal_has_var_lose() const {
-  bool value = (_has_bits_[0] & 0x00000008u) != 0;
+  bool value = (_has_bits_[0] & 0x00000010u) != 0;
   return value;
 }
 inline bool LOGIN_RES::has_var_lose() const {
@@ -3175,7 +3197,7 @@ inline bool LOGIN_RES::has_var_lose() const {
 }
 inline void LOGIN_RES::clear_var_lose() {
   var_lose_ = 0;
-  _has_bits_[0] &= ~0x00000008u;
+  _has_bits_[0] &= ~0x00000010u;
 }
 inline ::PROTOBUF_NAMESPACE_ID::int32 LOGIN_RES::_internal_var_lose() const {
   return var_lose_;
@@ -3185,7 +3207,7 @@ inline ::PROTOBUF_NAMESPACE_ID::int32 LOGIN_RES::var_lose() const {
   return _internal_var_lose();
 }
 inline void LOGIN_RES::_internal_set_var_lose(::PROTOBUF_NAMESPACE_ID::int32 value) {
-  _has_bits_[0] |= 0x00000008u;
+  _has_bits_[0] |= 0x00000010u;
   var_lose_ = value;
 }
 inline void LOGIN_RES::set_var_lose(::PROTOBUF_NAMESPACE_ID::int32 value) {
@@ -3195,7 +3217,7 @@ inline void LOGIN_RES::set_var_lose(::PROTOBUF_NAMESPACE_ID::int32 value) {
 
 // optional int32 var_draw = 6;
 inline bool LOGIN_RES::_internal_has_var_draw() const {
-  bool value = (_has_bits_[0] & 0x00000010u) != 0;
+  bool value = (_has_bits_[0] & 0x00000020u) != 0;
   return value;
 }
 inline bool LOGIN_RES::has_var_draw() const {
@@ -3203,7 +3225,7 @@ inline bool LOGIN_RES::has_var_draw() const {
 }
 inline void LOGIN_RES::clear_var_draw() {
   var_draw_ = 0;
-  _has_bits_[0] &= ~0x00000010u;
+  _has_bits_[0] &= ~0x00000020u;
 }
 inline ::PROTOBUF_NAMESPACE_ID::int32 LOGIN_RES::_internal_var_draw() const {
   return var_draw_;
@@ -3213,7 +3235,7 @@ inline ::PROTOBUF_NAMESPACE_ID::int32 LOGIN_RES::var_draw() const {
   return _internal_var_draw();
 }
 inline void LOGIN_RES::_internal_set_var_draw(::PROTOBUF_NAMESPACE_ID::int32 value) {
-  _has_bits_[0] |= 0x00000010u;
+  _has_bits_[0] |= 0x00000020u;
   var_draw_ = value;
 }
 inline void LOGIN_RES::set_var_draw(::PROTOBUF_NAMESPACE_ID::int32 value) {
@@ -3223,7 +3245,7 @@ inline void LOGIN_RES::set_var_draw(::PROTOBUF_NAMESPACE_ID::int32 value) {
 
 // optional int32 var_score = 7;
 inline bool LOGIN_RES::_internal_has_var_score() const {
-  bool value = (_has_bits_[0] & 0x00000020u) != 0;
+  bool value = (_has_bits_[0] & 0x00000040u) != 0;
   return value;
 }
 inline bool LOGIN_RES::has_var_score() const {
@@ -3231,7 +3253,7 @@ inline bool LOGIN_RES::has_var_score() const {
 }
 inline void LOGIN_RES::clear_var_score() {
   var_score_ = 0;
-  _has_bits_[0] &= ~0x00000020u;
+  _has_bits_[0] &= ~0x00000040u;
 }
 inline ::PROTOBUF_NAMESPACE_ID::int32 LOGIN_RES::_internal_var_score() const {
   return var_score_;
@@ -3241,7 +3263,7 @@ inline ::PROTOBUF_NAMESPACE_ID::int32 LOGIN_RES::var_score() const {
   return _internal_var_score();
 }
 inline void LOGIN_RES::_internal_set_var_score(::PROTOBUF_NAMESPACE_ID::int32 value) {
-  _has_bits_[0] |= 0x00000020u;
+  _has_bits_[0] |= 0x00000040u;
   var_score_ = value;
 }
 inline void LOGIN_RES::set_var_score(::PROTOBUF_NAMESPACE_ID::int32 value) {
@@ -3251,7 +3273,7 @@ inline void LOGIN_RES::set_var_score(::PROTOBUF_NAMESPACE_ID::int32 value) {
 
 // optional int32 var_rank = 8;
 inline bool LOGIN_RES::_internal_has_var_rank() const {
-  bool value = (_has_bits_[0] & 0x00000040u) != 0;
+  bool value = (_has_bits_[0] & 0x00000080u) != 0;
   return value;
 }
 inline bool LOGIN_RES::has_var_rank() const {
@@ -3259,7 +3281,7 @@ inline bool LOGIN_RES::has_var_rank() const {
 }
 inline void LOGIN_RES::clear_var_rank() {
   var_rank_ = 0;
-  _has_bits_[0] &= ~0x00000040u;
+  _has_bits_[0] &= ~0x00000080u;
 }
 inline ::PROTOBUF_NAMESPACE_ID::int32 LOGIN_RES::_internal_var_rank() const {
   return var_rank_;
@@ -3269,7 +3291,7 @@ inline ::PROTOBUF_NAMESPACE_ID::int32 LOGIN_RES::var_rank() const {
   return _internal_var_rank();
 }
 inline void LOGIN_RES::_internal_set_var_rank(::PROTOBUF_NAMESPACE_ID::int32 value) {
-  _has_bits_[0] |= 0x00000040u;
+  _has_bits_[0] |= 0x00000080u;
   var_rank_ = value;
 }
 inline void LOGIN_RES::set_var_rank(::PROTOBUF_NAMESPACE_ID::int32 value) {
@@ -3279,7 +3301,7 @@ inline void LOGIN_RES::set_var_rank(::PROTOBUF_NAMESPACE_ID::int32 value) {
 
 // optional int32 var_level = 9;
 inline bool LOGIN_RES::_internal_has_var_level() const {
-  bool value = (_has_bits_[0] & 0x00000080u) != 0;
+  bool value = (_has_bits_[0] & 0x00000100u) != 0;
   return value;
 }
 inline bool LOGIN_RES::has_var_level() const {
@@ -3287,7 +3309,7 @@ inline bool LOGIN_RES::has_var_level() const {
 }
 inline void LOGIN_RES::clear_var_level() {
   var_level_ = 0;
-  _has_bits_[0] &= ~0x00000080u;
+  _has_bits_[0] &= ~0x00000100u;
 }
 inline ::PROTOBUF_NAMESPACE_ID::int32 LOGIN_RES::_internal_var_level() const {
   return var_level_;
@@ -3297,12 +3319,83 @@ inline ::PROTOBUF_NAMESPACE_ID::int32 LOGIN_RES::var_level() const {
   return _internal_var_level();
 }
 inline void LOGIN_RES::_internal_set_var_level(::PROTOBUF_NAMESPACE_ID::int32 value) {
-  _has_bits_[0] |= 0x00000080u;
+  _has_bits_[0] |= 0x00000100u;
   var_level_ = value;
 }
 inline void LOGIN_RES::set_var_level(::PROTOBUF_NAMESPACE_ID::int32 value) {
   _internal_set_var_level(value);
   // @@protoc_insertion_point(field_set:LOGIN_RES.var_level)
+}
+
+// optional bytes var_locale = 10;
+inline bool LOGIN_RES::_internal_has_var_locale() const {
+  bool value = (_has_bits_[0] & 0x00000001u) != 0;
+  return value;
+}
+inline bool LOGIN_RES::has_var_locale() const {
+  return _internal_has_var_locale();
+}
+inline void LOGIN_RES::clear_var_locale() {
+  var_locale_.ClearToEmptyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline const std::string& LOGIN_RES::var_locale() const {
+  // @@protoc_insertion_point(field_get:LOGIN_RES.var_locale)
+  return _internal_var_locale();
+}
+inline void LOGIN_RES::set_var_locale(const std::string& value) {
+  _internal_set_var_locale(value);
+  // @@protoc_insertion_point(field_set:LOGIN_RES.var_locale)
+}
+inline std::string* LOGIN_RES::mutable_var_locale() {
+  // @@protoc_insertion_point(field_mutable:LOGIN_RES.var_locale)
+  return _internal_mutable_var_locale();
+}
+inline const std::string& LOGIN_RES::_internal_var_locale() const {
+  return var_locale_.GetNoArena();
+}
+inline void LOGIN_RES::_internal_set_var_locale(const std::string& value) {
+  _has_bits_[0] |= 0x00000001u;
+  var_locale_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), value);
+}
+inline void LOGIN_RES::set_var_locale(std::string&& value) {
+  _has_bits_[0] |= 0x00000001u;
+  var_locale_.SetNoArena(
+    &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:LOGIN_RES.var_locale)
+}
+inline void LOGIN_RES::set_var_locale(const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  _has_bits_[0] |= 0x00000001u;
+  var_locale_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:LOGIN_RES.var_locale)
+}
+inline void LOGIN_RES::set_var_locale(const void* value, size_t size) {
+  _has_bits_[0] |= 0x00000001u;
+  var_locale_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:LOGIN_RES.var_locale)
+}
+inline std::string* LOGIN_RES::_internal_mutable_var_locale() {
+  _has_bits_[0] |= 0x00000001u;
+  return var_locale_.MutableNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline std::string* LOGIN_RES::release_var_locale() {
+  // @@protoc_insertion_point(field_release:LOGIN_RES.var_locale)
+  if (!_internal_has_var_locale()) {
+    return nullptr;
+  }
+  _has_bits_[0] &= ~0x00000001u;
+  return var_locale_.ReleaseNonDefaultNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline void LOGIN_RES::set_allocated_var_locale(std::string* var_locale) {
+  if (var_locale != nullptr) {
+    _has_bits_[0] |= 0x00000001u;
+  } else {
+    _has_bits_[0] &= ~0x00000001u;
+  }
+  var_locale_.SetAllocatedNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), var_locale);
+  // @@protoc_insertion_point(field_set_allocated:LOGIN_RES.var_locale)
 }
 
 // -------------------------------------------------------------------

@@ -47,6 +47,12 @@ int  CDBProcessCer::RequestRank(std::list<Rank> &list)
 	return _ERR_NONE;
 }
 
+int  CDBProcessCer::CalcRank()
+{
+	m_DB->CalcRank();
+	return _ERR_NONE;
+}
+
 int CDBProcessCer::UpdaetPlayerScore(INT64 Index,int Win, int Lose, int Draw,int Level,int Score)
 {
 	return m_DB->UpdaetPlayerScore(Index, Win, Lose, Draw, Level, Score);
@@ -73,7 +79,7 @@ int  CDBProcessCer::DeleteAllConcurrentUser()
 	return m_DB->DeleteAllConcurrentUser();
 }
 
-int		CDBProcessCer::ProcedureUserLogin(const CHAR* flatformid, const int flatformtype, const CHAR* name, const CHAR* picture_url, const CHAR* email,std::string& szKey, int& Rank, int& Score, int& Win, int& Lose, int& Draw, INT64& Index, int& Level)
+int		CDBProcessCer::ProcedureUserLogin(const CHAR* flatformid, const int flatformtype, const CHAR* name, const CHAR* picture_url, const CHAR* email, const CHAR* locale,std::string& szKey, int& Rank, int& Score, int& Win, int& Lose, int& Draw, INT64& Index, int& Level)
 {
-	return m_DB->ProcedureUserLogin(flatformid, flatformtype, name, picture_url, email, szKey, Rank, Score, Win, Lose, Draw, Index, Level);
+	return m_DB->ProcedureUserLogin(flatformid, flatformtype, name, picture_url, email, locale, szKey, Rank, Score, Win, Lose, Draw, Index, Level);
 }
