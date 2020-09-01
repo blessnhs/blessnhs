@@ -14,13 +14,13 @@ public:
 
 	enum {
 		SYS_TIMER  = 1,
+		RANK_TIMER ,
 	};
 
 	static void CALLBACK OnEvt(LPVOID Arg);
 
 	void Start();
 
-	boost::object_pool<ContentsTimerJob>									m_TimerJobPool;
 };
 
 extern ContentsTimer &GetContentsTimer();

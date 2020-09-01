@@ -1,6 +1,8 @@
 #include "stdafx.h"
 #include "ContentsTimer.h"
 #include "ContentsTimerJob.h"
+#include "RankTimerJob.h"
+
 
 
 #include "GSAllocator.h"
@@ -20,13 +22,25 @@ ContentsTimer::~ContentsTimer()
 
 void ContentsTimer::Start()
 {
-	ContentsTimerJob *pJob = m_TimerJobPool.malloc();
+	{
+		ContentsTimerJob* pJob = new ContentsTimerJob();
 
-	pJob->Func = ContentsTimer::OnEvt;
-	pJob->SetExpineTime(GetTickCount());
-	pJob->SetId(ContentsTimer::SYS_TIMER);
+		pJob->Func = ContentsTimer::OnEvt;
+		pJob->SetExpineTime(GetTickCount());
+		pJob->SetId(ContentsTimer::SYS_TIMER);
 
-	AddTimerJob(pJob);
+		AddTimerJob(pJob);
+	}
+	/////////////////////////////////////////////////
+	{
+		RankTimerJob* pJob = new RankTimerJob();
+
+		pJob->Func = ContentsTimer::OnEvt;
+		pJob->SetExpineTime(GetTickCount());
+		pJob->SetId(ContentsTimer::RANK_TIMER);
+
+		AddTimerJob(pJob);
+	}
 }
 
 void ContentsTimer::OnEvt(LPVOID Arg)
@@ -39,17 +53,38 @@ void ContentsTimer::OnEvt(LPVOID Arg)
 		{
 			PLAYERMGR.CheckUserList();
 
-			ContentsTimerJob* pNewJob = GetContentsTimer().m_TimerJobPool.malloc();
+			ContentsTimerJob* pNewJob = new ContentsTimerJob();
 			pNewJob->Func = ContentsTimer::OnEvt;
 			pNewJob->SetExpineTime(GetTickCount() + 1000);
 			pNewJob->SetId(ContentsTimer::SYS_TIMER);
 			GetContentsTimer().AddTimerJob(pNewJob);
 		}
 		break;
+
+		case ContentsTimer::RANK_TIMER:
+		{
+			{
+				//로그인 쿼리를 날린다.
+				boost::shared_ptr<CalcRank> pRequest = ALLOCATOR.Create<CalcRank>();
+
+				boost::shared_ptr<Board::MSG_PLAYER_QUERY<CalcRank>>		PLAYER_MSG = ALLOCATOR.Create<Board::MSG_PLAYER_QUERY<CalcRank>>();
+				PLAYER_MSG->pRequst = pRequest;
+				PLAYER_MSG->Type = MSG_TYPE_DB_1;
+				PLAYER_MSG->SubType = ONQUERY;
+				MAINPROC.RegisterCommand(PLAYER_MSG);
+			}
+
+			ContentsTimerJob* pNewJob = new ContentsTimerJob();
+			pNewJob->Func = ContentsTimer::OnEvt;
+			pNewJob->SetExpineTime(GetTickCount() + 5000);
+			pNewJob->SetId(ContentsTimer::RANK_TIMER);
+			GetContentsTimer().AddTimerJob(pNewJob);
+		}
+		break;
 	}
 
-	if(pJob != NULL)
-		GetContentsTimer().m_TimerJobPool.destroy(pJob);
+	if (pJob != NULL)
+		delete pJob;
 }
 
 ContentsTimer &GetContentsTimer()
