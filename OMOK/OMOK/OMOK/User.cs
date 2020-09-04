@@ -48,6 +48,7 @@ namespace OMOK
         public static string Uid;
         public static string Token;
         public static long Id;
+        public static string Locale;
 
         public static PlayerState state = PlayerState.None;
     }

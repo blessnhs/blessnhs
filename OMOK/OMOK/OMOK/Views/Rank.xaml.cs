@@ -47,7 +47,7 @@ namespace OMOK.Views
                 var text = r.VarRank + "위 " + Helper.ToStr(r.VarName.ToByteArray()) + " " + r.VarWin + "승" + r.VarLose + "패";
 
                 text.Replace('\n', ' ');
-                var labelText = new Label { Padding = new Thickness(0, 10, 0, 0), Text = text, TextColor = Xamarin.Forms.Color.FromRgb(0, 0, 0) , HorizontalTextAlignment = TextAlignment.Start };
+                var labelText = new Label { Padding = new Thickness(5, 10, 0, 0), Text = text, TextColor = Xamarin.Forms.Color.FromRgb(0, 0, 0) , HorizontalTextAlignment = TextAlignment.Start };
 
                 stackLayout.Children.Add(labelText);
 

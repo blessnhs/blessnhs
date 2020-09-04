@@ -15,10 +15,6 @@ namespace OMOK
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class AISelect : PopupPage
     {
-     
-        public int game_rule = 1;
-        public int mode = 1;
-
         SingleMatch _parent;
 
         public AISelect(SingleMatch parent)
@@ -26,38 +22,60 @@ namespace OMOK
             InitializeComponent();
 
             _parent = parent;
+
+            switch(User.myInfo.ai_rule)
+            {
+                case 1:
+                    gomoku.IsChecked = true;
+                    break;
+                case 2:
+                    normal.IsChecked = true;
+                    break;
+                case 3:
+                    renju.IsChecked = true;
+                    break;
+            }
+
+            switch (User.myInfo.ai_mode)
+            {
+                case 1:
+                    ai1.IsChecked = true;
+                    break;
+                case 2:
+                    ai2.IsChecked = true;
+                    break;
+              
+            }
         }
 
         private void Gomoku_CheckedChanged(object sender, CheckedChangedEventArgs e)
         {
-            game_rule = 1;
+            User.myInfo.ai_rule = 1;
         }
 
         private void Normal_CheckedChanged(object sender, CheckedChangedEventArgs e)
         {
-            game_rule = 2;
+            User.myInfo.ai_rule = 2;
         }
 
         private void Renju_CheckedChanged(object sender, CheckedChangedEventArgs e)
         {
-            game_rule = 3;
+            User.myInfo.ai_rule = 3;
         }
 
         private void mode1_CheckedChanged(object sender, CheckedChangedEventArgs e)
         {
-            mode = 1;
+            User.myInfo.ai_mode = 1;
         }
 
         private void mode2_CheckedChanged(object sender, CheckedChangedEventArgs e)
         {
-            mode = 2;
+            User.myInfo.ai_mode = 2;
         }
 
         private async void CloseButtonClicked(object sender, EventArgs e)
         {
-            User.myInfo.ai_mode = mode;
-            User.myInfo.ai_rule = game_rule;
-            User.myInfo.ai_set_flag = true;
+           User.myInfo.ai_set_flag = true;
 
             await Navigation.PopAllPopupAsync();
 

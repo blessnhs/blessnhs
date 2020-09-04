@@ -40,8 +40,7 @@ namespace OMOK.Network
             string ip = "192.168.0.9";
 
             ip = GetIPAddress("blessnhs.iptime.org");
-            if (GlobalVariable.ip != "")
-                ip = GlobalVariable.ip;
+
 
             //연결중이면 안한다. 
             if (client.socket == null || client.socket.Connected == false)
@@ -116,6 +115,7 @@ namespace OMOK.Network
                                     User.myInfo.score = res.VarScore;
                                     User.myInfo.rank = res.VarRank;
                                     User.myInfo.level = res.VarLevel;
+                                    User.Locale = Helper.ToStr(res.VarLocale.ToByteArray());
 
                                     ((Lobby)page.Children[0]).UpdatePlayerInfo();
 
@@ -149,10 +149,14 @@ namespace OMOK.Network
                                     ((Lobby)page.Children[0]).CloseMatchInfoPopup();
 
                                     User.Color = eTeam.Black;
+
+                                    page.Children.Add(new Room());
+
                                     page.CurrentPage = page.Children[1];
                                     User.IsMyTurn = true;
                               
                                     User.state = PlayerState.Room;
+
 
                                     var Room = (Room)page.Children[1];
                                     Room.ClearBoard();
@@ -240,6 +244,8 @@ namespace OMOK.Network
 
                                     ((Room)page.Children[1]).ShowLeaveAd();
 
+                                    page.Children.Remove((Room)page.Children[1]);
+
                                 }
 
                                 ((Lobby)page.Children[0]).UpdatePlayerInfo();
@@ -255,6 +261,8 @@ namespace OMOK.Network
                                 if (res.VarCode == ErrorCode.Success)
                                 {
                                     ((Lobby)page.Children[0]).CloseMatchInfoPopup();
+                         
+                                    page.Children.Add(new Room());
 
                                     User.Color = eTeam.White;
                                     page.CurrentPage = page.Children[1];

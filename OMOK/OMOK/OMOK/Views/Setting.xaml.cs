@@ -41,8 +41,8 @@ namespace OMOK.Views
         }
         async void OnOptionClicked(object sender, EventArgs e)
         {
-            GlobalVariable.ip = ip.Text;
-            GlobalVariable.port = Convert.ToInt32(port.Text);
+            //GlobalVariable.ip = ip.Text;
+            //GlobalVariable.port = Convert.ToInt32(port.Text);
         }
         
     }

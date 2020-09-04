@@ -22,9 +22,33 @@ namespace OMOK
  
         iAd_IterstitialView iIterstitia;
 
+        public void InitBoardGrid()
+        {
+            grid.BackgroundColor = Color.Black;
+
+            for (int i = 0; i < ConstValue.SIZE; i++)
+            {
+                grid.ColumnDefinitions.Add(new ColumnDefinition()
+                {
+                    Width = new GridLength(1, GridUnitType.Star)
+                });
+            }
+
+            for (int i = 0; i < ConstValue.SIZE; i++)
+            {
+                grid.RowDefinitions.Add(new RowDefinition()
+                {
+                    Height = new GridLength(1, GridUnitType.Star)
+                });
+            }
+        }
+
+
         public Room()
         {
             InitializeComponent();
+
+            InitBoardGrid();
 
             ClearBoardState();
 
@@ -52,6 +76,9 @@ namespace OMOK
                             ProgressRoom.Progress = current;
 
                             int remainseconds = 30 - (int)((DateTime.Now - User.MytrunStartTime).TotalSeconds);
+                            if (remainseconds < 0)
+                                remainseconds = 0;
+
                             timeLabel.Text = remainseconds.ToString();
                             DependencyService.Get<Toast>().Show(timeLabel.Text);
 
@@ -128,7 +155,10 @@ namespace OMOK
 
             if (prevLayout != null)
             {
-                prevLayout.BackgroundColor = Color.FromHex("#F7E48B");
+                if (LastLayout == prevLayout)
+                    prevLayout.BackgroundColor = Color.Red;
+                else
+                    prevLayout.BackgroundColor = Color.FromHex("#F7E48B");
 
             }
 
@@ -192,6 +222,7 @@ namespace OMOK
                     slo.Padding = new Thickness(0, 0, 0, 0);
                     slo.Orientation = StackOrientation.Vertical;
                     slo.BackgroundColor = Color.FromHex("#F7E48B");
+                    slo.HeightRequest = slo.Width;
                     slo.IdField = x + ":" + y;
                     slo.GestureRecognizers.Add(
                           new TapGestureRecognizer()
@@ -236,6 +267,8 @@ namespace OMOK
 
         void OnLeaveClicked(object sender, System.EventArgs e)
         {
+            User.IsMyTurn = false;
+
             if (User.state == PlayerState.Room)
                 NetProcess.SendLeaveRoom(0);
             else
@@ -301,6 +334,21 @@ namespace OMOK
             UpdateAim(aimx, aimy);
         }
 
+        protected override void OnSizeAllocated(double width, double height)
+        {
+            base.OnSizeAllocated(width, height);
+
+            if (grid.ColumnDefinitions.Count == 0 || grid.RowDefinitions.Count == 0)
+                return;
+
+            var totalColSpacing = (grid.ColumnDefinitions.Count - 1) * grid.ColumnSpacing;
+            var totalRowSpacing = (grid.RowDefinitions.Count - 1) * grid.RowSpacing;
+
+            var cellWidth = (width - totalColSpacing) / grid.ColumnDefinitions.Count;
+
+            grid.HeightRequest = (cellWidth * grid.RowDefinitions.Count) + totalRowSpacing;
+        }
+
         public bool UpdateTurnBackground(eTeam status)
         {
             if (status == eTeam.Black)
@@ -328,6 +376,8 @@ namespace OMOK
         {
             ClearBoardState();
         }
+
+        BoardLayout LastLayout = null;
 
         public bool UpdateStone(int x, int y, eTeam status)
         {
@@ -357,6 +407,16 @@ namespace OMOK
                     HeightRequest = slo.Bounds.Height,
                 });
             }
+
+
+            slo.BackgroundColor = Color.Red;
+
+
+            //포커스 처리
+            if (LastLayout != null)
+                LastLayout.BackgroundColor = Color.FromHex("#F7E48B");
+
+            LastLayout = slo;
 
             return true;
         }

@@ -129,7 +129,10 @@ namespace OMOK.Views
             else
                 User.Color = eTeam.Black;
 
-            UpdateTurnBackground(eTeam.Black);
+            if(User.Color == eTeam.Black)
+                UpdateTurnBackground(eTeam.Black);
+            else
+                UpdateTurnBackground(eTeam.White);
         }
 
         // 흑과 백의 둘 차례를 바꾼다. 
@@ -465,6 +468,7 @@ namespace OMOK.Views
                     slo.Orientation = StackOrientation.Vertical;
                     slo.BackgroundColor = Color.FromHex("#F7E48B");
                     slo.IdField = x + ":" + y;
+                    slo.HeightRequest = slo.Width;
                     slo.GestureRecognizers.Add(
                           new TapGestureRecognizer()
                           {
@@ -614,6 +618,9 @@ namespace OMOK.Views
             int cnt = lo.Children.Count();
 
             if (cnt > 0)
+                return;
+
+            if (isbegin == false)
                 return;
 
             aix = aimx;

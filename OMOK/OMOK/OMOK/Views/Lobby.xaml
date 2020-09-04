@@ -87,7 +87,7 @@
  
                 <!--5row 0번째 이름 -->
                 <Frame Grid.Column="0"  Grid.Row="4"  Grid.ColumnSpan="6" Padding="0,0,0,0" HeightRequest="30" BackgroundColor="#D9D4D4">
-                    <Label x:Name="NoticeLabel" Text="서버 정검 시간은 새벽4시 입니다." FontAttributes="Bold"  FontSize="Large" TextColor="Black" WidthRequest="256" MaxLines="20" LineBreakMode="CharacterWrap"/>
+                    <Label x:Name="NoticeLabel" Text="서버점검 시간은 새벽4시 입니다." FontAttributes="Bold"  FontSize="Large" TextColor="Black" WidthRequest="256" MaxLines="20" LineBreakMode="CharacterWrap"/>
                 </Frame>
 
             </Grid>

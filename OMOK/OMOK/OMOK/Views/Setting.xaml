@@ -39,10 +39,6 @@
                     <Button  x:Name="sendbutton" Text="전송" Clicked="OnSendButtonClicked"/>
                     <Button  x:Name="closebutton" Text="닫기" Clicked="OnCloseButtonClicked" />
                 </StackLayout>
-
-                <Editor x:Name="ip" Text="192.168.0.9"  BackgroundColor="Gray" Grid.Row="4" Grid.Column="0"/>
-                <Editor x:Name="port" Text="20000" BackgroundColor="Gray" Grid.Row="4" Grid.Column="1" />
-                <Button  x:Name="option" Text="변경" Clicked="OnOptionClicked" Grid.Row="4" Grid.Column="2" />
             </Grid>
         </StackLayout>
 

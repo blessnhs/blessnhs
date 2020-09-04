@@ -34,7 +34,7 @@ namespace OMOK.Views
         public Lobby()
         {
             InitializeComponent();
-
+ 
             iIterstitia = DependencyService.Get<iAd_IterstitialView>();
       //      iIterstitia.ShowAd();
 

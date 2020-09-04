@@ -13,8 +13,14 @@ namespace OMOK.Views
         {
             InitializeComponent();
 
+
             Children.Add(new Lobby());
-            Children.Add(new Room());
+            var sizxe = Children[0].Height;
+
+            Children[0].HeightRequest = 0;
+            var bs = Children[0].Bounds;
+
+
 
             //소켓 연결
             {

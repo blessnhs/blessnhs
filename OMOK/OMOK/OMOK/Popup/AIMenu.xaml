@@ -16,16 +16,16 @@
 
             <Frame OutlineColor="Black" Padding="0,0,10,10">
                 <StackLayout VerticalOptions="Center" HorizontalOptions="Start">
-                    <RadioButton Text="고 모 쿠"  CheckedChanged="Gomoku_CheckedChanged" GroupName="rule" IsChecked="True"/>
-                    <RadioButton Text="일    반" CheckedChanged="Normal_CheckedChanged" GroupName="rule"/>
-                    <RadioButton Text="렌    주" CheckedChanged="Renju_CheckedChanged" GroupName="rule"/>
+                    <RadioButton x:Name="gomoku"  Text="고 모 쿠"  CheckedChanged="Gomoku_CheckedChanged" GroupName="rule"/>
+                    <RadioButton x:Name="normal" Text="일  반" CheckedChanged="Normal_CheckedChanged" GroupName="rule"/>
+                    <RadioButton x:Name="renju" Text="렌  주 (3 x 3 금지)" CheckedChanged="Renju_CheckedChanged" GroupName="rule"/>
                 </StackLayout>
             </Frame>
 
             <Frame OutlineColor="Black" Padding="0,0,10,15">
                 <StackLayout VerticalOptions="Center" HorizontalOptions="Center">
-                    <RadioButton Text="흑 AI vs 백 유저" CheckedChanged="mode1_CheckedChanged" GroupName="mode"/>
-                    <RadioButton Text="흑 유저 vs 백 AI" CheckedChanged="mode2_CheckedChanged" GroupName="mode" IsChecked="True"/>
+                    <RadioButton x:Name="ai1" Text="흑 AI vs 백 유저" CheckedChanged="mode1_CheckedChanged" GroupName="mode"/>
+                    <RadioButton x:Name="ai2" Text="흑 유저 vs 백 AI" CheckedChanged="mode2_CheckedChanged" GroupName="mode"/>
                 </StackLayout>
             </Frame>
             

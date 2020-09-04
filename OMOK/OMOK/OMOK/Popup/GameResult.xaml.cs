@@ -32,12 +32,12 @@ namespace OMOK
                 if (User.myInfo.level < nty.VarLevel1)
                 {
                     Label1.Text = "축하합니다. 승급하셨습니다. ";
-                    Label2.Text = User.myInfo.level + " => " + nty.VarLevel1;
+                    Label2.Text = Helper.LevelConverter(User.myInfo.level) + " => " + Helper.LevelConverter(nty.VarLevel1);
                 }
                 else if (User.myInfo.level > nty.VarLevel1)
                 {
                     Label1.Text = "강등되셨습니다. ";
-                    Label2.Text = User.myInfo.level + " => " + nty.VarLevel1;
+                    Label2.Text = Helper.LevelConverter(User.myInfo.level) + " => " + Helper.LevelConverter(nty.VarLevel1);
                 }
 
 
