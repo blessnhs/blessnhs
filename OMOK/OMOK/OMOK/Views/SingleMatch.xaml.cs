@@ -468,7 +468,6 @@ namespace OMOK.Views
                     slo.Orientation = StackOrientation.Vertical;
                     slo.BackgroundColor = Color.FromHex("#F7E48B");
                     slo.IdField = x + ":" + y;
-                    slo.HeightRequest = slo.Width;
                     slo.GestureRecognizers.Add(
                           new TapGestureRecognizer()
                           {

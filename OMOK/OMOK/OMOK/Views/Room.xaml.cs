@@ -80,7 +80,7 @@ namespace OMOK
                                 remainseconds = 0;
 
                             timeLabel.Text = remainseconds.ToString();
-                            DependencyService.Get<Toast>().Show(timeLabel.Text);
+                         //   DependencyService.Get<Toast>().Show(timeLabel.Text);
 
                             //   ToastNotification.TostMessage(timeLabel.Text);
 
@@ -222,7 +222,6 @@ namespace OMOK
                     slo.Padding = new Thickness(0, 0, 0, 0);
                     slo.Orientation = StackOrientation.Vertical;
                     slo.BackgroundColor = Color.FromHex("#F7E48B");
-                    slo.HeightRequest = slo.Width;
                     slo.IdField = x + ":" + y;
                     slo.GestureRecognizers.Add(
                           new TapGestureRecognizer()

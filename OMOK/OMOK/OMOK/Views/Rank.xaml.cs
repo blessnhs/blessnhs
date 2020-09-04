@@ -25,7 +25,7 @@ namespace OMOK.Views
             };
             main_grid.Children.Add(PrevBtn, 0, 0);
 
-            var titletext = "전체 랭크";
+            var titletext = "랭크";
             var titlelabelText = new Label { Text = titletext, TextColor = Xamarin.Forms.Color.FromRgb(0, 0, 0), HorizontalTextAlignment = TextAlignment.Center, FontSize = 25 };
             main_grid.Children.Add(titlelabelText, 1, 0);
     
