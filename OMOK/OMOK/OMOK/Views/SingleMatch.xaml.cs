@@ -577,7 +577,7 @@ namespace OMOK.Views
 
         void OnRetryClicked(object sender, System.EventArgs e)
         {
-            if(retrycount != 0)
+            if (retrycount != 0)
                 iIterstitia.ShowAd();
 
             retrycount++;

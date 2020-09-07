@@ -2,7 +2,7 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:AdFire="clr-namespace:OMOK.CustomAdMobView"
              x:Class="OMOK.Views.SingleMatch">
-    <RelativeLayout>
+    <RelativeLayout >
 
         <Grid x:Name="mainGrid" ColumnSpacing="0" RowSpacing="0">
         <Grid.RowDefinitions>
@@ -11,8 +11,8 @@
             <RowDefinition Height="auto" />
             <RowDefinition Height="auto" />
             <RowDefinition Height="auto" />
-            <RowDefinition Height="auto" />
-        </Grid.RowDefinitions>
+ 			<RowDefinition Height="auto" />
+       </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="20*"/>
             <ColumnDefinition Width="20*"/>
@@ -20,20 +20,21 @@
             <ColumnDefinition Width="20*"/>
             <ColumnDefinition Width="20*"/>
         </Grid.ColumnDefinitions>
-            
-        <Frame  Padding="5,5,5,0" BorderColor="White" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="5">
-            <AdFire:CtBannerView eBannerSize="Standardbanner"   BackgroundColor="White" x:Name="banner3"/>
+       
+        <Button Text="시작"   Grid.Row="0" Grid.Column="0" Clicked="OnRetryClicked" BackgroundColor="#E6DEDE" Margin="0,0,2,0" ContentLayout="Top"/>
+        <Button Text="룰 설정"   Grid.Row="0" Grid.Column="1" Clicked="OnSettingClicked" BackgroundColor="#E6DEDE" Margin="0,0,0,0" ContentLayout="Top"/>
+        <Frame  Padding="5,5,5,0" BorderColor="White" Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="5">
+            <AdFire:CtBannerView eBannerSize="Standardbanner"   BackgroundColor="White" x:Name="banner2"/>
         </Frame>
         
-        <Button Text="시작"   Grid.Row="1" Grid.Column="0" Clicked="OnRetryClicked" BackgroundColor="#E6DEDE" Margin="0,0,2,0" ContentLayout="Top"/>
-        <Button Text="룰 설정"   Grid.Row="1" Grid.Column="1" Clicked="OnSettingClicked" BackgroundColor="#E6DEDE" Margin="0,0,0,0" ContentLayout="Top"/>
+        <Button x:Name="LeaveRoom" Text="나가기"  Grid.Row="0" Grid.Column="3" Grid.ColumnSpan="2" Clicked="OnLeaveClicked" BackgroundColor="#E6DEDE" Margin="0,0,0,0" ContentLayout="Top,2"/>
 
-        <Button x:Name="LeaveRoom" Text="나가기"  Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="2" Clicked="OnLeaveClicked" BackgroundColor="#E6DEDE" Margin="0,0,0,0" ContentLayout="Top,2"/>
-
-        <Grid x:Name="grid" RowSpacing="2" ColumnSpacing="2" BackgroundColor="#43343E" Padding="5,5,5,5"  Grid.Row="2" Grid.Column="0"   Grid.ColumnSpan="5" >
+        <Grid x:Name="grid" RowSpacing="2" ColumnSpacing="2" BackgroundColor="#43343E" Padding="5,5,5,5"  Grid.Row="1" Grid.Column="0"   Grid.ColumnSpan="5" >
         </Grid>
 
-         <Label Text="흑"  Grid.Row="3" Grid.Column="0" BackgroundColor="Black" VerticalOptions="CenterAndExpand" HorizontalTextAlignment="Center" FontSize="Large" TextColor="White" />
+        <BoxView Grid.Row="2" Grid.Column="0"   Grid.ColumnSpan="5" />
+
+        <Label Text="흑"  Grid.Row="3" Grid.Column="0" BackgroundColor="Black" VerticalOptions="CenterAndExpand" HorizontalTextAlignment="Center" FontSize="Large" TextColor="White" />
 
          <Label Text="백" Grid.Row="3" Grid.Column="4" BackgroundColor="White" VerticalOptions="CenterAndExpand" HorizontalTextAlignment="Center"  FontSize="Large" TextColor="Black"/>
 
@@ -63,6 +64,10 @@
          <Button x:Name="DownButton" Text="아래" BackgroundColor="Gray" Clicked="OnClickedDown" Grid.Row="5" Grid.Column="2"/>
 
          <Button x:Name="RightButton" Text="오른쪽" BackgroundColor="Gray" Clicked="OnClickedRight" Grid.Row="4" Grid.Column="3" Grid.RowSpan="1" />
+
+         <Frame  Padding="5,5,5,0" BorderColor="White" Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="5">
+             <AdFire:CtBannerView eBannerSize="Standardbanner"   BackgroundColor="White" x:Name="banner3"/>
+         </Frame>
 
         </Grid>
 

@@ -255,7 +255,7 @@ namespace OMOK
 
             prevLayout = null;
 
-            UpdateAim(aimx, aimy);
+            //UpdateAim(aimx, aimy);
 
         }
 

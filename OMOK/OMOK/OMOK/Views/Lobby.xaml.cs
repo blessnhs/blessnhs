@@ -251,11 +251,11 @@ namespace OMOK.Views
             await Navigation.PushModalAsync(new Setting());
         }
 
-        private SingleMatch _singleMatch = new SingleMatch();
-
         async void OnSingleMatchClicked(object sender, System.EventArgs e)
         {
-            await Navigation.PushModalAsync(_singleMatch);
+            User.myInfo.ai_set_flag = false;
+
+            await Navigation.PushModalAsync(new SingleMatch());
        }
         
         async void OnLoginClicked(object sender, System.EventArgs e)
