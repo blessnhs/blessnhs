@@ -11,7 +11,7 @@ namespace OMOK
         {
             InitializeComponent();
 
-            MainPage = new MainPage();
+            MainPage = new Lobby();
 
         }
 

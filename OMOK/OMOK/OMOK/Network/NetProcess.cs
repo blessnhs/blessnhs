@@ -67,7 +67,9 @@ namespace OMOK.Network
         static public bool IsSuccessAuth = false;
         static public string UserId;
 
-        static public void Loop(MainPage page)
+        static Room pRoom = new Room();
+
+        static public void Loop(Lobby page)
         {
             
             if (client.socket.Connected == false)
@@ -117,14 +119,14 @@ namespace OMOK.Network
                                     User.myInfo.level = res.VarLevel;
                                     User.Locale = Helper.ToStr(res.VarLocale.ToByteArray());
 
-                                    ((Lobby)page.Children[0]).UpdatePlayerInfo();
+                                    page.UpdatePlayerInfo();
 
                                     User.state = PlayerState.Lobby;
 
                                     SendNociticeReq();
                                 }
                                 else
-                                    ((Lobby)page.Children[0]).LoginInformation("로그인에 실패했습니다.");
+                                    page.LoginInformation("로그인에 실패했습니다.");
 
 
                             }
@@ -135,7 +137,7 @@ namespace OMOK.Network
                                 NOTICE_RES res = new NOTICE_RES();
                                 res = NOTICE_RES.Parser.ParseFrom(data.Data);
 
-                                ((Lobby)page.Children[0]).SetNotice(Helper.ToStr(res.VarMessage.ToByteArray()));
+                                page.SetNotice(Helper.ToStr(res.VarMessage.ToByteArray()));
                             }
                             break;
 
@@ -146,25 +148,23 @@ namespace OMOK.Network
 
                                 if (res.VarCode == ErrorCode.Success)
                                 {
-                                    ((Lobby)page.Children[0]).CloseMatchInfoPopup();
+                                    page.CloseMatchInfoPopup();
 
                                     User.Color = eTeam.Black;
-
-                                    page.Children.Add(new Room());
-
-                                    page.CurrentPage = page.Children[1];
                                     User.IsMyTurn = true;
                               
                                     User.state = PlayerState.Room;
 
-
-                                    var Room = (Room)page.Children[1];
-                                    Room.ClearBoard();
+                                    pRoom = new Room();
+                                    pRoom.ClearBoard();
 
                                     //방 생성자는 무조건 흑이며 후에 입장자는 백이다.
-                                    Room.UpdateTurnBackground(eTeam.Black);
-                                    Room.RefreshAim();
-                                    Room.InitTimer();
+                                    pRoom.UpdateTurnBackground(eTeam.Black);
+                                    pRoom.RefreshAim();
+                                    pRoom.InitTimer();
+
+                                    page.PushRoomPopup(pRoom);
+
                                 }
                                 else
                                 {
@@ -175,11 +175,9 @@ namespace OMOK.Network
                             break;
                         case (int)PROTOCOL.IdPktNewUserInRoomNty:
                             {
-                                var lobby = (Lobby)page.Children[0];
-                                
                                 NEW_USER_IN_ROOM_NTY res = new NEW_USER_IN_ROOM_NTY();
                                 res = NEW_USER_IN_ROOM_NTY.Parser.ParseFrom(data.Data);
-                                var Room = (Room)page.Children[1];
+                             
                                 {
                                     //상대방이름
                                     //나갈때 초기화한다. 
@@ -189,7 +187,7 @@ namespace OMOK.Network
                                     User.OppInfo.NickName = Helper.ToStr(res.VarRoomUser.VarName.ToByteArray());
                                 }
 
-                                Room.UpdateBattleInfo();
+                                pRoom.UpdateBattleInfo();
 
                             }
                             break;
@@ -206,17 +204,13 @@ namespace OMOK.Network
                                 res = ROOM_PASS_THROUGH_RES.Parser.ParseFrom(data.Data);
                                 if(res.VarCode == ErrorCode.Success)
                                 {
-                                    var Room = (Room)page.Children[1];
-
-                                    Room.ProcReceivePutStoneMessage(res);
+                                    pRoom.ProcReceivePutStoneMessage(res);
                                 }
                             }
                             break;
                         case (int)PROTOCOL.IdPktRoomListRes:
                             {
-                                var lobby = (Lobby)page.Children[0];
-
-                                lobby.UpdateMessage(data);
+                                page.UpdateMessage(data);
                             }
                             break;
 
@@ -225,7 +219,7 @@ namespace OMOK.Network
                                 RANK_RES res = new RANK_RES();
                                 res = RANK_RES.Parser.ParseFrom(data.Data);
 
-                                ((Lobby)page.Children[0]).CreateRankPage(res.VarRankList);
+                                page.CreateRankPage(res.VarRankList);
                             }
                             break;
 
@@ -238,17 +232,16 @@ namespace OMOK.Network
                                 {
                                     User.state = PlayerState.Lobby;
 
-                                    page.CurrentPage = page.Children[0];
+                              
+                                    pRoom.ClearBoard();
 
-                                    ((Room)page.Children[1]).ClearBoard();
+                                    pRoom.ShowLeaveAd();
 
-                                    ((Room)page.Children[1]).ShowLeaveAd();
-
-                                    page.Children.Remove((Room)page.Children[1]);
+                                    page.PopRoomPopup();
 
                                 }
 
-                                ((Lobby)page.Children[0]).UpdatePlayerInfo();
+                                page.UpdatePlayerInfo();
 
                             }
                             break;
@@ -260,23 +253,23 @@ namespace OMOK.Network
 
                                 if (res.VarCode == ErrorCode.Success)
                                 {
-                                    ((Lobby)page.Children[0]).CloseMatchInfoPopup();
+                                    page.CloseMatchInfoPopup();
                          
-                                    page.Children.Add(new Room());
+                                    pRoom = new Room();
 
                                     User.Color = eTeam.White;
-                                    page.CurrentPage = page.Children[1];
                                     User.IsMyTurn = false;
 
                                     User.state = PlayerState.Room;
 
-                                    var Room = (Room)page.Children[1];
-                                    Room.ClearBoard();
+                                    pRoom.ClearBoard();
 
                                     //방 생성자는 무조건 흑이므로 흑에 표시
-                                    Room.UpdateTurnBackground(eTeam.Black);
-                                    Room.RefreshAim();
-                                    Room.InitTimer();
+                                    pRoom.UpdateTurnBackground(eTeam.Black);
+                                    pRoom.RefreshAim();
+                                    pRoom.InitTimer();
+
+                                    page.PushRoomPopup(pRoom);
                                 }
                             }
                             break;
@@ -287,7 +280,7 @@ namespace OMOK.Network
                                 res = GAME_RESULT_NTY.Parser.ParseFrom(data.Data);
 
 
-                                ((Room)page.Children[1]).GameResult(res);
+                                pRoom.GameResult(res);
                             }
                             break;
                     }

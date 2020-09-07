@@ -272,8 +272,7 @@ namespace OMOK
                 NetProcess.SendLeaveRoom(0);
             else
             {
-                MainPage parentpage = (MainPage)this.Parent;
-                parentpage.CurrentPage = parentpage.Children[0];
+                Navigation.PopModalAsync();
             }
         }
 

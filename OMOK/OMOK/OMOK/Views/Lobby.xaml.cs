@@ -53,6 +53,30 @@ namespace OMOK.Views
 
                 return true;
             });
+
+            //소켓 연결
+            {
+
+                Device.StartTimer(new TimeSpan(0, 0, 0, 0, 300), () =>
+                {
+                    Device.BeginInvokeOnMainThread(() =>
+                    {
+                        NetProcess.start();
+                        NetProcess.Loop(this);
+                    });
+                    return true; //if true repeat
+                });
+
+                Device.StartTimer(new TimeSpan(0, 0, 15), () =>
+                {
+                    Device.BeginInvokeOnMainThread(() =>
+                    {
+                        NetProcess.SendReqRoomList();
+                    });
+                    return true; //if true repeat
+                });
+
+            }
         }
 
         protected override void OnAppearing()
@@ -118,6 +142,17 @@ namespace OMOK.Views
         }
 
         public void CloseMatchInfoPopup()
+        {
+            Navigation.PopModalAsync();
+        }
+
+        public void PushRoomPopup(ContentPage page)
+        {
+            Navigation.PushModalAsync(page);
+
+        }
+
+        public void PopRoomPopup()
         {
             Navigation.PopModalAsync();
         }
