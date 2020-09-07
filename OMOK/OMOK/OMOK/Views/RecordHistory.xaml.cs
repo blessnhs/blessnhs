@@ -17,34 +17,28 @@ namespace OMOK.Views
         {
             InitializeComponent();
 
-            Button PrevBtn = new Button { Text = "◁", HorizontalOptions = LayoutOptions.Start };
-            PrevBtn.Clicked += (sender, e) => {
+            leaveButton.Clicked += (sender, e) => {
                 Navigation.PopModalAsync();
             };
-            main_grid.Children.Add(PrevBtn, 0, 0);
-
+    
             var list = SQLite.ReadResultLog();
 
-            int pos = 1;
+            var strlist = new string[list.Count];
+            int pos = 0;
             foreach (var r in list)
             {
-                var stackLayout = new StackLayout();
+                strlist[pos] = "";
 
-                var text = pos.ToString() + ". " + r.Time.ToString("yyyy-MM-dd HH:mm") + " " + r.MyName + " vs " + r.OpponentName + " " + (r.Result == 1 ? "승" : "패");
-
+                int index = pos + 1;
+                var text = index.ToString() + ". " + r.Time.ToString("yyyy-MM-dd HH:mm") + " " + r.MyName + " vs " + r.OpponentName + " 결과 " + (r.Result == 1 ? "승" : "패");
                 text.Replace('\n', ' ');
-                var labelText = new Label { Padding = new Thickness(10,3,0,0),   Text = text, TextColor = Xamarin.Forms.Color.FromRgb(0, 0, 0), HorizontalTextAlignment = TextAlignment.Start };
-
-                stackLayout.Children.Add(labelText);
-
-                var frame = new Frame { BorderColor = Color.Black, Padding = new Thickness(0,0,0,0) };
-                frame.Content = stackLayout;
-
-                main_grid.Children.Add(frame, 0, pos++);
-
-                if (pos > 20)
-                    break;
+                strlist[pos++] = text;
             }
+
+            listview.SeparatorColor = Color.Black;
+
+            listview.ItemsSource = strlist;
+            
         }
     }
 }

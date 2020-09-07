@@ -11,17 +11,25 @@
                 <Frame  Padding="5,5,5,0" HeightRequest="60" BorderColor="White">
                     <AdFire:CtBannerView eBannerSize="Standardbanner"   BackgroundColor="White" x:Name="banner"/>
                 </Frame>
-                
-                <Grid x:Name="main_grid">
-                <Grid.RowDefinitions BackgroundColor="White">
-                    <RowDefinition Height="auto" />
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="10*" />
-                    
-                </Grid.ColumnDefinitions>
-            </Grid>
-        </StackLayout>
+
+                <Grid x:Name="mainGrid" ColumnSpacing="0" RowSpacing="0" VerticalOptions="StartAndExpand" HorizontalOptions="StartAndExpand">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="20*"/>
+                        <ColumnDefinition Width="80*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Button Text="Exit" x:Name="leaveButton" Grid.Column="0" Grid.Row="0"></Button>
+                    <Label Text="기록실" Grid.Column="1" Grid.Row="0" TextColor="Black" FontSize="Medium" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"></Label>
+                </Grid>
+
+                <ListView x:Name="listview">
+                  
+                </ListView>
+
+            </StackLayout>
         </ScrollView>
     </ContentPage.Content>
 </ContentPage>

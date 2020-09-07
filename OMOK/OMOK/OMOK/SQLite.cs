@@ -25,7 +25,7 @@ namespace OMOK
         {
             ResultLog Data = new ResultLog();
             Data.Time = time;
-            Data.MyName = User.myInfo.NickName;
+            Data.MyName = User.myInfo.NickName +" " + Helper.LevelConverter(User.myInfo.level);
             Data.OpponentName = opponentName;
             Data.Result = result;
 

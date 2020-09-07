@@ -431,14 +431,14 @@ namespace OMOK
                 {
                     User.myInfo.win += 1;
 
-                    SQLite.InsertResultLog(DateTime.Now, User.OppInfo.NickName, 1);
+                    SQLite.InsertResultLog(DateTime.Now, User.OppInfo.NickName + " " + Helper.LevelConverter(User.OppInfo.level), 1);
 
                 }
                 else
                 {
                     User.myInfo.lose += 1;
 
-                    SQLite.InsertResultLog(DateTime.Now, User.OppInfo.NickName, 0);
+                    SQLite.InsertResultLog(DateTime.Now, User.OppInfo.NickName + " " + Helper.LevelConverter(User.OppInfo.level), 0);
 
                 }
 
