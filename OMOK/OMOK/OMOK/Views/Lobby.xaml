@@ -38,25 +38,21 @@
                 </Image>
 
                 <!--2row 2번째 매칭 버튼 -->
-                <Frame BorderColor="Gray" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="5"   Grid.RowSpan="2" VerticalOptions="Start" Padding="0,0,0,0">
-                    <StackLayout>
-                        <control:GradientButton  StartColor="#a595f1" EndColor="#ab90f4" x:Name="MatchButton" Text="실시간 매칭" Clicked="OnMatchClicked" FontSize="Large"/>
-                    </StackLayout>
-                </Frame>
-
+                <control:GradientButton  Margin="10,0,10,40" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="5"   Grid.RowSpan="2"  StartColor="#71c4d1" EndColor="#ab90f4" x:Name="MatchButton" Text="실시간 매칭" Clicked="OnMatchClicked" FontSize="Subtitle"/>
+        
                 <!--5row 0번째 이름 -->
-                <Frame Grid.Column="0"  Grid.Row="2"  Grid.ColumnSpan="6" Padding="0,0,0,0" BackgroundColor="#D9D4D4">
-                    <Label x:Name="NoticeLabel" Text="서버점검 시간은 새벽4시 입니다."  FontSize="Large" TextColor="Black" WidthRequest="256" MaxLines="20" LineBreakMode="CharacterWrap"/>
+                <Frame Grid.Column="0"  Grid.Row="2"  Grid.ColumnSpan="6" Padding="0,5,0,0" BackgroundColor="#D9D4D4">
+                    <Label x:Name="NoticeLabel" Text="서버점검 시간은 새벽4시 입니다."  FontSize="Default" TextColor="Black" WidthRequest="256" MaxLines="20" LineBreakMode="CharacterWrap"/>
                 </Frame>
 
                 <!--4row 0번째 방리스트 -->
                 <Frame BorderColor="Gray"   Grid.Column="0"  Grid.Row="3" CornerRadius="5"   Grid.ColumnSpan="6" Padding="0,0,0,0">
-                    <StackLayout BackgroundColor="#D5D1D1">
+                    <StackLayout BackgroundColor="DimGray">
 
                         <ListView x:Name="listView" ItemSelected="Handle_ItemSelected"   ItemsSource="{Binding CommunityRoomInfo}" IsVisible="True">
                             <ListView.ItemTemplate>
                                 <DataTemplate>
-                                    <TextCell Text="{Binding Name}" TextColor="Black" />
+                                    <TextCell Text="{Binding Name}" TextColor="White"/>
                                 </DataTemplate>
                             </ListView.ItemTemplate>
                         </ListView>

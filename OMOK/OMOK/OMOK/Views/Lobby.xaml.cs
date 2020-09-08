@@ -97,6 +97,7 @@ namespace OMOK.Views
             Navigation.PushModalAsync(new Rank(list));
         }
 
+
         public void UpdateMessage(CompletePacket packet)
         {
             viewModel.RoomModel.Clear();
