@@ -19,28 +19,49 @@ namespace OMOK
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class Room : ContentPage
     {
- 
+        double screenx;
+        double screeny;
+
+        //square
+        double boxwidth;
+        double boxheight;
+
+        double size = 19;  //default 19
+
         iAd_IterstitialView iIterstitia;
 
         public void InitBoardGrid()
         {
-            grid.BackgroundColor = Color.Black;
+            size = 15; //오목 15x15
 
-            for (int i = 0; i < ConstValue.SIZE; i++)
+            Device.StartTimer(new TimeSpan(0, 0, 1), () =>
             {
-                grid.ColumnDefinitions.Add(new ColumnDefinition()
+                // do something every 60 seconds
+                Device.BeginInvokeOnMainThread(() =>
                 {
-                    Width = new GridLength(1, GridUnitType.Star)
-                });
-            }
+                    screeny = screenx = Width;
 
-            for (int i = 0; i < ConstValue.SIZE; i++)
-            {
-                grid.RowDefinitions.Add(new RowDefinition()
-                {
-                    Height = new GridLength(1, GridUnitType.Star)
+                    boxwidth = screenx / size;
+                    boxheight = screeny / size;
+
+                    var background = new Image();
+                    background.Source = ImageSource.FromResource("OMOK.Image.Board_1.png");
+
+                    background.Aspect = Aspect.AspectFill;
+                    background.VerticalOptions = LayoutOptions.FillAndExpand;
+                    background.HorizontalOptions = LayoutOptions.FillAndExpand;
+
+                    absoluteLayout.Children.Add(background, new Rectangle(0, 0, 1, 1), AbsoluteLayoutFlags.All);
+
+                    DrawLine();
+
+                    TouchEffect touchEffect = new TouchEffect();
+                    touchEffect.TouchAction += OnTouchEffectAction;
+                    absoluteLayout.Effects.Add(touchEffect);
                 });
-            }
+                return false; // runs again, or false to stop
+            });
+
         }
 
 
@@ -143,26 +164,35 @@ namespace OMOK
         }
 
         int aimx = ConstValue.SIZE / 2, aimy = ConstValue.SIZE / 2;
-        BoardLayout prevLayout = null;
+        void DrawLayout(int x, int y, Color color)
+        {
+            if (aimMark != null)
+                absoluteLayout.Children.Remove(aimMark);
+
+            //SIZE로 등분한 길이
+            double beginx = boxwidth * x;
+            double beginy = boxwidth * y;
+
+            //등분한 사각형에서 위로 살짝 올린다.
+            double xx = beginx + (boxwidth / 2) - boxwidth / 4;
+            double yy = beginy + (boxwidth / 2) - boxwidth / 4;
+
+            double xx_width = (boxwidth / 4) * 2;
+            double yy_height = ((boxwidth / 4) * 2);
+
+            aimMark = new BoxView
+            {
+                BackgroundColor = color
+            };
+
+            absoluteLayout.Children.Add(aimMark, new Rectangle(xx, yy, xx_width, yy_height));
+        }
+
+        BoxView aimMark = null;
 
         public void UpdateAim(int x, int y)
         {
-            var view = grid.Children[y * ConstValue.SIZE + x];
-
-            BoardLayout lo = view as BoardLayout;
-
-            lo.BackgroundColor = Color.DarkGray;
-
-            if (prevLayout != null)
-            {
-                if (LastLayout == prevLayout)
-                    prevLayout.BackgroundColor = Color.Red;
-                else
-                    prevLayout.BackgroundColor = Color.FromHex("#F7E48B");
-
-            }
-
-            prevLayout = lo;
+            DrawLayout(x, y, Color.AliceBlue);
         }
 
         public bool CheckValid(int _x, int _y)
@@ -180,7 +210,7 @@ namespace OMOK
 
         protected override void OnDisappearing()
         {
-         //   NetProcess.SendLeaveRoom(0);
+            NetProcess.SendLeaveRoom(0);
         }
 
         public void UpdateBattleInfo()
@@ -208,54 +238,111 @@ namespace OMOK
                     bottom2picture.Source = ImageSource.FromUri(new Uri(User.myInfo.PhotoPath));
             }
         }
+        void DrawLine()
+        {
+            double x, y;
+            x = boxwidth / 2;
+            y = boxwidth / 2;
+
+            for (int yy = 0; yy < size; yy++) //draw vertical line
+            {
+                absoluteLayout.Children.Add(new BoxView
+                {
+                    Color = Color.Black,
+                }, new Rectangle(x + (yy * boxwidth), y, 1, screeny - boxwidth));
+
+            }
+
+
+            for (int xx = 0; xx < size; xx++) //draw horizontal
+            {
+                absoluteLayout.Children.Add(new BoxView
+                {
+                    Color = Color.Black,
+                }, new Rectangle(x, y + (xx * boxwidth), screenx - boxwidth, 1));
+
+            }
+        }
+
+        void FindXY(int x, int y, out int out_x, out int out_y)
+        {
+            out_y = out_x = -1;
+
+            for (int by = 0; by < size; by++)
+            {
+                for (int bx = 0; bx < size; bx++)
+                {
+                    double beginx = boxwidth * bx;
+                    double beginy = boxwidth * by;
+
+                    double xx = beginx + (boxwidth / 2) - boxwidth / 3;
+                    double yy = beginy + (boxwidth / 2) - boxwidth / 3;
+
+                    double xxwidth = xx + (boxwidth / 3) * 2;
+                    double yywidth = yy + (boxwidth / 3) * 2;
+
+
+                    if (xx <= x && xxwidth >= x)
+                    {
+                        if (yy <= y && yywidth >= y)
+                        {
+                            out_x = bx;
+                            out_y = by;
+                            return;
+                        }
+                    }
+                }
+            }
+        }
+
+        void OnTouchEffectAction(object sender, TouchActionEventArgs args)
+        {
+            if (args.Type != TouchActionType.Pressed)
+                return;
+
+            var x = args.Location.X;
+            var y = args.Location.Y;
+
+            int outx;
+            int outy;
+            FindXY((int)x, (int)y, out outx, out outy);
+
+            aimx = outx;
+            aimy = outy;
+
+            UpdateAim(aimx, aimy);
+
+
+        }
 
         public void ClearBoardState()
         {
-            grid.Children.Clear();
-            for (int y = 0; y < ConstValue.SIZE; y++)
+            if (absoluteLayout.Children.Count > 1)
             {
-                for (int x = 0; x < ConstValue.SIZE; x++)
+                List<View> chiles = new List<View>();
+                foreach (var child in absoluteLayout.Children)
                 {
-                    BoardLayout slo = new BoardLayout();
+                    var type = child.GetType();
+                    if (type.Name == "Image")
+                        continue;
 
-                    slo.Margin = new Thickness(0, 0, 0, 0);
-                    slo.Padding = new Thickness(0, 0, 0, 0);
-                    slo.Orientation = StackOrientation.Vertical;
-                    slo.BackgroundColor = Color.FromHex("#F7E48B");
-                    slo.IdField = x + ":" + y;
-                    slo.GestureRecognizers.Add(
-                          new TapGestureRecognizer()
-                          {
-                              Command = new Command(() => {
+                    chiles.Add(child);
+                }
 
-                                  if (prevLayout != null)
-                                      prevLayout.BackgroundColor = Color.FromHex("#F7E48B");
-
-                                  slo.BackgroundColor = Color.FloralWhite;
-
-                                  var words = slo.IdField.Split(':');
-
-                                  aimx = Convert.ToInt32(words[0]);
-                                  aimy = Convert.ToInt32(words[1]);
-
-
-                                  UpdateAim(aimx, aimy);
-
-                                  prevLayout = slo;
-
-                              })
-                          });
-                    grid.Children.Add(slo, x, y);
+                foreach (var child in chiles)
+                {
+                    absoluteLayout.Children.Remove(child);
                 }
             }
+            DrawLine();
 
 
             aimx = ConstValue.SIZE / 2;
             aimy = ConstValue.SIZE / 2;
 
-            prevLayout = null;
+            aimMark = null;
 
-            //UpdateAim(aimx, aimy);
+            UpdateAim(aimx, aimy);
 
         }
 
@@ -302,15 +389,6 @@ namespace OMOK
                 return;
             }
 
-            var view = grid.Children[aimy * ConstValue.SIZE + aimx];
-
-            BoardLayout lo = view as BoardLayout;
-
-            int cnt = lo.Children.Count();
-
-            if (cnt > 0)
-                return;
-
             NetProcess.SendPassThroughMessage(aimx, aimy, User.Color);
         }
 
@@ -331,22 +409,7 @@ namespace OMOK
             aimx += 1;
             UpdateAim(aimx, aimy);
         }
-
-        protected override void OnSizeAllocated(double width, double height)
-        {
-            base.OnSizeAllocated(width, height);
-
-            if (grid.ColumnDefinitions.Count == 0 || grid.RowDefinitions.Count == 0)
-                return;
-
-            var totalColSpacing = (grid.ColumnDefinitions.Count - 1) * grid.ColumnSpacing;
-            var totalRowSpacing = (grid.RowDefinitions.Count - 1) * grid.RowSpacing;
-
-            var cellWidth = (width - totalColSpacing) / grid.ColumnDefinitions.Count;
-
-            grid.HeightRequest = (cellWidth * grid.RowDefinitions.Count) + totalRowSpacing;
-        }
-
+     
         public bool UpdateTurnBackground(eTeam status)
         {
             if (status == eTeam.Black)
@@ -375,46 +438,81 @@ namespace OMOK
             ClearBoardState();
         }
 
-        BoardLayout LastLayout = null;
+
+
+        //ai에 넘길 사용자가 선택한 좌표
+        public int aix = -1, aiy = -1;
+
+        void DrawLastLayout(int x, int y, Color color)
+        {
+            if (LastStoneMark != null)
+                absoluteLayout.Children.Remove(LastStoneMark);
+
+            //SIZE로 등분한 길이
+            double beginx = boxwidth * x;
+            double beginy = boxwidth * y;
+
+            //등분한 사각형에서 위로 살짝 올린다.
+            double xx = beginx + (boxwidth / 2) - boxwidth / 4;
+            double yy = beginy + (boxwidth / 2) - boxwidth / 4;
+
+            double xx_width = (boxwidth / 4) * 2;
+            double yy_height = ((boxwidth / 4) * 2);
+
+            LastStoneMark = new BoxView
+            {
+                BackgroundColor = color
+            };
+
+            absoluteLayout.Children.Add(LastStoneMark, new Rectangle(xx, yy, xx_width, yy_height));
+        }
+
+
+        void DrawStone(int x, int y, Color color)
+        {
+            //SIZE로 등분한 길이
+            double beginx = boxwidth * x;
+            double beginy = boxwidth * y;
+
+            //등분한 사각형에서 위로 살짝 올린다.
+            double xx = beginx + (boxwidth / 2) - boxwidth / 2;
+            double yy = beginy + (boxwidth / 2) - boxwidth / 2;
+
+            double xx_width = (boxwidth / 2) * 2;
+            double yy_height = ((boxwidth / 2) * 2);
+
+
+            if (color == Color.Black)
+            {
+                absoluteLayout.Children.Add(new ImageButton
+                {
+                    Source = ImageSource.FromResource("OMOK.Image.Black.png"),
+                    CornerRadius = (int)(xx_width / 2)
+                }, new Rectangle(xx, yy, xx_width, yy_height));
+            }
+            else
+            {
+                absoluteLayout.Children.Add(new ImageButton
+                {
+                    Source = ImageSource.FromResource("OMOK.Image.White.png"),
+                    CornerRadius = (int)(xx_width / 2)
+                }, new Rectangle(xx, yy, xx_width, yy_height));
+            }
+
+            UpdateAim(x, y);
+        }
+
+
+        BoxView LastStoneMark = null;
 
         public bool UpdateStone(int x, int y, eTeam status)
         {
             User.IsMyTurn = false;
 
-            var view = grid.Children[y * ConstValue.SIZE + x];
+            DrawStone(x, y, status == eTeam.Black ? Color.Black : Color.White);
 
-            BoardLayout slo = view as BoardLayout;
+            DrawLastLayout(x, y, Color.Aqua);
 
-            if (status == eTeam.White)
-            {
-                slo.Children.Add(new Button()
-                {
-                    BackgroundColor = Color.White,
-                    CornerRadius = (int)Bounds.Width / 2,
-                    HeightRequest = slo.Bounds.Height,
-                    BorderWidth = 1,
-                    BorderColor = Color.Black
-                }); ; ;
-            }
-            else
-            {
-                slo.Children.Add(new Button()
-                {
-                    BackgroundColor = Color.Black,
-                    CornerRadius = (int)Bounds.Width / 2,
-                    HeightRequest = slo.Bounds.Height,
-                });
-            }
-
-
-            slo.BackgroundColor = Color.Red;
-
-
-            //포커스 처리
-            if (LastLayout != null)
-                LastLayout.BackgroundColor = Color.FromHex("#F7E48B");
-
-            LastLayout = slo;
 
             return true;
         }
@@ -441,22 +539,6 @@ namespace OMOK
                     SQLite.InsertResultLog(DateTime.Now, User.OppInfo.NickName + " " + Helper.LevelConverter(User.OppInfo.level), 0);
 
                 }
-
-                //            board.ClearBoardState();
-
-                //이번엔 서로 진형을 변경한다. 
-                //eTeam newColor = User.Color == eTeam.Black ? eTeam.White : eTeam.Black;
-
-                //User.Color = newColor;
-
-                //UpdateBattleInfo();
-
-                //if (User.Color == eTeam.Black)
-                //    User.IsMyTurn = true;
-                //else
-                //    User.IsMyTurn = false;
-
-                //User.MytrunStartTime = DateTime.Now;
 
                 return true;
             }

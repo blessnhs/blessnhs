@@ -22,20 +22,22 @@
                 <ColumnDefinition Width="20*"/>
             </Grid.ColumnDefinitions>
 
-            <StackLayout IsClippedToBounds="True" Grid.Row="0" Grid.Column="0"  Margin="0,0,0,0">
-                <Label Text="00" x:Name="timeLabel" FontSize="Large" HorizontalTextAlignment="Center"/>
+            <StackLayout IsClippedToBounds="True" Grid.Row="0" Grid.Column="0"  Margin="5">
+                <Label Text="00" x:Name="timeLabel" FontSize="Large" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
             </StackLayout>
 
-            <ProgressBar x:Name="ProgressRoom" Progress="0.0" Grid.Row="0" Grid.Column="1" />
-
+            <StackLayout IsClippedToBounds="True" Grid.Row="0" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center">
+                <ProgressBar x:Name="ProgressRoom" Progress="0.0" />
+            </StackLayout>
+            
             <Frame  Padding="5,5,5,0" BorderColor="White" Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="2">
                 <AdFire:CtBannerView eBannerSize="Standardbanner"   BackgroundColor="White" x:Name="banner"/>
             </Frame>
 
             <Button x:Name="LeaveRoom" Text="나가기"  Grid.Row="0" Grid.Column="4" Clicked="OnLeaveClicked" BackgroundColor="#E6DEDE"/>
 
-            <Grid x:Name="grid" RowSpacing="2" ColumnSpacing="2" BackgroundColor="#43343E" Padding="5,5,5,5"  Grid.Row="1" Grid.Column="0"   Grid.ColumnSpan="5" >
-            </Grid>
+            <AbsoluteLayout  x:Name="absoluteLayout"  BackgroundColor="#43343E"  Grid.Row="1" Grid.Column="0"   Grid.ColumnSpan="5">
+            </AbsoluteLayout>
 
             <BoxView Grid.Row="2" Grid.Column="0"   Grid.ColumnSpan="5" />
 
