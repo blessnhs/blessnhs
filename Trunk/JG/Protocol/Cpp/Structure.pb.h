@@ -563,6 +563,7 @@ class Rank :
   enum : int {
     kVarNameFieldNumber = 2,
     kVarPicUriFieldNumber = 4,
+    kVarContryFieldNumber = 9,
     kVarRankFieldNumber = 1,
     kVarLevelFieldNumber = 3,
     kVarIndexFieldNumber = 5,
@@ -608,6 +609,26 @@ class Rank :
   const std::string& _internal_var_pic_uri() const;
   void _internal_set_var_pic_uri(const std::string& value);
   std::string* _internal_mutable_var_pic_uri();
+  public:
+
+  // optional bytes var_contry = 9;
+  bool has_var_contry() const;
+  private:
+  bool _internal_has_var_contry() const;
+  public:
+  void clear_var_contry();
+  const std::string& var_contry() const;
+  void set_var_contry(const std::string& value);
+  void set_var_contry(std::string&& value);
+  void set_var_contry(const char* value);
+  void set_var_contry(const void* value, size_t size);
+  std::string* mutable_var_contry();
+  std::string* release_var_contry();
+  void set_allocated_var_contry(std::string* var_contry);
+  private:
+  const std::string& _internal_var_contry() const;
+  void _internal_set_var_contry(const std::string& value);
+  std::string* _internal_mutable_var_contry();
   public:
 
   // optional int32 var_rank = 1;
@@ -697,6 +718,7 @@ class Rank :
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr var_name_;
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr var_pic_uri_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr var_contry_;
   ::PROTOBUF_NAMESPACE_ID::int32 var_rank_;
   ::PROTOBUF_NAMESPACE_ID::int32 var_level_;
   ::PROTOBUF_NAMESPACE_ID::int64 var_index_;
@@ -1051,7 +1073,7 @@ inline void RoomInfo2::set_var_max_count(::PROTOBUF_NAMESPACE_ID::int32 value) {
 
 // optional int32 var_rank = 1;
 inline bool Rank::_internal_has_var_rank() const {
-  bool value = (_has_bits_[0] & 0x00000004u) != 0;
+  bool value = (_has_bits_[0] & 0x00000008u) != 0;
   return value;
 }
 inline bool Rank::has_var_rank() const {
@@ -1059,7 +1081,7 @@ inline bool Rank::has_var_rank() const {
 }
 inline void Rank::clear_var_rank() {
   var_rank_ = 0;
-  _has_bits_[0] &= ~0x00000004u;
+  _has_bits_[0] &= ~0x00000008u;
 }
 inline ::PROTOBUF_NAMESPACE_ID::int32 Rank::_internal_var_rank() const {
   return var_rank_;
@@ -1069,7 +1091,7 @@ inline ::PROTOBUF_NAMESPACE_ID::int32 Rank::var_rank() const {
   return _internal_var_rank();
 }
 inline void Rank::_internal_set_var_rank(::PROTOBUF_NAMESPACE_ID::int32 value) {
-  _has_bits_[0] |= 0x00000004u;
+  _has_bits_[0] |= 0x00000008u;
   var_rank_ = value;
 }
 inline void Rank::set_var_rank(::PROTOBUF_NAMESPACE_ID::int32 value) {
@@ -1150,7 +1172,7 @@ inline void Rank::set_allocated_var_name(std::string* var_name) {
 
 // optional int32 var_level = 3;
 inline bool Rank::_internal_has_var_level() const {
-  bool value = (_has_bits_[0] & 0x00000008u) != 0;
+  bool value = (_has_bits_[0] & 0x00000010u) != 0;
   return value;
 }
 inline bool Rank::has_var_level() const {
@@ -1158,7 +1180,7 @@ inline bool Rank::has_var_level() const {
 }
 inline void Rank::clear_var_level() {
   var_level_ = 0;
-  _has_bits_[0] &= ~0x00000008u;
+  _has_bits_[0] &= ~0x00000010u;
 }
 inline ::PROTOBUF_NAMESPACE_ID::int32 Rank::_internal_var_level() const {
   return var_level_;
@@ -1168,7 +1190,7 @@ inline ::PROTOBUF_NAMESPACE_ID::int32 Rank::var_level() const {
   return _internal_var_level();
 }
 inline void Rank::_internal_set_var_level(::PROTOBUF_NAMESPACE_ID::int32 value) {
-  _has_bits_[0] |= 0x00000008u;
+  _has_bits_[0] |= 0x00000010u;
   var_level_ = value;
 }
 inline void Rank::set_var_level(::PROTOBUF_NAMESPACE_ID::int32 value) {
@@ -1249,7 +1271,7 @@ inline void Rank::set_allocated_var_pic_uri(std::string* var_pic_uri) {
 
 // optional int64 var_index = 5;
 inline bool Rank::_internal_has_var_index() const {
-  bool value = (_has_bits_[0] & 0x00000010u) != 0;
+  bool value = (_has_bits_[0] & 0x00000020u) != 0;
   return value;
 }
 inline bool Rank::has_var_index() const {
@@ -1257,7 +1279,7 @@ inline bool Rank::has_var_index() const {
 }
 inline void Rank::clear_var_index() {
   var_index_ = PROTOBUF_LONGLONG(0);
-  _has_bits_[0] &= ~0x00000010u;
+  _has_bits_[0] &= ~0x00000020u;
 }
 inline ::PROTOBUF_NAMESPACE_ID::int64 Rank::_internal_var_index() const {
   return var_index_;
@@ -1267,7 +1289,7 @@ inline ::PROTOBUF_NAMESPACE_ID::int64 Rank::var_index() const {
   return _internal_var_index();
 }
 inline void Rank::_internal_set_var_index(::PROTOBUF_NAMESPACE_ID::int64 value) {
-  _has_bits_[0] |= 0x00000010u;
+  _has_bits_[0] |= 0x00000020u;
   var_index_ = value;
 }
 inline void Rank::set_var_index(::PROTOBUF_NAMESPACE_ID::int64 value) {
@@ -1277,7 +1299,7 @@ inline void Rank::set_var_index(::PROTOBUF_NAMESPACE_ID::int64 value) {
 
 // optional int32 var_win = 6;
 inline bool Rank::_internal_has_var_win() const {
-  bool value = (_has_bits_[0] & 0x00000020u) != 0;
+  bool value = (_has_bits_[0] & 0x00000040u) != 0;
   return value;
 }
 inline bool Rank::has_var_win() const {
@@ -1285,7 +1307,7 @@ inline bool Rank::has_var_win() const {
 }
 inline void Rank::clear_var_win() {
   var_win_ = 0;
-  _has_bits_[0] &= ~0x00000020u;
+  _has_bits_[0] &= ~0x00000040u;
 }
 inline ::PROTOBUF_NAMESPACE_ID::int32 Rank::_internal_var_win() const {
   return var_win_;
@@ -1295,7 +1317,7 @@ inline ::PROTOBUF_NAMESPACE_ID::int32 Rank::var_win() const {
   return _internal_var_win();
 }
 inline void Rank::_internal_set_var_win(::PROTOBUF_NAMESPACE_ID::int32 value) {
-  _has_bits_[0] |= 0x00000020u;
+  _has_bits_[0] |= 0x00000040u;
   var_win_ = value;
 }
 inline void Rank::set_var_win(::PROTOBUF_NAMESPACE_ID::int32 value) {
@@ -1305,7 +1327,7 @@ inline void Rank::set_var_win(::PROTOBUF_NAMESPACE_ID::int32 value) {
 
 // optional int32 var_lose = 7;
 inline bool Rank::_internal_has_var_lose() const {
-  bool value = (_has_bits_[0] & 0x00000040u) != 0;
+  bool value = (_has_bits_[0] & 0x00000080u) != 0;
   return value;
 }
 inline bool Rank::has_var_lose() const {
@@ -1313,7 +1335,7 @@ inline bool Rank::has_var_lose() const {
 }
 inline void Rank::clear_var_lose() {
   var_lose_ = 0;
-  _has_bits_[0] &= ~0x00000040u;
+  _has_bits_[0] &= ~0x00000080u;
 }
 inline ::PROTOBUF_NAMESPACE_ID::int32 Rank::_internal_var_lose() const {
   return var_lose_;
@@ -1323,7 +1345,7 @@ inline ::PROTOBUF_NAMESPACE_ID::int32 Rank::var_lose() const {
   return _internal_var_lose();
 }
 inline void Rank::_internal_set_var_lose(::PROTOBUF_NAMESPACE_ID::int32 value) {
-  _has_bits_[0] |= 0x00000040u;
+  _has_bits_[0] |= 0x00000080u;
   var_lose_ = value;
 }
 inline void Rank::set_var_lose(::PROTOBUF_NAMESPACE_ID::int32 value) {
@@ -1333,7 +1355,7 @@ inline void Rank::set_var_lose(::PROTOBUF_NAMESPACE_ID::int32 value) {
 
 // optional int32 var_draw = 8;
 inline bool Rank::_internal_has_var_draw() const {
-  bool value = (_has_bits_[0] & 0x00000080u) != 0;
+  bool value = (_has_bits_[0] & 0x00000100u) != 0;
   return value;
 }
 inline bool Rank::has_var_draw() const {
@@ -1341,7 +1363,7 @@ inline bool Rank::has_var_draw() const {
 }
 inline void Rank::clear_var_draw() {
   var_draw_ = 0;
-  _has_bits_[0] &= ~0x00000080u;
+  _has_bits_[0] &= ~0x00000100u;
 }
 inline ::PROTOBUF_NAMESPACE_ID::int32 Rank::_internal_var_draw() const {
   return var_draw_;
@@ -1351,12 +1373,83 @@ inline ::PROTOBUF_NAMESPACE_ID::int32 Rank::var_draw() const {
   return _internal_var_draw();
 }
 inline void Rank::_internal_set_var_draw(::PROTOBUF_NAMESPACE_ID::int32 value) {
-  _has_bits_[0] |= 0x00000080u;
+  _has_bits_[0] |= 0x00000100u;
   var_draw_ = value;
 }
 inline void Rank::set_var_draw(::PROTOBUF_NAMESPACE_ID::int32 value) {
   _internal_set_var_draw(value);
   // @@protoc_insertion_point(field_set:Rank.var_draw)
+}
+
+// optional bytes var_contry = 9;
+inline bool Rank::_internal_has_var_contry() const {
+  bool value = (_has_bits_[0] & 0x00000004u) != 0;
+  return value;
+}
+inline bool Rank::has_var_contry() const {
+  return _internal_has_var_contry();
+}
+inline void Rank::clear_var_contry() {
+  var_contry_.ClearToEmptyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline const std::string& Rank::var_contry() const {
+  // @@protoc_insertion_point(field_get:Rank.var_contry)
+  return _internal_var_contry();
+}
+inline void Rank::set_var_contry(const std::string& value) {
+  _internal_set_var_contry(value);
+  // @@protoc_insertion_point(field_set:Rank.var_contry)
+}
+inline std::string* Rank::mutable_var_contry() {
+  // @@protoc_insertion_point(field_mutable:Rank.var_contry)
+  return _internal_mutable_var_contry();
+}
+inline const std::string& Rank::_internal_var_contry() const {
+  return var_contry_.GetNoArena();
+}
+inline void Rank::_internal_set_var_contry(const std::string& value) {
+  _has_bits_[0] |= 0x00000004u;
+  var_contry_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), value);
+}
+inline void Rank::set_var_contry(std::string&& value) {
+  _has_bits_[0] |= 0x00000004u;
+  var_contry_.SetNoArena(
+    &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:Rank.var_contry)
+}
+inline void Rank::set_var_contry(const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  _has_bits_[0] |= 0x00000004u;
+  var_contry_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:Rank.var_contry)
+}
+inline void Rank::set_var_contry(const void* value, size_t size) {
+  _has_bits_[0] |= 0x00000004u;
+  var_contry_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:Rank.var_contry)
+}
+inline std::string* Rank::_internal_mutable_var_contry() {
+  _has_bits_[0] |= 0x00000004u;
+  return var_contry_.MutableNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline std::string* Rank::release_var_contry() {
+  // @@protoc_insertion_point(field_release:Rank.var_contry)
+  if (!_internal_has_var_contry()) {
+    return nullptr;
+  }
+  _has_bits_[0] &= ~0x00000004u;
+  return var_contry_.ReleaseNonDefaultNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline void Rank::set_allocated_var_contry(std::string* var_contry) {
+  if (var_contry != nullptr) {
+    _has_bits_[0] |= 0x00000004u;
+  } else {
+    _has_bits_[0] &= ~0x00000004u;
+  }
+  var_contry_.SetAllocatedNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), var_contry);
+  // @@protoc_insertion_point(field_set_allocated:Rank.var_contry)
 }
 
 #ifdef __GNUC__

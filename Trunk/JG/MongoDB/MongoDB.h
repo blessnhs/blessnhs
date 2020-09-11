@@ -178,6 +178,9 @@ public:
 			auto picUrl = doc["PictureUrl"];
 			r.set_var_pic_uri( picUrl.get_utf8().value.data());
 
+			auto picLocale = doc["Locale"];
+			r.set_var_contry(picLocale.get_utf8().value.data());
+
 			list.push_back(r);
 		}
 

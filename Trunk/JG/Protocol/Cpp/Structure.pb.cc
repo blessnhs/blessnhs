@@ -110,19 +110,21 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_Structure_2eproto::offsets[] P
   PROTOBUF_FIELD_OFFSET(::Rank, var_win_),
   PROTOBUF_FIELD_OFFSET(::Rank, var_lose_),
   PROTOBUF_FIELD_OFFSET(::Rank, var_draw_),
-  2,
-  0,
+  PROTOBUF_FIELD_OFFSET(::Rank, var_contry_),
   3,
-  1,
+  0,
   4,
+  1,
   5,
   6,
   7,
+  8,
+  2,
 };
 static const ::PROTOBUF_NAMESPACE_ID::internal::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
   { 0, 8, sizeof(::RoomUserInfo)},
   { 11, 20, sizeof(::RoomInfo2)},
-  { 24, 37, sizeof(::Rank)},
+  { 24, 38, sizeof(::Rank)},
 };
 
 static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] = {
@@ -137,11 +139,11 @@ const char descriptor_table_protodef_Structure_2eproto[] PROTOBUF_SECTION_VARIAB
   "(\003\022\023\n\013picture_uri\030\003 \001(\014\"_\n\tRoomInfo2\022\016\n\006"
   "var_id\030\001 \001(\005\022\020\n\010var_name\030\002 \001(\014\022\031\n\021var_cu"
   "rrent_count\030\003 \001(\005\022\025\n\rvar_max_count\030\004 \001(\005"
-  "\"\232\001\n\004Rank\022\020\n\010var_rank\030\001 \001(\005\022\020\n\010var_name\030"
+  "\"\256\001\n\004Rank\022\020\n\010var_rank\030\001 \001(\005\022\020\n\010var_name\030"
   "\002 \001(\014\022\021\n\tvar_level\030\003 \001(\005\022\023\n\013var_pic_uri\030"
   "\004 \001(\014\022\021\n\tvar_index\030\005 \001(\003\022\017\n\007var_win\030\006 \001("
-  "\005\022\020\n\010var_lose\030\007 \001(\005\022\020\n\010var_draw\030\010 \001(\005B\002H"
-  "\001"
+  "\005\022\020\n\010var_lose\030\007 \001(\005\022\020\n\010var_draw\030\010 \001(\005\022\022\n"
+  "\nvar_contry\030\t \001(\014B\002H\001"
   ;
 static const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable*const descriptor_table_Structure_2eproto_deps[1] = {
   &::descriptor_table_Enum_2eproto,
@@ -154,7 +156,7 @@ static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_Str
 static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_Structure_2eproto_once;
 static bool descriptor_table_Structure_2eproto_initialized = false;
 const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_Structure_2eproto = {
-  &descriptor_table_Structure_2eproto_initialized, descriptor_table_protodef_Structure_2eproto, "Structure.proto", 361,
+  &descriptor_table_Structure_2eproto_initialized, descriptor_table_protodef_Structure_2eproto, "Structure.proto", 381,
   &descriptor_table_Structure_2eproto_once, descriptor_table_Structure_2eproto_sccs, descriptor_table_Structure_2eproto_deps, 3, 1,
   schemas, file_default_instances, TableStruct_Structure_2eproto::offsets,
   file_level_metadata_Structure_2eproto, 3, file_level_enum_descriptors_Structure_2eproto, file_level_service_descriptors_Structure_2eproto,
@@ -766,28 +768,31 @@ class Rank::_Internal {
  public:
   using HasBits = decltype(std::declval<Rank>()._has_bits_);
   static void set_has_var_rank(HasBits* has_bits) {
-    (*has_bits)[0] |= 4u;
+    (*has_bits)[0] |= 8u;
   }
   static void set_has_var_name(HasBits* has_bits) {
     (*has_bits)[0] |= 1u;
   }
   static void set_has_var_level(HasBits* has_bits) {
-    (*has_bits)[0] |= 8u;
+    (*has_bits)[0] |= 16u;
   }
   static void set_has_var_pic_uri(HasBits* has_bits) {
     (*has_bits)[0] |= 2u;
   }
   static void set_has_var_index(HasBits* has_bits) {
-    (*has_bits)[0] |= 16u;
-  }
-  static void set_has_var_win(HasBits* has_bits) {
     (*has_bits)[0] |= 32u;
   }
-  static void set_has_var_lose(HasBits* has_bits) {
+  static void set_has_var_win(HasBits* has_bits) {
     (*has_bits)[0] |= 64u;
   }
-  static void set_has_var_draw(HasBits* has_bits) {
+  static void set_has_var_lose(HasBits* has_bits) {
     (*has_bits)[0] |= 128u;
+  }
+  static void set_has_var_draw(HasBits* has_bits) {
+    (*has_bits)[0] |= 256u;
+  }
+  static void set_has_var_contry(HasBits* has_bits) {
+    (*has_bits)[0] |= 4u;
   }
 };
 
@@ -809,6 +814,10 @@ Rank::Rank(const Rank& from)
   if (from._internal_has_var_pic_uri()) {
     var_pic_uri_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.var_pic_uri_);
   }
+  var_contry_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  if (from._internal_has_var_contry()) {
+    var_contry_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.var_contry_);
+  }
   ::memcpy(&var_rank_, &from.var_rank_,
     static_cast<size_t>(reinterpret_cast<char*>(&var_draw_) -
     reinterpret_cast<char*>(&var_rank_)) + sizeof(var_draw_));
@@ -819,6 +828,7 @@ void Rank::SharedCtor() {
   ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&scc_info_Rank_Structure_2eproto.base);
   var_name_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
   var_pic_uri_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  var_contry_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
   ::memset(&var_rank_, 0, static_cast<size_t>(
       reinterpret_cast<char*>(&var_draw_) -
       reinterpret_cast<char*>(&var_rank_)) + sizeof(var_draw_));
@@ -832,6 +842,7 @@ Rank::~Rank() {
 void Rank::SharedDtor() {
   var_name_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
   var_pic_uri_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  var_contry_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
 }
 
 void Rank::SetCachedSize(int size) const {
@@ -850,19 +861,23 @@ void Rank::Clear() {
   (void) cached_has_bits;
 
   cached_has_bits = _has_bits_[0];
-  if (cached_has_bits & 0x00000003u) {
+  if (cached_has_bits & 0x00000007u) {
     if (cached_has_bits & 0x00000001u) {
       var_name_.ClearNonDefaultToEmptyNoArena();
     }
     if (cached_has_bits & 0x00000002u) {
       var_pic_uri_.ClearNonDefaultToEmptyNoArena();
     }
+    if (cached_has_bits & 0x00000004u) {
+      var_contry_.ClearNonDefaultToEmptyNoArena();
+    }
   }
-  if (cached_has_bits & 0x000000fcu) {
+  if (cached_has_bits & 0x000000f8u) {
     ::memset(&var_rank_, 0, static_cast<size_t>(
-        reinterpret_cast<char*>(&var_draw_) -
-        reinterpret_cast<char*>(&var_rank_)) + sizeof(var_draw_));
+        reinterpret_cast<char*>(&var_lose_) -
+        reinterpret_cast<char*>(&var_rank_)) + sizeof(var_lose_));
   }
+  var_draw_ = 0;
   _has_bits_.Clear();
   _internal_metadata_.Clear();
 }
@@ -939,6 +954,14 @@ const char* Rank::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::inter
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
+      // optional bytes var_contry = 9;
+      case 9:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 74)) {
+          auto str = _internal_mutable_var_contry();
+          ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
       default: {
       handle_unusual:
         if ((tag & 7) == 4 || tag == 0) {
@@ -968,7 +991,7 @@ failure:
 
   cached_has_bits = _has_bits_[0];
   // optional int32 var_rank = 1;
-  if (cached_has_bits & 0x00000004u) {
+  if (cached_has_bits & 0x00000008u) {
     target = stream->EnsureSpace(target);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32ToArray(1, this->_internal_var_rank(), target);
   }
@@ -980,7 +1003,7 @@ failure:
   }
 
   // optional int32 var_level = 3;
-  if (cached_has_bits & 0x00000008u) {
+  if (cached_has_bits & 0x00000010u) {
     target = stream->EnsureSpace(target);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32ToArray(3, this->_internal_var_level(), target);
   }
@@ -992,27 +1015,33 @@ failure:
   }
 
   // optional int64 var_index = 5;
-  if (cached_has_bits & 0x00000010u) {
+  if (cached_has_bits & 0x00000020u) {
     target = stream->EnsureSpace(target);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt64ToArray(5, this->_internal_var_index(), target);
   }
 
   // optional int32 var_win = 6;
-  if (cached_has_bits & 0x00000020u) {
+  if (cached_has_bits & 0x00000040u) {
     target = stream->EnsureSpace(target);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32ToArray(6, this->_internal_var_win(), target);
   }
 
   // optional int32 var_lose = 7;
-  if (cached_has_bits & 0x00000040u) {
+  if (cached_has_bits & 0x00000080u) {
     target = stream->EnsureSpace(target);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32ToArray(7, this->_internal_var_lose(), target);
   }
 
   // optional int32 var_draw = 8;
-  if (cached_has_bits & 0x00000080u) {
+  if (cached_has_bits & 0x00000100u) {
     target = stream->EnsureSpace(target);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32ToArray(8, this->_internal_var_draw(), target);
+  }
+
+  // optional bytes var_contry = 9;
+  if (cached_has_bits & 0x00000004u) {
+    target = stream->WriteBytesMaybeAliased(
+        9, this->_internal_var_contry(), target);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
@@ -1047,49 +1076,56 @@ size_t Rank::ByteSizeLong() const {
           this->_internal_var_pic_uri());
     }
 
-    // optional int32 var_rank = 1;
+    // optional bytes var_contry = 9;
     if (cached_has_bits & 0x00000004u) {
+      total_size += 1 +
+        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::BytesSize(
+          this->_internal_var_contry());
+    }
+
+    // optional int32 var_rank = 1;
+    if (cached_has_bits & 0x00000008u) {
       total_size += 1 +
         ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32Size(
           this->_internal_var_rank());
     }
 
     // optional int32 var_level = 3;
-    if (cached_has_bits & 0x00000008u) {
+    if (cached_has_bits & 0x00000010u) {
       total_size += 1 +
         ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32Size(
           this->_internal_var_level());
     }
 
     // optional int64 var_index = 5;
-    if (cached_has_bits & 0x00000010u) {
+    if (cached_has_bits & 0x00000020u) {
       total_size += 1 +
         ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int64Size(
           this->_internal_var_index());
     }
 
     // optional int32 var_win = 6;
-    if (cached_has_bits & 0x00000020u) {
+    if (cached_has_bits & 0x00000040u) {
       total_size += 1 +
         ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32Size(
           this->_internal_var_win());
     }
 
     // optional int32 var_lose = 7;
-    if (cached_has_bits & 0x00000040u) {
+    if (cached_has_bits & 0x00000080u) {
       total_size += 1 +
         ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32Size(
           this->_internal_var_lose());
     }
 
-    // optional int32 var_draw = 8;
-    if (cached_has_bits & 0x00000080u) {
-      total_size += 1 +
-        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32Size(
-          this->_internal_var_draw());
-    }
-
   }
+  // optional int32 var_draw = 8;
+  if (cached_has_bits & 0x00000100u) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32Size(
+        this->_internal_var_draw());
+  }
+
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
     return ::PROTOBUF_NAMESPACE_ID::internal::ComputeUnknownFieldsSize(
         _internal_metadata_, total_size, &_cached_size_);
@@ -1132,24 +1168,28 @@ void Rank::MergeFrom(const Rank& from) {
       var_pic_uri_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.var_pic_uri_);
     }
     if (cached_has_bits & 0x00000004u) {
-      var_rank_ = from.var_rank_;
+      _has_bits_[0] |= 0x00000004u;
+      var_contry_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.var_contry_);
     }
     if (cached_has_bits & 0x00000008u) {
-      var_level_ = from.var_level_;
+      var_rank_ = from.var_rank_;
     }
     if (cached_has_bits & 0x00000010u) {
-      var_index_ = from.var_index_;
+      var_level_ = from.var_level_;
     }
     if (cached_has_bits & 0x00000020u) {
-      var_win_ = from.var_win_;
+      var_index_ = from.var_index_;
     }
     if (cached_has_bits & 0x00000040u) {
-      var_lose_ = from.var_lose_;
+      var_win_ = from.var_win_;
     }
     if (cached_has_bits & 0x00000080u) {
-      var_draw_ = from.var_draw_;
+      var_lose_ = from.var_lose_;
     }
     _has_bits_[0] |= cached_has_bits;
+  }
+  if (cached_has_bits & 0x00000100u) {
+    _internal_set_var_draw(from._internal_var_draw());
   }
 }
 
@@ -1178,6 +1218,8 @@ void Rank::InternalSwap(Rank* other) {
   var_name_.Swap(&other->var_name_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
     GetArenaNoVirtual());
   var_pic_uri_.Swap(&other->var_pic_uri_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+    GetArenaNoVirtual());
+  var_contry_.Swap(&other->var_contry_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
     GetArenaNoVirtual());
   swap(var_rank_, other->var_rank_);
   swap(var_level_, other->var_level_);

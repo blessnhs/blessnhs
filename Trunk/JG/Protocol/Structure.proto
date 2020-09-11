@@ -29,5 +29,6 @@ message Rank
 	optional int32 var_win = 6 ;
 	optional int32 var_lose = 7 ;
 	optional int32  var_draw = 8 ;
+	optional bytes var_contry = 9 ;
 }
 
