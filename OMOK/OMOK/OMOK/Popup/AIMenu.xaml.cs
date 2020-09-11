@@ -23,18 +23,21 @@ namespace OMOK
 
             _parent = parent;
 
-            switch(User.myInfo.ai_rule)
-            {
-                case 1:
-                    gomoku.IsChecked = true;
-                    break;
-                case 2:
-                    normal.IsChecked = true;
-                    break;
-                case 3:
-                    renju.IsChecked = true;
-                    break;
-            }
+            //switch(User.myInfo.ai_rule)
+            //{
+            //    case 1:
+            //        gomoku.IsChecked = true;
+            //        break;
+            //    case 2:
+            //        normal.IsChecked = true;
+            //        break;
+            //    case 3:
+            //        renju.IsChecked = true;
+            //        break;
+            //}
+
+            //렌주룰로 고정
+            User.myInfo.ai_rule = 3;
 
             switch (User.myInfo.ai_mode)
             {

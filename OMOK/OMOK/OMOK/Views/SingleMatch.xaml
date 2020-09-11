@@ -29,9 +29,9 @@
         
         <Button x:Name="LeaveRoom" Text="나가기"  Grid.Row="0" Grid.Column="3" Grid.ColumnSpan="2" Clicked="OnLeaveClicked" BackgroundColor="#E6DEDE" Margin="0,0,0,0" ContentLayout="Top,2"/>
 
-        <Grid x:Name="grid" RowSpacing="2" ColumnSpacing="2" BackgroundColor="#43343E" Padding="5,5,5,5"  Grid.Row="1" Grid.Column="0"   Grid.ColumnSpan="5" >
-        </Grid>
-
+         <AbsoluteLayout  x:Name="absoluteLayout"  BackgroundColor="#43343E"  Grid.Row="1" Grid.Column="0"   Grid.ColumnSpan="5">
+         </AbsoluteLayout>
+ 
         <BoxView Grid.Row="2" Grid.Column="0"   Grid.ColumnSpan="5" />
 
         <Label Text="흑"  Grid.Row="3" Grid.Column="0" BackgroundColor="Black" VerticalOptions="CenterAndExpand" HorizontalTextAlignment="Center" FontSize="Large" TextColor="White" />

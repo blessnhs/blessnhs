@@ -30,7 +30,7 @@ namespace OMOK.Views
                 strlist[pos] = "";
 
                 int index = pos + 1;
-                var text = index.ToString() + ". " + r.Time.ToString("yy-MM-dd HH:mm") + " " + r.MyName + " vs " + r.OpponentName +  (r.Result == 1 ? "승리" : "패배");
+                var text = index.ToString() + ". " + r.Time.ToString("yy-MM-dd HH:mm") + " " + r.MyName + " vs " + r.OpponentName +  (r.Result == 1 ? " 승리" : " 패배");
                 text.Replace('\n', ' ');
                 strlist[pos++] = text;
             }

@@ -21,7 +21,7 @@
                         <ColumnDefinition Width="80*"/>
                     </Grid.ColumnDefinitions>
 
-                    <Button Text="Exit" x:Name="leaveButton" Grid.Column="0" Grid.Row="0"></Button>
+                    <Button Text="나가기" x:Name="leaveButton" Grid.Column="0" Grid.Row="0"></Button>
                     <Label Text="기록실" Grid.Column="1" Grid.Row="0" TextColor="Black" FontSize="Medium" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"></Label>
                 </Grid>
 

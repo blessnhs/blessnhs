@@ -14,13 +14,13 @@
 
             <Label Text="기본 룰 설정" FontSize="Large" Padding="0,0,0,0"  TextColor="Black"/>
 
-            <Frame OutlineColor="Black" Padding="0,0,10,10">
+            <!--<Frame OutlineColor="Black" Padding="0,0,10,10">
                 <StackLayout VerticalOptions="Center" HorizontalOptions="Start">
                     <RadioButton x:Name="gomoku"  Text="고 모 쿠"  CheckedChanged="Gomoku_CheckedChanged" GroupName="rule"/>
                     <RadioButton x:Name="normal" Text="일  반" CheckedChanged="Normal_CheckedChanged" GroupName="rule"/>
                     <RadioButton x:Name="renju" Text="렌  주 (3 x 3 금지)" CheckedChanged="Renju_CheckedChanged" GroupName="rule"/>
                 </StackLayout>
-            </Frame>
+            </Frame>-->
 
             <Frame OutlineColor="Black" Padding="0,0,10,15">
                 <StackLayout VerticalOptions="Center" HorizontalOptions="Center">

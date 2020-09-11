@@ -96,11 +96,13 @@
   <ItemGroup>
     <Compile Include="BannerAd_ViewRenderer.cs" />
     <Compile Include="Dependency.cs" />
+    <Compile Include="GradientButtonRenderer.cs" />
     <Compile Include="InterstitiaAd_lViewRenderer.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RewardVideoAd_ViewRenderer.cs" />
+    <Compile Include="TouchEffect.cs" />
   </ItemGroup>
   <ItemGroup>
     <GoogleServicesJson Include="google-services.json" />

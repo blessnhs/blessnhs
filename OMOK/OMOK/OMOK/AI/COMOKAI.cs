@@ -4,7 +4,7 @@ using System.Text;
 
 namespace OMOK
 {
-    public class Point
+    public class PointAI
     {
         public int x, y;
     };
@@ -13,14 +13,14 @@ namespace OMOK
     {
         public static int[,] nBoard = new int[ConstValue.SIZE + 2, ConstValue.SIZE + 2];
         public static int[,] nWeight = new int[ConstValue.SIZE + 2, ConstValue.SIZE + 2];
-        public static Point[] p = new Point[10];
+        public static PointAI[] p = new PointAI[10];
         static int top = -1;
 
         public bool isO_Four;
         public bool isF_Three;
 
-        public Point l = new Point();  //left top, right bottom;
-        public Point r = new Point();
+        public PointAI l = new PointAI();  //left top, right bottom;
+        public PointAI r = new PointAI();
         public COMOKRULE pRule = new COMOKRULE();
         public delegate int fp4(int a, int b, int c,int d);
         public delegate bool fp3(int a, int b, int c);
@@ -29,7 +29,7 @@ namespace OMOK
         {
             for(int i=0;i<10;i++ )
             {
-                p[i] = new Point();
+                p[i] = new PointAI();
             }
 
             for (int i = 0; i < ConstValue.SIZE + 2; i++)
@@ -68,7 +68,7 @@ namespace OMOK
         }
 
         // 현재 바둑알이 놓여 있는 상하좌우의 좌표를 구한다. 
-        public void GetRect(ref Point p1, ref Point p2)
+        public void GetRect(ref PointAI p1, ref PointAI p2)
         {
             p1.x = p1.y = ConstValue.SIZE;
             p2.x = p2.y = 0;
