@@ -22,11 +22,15 @@
                     </Grid.ColumnDefinitions>
 
                     <Button Text="나가기" x:Name="leaveButton" Grid.Column="0" Grid.Row="0"></Button>
-                    <Label Text="기록실" Grid.Column="1" Grid.Row="0" TextColor="Black" FontSize="Medium" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"></Label>
+                    <Label Text="기  록  실" Grid.Column="1" Grid.Row="0" TextColor="Black" FontSize="Medium" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"></Label>
                 </Grid>
 
                 <ListView x:Name="listview">
-                  
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <TextCell Text="{Binding Text}" TextColor="Black"/>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
                 </ListView>
 
             </StackLayout>

@@ -19,7 +19,7 @@ namespace OMOK.Views
             InitializeComponent();
 
 
-            Button PrevBtn = new Button { Text = "◁", HorizontalOptions = LayoutOptions.Start };
+            Button PrevBtn = new Button { Text = "◁", HorizontalOptions = LayoutOptions.Start,HeightRequest = 45 };
             PrevBtn.Clicked += (sender, e) => {
                 Navigation.PopModalAsync();
             };
@@ -27,34 +27,46 @@ namespace OMOK.Views
 
             var titletext = "RANK";
             var titlelabelText = new Label { Text = titletext, TextColor = Xamarin.Forms.Color.FromRgb(0, 0, 0), HorizontalTextAlignment = TextAlignment.Center, FontSize = 25 };
-            main_grid.Children.Add(titlelabelText, 1, 0);
+            main_grid.Children.Add(titlelabelText, 2, 0);
     
 
             int pos = 1;
             foreach(var r in list )
             {
-
+                var imgcontry = new Image
+                {
+                    Source = ImageSource.FromResource(Helper.GetLocaleImagePath(Helper.ToStr(r.VarContry.ToByteArray()))),
+                    BackgroundColor = Color.White,
+                    HeightRequest = 30
+                };
+                main_grid.Children.Add(imgcontry, 0, pos);
+           
+               //프로필
                 var img = new Image
                 {
                     Source = new Uri(Helper.ToStr(r.VarPicUri.ToByteArray())),
                     BackgroundColor = Color.White,
+                    HeightRequest = 30
                 };
 
-                main_grid.Children.Add(img,0, pos);
-
-                var stackLayout = new StackLayout();
+                main_grid.Children.Add(img, 1, pos);
+                /////////////////////////////////////////////////////
+                /////기록
+                var stackLayout = new StackLayout() {  };
 
                 var text = r.VarRank + "위 " + Helper.ToStr(r.VarName.ToByteArray()) + " " + r.VarWin + "승" + r.VarLose + "패";
 
                 text.Replace('\n', ' ');
-                var labelText = new Label { Padding = new Thickness(5, 10, 0, 0), Text = text, TextColor = Xamarin.Forms.Color.FromRgb(0, 0, 0) , HorizontalTextAlignment = TextAlignment.Start };
+                var labelText = new Label { Padding = new Thickness(5, 10, 0, 0), Text = text, TextColor = Xamarin.Forms.Color.FromRgb(0, 0, 0), HorizontalTextAlignment = TextAlignment.Start };
 
                 stackLayout.Children.Add(labelText);
 
-                var frame = new Frame { BorderColor = Color.Black, Padding = new Thickness(0, 0, 0, 0) };
+                var frame = new Frame { BorderColor = Color.Black, Padding = new Thickness(0, 0, 0, 0) ,HeightRequest = 30};
                 frame.Content = stackLayout;
 
-                main_grid.Children.Add(frame, 1, pos++);
+                main_grid.Children.Add(frame, 2, pos++);
+                /////////////////////////////////////////////////////
+
             }
         }
     }

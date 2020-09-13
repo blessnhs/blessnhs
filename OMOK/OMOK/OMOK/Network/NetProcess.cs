@@ -7,6 +7,7 @@ using Xamarin.Essentials;
 using Xamarin.Forms;
 using System.Text;
 using System.Net;
+using OMOK.Popup;
 
 namespace OMOK.Network
 {
@@ -48,7 +49,7 @@ namespace OMOK.Network
                 if ((DateTime.Now - time).TotalSeconds > 10)
                 {
                     time = DateTime.Now;
-                    client.StartClient(ip, 20000);
+                    client.StartClient(ip, 21000);
                 }
             }
             else if (sendLogin == false && User.Uid != "" && User.Uid != null)
@@ -117,6 +118,7 @@ namespace OMOK.Network
                                     User.myInfo.score = res.VarScore;
                                     User.myInfo.rank = res.VarRank;
                                     User.myInfo.level = res.VarLevel;
+                                    User.myInfo.NickName = Helper.ToStr(res.VarName.ToByteArray()); ;
                                     User.Locale = Helper.ToStr(res.VarLocale.ToByteArray());
 
                                     page.UpdatePlayerInfo();
@@ -124,6 +126,11 @@ namespace OMOK.Network
                                     User.state = PlayerState.Lobby;
 
                                     SendNociticeReq();
+
+                                    if (User.myInfo.NickName == "")
+                                    {
+                                        page.NickNamePopup();
+                                    }
                                 }
                                 else
                                     page.LoginInformation("로그인에 실패했습니다.");
@@ -138,6 +145,24 @@ namespace OMOK.Network
                                 res = NOTICE_RES.Parser.ParseFrom(data.Data);
 
                                 page.SetNotice(Helper.ToStr(res.VarMessage.ToByteArray()));
+                            }
+                            break;
+
+                        case (int)PROTOCOL.IdPktCheckNicknameRes:
+                            {
+                                CHECK_NICKNAME_RES res = new CHECK_NICKNAME_RES();
+                                res = CHECK_NICKNAME_RES.Parser.ParseFrom(data.Data);
+
+                                if (res.VarCode != ErrorCode.Success)
+                                    page.SendNickNamePopupMessage();
+                                else
+                                {
+                                    page.CloseAllPopup();
+
+                                    page.UpdatePlayerInfo();
+                                }
+
+                                User.myInfo.NickName = Helper.ToStr(res.VarName.ToByteArray());
                             }
                             break;
 
@@ -345,6 +370,22 @@ namespace OMOK.Network
                 person.WriteTo(stream);
 
                 client.WritePacket((int)PROTOCOL.IdPktEnterRoomReq, stream.ToArray(), stream.ToArray().Length);
+            }
+        }
+
+        static public void SendCheckNickName(string Name)
+        {
+            byte[] in_Name = Helper.ToByteString(Name);
+
+            CHECK_NICKNAME_REQ person = new CHECK_NICKNAME_REQ
+            {
+                VarName = ByteString.CopyFrom(in_Name)
+            };
+            using (MemoryStream stream = new MemoryStream())
+            {
+                person.WriteTo(stream);
+
+                client.WritePacket((int)PROTOCOL.IdPktCheckNicknameReq, stream.ToArray(), stream.ToArray().Length);
             }
         }
 

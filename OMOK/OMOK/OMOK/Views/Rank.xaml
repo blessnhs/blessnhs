@@ -15,11 +15,12 @@
 
             <Grid x:Name="main_grid">
                 <Grid.RowDefinitions BackgroundColor="White">
-                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="auto"/>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="1*" />
-                    <ColumnDefinition Width="9*" />
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="6*" />
                 </Grid.ColumnDefinitions>
             </Grid>
 

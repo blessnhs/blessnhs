@@ -23,6 +23,8 @@ BoardProcess::BoardProcess(void)
 	ADD_NET_FUNC(BoardProcess, ID_PKT_QNS_REQ, QNS);
 	ADD_NET_FUNC(BoardProcess, ID_PKT_CANCEL_MATCH_REQ, CANCEL_MATCH);
 	ADD_NET_FUNC(BoardProcess, ID_PKT_NOTICE_REQ, NOTICE);
+	ADD_NET_FUNC(BoardProcess, ID_PKT_CHECK_NICKNAME_REQ, CHECK_NICKNAME);
+	
 	
 }
 
@@ -57,6 +59,26 @@ VOID BoardProcess::Process(LPVOID Data, DWORD Length, WORD MainProtocol, WORD Su
 	{
 		printf("handle exception %d\n",exception);
 	}
+}
+
+VOID BoardProcess::CHECK_NICKNAME(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client)
+{
+	DECLARE_RECV_TYPE(CHECK_NICKNAME_REQ, nickname)
+
+	if (_result_, nickname.var_name().size() <= 0 || nickname.var_name().size() >= 20)
+		return;
+
+	//로그인 쿼리를 날린다.
+	boost::shared_ptr<NickNameCheck> pRequest = ALLOCATOR.Create<NickNameCheck>();
+	pRequest->NickName = nickname.var_name();
+	pRequest->Index = Client->GetPair();
+
+	boost::shared_ptr<Board::MSG_PLAYER_QUERY<NickNameCheck>>		PLAYER_MSG = ALLOCATOR.Create<Board::MSG_PLAYER_QUERY<NickNameCheck>>();
+	PLAYER_MSG->pSession = Client;
+	PLAYER_MSG->pRequst = pRequest;
+	PLAYER_MSG->Type = Client->GetMyDBTP();
+	PLAYER_MSG->SubType = ONQUERY;
+	MAINPROC.RegisterCommand(PLAYER_MSG);
 }
 
 VOID BoardProcess::NOTICE(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client)

@@ -45,6 +45,8 @@ public:
 
 	VOID NOTICE(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client);
 
+	VOID CHECK_NICKNAME(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client);
+
 protected:
 
 	DECLARE_MSG_MAP(BoardProcess)

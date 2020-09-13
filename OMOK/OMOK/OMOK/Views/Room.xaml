@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:AdFire="clr-namespace:OMOK.CustomAdMobView"
+             xmlns:AdFire="clr-namespace:OMOK.CustomAdMobView" xmlns:control="clr-namespace:OMOK.Control"
              x:Class="OMOK.Room">
     <RelativeLayout >
 
@@ -22,19 +22,15 @@
                 <ColumnDefinition Width="20*"/>
             </Grid.ColumnDefinitions>
 
-            <StackLayout IsClippedToBounds="True" Grid.Row="0" Grid.Column="0"  Margin="5">
-                <Label Text="00" x:Name="timeLabel" FontSize="Large" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
-            </StackLayout>
-
-            <StackLayout IsClippedToBounds="True" Grid.Row="0" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center">
-                <ProgressBar x:Name="ProgressRoom" Progress="0.0" />
-            </StackLayout>
+            <Label Text="00" x:Name="timeLabel" FontSize="Large" Grid.Row="0" Grid.Column="0" HorizontalOptions="Center" VerticalOptions="Center" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
+    
+            <ProgressBar x:Name="ProgressRoom" Progress="0.0"  Grid.Row="0" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center"/>
             
             <Frame  Padding="5,5,5,0" BorderColor="White" Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="2">
                 <AdFire:CtBannerView eBannerSize="Standardbanner"   BackgroundColor="White" x:Name="banner"/>
             </Frame>
 
-            <Button x:Name="LeaveRoom" Text="나가기"  Grid.Row="0" Grid.Column="4" Clicked="OnLeaveClicked" BackgroundColor="#E6DEDE"/>
+            <control:GradientButton x:Name="LeaveRoom" StartColor="#71c4d1" EndColor="#77bfd4" Text="나가기"  Grid.Row="0" Grid.Column="4" Clicked="OnLeaveClicked" BackgroundColor="#E6DEDE"/>
 
             <AbsoluteLayout  x:Name="absoluteLayout"  BackgroundColor="#43343E"  Grid.Row="1" Grid.Column="0"   Grid.ColumnSpan="5">
             </AbsoluteLayout>

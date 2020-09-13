@@ -349,11 +349,6 @@ namespace OMOK.Views
                 // do something every 60 seconds
                 Device.BeginInvokeOnMainThread(() =>
                 {
-                    if (once1 == true)
-                        return;
-
-                    once1 = true;
-
                     screeny = screenx = Width;
 
                     boxwidth = screenx / size;
@@ -374,7 +369,7 @@ namespace OMOK.Views
                     touchEffect.TouchAction += OnTouchEffectAction;
                     absoluteLayout.Effects.Add(touchEffect);
                 });
-                return true; // runs again, or false to stop
+                return false; // runs again, or false to stop
             });
 
         }
@@ -390,8 +385,6 @@ namespace OMOK.Views
         double boxheight;
 
         double size = 19;  //default 19
-
-        bool once1 = false;
 
         public SingleMatch()
         {
@@ -443,6 +436,8 @@ namespace OMOK.Views
             });
 
             iIterstitia = DependencyService.Get<iAd_IterstitialView>();
+
+            Clicked.IsEnabled = false;
 
         }
 
@@ -621,6 +616,8 @@ namespace OMOK.Views
                 iIterstitia.ShowAd();
 
             retrycount++;
+
+            Clicked.IsEnabled = true;
 
             User.myInfo.ai_set_flag = true;
         }

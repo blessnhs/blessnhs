@@ -16,8 +16,8 @@ public:
 	
 	BOOL Initalize();
 
-	int	 ProcedureUserLogin(const CHAR* flatformid, const int flatformtype, const CHAR* name, const CHAR* picture_url, const CHAR* email, const CHAR* locale,
-	std::string&szKey,int &Rank, int& Score, int& Win, int& Lose, int& Draw,INT64 &Index, int& Level);
+	int	 ProcedureUserLogin(const CHAR* flatformid, const int flatformtype, const CHAR* picture_url, const CHAR* email, const CHAR* locale,
+	std::string&szKey,int &Rank, int& Score, int& Win, int& Lose, int& Draw,INT64 &Index, int& Level,string& name);
 
 
 	int	 ProcedureUserLogout(const INT64 id);
@@ -25,6 +25,8 @@ public:
 
 	int  RequestRank(std::list<Rank>& list);
 	int  CalcRank();
+
+	bool NickNameCheck(string Name, INT64 Index);
 
 	int UpdaetPlayerScore(INT64 Index,int Win, int Lose, int Draw, int Level, int Score);
 

@@ -138,6 +138,33 @@ public:
 		return 0;
 	}
 
+	bool IsExistNickName(string name, int64_t Index)
+	{
+		auto collection = db["ACCOUNT"];
+
+		bsoncxx::stdx::optional<bsoncxx::document::value> maybe_result =
+			collection.find_one(document{} << "Name" << name << finalize);
+		if (!maybe_result)
+		{
+			//닉네임이 없다.
+
+			auto serverQuery = db["ACCOUNT"].update_one(
+				make_document(kvp("INDEX", Index)),
+				make_document(
+					kvp("$set", make_document(kvp("Name", name)))));
+
+			if (!serverQuery)
+			{
+				printf("IsExistNickName  Index %I64d query failed \n", Index);
+				return false;
+			}
+
+			return true;
+		}
+
+		return false;
+		
+	}
 
 	void  RequestRank(std::list<Rank>& list, int count = 10)
 	{
@@ -190,29 +217,7 @@ public:
 	int UpdaetPlayerScore(int64_t Index, int Win, int Lose, int Draw, int Level, int Score)
 	{
 		auto collection = db["ACCOUNT"];
-
-		bsoncxx::builder::stream::document query{};
-
-		/*query << "INDEX" << Index;*/
-
-		//bsoncxx::builder::stream::document update{};
-		//update << "$inc" << bsoncxx::builder::stream::open_document <<
-		//	"Win" << Win <<
-		//	bsoncxx::builder::stream::close_document
-		//	<< "$inc" << bsoncxx::builder::stream::open_document <<
-		//	"Lose" << Lose <<
-		//	bsoncxx::builder::stream::close_document
-		//	<< "$inc" << bsoncxx::builder::stream::open_document <<
-		//	"Draw" << Draw <<
-		//	bsoncxx::builder::stream::close_document
-		//	<< "$set" << bsoncxx::builder::stream::open_document <<
-		//	"Level" << Level <<
-		//	bsoncxx::builder::stream::close_document
-		//	<< "$set" << bsoncxx::builder::stream::open_document <<
-		//	"Score" << Score <<
-		//	bsoncxx::builder::stream::close_document;
-
-
+		
 		auto serverQuery = db["ACCOUNT"].update_one(
 			make_document(kvp("INDEX", Index)),
 			make_document(
@@ -221,8 +226,6 @@ public:
 				kvp("$inc", make_document(kvp("Draw", Draw))),
 				kvp("$set", make_document(kvp("Level", Level))),
 				kvp("$set", make_document(kvp("Score", Score)))));
-
-	/*	auto serverQuery = collection.update_many(query.view(), update.view());*/
 
 		if (!serverQuery)
 		{
@@ -375,7 +378,7 @@ public:
 		return -1;
 	}
 
-	int		ProcedureUserLogin(const char* flatformid, const int flatformtype, const char* name, const char* picture_url, const char* email, const char* locale, std::string& szKey, int& Rank, int& Score, int& Win, int& Lose, int& Draw, INT64& Index, int& Level)
+	int		ProcedureUserLogin(const char* flatformid, const int flatformtype, const char* picture_url, const char* email, const char* locale, std::string& szKey, int& Rank, int& Score, int& Win, int& Lose, int& Draw, INT64& Index, int& Level, string& name)
 	{
 		mongocxx::collection collection = db["ACCOUNT"];
 		bsoncxx::stdx::optional<bsoncxx::document::value> maybe_result =
@@ -402,6 +405,9 @@ public:
 
 			auto viewIndex = maybe_result->view()["INDEX"];
 			Index = viewIndex.get_int64().value;
+
+			auto viewName = maybe_result->view()["Name"];
+			name = viewName.get_utf8().value.data();
 
 			//concurrent
 			//접속 기록이 있다. 중복 접속
@@ -455,7 +461,7 @@ public:
 				bsoncxx::document::value doc_value = builder
 					<< "FlatformId" << flatformid
 					<< "FlatformType" << flatformtype
-					<< "Name" << name
+					<< "Name" << "" //default
 					<< "PictureUrl" << picture_url
 					<< "Email" << email
 					<< "LastLoginTime" << bsoncxx::types::b_date(std::chrono::system_clock::now())

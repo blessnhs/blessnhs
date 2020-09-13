@@ -16,6 +16,16 @@ public:
 	float Version;
 };
 
+class NickNameCheck : public GSObject
+{
+public:
+	NickNameCheck(void) {}
+	~NickNameCheck(void) {}
+
+	string NickName;
+	INT64 Index;
+};
+
 class RequestPlayerScore : public GSObject
 {
 public:

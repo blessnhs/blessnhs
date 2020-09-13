@@ -49,7 +49,7 @@ struct TableStruct_GS_2eCLI_2eproto {
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::PROTOBUF_NAMESPACE_ID::internal::AuxillaryParseTableField aux[]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
-  static const ::PROTOBUF_NAMESPACE_ID::internal::ParseTable schema[15]
+  static const ::PROTOBUF_NAMESPACE_ID::internal::ParseTable schema[16]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::PROTOBUF_NAMESPACE_ID::internal::FieldMetadata field_metadata[];
   static const ::PROTOBUF_NAMESPACE_ID::internal::SerializationTable serialization_table[];
@@ -62,6 +62,9 @@ extern BROADCAST_ROOM_MESSAGE_RESDefaultTypeInternal _BROADCAST_ROOM_MESSAGE_RES
 class CANCEL_MATCH_RES;
 class CANCEL_MATCH_RESDefaultTypeInternal;
 extern CANCEL_MATCH_RESDefaultTypeInternal _CANCEL_MATCH_RES_default_instance_;
+class CHECK_NICKNAME_RES;
+class CHECK_NICKNAME_RESDefaultTypeInternal;
+extern CHECK_NICKNAME_RESDefaultTypeInternal _CHECK_NICKNAME_RES_default_instance_;
 class CREATE_ROOM_RES;
 class CREATE_ROOM_RESDefaultTypeInternal;
 extern CREATE_ROOM_RESDefaultTypeInternal _CREATE_ROOM_RES_default_instance_;
@@ -104,6 +107,7 @@ extern VERSION_RESDefaultTypeInternal _VERSION_RES_default_instance_;
 PROTOBUF_NAMESPACE_OPEN
 template<> ::BROADCAST_ROOM_MESSAGE_RES* Arena::CreateMaybeMessage<::BROADCAST_ROOM_MESSAGE_RES>(Arena*);
 template<> ::CANCEL_MATCH_RES* Arena::CreateMaybeMessage<::CANCEL_MATCH_RES>(Arena*);
+template<> ::CHECK_NICKNAME_RES* Arena::CreateMaybeMessage<::CHECK_NICKNAME_RES>(Arena*);
 template<> ::CREATE_ROOM_RES* Arena::CreateMaybeMessage<::CREATE_ROOM_RES>(Arena*);
 template<> ::ENTER_ROOM_RES* Arena::CreateMaybeMessage<::ENTER_ROOM_RES>(Arena*);
 template<> ::GAME_RESULT_NTY* Arena::CreateMaybeMessage<::GAME_RESULT_NTY>(Arena*);
@@ -405,6 +409,7 @@ class LOGIN_RES :
 
   enum : int {
     kVarLocaleFieldNumber = 10,
+    kVarNameFieldNumber = 11,
     kVarIndexFieldNumber = 3,
     kVarCodeFieldNumber = 2,
     kVarWinFieldNumber = 4,
@@ -433,6 +438,26 @@ class LOGIN_RES :
   const std::string& _internal_var_locale() const;
   void _internal_set_var_locale(const std::string& value);
   std::string* _internal_mutable_var_locale();
+  public:
+
+  // optional bytes var_name = 11;
+  bool has_var_name() const;
+  private:
+  bool _internal_has_var_name() const;
+  public:
+  void clear_var_name();
+  const std::string& var_name() const;
+  void set_var_name(const std::string& value);
+  void set_var_name(std::string&& value);
+  void set_var_name(const char* value);
+  void set_var_name(const void* value, size_t size);
+  std::string* mutable_var_name();
+  std::string* release_var_name();
+  void set_allocated_var_name(std::string* var_name);
+  private:
+  const std::string& _internal_var_name() const;
+  void _internal_set_var_name(const std::string& value);
+  std::string* _internal_mutable_var_name();
   public:
 
   // optional int64 var_index = 3;
@@ -560,6 +585,7 @@ class LOGIN_RES :
   ::PROTOBUF_NAMESPACE_ID::internal::HasBits<1> _has_bits_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr var_locale_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr var_name_;
   ::PROTOBUF_NAMESPACE_ID::int64 var_index_;
   int var_code_;
   ::PROTOBUF_NAMESPACE_ID::int32 var_win_;
@@ -2972,6 +2998,183 @@ class NOTICE_RES :
   int id_;
   friend struct ::TableStruct_GS_2eCLI_2eproto;
 };
+// -------------------------------------------------------------------
+
+class CHECK_NICKNAME_RES :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:CHECK_NICKNAME_RES) */ {
+ public:
+  CHECK_NICKNAME_RES();
+  virtual ~CHECK_NICKNAME_RES();
+
+  CHECK_NICKNAME_RES(const CHECK_NICKNAME_RES& from);
+  CHECK_NICKNAME_RES(CHECK_NICKNAME_RES&& from) noexcept
+    : CHECK_NICKNAME_RES() {
+    *this = ::std::move(from);
+  }
+
+  inline CHECK_NICKNAME_RES& operator=(const CHECK_NICKNAME_RES& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline CHECK_NICKNAME_RES& operator=(CHECK_NICKNAME_RES&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  inline const ::PROTOBUF_NAMESPACE_ID::UnknownFieldSet& unknown_fields() const {
+    return _internal_metadata_.unknown_fields();
+  }
+  inline ::PROTOBUF_NAMESPACE_ID::UnknownFieldSet* mutable_unknown_fields() {
+    return _internal_metadata_.mutable_unknown_fields();
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return GetMetadataStatic().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return GetMetadataStatic().reflection;
+  }
+  static const CHECK_NICKNAME_RES& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const CHECK_NICKNAME_RES* internal_default_instance() {
+    return reinterpret_cast<const CHECK_NICKNAME_RES*>(
+               &_CHECK_NICKNAME_RES_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    15;
+
+  friend void swap(CHECK_NICKNAME_RES& a, CHECK_NICKNAME_RES& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(CHECK_NICKNAME_RES* other) {
+    if (other == this) return;
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline CHECK_NICKNAME_RES* New() const final {
+    return CreateMaybeMessage<CHECK_NICKNAME_RES>(nullptr);
+  }
+
+  CHECK_NICKNAME_RES* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
+    return CreateMaybeMessage<CHECK_NICKNAME_RES>(arena);
+  }
+  void CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void CopyFrom(const CHECK_NICKNAME_RES& from);
+  void MergeFrom(const CHECK_NICKNAME_RES& from);
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  ::PROTOBUF_NAMESPACE_ID::uint8* _InternalSerialize(
+      ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  inline void SharedCtor();
+  inline void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(CHECK_NICKNAME_RES* other);
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "CHECK_NICKNAME_RES";
+  }
+  private:
+  inline ::PROTOBUF_NAMESPACE_ID::Arena* GetArenaNoVirtual() const {
+    return nullptr;
+  }
+  inline void* MaybeArenaPtr() const {
+    return nullptr;
+  }
+  public:
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+  private:
+  static ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadataStatic() {
+    ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&::descriptor_table_GS_2eCLI_2eproto);
+    return ::descriptor_table_GS_2eCLI_2eproto.file_level_metadata[kIndexInFileMessages];
+  }
+
+  public:
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kVarNameFieldNumber = 3,
+    kVarCodeFieldNumber = 2,
+    kIdFieldNumber = 1,
+  };
+  // required bytes var_name = 3;
+  bool has_var_name() const;
+  private:
+  bool _internal_has_var_name() const;
+  public:
+  void clear_var_name();
+  const std::string& var_name() const;
+  void set_var_name(const std::string& value);
+  void set_var_name(std::string&& value);
+  void set_var_name(const char* value);
+  void set_var_name(const void* value, size_t size);
+  std::string* mutable_var_name();
+  std::string* release_var_name();
+  void set_allocated_var_name(std::string* var_name);
+  private:
+  const std::string& _internal_var_name() const;
+  void _internal_set_var_name(const std::string& value);
+  std::string* _internal_mutable_var_name();
+  public:
+
+  // optional .ErrorCode var_code = 2;
+  bool has_var_code() const;
+  private:
+  bool _internal_has_var_code() const;
+  public:
+  void clear_var_code();
+  ::ErrorCode var_code() const;
+  void set_var_code(::ErrorCode value);
+  private:
+  ::ErrorCode _internal_var_code() const;
+  void _internal_set_var_code(::ErrorCode value);
+  public:
+
+  // optional .PROTOCOL id = 1 [default = ID_PKT_CHECK_NICKNAME_RES];
+  bool has_id() const;
+  private:
+  bool _internal_has_id() const;
+  public:
+  void clear_id();
+  ::PROTOCOL id() const;
+  void set_id(::PROTOCOL value);
+  private:
+  ::PROTOCOL _internal_id() const;
+  void _internal_set_id(::PROTOCOL value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:CHECK_NICKNAME_RES)
+ private:
+  class _Internal;
+
+  ::PROTOBUF_NAMESPACE_ID::internal::InternalMetadataWithArena _internal_metadata_;
+  ::PROTOBUF_NAMESPACE_ID::internal::HasBits<1> _has_bits_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr var_name_;
+  int var_code_;
+  int id_;
+  friend struct ::TableStruct_GS_2eCLI_2eproto;
+};
 // ===================================================================
 
 
@@ -3075,7 +3278,7 @@ inline void VERSION_RES::set_var_code(::ErrorCode value) {
 
 // optional .PROTOCOL id = 1 [default = ID_PKT_LOGIN_RES];
 inline bool LOGIN_RES::_internal_has_id() const {
-  bool value = (_has_bits_[0] & 0x00000200u) != 0;
+  bool value = (_has_bits_[0] & 0x00000400u) != 0;
   return value;
 }
 inline bool LOGIN_RES::has_id() const {
@@ -3083,7 +3286,7 @@ inline bool LOGIN_RES::has_id() const {
 }
 inline void LOGIN_RES::clear_id() {
   id_ = 3;
-  _has_bits_[0] &= ~0x00000200u;
+  _has_bits_[0] &= ~0x00000400u;
 }
 inline ::PROTOCOL LOGIN_RES::_internal_id() const {
   return static_cast< ::PROTOCOL >(id_);
@@ -3094,7 +3297,7 @@ inline ::PROTOCOL LOGIN_RES::id() const {
 }
 inline void LOGIN_RES::_internal_set_id(::PROTOCOL value) {
   assert(::PROTOCOL_IsValid(value));
-  _has_bits_[0] |= 0x00000200u;
+  _has_bits_[0] |= 0x00000400u;
   id_ = value;
 }
 inline void LOGIN_RES::set_id(::PROTOCOL value) {
@@ -3104,7 +3307,7 @@ inline void LOGIN_RES::set_id(::PROTOCOL value) {
 
 // optional .ErrorCode var_code = 2;
 inline bool LOGIN_RES::_internal_has_var_code() const {
-  bool value = (_has_bits_[0] & 0x00000004u) != 0;
+  bool value = (_has_bits_[0] & 0x00000008u) != 0;
   return value;
 }
 inline bool LOGIN_RES::has_var_code() const {
@@ -3112,7 +3315,7 @@ inline bool LOGIN_RES::has_var_code() const {
 }
 inline void LOGIN_RES::clear_var_code() {
   var_code_ = 0;
-  _has_bits_[0] &= ~0x00000004u;
+  _has_bits_[0] &= ~0x00000008u;
 }
 inline ::ErrorCode LOGIN_RES::_internal_var_code() const {
   return static_cast< ::ErrorCode >(var_code_);
@@ -3123,7 +3326,7 @@ inline ::ErrorCode LOGIN_RES::var_code() const {
 }
 inline void LOGIN_RES::_internal_set_var_code(::ErrorCode value) {
   assert(::ErrorCode_IsValid(value));
-  _has_bits_[0] |= 0x00000004u;
+  _has_bits_[0] |= 0x00000008u;
   var_code_ = value;
 }
 inline void LOGIN_RES::set_var_code(::ErrorCode value) {
@@ -3133,7 +3336,7 @@ inline void LOGIN_RES::set_var_code(::ErrorCode value) {
 
 // optional int64 var_index = 3;
 inline bool LOGIN_RES::_internal_has_var_index() const {
-  bool value = (_has_bits_[0] & 0x00000002u) != 0;
+  bool value = (_has_bits_[0] & 0x00000004u) != 0;
   return value;
 }
 inline bool LOGIN_RES::has_var_index() const {
@@ -3141,7 +3344,7 @@ inline bool LOGIN_RES::has_var_index() const {
 }
 inline void LOGIN_RES::clear_var_index() {
   var_index_ = PROTOBUF_LONGLONG(0);
-  _has_bits_[0] &= ~0x00000002u;
+  _has_bits_[0] &= ~0x00000004u;
 }
 inline ::PROTOBUF_NAMESPACE_ID::int64 LOGIN_RES::_internal_var_index() const {
   return var_index_;
@@ -3151,7 +3354,7 @@ inline ::PROTOBUF_NAMESPACE_ID::int64 LOGIN_RES::var_index() const {
   return _internal_var_index();
 }
 inline void LOGIN_RES::_internal_set_var_index(::PROTOBUF_NAMESPACE_ID::int64 value) {
-  _has_bits_[0] |= 0x00000002u;
+  _has_bits_[0] |= 0x00000004u;
   var_index_ = value;
 }
 inline void LOGIN_RES::set_var_index(::PROTOBUF_NAMESPACE_ID::int64 value) {
@@ -3161,7 +3364,7 @@ inline void LOGIN_RES::set_var_index(::PROTOBUF_NAMESPACE_ID::int64 value) {
 
 // optional int32 var_win = 4;
 inline bool LOGIN_RES::_internal_has_var_win() const {
-  bool value = (_has_bits_[0] & 0x00000008u) != 0;
+  bool value = (_has_bits_[0] & 0x00000010u) != 0;
   return value;
 }
 inline bool LOGIN_RES::has_var_win() const {
@@ -3169,7 +3372,7 @@ inline bool LOGIN_RES::has_var_win() const {
 }
 inline void LOGIN_RES::clear_var_win() {
   var_win_ = 0;
-  _has_bits_[0] &= ~0x00000008u;
+  _has_bits_[0] &= ~0x00000010u;
 }
 inline ::PROTOBUF_NAMESPACE_ID::int32 LOGIN_RES::_internal_var_win() const {
   return var_win_;
@@ -3179,7 +3382,7 @@ inline ::PROTOBUF_NAMESPACE_ID::int32 LOGIN_RES::var_win() const {
   return _internal_var_win();
 }
 inline void LOGIN_RES::_internal_set_var_win(::PROTOBUF_NAMESPACE_ID::int32 value) {
-  _has_bits_[0] |= 0x00000008u;
+  _has_bits_[0] |= 0x00000010u;
   var_win_ = value;
 }
 inline void LOGIN_RES::set_var_win(::PROTOBUF_NAMESPACE_ID::int32 value) {
@@ -3189,7 +3392,7 @@ inline void LOGIN_RES::set_var_win(::PROTOBUF_NAMESPACE_ID::int32 value) {
 
 // optional int32 var_lose = 5;
 inline bool LOGIN_RES::_internal_has_var_lose() const {
-  bool value = (_has_bits_[0] & 0x00000010u) != 0;
+  bool value = (_has_bits_[0] & 0x00000020u) != 0;
   return value;
 }
 inline bool LOGIN_RES::has_var_lose() const {
@@ -3197,7 +3400,7 @@ inline bool LOGIN_RES::has_var_lose() const {
 }
 inline void LOGIN_RES::clear_var_lose() {
   var_lose_ = 0;
-  _has_bits_[0] &= ~0x00000010u;
+  _has_bits_[0] &= ~0x00000020u;
 }
 inline ::PROTOBUF_NAMESPACE_ID::int32 LOGIN_RES::_internal_var_lose() const {
   return var_lose_;
@@ -3207,7 +3410,7 @@ inline ::PROTOBUF_NAMESPACE_ID::int32 LOGIN_RES::var_lose() const {
   return _internal_var_lose();
 }
 inline void LOGIN_RES::_internal_set_var_lose(::PROTOBUF_NAMESPACE_ID::int32 value) {
-  _has_bits_[0] |= 0x00000010u;
+  _has_bits_[0] |= 0x00000020u;
   var_lose_ = value;
 }
 inline void LOGIN_RES::set_var_lose(::PROTOBUF_NAMESPACE_ID::int32 value) {
@@ -3217,7 +3420,7 @@ inline void LOGIN_RES::set_var_lose(::PROTOBUF_NAMESPACE_ID::int32 value) {
 
 // optional int32 var_draw = 6;
 inline bool LOGIN_RES::_internal_has_var_draw() const {
-  bool value = (_has_bits_[0] & 0x00000020u) != 0;
+  bool value = (_has_bits_[0] & 0x00000040u) != 0;
   return value;
 }
 inline bool LOGIN_RES::has_var_draw() const {
@@ -3225,7 +3428,7 @@ inline bool LOGIN_RES::has_var_draw() const {
 }
 inline void LOGIN_RES::clear_var_draw() {
   var_draw_ = 0;
-  _has_bits_[0] &= ~0x00000020u;
+  _has_bits_[0] &= ~0x00000040u;
 }
 inline ::PROTOBUF_NAMESPACE_ID::int32 LOGIN_RES::_internal_var_draw() const {
   return var_draw_;
@@ -3235,7 +3438,7 @@ inline ::PROTOBUF_NAMESPACE_ID::int32 LOGIN_RES::var_draw() const {
   return _internal_var_draw();
 }
 inline void LOGIN_RES::_internal_set_var_draw(::PROTOBUF_NAMESPACE_ID::int32 value) {
-  _has_bits_[0] |= 0x00000020u;
+  _has_bits_[0] |= 0x00000040u;
   var_draw_ = value;
 }
 inline void LOGIN_RES::set_var_draw(::PROTOBUF_NAMESPACE_ID::int32 value) {
@@ -3245,7 +3448,7 @@ inline void LOGIN_RES::set_var_draw(::PROTOBUF_NAMESPACE_ID::int32 value) {
 
 // optional int32 var_score = 7;
 inline bool LOGIN_RES::_internal_has_var_score() const {
-  bool value = (_has_bits_[0] & 0x00000040u) != 0;
+  bool value = (_has_bits_[0] & 0x00000080u) != 0;
   return value;
 }
 inline bool LOGIN_RES::has_var_score() const {
@@ -3253,7 +3456,7 @@ inline bool LOGIN_RES::has_var_score() const {
 }
 inline void LOGIN_RES::clear_var_score() {
   var_score_ = 0;
-  _has_bits_[0] &= ~0x00000040u;
+  _has_bits_[0] &= ~0x00000080u;
 }
 inline ::PROTOBUF_NAMESPACE_ID::int32 LOGIN_RES::_internal_var_score() const {
   return var_score_;
@@ -3263,7 +3466,7 @@ inline ::PROTOBUF_NAMESPACE_ID::int32 LOGIN_RES::var_score() const {
   return _internal_var_score();
 }
 inline void LOGIN_RES::_internal_set_var_score(::PROTOBUF_NAMESPACE_ID::int32 value) {
-  _has_bits_[0] |= 0x00000040u;
+  _has_bits_[0] |= 0x00000080u;
   var_score_ = value;
 }
 inline void LOGIN_RES::set_var_score(::PROTOBUF_NAMESPACE_ID::int32 value) {
@@ -3273,7 +3476,7 @@ inline void LOGIN_RES::set_var_score(::PROTOBUF_NAMESPACE_ID::int32 value) {
 
 // optional int32 var_rank = 8;
 inline bool LOGIN_RES::_internal_has_var_rank() const {
-  bool value = (_has_bits_[0] & 0x00000080u) != 0;
+  bool value = (_has_bits_[0] & 0x00000100u) != 0;
   return value;
 }
 inline bool LOGIN_RES::has_var_rank() const {
@@ -3281,7 +3484,7 @@ inline bool LOGIN_RES::has_var_rank() const {
 }
 inline void LOGIN_RES::clear_var_rank() {
   var_rank_ = 0;
-  _has_bits_[0] &= ~0x00000080u;
+  _has_bits_[0] &= ~0x00000100u;
 }
 inline ::PROTOBUF_NAMESPACE_ID::int32 LOGIN_RES::_internal_var_rank() const {
   return var_rank_;
@@ -3291,7 +3494,7 @@ inline ::PROTOBUF_NAMESPACE_ID::int32 LOGIN_RES::var_rank() const {
   return _internal_var_rank();
 }
 inline void LOGIN_RES::_internal_set_var_rank(::PROTOBUF_NAMESPACE_ID::int32 value) {
-  _has_bits_[0] |= 0x00000080u;
+  _has_bits_[0] |= 0x00000100u;
   var_rank_ = value;
 }
 inline void LOGIN_RES::set_var_rank(::PROTOBUF_NAMESPACE_ID::int32 value) {
@@ -3301,7 +3504,7 @@ inline void LOGIN_RES::set_var_rank(::PROTOBUF_NAMESPACE_ID::int32 value) {
 
 // optional int32 var_level = 9;
 inline bool LOGIN_RES::_internal_has_var_level() const {
-  bool value = (_has_bits_[0] & 0x00000100u) != 0;
+  bool value = (_has_bits_[0] & 0x00000200u) != 0;
   return value;
 }
 inline bool LOGIN_RES::has_var_level() const {
@@ -3309,7 +3512,7 @@ inline bool LOGIN_RES::has_var_level() const {
 }
 inline void LOGIN_RES::clear_var_level() {
   var_level_ = 0;
-  _has_bits_[0] &= ~0x00000100u;
+  _has_bits_[0] &= ~0x00000200u;
 }
 inline ::PROTOBUF_NAMESPACE_ID::int32 LOGIN_RES::_internal_var_level() const {
   return var_level_;
@@ -3319,7 +3522,7 @@ inline ::PROTOBUF_NAMESPACE_ID::int32 LOGIN_RES::var_level() const {
   return _internal_var_level();
 }
 inline void LOGIN_RES::_internal_set_var_level(::PROTOBUF_NAMESPACE_ID::int32 value) {
-  _has_bits_[0] |= 0x00000100u;
+  _has_bits_[0] |= 0x00000200u;
   var_level_ = value;
 }
 inline void LOGIN_RES::set_var_level(::PROTOBUF_NAMESPACE_ID::int32 value) {
@@ -3396,6 +3599,77 @@ inline void LOGIN_RES::set_allocated_var_locale(std::string* var_locale) {
   }
   var_locale_.SetAllocatedNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), var_locale);
   // @@protoc_insertion_point(field_set_allocated:LOGIN_RES.var_locale)
+}
+
+// optional bytes var_name = 11;
+inline bool LOGIN_RES::_internal_has_var_name() const {
+  bool value = (_has_bits_[0] & 0x00000002u) != 0;
+  return value;
+}
+inline bool LOGIN_RES::has_var_name() const {
+  return _internal_has_var_name();
+}
+inline void LOGIN_RES::clear_var_name() {
+  var_name_.ClearToEmptyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline const std::string& LOGIN_RES::var_name() const {
+  // @@protoc_insertion_point(field_get:LOGIN_RES.var_name)
+  return _internal_var_name();
+}
+inline void LOGIN_RES::set_var_name(const std::string& value) {
+  _internal_set_var_name(value);
+  // @@protoc_insertion_point(field_set:LOGIN_RES.var_name)
+}
+inline std::string* LOGIN_RES::mutable_var_name() {
+  // @@protoc_insertion_point(field_mutable:LOGIN_RES.var_name)
+  return _internal_mutable_var_name();
+}
+inline const std::string& LOGIN_RES::_internal_var_name() const {
+  return var_name_.GetNoArena();
+}
+inline void LOGIN_RES::_internal_set_var_name(const std::string& value) {
+  _has_bits_[0] |= 0x00000002u;
+  var_name_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), value);
+}
+inline void LOGIN_RES::set_var_name(std::string&& value) {
+  _has_bits_[0] |= 0x00000002u;
+  var_name_.SetNoArena(
+    &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:LOGIN_RES.var_name)
+}
+inline void LOGIN_RES::set_var_name(const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  _has_bits_[0] |= 0x00000002u;
+  var_name_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:LOGIN_RES.var_name)
+}
+inline void LOGIN_RES::set_var_name(const void* value, size_t size) {
+  _has_bits_[0] |= 0x00000002u;
+  var_name_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:LOGIN_RES.var_name)
+}
+inline std::string* LOGIN_RES::_internal_mutable_var_name() {
+  _has_bits_[0] |= 0x00000002u;
+  return var_name_.MutableNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline std::string* LOGIN_RES::release_var_name() {
+  // @@protoc_insertion_point(field_release:LOGIN_RES.var_name)
+  if (!_internal_has_var_name()) {
+    return nullptr;
+  }
+  _has_bits_[0] &= ~0x00000002u;
+  return var_name_.ReleaseNonDefaultNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline void LOGIN_RES::set_allocated_var_name(std::string* var_name) {
+  if (var_name != nullptr) {
+    _has_bits_[0] |= 0x00000002u;
+  } else {
+    _has_bits_[0] &= ~0x00000002u;
+  }
+  var_name_.SetAllocatedNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), var_name);
+  // @@protoc_insertion_point(field_set_allocated:LOGIN_RES.var_name)
 }
 
 // -------------------------------------------------------------------
@@ -5179,9 +5453,144 @@ inline void NOTICE_RES::set_allocated_var_message(std::string* var_message) {
   // @@protoc_insertion_point(field_set_allocated:NOTICE_RES.var_message)
 }
 
+// -------------------------------------------------------------------
+
+// CHECK_NICKNAME_RES
+
+// optional .PROTOCOL id = 1 [default = ID_PKT_CHECK_NICKNAME_RES];
+inline bool CHECK_NICKNAME_RES::_internal_has_id() const {
+  bool value = (_has_bits_[0] & 0x00000004u) != 0;
+  return value;
+}
+inline bool CHECK_NICKNAME_RES::has_id() const {
+  return _internal_has_id();
+}
+inline void CHECK_NICKNAME_RES::clear_id() {
+  id_ = 30;
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline ::PROTOCOL CHECK_NICKNAME_RES::_internal_id() const {
+  return static_cast< ::PROTOCOL >(id_);
+}
+inline ::PROTOCOL CHECK_NICKNAME_RES::id() const {
+  // @@protoc_insertion_point(field_get:CHECK_NICKNAME_RES.id)
+  return _internal_id();
+}
+inline void CHECK_NICKNAME_RES::_internal_set_id(::PROTOCOL value) {
+  assert(::PROTOCOL_IsValid(value));
+  _has_bits_[0] |= 0x00000004u;
+  id_ = value;
+}
+inline void CHECK_NICKNAME_RES::set_id(::PROTOCOL value) {
+  _internal_set_id(value);
+  // @@protoc_insertion_point(field_set:CHECK_NICKNAME_RES.id)
+}
+
+// optional .ErrorCode var_code = 2;
+inline bool CHECK_NICKNAME_RES::_internal_has_var_code() const {
+  bool value = (_has_bits_[0] & 0x00000002u) != 0;
+  return value;
+}
+inline bool CHECK_NICKNAME_RES::has_var_code() const {
+  return _internal_has_var_code();
+}
+inline void CHECK_NICKNAME_RES::clear_var_code() {
+  var_code_ = 0;
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline ::ErrorCode CHECK_NICKNAME_RES::_internal_var_code() const {
+  return static_cast< ::ErrorCode >(var_code_);
+}
+inline ::ErrorCode CHECK_NICKNAME_RES::var_code() const {
+  // @@protoc_insertion_point(field_get:CHECK_NICKNAME_RES.var_code)
+  return _internal_var_code();
+}
+inline void CHECK_NICKNAME_RES::_internal_set_var_code(::ErrorCode value) {
+  assert(::ErrorCode_IsValid(value));
+  _has_bits_[0] |= 0x00000002u;
+  var_code_ = value;
+}
+inline void CHECK_NICKNAME_RES::set_var_code(::ErrorCode value) {
+  _internal_set_var_code(value);
+  // @@protoc_insertion_point(field_set:CHECK_NICKNAME_RES.var_code)
+}
+
+// required bytes var_name = 3;
+inline bool CHECK_NICKNAME_RES::_internal_has_var_name() const {
+  bool value = (_has_bits_[0] & 0x00000001u) != 0;
+  return value;
+}
+inline bool CHECK_NICKNAME_RES::has_var_name() const {
+  return _internal_has_var_name();
+}
+inline void CHECK_NICKNAME_RES::clear_var_name() {
+  var_name_.ClearToEmptyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline const std::string& CHECK_NICKNAME_RES::var_name() const {
+  // @@protoc_insertion_point(field_get:CHECK_NICKNAME_RES.var_name)
+  return _internal_var_name();
+}
+inline void CHECK_NICKNAME_RES::set_var_name(const std::string& value) {
+  _internal_set_var_name(value);
+  // @@protoc_insertion_point(field_set:CHECK_NICKNAME_RES.var_name)
+}
+inline std::string* CHECK_NICKNAME_RES::mutable_var_name() {
+  // @@protoc_insertion_point(field_mutable:CHECK_NICKNAME_RES.var_name)
+  return _internal_mutable_var_name();
+}
+inline const std::string& CHECK_NICKNAME_RES::_internal_var_name() const {
+  return var_name_.GetNoArena();
+}
+inline void CHECK_NICKNAME_RES::_internal_set_var_name(const std::string& value) {
+  _has_bits_[0] |= 0x00000001u;
+  var_name_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), value);
+}
+inline void CHECK_NICKNAME_RES::set_var_name(std::string&& value) {
+  _has_bits_[0] |= 0x00000001u;
+  var_name_.SetNoArena(
+    &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:CHECK_NICKNAME_RES.var_name)
+}
+inline void CHECK_NICKNAME_RES::set_var_name(const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  _has_bits_[0] |= 0x00000001u;
+  var_name_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:CHECK_NICKNAME_RES.var_name)
+}
+inline void CHECK_NICKNAME_RES::set_var_name(const void* value, size_t size) {
+  _has_bits_[0] |= 0x00000001u;
+  var_name_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:CHECK_NICKNAME_RES.var_name)
+}
+inline std::string* CHECK_NICKNAME_RES::_internal_mutable_var_name() {
+  _has_bits_[0] |= 0x00000001u;
+  return var_name_.MutableNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline std::string* CHECK_NICKNAME_RES::release_var_name() {
+  // @@protoc_insertion_point(field_release:CHECK_NICKNAME_RES.var_name)
+  if (!_internal_has_var_name()) {
+    return nullptr;
+  }
+  _has_bits_[0] &= ~0x00000001u;
+  return var_name_.ReleaseNonDefaultNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline void CHECK_NICKNAME_RES::set_allocated_var_name(std::string* var_name) {
+  if (var_name != nullptr) {
+    _has_bits_[0] |= 0x00000001u;
+  } else {
+    _has_bits_[0] &= ~0x00000001u;
+  }
+  var_name_.SetAllocatedNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), var_name);
+  // @@protoc_insertion_point(field_set_allocated:CHECK_NICKNAME_RES.var_name)
+}
+
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

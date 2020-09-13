@@ -127,6 +127,40 @@ namespace Board	{
 		void Undo() {}
 	};
 
+	template<>
+	class MSG_PLAYER_QUERY<NickNameCheck> : public IMESSAGE
+	{
+	public:
+		MSG_PLAYER_QUERY() { }
+		~MSG_PLAYER_QUERY() {}
+
+		boost::shared_ptr<NickNameCheck> pRequst;
+		GSCLIENT_PTR pSession;
+
+		void Execute(LPVOID Param)
+		{
+			DBPROCESS_CER_PTR pProcess = DBPROCESSCONTAINER_CER.Search(Type);
+			if (pProcess == NULL || pProcess->m_IsOpen == false)
+			{
+				return;
+			}
+
+			CHECK_NICKNAME_RES res;
+			
+			bool ret = pProcess->NickNameCheck(pRequst->NickName, pRequst->Index);
+			ErrorCode code = ret == true ? ErrorCode::Success : ErrorCode::DataBaseError;
+
+			res.set_var_code(code);
+			res.set_var_name(pRequst->NickName);
+
+			SEND_PROTO_BUFFER(res, pSession)
+
+		}
+
+
+		void Undo() {}
+	};
+
 
 	template<>
 	class MSG_PLAYER_QUERY<RequestRank> : public IMESSAGE
@@ -166,6 +200,9 @@ namespace Board	{
 
 			for each (auto r in list)
 			{
+				if (r.var_win() == 0)
+					continue;
+
 				auto rank = res.mutable_var_rank_list()->Add();
 
 				*rank = r;
@@ -471,7 +508,7 @@ namespace Board	{
 				return;
 			}
 
-			std::string flatformid, name, picture_url, email,locale;
+			std::string flatformid, google_name, picture_url, email,locale;
 
 			flatformid.assign(http_out[1].begin(), http_out[1].end());
 			email.assign(http_out[2].begin(), http_out[2].end());
@@ -479,14 +516,15 @@ namespace Board	{
 			locale.assign(http_out[5].begin(), http_out[5].end());
 
 
-			Base64::convert_unicode_to_ansi_string(name, http_out[3].c_str(), http_out[3].size());
+			Base64::convert_unicode_to_ansi_string(google_name, http_out[3].c_str(), http_out[3].size());
 
 			int rank, score, win, lose, draw, level;
+			string nickname;
 
 			// 로그인 절차 : 아이디의 접속확인 및 인증키값을 가져온다.
 			std::string authentickey;
 			INT64 Index = 0;
-			WORD nRet = pProcess->ProcedureUserLogin(flatformid.c_str(), 0/*0번은 구글 인증*/, name.c_str(),picture_url.c_str(),email.c_str(), locale.c_str(), authentickey, rank, score, win, lose, draw,Index, level);
+			WORD nRet = pProcess->ProcedureUserLogin(flatformid.c_str(), 0/*0번은 구글 인증*/,picture_url.c_str(),email.c_str(), locale.c_str(), authentickey, rank, score, win, lose, draw,Index, level, nickname);
 
 			if(nRet != _ERR_NONE )
 			{ 
@@ -517,11 +555,11 @@ namespace Board	{
 			PlayerPtr pNewPlayer = PLAYERMGR.Create();
 	
 			pNewPlayer->Initialize();
-			pNewPlayer->m_Char[0].SetName(name);
+			pNewPlayer->m_Char[0].SetName(nickname);
 			pNewPlayer->m_Account.SetFlatformId(flatformid);
 			pNewPlayer->m_Account.SetEMail(email);
 			pNewPlayer->m_Account.SetPicture_url(picture_url);
-			pNewPlayer->m_Account.SetName(name);
+			pNewPlayer->m_Account.SetName(nickname);
 
 			pNewPlayer->SetId(Index);
 			pNewPlayer->SetPair(pSession->GetId());
@@ -540,6 +578,7 @@ namespace Board	{
 			res.set_var_rank(rank);
 			res.set_var_level(level);
 			res.set_var_locale(locale);
+			res.set_var_name(nickname);
 
 			SEND_PROTO_BUFFER(res, pSession)
 		}

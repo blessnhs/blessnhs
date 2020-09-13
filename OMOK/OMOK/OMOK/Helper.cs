@@ -61,6 +61,24 @@ namespace OMOK
             }
         }
 
+        public static string GetLocaleImagePath(string locale)
+        {
+            switch(locale)
+            {
+                case "ko":
+                    return "OMOK.Image.ko.png";
+                case "ja":
+                    return "OMOK.Image.jp.png";
+                case "zh-TW":
+                    return "OMOK.Image.tw.png";
+                case "fil":
+                    return "OMOK.Image.ph.png";
+             
+            }
+
+            return "";
+        }
+
         public static System.Int64 ToInteger64(this string thisString)
         {
             if (string.IsNullOrEmpty(thisString))

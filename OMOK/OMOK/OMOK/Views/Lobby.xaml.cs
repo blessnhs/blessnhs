@@ -13,6 +13,7 @@ using OMOK.Network;
 using OMOK.CustomAdMobView;
 using Google.Protobuf.Collections;
 using Rg.Plugins.Popup.Extensions;
+using OMOK.Popup;
 
 namespace OMOK.Views
 {
@@ -156,6 +157,23 @@ namespace OMOK.Views
         public void PopRoomPopup()
         {
             Navigation.PopModalAsync();
+        }
+
+        public void CloseAllPopup()
+        {
+            Navigation.PopAllPopupAsync();
+        }
+
+        NickNameEdit currentNickNamePopup = new NickNameEdit();
+
+        public void SendNickNamePopupMessage()
+        {
+            MessagingCenter.Send<NickNameEdit>(currentNickNamePopup, "Fail");
+        }
+
+        public void NickNamePopup()
+        {
+             Navigation.PushPopupAsync(currentNickNamePopup);
         }
 
         public static Task<string> InputBox(INavigation navigation)

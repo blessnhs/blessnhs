@@ -28,7 +28,8 @@ message LOGIN_RES
     optional int32	 var_score 		= 7;
     optional int32	 var_rank		= 8;
     optional int32	 var_level		= 9;
-    optional bytes    var_locale                  = 10;
+    optional bytes   var_locale     = 10;
+    optional bytes   var_name       = 11;
 }
 
 message CREATE_ROOM_RES
@@ -134,4 +135,11 @@ message NOTICE_RES
 {
     optional PROTOCOL   id                        = 1 [default = ID_PKT_NOTICE_RES    ];
     required bytes     var_message    	     = 2;
+}
+
+message CHECK_NICKNAME_RES
+{
+    optional PROTOCOL   id                        = 1 [default = ID_PKT_CHECK_NICKNAME_RES    ];
+    optional  ErrorCode    var_code         = 2;
+    required bytes     var_name    	     = 3;
 }

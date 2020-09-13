@@ -32,6 +32,10 @@
     <None Remove="Image\Black.png" />
     <None Remove="Image\Board_1.png" />
     <None Remove="Image\Cell.png" />
+    <None Remove="Image\jp.png" />
+    <None Remove="Image\ko.png" />
+    <None Remove="Image\ph.png" />
+    <None Remove="Image\tw.png" />
     <None Remove="Image\White.png" />
   </ItemGroup>
 
@@ -43,13 +47,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="Image\ABlack.png" />
-    <EmbeddedResource Include="Image\Aim.png" />
-    <EmbeddedResource Include="Image\AWhite.png" />
-    <EmbeddedResource Include="Image\Background.png" />
     <EmbeddedResource Include="Image\Black.png" />
     <EmbeddedResource Include="Image\Board_1.png" />
-    <EmbeddedResource Include="Image\Cell.png" />
+    <EmbeddedResource Include="Image\jp.png" />
+    <EmbeddedResource Include="Image\ko.png" />
+    <EmbeddedResource Include="Image\ph.png" />
+    <EmbeddedResource Include="Image\tw.png" />
     <EmbeddedResource Include="Image\White.png" />
   </ItemGroup>
 
@@ -78,6 +81,9 @@
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Popup\MatchInfo.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Popup\NickNameEdit.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Popup\Profile.xaml">
