@@ -93,6 +93,16 @@ namespace OMOK
 
         }
 
+        public void initBoard()
+        {
+            uTop = rTop = -1;
+
+            for (int i = 0; i < ConstValue.SIZE + 2; i++)
+                for (int j = 0; j < ConstValue.SIZE + 2; j++)
+                    arrBoard[i, j] = (int)V1.LINE;
+        }
+
+
         // 바둑알 놓을 자리를 체크한다. 
         public bool isOccupy()
         {
@@ -265,7 +275,6 @@ namespace OMOK
 
             return ret;
         }
-
     };
 
     public class CRENJUWHITEAI : COMOK

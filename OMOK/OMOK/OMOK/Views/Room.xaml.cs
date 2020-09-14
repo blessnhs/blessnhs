@@ -13,6 +13,7 @@ using Rg.Plugins.Popup.Extensions;
 using ToastMessage;
 using OMOK.Control;
 using Xamarin.Essentials;
+using Xamarin.Forms.Shapes;
 
 namespace OMOK
 {
@@ -29,6 +30,9 @@ namespace OMOK
         double size = 19;  //default 19
 
         iAd_IterstitialView iIterstitia;
+
+        //3,3 체크를 위해 렌주룰 흑을 생성 백은 어차피 제한이 없음
+        public CBLACKSTONE renjuRuleChecker = new CBLACKSTONE();
 
         public void InitBoardGrid()
         {
@@ -51,7 +55,7 @@ namespace OMOK
                     background.VerticalOptions = LayoutOptions.FillAndExpand;
                     background.HorizontalOptions = LayoutOptions.FillAndExpand;
 
-                    absoluteLayout.Children.Add(background, new Rectangle(0, 0, 1, 1), AbsoluteLayoutFlags.All);
+                    absoluteLayout.Children.Add(background, new Xamarin.Forms.Rectangle(0, 0, 1, 1), AbsoluteLayoutFlags.All);
 
                     DrawLine();
 
@@ -64,10 +68,16 @@ namespace OMOK
 
         }
 
+        /// <summary>
+        /// /////////////////////////////////////////////////////////////////////
+      
+/// </summary>
 
         public Room()
         {
             InitializeComponent();
+
+            renjuRuleChecker.initBoard();
 
             InitBoardGrid();
 
@@ -118,6 +128,14 @@ namespace OMOK
                 });
 
                 return true;
+            });
+
+
+
+            MessagingCenter.Subscribe<Room>(this, "close", (sender) =>
+            {
+                NetProcess.SendLeaveRoom(0);
+
             });
         }
 
@@ -185,7 +203,7 @@ namespace OMOK
                 BackgroundColor = color
             };
 
-            absoluteLayout.Children.Add(aimMark, new Rectangle(xx, yy, xx_width, yy_height));
+            absoluteLayout.Children.Add(aimMark, new Xamarin.Forms.Rectangle(xx, yy, xx_width, yy_height));
         }
 
         BoxView aimMark = null;
@@ -249,7 +267,7 @@ namespace OMOK
                 absoluteLayout.Children.Add(new BoxView
                 {
                     Color = Color.Black,
-                }, new Rectangle(x + (yy * boxwidth), y, 1, screeny - boxwidth));
+                }, new Xamarin.Forms.Rectangle(x + (yy * boxwidth), y, 1, screeny - boxwidth));
 
             }
 
@@ -259,9 +277,14 @@ namespace OMOK
                 absoluteLayout.Children.Add(new BoxView
                 {
                     Color = Color.Black,
-                }, new Rectangle(x, y + (xx * boxwidth), screenx - boxwidth, 1));
+                }, new Xamarin.Forms.Rectangle(x, y + (xx * boxwidth), screenx - boxwidth, 1));
 
             }
+
+            absoluteLayout.Children.Add(new BoxView
+            {
+                Color = Color.Black,
+            }, new Xamarin.Forms.Rectangle(0, y + (size * boxwidth), screenx, 1));
         }
 
         void FindXY(int x, int y, out int out_x, out int out_y)
@@ -351,15 +374,17 @@ namespace OMOK
             iIterstitia.ShowAd();
         }
 
-        void OnLeaveClicked(object sender, System.EventArgs e)
+        async void OnLeaveClicked(object sender, System.EventArgs e)
         {
             User.IsMyTurn = false;
 
             if (User.state == PlayerState.Room)
-                NetProcess.SendLeaveRoom(0);
+            {
+                await Navigation.PushPopupAsync(new Confirm(this));
+            }
             else
             {
-                Navigation.PopModalAsync();
+                await Navigation.PopModalAsync();
             }
         }
 
@@ -387,6 +412,20 @@ namespace OMOK
             if (User.IsMyTurn == false)
             {
                 return;
+            }
+
+            if(User.Color == eTeam.Black)
+            {
+                //내부 좌표는 1,1 시작 ui이는 0,0 시작이라 변환
+                int x = aimx + 1;
+                int y = aimy + 1;
+
+                var ret = renjuRuleChecker.placement(x, y, 0);
+                if (ret == 11 || ret == 10) //삼삼 11 이미 놓여졌음 10
+                {
+                    DependencyService.Get<Toast>().Show("착수금지 구역입니다.");
+                    return;
+                }
             }
 
             NetProcess.SendPassThroughMessage(aimx, aimy, User.Color);
@@ -438,11 +477,6 @@ namespace OMOK
             ClearBoardState();
         }
 
-
-
-        //ai에 넘길 사용자가 선택한 좌표
-        public int aix = -1, aiy = -1;
-
         void DrawLastLayout(int x, int y, Color color)
         {
             if (LastStoneMark != null)
@@ -464,7 +498,32 @@ namespace OMOK
                 BackgroundColor = color
             };
 
-            absoluteLayout.Children.Add(LastStoneMark, new Rectangle(xx, yy, xx_width, yy_height));
+            absoluteLayout.Children.Add(LastStoneMark, new Xamarin.Forms.Rectangle(xx, yy, xx_width, yy_height));
+        }
+
+        void DrawRestrictLayout(int x, int y, Color color)
+        {
+
+            //SIZE로 등분한 길이
+            double beginx = boxwidth * x;
+            double beginy = boxwidth * y;
+
+            //등분한 사각형에서 위로 살짝 올린다.
+            double xx = beginx + (boxwidth / 2) - boxwidth / 4;
+            double yy = beginy + (boxwidth / 2) - boxwidth / 4;
+
+            double xx_width = (boxwidth / 4) * 2;
+            double yy_height = ((boxwidth / 4) * 2);
+
+            Line line = new Line();
+            line.X1 = xx;
+            line.Y1 = yy;
+
+            line.X2 = xx + xx_width;
+            line.Y2 = yy + yy_height;
+            line.BackgroundColor = color;
+
+            absoluteLayout.Children.Add(line);
         }
 
 
@@ -488,7 +547,7 @@ namespace OMOK
                 {
                     Source = ImageSource.FromResource("OMOK.Image.Black.png"),
                     CornerRadius = (int)(xx_width / 2)
-                }, new Rectangle(xx, yy, xx_width, yy_height));
+                }, new Xamarin.Forms.Rectangle(xx, yy, xx_width, yy_height));
             }
             else
             {
@@ -496,7 +555,7 @@ namespace OMOK
                 {
                     Source = ImageSource.FromResource("OMOK.Image.White.png"),
                     CornerRadius = (int)(xx_width / 2)
-                }, new Rectangle(xx, yy, xx_width, yy_height));
+                }, new Xamarin.Forms.Rectangle(xx, yy, xx_width, yy_height));
             }
 
             UpdateAim(x, y);

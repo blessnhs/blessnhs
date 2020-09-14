@@ -95,7 +95,7 @@ namespace OMOK.Droid
 
         async void ProcessSignInResult(Intent data)
         {
-            GoogleSignInResult signInResult = Auth.GoogleSignInApi.GetSignInResultFromIntent(data);
+             GoogleSignInResult signInResult = Auth.GoogleSignInApi.GetSignInResultFromIntent(data);
             if (signInResult.IsSuccess)
             {
                 AuthCredential credential = GoogleAuthProvider.GetCredential(signInResult.SignInAccount.IdToken, null);
@@ -113,19 +113,20 @@ namespace OMOK.Droid
                     FirebaseUser user = authResult.User;
                     // 사용자 로그인 및 파이어베이스 등록 완료
 
-//                    new AlertDialog.Builder(this).SetMessage(signInResult.SignInAccount.DisplayName + t23).Show();
+                    //                    new AlertDialog.Builder(this).SetMessage(signInResult.SignInAccount.DisplayName + t23).Show();
+                   
                 }
                 catch (Exception ex)
                 {
                     new Handler(MainLooper).Post(() => new AlertDialog.Builder(this).SetMessage("파이어베이스 등록 실패\n\n" + ex).Show());
                 }
+                
             }
             else
             {
-                new AlertDialog.Builder(this).SetMessage("구글 로그인 실패").Show();
+               
+               
             }
-
- 
         }
     }
 }

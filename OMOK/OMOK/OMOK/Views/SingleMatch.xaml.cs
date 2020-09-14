@@ -216,19 +216,7 @@ namespace OMOK.Views
 
 
             //return 0;
-        }
-
-        public bool CheckAILoop()
-        {
-            isbegin = PlaygameLoop(User.myInfo.ai_mode);
-     
-            isbegin = PlaygameLoop(User.myInfo.ai_mode);
-            if (isbegin == false) //종료
-            {
-               
-            }
-            return true;
-        }
+        }      
 
         public bool PlaygameLoop(int mode)
         {
@@ -439,6 +427,12 @@ namespace OMOK.Views
 
             Clicked.IsEnabled = false;
 
+
+            MessagingCenter.Subscribe<SingleMatch>(this, "close", (sender) =>
+            {
+                Navigation.PopModalAsync();
+            });
+
         }
 
 
@@ -498,6 +492,13 @@ namespace OMOK.Views
                 }, new Rectangle(x, y + (xx * boxwidth), screenx - boxwidth, 1));
 
             }
+            //화면 사이즈 조절을 위해 제일 바닥 라인을 그린다.
+
+            absoluteLayout.Children.Add(new BoxView
+            {
+                Color = Color.Black,
+            }, new Rectangle(0, y + (size * boxwidth), screenx, 1));
+
         }
 
         void FindXY(int x, int y, out int out_x, out int out_y)
@@ -599,13 +600,14 @@ namespace OMOK.Views
       
         public void ShowLeaveAd()
         {
+
             iIterstitia.ShowAd();
         }
 
-        
-        void OnSettingClicked(object sender, System.EventArgs e)
+
+        async void OnSettingClicked(object sender, System.EventArgs e)
         {
-            Navigation.PushPopupAsync(new AISelect(this));
+            await Navigation.PushPopupAsync(new AISelect(this));
         }
 
         int retrycount = 0;
@@ -623,7 +625,9 @@ namespace OMOK.Views
         }
         async void OnLeaveClicked(object sender, System.EventArgs e)
         {
-            var page = await Navigation.PopModalAsync();
+            await Navigation.PushPopupAsync(new Confirm(this));
+
+       //     var page = await Navigation.PopModalAsync();
         }
 
         void OnClickedLeft(object sender, System.EventArgs e)

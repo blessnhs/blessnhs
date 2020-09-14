@@ -21,7 +21,7 @@ namespace ToastMessage.Droid
         public void Show(string message)
         {
             var toast = Android.Widget.Toast.MakeText(Android.App.Application.Context, message, ToastLength.Short);
-            toast.SetGravity(GravityFlags.Top | GravityFlags.Center, 0, 5);
+            toast.SetGravity(GravityFlags.Center | GravityFlags.Center, 0, 5);
             toast.Show();
         }
     }

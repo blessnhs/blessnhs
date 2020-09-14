@@ -15,13 +15,34 @@ namespace OMOK
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class MatchInfoPage : PopupPage
     {
+        string pattern = "mm-ss";
 
         public MatchInfoPage()
         {
             InitializeComponent();
-
+            DateTime begiTime = DateTime.Now;
 
             AnimatedTextControl.IsRunning = true;
+
+            Device.StartTimer(TimeSpan.FromSeconds(1), () =>
+            {
+                Device.BeginInvokeOnMainThread(() =>
+                {
+                    try
+                    {
+                        int seconds = (int)((DateTime.Now - begiTime).TotalSeconds);   
+
+
+                        time.Text = string.Format("{0:00} : {1:00}", seconds / 60, seconds % 60);
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e.ToString());
+                    }
+                });
+
+                return true;
+            });
         }
         public void ClosePopup()
         {

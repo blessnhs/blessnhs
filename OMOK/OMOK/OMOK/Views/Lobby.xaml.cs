@@ -78,6 +78,7 @@ namespace OMOK.Views
                 });
 
             }
+
         }
 
         protected override void OnAppearing()
@@ -128,8 +129,8 @@ namespace OMOK.Views
             //선택된 아이템을 Contact 타입으로 변환
             var contact = e.SelectedItem as CommunityRoomInfoModel;
 
-            if (contact != null)
-                NetProcess.SendEnterRoom(contact.Id);
+            //if (contact != null)
+            //    NetProcess.SendEnterRoom(contact.Id);
         }
 
         public void LoginInformation(string msg)

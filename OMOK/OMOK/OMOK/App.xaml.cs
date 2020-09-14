@@ -11,6 +11,7 @@ namespace OMOK
         {
             InitializeComponent();
 
+            Device.SetFlags(new[] { "Shapes_Experimental", "Brush_Experimental", "RadioButton_Experimental" });
             MainPage = new Lobby();
 
         }
