@@ -44,7 +44,7 @@ public:
 
 		default_db_name = db_name;
 
-		CheckIndexCollection();
+		CreateIndex();
 	}
 
 	~MongoDB()
@@ -58,13 +58,53 @@ private:
 	mongocxx::client _client;
 	mongocxx::database db;
 
-	//인덱스가 생성이 안되었으면 여기서 생성한다.
-	bool CheckIndexCollection()
-	{
-		return true;
-	}
-
 public:
+
+	void CreateIndex()
+	{
+		{
+			mongocxx::collection collection = db["ACCOUNT"];
+
+			auto index_specification1 = document{} << "Win" << 1 << finalize;
+			collection.create_index(std::move(index_specification1));
+		}
+
+		{
+			mongocxx::collection collection = db["ACCOUNT"];
+
+			auto index_specification1 = document{} << "Name" << 1 << finalize;
+			collection.create_index(std::move(index_specification1));
+		}
+
+		{
+			mongocxx::collection collection = db["ACCOUNT"];
+
+			auto index_specification1 = document{} << "Rank" << 1 << finalize;
+			collection.create_index(std::move(index_specification1));
+		}
+
+		{
+			mongocxx::collection collection = db["ACCOUNT"];
+
+			auto index_specification1 = document{} << "Rank" << 1 << finalize;
+			collection.create_index(std::move(index_specification1));
+		}
+
+		{
+			mongocxx::collection collection = db["ACCOUNT"];
+
+			auto index_specification1 = document{} << "FlatformId" << 1 << finalize;
+			collection.create_index(std::move(index_specification1));
+		}
+
+
+		{
+			mongocxx::collection collection = db["CONCURRENTUSER"];
+
+			auto index_specification1 = document{} << "INDEX" << 1 << finalize;
+			collection.create_index(std::move(index_specification1));
+		}
+	}
 
 	//버전 정보를 가져온다.
 	double ProcedureVersion(int type)

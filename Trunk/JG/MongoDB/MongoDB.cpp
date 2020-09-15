@@ -5,4 +5,3 @@
 #include "framework.h"
 #include "MongoDB.h"
 
-// TODO: This is an example of a library function
