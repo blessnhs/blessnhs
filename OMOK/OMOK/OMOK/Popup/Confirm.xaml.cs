@@ -22,6 +22,14 @@ namespace OMOK
 
             _parent = parent;
 
+
+            if (User.Locale != "ko")
+            {
+                Label1.Text = "Are you sure ?";
+                OKButton.Text = "OK";
+                CancelButton.Text = "Cancel";
+            }
+
         }
 
         void OnYesClicked(object sender, System.EventArgs e)

@@ -24,6 +24,19 @@ namespace OMOK.Views
             RecordLabel.Text = User.myInfo.win + "승" + User.myInfo.lose + "패" + User.myInfo.draw + "무승부";
 
             RankLabel.Text = "현재 순위 " + User.myInfo.rank + " 위";
+
+            //언어 수동 변환
+            if (User.Locale != "ko")
+            {
+                QNSLabel.Text = "Question & Bug Report";
+                sendbutton.Text = "Send";
+                closebutton.Text = "Close";
+
+                RecordLabel.Text = User.myInfo.win + " Win " + User.myInfo.lose + " Lose " + User.myInfo.draw + " Draw ";
+
+                RankLabel.Text = "Rank " + User.myInfo.rank ;
+            }
+            
         }
 
         
@@ -33,9 +46,17 @@ namespace OMOK.Views
         }
         async void OnSendButtonClicked(object sender, EventArgs e)
         {
+            if(contents.Text.Length == 0)
+            {
+                await DisplayAlert("", "Transfer complete..\n", "OK");
+                return;
+
+            }
+
+
             NetProcess.SendQNS(contents.Text);
 
-            await DisplayAlert("", "전송하였습니다..\n", "OK");
+            await DisplayAlert("", "Transfer complete..\n", "OK");
 
             contents.Text = "";
         }

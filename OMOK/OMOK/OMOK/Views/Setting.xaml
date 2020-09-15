@@ -32,7 +32,7 @@
 
                 <Label x:Name="RecordLabel" TextColor="Black" VerticalOptions="CenterAndExpand" HorizontalTextAlignment="Start"  Grid.Row="1" Grid.Column="1" Padding="1,1,1,1" Margin="10,0,0,0"/>
 
-                <Label Text="문의 사항 및 버그 제보"  TextColor="Black" Grid.Row="2" Grid.Column="0" Padding="1,30,1,1" Margin="10,10,0,0"/>
+                <Label  x:Name="QNSLabel" Text="문의 사항 및 버그 제보"  TextColor="Black" Grid.Row="2" Grid.Column="0" Padding="1,30,1,1" Margin="10,10,0,0"/>
 
                 <StackLayout VerticalOptions="StartAndExpand" Grid.Row="3" Grid.Column="0" Padding="1,10,1,1" Margin="10,10,0,0" Grid.ColumnSpan="4">
                     <Editor x:Name="contents" Text="" HeightRequest="400"  BackgroundColor="Gray"/>

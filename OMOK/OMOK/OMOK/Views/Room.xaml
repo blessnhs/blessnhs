@@ -37,9 +37,9 @@
 
             <BoxView Grid.Row="2" Grid.Column="0"   Grid.ColumnSpan="5" />
 
-            <Label Text="흑"  Grid.Row="3" Grid.Column="0" BackgroundColor="Black" VerticalOptions="CenterAndExpand" HorizontalTextAlignment="Center" FontSize="Large" TextColor="White" />
+            <Label Text="흑" x:Name="black" Grid.Row="3" Grid.Column="0" BackgroundColor="Black" VerticalOptions="CenterAndExpand" HorizontalTextAlignment="Center" FontSize="Large" TextColor="White" />
 
-            <Label Text="백" Grid.Row="3" Grid.Column="4" BackgroundColor="White" VerticalOptions="CenterAndExpand" HorizontalTextAlignment="Center"  FontSize="Large" TextColor="Black"/>
+            <Label Text="백" x:Name="white" Grid.Row="3" Grid.Column="4" BackgroundColor="White" VerticalOptions="CenterAndExpand" HorizontalTextAlignment="Center"  FontSize="Large" TextColor="Black"/>
 
             <Image  x:Name="bottom1picture" Grid.Row="4" Grid.ColumnSpan="1" Grid.Column="0">
                 <Image.Source>

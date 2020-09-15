@@ -34,6 +34,9 @@ namespace OMOK.Views
             {
                 int index = pos + 1;
                 var text = index.ToString() + ". " + r.Time.ToString("yy-MM-dd HH:mm") + " " + r.MyName + " vs " + r.OpponentName + (r.Result == 1 ? " 승리" : " 패배");
+
+                if (User.Locale != "ko")
+                    text = index.ToString() + ". " + r.Time.ToString("yy-MM-dd HH:mm") + " " + r.MyName + " vs " + r.OpponentName + (r.Result == 1 ? " Win" : " Defeat");
                 text.Replace('\n', ' ');
                 strlist[pos++] = new Record() { Text = text };
             }
@@ -41,7 +44,15 @@ namespace OMOK.Views
             listview.SeparatorColor = Color.Black;
 
             listview.ItemsSource = strlist;
-            
+
+
+            //언어 수동 변환
+            if (User.Locale != "ko")
+            {
+                leaveButton.Text = "Exit";
+                RecordLabel.Text = "Record";
+            }
+
         }
     }
 }

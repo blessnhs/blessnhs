@@ -4,18 +4,27 @@ using System.Text;
 
 namespace OMOK
 {
-    public class LanguageTable
+    static public class LanguageTable
     {
-        public Dictionary<string, Dictionary<string, string>> LanguageMap = new Dictionary<string, Dictionary<string, string>>();
-     
-        public void Add(string lang,string type,string msg)
+        static public Dictionary<string, Dictionary<string, string>> LanguageMap = new Dictionary<string, Dictionary<string, string>>();
+
+        static public void Add(string lang,string type,string msg)
         {
             LanguageMap[lang][type] = msg;
         }
 
-        public string Get(string lang, string type, string msg)
+        static public string Get(string lang, string type, string msg)
         {
             return LanguageMap[lang][type];
+        }
+
+        static public void Init()
+        {
+            Add("en", "lobby_match", "R-Matching");
+            Add("en", "lobby_record", "Record");
+            Add("en", "lobby_rank", "Rank");
+            Add("en", "lobby_rank", "Rank");
+            Add("en", "lobby_setting", "Setting");
         }
 
     }

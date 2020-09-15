@@ -35,7 +35,7 @@ namespace OMOK.Droid
             Rg.Plugins.Popup.Popup.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.SetFlags("RadioButton_Experimental");
             //테스트 광고가 아닐 경우 APP ID를 넣어줘야 한다.
-            MobileAds.Initialize(ApplicationContext, "YOUR ANDROID APP ID HERE");
+            MobileAds.Initialize(ApplicationContext, /*"YOUR ANDROID APP ID HERE"*/"ca-app-pub-9541028236702321~9544639066");
 
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);

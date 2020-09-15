@@ -79,6 +79,17 @@ namespace OMOK.Views
 
             }
 
+
+            //언어 수동 변환
+            if(User.Locale != "ko")
+            {
+                NameButton.Text = "Name";
+                HistroyButton.Text = "History";
+                RankButton.Text = "Rank";
+                SettingButton.Text = "Setting";
+                MatchButton.Text = "Real Time Matching";
+            }
+
         }
 
         protected override void OnAppearing()
@@ -91,7 +102,11 @@ namespace OMOK.Views
         {
             var level = Helper.LevelConverter(User.myInfo.level);
             var Record = User.myInfo.win + "승" + User.myInfo.lose + "패";
-            NameButton.Text = level + " " + User.myInfo.NickName + "\n" + Record;
+
+            if (User.Locale != "ko")
+                Record = User.myInfo.win + "Win" + User.myInfo.lose + "Defeat";
+
+            NameButton.Text = level + "\n" + User.myInfo.NickName;
         }
 
         public void CreateRankPage(RepeatedField<global::Rank> list)

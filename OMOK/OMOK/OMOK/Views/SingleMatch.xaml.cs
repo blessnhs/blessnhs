@@ -304,7 +304,7 @@ namespace OMOK.Views
             if (User.Color == eTeam.Black)
             {
                 blackLabel.Text = User.myInfo.NickName;
-                whiteLabel.Text = "알파목";
+                whiteLabel.Text = "alpha mok";
 
                 bottom2picture.Source = null;
 
@@ -316,7 +316,7 @@ namespace OMOK.Views
                 return;
             }
 
-            blackLabel.Text = "알파목";
+            blackLabel.Text = "alpha mok";
             whiteLabel.Text = User.myInfo.NickName;
 
             bottom1picture.Source = null;
@@ -432,6 +432,25 @@ namespace OMOK.Views
             {
                 Navigation.PopModalAsync();
             });
+
+
+            //언어 수동 변환
+            if (User.Locale != "ko")
+            {
+                LeaveRoom.Text = "Exit";
+
+                LeftButton.Text = "Left";
+                UPButton.Text = "Up";
+                Clicked.Text = "Stone";
+                DownButton.Text = "Down";
+                RightButton.Text = "Right";
+
+                black.Text = "Black";
+                white.Text = "White";
+
+                BeginBtn.Text = "Begin";
+                RuleBtn.Text = "Rule";
+            }
 
         }
 

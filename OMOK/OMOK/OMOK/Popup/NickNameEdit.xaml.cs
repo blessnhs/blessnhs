@@ -17,12 +17,18 @@ namespace OMOK.Popup
         public NickNameEdit()
         {
             InitializeComponent();
-
-            NickNameLabel.Text = "닉네임을 입력하세요(7자 이내)";
+            if (User.Locale != "ko")
+                NickNameLabel.Text = "Please enter your nickname (7 Characters)";
+            else
+                NickNameLabel.Text = "닉네임을 입력하세요(7자 이내)";
 
             MessagingCenter.Subscribe<NickNameEdit>(this, "Fail", (sender) =>
             {
-                NickNameLabel.Text = "존재하는 닉네임 입니다";
+                if (User.Locale != "ko")
+                    NickNameLabel.Text = "Exist NickName";
+                else
+                    NickNameLabel.Text = "존재하는 닉네임 입니다";
+
                 NickNameLabel.TextColor = Color.Red;
                 UsernameEntry.Text = "";
             });
@@ -32,14 +38,21 @@ namespace OMOK.Popup
         {
             if(UsernameEntry.Text.Length > 20)
             {
-                NickNameLabel.Text = "길이가 너무 깁니다.";
+                if (User.Locale != "ko")
+                    NickNameLabel.Text = "Too Long Name";
+                else
+                    NickNameLabel.Text = "길이가 너무 깁니다.";
                 UsernameEntry.Text = "";
                 return;
             }
 
             if(UsernameEntry.Text.Length == 0)
             {
-                NickNameLabel.Text = "다시 입력하세요.";
+                if (User.Locale != "ko")
+                    NickNameLabel.Text = "Please Retry";
+                else
+                    NickNameLabel.Text = "다시 입력하세요.";
+
                 UsernameEntry.Text = "";
                 return;
             }

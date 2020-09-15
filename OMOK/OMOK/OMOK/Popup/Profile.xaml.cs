@@ -30,11 +30,23 @@ namespace OMOK
             var Record = User.myInfo.win + "승" + User.myInfo.lose + "패";
             Record = level + User.myInfo.NickName + "\n" + Record;
 
-            Label1.Text = User.myInfo.NickName + "  :  " + level;
-            Label2.Text = "전적     :  " + User.myInfo.win + "승" + User.myInfo.lose + "패";
-            Label3.Text = "토너먼트 순위 : 없음";
-            Label4.Text = "월드 랭킹  :  " + User.myInfo.rank;
-            Label5.Text = "승급 포인트   :  " + User.myInfo.score;
+            if (User.Locale != "ko")
+            {
+                Label1.Text = User.myInfo.NickName + "  :  " + level;
+                Label2.Text = "Record     :  " + User.myInfo.win + " Win " + User.myInfo.lose + " Defeat";
+                Label3.Text = "Tournament : None";
+                Label4.Text = "Word Rank  :  " + User.myInfo.rank;
+                Label5.Text = "Level Point   :  " + User.myInfo.score;
+            }
+            else
+            {
+                Label1.Text = User.myInfo.NickName + "  :  " + level;
+                Label2.Text = "전적     :  " + User.myInfo.win + "승" + User.myInfo.lose + "패";
+                Label3.Text = "토너먼트 순위 : 없음";
+                Label4.Text = "월드 랭킹  :  " + User.myInfo.rank;
+                Label5.Text = "승급 포인트   :  " + User.myInfo.score;
+            }
+
 
             var current = User.myInfo.score * 0.01;
             Progress.Progress = current;

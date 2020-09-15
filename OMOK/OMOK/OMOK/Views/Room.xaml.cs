@@ -131,12 +131,27 @@ namespace OMOK
             });
 
 
-
             MessagingCenter.Subscribe<Room>(this, "close", (sender) =>
             {
                 NetProcess.SendLeaveRoom(0);
 
             });
+
+            //언어 수동 변환
+            if (User.Locale != "ko")
+            {
+                LeaveRoom.Text = "Exit";
+
+                LeftButton.Text = "Left";
+                UPButton.Text = "Up";
+                Clicked.Text = "Stone";
+                DownButton.Text = "Down";
+                RightButton.Text = "Right";
+
+                black.Text = "Black";
+                white.Text = "White";
+            }
+
         }
 
         public void InitTimer()

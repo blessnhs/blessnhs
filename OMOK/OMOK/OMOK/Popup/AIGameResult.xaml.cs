@@ -19,9 +19,9 @@ namespace OMOK.Popup
             InitializeComponent();
 
             if (Result == true)
-                Label1.Text = "승리 하셨습니다.";
+                Label1.Text = "Veictory";
             else
-                Label1.Text = "패배 하였습니다.";
+                Label1.Text = "Defeat";
 
             if (User.myInfo.PhotoPath != null)
                 mypicture.Source = ImageSource.FromUri(new Uri(User.myInfo.PhotoPath));

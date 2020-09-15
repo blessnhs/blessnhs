@@ -43,6 +43,9 @@ namespace OMOK
 
                 return true;
             });
+
+            if (User.Locale != "ko")
+                AnimatedTextControl.Text = "M a t c h i n g";
         }
         public void ClosePopup()
         {

@@ -21,8 +21,8 @@
             <ColumnDefinition Width="20*"/>
         </Grid.ColumnDefinitions>
 
-            <control:GradientButton Text="시작"   Grid.Row="0" Grid.Column="0" Clicked="OnRetryClicked" StartColor="#71c4d1" EndColor="#77bfd4" Margin="4" ContentLayout="Top" />
-            <control:GradientButton Text="룰 설정"   Grid.Row="0" Grid.Column="1" Clicked="OnSettingClicked" StartColor="#71c4d1" EndColor="#77bfd4" Margin="4" ContentLayout="Top" />
+            <control:GradientButton  x:Name="BeginBtn"  Text="시작"   Grid.Row="0" Grid.Column="0" Clicked="OnRetryClicked" StartColor="#71c4d1" EndColor="#77bfd4" Margin="4" ContentLayout="Top" />
+            <control:GradientButton  x:Name="RuleBtn" Text="룰 설정"   Grid.Row="0" Grid.Column="1" Clicked="OnSettingClicked" StartColor="#71c4d1" EndColor="#77bfd4" Margin="4" ContentLayout="Top" />
                 <!--<Frame  Padding="5,5,5,0" BorderColor="White" Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="5">
             <AdFire:CtBannerView eBannerSize="Standardbanner"   BackgroundColor="White" x:Name="banner2"/>
         </Frame>-->
@@ -32,11 +32,11 @@
          <AbsoluteLayout  x:Name="absoluteLayout"  BackgroundColor="#43343E"  Grid.Row="1" Grid.Column="0"   Grid.ColumnSpan="5" >
          </AbsoluteLayout>
  
-       <BoxView Grid.Row="2" Grid.Column="0"   Grid.ColumnSpan="5" />
+        <BoxView Grid.Row="2" Grid.Column="0"   Grid.ColumnSpan="5" />
 
-        <Label Text="흑"  Grid.Row="3" Grid.Column="0" BackgroundColor="Black" VerticalOptions="CenterAndExpand" HorizontalTextAlignment="Center" FontSize="Large" TextColor="White" />
+         <Label  x:Name="black" Text="흑"  Grid.Row="3" Grid.Column="0" BackgroundColor="Black" VerticalOptions="CenterAndExpand" HorizontalTextAlignment="Center" FontSize="Large" TextColor="White" />
 
-         <Label Text="백" Grid.Row="3" Grid.Column="4" BackgroundColor="White" VerticalOptions="CenterAndExpand" HorizontalTextAlignment="Center"  FontSize="Large" TextColor="Black"/>
+         <Label x:Name="white" Text="백" Grid.Row="3" Grid.Column="4" BackgroundColor="White" VerticalOptions="CenterAndExpand" HorizontalTextAlignment="Center"  FontSize="Large" TextColor="Black"/>
 
          <Image  x:Name="bottom1picture" Grid.Row="4" Grid.ColumnSpan="1" Grid.Column="0">
              <Image.Source>

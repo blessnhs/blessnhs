@@ -21,6 +21,12 @@ namespace OMOK
         {
             InitializeComponent();
 
+            if (User.Locale != "ko")
+            {
+                ai1.Text = "Black AI vs White User";
+                ai2.Text = "Black User vs White AI";
+             }
+
             _parent = parent;
 
             //switch(User.myInfo.ai_rule)

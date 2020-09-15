@@ -120,7 +120,9 @@ namespace OMOK.Network
                                     User.myInfo.level = res.VarLevel;
                                     User.myInfo.NickName = Helper.ToStr(res.VarName.ToByteArray()); ;
                                     User.Locale = Helper.ToStr(res.VarLocale.ToByteArray());
+                                    User.Locale = "tw";
 
+                                        
                                     page.UpdatePlayerInfo();
 
                                     User.state = PlayerState.Lobby;

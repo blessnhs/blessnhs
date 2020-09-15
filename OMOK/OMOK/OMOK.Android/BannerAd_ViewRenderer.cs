@@ -21,10 +21,7 @@ namespace OMOK.Droid
         public AdMobBannerViewRenderer(Context context) : base(context) { }
 
         // 안드로이드 용 테스트 아이디
-        public string AdUnitIdSet = "ca-app-pub-9541028236702321/8528793061";
-
-        // 안드로이드 테스트 디바이스
-        string TestDeviceID = "C6023D05217C4D7DA3C30B4A5F2CB928";
+        public string AdUnitIdSet = "ca-app-pub-9541028236702321/1413912651";
 
         protected override void OnElementChanged(ElementChangedEventArgs<CtBannerView> e)
         {
