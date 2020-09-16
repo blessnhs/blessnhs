@@ -6,11 +6,17 @@ using System.Text;
 
 using Android.App;
 using Android.Content;
+using Android.Gms.Auth.Api;
+using Android.Gms.Auth.Api.SignIn;
+using Android.Gms.Common.Apis;
 using Android.OS;
 using Android.Runtime;
 using Android.Views;
 using Android.Widget;
+using Firebase.Auth;
+using OMOK.Droid;
 using ToastMessage.Droid;
+using Xamarin.Forms;
 
 [assembly: Xamarin.Forms.Dependency(typeof(Toast_Android))]
 

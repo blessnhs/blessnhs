@@ -25,21 +25,21 @@ namespace OMOK.Views
             };
             main_grid.Children.Add(PrevBtn, 0, 0);
 
-            var titletext = "RANK";
-            var titlelabelText = new Label { Text = titletext, TextColor = Xamarin.Forms.Color.FromRgb(0, 0, 0), HorizontalTextAlignment = TextAlignment.Center, FontSize = 25 };
-            main_grid.Children.Add(titlelabelText, 2, 0);
-    
-
             int pos = 1;
             foreach(var r in list )
             {
+                //순위
+                var labelText = new Label { FontSize = 30,Text = r.VarRank.ToString(), TextColor = Color.Black, HorizontalTextAlignment = TextAlignment.Center,VerticalTextAlignment = TextAlignment.Center };
+                main_grid.Children.Add(labelText, 0, pos);
+
+                //국기
                 var imgcontry = new Image
                 {
                     Source = ImageSource.FromResource(Helper.GetLocaleImagePath(Helper.ToStr(r.VarContry.ToByteArray()))),
                     BackgroundColor = Color.White,
                     HeightRequest = 30
                 };
-                main_grid.Children.Add(imgcontry, 0, pos);
+                main_grid.Children.Add(imgcontry, 1, pos);
            
                //프로필
                 var img = new Image
@@ -48,26 +48,31 @@ namespace OMOK.Views
                     BackgroundColor = Color.White,
                     HeightRequest = 30
                 };
+                main_grid.Children.Add(img, 2, pos);
 
-                main_grid.Children.Add(img, 1, pos);
+                /////////////////////////////////////////////////////
+
+                //이름
+                var labelName = new Label { Text = Helper.ToStr(r.VarName.ToByteArray()), TextColor = Color.Black, HorizontalTextAlignment = TextAlignment.Center, VerticalTextAlignment = TextAlignment.Center };
+                main_grid.Children.Add(labelName, 3, pos);
+
                 /////////////////////////////////////////////////////
                 /////기록
                 var stackLayout = new StackLayout() {  };
 
-                var text = r.VarRank + "위 " + Helper.ToStr(r.VarName.ToByteArray()) + " " + r.VarWin + "승" + r.VarLose + "패";
+                var content = r.VarWin + "승" + r.VarLose + "패";
 
                 if (User.Locale != "ko")
-                    text = r.VarRank + "Rank " + Helper.ToStr(r.VarName.ToByteArray()) + " " + r.VarWin + "Win" + r.VarLose + "Defeat";
+                    content = r.VarWin + " Win " + r.VarLose +  " Defeat ";
 
-                text.Replace('\n', ' ');
-                var labelText = new Label { Padding = new Thickness(5, 10, 0, 0), Text = text, TextColor = Xamarin.Forms.Color.FromRgb(0, 0, 0), HorizontalTextAlignment = TextAlignment.Start };
+                var contentText = new Label { FontSize = 15, Padding = new Thickness(5, 10, 0, 0), Text = content, TextColor = Color.Black, HorizontalTextAlignment = TextAlignment.Start, VerticalTextAlignment = TextAlignment.Center };
 
-                stackLayout.Children.Add(labelText);
+                stackLayout.Children.Add(contentText);
 
                 var frame = new Frame { BorderColor = Color.Black, Padding = new Thickness(0, 0, 0, 0) ,HeightRequest = 30};
                 frame.Content = stackLayout;
 
-                main_grid.Children.Add(frame, 2, pos++);
+                main_grid.Children.Add(frame, 4, pos++);
                 /////////////////////////////////////////////////////
 
             }

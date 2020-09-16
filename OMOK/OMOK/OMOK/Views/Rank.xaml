@@ -20,8 +20,12 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="1*" />
                     <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
                     <ColumnDefinition Width="6*" />
                 </Grid.ColumnDefinitions>
+
+                <Label Text="R a n k Top 100" FontSize="Large" Grid.Column="1" Grid.ColumnSpan="5" VerticalOptions="Center" HorizontalOptions="Center"></Label>
             </Grid>
 
         </StackLayout>

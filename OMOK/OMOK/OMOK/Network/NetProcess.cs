@@ -32,10 +32,9 @@ namespace OMOK.Network
         }
 
         private static DateTime time = new DateTime();
-        private static bool sendLogin = false;
-
+   
         private static DateTime notice_time = new DateTime();
-
+   
         static public void start()
         {
             string ip = "192.168.0.9";
@@ -46,34 +45,30 @@ namespace OMOK.Network
             //연결중이면 안한다. 
             if (client.socket == null || client.socket.Connected == false)
             {
-                if ((DateTime.Now - time).TotalSeconds > 10)
+                if ((DateTime.Now - time).TotalSeconds > 1)
                 {
                     time = DateTime.Now;
-                    client.StartClient(ip, 21000);
+                    if(User.Token != null && User.Token != "")
+                        client.StartClient(ip, 20000);
                 }
             }
-            else if (sendLogin == false && User.Uid != "" && User.Uid != null)
-            {
-                NetProcess.SendLogin(User.Uid, User.Token);
-                sendLogin = true;
-            }
 
-            if ((DateTime.Now - notice_time).TotalSeconds > 60 * 3)
+            if ((DateTime.Now - notice_time).TotalSeconds > 30)
             {
-                notice_time = DateTime.Now;
-                SendNociticeReq();
+                if (client.socket != null && client.socket.Connected == true)
+                {
+                    notice_time = DateTime.Now;
+                    SendNociticeReq();
+                }
             }
         }
-
-        static public bool IsSuccessAuth = false;
-        static public string UserId;
 
         static Room pRoom = new Room();
 
         static public void Loop(Lobby page)
         {
             
-            if (client.socket.Connected == false)
+            if (client.socket == null || client.socket.Connected == false)
                 return;
 
             client.Update();
@@ -101,6 +96,9 @@ namespace OMOK.Network
 
                                     return;
                                 }
+
+                                NetProcess.SendLogin(User.Uid, User.Token);
+
                             }
                             break;
                         case (int)PROTOCOL.IdPktLoginRes:
@@ -110,7 +108,9 @@ namespace OMOK.Network
 
                                 if (res.VarCode == ErrorCode.Success)
                                 {
-                                    IsSuccessAuth = true;
+
+                                    User.IsLogin = true;
+
                                     User.Id = res.VarIndex;
                                     User.myInfo.win = res.VarWin;
                                     User.myInfo.lose = res.VarLose;
@@ -135,7 +135,7 @@ namespace OMOK.Network
                                     }
                                 }
                                 else
-                                    page.LoginInformation("로그인에 실패했습니다.");
+                                    page.LoginInformation("Failed Login.");
 
 
                             }
@@ -457,7 +457,6 @@ namespace OMOK.Network
 
         static public void SendLogin(string uid, string token)
         {
-            UserId = uid;
 
             LOGIN_REQ person = new LOGIN_REQ
             {

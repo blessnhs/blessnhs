@@ -98,13 +98,13 @@ namespace OMOK
                     l = 9;
 
                 if (User.Locale != "ko")
-                    return l + "Major";
+                    return l + " HLvl";
 
                 return l + "단";
             }
 
             if (User.Locale != "ko")
-                return o + "Minor";
+                return o + " Lvl";
             return o + "급";
             
         }

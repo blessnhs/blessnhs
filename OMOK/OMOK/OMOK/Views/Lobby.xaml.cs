@@ -259,7 +259,8 @@ namespace OMOK.Views
 
         async void OnProfileClicked(object sender, System.EventArgs e)
         {
-            await Navigation.PushPopupAsync(new LoginPopupPage());
+            NetProcess.client.socket.Close();
+           await Navigation.PushPopupAsync(new LoginPopupPage());
         }
 
         async void OnMatchClicked(object sender, System.EventArgs e)

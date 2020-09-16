@@ -29,6 +29,7 @@ namespace OMOK
         public int ai_mode = 2;
         public bool ai_set_flag = false;
 
+
     }
 
     public static class User
@@ -51,5 +52,8 @@ namespace OMOK
         public static string Locale;
 
         public static PlayerState state = PlayerState.None;
+
+        public static bool IsLogin = false;
+
     }
 }

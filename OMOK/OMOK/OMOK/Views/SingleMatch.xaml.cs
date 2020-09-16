@@ -306,23 +306,24 @@ namespace OMOK.Views
                 blackLabel.Text = User.myInfo.NickName;
                 whiteLabel.Text = "alpha mok";
 
-                bottom2picture.Source = null;
-
                 if (User.myInfo.PhotoPath != null)
                     bottom1picture.Source = ImageSource.FromUri(new Uri(User.myInfo.PhotoPath));
 
-                
-
-                return;
+                bottom2picture.Source = ImageSource.FromResource("OMOK.Image.sky.png");
             }
+            else
+            {
 
-            blackLabel.Text = "alpha mok";
-            whiteLabel.Text = User.myInfo.NickName;
+                blackLabel.Text = "alpha mok";
+                whiteLabel.Text = User.myInfo.NickName;
 
-            bottom1picture.Source = null;
+                bottom1picture.Source = null;
 
-            if (User.myInfo.PhotoPath != null)
-                bottom2picture.Source = ImageSource.FromUri(new Uri(User.myInfo.PhotoPath));
+                if (User.myInfo.PhotoPath != null)
+                    bottom2picture.Source = ImageSource.FromUri(new Uri(User.myInfo.PhotoPath));
+
+                bottom1picture.Source = ImageSource.FromResource("OMOK.Image.sky.png");
+            }
         }
 
 
@@ -389,11 +390,10 @@ namespace OMOK.Views
                 {
                     try 
                     {
-                        lock (this)
+                       // lock (this)
                         {
                             if (User.myInfo.ai_set_flag == true)
                             {
-                                ClearBoardState();
 
                                 PlayGame(User.myInfo.ai_rule, User.myInfo.ai_mode);
                                 isbegin = true;
@@ -626,6 +626,12 @@ namespace OMOK.Views
 
         async void OnSettingClicked(object sender, System.EventArgs e)
         {
+            if (retrycount != 0)
+                iIterstitia.ShowAd();
+
+            ClearBoardState();
+
+            retrycount++;
             await Navigation.PushPopupAsync(new AISelect(this));
         }
 
@@ -633,6 +639,8 @@ namespace OMOK.Views
 
         void OnRetryClicked(object sender, System.EventArgs e)
         {
+            ClearBoardState();
+
             if (retrycount != 0)
                 iIterstitia.ShowAd();
 

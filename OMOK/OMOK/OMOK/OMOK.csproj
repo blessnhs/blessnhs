@@ -35,6 +35,7 @@
     <None Remove="Image\jp.png" />
     <None Remove="Image\ko.png" />
     <None Remove="Image\ph.png" />
+    <None Remove="Image\sky.png" />
     <None Remove="Image\tw.png" />
     <None Remove="Image\White.png" />
   </ItemGroup>
@@ -52,6 +53,7 @@
     <EmbeddedResource Include="Image\jp.png" />
     <EmbeddedResource Include="Image\ko.png" />
     <EmbeddedResource Include="Image\ph.png" />
+    <EmbeddedResource Include="Image\sky.png" />
     <EmbeddedResource Include="Image\tw.png" />
     <EmbeddedResource Include="Image\White.png" />
   </ItemGroup>

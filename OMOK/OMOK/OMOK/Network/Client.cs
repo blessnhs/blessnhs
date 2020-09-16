@@ -7,6 +7,7 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using OMOK;
 using OMOK.Network;
 
 namespace NetClient
