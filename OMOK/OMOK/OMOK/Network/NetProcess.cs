@@ -120,10 +120,9 @@ namespace OMOK.Network
                                     User.myInfo.level = res.VarLevel;
                                     User.myInfo.NickName = Helper.ToStr(res.VarName.ToByteArray()); ;
                                     User.Locale = Helper.ToStr(res.VarLocale.ToByteArray());
-                                    User.Locale = "tw";
-
-                                        
+                                                           
                                     page.UpdatePlayerInfo();
+                                    page.UpdateLocalMenu();
 
                                     User.state = PlayerState.Lobby;
 
@@ -407,7 +406,7 @@ namespace OMOK.Network
 
         static public void SendReqRoomList()
         {
-            if (client.socket.Connected == false)
+            if (client.socket == null || client.socket.Connected == false)
                 return;
 
             ROOM_LIST_REQ snd = new ROOM_LIST_REQ

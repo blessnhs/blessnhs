@@ -2,38 +2,14 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:AdFire="clr-namespace:OMOK.CustomAdMobView"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:AdFire="clr-namespace:OMOK.CustomAdMobView" xmlns:oxy="clr-namespace:OxyPlot.Xamarin.Forms;assembly=OxyPlot.Xamarin.Forms"
              mc:Ignorable="d"
              x:Class="OMOK.Views.RecordHistory">
-    <ContentPage.Content>
-        <ScrollView>
-        <StackLayout Margin="20,20,20,20">
-                <Frame  Padding="5,5,5,0" HeightRequest="60" BorderColor="White">
-                    <AdFire:CtBannerView eBannerSize="Standardbanner"   BackgroundColor="White" x:Name="banner"/>
-                </Frame>
-
-                <Grid x:Name="mainGrid" ColumnSpacing="0" RowSpacing="0" VerticalOptions="StartAndExpand" HorizontalOptions="StartAndExpand">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="auto" />
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="20*"/>
-                        <ColumnDefinition Width="80*"/>
-                    </Grid.ColumnDefinitions>
-
-                    <Button Text="나가기" x:Name="leaveButton" Grid.Column="0" Grid.Row="0"></Button>
-                    <Label Text="기  록  실"  x:Name="RecordLabel" Grid.Column="1" Grid.Row="0" TextColor="Black" FontSize="Medium" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"></Label>
-                </Grid>
-
-                <ListView x:Name="listview">
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <TextCell Text="{Binding Text}" TextColor="Black"/>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
-
-            </StackLayout>
-        </ScrollView>
-    </ContentPage.Content>
+            <AbsoluteLayout>
+                <Button x:Name="leaveButton" Text="◀" WidthRequest="40"></Button>
+                <oxy:PlotView Model="{Binding BarModel}"  
+                  AbsoluteLayout.LayoutBounds="20,0,.9,.9"  
+                  AbsoluteLayout.LayoutFlags="WidthProportional,HeightProportional" />
+            </AbsoluteLayout>
+     
 </ContentPage>

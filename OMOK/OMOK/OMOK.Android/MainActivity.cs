@@ -18,7 +18,7 @@ using System.Text;
 
 namespace OMOK.Droid
 {
-    [Activity(Label = "OMOK", Icon = "@mipmap/icon", Theme = "@style/MainTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation, ScreenOrientation = ScreenOrientation.UserPortrait)]
+    [Activity(Label = "OMOK",ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation, ScreenOrientation = ScreenOrientation.UserPortrait)]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {
         public FirebaseAuth FirebaseAuth_ { get; private set; }
@@ -26,11 +26,14 @@ namespace OMOK.Droid
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
-        
             TabLayoutResource = Resource.Layout.Tabbar;
             ToolbarResource = Resource.Layout.Toolbar;
 
+            base.Window.RequestFeature(WindowFeatures.ActionBar);
+            base.SetTheme(Resource.Style.MainTheme);
+
             base.OnCreate(savedInstanceState);
+            OxyPlot.Xamarin.Forms.Platform.Android.PlotViewRenderer.Init();
 
             Rg.Plugins.Popup.Popup.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.SetFlags("RadioButton_Experimental");
@@ -40,27 +43,9 @@ namespace OMOK.Droid
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
 
-            FirebaseApp.InitializeApp(Application.Context);
-
-            FirebaseAuth_ = FirebaseAuth.Instance;
-
-            if (FirebaseAuth_ == null)
-                FirebaseAuth_ = new FirebaseAuth(FirebaseApp.Instance);
-
-            GoogleSignInOptions signInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DefaultSignIn)
-                .RequestIdToken("926850429943-envuu4ga9i133mbaq5hd77g1b9bdcrj5.apps.googleusercontent.com")
-                .RequestEmail()
-                .Build();
-            GoogleApiClient = new GoogleApiClient.Builder(this)
-                .EnableAutoManage(this, null)
-                .AddApi(Auth.GOOGLE_SIGN_IN_API, signInOptions)
-                .Build();
-
-
-            GoogleSignIn();
-
             LoadApplication(new App());
-          
+
+
         }
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
         {
@@ -101,6 +86,8 @@ namespace OMOK.Droid
                 AuthCredential credential = GoogleAuthProvider.GetCredential(signInResult.SignInAccount.IdToken, null);
                 try
                 {
+                    IAuthResult authResult = await FirebaseAuth_.SignInWithCredentialAsync(credential);
+                    FirebaseUser user = authResult.User;
 
                     User.myInfo.PhotoPath = signInResult.SignInAccount.PhotoUrl.ToString();
 
@@ -108,13 +95,6 @@ namespace OMOK.Droid
                     User.Token = signInResult.SignInAccount.IdToken;
                     User.myInfo.NickName = signInResult.SignInAccount.DisplayName;
 
-
-                    IAuthResult authResult = await FirebaseAuth_.SignInWithCredentialAsync(credential);
-                    FirebaseUser user = authResult.User;
-                    // 사용자 로그인 및 파이어베이스 등록 완료
-
-                    //                    new AlertDialog.Builder(this).SetMessage(signInResult.SignInAccount.DisplayName + t23).Show();
-                   
                 }
                 catch (Exception ex)
                 {

@@ -80,8 +80,14 @@ namespace OMOK.Views
             }
 
 
+            UpdateLocalMenu();
+
+        }
+
+        public void UpdateLocalMenu()
+        {
             //언어 수동 변환
-            if(User.Locale != "ko")
+            if (User.Locale != "ko")
             {
                 NameButton.Text = "Name";
                 HistroyButton.Text = "History";
@@ -89,7 +95,14 @@ namespace OMOK.Views
                 SettingButton.Text = "Setting";
                 MatchButton.Text = "Real Time Matching";
             }
-
+            else
+            {
+                NameButton.Text = "프로필";
+                HistroyButton.Text = "기록";
+                RankButton.Text = "랭크";
+                SettingButton.Text = "설정";
+                MatchButton.Text = "실시간 매칭";
+            }
         }
 
         protected override void OnAppearing()
@@ -259,13 +272,12 @@ namespace OMOK.Views
 
         async void OnProfileClicked(object sender, System.EventArgs e)
         {
-            NetProcess.client.socket.Close();
-           await Navigation.PushPopupAsync(new LoginPopupPage());
+            await Navigation.PushPopupAsync(new LoginPopupPage());
         }
 
         async void OnMatchClicked(object sender, System.EventArgs e)
         {
-           NetProcess.SendMatch();
+            NetProcess.SendMatch();
 
             await Navigation.PushModalAsync(new MatchInfoPage()/*_MachPage*/);
 
