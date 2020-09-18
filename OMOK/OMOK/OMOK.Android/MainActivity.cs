@@ -33,6 +33,9 @@ namespace OMOK.Droid
             base.SetTheme(Resource.Style.MainTheme);
 
             base.OnCreate(savedInstanceState);
+
+            MyApplication.activity = this;
+
             OxyPlot.Xamarin.Forms.Platform.Android.PlotViewRenderer.Init();
 
             Rg.Plugins.Popup.Popup.Init(this, savedInstanceState);
@@ -42,6 +45,25 @@ namespace OMOK.Droid
 
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
+
+            FirebaseApp.InitializeApp(Application.Context);
+
+            FirebaseAuth_ = FirebaseAuth.Instance;
+
+            if (FirebaseAuth_ == null)
+                FirebaseAuth_ = new FirebaseAuth(FirebaseApp.Instance);
+
+            GoogleSignInOptions signInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DefaultSignIn)
+                .RequestIdToken("926850429943-envuu4ga9i133mbaq5hd77g1b9bdcrj5.apps.googleusercontent.com")
+                .RequestEmail()
+                .Build();
+            GoogleApiClient = new GoogleApiClient.Builder(this)
+                .EnableAutoManage(this, null)
+                .AddApi(Auth.GOOGLE_SIGN_IN_API, signInOptions)
+                .Build();
+
+
+            GoogleSignIn();
 
             LoadApplication(new App());
 

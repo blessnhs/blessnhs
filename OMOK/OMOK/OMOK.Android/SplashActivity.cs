@@ -28,6 +28,7 @@ namespace OMOK.Droid
 
         public override void OnCreate(Bundle savedInstanceState, PersistableBundle persistentState)
         {
+
             base.OnCreate(savedInstanceState, persistentState);
         }
 
@@ -51,26 +52,27 @@ namespace OMOK.Droid
 
 
         // Simulates background work that happens behind the splash screen
-        async void SimulateStartup()
+        void SimulateStartup()
         {
-            FirebaseApp.InitializeApp(Application.Context);
+            StartActivity(new Intent(Application.Context, typeof(MainActivity)));
+            //FirebaseApp.InitializeApp(Application.Context);
 
-            FirebaseAuth_ = FirebaseAuth.Instance;
+            //FirebaseAuth_ = FirebaseAuth.Instance;
 
-            if (FirebaseAuth_ == null)
-                FirebaseAuth_ = new FirebaseAuth(FirebaseApp.Instance);
+            //if (FirebaseAuth_ == null)
+            //    FirebaseAuth_ = new FirebaseAuth(FirebaseApp.Instance);
 
-            GoogleSignInOptions signInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DefaultSignIn)
-                .RequestIdToken("926850429943-envuu4ga9i133mbaq5hd77g1b9bdcrj5.apps.googleusercontent.com")
-                .RequestEmail()
-                .Build();
-            GoogleApiClient = new GoogleApiClient.Builder(this)
-                .EnableAutoManage(this, null)
-                .AddApi(Auth.GOOGLE_SIGN_IN_API, signInOptions)
-                .Build();
+            //GoogleSignInOptions signInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DefaultSignIn)
+            //    .RequestIdToken("926850429943-envuu4ga9i133mbaq5hd77g1b9bdcrj5.apps.googleusercontent.com")
+            //    .RequestEmail()
+            //    .Build();
+            //GoogleApiClient = new GoogleApiClient.Builder(this)
+            //    .EnableAutoManage(this, null)
+            //    .AddApi(Auth.GOOGLE_SIGN_IN_API, signInOptions)
+            //    .Build();
 
 
-            GoogleSignIn();
+            //GoogleSignIn();
         }
         const int SignInRequestCode = 9001;
 
@@ -120,7 +122,7 @@ namespace OMOK.Droid
                 }
                 catch (Exception ex)
                 {
-                    new Handler(MainLooper).Post(() => new Android.App.AlertDialog.Builder(this).SetMessage("파이어베이스 등록 실패\n\n" + ex).Show());
+                    new Handler(MainLooper).Post(() => new Android.App.AlertDialog.Builder(this).SetMessage("var_TeamRecord 등록 실패\n\n" + ex).Show());
                 }
 
             }

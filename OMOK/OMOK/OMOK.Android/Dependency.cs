@@ -17,6 +17,7 @@ using Firebase.Auth;
 using OMOK.Droid;
 using ToastMessage.Droid;
 using Xamarin.Forms;
+using Xamarin.Forms.Platform.Android;
 
 [assembly: Xamarin.Forms.Dependency(typeof(Toast_Android))]
 
@@ -29,6 +30,7 @@ namespace ToastMessage.Droid
             var toast = Android.Widget.Toast.MakeText(Android.App.Application.Context, message, ToastLength.Short);
             toast.SetGravity(GravityFlags.Center | GravityFlags.Center, 0, 5);
             toast.Show();
+
         }
     }
 }
