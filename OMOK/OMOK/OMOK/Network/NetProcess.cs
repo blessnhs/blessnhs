@@ -8,6 +8,7 @@ using Xamarin.Forms;
 using System.Text;
 using System.Net;
 using OMOK.Popup;
+using Xamarin.Forms.PlatformConfiguration;
 
 namespace OMOK.Network
 {
@@ -45,7 +46,7 @@ namespace OMOK.Network
             //연결중이면 안한다. 
             if (client.socket == null || client.socket.Connected == false)
             {
-                if ((DateTime.Now - time).TotalSeconds > 1)
+               // if ((DateTime.Now - time).TotalSeconds > 1)
                 {
                     time = DateTime.Now;
                     if(User.Token != null && User.Token != "")
@@ -120,7 +121,7 @@ namespace OMOK.Network
                                     User.myInfo.level = res.VarLevel;
                                     User.myInfo.NickName = Helper.ToStr(res.VarName.ToByteArray()); ;
                                     User.Locale = Helper.ToStr(res.VarLocale.ToByteArray());
-                                                           
+
                                     page.UpdatePlayerInfo();
                                     page.UpdateLocalMenu();
 
@@ -134,7 +135,12 @@ namespace OMOK.Network
                                     }
                                 }
                                 else
-                                    page.LoginInformation("Failed Login.");
+                                {
+                                    //강제 exception 발생후 종료 후 재 실행
+                                    //System.Diagnostics.Process.GetCurrentProcess().Close();
+                                    //page.LoginInformation("Failed Login.");
+                                    throw new NullReferenceException();
+                                }
 
 
                             }

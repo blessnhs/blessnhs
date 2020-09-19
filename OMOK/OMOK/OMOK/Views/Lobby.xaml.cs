@@ -14,6 +14,7 @@ using OMOK.CustomAdMobView;
 using Google.Protobuf.Collections;
 using Rg.Plugins.Popup.Extensions;
 using OMOK.Popup;
+using ToastMessage;
 
 namespace OMOK.Views
 {
@@ -304,8 +305,14 @@ namespace OMOK.Views
             User.myInfo.ai_set_flag = false;
 
             await Navigation.PushModalAsync(new SingleMatch());
-       }
-        
+        }
+
+        async void OnShopClicked(object sender, System.EventArgs e)
+        {
+            //await DisplayAlert("Info", "Comming Soon", "OK");
+            DependencyService.Get<Toast>().Show("Comming Soon");
+        }
+
         async void OnLoginClicked(object sender, System.EventArgs e)
         {
             string inputstring = await InputBox(this.Navigation);

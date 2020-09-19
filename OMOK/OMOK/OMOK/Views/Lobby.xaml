@@ -38,8 +38,11 @@
                 </Image>
 
                 <!--2row 2번째 매칭 버튼 -->
-                <control:GradientButton  Margin="10,0,10,40" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="5"   Grid.RowSpan="2"  StartColor="#71c4d1" EndColor="#ab90f4" x:Name="MatchButton" Text="실시간 매칭" Clicked="OnMatchClicked" FontSize="Subtitle"/>
-        
+                <control:GradientButton  Margin="10,0,00,40" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="3"   Grid.RowSpan="2"  StartColor="#71c4d1" EndColor="#ab90f4" x:Name="MatchButton" Text="실시간 매칭" Clicked="OnMatchClicked" FontSize="Subtitle"/>
+            
+                <!--2row 3번째 ai 버튼 -->
+                <control:GradientButton  Margin="0,0,5,40" Grid.Column="4" Grid.Row="1" Grid.ColumnSpan="2"   Grid.RowSpan="2"  StartColor="#71c4d1" EndColor="#ab90f4" x:Name="AIMatchButton" Text="AI Match" Clicked="OnSingleMatchClicked" FontSize="Subtitle"/>
+
                 <!--5row 0번째 이름 -->
                 <Frame Grid.Column="0"  Grid.Row="2"  Grid.ColumnSpan="6" Padding="0,5,0,0" BackgroundColor="#D9D4D4">
                     <Label x:Name="NoticeLabel" Text="Server maintenance time is every Thursday at 4am."  FontSize="Default" TextColor="Black" WidthRequest="256" MaxLines="20" LineBreakMode="CharacterWrap"/>
@@ -70,7 +73,7 @@
                 <control:GradientButton Grid.Column="3"  Grid.Row="4" StartColor="#88afdf" EndColor="#8eaae3" x:Name="RankButton" Text="랭킹" Clicked="OnRankClicked"  BackgroundColor="White"/>
            
                 <!--5row 3번째 설정 -->
-                <control:GradientButton  Grid.Column="4" Grid.Row="4"  StartColor="#94a4e6" EndColor="#94a4e6" x:Name="SingleMatch" Text="A I" Clicked="OnSingleMatchClicked" BackgroundColor="White"/>
+                <control:GradientButton  Grid.Column="4" Grid.Row="4"  StartColor="#94a4e6" EndColor="#94a4e6" x:Name="Shop" Text="Shop" Clicked="OnShopClicked" BackgroundColor="White"/>
                 
                 <!--5row 3번째 설정 -->
                 <control:GradientButton  Grid.Column="5" Grid.Row="4" StartColor="#a09aed" EndColor="#a09aed" x:Name="SettingButton" Text="설정" Clicked="OnSettingClicked" BackgroundColor="White"/>

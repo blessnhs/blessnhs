@@ -388,7 +388,7 @@ namespace OMOK.Views
             {
                 Device.BeginInvokeOnMainThread(() =>
                 {
-                    try 
+                   try
                     {
                        // lock (this)
                         {
@@ -419,6 +419,9 @@ namespace OMOK.Views
                         Console.WriteLine(e.ToString());
                     }
                 });
+
+                if (isExit == true)
+                    return false;
 
                 return true;
             });
@@ -612,9 +615,11 @@ namespace OMOK.Views
             base.OnAppearing();
         }
 
+        bool isExit = false;
+
         protected override void OnDisappearing()
         {
-           
+            isExit = true;
         }
       
         public void ShowLeaveAd()
