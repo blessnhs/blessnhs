@@ -67,6 +67,9 @@ public:
 
 			auto index_specification1 = document{} << "Win" << 1 << finalize;
 			collection.create_index(std::move(index_specification1));
+
+			auto index = collection.indexes();
+
 		}
 
 		{
@@ -128,7 +131,7 @@ public:
 	}
 
 	//승수로 정렬해서 상위1 10개만 가져오고 각 해당 유저에게 rank를 업데이트 한다.
-	int CalcRank(int count = 10)
+	int CalcRank(int count = 100)
 	{
 		auto collection_acconut = db["ACCOUNT"];
 		auto collection_rank = db["RANK"];
@@ -206,7 +209,7 @@ public:
 		
 	}
 
-	void  RequestRank(std::list<Rank>& list, int count = 10)
+	void  RequestRank(std::list<Rank>& list, int count = 100)
 	{
 		mongocxx::collection collection = db["RANK"];
 
