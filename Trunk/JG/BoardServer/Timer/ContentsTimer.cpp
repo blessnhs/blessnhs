@@ -55,7 +55,7 @@ void ContentsTimer::OnEvt(LPVOID Arg)
 
 			ContentsTimerJob* pNewJob = new ContentsTimerJob();
 			pNewJob->Func = ContentsTimer::OnEvt;
-			pNewJob->SetExpineTime(GetTickCount() + 1000);
+			pNewJob->SetExpineTime(GetTickCount() + 9000);
 			pNewJob->SetId(ContentsTimer::SYS_TIMER);
 			GetContentsTimer().AddTimerJob(pNewJob);
 		}
@@ -63,8 +63,7 @@ void ContentsTimer::OnEvt(LPVOID Arg)
 
 		case ContentsTimer::RANK_TIMER:
 		{
-			{
-				//로그인 쿼리를 날린다.
+			/*{
 				boost::shared_ptr<CalcRank> pRequest = ALLOCATOR.Create<CalcRank>();
 
 				boost::shared_ptr<Board::MSG_PLAYER_QUERY<CalcRank>>		PLAYER_MSG = ALLOCATOR.Create<Board::MSG_PLAYER_QUERY<CalcRank>>();
@@ -76,9 +75,9 @@ void ContentsTimer::OnEvt(LPVOID Arg)
 
 			ContentsTimerJob* pNewJob = new ContentsTimerJob();
 			pNewJob->Func = ContentsTimer::OnEvt;
-			pNewJob->SetExpineTime(GetTickCount() + 5000);
+			pNewJob->SetExpineTime(GetTickCount() + 1000 * 60 * 60);
 			pNewJob->SetId(ContentsTimer::RANK_TIMER);
-			GetContentsTimer().AddTimerJob(pNewJob);
+			GetContentsTimer().AddTimerJob(pNewJob);*/
 		}
 		break;
 	}

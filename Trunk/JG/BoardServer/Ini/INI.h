@@ -19,6 +19,8 @@ public:
 	CHAR ODBC_ID[MAX_CHAR_LENGTH];
 	CHAR ODBC_PWD[MAX_CHAR_LENGTH];
 
+	INT AliveSeconds;
+
 };
 
 #define  INI Singleton<BoardINI>::Instance()

@@ -38,19 +38,17 @@ namespace OMOK.Network
    
         static public void start()
         {
-            string ip = "192.168.0.9";
-
-            ip = GetIPAddress("blessnhs.iptime.org");
+            string ip = "211.212.37.238";
 
 
             //연결중이면 안한다. 
             if (client.socket == null || client.socket.Connected == false)
             {
-               // if ((DateTime.Now - time).TotalSeconds > 1)
+                if ((DateTime.Now - time).TotalSeconds > 5)
                 {
                     time = DateTime.Now;
                     if(User.Token != null && User.Token != "")
-                        client.StartClient(ip, 20000);
+                        client.StartClient(ip, 21000);
                 }
             }
 
@@ -93,7 +91,8 @@ namespace OMOK.Network
 
                                 if (Math.Abs(res.VarVersion - myversion) > Eps)
                                 {
-                                    Xamarin.Essentials.Browser.OpenAsync("https://play.google.com/store/apps/details?id=com.blessnhs.BAC");
+                                    //첫 검수라 임시 주석 2번째 패치 부터는 활성화
+                                    Xamarin.Essentials.Browser.OpenAsync("https://play.google.com/store/apps/details?id=com.companyname.OMOK");
 
                                     return;
                                 }
@@ -164,12 +163,14 @@ namespace OMOK.Network
                                     page.SendNickNamePopupMessage();
                                 else
                                 {
+                                    User.myInfo.NickName = Helper.ToStr(res.VarName.ToByteArray());
+
                                     page.CloseAllPopup();
 
                                     page.UpdatePlayerInfo();
                                 }
 
-                                User.myInfo.NickName = Helper.ToStr(res.VarName.ToByteArray());
+                               
                             }
                             break;
 
@@ -326,6 +327,9 @@ namespace OMOK.Network
 
         static public void SendVersion()
         {
+            if (client == null || client.socket == null || client.socket.Connected == false)
+                return;
+
             VERSION_REQ person = new VERSION_REQ
             {
             };
@@ -339,6 +343,9 @@ namespace OMOK.Network
 
         static public void SendNociticeReq()
         {
+            if (client == null || client.socket == null || client.socket.Connected == false)
+                return;
+
             NOTICE_REQ person = new NOTICE_REQ
             {
             };
@@ -352,6 +359,9 @@ namespace OMOK.Network
 
         static public void SendMakeRoom(string Name)
         {
+            if (client == null || client.socket == null || client.socket.Connected == false)
+                return;
+
             byte[] in_Name = Helper.ToByteString(Name);
 
             CREATE_ROOM_REQ person = new CREATE_ROOM_REQ
@@ -368,6 +378,9 @@ namespace OMOK.Network
 
         static public void SendEnterRoom(int id)
         {
+            if (client == null || client.socket == null || client.socket.Connected == false)
+                return;
+
             ENTER_ROOM_REQ person = new ENTER_ROOM_REQ
             {
                 VarId = id,
@@ -382,6 +395,9 @@ namespace OMOK.Network
 
         static public void SendCheckNickName(string Name)
         {
+            if (client == null || client.socket == null || client.socket.Connected == false)
+                return;
+
             byte[] in_Name = Helper.ToByteString(Name);
 
             CHECK_NICKNAME_REQ person = new CHECK_NICKNAME_REQ
@@ -398,6 +414,9 @@ namespace OMOK.Network
 
         static public void SendLeaveRoom(int id)
         {
+            if (client == null || client.socket == null || client.socket.Connected == false)
+                return;
+
             LEAVE_ROOM_REQ person = new LEAVE_ROOM_REQ
             {
                 VarId = id,
@@ -412,7 +431,7 @@ namespace OMOK.Network
 
         static public void SendReqRoomList()
         {
-            if (client.socket == null || client.socket.Connected == false)
+            if (client == null || client.socket == null || client.socket.Connected == false)
                 return;
 
             ROOM_LIST_REQ snd = new ROOM_LIST_REQ
@@ -428,9 +447,8 @@ namespace OMOK.Network
 
         static public void SendMatch()
         {
-            if (client.socket.Connected == false)
+            if (client == null || client.socket == null || client.socket.Connected == false)
                 return;
-
 
             MATCH_REQ person = new MATCH_REQ
             {
@@ -445,9 +463,8 @@ namespace OMOK.Network
 
         static public void SendRank()
         {
-            if (client.socket.Connected == false)
+            if (client == null || client.socket == null || client.socket.Connected == false)
                 return;
-
 
             RANK_REQ person = new RANK_REQ
             {
@@ -462,6 +479,8 @@ namespace OMOK.Network
 
         static public void SendLogin(string uid, string token)
         {
+            if (client == null || client.socket == null || client.socket.Connected == false)
+                return;
 
             LOGIN_REQ person = new LOGIN_REQ
             {
@@ -478,6 +497,9 @@ namespace OMOK.Network
 
         static public void SendRoomMessage(string msg)
         {
+
+            if (client == null || client.socket == null || client.socket.Connected == false)
+                return;
 
             var bytearray = System.Text.Encoding.UTF8.GetBytes(msg);
 
@@ -496,6 +518,9 @@ namespace OMOK.Network
 
         static public void SendQNS(string msg)
         {
+            if (client == null || client.socket == null || client.socket.Connected == false)
+                return;
+
             var bytearray = System.Text.Encoding.UTF8.GetBytes(msg);
 
             QNS_REQ message = new QNS_REQ
@@ -514,6 +539,9 @@ namespace OMOK.Network
 
         static public void SendPassThroughMessage(int x, int y, eTeam team, string msg="0")
         {
+            if (client == null || client.socket == null || client.socket.Connected == false)
+                return;
+
             var bytearray = System.Text.Encoding.UTF8.GetBytes(msg);
 
             ROOM_PASS_THROUGH_REQ message = new ROOM_PASS_THROUGH_REQ
@@ -537,6 +565,9 @@ namespace OMOK.Network
 
         static public void SendCancelMatchMessage()
         {
+            if (client == null || client.socket == null || client.socket.Connected == false)
+                return;
+
             CANCEL_MATCH_REQ message = new CANCEL_MATCH_REQ
             {
             };

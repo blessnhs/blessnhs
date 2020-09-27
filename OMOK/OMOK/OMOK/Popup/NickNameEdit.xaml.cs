@@ -25,7 +25,7 @@ namespace OMOK.Popup
             MessagingCenter.Subscribe<NickNameEdit>(this, "Fail", (sender) =>
             {
                 if (User.Locale != "ko")
-                    NickNameLabel.Text = "Exist NickName";
+                    NickNameLabel.Text = "Exist NickName Please Retry your nickname (7 Characters)";
                 else
                     NickNameLabel.Text = "존재하는 닉네임 입니다";
 
@@ -36,12 +36,23 @@ namespace OMOK.Popup
 
         async void OnClick(object sender, System.EventArgs e)
         {
+            if(UsernameEntry.Text == null)
+            {
+                if (User.Locale != "ko")
+                    NickNameLabel.Text = "Please Retry your nickname (7 Characters)";
+                else
+                    NickNameLabel.Text = "닉네임을 다시 입력하세요.";
+
+                UsernameEntry.Text = "";
+                return;
+            }
+
             if(UsernameEntry.Text.Length > 20)
             {
                 if (User.Locale != "ko")
-                    NickNameLabel.Text = "Too Long Name";
+                    NickNameLabel.Text = " your nickname Too Long Name";
                 else
-                    NickNameLabel.Text = "길이가 너무 깁니다.";
+                    NickNameLabel.Text = "닉네임 길이가 너무 깁니다.다시 입력하세요";
                 UsernameEntry.Text = "";
                 return;
             }
@@ -49,13 +60,25 @@ namespace OMOK.Popup
             if(UsernameEntry.Text.Length == 0)
             {
                 if (User.Locale != "ko")
-                    NickNameLabel.Text = "Please Retry";
+                    NickNameLabel.Text = "Please Retry your nickname (7 Characters)";
                 else
-                    NickNameLabel.Text = "다시 입력하세요.";
+                    NickNameLabel.Text = "닉네임을 다시 입력하세요.";
 
                 UsernameEntry.Text = "";
                 return;
             }
+
+            if(UsernameEntry.Text.IndexOf(' ') != -1)
+            {
+                if (User.Locale != "ko")
+                    NickNameLabel.Text = "Please Retry your nickname (7 Characters)";
+                else
+                    NickNameLabel.Text = "닉네임을 다시 입력하세요.";
+
+                UsernameEntry.Text = "";
+                return;
+            }
+
 
             NetProcess.SendCheckNickName(UsernameEntry.Text);
         }

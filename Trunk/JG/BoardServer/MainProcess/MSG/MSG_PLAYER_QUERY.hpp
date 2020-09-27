@@ -531,6 +531,8 @@ namespace Board	{
 				printf("Login Fail Db Failed %d \n", nRet);
 				res.set_var_code(LoginFailed);
 				SEND_PROTO_BUFFER(res, pSession)
+
+				pSession->Close();
 				return ;
 			}
 

@@ -19,7 +19,7 @@ namespace OMOK.Views
             InitializeComponent();
 
 
-            Button PrevBtn = new Button { Text = "◁", HorizontalOptions = LayoutOptions.Start,HeightRequest = 45 ,WidthRequest=45};
+            Button PrevBtn = new Button { Text = "◁", HorizontalOptions = LayoutOptions.Start,HeightRequest = 45 ,WidthRequest=80};
             PrevBtn.Clicked += (sender, e) => {
                 Navigation.PopModalAsync();
             };

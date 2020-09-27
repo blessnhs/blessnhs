@@ -8,13 +8,15 @@ VOID BoardINI::Load()
 
 	Default_FrontPort = GetPrivateProfileInt(("SERVER"), ("DEFAULT_FRONT_PORT"), 100,("./Board.ini"));
 
+	AliveSeconds = GetPrivateProfileInt(("SERVER"), ("ALIVE_SECONDS"), 60 * 60 /*1HOURS*/, ("./Board.ini"));
+
 	GetPrivateProfileString(("SERVER"), ("DEFAULT_FRONT_IP"),("127.0.0.1"),Default_FrontIp,sizeof(Default_FrontIp),("./Board.ini"));
 
 	GetPrivateProfileString(("SERVER"), ("ODBC_SYSTEM32_NAME"), ("."), ODBC_NAME, sizeof(ODBC_NAME), ("./Board.ini"));
 	GetPrivateProfileString(("SERVER"), ("ODBC_ID"), ("."), ODBC_ID, sizeof(ODBC_ID), ("./Board.ini"));
 	GetPrivateProfileString(("SERVER"), ("ODBC_PASSWD"), ("."), ODBC_PWD, sizeof(ODBC_PWD), ("./Board.ini"));
 
-	printf("[ Board ] Port [ %d ] MaxUser [ %d ] \n",Port,MaxUser);
+	printf("[ Board ] Port [ %d ] MaxUser [ %d ] Alive Seconds[%d] \n",Port,MaxUser, AliveSeconds);
 
 	//printf("ODBC SYSTEM32 NAME [%s] ID [%s] PWD [%s] \n", ODBC_NAME, ODBC_ID, ODBC_PWD);
 }

@@ -112,19 +112,26 @@ public:
 	//버전 정보를 가져온다.
 	double ProcedureVersion(int type)
 	{
-		mongocxx::collection collection = db["VERSION"];
-		bsoncxx::stdx::optional<bsoncxx::document::value> maybe_result =
-			collection.find_one(document{} << "type" << type << finalize);
-		if (maybe_result)
+		try
 		{
-			auto view = maybe_result->view()["value"];
+			mongocxx::collection collection = db["VERSION"];
+			bsoncxx::stdx::optional<bsoncxx::document::value> maybe_result =
+				collection.find_one(document{} << "type" << type << finalize);
+			if (maybe_result)
+			{
+				auto view = maybe_result->view()["value"];
 
-			auto strview = view.get_utf8().value;
-			string version = strview.to_string();
+				auto strview = view.get_utf8().value;
+				string version = strview.to_string();
 
-			double lol = atof(version.c_str());
+				double lol = atof(version.c_str());
 
-			return lol;
+				return lol;
+			}
+		}
+		catch (...)
+		{
+			printf("exception ProcedureVersion \n");
 		}
 
 		return 0;
@@ -133,407 +140,407 @@ public:
 	//승수로 정렬해서 상위1 10개만 가져오고 각 해당 유저에게 rank를 업데이트 한다.
 	int CalcRank(int count = 100)
 	{
-		auto collection_acconut = db["ACCOUNT"];
-		auto collection_rank = db["RANK"];
-
-		collection_rank.drop();
-
-		auto order = bsoncxx::builder::stream::document{} << "Win" << -1 << bsoncxx::builder::stream::finalize;
-
-		auto opts = mongocxx::options::find{};
-		opts.sort(order.view());
-		opts.limit(count);
-
-		auto cursor = collection_acconut.find({}, opts);
-
-		int irank = 1;
-
-		for (auto doc : cursor)
+		try
 		{
+			auto collection_acconut = db["ACCOUNT"];
+			auto collection_rank = db["RANK"];
 
-			bsoncxx::stdx::optional<mongocxx::result::insert_one> result =
-				collection_rank.insert_one(doc);
+			collection_rank.drop();
 
-			//각각 유저 업데이트
+			auto order = bsoncxx::builder::stream::document{} << "Win" << -1 << bsoncxx::builder::stream::finalize;
+
+			auto opts = mongocxx::options::find{};
+			opts.sort(order.view());
+			opts.limit(count);
+
+			auto cursor = collection_acconut.find({}, opts);
+
+			int irank = 1;
+
+			for (auto doc : cursor)
 			{
-				auto viewIndex = doc["INDEX"];
-				int64_t Index = viewIndex.get_int64().value;
 
-				bsoncxx::builder::stream::document query{};
+				bsoncxx::stdx::optional<mongocxx::result::insert_one> result =
+					collection_rank.insert_one(doc);
 
-				query << "INDEX" << Index;
-
-				bsoncxx::builder::stream::document update{};
-				update << "$set" << bsoncxx::builder::stream::open_document <<
-					"Rank" << irank++ <<
-					bsoncxx::builder::stream::close_document;
-
-				auto serverQuery = collection_acconut.find_one_and_update(query.view(), update.view());
-				if (!serverQuery)
+				//각각 유저 업데이트
 				{
-					printf("%I64d user rank %d query failed \n", Index, irank - 1);
+					auto viewIndex = doc["INDEX"];
+					int64_t Index = viewIndex.get_int64().value;
+
+					bsoncxx::builder::stream::document query{};
+
+					query << "INDEX" << Index;
+
+					bsoncxx::builder::stream::document update{};
+					update << "$set" << bsoncxx::builder::stream::open_document <<
+						"Rank" << irank++ <<
+						bsoncxx::builder::stream::close_document;
+
+					auto serverQuery = collection_acconut.find_one_and_update(query.view(), update.view());
+					if (!serverQuery)
+					{
+						printf("%I64d user rank %d query failed \n", Index, irank - 1);
+					}
 				}
+
+
 			}
-
-
+		
+			return 0;
 		}
-
-		return 0;
+		catch (...)
+		{
+			printf("exception CalcRank \n");
+		}
 	}
 
 	bool IsExistNickName(string name, int64_t Index)
 	{
-		auto collection = db["ACCOUNT"];
-
-		bsoncxx::stdx::optional<bsoncxx::document::value> maybe_result =
-			collection.find_one(document{} << "Name" << name << finalize);
-		if (!maybe_result)
+		try
 		{
-			//닉네임이 없다.
+			auto collection = db["ACCOUNT"];
 
-			auto serverQuery = db["ACCOUNT"].update_one(
-				make_document(kvp("INDEX", Index)),
-				make_document(
-					kvp("$set", make_document(kvp("Name", name)))));
-
-			if (!serverQuery)
+			bsoncxx::stdx::optional<bsoncxx::document::value> maybe_result =
+				collection.find_one(document{} << "Name" << name << finalize);
+			if (!maybe_result)
 			{
-				printf("IsExistNickName  Index %I64d query failed \n", Index);
-				return false;
+				//닉네임이 없다.
+
+				auto serverQuery = db["ACCOUNT"].update_one(
+					make_document(kvp("INDEX", Index)),
+					make_document(
+						kvp("$set", make_document(kvp("Name", name)))));
+
+				if (!serverQuery)
+				{
+					printf("IsExistNickName  Index %I64d query failed \n", Index);
+					return false;
+				}
+
+				return true;
 			}
-
-			return true;
-		}
-
-		return false;
 		
+			return false;
+		}
+		catch (...)
+		{
+			printf("exception IsExistNickName \n");
+		}
 	}
 
 	void  RequestRank(std::list<Rank>& list, int count = 100)
 	{
-		mongocxx::collection collection = db["RANK"];
-
-		auto order = bsoncxx::builder::stream::document{} << "Rank" << 1 << bsoncxx::builder::stream::finalize;
-
-		auto opts = mongocxx::options::find{};
-		opts.sort(order.view());
-		opts.limit(count);
-
-		//find all
-		mongocxx::cursor cursor = collection.find(
-			{}, opts);
-
-		for (bsoncxx::document::view doc : cursor)
+		try
 		{
-			Rank r;
+			mongocxx::collection collection = db["RANK"];
 
-			auto viewRank = doc["Rank"];
-			r.set_var_rank(viewRank.get_int32().value);
+			auto order = bsoncxx::builder::stream::document{} << "Rank" << 1 << bsoncxx::builder::stream::finalize;
 
-			auto viewLevel = doc["Level"];
-			r.set_var_level(viewLevel.get_int32().value);
+			auto opts = mongocxx::options::find{};
+			opts.sort(order.view());
+			opts.limit(count);
 
-			auto viewLose = doc["Lose"];
-			r.set_var_lose(viewLose.get_int32().value);
+			//find all
+			mongocxx::cursor cursor = collection.find(
+				{}, opts);
 
-			auto viewWin = doc["Win"];
-			r.set_var_win(viewWin.get_int32().value);
+			for (bsoncxx::document::view doc : cursor)
+			{
+				Rank r;
 
-			auto viewDraw = doc["Draw"];
-			r.set_var_draw(viewDraw.get_int32().value);
+				auto viewRank = doc["Rank"];
+				r.set_var_rank(viewRank.get_int32().value);
 
-			auto viewName = doc["Name"];
-			r.set_var_name( viewName.get_utf8().value.data());
+				auto viewLevel = doc["Level"];
+				r.set_var_level(viewLevel.get_int32().value);
 
-			auto picUrl = doc["PictureUrl"];
-			r.set_var_pic_uri( picUrl.get_utf8().value.data());
+				auto viewLose = doc["Lose"];
+				r.set_var_lose(viewLose.get_int32().value);
 
-			auto picLocale = doc["Locale"];
-			r.set_var_contry(picLocale.get_utf8().value.data());
+				auto viewWin = doc["Win"];
+				r.set_var_win(viewWin.get_int32().value);
 
-			list.push_back(r);
+				auto viewDraw = doc["Draw"];
+				r.set_var_draw(viewDraw.get_int32().value);
+
+				auto viewName = doc["Name"];
+				r.set_var_name( viewName.get_utf8().value.data());
+
+				auto picUrl = doc["PictureUrl"];
+				r.set_var_pic_uri( picUrl.get_utf8().value.data());
+
+				auto picLocale = doc["Locale"];
+				r.set_var_contry(picLocale.get_utf8().value.data());
+
+				list.push_back(r);
+			}
 		}
-
+		catch (...)
+		{
+			printf("exception RequestRank \n");
+		}
 	}
 
 
 	int UpdaetPlayerScore(int64_t Index, int Win, int Lose, int Draw, int Level, int Score)
 	{
-		auto collection = db["ACCOUNT"];
-		
-		auto serverQuery = db["ACCOUNT"].update_one(
-			make_document(kvp("INDEX", Index)),
-			make_document(
-				kvp("$inc", make_document(kvp("Win", Win))),
-				kvp("$inc", make_document(kvp("Lose", Lose))),
-				kvp("$inc", make_document(kvp("Draw", Draw))),
-				kvp("$set", make_document(kvp("Level", Level))),
-				kvp("$set", make_document(kvp("Score", Score)))));
-
-		if (!serverQuery)
+		try
 		{
-			printf("UpdaetPlayerScore  Index %I64d query failed \n", Index);
-			return -1;
-		}
+			auto collection = db["ACCOUNT"];
+		
+			auto serverQuery = db["ACCOUNT"].update_one(
+				make_document(kvp("INDEX", Index)),
+				make_document(
+					kvp("$inc", make_document(kvp("Win", Win))),
+					kvp("$inc", make_document(kvp("Lose", Lose))),
+					kvp("$inc", make_document(kvp("Draw", Draw))),
+					kvp("$set", make_document(kvp("Level", Level))),
+					kvp("$set", make_document(kvp("Score", Score)))));
 
-		return 0;
+			if (!serverQuery)
+			{
+				printf("UpdaetPlayerScore  Index %I64d query failed \n", Index);
+				return -1;
+			}
+
+			return 0;
+		}
+		catch (...)
+		{
+			printf("exception UpdaetPlayerScore \n");
+		}
 	}
 
 	std::string ToAnsi(const char* pszIn)
 	{
-		std::string resultString;
-
-		int nLenOfUni = 0, nLenOfANSI = 0;
-		wchar_t* us = NULL;
-		char* pszOut = NULL;
-
-		if ((nLenOfUni = MultiByteToWideChar(CP_UTF8, 0, pszIn, strlen(pszIn), NULL, 0)) <= 0)
-			return 0;
-
-		us = new wchar_t[nLenOfUni + 1];
-		memset(us, 0x00, sizeof(wchar_t) * (nLenOfUni + 1));
-
-		// utf8 --> unicode
-		nLenOfUni = MultiByteToWideChar(CP_UTF8, 0, pszIn, strlen(pszIn), us, nLenOfUni);
-
-		if ((nLenOfANSI = WideCharToMultiByte(CP_ACP, 0, us, nLenOfUni, NULL, 0, NULL, NULL)) <= 0)
+		try
 		{
-			//free(us);
+			std::string resultString;
+
+			int nLenOfUni = 0, nLenOfANSI = 0;
+			wchar_t* us = NULL;
+			char* pszOut = NULL;
+
+			if ((nLenOfUni = MultiByteToWideChar(CP_UTF8, 0, pszIn, strlen(pszIn), NULL, 0)) <= 0)
+				return 0;
+
+			us = new wchar_t[nLenOfUni + 1];
+			memset(us, 0x00, sizeof(wchar_t) * (nLenOfUni + 1));
+
+			// utf8 --> unicode
+			nLenOfUni = MultiByteToWideChar(CP_UTF8, 0, pszIn, strlen(pszIn), us, nLenOfUni);
+
+			if ((nLenOfANSI = WideCharToMultiByte(CP_ACP, 0, us, nLenOfUni, NULL, 0, NULL, NULL)) <= 0)
+			{
+				//free(us);
+				delete[] us;
+				return 0;
+			}
+
+			pszOut = new char[nLenOfANSI + 1];
+			memset(pszOut, 0x00, sizeof(char) * (nLenOfANSI + 1));
+
+			// unicode --> ansi
+			nLenOfANSI = WideCharToMultiByte(CP_ACP, 0, us, nLenOfUni, pszOut, nLenOfANSI, NULL, NULL);
+			pszOut[nLenOfANSI] = 0;
+			resultString = pszOut;
+
 			delete[] us;
-			return 0;
+			delete[] pszOut;
+
+			return resultString;
 		}
-
-		pszOut = new char[nLenOfANSI + 1];
-		memset(pszOut, 0x00, sizeof(char) * (nLenOfANSI + 1));
-
-		// unicode --> ansi
-		nLenOfANSI = WideCharToMultiByte(CP_ACP, 0, us, nLenOfUni, pszOut, nLenOfANSI, NULL, NULL);
-		pszOut[nLenOfANSI] = 0;
-		resultString = pszOut;
-
-		delete[] us;
-		delete[] pszOut;
-
-		return resultString;
+		catch (...)
+		{
+			printf("exception ToAnsi \n");
+		}
 	}
 
 	int NoticeInfoInfo(string& notice)
 	{
-		mongocxx::collection collection = db["NOTICE"];
-		bsoncxx::stdx::optional<bsoncxx::document::value> maybe_result =
-			collection.find_one(document{} << finalize);
-		if (maybe_result)
+		try
 		{
-			auto view = maybe_result->view()["text"];
+			mongocxx::collection collection = db["NOTICE"];
+			bsoncxx::stdx::optional<bsoncxx::document::value> maybe_result =
+				collection.find_one(document{} << finalize);
+			if (maybe_result)
+			{
+				auto view = maybe_result->view()["text"];
 
-			auto strview = view.get_utf8().value;
-			notice = strview.to_string();
+				auto strview = view.get_utf8().value;
+				notice = strview.to_string();
 
-			notice = ToAnsi(notice.c_str());
+				notice = ToAnsi(notice.c_str());
+			}
+
+			return 0;
 		}
-
-		return 0;
+		catch (...)
+		{
+			printf("exception NoticeInfoInfo \n");
+		}
 	}
 
 	int UpdaetQNS(int64_t Index, std::string contents)
 	{
-		mongocxx::collection collection = db["QNS"];
-		///////////////////////////////////////////////////////////
-		/////insert 
-		auto builder = bsoncxx::builder::stream::document{};
-		bsoncxx::document::value doc_value = builder
-			<< "INDEX" << Index
-			<< "contents" << contents
-			<< "reg-time" << bsoncxx::types::b_date(std::chrono::system_clock::now())
-			<< bsoncxx::builder::stream::finalize;
-
-		bsoncxx::document::view view = doc_value.view();
-
-		bsoncxx::stdx::optional<mongocxx::result::insert_one> result =
-			collection.insert_one(view);
-
-		if (!result)
+		try
 		{
-			printf("UpdaetQNS  Index %I64d query failed \n", Index);
-
-			return -1;
-		}
-
-		return 0;
-	}
-
-	int	 ProcedureUserLogout(const int64_t id)
-	{
-		mongocxx::collection collection = db["CONCURRENTUSER"];
-
-		collection.delete_many(document{} << "INDEX" << id << finalize);
-		return 0;
-	}
-
-	int  DeleteAllConcurrentUser()
-	{
-		mongocxx::collection collection = db["CONCURRENTUSER"];
-		collection.delete_many(document{} << finalize);
-
-		return 0;
-	}
-
-
-	int64_t GetNextIndex()
-	{
-		auto collection = db["INDEX"];
-
-		bsoncxx::builder::stream::document query{};
-		bsoncxx::builder::stream::document update{};
-		update << "$inc" << bsoncxx::builder::stream::open_document <<
-			"INDEX" << 1 <<
-			bsoncxx::builder::stream::close_document;
-
-		auto serverQuery = collection.find_one_and_update(query.view(), update.view());
-
-		if (serverQuery) {
-			//Do something
-
-			int64_t index = serverQuery.get().view()["INDEX"].get_int64();
-			return index;
-		}
-		else
-		{
+			mongocxx::collection collection = db["QNS"];
+			///////////////////////////////////////////////////////////
+			/////insert 
 			auto builder = bsoncxx::builder::stream::document{};
 			bsoncxx::document::value doc_value = builder
-				<< "INDEX" << bsoncxx::types::b_int64()
+				<< "INDEX" << Index
+				<< "contents" << contents
+				<< "reg-time" << bsoncxx::types::b_date(std::chrono::system_clock::now())
 				<< bsoncxx::builder::stream::finalize;
 
 			bsoncxx::document::view view = doc_value.view();
 
 			bsoncxx::stdx::optional<mongocxx::result::insert_one> result =
 				collection.insert_one(view);
-		}
 
-		serverQuery = collection.find_one_and_update(query.view(), update.view());
-		if (serverQuery) {
-			//Do something
-
-			int64_t index = serverQuery.get().view()["INDEX"].get_int64();
-			return index;
-		}
-
-		return -1;
-	}
-
-	int		ProcedureUserLogin(const char* flatformid, const int flatformtype, const char* picture_url, const char* email, const char* locale, std::string& szKey, int& Rank, int& Score, int& Win, int& Lose, int& Draw, INT64& Index, int& Level, string& name)
-	{
-		mongocxx::collection collection = db["ACCOUNT"];
-		bsoncxx::stdx::optional<bsoncxx::document::value> maybe_result =
-			collection.find_one(document{} << "FlatformId" << flatformid << "FlatformType" << flatformtype << finalize);
-		if (maybe_result) //캐릭터가 이미 존재한다.
-		{
-			auto viewScore = maybe_result->view()["Score"];
-			Score = viewScore.get_int32().value;
-
-			auto viewRank = maybe_result->view()["Rank"];
-			Rank = viewRank.get_int32().value;
-
-			auto viewWin = maybe_result->view()["Win"];
-			Win = viewWin.get_int32().value;
-
-			auto viewLose = maybe_result->view()["Lose"];
-			Lose = viewLose.get_int32().value;
-
-			auto viewDraw = maybe_result->view()["Draw"];
-			Draw = viewDraw.get_int32().value;
-
-			auto viewLevel = maybe_result->view()["Level"];
-			Level = viewLevel.get_int32().value;
-
-			auto viewIndex = maybe_result->view()["INDEX"];
-			Index = viewIndex.get_int64().value;
-
-			auto viewName = maybe_result->view()["Name"];
-			name = viewName.get_utf8().value.data();
-
-			//concurrent
-			//접속 기록이 있다. 중복 접속
+			if (!result)
 			{
-				mongocxx::collection collection2 = db["CONCURRENTUSER"];
-				bsoncxx::stdx::optional<bsoncxx::document::value> maybe_result =
-					collection2.find_one(document{} << "INDEX" << Index << finalize);
-				if (maybe_result)
-				{
-					printf("duplicate login ProcedureUserLogin CONCURRENTUSER  Index %I64d query failed \n", Index);
-					return -1;
-				}
+				printf("UpdaetQNS  Index %I64d query failed \n", Index);
 
-				UUID id1;
-				UuidCreate(&id1);
-				RPC_STATUS s;
-				char* tmp;
-				UuidToStringA(&id1, (RPC_CSTR*)&tmp);
-
-				szKey = (char*)tmp;
-
-				auto builder2 = bsoncxx::builder::stream::document{};
-				bsoncxx::document::value doc_value2 = builder2
-					<< "Type" << 2
-					<< "SessionKey" << szKey
-					<< "INDEX" << Index
-					<< bsoncxx::builder::stream::finalize;
-
-				bsoncxx::document::view view2 = doc_value2.view();
-
-				bsoncxx::stdx::optional<mongocxx::result::insert_one> result =
-					collection2.insert_one(view2);
-
-				if (!result)
-				{
-					printf("fail insert CONCURRENTUSER  Index %I64d query failed \n", Index);
-
-					return -1;
-				}
+				return -1;
 			}
 
+			return 0;
 		}
-		else
+		catch (...)
 		{
-			///////////////////////////////////////////////////////////
-			///////insert 
-			{
-				int64_t index = GetNextIndex();
+			printf("exception UpdaetQNS \n");
+		}
+	}
 
+	int	 ProcedureUserLogout(const int64_t id)
+	{
+		try
+		{
+			mongocxx::collection collection = db["CONCURRENTUSER"];
+
+			collection.delete_many(document{} << "INDEX" << id << finalize);
+			return 0;
+		}
+		catch (...)
+		{
+			printf("exception ProcedureUserLogout \n");
+		}
+	}
+
+	int  DeleteAllConcurrentUser()
+	{
+		try
+		{
+			mongocxx::collection collection = db["CONCURRENTUSER"];
+			collection.delete_many(document{} << finalize);
+
+			return 0;
+		}
+		catch (...)
+		{
+			printf("exception DeleteAllConcurrentUser \n");
+		}
+	}
+
+
+	int64_t GetNextIndex()
+	{
+		try
+		{
+			auto collection = db["INDEX"];
+
+			bsoncxx::builder::stream::document query{};
+			bsoncxx::builder::stream::document update{};
+			update << "$inc" << bsoncxx::builder::stream::open_document <<
+				"INDEX" << 1 <<
+				bsoncxx::builder::stream::close_document;
+
+			auto serverQuery = collection.find_one_and_update(query.view(), update.view());
+
+			if (serverQuery) {
+				//Do something
+
+				int64_t index = serverQuery.get().view()["INDEX"].get_int64();
+				return index;
+			}
+			else
+			{
 				auto builder = bsoncxx::builder::stream::document{};
 				bsoncxx::document::value doc_value = builder
-					<< "FlatformId" << flatformid
-					<< "FlatformType" << flatformtype
-					<< "Name" << "" //default
-					<< "PictureUrl" << picture_url
-					<< "Email" << email
-					<< "LastLoginTime" << bsoncxx::types::b_date(std::chrono::system_clock::now())
-					<< "Score" << 0
-					<< "Rank" << 0
-					<< "Score" << 0
-					<< "Win" << 0
-					<< "Lose" << 0
-					<< "Draw" << 0
-					<< "Level" << 0
-					<< "Locale" << locale
-					<< "INDEX" << index
+					<< "INDEX" << bsoncxx::types::b_int64()
 					<< bsoncxx::builder::stream::finalize;
 
 				bsoncxx::document::view view = doc_value.view();
 
 				bsoncxx::stdx::optional<mongocxx::result::insert_one> result =
 					collection.insert_one(view);
+			}
 
-				//캐릭터 생성 실패
-				if (!result)
-				{
-					printf("fail insert ACCOUNT  Index %I64d query failed \n", Index);
+			serverQuery = collection.find_one_and_update(query.view(), update.view());
+			if (serverQuery) {
+				//Do something
 
-					return -1;
-				}
+				int64_t index = serverQuery.get().view()["INDEX"].get_int64();
+				return index;
+			}
+
+			return -1;
+		}
+		catch (...)
+		{
+			printf("exception GetNextIndex \n");
+		}
+	}
+
+	int		ProcedureUserLogin(const char* flatformid, const int flatformtype, const char* picture_url, const char* email, const char* locale, std::string& szKey, int& Rank, int& Score, int& Win, int& Lose, int& Draw, INT64& Index, int& Level, string& name)
+	{
+		try
+		{
+			mongocxx::collection collection = db["ACCOUNT"];
+			bsoncxx::stdx::optional<bsoncxx::document::value> maybe_result =
+				collection.find_one(document{} << "FlatformId" << flatformid << "FlatformType" << flatformtype << finalize);
+			if (maybe_result) //캐릭터가 이미 존재한다.
+			{
+				auto viewScore = maybe_result->view()["Score"];
+				Score = viewScore.get_int32().value;
+
+				auto viewRank = maybe_result->view()["Rank"];
+				Rank = viewRank.get_int32().value;
+
+				auto viewWin = maybe_result->view()["Win"];
+				Win = viewWin.get_int32().value;
+
+				auto viewLose = maybe_result->view()["Lose"];
+				Lose = viewLose.get_int32().value;
+
+				auto viewDraw = maybe_result->view()["Draw"];
+				Draw = viewDraw.get_int32().value;
+
+				auto viewLevel = maybe_result->view()["Level"];
+				Level = viewLevel.get_int32().value;
+
+				auto viewIndex = maybe_result->view()["INDEX"];
+				Index = viewIndex.get_int64().value;
+
+				auto viewName = maybe_result->view()["Name"];
+				name = viewName.get_utf8().value.data();
 
 				//concurrent
+				//접속 기록이 있다. 중복 접속
 				{
+					mongocxx::collection collection2 = db["CONCURRENTUSER"];
+					bsoncxx::stdx::optional<bsoncxx::document::value> maybe_result =
+						collection2.find_one(document{} << "INDEX" << Index << finalize);
+					if (maybe_result)
+					{
+						printf("duplicate login ProcedureUserLogin CONCURRENTUSER  Index %I64d query failed \n", Index);
+						return -1;
+					}
+
 					UUID id1;
 					UuidCreate(&id1);
 					RPC_STATUS s;
@@ -542,13 +549,11 @@ public:
 
 					szKey = (char*)tmp;
 
-					mongocxx::collection collection2 = db["CONCURRENTUSER"];
-
 					auto builder2 = bsoncxx::builder::stream::document{};
 					bsoncxx::document::value doc_value2 = builder2
 						<< "Type" << 2
 						<< "SessionKey" << szKey
-						<< "INDEX" << index
+						<< "INDEX" << Index
 						<< bsoncxx::builder::stream::finalize;
 
 					bsoncxx::document::view view2 = doc_value2.view();
@@ -559,21 +564,94 @@ public:
 					if (!result)
 					{
 						printf("fail insert CONCURRENTUSER  Index %I64d query failed \n", Index);
+
 						return -1;
 					}
 				}
 
-				//auto index_specification = document{} << "INDEX" << 1 << finalize;
-				//collection.create_index(std::move(index_specification));
-				Index = index;
-				Score = Rank = Win = Lose = Draw = Level = 0;
 			}
-		
+			else
+			{
+				///////////////////////////////////////////////////////////
+				///////insert 
+				{
+					int64_t index = GetNextIndex();
 
+					auto builder = bsoncxx::builder::stream::document{};
+					bsoncxx::document::value doc_value = builder
+						<< "FlatformId" << flatformid
+						<< "FlatformType" << flatformtype
+						<< "Name" << "" //default
+						<< "PictureUrl" << picture_url
+						<< "Email" << email
+						<< "LastLoginTime" << bsoncxx::types::b_date(std::chrono::system_clock::now())
+						<< "Score" << 0
+						<< "Rank" << 0
+						<< "Score" << 0
+						<< "Win" << 0
+						<< "Lose" << 0
+						<< "Draw" << 0
+						<< "Level" << 0
+						<< "Locale" << locale
+						<< "INDEX" << index
+						<< bsoncxx::builder::stream::finalize;
+
+					bsoncxx::document::view view = doc_value.view();
+
+					bsoncxx::stdx::optional<mongocxx::result::insert_one> result =
+						collection.insert_one(view);
+
+					//캐릭터 생성 실패
+					if (!result)
+					{
+						printf("fail insert ACCOUNT  Index %I64d query failed \n", Index);
+
+						return -1;
+					}
+
+					//concurrent
+					{
+						UUID id1;
+						UuidCreate(&id1);
+						RPC_STATUS s;
+						char* tmp;
+						UuidToStringA(&id1, (RPC_CSTR*)&tmp);
+
+						szKey = (char*)tmp;
+
+						mongocxx::collection collection2 = db["CONCURRENTUSER"];
+
+						auto builder2 = bsoncxx::builder::stream::document{};
+						bsoncxx::document::value doc_value2 = builder2
+							<< "Type" << 2
+							<< "SessionKey" << szKey
+							<< "INDEX" << index
+							<< bsoncxx::builder::stream::finalize;
+
+						bsoncxx::document::view view2 = doc_value2.view();
+
+						bsoncxx::stdx::optional<mongocxx::result::insert_one> result =
+							collection2.insert_one(view2);
+
+						if (!result)
+						{
+							printf("fail insert CONCURRENTUSER  Index %I64d query failed \n", Index);
+							return -1;
+						}
+					}
+
+					//auto index_specification = document{} << "INDEX" << 1 << finalize;
+					//collection.create_index(std::move(index_specification));
+					Index = index;
+					Score = Rank = Win = Lose = Draw = Level = 0;
+				}
+			}
+			return 0;
 		}
-
-
-		return 0;
+		catch (...)
+		{
+			printf("exception ProcedureUserLogin \n");
+		}
 	}
 
 
