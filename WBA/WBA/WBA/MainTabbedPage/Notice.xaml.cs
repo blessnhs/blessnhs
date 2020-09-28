@@ -4,7 +4,6 @@ using Xamarin.Forms.Xaml;
 using System.IO;
 using WBA.MainTabbedPage;
 using System.Linq;
-using WBA.Navigation;
 
 namespace WBA
 {
@@ -215,7 +214,7 @@ namespace WBA
             {
                 var labelText = s as Label;
 
-                Navigation.PushModalAsync(new TextView("WBA.Resource.Message2020.txt"));
+            //    Navigation.PushModalAsync(new TextView("WBA.Resource.Message2020.txt"));
             };
 
             label_2020msg.GestureRecognizers.Add(forgetPassword_tap);

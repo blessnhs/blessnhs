@@ -38,7 +38,7 @@ namespace WBA.Droid
 
                         var manager = (NotificationManager)GetSystemService(NotificationService);
 
-                        if (Build.VERSION.SdkInt >= Build.VERSION_CODES.O)
+                        if (Build.VERSION.SdkInt >= Android.OS.BuildVersionCodes.O)
                         {
 
                             var notification = new Notification.Builder(this, "DE")
@@ -115,7 +115,7 @@ namespace WBA.Droid
         {
             NotificationManager Manager = (NotificationManager)GetSystemService(NotificationService);
 
-            if (Build.VERSION.SdkInt >= Build.VERSION_CODES.O)
+            if (Build.VERSION.SdkInt >= Android.OS.BuildVersionCodes.O)
             {
 
                 var chan1 = new NotificationChannel("DE",

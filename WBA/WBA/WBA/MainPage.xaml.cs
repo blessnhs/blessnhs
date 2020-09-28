@@ -5,7 +5,6 @@ using WBA.Network;
 using NetClient;
 using WBA.MainTabbedPage;
 using Xamarin.Forms;
-using WBA.Navigation;
 using System.Linq;
 
 namespace WBA

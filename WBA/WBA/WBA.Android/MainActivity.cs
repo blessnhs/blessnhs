@@ -9,9 +9,6 @@ using Android.Content;
 using Microsoft.AppCenter;
 using Microsoft.AppCenter.Analytics;
 using Microsoft.AppCenter.Crashes;
-using Microsoft.AppCenter;
-using Microsoft.AppCenter.Analytics;
-using Microsoft.AppCenter.Crashes;
 using Microsoft.AppCenter.Distribute;
 
 namespace WBA.Droid
@@ -57,7 +54,7 @@ namespace WBA.Droid
             Intent startService = new Intent(this, typeof(BackEndService));
             startService.SetAction(Constants.ACTION_START_SERVICE);
 
-            if (Build.VERSION.SdkInt >= Build.VERSION_CODES.O)
+            if (Build.VERSION.SdkInt >= Android.OS.BuildVersionCodes.O)
             {
                 StartForegroundService(startService);
             }

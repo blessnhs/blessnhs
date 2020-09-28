@@ -16,7 +16,7 @@ namespace WBA.MainTabbedPage.Droid
             Intent startService = new Intent(context, typeof(BackEndService));
             startService.SetAction(Constants.ACTION_START_SERVICE);
 
-            if (Build.VERSION.SdkInt >= Build.VERSION_CODES.O)
+            if (Build.VERSION.SdkInt >= Android.OS.BuildVersionCodes.O)
             {
                 context.StartForegroundService(startService);
             }
@@ -40,9 +40,9 @@ namespace WBA.MainTabbedPage.Droid
             calendar.TimeInMillis = Java.Lang.JavaSystem.CurrentTimeMillis();
             calendar.Set(alarmtime.Year, alarmtime.Month - 1, alarmtime.Day, alarmtime.Hour, alarmtime.Minute, alarmtime.Second);
 
-            if (Build.VERSION.SdkInt < Build.VERSION_CODES.M)
+            if (Build.VERSION.SdkInt < Android.OS.BuildVersionCodes.M)
             {
-                if (Build.VERSION.SdkInt >= Build.VERSION_CODES.Kitkat)
+                if (Build.VERSION.SdkInt >= Android.OS.BuildVersionCodes.Kitkat)
                 {
                     //API 19 이상 API 23미만
                     alarmManager.SetExact(AlarmType.RtcWakeup, calendar.TimeInMillis, pendingIntent);

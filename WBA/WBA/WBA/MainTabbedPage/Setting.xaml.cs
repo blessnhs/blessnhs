@@ -3,7 +3,6 @@ using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using WBA.Network;
 using NetClient;
-using WBA.Navigation;
 
 namespace WBA.MainTabbedPage
 {

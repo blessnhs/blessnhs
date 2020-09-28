@@ -7,7 +7,6 @@ using System.IO;
 using System.Text;
 using System.Threading;
 using WBA.MainTabbedPage;
-using WBA.Navigation;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 
@@ -93,7 +92,7 @@ namespace WBA.Network
 
                                     if (res.VarCode == ErrorCode.Success)
                                     {
-                                        ChatPage = new MainChatView(res.VarRoomId);
+                                    //    ChatPage = new MainChatView(res.VarRoomId);
                                         page.Navigation.PushModalAsync(new NavigationPage(ChatPage));
                                     }
                                     else
@@ -113,7 +112,7 @@ namespace WBA.Network
                                 {
                                     if (ChatPage != null)
                                     {
-                                        ((MainChatView)ChatPage).UpdateMessage(data);
+                                   //     ((MainChatView)ChatPage).UpdateMessage(data);
                                     }
                                 }
                                 break;
@@ -129,8 +128,8 @@ namespace WBA.Network
 
                                     if (res.VarCode == ErrorCode.Success)
                                     {
-                                           ChatPage = new MainChatView(res.VarRoomId);
-                                           page.Navigation.PushModalAsync(new NavigationPage(ChatPage));
+                                     //      ChatPage = new MainChatView(res.VarRoomId);
+                                     //      page.Navigation.PushModalAsync(new NavigationPage(ChatPage));
                                     }
                                 }
                                 break;
