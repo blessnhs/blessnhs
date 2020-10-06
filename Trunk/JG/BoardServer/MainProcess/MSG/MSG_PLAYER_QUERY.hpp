@@ -454,135 +454,153 @@ namespace Board	{
 
 		void Execute(LPVOID Param)
 		{
-			LOGIN_RES res;
-
-			if (pSession == NULL || pSession->GetConnected() == false)
+			try
 			{
-//				printf("pSession is null or disconnect", pSession);
 
-				res.set_var_code(DataBaseError);
+				LOGIN_RES res;
 
-				SEND_PROTO_BUFFER(res, pSession)
-				return;
-			}
-
-			DBPROCESS_CER_PTR pProcess = DBPROCESSCONTAINER_CER.Search(Type);
-			if (pProcess == NULL || pProcess->m_IsOpen == false)
-			{
-				printf("DBPROCESSCONTAINER_CER.Search wong %d \n", pSession->GetMyDBTP());
-
-				res.set_var_code(DataBaseError);
-
-				SEND_PROTO_BUFFER(res, pSession)
-				return;
-			}
-
-			if (pRequst->Token.size() == 0 || pRequst->Token.size() < 10)
-			{
-				printf("DBPROCESSCONTAINER_CER.Search token size error %d \n", pRequst->Token.size());
-
-				res.set_var_code(DataBaseError);
-
-				SEND_PROTO_BUFFER(res, pSession)
-				return;
-			}
-
-			//실패할수 있으니 반복
-			for (int i = 0; i < 10; i++)
-			{
-				GetGoogleAuth(pRequst->Token.c_str());
-
-				if (http_out.size() == 6)
-					break;
-
-				printf("retry google auth\n");
-			}
-
-
-			if(http_out.size() != 6)
-			{
-				printf("http_out wong %d \n", http_out.size());
-				res.set_var_code(DataBaseError);
-
-				SEND_PROTO_BUFFER(res, pSession)
-				return;
-			}
-
-			std::string flatformid, google_name, picture_url, email,locale;
-
-			flatformid.assign(http_out[1].begin(), http_out[1].end());
-			email.assign(http_out[2].begin(), http_out[2].end());
-			picture_url.assign(http_out[4].begin(), http_out[4].end());
-			locale.assign(http_out[5].begin(), http_out[5].end());
-
-
-			Base64::convert_unicode_to_ansi_string(google_name, http_out[3].c_str(), http_out[3].size());
-
-			int rank, score, win, lose, draw, level;
-			string nickname;
-
-			// 로그인 절차 : 아이디의 접속확인 및 인증키값을 가져온다.
-			std::string authentickey;
-			INT64 Index = 0;
-			WORD nRet = pProcess->ProcedureUserLogin(flatformid.c_str(), 0/*0번은 구글 인증*/,picture_url.c_str(),email.c_str(), locale.c_str(), authentickey, rank, score, win, lose, draw,Index, level, nickname);
-
-			if(nRet != _ERR_NONE )
-			{ 
-				printf("Login Fail Db Failed %d \n", nRet);
-				res.set_var_code(LoginFailed);
-				SEND_PROTO_BUFFER(res, pSession)
-
-				pSession->Close();
-				return ;
-			}
-
-			//이미 접속중이면 이전 접속을 끊는다. 
-			auto existClient = PLAYERMGR.Search(Index);
-			if (existClient != NULL)
-			{
-				GSCLIENT_PTR pPair = SERVER.GetClient(existClient->GetPair());
-				if (pPair != NULL)
+				if (pSession == NULL || pSession->GetConnected() == false)
 				{
-					printf("1.Exist player client %lld \n", Index);
+					res.set_var_code(DataBaseError);
 
-					pPair->Close();
+					SEND_PROTO_BUFFER(res, pSession)
+						return;
 				}
 
-				printf("2.Exist player client %d \n", Index);
-				res.set_var_code(LoginFailed);
+				DBPROCESS_CER_PTR pProcess = DBPROCESSCONTAINER_CER.Search(Type);
+				if (pProcess == NULL || pProcess->m_IsOpen == false)
+				{
+					printf("DBPROCESSCONTAINER_CER.Search wong %d \n", pSession->GetMyDBTP());
+
+					res.set_var_code(DataBaseError);
+
+					SEND_PROTO_BUFFER(res, pSession)
+						return;
+				}
+
+				if (pRequst->Token.size() == 0 || pRequst->Token.size() < 10)
+				{
+					printf("DBPROCESSCONTAINER_CER.Search token size error %d \n", pRequst->Token.size());
+
+					res.set_var_code(DataBaseError);
+
+					SEND_PROTO_BUFFER(res, pSession)
+
+						pSession->Close();
+					return;
+				}
+
+				//실패할수 있으니 반복
+				for (int i = 0; i < 10; i++)
+				{
+					GetGoogleAuth(pRequst->Token.c_str());
+
+					if (http_out.size() == 6)
+						break;
+				}
+
+				if (http_out.size() != 6)
+				{
+					pSession->Close();
+					return;
+				}
+
+				std::string flatformid, google_name, picture_url, email, locale;
+
+				flatformid.assign(http_out[1].begin(), http_out[1].end());
+				email.assign(http_out[2].begin(), http_out[2].end());
+				picture_url.assign(http_out[4].begin(), http_out[4].end());
+				locale.assign(http_out[5].begin(), http_out[5].end());
+
+				Base64::convert_unicode_to_ansi_string(google_name, http_out[3].c_str(), http_out[3].size());
+
+				int rank, score, win, lose, draw, level;
+				string nickname;
+
+				// 로그인 절차 : 아이디의 접속확인 및 인증키값을 가져온다.
+				std::string authentickey;
+				INT64 Index = 0;
+				WORD nRet = pProcess->ProcedureUserLogin(flatformid.c_str(), 0/*0번은 구글 인증*/, picture_url.c_str(), email.c_str(), locale.c_str(), authentickey, rank, score, win, lose, draw, Index, level, nickname);
+
+				//이미 접속해 있는 세션이 있고(디비에 접속기록이 남아 있다.)
+				if (nRet != _ERR_NONE)
+				{
+					printf("Login Fail Concurrent Table Exist data Ret %d \n", nRet);
+					res.set_var_code(LoginFailed);
+					SEND_PROTO_BUFFER(res, pSession)
+
+						pSession->Close();
+
+					//기존 세션과 신규 세션 양쪽 다 팅기는 것으로 변경
+					//이미 접속중이면 이전 접속을 끊는다. 
+					auto existClient = PLAYERMGR.Search(Index);
+					if (existClient != NULL)
+					{
+						GSCLIENT_PTR pPair = SERVER.GetClient(existClient->GetPair());
+						if (pPair != NULL)
+						{
+							printf("Exist player client %lld and session close\n", Index);
+
+							pPair->Close();
+						}
+						return;
+					}
+
+					return;
+				}
+
+				//이미 접속중이면 이전 접속을 끊는다. 
+				auto existClient = PLAYERMGR.Search(Index);
+				if (existClient != NULL)
+				{
+					GSCLIENT_PTR pPair = SERVER.GetClient(existClient->GetPair());
+					if (pPair != NULL)
+					{
+						printf("1.Exist player client %lld \n", Index);
+
+						pPair->Close();
+					}
+
+					printf("2.Exist player client %d \n", Index);
+					res.set_var_code(LoginFailed);
+					SEND_PROTO_BUFFER(res, pSession)
+						return;
+				}
+
+				PlayerPtr pNewPlayer = PLAYERMGR.Create();
+
+				pNewPlayer->Initialize();
+				pNewPlayer->m_Char[0].SetName(nickname);
+				pNewPlayer->m_Account.SetFlatformId(flatformid);
+				pNewPlayer->m_Account.SetEMail(email);
+				pNewPlayer->m_Account.SetPicture_url(picture_url);
+				pNewPlayer->m_Account.SetName(nickname);
+
+				pNewPlayer->SetId(Index);
+				pNewPlayer->SetPair(pSession->GetId());
+				pSession->SetPair(Index);
+				pNewPlayer->m_Char[0].GetScore().SetScore(rank, score, win, lose, draw);
+				pNewPlayer->m_Char[0].SetLevel(level);
+				PLAYERMGR.Add(pNewPlayer);
+
+				res.set_var_code(Success);
+				res.set_var_index(Index);
+
+				res.set_var_win(win);
+				res.set_var_lose(lose);
+				res.set_var_draw(draw);
+				res.set_var_score(score);
+				res.set_var_rank(rank);
+				res.set_var_level(level);
+				res.set_var_locale(locale);
+				res.set_var_name(nickname);
+
 				SEND_PROTO_BUFFER(res, pSession)
-				return;
 			}
-
-			PlayerPtr pNewPlayer = PLAYERMGR.Create();
-	
-			pNewPlayer->Initialize();
-			pNewPlayer->m_Char[0].SetName(nickname);
-			pNewPlayer->m_Account.SetFlatformId(flatformid);
-			pNewPlayer->m_Account.SetEMail(email);
-			pNewPlayer->m_Account.SetPicture_url(picture_url);
-			pNewPlayer->m_Account.SetName(nickname);
-
-			pNewPlayer->SetId(Index);
-			pNewPlayer->SetPair(pSession->GetId());
-			pSession->SetPair(Index);
-			pNewPlayer->m_Char[0].GetScore().SetScore(rank, score, win, lose, draw);
-			pNewPlayer->m_Char[0].SetLevel(level);
-			PLAYERMGR.Add(pNewPlayer);
-
-			res.set_var_code(Success);
-			res.set_var_index(Index);
-
-			res.set_var_win(win);
-			res.set_var_lose(lose);
-			res.set_var_draw(draw);
-			res.set_var_score(score);
-			res.set_var_rank(rank);
-			res.set_var_level(level);
-			res.set_var_locale(locale);
-			res.set_var_name(nickname);
-
-			SEND_PROTO_BUFFER(res, pSession)
+			catch (...)
+			{
+				printf("RequestPlayerAuth try catch \n");
+			}
 		}
 
 

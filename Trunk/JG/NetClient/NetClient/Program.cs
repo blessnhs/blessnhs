@@ -39,7 +39,7 @@ public class Process
     {
         var ip = GetIPAddress("blessnhs.iptime.org");
 
-         client.StartClient(ip, 20000);
+         client.StartClient("211.212.37.238", 23000);
 
         testcid = id;
 
@@ -165,6 +165,7 @@ public static int Main(String[] args)
 {
         int id = 1;
         List<Process> array = new List<Process>();
+
 
         while (true)
         {
