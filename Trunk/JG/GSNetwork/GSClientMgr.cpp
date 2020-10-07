@@ -34,7 +34,7 @@ VOID GSClientMgr::CheckAliveTime()
 		if (client.second->GetConnected())
 		{
 			DWORD client_time = client.second->GetAliveTime();
-			DWORD server_check_time = pServer->GetArgument().m_AliveTime * 1000;
+			DWORD server_check_time = pServer->GetArgument().m_AliveTime;
 			DWORD system_tick = GetTickCount();
 			int Diff = system_tick - (client_time + server_check_time);
 

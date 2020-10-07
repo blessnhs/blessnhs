@@ -87,8 +87,9 @@ VOID GSServer::OnConnected(int client_id)
 	{
 		return;
 	}
+	static int total_cnt = 0;
 
-	printf("Connected Socket %d \n", client_id);
+	printf("Connected Socket %d total %d\n", client_id, total_cnt++);
 
 	pClient->GetTCPSocket()->m_OLP_REMAIN_COUNT_ACC.fetch_sub(1);
 
