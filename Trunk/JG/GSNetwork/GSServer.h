@@ -36,7 +36,7 @@ public:
 	virtual VOID												  OnRead(int client_id, DWORD dataLength);
 	virtual VOID												  OnWrote(int client_id, DWORD dataLength);
 	virtual VOID												  OnConnected(int client_id);
-	virtual VOID												  OnDisconnected(int client_id);
+	virtual VOID												  OnDisconnected(int client_id,bool isForce = false);
 
 	virtual VOID 												  OnDisconnected2(int client_id, int type);
 

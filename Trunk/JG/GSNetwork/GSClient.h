@@ -94,11 +94,11 @@ public:
 
 	virtual void									OnSend(WORD MainId,WORD SubId,char *Data,WORD Length);
 	virtual void									OnRecv(DWORD Length, boost::shared_ptr<GSClient> client);
-	virtual void									OnDisconnect(boost::shared_ptr<GSClient> client);
+	virtual void									OnDisconnect(boost::shared_ptr<GSClient> client, bool isForce = false);
 	virtual void									OnConnect(boost::shared_ptr<GSClient> client);
 
 	VOID											ProcPacket(boost::shared_ptr<GSClient> pClient);
-	VOID											ProcDisconnect(boost::shared_ptr<GSClient> pClient);
+	VOID											ProcDisconnect(boost::shared_ptr<GSClient> pClient,bool isForce = false);
 
 	WORD											GetMyTP();
 	WORD											GetMyDBTP(WORD StartIndex = MSG_TYPE_DB_1);

@@ -35,5 +35,10 @@ MaxFreeTcbs
 추천 값: 2000
 
 
+TcpTimedWaitDelay 
+
+ 30
+
+
 
 출처: https://nic2hong.tistory.com/entry/TCP-파라미터-튜닝을-통한-접속-증가-방법 [Sungho's Blog]

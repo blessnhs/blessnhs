@@ -486,7 +486,7 @@ namespace Board	{
 
 					SEND_PROTO_BUFFER(res, pSession)
 
-						pSession->Close();
+					pSession->Close();
 					return;
 				}
 

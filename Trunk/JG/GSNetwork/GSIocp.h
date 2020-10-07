@@ -23,7 +23,7 @@ protected:
 	virtual VOID		OnRead(int client_id, DWORD dataLength)	= 0;
 	virtual VOID		OnWrote(int client_id, DWORD dataLength)	= 0;
 	virtual VOID		OnConnected(int client_id)				= 0;
-	virtual VOID		OnDisconnected(int client_id)			= 0;
+	virtual VOID		OnDisconnected(int client_id, bool isForce = false)			= 0;
 	virtual VOID		OnDisconnected2(int client_id,int type) = 0;
 
 public:

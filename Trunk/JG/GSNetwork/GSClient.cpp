@@ -301,13 +301,13 @@ VOID GSClient::ProcPacket(boost::shared_ptr<GSClient> pClient)
 	}
 }
 
-VOID GSClient::ProcDisconnect(boost::shared_ptr<GSClient> pClient)
+VOID GSClient::ProcDisconnect(boost::shared_ptr<GSClient> pClient,bool isForce)
 {
 	CThreadSync Sync;
 	
 	GSServer::GSServer *pServer = (GSServer::GSServer *)m_GSServer;
 
-	if(GetConnected() == FALSE)
+	if(GetConnected() == FALSE && isForce == false)
 	{
 		printf("Already Disconnected socket  %d %ld\n",GetSocket(),GetId());
 		return ;
@@ -381,7 +381,7 @@ void GSClient::OnRecv(DWORD Length, boost::shared_ptr<GSClient> client)
 	TakeMsg(client);
 }
 
-void GSClient::OnDisconnect(boost::shared_ptr<GSClient> client)
+void GSClient::OnDisconnect(boost::shared_ptr<GSClient> client, bool isForce)
 {
 	CThreadSync Sync;
 
@@ -397,7 +397,7 @@ void GSClient::OnDisconnect(boost::shared_ptr<GSClient> client)
 
 			printf("Code %d ERROR_NETNAME_DELETED\n",Code);
 
-			ProcDisconnect(client);
+			ProcDisconnect(client,isForce);
 
 			return ;
 		}
@@ -409,7 +409,7 @@ void GSClient::OnDisconnect(boost::shared_ptr<GSClient> client)
 	//바로 콜하는 것으로 대체
 	//PROC_REG_CLOSE_JOB(this,this,pServer)
 
-	ProcDisconnect(client);
+	ProcDisconnect(client, isForce);
 	
 }
 
@@ -418,8 +418,8 @@ void GSClient::OnConnect(boost::shared_ptr<GSClient> pClient)
 	//Accept가 떨어졌다.
 	CThreadSync Sync;
 
-	SetConnected(TRUE);
 	//printf("Accept Success Socket %d %d %d\n",GetSocket(),GetId(),GetMyTP());
+	pClient->SetConnected(true);
 
 
 	GSServer::GSServer *pServer = (GSServer::GSServer *)m_GSServer;

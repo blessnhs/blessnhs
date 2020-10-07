@@ -85,6 +85,7 @@ VOID GSServer::OnConnected(int client_id)
 	boost::shared_ptr<GSClient> pClient = GetClient(client_id);
 	if (pClient == NULL)
 	{
+		printf("!!!alert cant find onconnect client id\n");
 		return;
 	}
 	static int total_cnt = 0;
@@ -100,7 +101,10 @@ VOID GSServer::OnConnected(int client_id)
 
 	if (!pClient->InitializeReadForIocp())
 	{ 
-		pClient->Close();
+		//이코드에서 그냥 close하면 gsclient는 서버에 접속도 못하는 미아 객체가 됨
+		this->AddPlayerCount(1);
+		OnDisconnected(client_id,true);
+		//pClient->Close();
 		return; 
 	}
 
@@ -108,17 +112,18 @@ VOID GSServer::OnConnected(int client_id)
 	pClient->OnConnect(pClient);
 }
 
-VOID GSServer::OnDisconnected(int client_id)
+VOID GSServer::OnDisconnected(int client_id, bool isForce)
 {
 	boost::shared_ptr<GSClient> pClient = GetClient(client_id);
 	if (pClient == NULL)
 	{
+		printf("!!!alert cant find OnDisconnected client id\n");
 		return;
 	}
 
 	printf("Disconnected Socket %d \n", client_id);
 
-	pClient->OnDisconnect(pClient);
+	pClient->OnDisconnect(pClient, isForce);
 
 }
 

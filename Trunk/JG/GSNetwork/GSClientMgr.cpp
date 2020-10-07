@@ -224,6 +224,8 @@ BOOL GSClientMgr::AddClient(GSCLIENT_PTR newclient)
 {
 	CThreadSync sync;
 
+	printf("add client %d\n", newclient->GetId());
+
 	m_Clients[newclient->GetId()] = newclient;
 
 	AddClientLoop(newclient);
@@ -278,6 +280,14 @@ BOOL GSClientMgr::NewClient(SOCKET ListenSocket, LPVOID pServer)
 		pClient->Create(TCP);
 		pClient->m_GSServer = pServer;
 
+		pClient->SetType(_PLAYER_);
+
+		if (AddClient(pClient) == FALSE)
+		{
+			printf("NewClient failed \n");
+		}
+
+
 		if (!pClient->GetTCPSocket()->Initialize())
 		{
 			End();
@@ -290,12 +300,6 @@ BOOL GSClientMgr::NewClient(SOCKET ListenSocket, LPVOID pServer)
 			return FALSE;
 		}
 
-		pClient->SetType(_PLAYER_);
-		
-		if (AddClient(pClient) == FALSE)
-		{
-			printf("NewClient failed \n");
-		}
 	}
 
 	return TRUE;
