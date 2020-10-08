@@ -445,7 +445,7 @@ namespace Board	{
 			}
 			catch (const std::exception & e)
 			{
-				printf("Error exception:%s\n", e.what());
+				//printf("Error exception:%s\n", e.what());
 				return -1;
 			}
 
@@ -480,7 +480,7 @@ namespace Board	{
 
 				if (pRequst->Token.size() == 0 || pRequst->Token.size() < 10)
 				{
-					printf("DBPROCESSCONTAINER_CER.Search token size error %d \n", pRequst->Token.size());
+			//		printf("DBPROCESSCONTAINER_CER.Search token size error %d \n", pRequst->Token.size());
 
 					res.set_var_code(DataBaseError);
 
@@ -525,7 +525,7 @@ namespace Board	{
 				//이미 접속해 있는 세션이 있고(디비에 접속기록이 남아 있다.)
 				if (nRet != _ERR_NONE)
 				{
-					printf("Login Fail Concurrent Table Exist data Ret %d \n", nRet);
+				//	printf("Login Fail Concurrent Table Exist data Ret %d \n", nRet);
 					res.set_var_code(LoginFailed);
 					SEND_PROTO_BUFFER(res, pSession)
 
@@ -539,7 +539,7 @@ namespace Board	{
 						GSCLIENT_PTR pPair = SERVER.GetClient(existClient->GetPair());
 						if (pPair != NULL)
 						{
-							printf("Exist player client %lld and session close\n", Index);
+					//		printf("Exist player client %lld and session close\n", Index);
 
 							pPair->Close();
 						}
@@ -556,12 +556,12 @@ namespace Board	{
 					GSCLIENT_PTR pPair = SERVER.GetClient(existClient->GetPair());
 					if (pPair != NULL)
 					{
-						printf("1.Exist player client %lld \n", Index);
+				//		printf("1.Exist player client %lld \n", Index);
 
 						pPair->Close();
 					}
 
-					printf("2.Exist player client %d \n", Index);
+			//		printf("2.Exist player client %d \n", Index);
 					res.set_var_code(LoginFailed);
 					SEND_PROTO_BUFFER(res, pSession)
 						return;

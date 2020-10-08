@@ -224,8 +224,6 @@ BOOL GSClientMgr::AddClient(GSCLIENT_PTR newclient)
 {
 	CThreadSync sync;
 
-	printf("add client %d\n", newclient->GetId());
-
 	m_Clients[newclient->GetId()] = newclient;
 
 	AddClientLoop(newclient);
@@ -260,7 +258,10 @@ BOOL GSClientMgr::DelClient(int id)
 BOOL GSClientMgr::NewClient(SOCKET ListenSocket, LPVOID pServer)
 {
 	if (!ListenSocket)
+	{
+		printf("NewClient !ListenSocket \n");
 		return FALSE;
+	}
 
 	CThreadSync Sync;
 
@@ -272,7 +273,7 @@ BOOL GSClientMgr::NewClient(SOCKET ListenSocket, LPVOID pServer)
 
 		m_MaxClients += NewClient;
 	}
-
+	
 	for (DWORD i = 0; i < NewClient; i++)
 	{
 		GSCLIENT_PTR pClient = boost::make_shared<GSClient>();

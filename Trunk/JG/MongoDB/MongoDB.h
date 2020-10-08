@@ -537,7 +537,7 @@ public:
 						collection2.find_one(document{} << "INDEX" << Index << finalize);
 					if (maybe_result)
 					{
-						printf("duplicate login ProcedureUserLogin CONCURRENTUSER  Index %I64d query failed \n", Index);
+						//printf("duplicate login ProcedureUserLogin CONCURRENTUSER  Index %I64d query failed \n", Index);
 						return -1;
 					}
 

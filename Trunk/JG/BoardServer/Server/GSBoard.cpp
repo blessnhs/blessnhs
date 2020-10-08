@@ -84,12 +84,14 @@ BOOL GSBoard::Initialize()
 	_arg.m_Naggle = false;
 	_arg.m_AliveTime = m_Ini.AliveSeconds * 1000;
 
-	Create(_arg);
-//	SetHandler<BoardProcess>();
-
 	DBPROCESSCONTAINER_CER.Initialize(_arg.m_DBThreadCnt);
 
 	DeleteAllConcurrentUser();
+
+	Create(_arg);
+//	SetHandler<BoardProcess>();
+
+
 	
 	return TRUE;
 }

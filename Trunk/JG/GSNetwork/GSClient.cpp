@@ -304,10 +304,13 @@ VOID GSClient::ProcPacket(boost::shared_ptr<GSClient> pClient)
 VOID GSClient::ProcDisconnect(boost::shared_ptr<GSClient> pClient,bool isForce)
 {
 	CThreadSync Sync;
-	
+
+
 	GSServer::GSServer *pServer = (GSServer::GSServer *)m_GSServer;
 
-	if(GetConnected() == FALSE && isForce == false)
+	//accpet를 안거치고 바로 disconnect되는 애들은 this->GetProcess() null이다 
+	//그래서 그넘들은 종료 처리를 해저야하기 때문에 아래에서 리턴시키면 안된다.
+	if(GetConnected() == FALSE && isForce == false && this->GetProcess() != NULL)
 	{
 		printf("Already Disconnected socket  %d %ld\n",GetSocket(),GetId());
 		return ;
@@ -331,6 +334,7 @@ VOID GSClient::ProcDisconnect(boost::shared_ptr<GSClient> pClient,bool isForce)
 	//그래서 closejob 실행되고 login 함수가 실행되면 순서가 엇갈려 유저가 남게 된다.
 	//그러나 완벽하지 않다 logic -> dbthread 2단계이기 때문
 	//고민하다가 그냥 logic tp로 던지고 유저 체크 함수를 만듬 (alive check usermgr)
+
 	PROC_REG_CLOSE_JOB(pClient,pServer)
 
 	//여기 부터는 소켓 정리
@@ -341,6 +345,7 @@ VOID GSClient::ProcDisconnect(boost::shared_ptr<GSClient> pClient,bool isForce)
 	pServer->GetClientMgr().BookDelClient(pClient->GetId());
 
 	pServer->GetClientMgr().NewClient(pServer->GetTcpListen()->GetSocket(), pServer);
+
 }
 
 
@@ -401,7 +406,15 @@ void GSClient::OnDisconnect(boost::shared_ptr<GSClient> client, bool isForce)
 
 			return ;
 		}
+
+		printf("Overlapped.Internal != 0\n");
 	}
+
+	//소켓 접속 여유 풀이 없을때 만약 100명이면 100명다 붙어 있을때 클라에서 소켓 연결 요청하면
+	//connect에는 콜이 안떨어진다 그 상태에서 접속 종료하면 disconnected만 떨어짐 Connected exception ...2
+
+	if(GetProcess() == NULL)
+		printf("!!!!!!!!!!!!!OnDisconnect get process is nulll\n");
 
 	//GSServer::GSServer *pServer = (GSServer::GSServer *)m_GSServer;
 
@@ -419,7 +432,6 @@ void GSClient::OnConnect(boost::shared_ptr<GSClient> pClient)
 	CThreadSync Sync;
 
 	//printf("Accept Success Socket %d %d %d\n",GetSocket(),GetId(),GetMyTP());
-	pClient->SetConnected(true);
 
 
 	GSServer::GSServer *pServer = (GSServer::GSServer *)m_GSServer;
@@ -428,6 +440,7 @@ void GSClient::OnConnect(boost::shared_ptr<GSClient> pClient)
 
 	pServer->Accept(pClient);
 	pServer->AddPlayerCount(1); //접속자 수 카운트
+	pClient->SetConnected(true);
 
 	//아래 함수를 로직 쓰레드로 던지게 되면 동기화 문제가 발생하여 
 	//바로 콜하는 것으로 대체

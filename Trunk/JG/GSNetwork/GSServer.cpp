@@ -92,8 +92,6 @@ VOID GSServer::OnConnected(int client_id)
 	}
 	static int total_cnt = 0;
 
-	printf("Connected Socket %d total %d\n", client_id, total_cnt++);
-
 	pClient->GetTCPSocket()->m_OLP_REMAIN_COUNT_ACC.fetch_sub(1);
 
 	m_EvtClientId = client_id;
@@ -132,8 +130,6 @@ VOID GSServer::OnDisconnected(int client_id, bool isForce)
 		printf("!!!alert cant find OnDisconnected client id\n");
 		return;
 	}
-
-	printf("Disconnected Socket %d \n", client_id);
 
 	pClient->OnDisconnect(pClient, isForce);
 
