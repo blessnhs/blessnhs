@@ -82,6 +82,8 @@ VOID GSServer::OnWrote(int client_id, DWORD dataLength)
 
 VOID GSServer::OnConnected(int client_id)
 {
+	CThreadSync Sync;
+
 	boost::shared_ptr<GSClient> pClient = GetClient(client_id);
 	if (pClient == NULL)
 	{
@@ -97,10 +99,19 @@ VOID GSServer::OnConnected(int client_id)
 	m_EvtClientId = client_id;
 
 	if (!GSIocp::RegIocpHandler(pClient->GetSocket(), reinterpret_cast<ULONG_PTR>(&m_EvtClientId)))
+	{
+		printf("Connected exception ...1\n");
+		//이코드에서 그냥 close하면 gsclient는 서버에 접속도 못하는 미아 객체가 됨
+		this->AddPlayerCount(1);
+		OnDisconnected(client_id, true);
+		//pClient->Close();
 		return;
+	}
+
 
 	if (!pClient->InitializeReadForIocp())
 	{ 
+		printf("Connected exception ...2\n");
 		//이코드에서 그냥 close하면 gsclient는 서버에 접속도 못하는 미아 객체가 됨
 		this->AddPlayerCount(1);
 		OnDisconnected(client_id,true);
@@ -114,6 +125,7 @@ VOID GSServer::OnConnected(int client_id)
 
 VOID GSServer::OnDisconnected(int client_id, bool isForce)
 {
+	CThreadSync Sync;
 	boost::shared_ptr<GSClient> pClient = GetClient(client_id);
 	if (pClient == NULL)
 	{

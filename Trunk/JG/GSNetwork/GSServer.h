@@ -11,7 +11,7 @@ namespace GSNetwork	{	namespace GSServer	{
 
 typedef GSNetwork::GSSocket::GSPacket::GSPacketTCP::GSPacketTCP GSPacketTCP;
 
-class GSServer : public GSIocp::GSIocp , public Singleton<GSServer>
+class GSServer : public GSIocp::GSIocp , public Singleton<GSServer>, public GSGuard<GSServer>
 {
 public:
 	enum USER_EVNT_TYPE
