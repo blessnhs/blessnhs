@@ -19,7 +19,7 @@ namespace OMOK.Droid
         InterstitialAd interstitialAd;
 
         //안드로이드 테스트 아이디 및 테스트 디바이스.
-        string AdUnitId = "ca-app-pub-9541028236702321/1434109863"; // 전면 광고
+        string AdUnitId = "ca-app-pub-9541028236702321/6067841759"; // 전면 광고
 
         bool isShow = false;
 

@@ -7,7 +7,11 @@
 #include "GSMainProcess.h"
 #include <boost/make_shared.hpp>
 
+atomic<int>		ConnectCount = 0;
+atomic<int>		DisConnectCount = 0;
+
 namespace GSNetwork	{	namespace GSServer	{
+	
 
 GSServer::GSServer(void)
 {
@@ -92,6 +96,8 @@ VOID GSServer::OnConnected(int client_id)
 	}
 	static int total_cnt = 0;
 
+	ConnectCount.fetch_add(1);
+
 	pClient->GetTCPSocket()->m_OLP_REMAIN_COUNT_ACC.fetch_sub(1);
 
 	m_EvtClientId = client_id;
@@ -131,6 +137,8 @@ VOID GSServer::OnDisconnected(int client_id, bool isForce)
 		return;
 	}
 
+	DisConnectCount.fetch_add(1);
+
 	pClient->OnDisconnect(pClient, isForce);
 
 }
@@ -140,6 +148,7 @@ VOID GSServer::OnDisconnected2(int client_id, int type)
 	boost::shared_ptr<GSClient> pClient = GetClient(client_id);
 	if (pClient == NULL)
 	{
+		printf("!!!alert cant find OnDisconnected2222 client id\n");
 		return;
 	}
 

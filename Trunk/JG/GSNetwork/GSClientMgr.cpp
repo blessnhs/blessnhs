@@ -5,6 +5,10 @@
 #include <boost/make_shared.hpp>
 
 extern atomic<int>		DebugCount;
+extern atomic<int>		ConnectCount;
+extern atomic<int>		DisConnectCount;
+
+atomic<int>				NewConnectount = 0;
 
 namespace GSNetwork	{	namespace GSClientMgr	{
 
@@ -41,7 +45,7 @@ VOID GSClientMgr::CheckAliveTime()
 			if ((client_time + server_check_time) <= system_tick)
 				if (client.second->GetType() == _PLAYER_)
 				{
-					client.second->OnDisconnect(client.second);
+				//	client.second->OnDisconnect(client.second);
 					client.second->Close();
 				}
 		}
@@ -105,8 +109,8 @@ VOID GSClientMgr::CheckAliveTime()
 
 		char msg[256];
 		
-		sprintf(msg,"[UserCount : %d] [Debug Count : %d]\n",
-				pServer->CurrentPlayerCount(), DebugCount.fetch_add(0));
+		sprintf(msg,"[Conncted Socket : %d] [Debug Count : %d] [Total Connect : %d] [Ttoal NewConnect : %d][Total Disconnect %d]\n",
+				pServer->CurrentPlayerCount(), DebugCount.fetch_add(0), ConnectCount.fetch_add(0), NewConnectount.fetch_add(0), DisConnectCount.fetch_add(0));
 
 		ConsoleHelper::DebugConsoleString(0, msg);
 
@@ -264,6 +268,8 @@ BOOL GSClientMgr::NewClient(SOCKET ListenSocket, LPVOID pServer)
 	}
 
 	CThreadSync Sync;
+
+	NewConnectount.fetch_add(1);
 
 	int NewClient = 1;
 	if (ConnectableSocketCount() < 20)

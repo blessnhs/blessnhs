@@ -364,6 +364,7 @@ namespace OMOK.Views
         }
 
         iAd_IterstitialView iIterstitia;
+        iAd_RewardVideoView rewardVideo;
 
 
         double screenx;
@@ -383,6 +384,7 @@ namespace OMOK.Views
             InitBoardGrid();
 
             iIterstitia = DependencyService.Get<iAd_IterstitialView>();
+            rewardVideo = DependencyService.Get<iAd_RewardVideoView>();
 
             Device.StartTimer(TimeSpan.FromSeconds(1), () =>
             {
@@ -622,17 +624,17 @@ namespace OMOK.Views
             isExit = true;
         }
       
-        public void ShowLeaveAd()
-        {
-
-            iIterstitia.ShowAd();
-        }
-
-
+     
         async void OnSettingClicked(object sender, System.EventArgs e)
         {
             if (retrycount != 0)
-                iIterstitia.ShowAd();
+            {
+                if(retrycount % 3 == 0)
+                    rewardVideo.ShowAd();
+                else
+                    iIterstitia.ShowAd();
+                
+            }
 
             ClearBoardState();
 
@@ -647,7 +649,12 @@ namespace OMOK.Views
             ClearBoardState();
 
             if (retrycount != 0)
-                iIterstitia.ShowAd();
+            {
+                if (retrycount % 3 == 0)
+                    rewardVideo.ShowAd();
+                else
+                    iIterstitia.ShowAd();
+            }
 
             retrycount++;
 

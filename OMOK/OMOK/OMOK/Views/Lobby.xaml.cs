@@ -56,10 +56,11 @@ namespace OMOK.Views
                 return true;
             });
 
+
             //소켓 연결
             {
 
-                Device.StartTimer(new TimeSpan(0, 0, 0, 0, 300), () =>
+                Device.StartTimer(new TimeSpan(0, 0, 0, 0, 10), () =>
                 {
                     Device.BeginInvokeOnMainThread(() =>
                     {
@@ -82,6 +83,9 @@ namespace OMOK.Views
 
 
             UpdateLocalMenu();
+
+            Navigation.PushModalAsync(new Loading()/*_MachPage*/);
+
 
         }
 
@@ -173,7 +177,7 @@ namespace OMOK.Views
             NoticeLabel.TranslationX = 0;
         }
 
-        public void CloseMatchInfoPopup()
+        public void ClosePopup()
         {
             Navigation.PopModalAsync();
         }

@@ -39,7 +39,7 @@ public class Process
     {
         var ip = GetIPAddress("blessnhs.iptime.org");
 
-         client.StartClient("211.212.37.238", 23000);
+         client.StartClient("211.212.37.238", 21000);
 
         testcid = id;
 
@@ -179,7 +179,7 @@ public static int Main(String[] args)
             {
                 if (elem.client.socket.Connected == false)
                 {
-                    array.Remove(elem);
+              //      array.Remove(elem);
                     break;
                 }
 

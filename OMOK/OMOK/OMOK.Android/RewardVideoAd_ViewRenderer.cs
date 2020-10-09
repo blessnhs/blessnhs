@@ -18,7 +18,7 @@ namespace OMOK.Droid
 
         //안드로이드 테스트 아이디 및 테스트 디바이스.
         //https://developers.google.com/admob/unity/test-ads
-        string AdUnitId = "ca-app-pub-9541028236702321/6067841759"; // 동영상 광고
+        string AdUnitId = "ca-app-pub-9541028236702321/4678326084"; // 동영상 광고
 
 
         bool isShow = false;

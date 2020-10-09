@@ -29,7 +29,7 @@ namespace OMOK
 
         double size = 19;  //default 19
 
-        iAd_IterstitialView iIterstitia;
+        iAd_RewardVideoView rewardVideo;
 
         //3,3 체크를 위해 렌주룰 흑을 생성 백은 어차피 제한이 없음
         public CBLACKSTONE renjuRuleChecker = new CBLACKSTONE();
@@ -93,7 +93,7 @@ namespace OMOK
             timeLabel.IsEnabled = true;
             timeLabel.Text = "00";
 
-            iIterstitia = DependencyService.Get<iAd_IterstitialView>();
+            rewardVideo = DependencyService.Get<iAd_RewardVideoView>();
 
             Device.StartTimer(TimeSpan.FromSeconds(1), () =>
             {
@@ -386,7 +386,7 @@ namespace OMOK
 
         public void ShowLeaveAd()
         {
-            iIterstitia.ShowAd();
+            rewardVideo.ShowAd();
         }
 
         async void OnLeaveClicked(object sender, System.EventArgs e)

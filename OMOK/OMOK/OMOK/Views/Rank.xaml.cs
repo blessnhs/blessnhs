@@ -42,14 +42,20 @@ namespace OMOK.Views
                 main_grid.Children.Add(imgcontry, 1, pos);
            
                //프로필
-                var img = new Image
-                {
-                    Source = new Uri(Helper.ToStr(r.VarPicUri.ToByteArray())),
-                    BackgroundColor = Color.White,
-                    HeightRequest = 30
-                };
-                main_grid.Children.Add(img, 2, pos);
 
+                if(Helper.ToStr(r.VarPicUri.ToByteArray()) != "")
+                {
+
+                    var img = new Image
+                    {
+                        Source = new Uri(Helper.ToStr(r.VarPicUri.ToByteArray())),
+                        BackgroundColor = Color.White,
+                        HeightRequest = 30
+                    };
+                    main_grid.Children.Add(img, 2, pos);
+
+
+                }
                 /////////////////////////////////////////////////////
 
                 //이름

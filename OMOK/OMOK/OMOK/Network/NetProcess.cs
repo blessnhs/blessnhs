@@ -38,13 +38,13 @@ namespace OMOK.Network
    
         static public void start()
         {
-            string ip = "211.212.37.238";
+            string ip ="211.212.37.238";// "113.199.71.69"; //
 
 
             //연결중이면 안한다. 
-            if (client.socket == null || client.socket.Connected == false)
+             if (client.socket == null || client.socket.Connected == false)
             {
-                if ((DateTime.Now - time).TotalSeconds > 5)
+                if ((DateTime.Now - time).TotalSeconds > 3)
                 {
                     time = DateTime.Now;
                     if(User.Token != null && User.Token != "")
@@ -105,6 +105,8 @@ namespace OMOK.Network
                             {
                                 LOGIN_RES res = new LOGIN_RES();
                                 res = LOGIN_RES.Parser.ParseFrom(data.Data);
+
+                                page.ClosePopup();
 
                                 if (res.VarCode == ErrorCode.Success)
                                 {
@@ -181,7 +183,7 @@ namespace OMOK.Network
 
                                 if (res.VarCode == ErrorCode.Success)
                                 {
-                                    page.CloseMatchInfoPopup();
+                                    page.ClosePopup();
 
                                     User.Color = eTeam.Black;
                                     User.IsMyTurn = true;
@@ -286,7 +288,7 @@ namespace OMOK.Network
 
                                 if (res.VarCode == ErrorCode.Success)
                                 {
-                                    page.CloseMatchInfoPopup();
+                                    page.ClosePopup();
                          
                                     pRoom = new Room();
 
