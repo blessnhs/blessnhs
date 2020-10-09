@@ -490,8 +490,7 @@ namespace Board	{
 					return;
 				}
 
-				//실패할수 있으니 반복
-				for (int i = 0; i < 10; i++)
+				for (int i = 0; i < 1; i++)
 				{
 					GetGoogleAuth(pRequst->Token.c_str());
 
