@@ -100,15 +100,22 @@ VOID BoardProcess::VERSION(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient
 {
 	DECLARE_RECV_TYPE(VERSION_REQ, version)
 
-	//로그인 쿼리를 날린다.
-	boost::shared_ptr<RequestVersion> pRequest = ALLOCATOR.Create<RequestVersion>();
-	
-	boost::shared_ptr<Board::MSG_PLAYER_QUERY<RequestVersion>>		PLAYER_MSG = ALLOCATOR.Create<Board::MSG_PLAYER_QUERY<RequestVersion>>();
-	PLAYER_MSG->pSession = Client;
-	PLAYER_MSG->pRequst = pRequest;
-	PLAYER_MSG->Type = Client->GetMyDBTP();
-	PLAYER_MSG->SubType = ONQUERY;
-	MAINPROC.RegisterCommand(PLAYER_MSG);
+	VERSION_RES res;
+
+	res.set_var_code(Success);
+	res.set_var_version(INI.Version);
+
+	SEND_PROTO_BUFFER(res, Client)
+
+	////버전 쿼리를 날린다.
+	//boost::shared_ptr<RequestVersion> pRequest = ALLOCATOR.Create<RequestVersion>();
+	//
+	//boost::shared_ptr<Board::MSG_PLAYER_QUERY<RequestVersion>>		PLAYER_MSG = ALLOCATOR.Create<Board::MSG_PLAYER_QUERY<RequestVersion>>();
+	//PLAYER_MSG->pSession = Client;
+	//PLAYER_MSG->pRequst = pRequest;
+	//PLAYER_MSG->Type = Client->GetMyDBTP();
+	//PLAYER_MSG->SubType = ONQUERY;
+	//MAINPROC.RegisterCommand(PLAYER_MSG);
 }
 
 VOID BoardProcess::LOGIN_PLAYER(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client)

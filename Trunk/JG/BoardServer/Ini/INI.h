@@ -21,6 +21,8 @@ public:
 
 	INT AliveSeconds;
 
+	float Version;
+
 };
 
 #define  INI Singleton<BoardINI>::Instance()
