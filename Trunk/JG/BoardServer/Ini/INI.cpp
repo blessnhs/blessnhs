@@ -22,7 +22,7 @@ VOID BoardINI::Load()
 	GetPrivateProfileString(("SERVER"), ("ODBC_ID"), ("."), ODBC_ID, sizeof(ODBC_ID), ("./Board.ini"));
 	GetPrivateProfileString(("SERVER"), ("ODBC_PASSWD"), ("."), ODBC_PWD, sizeof(ODBC_PWD), ("./Board.ini"));
 
-	printf("[ Board ] Port [ %d ] MaxUser [ %d ] Alive Seconds[ %d ] Version [%f]\n",Port,MaxUser, AliveSeconds);
+	printf("[ Board ] Port [ %d ] MaxUser [ %d ] Alive Seconds[ %d ] Version [%f]\n",Port,MaxUser, AliveSeconds, Version);
 
 	//printf("ODBC SYSTEM32 NAME [%s] ID [%s] PWD [%s] \n", ODBC_NAME, ODBC_ID, ODBC_PWD);
 }
