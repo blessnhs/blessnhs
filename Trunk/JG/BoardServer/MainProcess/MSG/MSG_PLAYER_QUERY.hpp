@@ -366,86 +366,56 @@ namespace Board	{
 				builder.append_query(U("id_token"),
 					token.c_str());
 
-
-				// make task(request and get result)
-				auto requestTask = client.request(web::http::methods::POST, builder.to_string())
-				// The following code executes when the response is available
-				.then([](http_response response) -> pplx::task<json::value>
-				{
-					// If the status is OK extract the body of the response into a JSON value
-					if (response.status_code() == status_codes::OK)
-					{
-						return response.extract_json();
-					}
-					else
-					{
-						// return an empty JSON value
-						return pplx::task_from_result(json::value());
-					}
-					// Continue when the JSON value is available
-				}).then([](pplx::task<json::value> previousTask)
-				{
-					// Get the JSON value from the task and call the DisplayJSONValue method
-					try
-					{
-						std::vector<std::wstring> outValue;
-
-						json::value const& V = previousTask.get();
-						{
-							web::json::value _iss = V.at(U("iss"));
-							if (_iss.is_string())
-							{
-								outValue.push_back(_iss.as_string());
-							}
-
-							web::json::value _sub = V.at(U("sub"));
-							if (_sub.is_string())
-							{
-								outValue.push_back(_sub.as_string());
-							}
-
-							web::json::value _email = V.at(U("email"));
-							if (_email.is_string())
-							{
-								outValue.push_back(_email.as_string());
-							}
-
-							web::json::value _name = V.at(U("name"));
-							if (_name.is_string())
-							{
-								outValue.push_back(_T(_name.as_string()));
-							}
-
-							web::json::value _picture = V.at(U("picture"));
-							if (_picture.is_string())
-							{
-								outValue.push_back(_picture.as_string());
-							}
-							web::json::value _locale = V.at(U("locale"));
-							if (_locale.is_string())
-							{
-								outValue.push_back(_T(_locale.as_string()));
-							}
-						
-							return outValue;
-						}
-					}
-					catch (http_exception const& e)
-					{
-						std::wcout << e.what() << std::endl;
-					}
-
-					return std::vector<std::wstring>();
-				});
-				
+				auto requestTask = client.request(methods::GET, builder.to_string());
 				requestTask.wait();
-	
-				http_out = requestTask.get();
+
+				http_response response = requestTask.get();
+				if (response.status_code() == status_codes::OK)
+				{
+					auto V = response.extract_json().get();
+
+					web::json::value _iss = V[U("iss")];
+					if (_iss.is_string())
+					{
+						http_out.push_back(_iss.as_string());
+					}
+
+					web::json::value _sub = V[U("sub")];
+					if (_sub.is_string())
+					{
+						http_out.push_back(_sub.as_string());
+					}
+
+					web::json::value _email = V[U("email")];
+					if (_email.is_string())
+					{
+						http_out.push_back(_email.as_string());
+					}
+
+					web::json::value _name = V[U("name")];
+					if (_name.is_string())
+					{
+						http_out.push_back(_T(_name.as_string()));
+					}
+
+					web::json::value _picture = V[U("picture")];
+					if (_picture.is_string())
+					{
+						http_out.push_back(_picture.as_string());
+					}
+					web::json::value _locale = V[U("locale")];
+					if (_locale.is_string())
+					{
+						http_out.push_back(_locale.as_string());
+					}
+				}
+
+				return 0;
 
 			}
 			catch (const std::exception & e)
 			{
-				//printf("Error exception:%s\n", e.what());
+				printf("Error exception:%s\n", e.what());
 				return -1;
 			}
 
@@ -482,12 +452,12 @@ namespace Board	{
 				{
 			//		printf("DBPROCESSCONTAINER_CER.Search token size error %d \n", pRequst->Token.size());
 
-					res.set_var_code(DataBaseError);
+			//		res.set_var_code(DataBaseError);
 
-					SEND_PROTO_BUFFER(res, pSession)
+			//		SEND_PROTO_BUFFER(res, pSession)
 
-					pSession->Close();
-					return;
+			//		pSession->Close();
+			//		return;
 				}
 
 				for (int i = 0; i < 1; i++)
