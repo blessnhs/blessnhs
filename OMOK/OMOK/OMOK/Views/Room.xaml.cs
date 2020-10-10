@@ -422,6 +422,8 @@ namespace OMOK
             UpdateAim(aimx, aimy);
         }
 
+        public Dictionary<int, Dictionary<int,int>> board = new Dictionary<int, Dictionary<int, int>>();
+
         void OnPutStone(object sender, System.EventArgs e)
         {
             if (User.IsMyTurn == false)
@@ -429,7 +431,19 @@ namespace OMOK
                 return;
             }
 
-            if(User.Color == eTeam.Black)
+            if (board.ContainsKey(aimy) == false)
+                board[aimy] = new Dictionary<int, int>();
+
+            if (board[aimy].ContainsKey(aimx) == false)
+            {
+                board[aimy][aimx] = 0;
+            }
+            else if(board[aimy][aimx] != 0)
+            {
+                return;
+            }
+
+            if (User.Color == eTeam.Black)
             {
                 //내부 좌표는 1,1 시작 ui이는 0,0 시작이라 변환
                 int x = aimx + 1;
@@ -586,6 +600,11 @@ namespace OMOK
             DrawStone(x, y, status == eTeam.Black ? Color.Black : Color.White);
 
             DrawLastLayout(x, y, Color.Aqua);
+
+            if (board.ContainsKey(y) == false)
+                board[y] = new Dictionary<int, int>();
+
+            board[y][x] = (int)status;
 
 
             return true;

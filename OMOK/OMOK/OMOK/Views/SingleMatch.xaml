@@ -23,7 +23,8 @@
 
             <control:GradientButton  x:Name="BeginBtn"  Text="시작"   Grid.Row="0" Grid.Column="0" Clicked="OnRetryClicked" StartColor="#71c4d1" EndColor="#77bfd4" Margin="4" ContentLayout="Top" />
             <control:GradientButton  x:Name="RuleBtn" Text="룰 설정"   Grid.Row="0" Grid.Column="1" Clicked="OnSettingClicked" StartColor="#71c4d1" EndColor="#77bfd4" Margin="4" ContentLayout="Top" />
-                <!--<Frame  Padding="5,5,5,0" BorderColor="White" Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="5">
+            <control:GradientButton  x:Name="PutStoneBtn" Text="착수"   Grid.Row="0" Grid.Column="2" Clicked="OnPutStone" StartColor="#71c4d1" EndColor="#77bfd4" Margin="4" ContentLayout="Top" />
+            <!--<Frame  Padding="5,5,5,0" BorderColor="White" Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="5">
             <AdFire:CtBannerView eBannerSize="Standardbanner"   BackgroundColor="White" x:Name="banner2"/>
         </Frame>-->
 

@@ -26,9 +26,11 @@
     
             <ProgressBar x:Name="ProgressRoom" Progress="0.0"  Grid.Row="0" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center"/>
             
-            <Frame  Padding="5,5,5,0" BorderColor="White" Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="2">
+            <!--<Frame  Padding="5,5,5,0" BorderColor="White" Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="2">
                 <AdFire:CtBannerView eBannerSize="Standardbanner"   BackgroundColor="White" x:Name="banner"/>
-            </Frame>
+            </Frame>-->
+            <control:GradientButton  x:Name="PutStoneBtn" Text="착수"   Grid.Row="0" Grid.Column="2" Clicked="OnPutStone" StartColor="#71c4d1" EndColor="#77bfd4" Margin="4" ContentLayout="Top" />
+
 
             <control:GradientButton x:Name="LeaveRoom" StartColor="#71c4d1" EndColor="#77bfd4" Text="나가기"  Grid.Row="0" Grid.Column="4" Clicked="OnLeaveClicked" BackgroundColor="#E6DEDE"/>
 

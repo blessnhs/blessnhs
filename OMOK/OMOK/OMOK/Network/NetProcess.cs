@@ -38,17 +38,17 @@ namespace OMOK.Network
    
         static public void start()
         {
-            string ip ="211.212.37.238";// "113.199.71.69"; //
+            string ip = "211.212.37.238";// "113.199.71.69"; //
 
 
             //연결중이면 안한다. 
-             if (client.socket == null || client.socket.Connected == false)
+            if (client.socket == null || client.socket.Connected == false)
             {
                 if ((DateTime.Now - time).TotalSeconds > 3)
                 {
                     time = DateTime.Now;
                     if(User.Token != null && User.Token != "")
-                        client.StartClient(ip, 21000);
+                        client.StartClient(ip, 20000);
                 }
             }
 

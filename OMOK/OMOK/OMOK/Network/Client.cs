@@ -61,11 +61,17 @@ namespace NetClient
 
                 IPEndPoint remoteEP = new IPEndPoint(ip, port);
 
-                if (socket == null)
+                if (socket != null)
                 // Create a TCP/IP socket.
                 {
+                    socket.Dispose();
                     socket = new Socket(AddressFamily.InterNetwork,
                     SocketType.Stream, ProtocolType.Tcp);
+                }
+                else
+                {
+                    socket = new Socket(AddressFamily.InterNetwork,
+                   SocketType.Stream, ProtocolType.Tcp);
                 }
 
                 // Connect to the remote endpoint.
