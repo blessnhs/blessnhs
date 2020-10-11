@@ -291,18 +291,22 @@ BOOL GSClientMgr::NewClient(SOCKET ListenSocket, LPVOID pServer)
 
 		if (AddClient(pClient) == FALSE)
 		{
-			printf("NewClient failed \n");
+			printf("NewClient failed...1 \n");
 		}
 
 
 		if (!pClient->GetTCPSocket()->Initialize())
 		{
+			printf("NewClient failed...2 \n");
+			DelClient(pClient->GetId());
 			End();
 			return FALSE;
 		}
 
 		if (!pClient->GetTCPSocket()->Accept(ListenSocket))
 		{
+			printf("NewClient failed...3 \n");
+			DelClient(pClient->GetId());
 			End();
 			return FALSE;
 		}

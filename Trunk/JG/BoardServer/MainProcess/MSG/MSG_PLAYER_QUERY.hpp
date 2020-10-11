@@ -450,14 +450,14 @@ namespace Board	{
 
 				if (pRequst->Token.size() == 0 || pRequst->Token.size() < 10)
 				{
-			//		printf("DBPROCESSCONTAINER_CER.Search token size error %d \n", pRequst->Token.size());
+					printf("DBPROCESSCONTAINER_CER.Search token size error %d \n", pRequst->Token.size());
 
-			//		res.set_var_code(DataBaseError);
+					res.set_var_code(DataBaseError);
 
-			//		SEND_PROTO_BUFFER(res, pSession)
+					SEND_PROTO_BUFFER(res, pSession)
 
-			//		pSession->Close();
-			//		return;
+					pSession->Close();
+					return;
 				}
 
 				for (int i = 0; i < 1; i++)
@@ -467,7 +467,7 @@ namespace Board	{
 					if (http_out.size() == 6)
 						break;
 				}
-
+	
 				if (http_out.size() != 6)
 				{
 					pSession->Close();
