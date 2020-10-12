@@ -75,7 +75,7 @@ void ContentsTimer::OnEvt(LPVOID Arg)
 
 			ContentsTimerJob* pNewJob = new ContentsTimerJob();
 			pNewJob->Func = ContentsTimer::OnEvt;
-			pNewJob->SetExpineTime(GetTickCount());
+			pNewJob->SetExpineTime(GetTickCount() + (1000 * 60 * 5));
 			pNewJob->SetId(ContentsTimer::RANK_TIMER);
 			GetContentsTimer().AddTimerJob(pNewJob);
 		}
