@@ -15,6 +15,10 @@ namespace GSNetwork	{ namespace GSSocket	{	namespace GSPacket	{
 
 struct XDATA
 {
+	XDATA() {}
+	~XDATA()
+	{
+	}
 	XBUFFER m_Buffer;
 	DWORD Length;
 	WORD MainId;

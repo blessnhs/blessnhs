@@ -68,7 +68,11 @@ VOID GSServer::OnRead(int client_id, DWORD dataLength)
 	pClient->OnRecv(dataLength,pClient);
 
 	if (!pClient->InitializeReadForIocp())
-		OnDisconnected(client_id);
+	{
+		this->AddPlayerCount(1);
+		OnDisconnected(client_id);	//add 	
+	}
+
 }
 
 VOID GSServer::OnWrote(int client_id, DWORD dataLength)

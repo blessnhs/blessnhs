@@ -44,8 +44,11 @@ BOOL	GSPacketTCP::ReadPacket(DWORD readLength)
 {
 	CThreadSync Sync;
 
-	if (!GSSocketTCP::ReadForIocp(m_PacketBuffer, readLength,m_RemainLength))
+	if (!GSSocketTCP::ReadForIocp(m_PacketBuffer, readLength, m_RemainLength))
+	{
+
 		return FALSE;
+	}
 
 	m_RemainLength	+= readLength;
 
@@ -230,7 +233,15 @@ BOOL GSPacketTCP::GetPacket(WORD &MainProtocol, WORD &SubProtocol,BYTE *packet, 
 
 	if (PacketLength > MAX_BUFFER_LENGTH || PacketLength <= 0) 
 	{
+		printf("!!GetPacket Packet Size Wrong %d\n", PacketLength);
 		m_RemainLength = 0;
+		return FALSE;
+	}
+
+	//2020.10.13 서버 덤프없이 사라지는 버그 패킷 전송시 클라이언트에서 Size패킷을 변조해 헤더보다 작은 값으로 보내서
+	//복사하다 죽었다.
+	if (PacketLength <= (sizeof(WORD) - sizeof(WORD) - sizeof(WORD) - sizeof(DWORD)))
+	{
 		return FALSE;
 	}
 

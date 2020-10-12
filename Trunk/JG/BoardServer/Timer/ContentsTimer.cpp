@@ -63,7 +63,7 @@ void ContentsTimer::OnEvt(LPVOID Arg)
 
 		case ContentsTimer::RANK_TIMER:
 		{
-			/*{
+			{
 				boost::shared_ptr<CalcRank> pRequest = ALLOCATOR.Create<CalcRank>();
 
 				boost::shared_ptr<Board::MSG_PLAYER_QUERY<CalcRank>>		PLAYER_MSG = ALLOCATOR.Create<Board::MSG_PLAYER_QUERY<CalcRank>>();
@@ -71,7 +71,7 @@ void ContentsTimer::OnEvt(LPVOID Arg)
 				PLAYER_MSG->Type = MSG_TYPE_DB_1;
 				PLAYER_MSG->SubType = ONQUERY;
 				MAINPROC.RegisterCommand(PLAYER_MSG);
-			}*/
+			}
 
 			ContentsTimerJob* pNewJob = new ContentsTimerJob();
 			pNewJob->Func = ContentsTimer::OnEvt;
