@@ -108,14 +108,15 @@ namespace OMOK.Droid
                 AuthCredential credential = GoogleAuthProvider.GetCredential(signInResult.SignInAccount.IdToken, null);
                 try
                 {
-                    IAuthResult authResult = await FirebaseAuth_.SignInWithCredentialAsync(credential);
-                    FirebaseUser user = authResult.User;
-
                     User.myInfo.PhotoPath = signInResult.SignInAccount.PhotoUrl.ToString();
 
                     User.Uid = signInResult.SignInAccount.Id;
                     User.Token = signInResult.SignInAccount.IdToken;
                     User.myInfo.NickName = signInResult.SignInAccount.DisplayName;
+
+                    IAuthResult authResult = await FirebaseAuth_.SignInWithCredentialAsync(credential);
+                    FirebaseUser user = authResult.User;
+
 
                 }
                 catch (Exception ex)

@@ -56,7 +56,6 @@ namespace NetClient
             // Connect to a remote device.
             try
             {
-                IPAddress ipAddress;
                 IPAddress ip = IPAddress.Parse(address);
 
                 IPEndPoint remoteEP = new IPEndPoint(ip, port);
@@ -66,12 +65,12 @@ namespace NetClient
                 {
                     socket.Dispose();
                     socket = new Socket(AddressFamily.InterNetwork,
-                    SocketType.Stream, ProtocolType.Tcp);
+                                SocketType.Stream, ProtocolType.Tcp);
                 }
                 else
                 {
-                    socket = new Socket(AddressFamily.InterNetwork,
-                   SocketType.Stream, ProtocolType.Tcp);
+                       socket = new Socket(AddressFamily.InterNetwork,
+                            SocketType.Stream, ProtocolType.Tcp);
                 }
 
                 // Connect to the remote endpoint.
