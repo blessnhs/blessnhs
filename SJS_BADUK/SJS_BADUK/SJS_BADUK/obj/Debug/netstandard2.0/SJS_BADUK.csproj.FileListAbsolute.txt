@@ -1,0 +1,15 @@
+C:\work\blessnhs\SJS_BADUK\SJS_BADUK\SJS_BADUK\bin\Debug\netstandard2.0\SJS_BADUK.deps.json
+C:\work\blessnhs\SJS_BADUK\SJS_BADUK\SJS_BADUK\bin\Debug\netstandard2.0\SJS_BADUK.dll
+C:\work\blessnhs\SJS_BADUK\SJS_BADUK\SJS_BADUK\bin\Debug\netstandard2.0\ref\SJS_BADUK.dll
+C:\work\blessnhs\SJS_BADUK\SJS_BADUK\SJS_BADUK\bin\Debug\netstandard2.0\SJS_BADUK.pdb
+C:\work\blessnhs\SJS_BADUK\SJS_BADUK\SJS_BADUK\obj\Debug\netstandard2.0\SJS_BADUK.csprojAssemblyReference.cache
+C:\work\blessnhs\SJS_BADUK\SJS_BADUK\SJS_BADUK\obj\Debug\netstandard2.0\App.xaml.g.cs
+C:\work\blessnhs\SJS_BADUK\SJS_BADUK\SJS_BADUK\obj\Debug\netstandard2.0\MainPage.xaml.g.cs
+C:\work\blessnhs\SJS_BADUK\SJS_BADUK\SJS_BADUK\obj\Debug\netstandard2.0\PVPRoom.xaml.g.cs
+C:\work\blessnhs\SJS_BADUK\SJS_BADUK\SJS_BADUK\obj\Debug\netstandard2.0\SJS_BADUK.AssemblyInfoInputs.cache
+C:\work\blessnhs\SJS_BADUK\SJS_BADUK\SJS_BADUK\obj\Debug\netstandard2.0\SJS_BADUK.AssemblyInfo.cs
+C:\work\blessnhs\SJS_BADUK\SJS_BADUK\SJS_BADUK\obj\Debug\netstandard2.0\SJS_BADUK.csproj.CoreCompileInputs.cache
+C:\work\blessnhs\SJS_BADUK\SJS_BADUK\SJS_BADUK\obj\Debug\netstandard2.0\XamlC.stamp
+C:\work\blessnhs\SJS_BADUK\SJS_BADUK\SJS_BADUK\obj\Debug\netstandard2.0\SJS_BADUK.dll
+C:\work\blessnhs\SJS_BADUK\SJS_BADUK\SJS_BADUK\obj\Debug\netstandard2.0\ref\SJS_BADUK.dll
+C:\work\blessnhs\SJS_BADUK\SJS_BADUK\SJS_BADUK\obj\Debug\netstandard2.0\SJS_BADUK.pdb
