@@ -6,6 +6,7 @@
 #include "../Room/RoomContainer.h"
 #include "../DB/DBProxy/DBProcessContainer.h"
 #include "../DB/DBJob/DBContext.h"
+#include "../Channel/ChannelContainer.h"
 
 GSBoard::GSBoard(void)
 {
@@ -21,13 +22,20 @@ BOOL GSBoard::Disconnect(GSCLIENT_PTR pSession)
 	PlayerPtr pPlayer = PLAYERMGR.Search(pSession->GetPair());
 	if (pPlayer != NULL)
 	{
-		ROOMMGR.LeaveRoomPlayer(pPlayer);
-
+		auto channel = CHANNELMGR.Search(pPlayer->GetChannel());
+		if (channel != NULL)
+		{
+			channel->RoomContainer.DelMatchMap(pPlayer);
+			channel->RoomContainer.LeaveRoomPlayer(pPlayer);
+		}
 		pPlayer->SetPair(ULONG_MAX);
 		PLAYERMGR.Del(pPlayer);
+	
 
-		//매칭 큐에서 제거한다.
-		ROOMMGR.DelMatchMap(pPlayer);
+		//채널 등록 유저 룸 제거
+		CHANNELMGR.RoomLeaveChannel(pPlayer);
+		CHANNELMGR.PlayerLeaveChannel(pPlayer);
+		////////
 
 		//로그아웃 쿼리를 날린다.
 		boost::shared_ptr<RequestLogout> pRequest = ALLOCATOR.Create<RequestLogout>();

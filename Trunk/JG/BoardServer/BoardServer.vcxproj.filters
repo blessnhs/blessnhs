@@ -67,6 +67,9 @@
     <Filter Include="TIMER\Timer">
       <UniqueIdentifier>{4b81a360-44e9-4410-9b48-27c82016cd23}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Channel">
+      <UniqueIdentifier>{5aaf3df1-ad0a-449c-b944-6402f741c47c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Ini\INI.h">
@@ -150,6 +153,15 @@
     <ClInclude Include="Timer\ContentsTimer.h">
       <Filter>TIMER\Timer</Filter>
     </ClInclude>
+    <ClInclude Include="Channel\Channel.h">
+      <Filter>Channel</Filter>
+    </ClInclude>
+    <ClInclude Include="Channel\ChannelContainer.h">
+      <Filter>Channel</Filter>
+    </ClInclude>
+    <ClInclude Include="Channel\ChannelContainer.hpp">
+      <Filter>Channel</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BoardServer.cpp">
@@ -226,6 +238,12 @@
     </ClCompile>
     <ClCompile Include="Timer\ContentsTimer.cpp">
       <Filter>TIMER\Timer</Filter>
+    </ClCompile>
+    <ClCompile Include="Channel\Channel.cpp">
+      <Filter>Channel</Filter>
+    </ClCompile>
+    <ClCompile Include="Channel\ChannelContainer.cpp">
+      <Filter>Channel</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

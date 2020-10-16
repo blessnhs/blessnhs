@@ -11,7 +11,7 @@ public:
 	~GSBuffer(void);
 
 private:
-	BYTE	mBufferPointer[MAX_BUFFER_LENGTH];
+	BYTE	mBufferPointer[MAX_BUFFER_LENGTH+1];
 	DWORD	mLength;
 	DWORD   mPos;
 

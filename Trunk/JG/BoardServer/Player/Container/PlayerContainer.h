@@ -25,6 +25,10 @@ public:
 
 	bool Add(PlayerPtr &pObj);
 	bool Del(PlayerPtr &pObj);
+
+	bool Add2(PlayerPtr& pObj);
+	bool Del2(PlayerPtr& pObj);
+
 	PlayerPtr Search(INT64 Id);
 	PlayerPtr Search(string flatformid);
 	PlayerPtr SearchBySocketId(DWORD Id);

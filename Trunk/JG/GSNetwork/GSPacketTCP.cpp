@@ -231,7 +231,7 @@ BOOL GSPacketTCP::GetPacket(WORD &MainProtocol, WORD &SubProtocol,BYTE *packet, 
 	WORD PacketLength = 0;
 	memcpy(&PacketLength, m_PacketBuffer, sizeof(WORD));
 
-	if (PacketLength > MAX_BUFFER_LENGTH || PacketLength <= 0) 
+	if (PacketLength >= MAX_BUFFER_LENGTH || PacketLength <= 0) 
 	{
 		printf("!!GetPacket Packet Size Wrong %d\n", PacketLength);
 		m_RemainLength = 0;

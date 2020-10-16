@@ -81,6 +81,7 @@ public:
 	std::string SessionKey;
 	INT64 Index;
 	int Result;
+	int channel;
 };
 
 class RequestQNS : public GSObject

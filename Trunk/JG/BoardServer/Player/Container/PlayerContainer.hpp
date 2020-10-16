@@ -12,10 +12,62 @@ template<template<class T> class CreationPolicy> PlayerContainer<CreationPolicy>
 	DeleteCriticalSection(&m_PublicLock);
 }
 
+
+template<template<class T> class CreationPolicy> bool PlayerContainer<CreationPolicy>::Add2(PlayerPtr& pObj)
+{
+	m_PlayerMap[pObj->GetId()] = pObj;
+
+	bool find = false;
+	for (auto iter = m_PlayerMapForLoop.begin(); iter != m_PlayerMapForLoop.end(); iter++)
+	{
+		if (iter->second == NULL)
+		{
+			m_PlayerMapForLoop[iter->first] = pObj;
+			return true;
+		}
+	}
+
+	m_PlayerMapForLoop[pObj->GetId()] = pObj;
+
+	return true;
+}
+
+template<template<class T> class CreationPolicy> bool PlayerContainer<CreationPolicy>::Del2(PlayerPtr& pObj)
+{
+	auto iter = m_PlayerMap.find(pObj->GetId());
+
+	if (iter == m_PlayerMap.end())
+	{
+		return false;
+	}
+
+	m_PlayerMap[pObj->GetId()] = NULL;
+
+	///////////////////////////////////////////////////
+
+	bool find = false;
+	for (auto iter = m_PlayerMapForLoop.begin(); iter != m_PlayerMapForLoop.end(); iter++)
+	{
+		if (iter->second != NULL)
+		{
+			if (iter->second->GetId() == pObj->GetId())
+			{
+				m_PlayerMapForLoop[iter->first] = NULL;
+				return true;
+			}
+
+		}
+	}
+
+
+	return false;
+}
+
 template<template<class T> class CreationPolicy> bool PlayerContainer<CreationPolicy>::Add(PlayerPtr &pObj)
 {
 	m_PlayerMap[pObj->GetId()] = pObj;
 
+	CHANNELMGR.PlayerEnterChannel( pObj);
 
 	bool find = false;
 	for (auto iter = m_PlayerMapForLoop.begin(); iter != m_PlayerMapForLoop.end(); iter++)
@@ -42,6 +94,9 @@ template<template<class T> class CreationPolicy> bool PlayerContainer<CreationPo
 		return false;
 	}
 
+	CHANNELMGR.PlayerLeaveChannel(pObj);
+
+
 	m_PlayerMap[pObj->GetId()] = NULL;
 
 	///////////////////////////////////////////////////
@@ -61,7 +116,7 @@ template<template<class T> class CreationPolicy> bool PlayerContainer<CreationPo
 	}
 
 
-	return true;
+	return false;
 }
 
 
@@ -148,15 +203,21 @@ template<template<class T> class CreationPolicy> void PlayerContainer<CreationPo
 			PlayerPtr pPlayer = iter->second;
 			if (pPlayer != NULL)
 			{
-				printf("Client session is null\n");
+				printf("Client session is null mia\n");
 
-				ROOMMGR.LeaveRoomPlayer(pPlayer);
+				auto channel = CHANNELMGR.Search(pPlayer->GetChannel());
+				if (channel == NULL)
+				{
+					continue;
+				}
+
+				channel->RoomContainer.LeaveRoomPlayer(pPlayer);
 
 				pPlayer->SetPair(ULONG_MAX);
 				PLAYERMGR.Del(pPlayer);
 
 				//매칭 큐에서 제거한다.
-				ROOMMGR.DelMatchMap(pPlayer);
+				channel->RoomContainer.DelMatchMap(pPlayer);
 
 				//로그아웃 쿼리를 날린다.
 				boost::shared_ptr<RequestLogout> pRequest = ALLOCATOR.Create<RequestLogout>();

@@ -14,8 +14,9 @@ message LOGIN_REQ
 {
     optional PROTOCOL   id                  = 1 [default = ID_PKT_LOGIN_REQ ];
 
-    required string  var_uid                     = 2;
-    required string  var_token                  = 3;
+    required string  var_uid                = 2;
+    required string  var_token              = 3;
+   
 }
 
 message CREATE_ROOM_REQ

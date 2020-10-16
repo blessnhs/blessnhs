@@ -92,8 +92,12 @@ BOOL GSSocketTCP::InitializeReadForIocp(VOID)
 	return TRUE;
 }
 
-BOOL			GSSocketTCP::ReadForIocp(BYTE *data, DWORD &dataLength,DWORD RemainLength)
+BOOL			GSSocketTCP::ReadForIocp(BYTE *data, DWORD dataLength,DWORD RemainLength)
 {
+	//m_Buffer 이번에 읽은 버퍼
+	//m_PacketBuffer 누적 버퍼
+
+
 	CThreadSync Sync;
 
 	if (!m_Socket)

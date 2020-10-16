@@ -245,6 +245,9 @@
     <ClInclude Include="..\Protocol\Cpp\Enum.pb.h" />
     <ClInclude Include="..\Protocol\Cpp\GS.CLI.pb.h" />
     <ClInclude Include="..\Protocol\Cpp\Structure.pb.h" />
+    <ClInclude Include="Channel\Channel.h" />
+    <ClInclude Include="Channel\ChannelContainer.h" />
+    <ClInclude Include="Channel\ChannelContainer.hpp" />
     <ClInclude Include="Command\Command.h" />
     <ClInclude Include="Constructor\Constructor.h" />
     <ClInclude Include="DB\DBJob\DBContext.h" />
@@ -291,6 +294,8 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="BoardServer.cpp" />
+    <ClCompile Include="Channel\Channel.cpp" />
+    <ClCompile Include="Channel\ChannelContainer.cpp" />
     <ClCompile Include="Command\Command.cpp" />
     <ClCompile Include="Constructor\Constructor.cpp" />
     <ClCompile Include="DB\DBJob\DBContext.cpp" />

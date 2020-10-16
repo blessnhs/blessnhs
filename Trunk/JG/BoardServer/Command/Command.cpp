@@ -39,8 +39,6 @@ extern atomic<int>		DebugCount;
 	VOID BoardCommand::RoomList(std::string)
 	{
 	
-		
-		printf("Current Room Count %d\n", ROOMMGR.RoomCount());
 	}
 
 	VOID BoardCommand::CheckUserList(std::string)

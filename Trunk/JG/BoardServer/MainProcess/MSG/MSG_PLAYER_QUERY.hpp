@@ -20,6 +20,8 @@
 
 #include <boost/algorithm/string/replace.hpp>
 
+#include "../../Channel/ChannelContainer.h"
+
 #include "Base64.h"
 
 using namespace ::pplx;
@@ -498,7 +500,7 @@ namespace Board	{
 					res.set_var_code(LoginFailed);
 					SEND_PROTO_BUFFER(res, pSession)
 
-						pSession->Close();
+					pSession->Close();
 
 					//기존 세션과 신규 세션 양쪽 다 팅기는 것으로 변경
 					//이미 접속중이면 이전 접속을 끊는다. 
@@ -565,6 +567,8 @@ namespace Board	{
 				res.set_var_name(nickname);
 
 				SEND_PROTO_BUFFER(res, pSession)
+
+				pNewPlayer->SetChannel(pRequst->channel);
 			}
 			catch (...)
 			{

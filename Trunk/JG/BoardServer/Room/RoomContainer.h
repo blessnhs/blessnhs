@@ -14,7 +14,7 @@
 #include "Structure.pb.h"
 
 template<template<class T> class CreationPolicy>
-class RoomContainer  : public IContainer<ROOM_PTR>, public CreationPolicy<ROOM>
+class RoomContainer  : public CreationPolicy<ROOM>
 {
 public:
 	RoomContainer(void) { InitializeCriticalSection(&m_PublicLock); }
@@ -22,8 +22,13 @@ public:
 
 	ROOM_PTR Create();
 
-	bool Add(ROOM_PTR &pObj);
-	bool Del(ROOM_PTR &pObj);
+	bool Add(ROOM_PTR &pObj, PLAYER_PTR player);
+	bool Del(ROOM_PTR &pObj, PLAYER_PTR player);
+
+	bool Add2(ROOM_PTR& pObj);
+	bool Del2(ROOM_PTR& pObj);
+
+
 	ROOM_PTR Search(INT64 Id);
 
 	ROOM_PTR SearchByGameType(WORD Type);
@@ -55,8 +60,9 @@ protected:
 	CRITICAL_SECTION											m_PublicLock;
 };
 
-extern RoomContainer<GSCreator> &GetRoomContainer();
+//채널 도입으로 전역 룸 객체는 주석
+//extern RoomContainer<GSCreator> &GetRoomContainer();
+//#define ROOMMGR GetRoomContainer()
 
 #include "RoomContainer.hpp"
 
-#define ROOMMGR GetRoomContainer()

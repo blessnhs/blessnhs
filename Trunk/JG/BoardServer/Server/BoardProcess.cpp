@@ -24,8 +24,6 @@ BoardProcess::BoardProcess(void)
 	ADD_NET_FUNC(BoardProcess, ID_PKT_CANCEL_MATCH_REQ, CANCEL_MATCH);
 	ADD_NET_FUNC(BoardProcess, ID_PKT_NOTICE_REQ, NOTICE);
 	ADD_NET_FUNC(BoardProcess, ID_PKT_CHECK_NICKNAME_REQ, CHECK_NICKNAME);
-	
-	
 }
 
 
@@ -132,6 +130,7 @@ VOID BoardProcess::LOGIN_PLAYER(LPVOID Data, DWORD Length, boost::shared_ptr<GSC
 	boost::shared_ptr<RequestPlayerAuth> pRequest = ALLOCATOR.Create<RequestPlayerAuth>();
 	pRequest->Uid.assign(login.var_uid().begin(), login.var_uid().end());
 	pRequest->Token.assign(login.var_token().begin(), login.var_token().end());
+	pRequest->channel = 1;// login.var_channel();
 
 	boost::shared_ptr<Board::MSG_PLAYER_QUERY<RequestPlayerAuth>>		PLAYER_MSG = ALLOCATOR.Create<Board::MSG_PLAYER_QUERY<RequestPlayerAuth>>();
 	PLAYER_MSG->pSession = Client;
@@ -160,10 +159,16 @@ VOID BoardProcess::ROOM_CREATE(LPVOID Data, DWORD Length, boost::shared_ptr<GSCl
 		return;
 	}
 
-	ROOM_PTR RoomPtr = ROOMMGR.Create();
+	auto channel = CHANNELMGR.Search(pPlayer->GetChannel());
+	if (channel == NULL)
+	{
+		return;
+	}
+
+	ROOM_PTR RoomPtr = channel->RoomContainer.Create();
 	RoomPtr->m_Stock.Name = createroom.var_name();
 
-	ROOMMGR.Add(RoomPtr);
+	channel->RoomContainer.Add(RoomPtr, pPlayer);
 	RoomPtr->m_Stock.MAX_PLAYER = USHRT_MAX;
 
 	if (pPlayer != NULL)
@@ -190,7 +195,14 @@ VOID BoardProcess::CANCEL_MATCH(LPVOID Data, DWORD Length, boost::shared_ptr<GSC
 		return;
 	}
 
-	ROOMMGR.DelMatchMap(pPlayer);
+
+	auto channel = CHANNELMGR.Search(pPlayer->GetChannel());
+	if (channel == NULL)
+	{
+		return;
+	}
+
+	channel->RoomContainer.DelMatchMap(pPlayer);
 
 	CANCEL_MATCH_RES res;
 	SEND_PROTO_BUFFER(res, Client)
@@ -239,7 +251,13 @@ VOID BoardProcess::ROOM_PASSTHROUGH(LPVOID Data, DWORD Length, boost::shared_ptr
 		return;
 	}
 
-	ROOM_PTR pPtr = ROOMMGR.Search(pPlayer->m_Char[0].GetRoom());
+	auto channel = CHANNELMGR.Search(pPlayer->GetChannel());
+	if (channel == NULL)
+	{
+		return;
+	}
+
+	ROOM_PTR pPtr = channel->RoomContainer.Search(pPlayer->m_Char[0].GetRoom());
 	if (pPtr != NULL && pPtr->GetState() != State::End)
 	{
 		ROOM_PASS_THROUGH_RES res;
@@ -308,9 +326,22 @@ VOID BoardProcess::ROOM_ENTER(LPVOID Data, DWORD Length, boost::shared_ptr<GSCli
 {
 	DECLARE_RECV_TYPE(ENTER_ROOM_REQ, enterroom)
 
+	PlayerPtr pPlayer = PLAYERMGR.Search(Client->GetPair());
+	if (pPlayer == NULL)
+	{
+		return;
+	}
+
+	auto channel = CHANNELMGR.Search(pPlayer->GetChannel());
+	if (channel == NULL)
+	{
+		return;
+	}
+
 	ENTER_ROOM_RES res;
 
-	ROOM_PTR RoomPtr = ROOMMGR.Search(enterroom.var_id());
+
+	ROOM_PTR RoomPtr = channel->RoomContainer.Search(enterroom.var_id());
 	if (RoomPtr == NULL)
 	{
 		res.set_var_code(SystemError);
@@ -318,11 +349,6 @@ VOID BoardProcess::ROOM_ENTER(LPVOID Data, DWORD Length, boost::shared_ptr<GSCli
 		return;
 	}	
 	
-	PlayerPtr pPlayer = PLAYERMGR.Search(Client->GetPair());
-	if (pPlayer == NULL)
-	{
-		return;
-	}
 
 	//이미 입장 해 있다면 
 	if (RoomPtr->FindPlayer(pPlayer) == TRUE)
@@ -330,6 +356,8 @@ VOID BoardProcess::ROOM_ENTER(LPVOID Data, DWORD Length, boost::shared_ptr<GSCli
 		return;
 	}
 	
+
+
 	RoomPtr->InsertPlayer(pPlayer);
 
 	pPlayer->m_Char[0].SetRoom( RoomPtr->GetId() );
@@ -386,7 +414,14 @@ VOID BoardProcess::ROOM_LEAVE(LPVOID Data, DWORD Length, boost::shared_ptr<GSCli
 		return;
 	}
 
-	ROOMMGR.LeaveRoomPlayer(pPlayer);
+	auto channel = CHANNELMGR.Search(pPlayer->GetChannel());
+	if (channel == NULL)
+	{
+		return;
+	}
+
+
+	channel->RoomContainer.LeaveRoomPlayer(pPlayer);
 
 }
 
@@ -463,11 +498,17 @@ VOID BoardProcess::ROOM_CHAT(LPVOID Data, DWORD Length, boost::shared_ptr<GSClie
 	{
 		return;
 	}
+
+	auto channel = CHANNELMGR.Search(pPlayer->GetChannel());
+	if (channel == NULL)
+	{
+		return;
+	}
 	
 	res.set_var_message(message.var_message());
 	res.set_var_name(pPlayer->m_Account.GetName());
 
-	ROOM_PTR pPtr = ROOMMGR.Search(pPlayer->m_Char[0].GetRoom());
+	ROOM_PTR pPtr = channel->RoomContainer.Search(pPlayer->m_Char[0].GetRoom());
 	if (pPtr != NULL && pPtr->GetState() != State::End)
 	{
 		pPtr->SendToAll(res);
@@ -487,7 +528,13 @@ VOID BoardProcess::ROOM_LIST(LPVOID Data, DWORD Length, boost::shared_ptr<GSClie
 		return;
 	}
 
-	ROOMMGR.GetRoomList(res.mutable_var_room_list());
+	auto channel = CHANNELMGR.Search(pPlayer->GetChannel());
+	if (channel == NULL)
+	{
+		return;
+	}
+
+	channel->RoomContainer.GetRoomList(res.mutable_var_room_list());
 
 	SEND_PROTO_BUFFER(res, Client)
 }
@@ -509,7 +556,13 @@ VOID BoardProcess::MATCH(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> 
 		return;
 	}
 
-	if (ROOMMGR.IsExistMatchMap(pPlayer) == true)
+	auto channel = CHANNELMGR.Search(pPlayer->GetChannel());
+	if (channel == NULL)
+	{
+		return;
+	}
+
+	if (channel->RoomContainer.IsExistMatchMap(pPlayer) == true)
 	{
 		return;
 	}
@@ -517,7 +570,7 @@ VOID BoardProcess::MATCH(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> 
 	res.set_var_code(Success);
 	SEND_PROTO_BUFFER(res, Client)
 
-	for each(auto player in ROOMMGR.GetMatchMap())
+	for each(auto player in channel->RoomContainer.GetMatchMap())
 	{
 		if (player.second == NULL)
 			continue;
@@ -525,13 +578,13 @@ VOID BoardProcess::MATCH(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> 
 		if (player.first == pPlayer->GetId())
 			continue;
 
-		ROOMMGR.CreateMatchRoom(player.second, pPlayer);
+		channel->RoomContainer.CreateMatchRoom(player.second, pPlayer);
 
 		return;
 	}
 
 	//여기 있으면 큐에 아무도 없는것임
-	ROOMMGR.AddMatchMap(pPlayer);
+	channel->RoomContainer.AddMatchMap(pPlayer);
 }
 
 

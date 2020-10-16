@@ -1,10 +1,18 @@
-template<template<class T> class CreationPolicy> bool RoomContainer<CreationPolicy>::Add(ROOM_PTR &pObj)
+#include "../Channel/ChannelContainer.h"
+
+template<template<class T> class CreationPolicy> bool RoomContainer<CreationPolicy>::Add(ROOM_PTR &pObj, PLAYER_PTR player)
 {
 	auto iter = m_RoomMap.find(pObj->GetId());
 
 	if(iter == m_RoomMap.end())
 	{
 		m_RoomMap[pObj->GetId()] = pObj;
+
+		//룸 매니저는 통합 매니저 없애고 채널에 귀속
+	/*	if (player != NULL)
+			CHANNELMGR.RoomEnterChannel(player->GetChannel(), pObj);
+		else
+			printf("cant enter channel %d\n", player->GetChannel());*/
 
 		bool find = false;
 		for (auto iter = m_RoomMapForLoop.begin(); iter != m_RoomMapForLoop.end(); iter++)
@@ -24,7 +32,7 @@ template<template<class T> class CreationPolicy> bool RoomContainer<CreationPoli
 	return false;
 }
 
-template<template<class T> class CreationPolicy> bool RoomContainer<CreationPolicy>::Del(ROOM_PTR &pObj)
+template<template<class T> class CreationPolicy> bool RoomContainer<CreationPolicy>::Del(ROOM_PTR &pObj, PLAYER_PTR player)
 {
 	auto iter = m_RoomMap.find(pObj->GetId());
 
@@ -35,6 +43,10 @@ template<template<class T> class CreationPolicy> bool RoomContainer<CreationPoli
 
 	m_RoomMap[pObj->GetId()] = NULL;
 
+	//if (player != NULL)
+	//	CHANNELMGR.RoomLeaveChannel(player);
+	//else
+	//	printf("cant leave channel %d\n", player->GetChannel());
 
 	bool find = false;
 	for (auto iter = m_RoomMapForLoop.begin(); iter != m_RoomMapForLoop.end(); iter++)
@@ -44,12 +56,70 @@ template<template<class T> class CreationPolicy> bool RoomContainer<CreationPoli
 			if (iter->second->GetId() == pObj->GetId())
 			{
 				m_RoomMapForLoop[iter->first] = NULL;
+
+
 				return true;
 			}
 
 		}
 	}
 
+
+	return false;
+}
+
+
+template<template<class T> class CreationPolicy> bool RoomContainer<CreationPolicy>::Add2(ROOM_PTR& pObj)
+{
+	auto iter = m_RoomMap.find(pObj->GetId());
+
+	if (iter == m_RoomMap.end())
+	{
+		m_RoomMap[pObj->GetId()] = pObj;
+
+		bool find = false;
+		for (auto iter = m_RoomMapForLoop.begin(); iter != m_RoomMapForLoop.end(); iter++)
+		{
+			if (iter->second == NULL)
+			{
+				m_RoomMapForLoop[iter->first] = pObj;
+				return true;
+			}
+		}
+
+		m_RoomMapForLoop[pObj->GetId()] = pObj;
+	}
+
+
+
+	return false;
+}
+
+template<template<class T> class CreationPolicy> bool RoomContainer<CreationPolicy>::Del2(ROOM_PTR& pObj)
+{
+	auto iter = m_RoomMap.find(pObj->GetId());
+
+	if (iter == m_RoomMap.end())
+	{
+		return false;
+	}
+
+	m_RoomMap[pObj->GetId()] = NULL;
+
+	bool find = false;
+	for (auto iter = m_RoomMapForLoop.begin(); iter != m_RoomMapForLoop.end(); iter++)
+	{
+		if (iter->second != NULL)
+		{
+			if (iter->second->GetId() == pObj->GetId())
+			{
+				m_RoomMapForLoop[iter->first] = NULL;
+
+				return true;
+			}
+
+		}
+	}
 
 	return false;
 }
@@ -223,7 +293,7 @@ template<template<class T> class CreationPolicy> void RoomContainer<CreationPoli
 			pPlayer->m_Char[0].SetRoom(0);
 
 			if (RoomPtr->GetCurrPlayer() == 0)
-				Del(RoomPtr);
+				Del(RoomPtr, pPlayer);
 		}
 
 		pPlayer->m_Char[0].SetAllComplete(FALSE);
@@ -259,7 +329,7 @@ template<template<class T> class CreationPolicy> BOOL RoomContainer<CreationPoli
 	string lvstring2 = RoomPtr->LevelConverter(target2->m_Char[0].GetLevel());
 	RoomPtr->m_Stock.Name.append(lvstring2);
 
-	Add(RoomPtr);
+	Add(RoomPtr, target1);
 	RoomPtr->m_Stock.MAX_PLAYER = USHRT_MAX;
 
 	if (target1 != NULL)
@@ -282,7 +352,7 @@ template<template<class T> class CreationPolicy> BOOL RoomContainer<CreationPoli
 	{
 		printf("Match Fail Not Found player 2\n");
 		RoomPtr->RemovePlayer(target1);
-		Del(RoomPtr);
+		Del(RoomPtr, target1);
 		return FALSE;
 	}
 
@@ -293,7 +363,7 @@ template<template<class T> class CreationPolicy> BOOL RoomContainer<CreationPoli
 	{
 		printf("Match Fail Exist player 2\n");
 		RoomPtr->RemovePlayer(target1);
-		Del(RoomPtr);
+		Del(RoomPtr, target1);
 		return FALSE;
 	}
 
