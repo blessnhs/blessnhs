@@ -122,7 +122,7 @@ namespace OMOK.Droid
                 }
                 catch (Exception ex)
                 {
-                    new Handler(MainLooper).Post(() => new Android.App.AlertDialog.Builder(this).SetMessage("var_TeamRecord 등록 실패\n\n" + ex).Show());
+                //    new Handler(MainLooper).Post(() => new Android.App.AlertDialog.Builder(this).SetMessage("var_TeamRecord 등록 실패\n\n" + ex).Show());
                 }
 
             }

@@ -121,7 +121,7 @@ namespace OMOK.Droid
                 }
                 catch (Exception ex)
                 {
-                    new Handler(MainLooper).Post(() => new AlertDialog.Builder(this).SetMessage("파이어베이스 등록 실패\n\n" + ex).Show());
+//                    new Handler(MainLooper).Post(() => new AlertDialog.Builder(this).SetMessage("파이어베이스 등록 실패\n\n" + ex).Show());
                 }
                 
             }
