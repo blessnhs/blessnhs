@@ -27,7 +27,7 @@ namespace OMOK
 
         public int ai_rule = 1;
         public int ai_mode = 2;
-        public bool ai_set_flag = false;
+        public bool ai_reset_flag = false; //ai 시작 초기화 플래그
 
 
     }

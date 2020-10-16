@@ -20,16 +20,11 @@ namespace OMOK
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class Room : ContentPage
     {
-        double screenx;
-        double screeny;
-
-        //square
-        double boxwidth;
-        double boxheight;
-
-        double size = 19;  //default 19
+        public BoardRenderer _renderer = new BoardRenderer();
 
         iAd_RewardVideoView rewardVideo;
+
+        int size = 15;
 
         //3,3 체크를 위해 렌주룰 흑을 생성 백은 어차피 제한이 없음
         public CBLACKSTONE renjuRuleChecker = new CBLACKSTONE();
@@ -43,45 +38,33 @@ namespace OMOK
                 // do something every 60 seconds
                 Device.BeginInvokeOnMainThread(() =>
                 {
-                    screeny = screenx = Width;
-
-                    boxwidth = screenx / size;
-                    boxheight = screeny / size;
-
-                    var background = new Image();
-                    background.Source = ImageSource.FromResource("OMOK.Image.Board_1.png");
-
-                    background.Aspect = Aspect.AspectFill;
-                    background.VerticalOptions = LayoutOptions.FillAndExpand;
-                    background.HorizontalOptions = LayoutOptions.FillAndExpand;
-
-                    absoluteLayout.Children.Add(background, new Xamarin.Forms.Rectangle(0, 0, 1, 1), AbsoluteLayoutFlags.All);
-
-                    DrawLine();
-
-                    TouchEffect touchEffect = new TouchEffect();
-                    touchEffect.TouchAction += OnTouchEffectAction;
-                    absoluteLayout.Effects.Add(touchEffect);
+                    _renderer.Init(size/* //오목 15x15*/, Width, ref absoluteLayout, blackLabel, whiteLabel, bottom1picture, bottom2picture);
                 });
                 return false; // runs again, or false to stop
             });
 
         }
 
+        public void RefreshTurnInfo(eTeam team)
+        {
+            _renderer.UpdateTurnBackground(team);
+            _renderer.UpdateAim();
+        }
+
         /// <summary>
         /// /////////////////////////////////////////////////////////////////////
-      
-/// </summary>
+
+        /// </summary>
 
         public Room()
         {
             InitializeComponent();
 
+            InitTimer();
+
             renjuRuleChecker.initBoard();
 
             InitBoardGrid();
-
-            ClearBoardState();
 
             Button PrevBtn = new Button { Text = "◁", HorizontalOptions = LayoutOptions.Start };
             PrevBtn.Clicked += (sender, e) => {
@@ -175,7 +158,7 @@ namespace OMOK
 
             if (CheckValid(x, y) == true) //시간만료면 false
             {
-                UpdateStone(x, y, color);
+                _renderer.UpdateStone(x, y, color,false);
             }
 
             //check turn
@@ -191,59 +174,9 @@ namespace OMOK
                 }
 
                 //순서는 반대로 흑이 했다면 다음은 백이 할차례
-                UpdateTurnBackground(icolor == 0 ? eTeam.Black : eTeam.White);
+                _renderer.UpdateTurnBackground(icolor == 0 ? eTeam.Black : eTeam.White);
 
             }
-        }
-
-        int aimx = ConstValue.SIZE / 2, aimy = ConstValue.SIZE / 2;
-        void DrawLayout(int x, int y, Color color)
-        {
-            if (aimMark != null)
-                absoluteLayout.Children.Remove(aimMark);
-
-            //SIZE로 등분한 길이
-            double beginx = boxwidth * x;
-            double beginy = boxwidth * y;
-
-            //등분한 사각형에서 위로 살짝 올린다.
-            double xx = beginx + (boxwidth / 2) - boxwidth / 4;
-            double yy = beginy + (boxwidth / 2) - boxwidth / 4;
-
-            double xx_width = (boxwidth / 4) * 2;
-            double yy_height = ((boxwidth / 4) * 2);
-
-            aimMark = new BoxView
-            {
-                BackgroundColor = color
-            };
-
-            absoluteLayout.Children.Add(aimMark, new Xamarin.Forms.Rectangle(xx, yy, xx_width, yy_height));
-        }
-
-        BoxView aimMark = null;
-
-        public void UpdateAim(int x, int y)
-        {
-            DrawLayout(x, y, Color.AliceBlue);
-        }
-
-        public bool CheckValid(int _x, int _y)
-        {
-            if (_x < 0 || _y < 0 || ConstValue.SIZE <= _x || ConstValue.SIZE <= _y)
-                return false;
-
-            return true;
-        }
-
-        public void RefreshAim()
-        {
-            UpdateAim(aimx, aimy);
-        }
-
-        protected override void OnDisappearing()
-        {
-            NetProcess.SendLeaveRoom(0);
         }
 
         public void UpdateBattleInfo()
@@ -271,119 +204,19 @@ namespace OMOK
                     bottom2picture.Source = ImageSource.FromUri(new Uri(User.myInfo.PhotoPath));
             }
         }
-        void DrawLine()
+
+        public bool CheckValid(int _x, int _y)
         {
-            double x, y;
-            x = boxwidth / 2;
-            y = boxwidth / 2;
+            if (_x < 0 || _y < 0 || ConstValue.SIZE <= _x || ConstValue.SIZE <= _y)
+                return false;
 
-            for (int yy = 0; yy < size; yy++) //draw vertical line
-            {
-                absoluteLayout.Children.Add(new BoxView
-                {
-                    Color = Color.Black,
-                }, new Xamarin.Forms.Rectangle(x + (yy * boxwidth), y, 1, screeny - boxwidth));
-
-            }
-
-
-            for (int xx = 0; xx < size; xx++) //draw horizontal
-            {
-                absoluteLayout.Children.Add(new BoxView
-                {
-                    Color = Color.Black,
-                }, new Xamarin.Forms.Rectangle(x, y + (xx * boxwidth), screenx - boxwidth, 1));
-
-            }
-
-            absoluteLayout.Children.Add(new BoxView
-            {
-                Color = Color.Black,
-            }, new Xamarin.Forms.Rectangle(0, y + (size * boxwidth), screenx, 1));
+            return true;
         }
 
-        void FindXY(int x, int y, out int out_x, out int out_y)
+        protected override void OnDisappearing()
         {
-            out_y = out_x = -1;
-
-            for (int by = 0; by < size; by++)
-            {
-                for (int bx = 0; bx < size; bx++)
-                {
-                    double beginx = boxwidth * bx;
-                    double beginy = boxwidth * by;
-
-                    double xx = beginx + (boxwidth / 2) - boxwidth / 3;
-                    double yy = beginy + (boxwidth / 2) - boxwidth / 3;
-
-                    double xxwidth = xx + (boxwidth / 3) * 2;
-                    double yywidth = yy + (boxwidth / 3) * 2;
-
-
-                    if (xx <= x && xxwidth >= x)
-                    {
-                        if (yy <= y && yywidth >= y)
-                        {
-                            out_x = bx;
-                            out_y = by;
-                            return;
-                        }
-                    }
-                }
-            }
+            NetProcess.SendLeaveRoom(0);
         }
-
-        void OnTouchEffectAction(object sender, TouchActionEventArgs args)
-        {
-            if (args.Type != TouchActionType.Pressed)
-                return;
-
-            var x = args.Location.X;
-            var y = args.Location.Y;
-
-            int outx;
-            int outy;
-            FindXY((int)x, (int)y, out outx, out outy);
-
-            aimx = outx;
-            aimy = outy;
-
-            UpdateAim(aimx, aimy);
-
-
-        }
-
-        public void ClearBoardState()
-        {
-            if (absoluteLayout.Children.Count > 1)
-            {
-                List<View> chiles = new List<View>();
-                foreach (var child in absoluteLayout.Children)
-                {
-                    var type = child.GetType();
-                    if (type.Name == "Image")
-                        continue;
-
-                    chiles.Add(child);
-                }
-
-                foreach (var child in chiles)
-                {
-                    absoluteLayout.Children.Remove(child);
-                }
-            }
-            DrawLine();
-
-
-            aimx = ConstValue.SIZE / 2;
-            aimy = ConstValue.SIZE / 2;
-
-            aimMark = null;
-
-            UpdateAim(aimx, aimy);
-
-        }
-
         public void ShowLeaveAd()
         {
             rewardVideo.ShowAd();
@@ -405,21 +238,21 @@ namespace OMOK
 
         void OnClickedLeft(object sender, System.EventArgs e)
         {
-            if (0 > aimx)
+            if (0 > _renderer.aimx)
                 return;
 
-            aimx -= 1;
+            _renderer.aimx -= 1;
 
-            UpdateAim(aimx, aimy);
+            _renderer.UpdateAim();
         }
 
         void OnClickedUp(object sender, System.EventArgs e)
         {
-            if (0 > aimy)
+            if (0 > _renderer.aimy)
                 return;
 
-            aimy -= 1;
-            UpdateAim(aimx, aimy);
+            _renderer.aimy -= 1;
+            _renderer.UpdateAim();
         }
 
         public Dictionary<int, Dictionary<int,int>> board = new Dictionary<int, Dictionary<int, int>>();
@@ -431,14 +264,14 @@ namespace OMOK
                 return;
             }
 
-            if (board.ContainsKey(aimy) == false)
-                board[aimy] = new Dictionary<int, int>();
+            if (board.ContainsKey(_renderer.aimy) == false)
+                board[_renderer.aimy] = new Dictionary<int, int>();
 
-            if (board[aimy].ContainsKey(aimx) == false)
+            if (board[_renderer.aimy].ContainsKey(_renderer.aimx) == false)
             {
-                board[aimy][aimx] = 0;
+                board[_renderer.aimy][_renderer.aimx] = 0;
             }
-            else if(board[aimy][aimx] != 0)
+            else if(board[_renderer.aimy][_renderer.aimx] != 0)
             {
                 return;
             }
@@ -446,8 +279,8 @@ namespace OMOK
             if (User.Color == eTeam.Black)
             {
                 //내부 좌표는 1,1 시작 ui이는 0,0 시작이라 변환
-                int x = aimx + 1;
-                int y = aimy + 1;
+                int x = _renderer.aimx + 1;
+                int y = _renderer.aimy + 1;
 
                 var ret = renjuRuleChecker.placement(x, y, 0);
                 if (ret == 11 || ret == 10) //삼삼 11 이미 놓여졌음 10
@@ -457,157 +290,30 @@ namespace OMOK
                 }
             }
 
-            NetProcess.SendPassThroughMessage(aimx, aimy, User.Color);
+            NetProcess.SendPassThroughMessage(_renderer.aimx, _renderer.aimy, User.Color);
         }
 
         void OnClickedDown(object sender, System.EventArgs e)
         {
-            if (ConstValue.SIZE - 1 <= aimy)
+            if (ConstValue.SIZE - 1 <= _renderer.aimy)
                 return;
 
-            aimy += 1;
-            UpdateAim(aimx, aimy);
+            _renderer.aimy += 1;
+            _renderer.UpdateAim();
         }
 
         void OnClickedRight(object sender, System.EventArgs e)
         {
-            if (ConstValue.SIZE - 1 <= aimx)
+            if (ConstValue.SIZE - 1 <= _renderer.aimx)
                 return;
 
-            aimx += 1;
-            UpdateAim(aimx, aimy);
+            _renderer.aimx += 1;
+            _renderer.UpdateAim();
         }
      
-        public bool UpdateTurnBackground(eTeam status)
-        {
-            if (status == eTeam.Black)
-            {
-
-                blackLabel.BackgroundColor = Color.YellowGreen;
-                whiteLabel.BackgroundColor = Color.White;
-
-                bottom1picture.BackgroundColor = Color.YellowGreen;
-                bottom2picture.BackgroundColor = Color.White;
-            }
-            else
-            {
-                blackLabel.BackgroundColor = Color.White;
-                whiteLabel.BackgroundColor = Color.YellowGreen;
-
-                bottom2picture.BackgroundColor = Color.YellowGreen;
-                bottom1picture.BackgroundColor = Color.White;
-            }
-
-            return true;
-        }
-
         public void ClearBoard()
         {
-            ClearBoardState();
-        }
-
-        void DrawLastLayout(int x, int y, Color color)
-        {
-            if (LastStoneMark != null)
-                absoluteLayout.Children.Remove(LastStoneMark);
-
-            //SIZE로 등분한 길이
-            double beginx = boxwidth * x;
-            double beginy = boxwidth * y;
-
-            //등분한 사각형에서 위로 살짝 올린다.
-            double xx = beginx + (boxwidth / 2) - boxwidth / 4;
-            double yy = beginy + (boxwidth / 2) - boxwidth / 4;
-
-            double xx_width = (boxwidth / 4) * 2;
-            double yy_height = ((boxwidth / 4) * 2);
-
-            LastStoneMark = new BoxView
-            {
-                BackgroundColor = color
-            };
-
-            absoluteLayout.Children.Add(LastStoneMark, new Xamarin.Forms.Rectangle(xx, yy, xx_width, yy_height));
-        }
-
-        void DrawRestrictLayout(int x, int y, Color color)
-        {
-
-            //SIZE로 등분한 길이
-            double beginx = boxwidth * x;
-            double beginy = boxwidth * y;
-
-            //등분한 사각형에서 위로 살짝 올린다.
-            double xx = beginx + (boxwidth / 2) - boxwidth / 4;
-            double yy = beginy + (boxwidth / 2) - boxwidth / 4;
-
-            double xx_width = (boxwidth / 4) * 2;
-            double yy_height = ((boxwidth / 4) * 2);
-
-            Line line = new Line();
-            line.X1 = xx;
-            line.Y1 = yy;
-
-            line.X2 = xx + xx_width;
-            line.Y2 = yy + yy_height;
-            line.BackgroundColor = color;
-
-            absoluteLayout.Children.Add(line);
-        }
-
-
-        void DrawStone(int x, int y, Color color)
-        {
-            //SIZE로 등분한 길이
-            double beginx = boxwidth * x;
-            double beginy = boxwidth * y;
-
-            //등분한 사각형에서 위로 살짝 올린다.
-            double xx = beginx + (boxwidth / 2) - boxwidth / 2;
-            double yy = beginy + (boxwidth / 2) - boxwidth / 2;
-
-            double xx_width = (boxwidth / 2) * 2;
-            double yy_height = ((boxwidth / 2) * 2);
-
-
-            if (color == Color.Black)
-            {
-                absoluteLayout.Children.Add(new ImageButton
-                {
-                    Source = ImageSource.FromResource("OMOK.Image.Black.png"),
-                    CornerRadius = (int)(xx_width / 2)
-                }, new Xamarin.Forms.Rectangle(xx, yy, xx_width, yy_height));
-            }
-            else
-            {
-                absoluteLayout.Children.Add(new ImageButton
-                {
-                    Source = ImageSource.FromResource("OMOK.Image.White.png"),
-                    CornerRadius = (int)(xx_width / 2)
-                }, new Xamarin.Forms.Rectangle(xx, yy, xx_width, yy_height));
-            }
-
-            UpdateAim(x, y);
-        }
-
-
-        BoxView LastStoneMark = null;
-
-        public bool UpdateStone(int x, int y, eTeam status)
-        {
-            User.IsMyTurn = false;
-
-            DrawStone(x, y, status == eTeam.Black ? Color.Black : Color.White);
-
-            DrawLastLayout(x, y, Color.Aqua);
-
-            if (board.ContainsKey(y) == false)
-                board[y] = new Dictionary<int, int>();
-
-            board[y][x] = (int)status;
-
-
-            return true;
+            _renderer.ClearBoardState();
         }
 
         public bool GameResult(GAME_RESULT_NTY nty)

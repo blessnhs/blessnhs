@@ -84,7 +84,7 @@ namespace OMOK
 
         private async void CloseButtonClicked(object sender, EventArgs e)
         {
-           User.myInfo.ai_set_flag = true;
+           User.myInfo.ai_reset_flag = true;
 
             await Navigation.PopAllPopupAsync();
 

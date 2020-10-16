@@ -306,7 +306,7 @@ namespace OMOK.Views
 
         async void OnSingleMatchClicked(object sender, System.EventArgs e)
         {
-            User.myInfo.ai_set_flag = false;
+            User.myInfo.ai_reset_flag = false;
 
             await Navigation.PushModalAsync(new SingleMatch());
         }

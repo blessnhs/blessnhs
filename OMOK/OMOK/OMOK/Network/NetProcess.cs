@@ -38,7 +38,7 @@ namespace OMOK.Network
    
         static public void start()
         {
-            string ip =  "211.212.37.238";//
+            string ip =  "211.212.37.238";//"192.168.0.9";//
 
 
             //연결중이면 안한다. 
@@ -92,9 +92,9 @@ namespace OMOK.Network
                                 if (Math.Abs(res.VarVersion - myversion) > Eps)
                                 {
                                     //첫 검수라 임시 주석 2번째 패치 부터는 활성화
-                                    Xamarin.Essentials.Browser.OpenAsync("https://play.google.com/store/apps/details?id=com.companyname.OMOK");
+                                 //   Xamarin.Essentials.Browser.OpenAsync("https://play.google.com/store/apps/details?id=com.companyname.OMOK");
 
-                                    return;
+                                //    return;
                                 }
 
                                 NetProcess.SendLogin(User.Uid, User.Token);
@@ -190,14 +190,8 @@ namespace OMOK.Network
                               
                                     User.state = PlayerState.Room;
 
+                                    
                                     pRoom = new Room();
-                                    pRoom.ClearBoard();
-
-                                    //방 생성자는 무조건 흑이며 후에 입장자는 백이다.
-                                    pRoom.UpdateTurnBackground(eTeam.Black);
-                                    pRoom.RefreshAim();
-                                    pRoom.InitTimer();
-
                                     page.PushRoomPopup(pRoom);
 
                                 }
@@ -267,9 +261,6 @@ namespace OMOK.Network
                                 {
                                     User.state = PlayerState.Lobby;
 
-                              
-                                    pRoom.ClearBoard();
-
                                     pRoom.ShowLeaveAd();
 
                                     page.PopRoomPopup();
@@ -296,14 +287,6 @@ namespace OMOK.Network
                                     User.IsMyTurn = false;
 
                                     User.state = PlayerState.Room;
-
-                                    pRoom.ClearBoard();
-
-                                    //방 생성자는 무조건 흑이므로 흑에 표시
-                                    pRoom.UpdateTurnBackground(eTeam.Black);
-                                    pRoom.RefreshAim();
-                                    pRoom.InitTimer();
-
                                     page.PushRoomPopup(pRoom);
                                 }
                             }
@@ -488,6 +471,7 @@ namespace OMOK.Network
             {
                VarUid = uid,
                 VarToken = token,
+  //              VarChannel = 1
             };
             using (MemoryStream stream = new MemoryStream())
             {
@@ -513,9 +497,9 @@ namespace OMOK.Network
             using (MemoryStream stream = new MemoryStream())
             {
                 message.WriteTo(stream);
-
                 client.WritePacket((int)PROTOCOL.IdPktBroadcastRoomMessageReq, stream.ToArray(), stream.ToArray().Length);
             }
+             
         }
 
         static public void SendQNS(string msg)
