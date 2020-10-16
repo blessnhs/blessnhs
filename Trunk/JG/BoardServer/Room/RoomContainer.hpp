@@ -193,7 +193,7 @@ template<template<class T> class CreationPolicy> VOID RoomContainer<CreationPoli
 	}
 }
 
-template<template<class T> class CreationPolicy> int RoomContainer<CreationPolicy>::RoomCount()
+template<template<class T> class CreationPolicy> int RoomContainer<CreationPolicy>::Count()
 {
 	int count = 0;
 	for each (auto room in m_RoomMapForLoop)

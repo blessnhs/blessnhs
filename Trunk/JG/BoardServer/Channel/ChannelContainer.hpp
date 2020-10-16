@@ -137,3 +137,14 @@ template<template<class T> class CreationPolicy> bool ChannelContainer<CreationP
 	return false;
 }
 
+template<template<class T> class CreationPolicy> void ChannelContainer<CreationPolicy>::Report()
+{
+	for each(auto channel in m_ChannelMap)
+	{
+		printf("channel id %d\n", channel.second->GetId());
+		printf("usermgr count  %d\n", channel.second->PlayerContainer.Count());
+		printf("roommgr count  %d\n", channel.second->RoomContainer.Count());
+	}
+	
+}
+

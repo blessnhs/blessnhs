@@ -45,3 +45,9 @@ extern atomic<int>		DebugCount;
 	{
 		PLAYERMGR.CheckUserList();
 	}
+
+	
+	VOID BoardCommand::ChannelList(std::string)
+	{
+		CHANNELMGR.Report();
+	}

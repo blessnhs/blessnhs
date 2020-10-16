@@ -33,6 +33,8 @@ public:
 	bool RoomEnterChannel(INT64 Id, ROOM_PTR room);
 	bool RoomLeaveChannel(PLAYER_PTR player);
 
+	void Report();
+
 protected:
 
 	concurrency::concurrent_unordered_map<DWORD, CHANNEL_PTR>		m_ChannelMap;
