@@ -89,6 +89,7 @@ namespace OMOK
             for (int i = 0; i < ConstValue.SIZE + 2; i++)
                 for (int j = 0; j < ConstValue.SIZE + 2; j++)
                     arrBoard[i, j] = (int)V1.LINE;
+       
             arrBoard[(int)ConstValue.CENTER, (int)ConstValue.CENTER] = nStone;
 
         }

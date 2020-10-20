@@ -38,7 +38,7 @@ namespace OMOK.Network
    
         static public void start()
         {
-            string ip =  "211.212.37.238";//"192.168.0.9";//
+            string ip =  /*"211.212.37.238";//*/"192.168.0.9";//
 
 
             //연결중이면 안한다. 
@@ -62,7 +62,7 @@ namespace OMOK.Network
             }
         }
 
-        static Room pRoom = new Room();
+        static Room pRoom = null;
 
         static public void Loop(Lobby page)
         {
@@ -190,7 +190,7 @@ namespace OMOK.Network
                               
                                     User.state = PlayerState.Room;
 
-                                    
+                                    pRoom = null;
                                     pRoom = new Room();
                                     page.PushRoomPopup(pRoom);
 
@@ -265,6 +265,8 @@ namespace OMOK.Network
 
                                     page.PopRoomPopup();
 
+                                    pRoom = null;
+
                                 }
 
                                 page.UpdatePlayerInfo();
@@ -280,7 +282,8 @@ namespace OMOK.Network
                                 if (res.VarCode == ErrorCode.Success)
                                 {
                                     page.ClosePopup();
-                         
+
+                                    pRoom = null;
                                     pRoom = new Room();
 
                                     User.Color = eTeam.White;

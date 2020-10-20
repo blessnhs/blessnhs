@@ -22,6 +22,9 @@ namespace OMOK
     {
         public BoardRenderer _renderer = new BoardRenderer();
 
+        AI _ai = new AI();
+        public bool isPlaying = false;
+
         iAd_RewardVideoView rewardVideo;
 
         int size = 15;
@@ -31,8 +34,6 @@ namespace OMOK
 
         public void InitBoardGrid()
         {
-            size = 15; //오목 15x15
-
             Device.StartTimer(new TimeSpan(0, 0, 1), () =>
             {
                 // do something every 60 seconds
@@ -61,6 +62,10 @@ namespace OMOK
             InitializeComponent();
 
             InitTimer();
+
+            _ai._renderer = _renderer;
+            User.myInfo.ai_reset_flag = true;
+
 
             renjuRuleChecker.initBoard();
 
@@ -100,9 +105,46 @@ namespace OMOK
 
                             if ((DateTime.Now - User.MytrunStartTime).TotalSeconds > 30)
                             {
-                                NetProcess.SendPassThroughMessage(-1, -1, User.Color);
+                             //   NetProcess.SendPassThroughMessage(-1, -1, User.Color);
                             }
                         }
+
+
+                        ///////////////////////////////////////////////////////////////////
+                        if (User.myInfo.ai_reset_flag == true)
+                        {
+                            //흑ai
+                            if (User.Color == eTeam.Black)
+                            {
+                                User.myInfo.ai_rule = 3;
+                                User.myInfo.ai_mode = 1;
+                            }
+                            else//백ai
+                            {
+                                User.myInfo.ai_rule = 3;
+                                User.myInfo.ai_mode = 2;
+                            }
+
+                            _ai.PlayGame(User.myInfo.ai_rule, User.myInfo.ai_mode,true);
+                            isPlaying = true;
+                            User.myInfo.ai_reset_flag = false;
+                           
+                            _renderer.UpdateBattleInfo();
+
+
+                        }
+
+                        if (isPlaying == true)
+                        {
+                            isPlaying = _ai.PlaygameLoop(this, User.myInfo.ai_mode,true);
+
+                            if (isPlaying == false) //종료
+                            {
+                                isPlaying = false;
+
+                            }
+                        }
+
                     }
                     catch (Exception e)
                     {
@@ -110,7 +152,7 @@ namespace OMOK
                     }
                 });
 
-                return true;
+                return !isExist;
             });
 
 
@@ -158,7 +200,8 @@ namespace OMOK
 
             if (CheckValid(x, y) == true) //시간만료면 false
             {
-                _renderer.UpdateStone(x, y, color,false);
+               
+                _renderer.UpdateStone(x, y, color, false);
             }
 
             //check turn
@@ -169,6 +212,10 @@ namespace OMOK
                 }
                 else
                 {
+                    _ai.aix = x;
+                    _ai.aiy = y;
+
+
                     User.IsMyTurn = true;
                     User.MytrunStartTime = DateTime.Now;
                 }
@@ -212,9 +259,11 @@ namespace OMOK
 
             return true;
         }
+        bool isExist = false;
 
         protected override void OnDisappearing()
         {
+            isExist = true;
             NetProcess.SendLeaveRoom(0);
         }
         public void ShowLeaveAd()

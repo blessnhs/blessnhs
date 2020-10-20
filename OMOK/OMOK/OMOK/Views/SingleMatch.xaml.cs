@@ -63,27 +63,24 @@ namespace OMOK.Views
                 {
                    try
                     {
-                       // lock (this)
+                        if (User.myInfo.ai_reset_flag == true)
                         {
-                            if (User.myInfo.ai_reset_flag == true)
+
+                            _ai.PlayGame(User.myInfo.ai_rule, User.myInfo.ai_mode);
+                            isPlaying = true;
+                            User.myInfo.ai_reset_flag = false;
+
+                            _renderer.UpdateBattleInfo();
+                        }
+
+                        if (isPlaying == true)
+                        {
+                            isPlaying = _ai.PlaygameLoop(this,User.myInfo.ai_mode);
+
+                            if (isPlaying == false) //종료
                             {
+                                isPlaying = false;
 
-                                _ai.PlayGame(User.myInfo.ai_rule, User.myInfo.ai_mode);
-                                isPlaying = true;
-                                User.myInfo.ai_reset_flag = false;
-
-                                _renderer.UpdateBattleInfo();
-                            }
-
-                            if (isPlaying == true)
-                            {
-                                isPlaying = _ai.PlaygameLoop(this,User.myInfo.ai_mode);
-
-                                if (isPlaying == false) //종료
-                                {
-                                    isPlaying = false;
-
-                                }
                             }
                         }
                     }
