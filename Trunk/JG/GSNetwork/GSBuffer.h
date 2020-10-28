@@ -11,13 +11,12 @@ public:
 	~GSBuffer(void);
 
 private:
-	BYTE	mBufferPointer[MAX_BUFFER_LENGTH+1];
+	BYTE	*mBufferPointer;
 	DWORD	mLength;
 	DWORD   mPos;
 
 public:
 	BOOL	SetBuffer(BYTE *buffer,INT Size);
-	BOOL	SetBuffer2(BYTE *buffer,INT Size);
 
 	BOOL	SetBuffer();
 	BYTE	*GetBuffer();

@@ -7,33 +7,23 @@ GSBuffer::GSBuffer(void)
 {
 	mLength			= 0;
 	mPos			= 0;
+	mBufferPointer = NULL;
+
 }
 
 GSBuffer::~GSBuffer(void)
 {
+	if (mBufferPointer != NULL)
+		delete mBufferPointer;
 }
 
 BOOL GSBuffer::SetBuffer(BYTE *buffer,INT Size)
 {
-	if(Size >= MAX_BUFFER_LENGTH)
-		Size = MAX_BUFFER_LENGTH;
 
-	memset(mBufferPointer,0,sizeof(mBufferPointer));
+	mBufferPointer = new BYTE[Size+1];
 
 	memcpy(mBufferPointer,buffer,Size);
 	mLength			= Size;
-	return TRUE;
-}
-
-BOOL GSBuffer::SetBuffer2(BYTE *buffer,INT Size)
-{
-	if (!buffer)
-		return FALSE;
-
-	memcpy(mBufferPointer,buffer,Size);
-	//mBufferPointer	= buffer;
-	mLength			= 0;
-
 	return TRUE;
 }
 
