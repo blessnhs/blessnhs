@@ -38,12 +38,10 @@ BOOL GSBoard::Disconnect(GSCLIENT_PTR pSession)
 		////////
 
 		//·Î±×¾Æ¿ô Äõ¸®¸¦ ³¯¸°´Ù.
-		boost::shared_ptr<RequestLogout> pRequest = ALLOCATOR.Create<RequestLogout>();
-		pRequest->Index = pSession->GetPair();
-
+	
 		boost::shared_ptr<Board::MSG_PLAYER_QUERY<RequestLogout>>		PLAYER_MSG = ALLOCATOR.Create<Board::MSG_PLAYER_QUERY<RequestLogout>>();
 		PLAYER_MSG->pSession = pSession;
-		PLAYER_MSG->pRequst = pRequest;
+		PLAYER_MSG->pRequst.Index = pSession->GetPair();
 		PLAYER_MSG->Type = pSession->GetMyDBTP();
 		PLAYER_MSG->SubType = ONQUERY;
 		MAINPROC.RegisterCommand(PLAYER_MSG);
@@ -62,10 +60,8 @@ VOID GSBoard::Accept(GSCLIENT_PTR object)
 BOOL GSBoard::DeleteAllConcurrentUser()
 {
 	//·Î±×¾Æ¿ô Äõ¸®¸¦ ³¯¸°´Ù.
-	boost::shared_ptr<RequestDeleteAllConcurrentUser> pRequest = ALLOCATOR.Create<RequestDeleteAllConcurrentUser>();
 
 	boost::shared_ptr<Board::MSG_PLAYER_QUERY<RequestDeleteAllConcurrentUser>>		PLAYER_MSG = ALLOCATOR.Create<Board::MSG_PLAYER_QUERY<RequestDeleteAllConcurrentUser>>();
-	PLAYER_MSG->pRequst = pRequest;
 	PLAYER_MSG->Type = MSG_TYPE_DB_1;
 	PLAYER_MSG->SubType = ONQUERY;
 	MAINPROC.RegisterCommand(PLAYER_MSG);

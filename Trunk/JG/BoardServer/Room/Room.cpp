@@ -345,17 +345,17 @@ void Room::RecoardResult(PLAYER_PTR Winner, PLAYER_PTR Loser)
 
 		Loser->m_Char[0].UpdateScore(-POINT);
 
-		boost::shared_ptr<RequestPlayerScore> pRequest = ALLOCATOR.Create<RequestPlayerScore>();
-		pRequest->Index = Loser->GetId();
-		pRequest->Win = 0;	pRequest->Lose = 1;	pRequest->Draw = 0; pRequest->Level = Loser->m_Char[0].GetLevel(); pRequest->Score = Loser->m_Char[0].GetScore().GetScorePoint();
-
 		result_nty.set_var_index_1(Loser->GetId()); 
 		result_nty.set_var_level_1(Loser->m_Char[0].GetLevel()); 
 		result_nty.set_var_level_point_1(Loser->m_Char[0].GetScore().GetScorePoint());
 
 		boost::shared_ptr<Board::MSG_PLAYER_QUERY<RequestPlayerScore>>		PLAYER_MSG = ALLOCATOR.Create<Board::MSG_PLAYER_QUERY<RequestPlayerScore>>();
-		PLAYER_MSG->pSession = NULL;
-		PLAYER_MSG->pRequst = pRequest;
+		{
+			PLAYER_MSG->pRequst.Index = Loser->GetId();
+			PLAYER_MSG->pRequst.Win = 0;	PLAYER_MSG->pRequst.Lose = 1;	PLAYER_MSG->pRequst.Draw = 0; PLAYER_MSG->pRequst.Level = Loser->m_Char[0].GetLevel(); 
+			PLAYER_MSG->pRequst.Score = Loser->m_Char[0].GetScore().GetScorePoint();
+
+		}
 		PLAYER_MSG->Type = MSG_TYPE_DB_1;
 		PLAYER_MSG->SubType = ONQUERY;
 		MAINPROC.RegisterCommand(PLAYER_MSG);
@@ -373,17 +373,18 @@ void Room::RecoardResult(PLAYER_PTR Winner, PLAYER_PTR Loser)
 		Winner->m_Char[0].UpdateScore(POINT);
 
 		{
-			boost::shared_ptr<RequestPlayerScore> pRequest = ALLOCATOR.Create<RequestPlayerScore>();
-			pRequest->Index = Winner->GetId();
-			pRequest->Win = 1;	pRequest->Lose = 0;	pRequest->Draw = 0; pRequest->Level = Winner->m_Char[0].GetLevel(); pRequest->Score = Winner->m_Char[0].GetScore().GetScorePoint();
 
 			result_nty.set_var_index_2(Winner->GetId());
 			result_nty.set_var_level_2(Winner->m_Char[0].GetLevel());
 			result_nty.set_var_level_point_2(Winner->m_Char[0].GetScore().GetScorePoint());
 
 			boost::shared_ptr<Board::MSG_PLAYER_QUERY<RequestPlayerScore>>		PLAYER_MSG = ALLOCATOR.Create<Board::MSG_PLAYER_QUERY<RequestPlayerScore>>();
-			PLAYER_MSG->pSession = NULL;
-			PLAYER_MSG->pRequst = pRequest;
+			{
+				PLAYER_MSG->pRequst.Index = Winner->GetId();
+				PLAYER_MSG->pRequst.Win = 1;	PLAYER_MSG->pRequst.Lose = 0;	PLAYER_MSG->pRequst.Draw = 0; PLAYER_MSG->pRequst.Level = Winner->m_Char[0].GetLevel();
+				PLAYER_MSG->pRequst.Score = Winner->m_Char[0].GetScore().GetScorePoint();
+
+			}
 			PLAYER_MSG->Type = MSG_TYPE_DB_1;
 			PLAYER_MSG->SubType = ONQUERY;
 			MAINPROC.RegisterCommand(PLAYER_MSG);

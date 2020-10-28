@@ -65,8 +65,6 @@ namespace Board	{
 
 		GSCLIENT_PTR pSession;
 
-		boost::shared_ptr<RequestVersion> pRequst;
-
 		void Execute(LPVOID Param)
 		{
 			VERSION_RES res;
@@ -108,9 +106,6 @@ namespace Board	{
 		MSG_PLAYER_QUERY() { }
 		~MSG_PLAYER_QUERY() {}
 
-	
-		boost::shared_ptr<CalcRank> pRequst;
-
 		void Execute(LPVOID Param)
 		{
 			DBPROCESS_CER_PTR pProcess = DBPROCESSCONTAINER_CER.Search(Type);
@@ -136,7 +131,7 @@ namespace Board	{
 		MSG_PLAYER_QUERY() { }
 		~MSG_PLAYER_QUERY() {}
 
-		boost::shared_ptr<NickNameCheck> pRequst;
+		NickNameCheck pRequst;
 		GSCLIENT_PTR pSession;
 
 		void Execute(LPVOID Param)
@@ -149,11 +144,11 @@ namespace Board	{
 
 			CHECK_NICKNAME_RES res;
 			
-			bool ret = pProcess->NickNameCheck(pRequst->NickName, pRequst->Index);
+			bool ret = pProcess->NickNameCheck(pRequst.NickName, pRequst.Index);
 			ErrorCode code = ret == true ? ErrorCode::Success : ErrorCode::DataBaseError;
 
 			res.set_var_code(code);
-			res.set_var_name(pRequst->NickName);
+			res.set_var_name(pRequst.NickName);
 
 			SEND_PROTO_BUFFER(res, pSession)
 
@@ -172,8 +167,6 @@ namespace Board	{
 		~MSG_PLAYER_QUERY() {}
 
 		GSCLIENT_PTR pSession;
-
-		boost::shared_ptr<RequestRank> pRequst;
 
 		void Execute(LPVOID Param)
 		{
@@ -230,8 +223,6 @@ namespace Board	{
 
 		GSCLIENT_PTR pSession;
 
-		boost::shared_ptr<RequestDeleteAllConcurrentUser> pRequst;
-
 		void Execute(LPVOID Param)
 		{
 			DBPROCESS_CER_PTR pProcess = DBPROCESSCONTAINER_CER.Search(Type);
@@ -256,7 +247,7 @@ namespace Board	{
 
 		GSCLIENT_PTR pSession;
 
-		boost::shared_ptr<RequestQNS> pRequst;
+		RequestQNS pRequst;
 
 		void Execute(LPVOID Param)
 		{
@@ -266,9 +257,9 @@ namespace Board	{
 				return;
 			}
 
-			boost::replace_all(pRequst->contents, "'", "''");
+			boost::replace_all(pRequst.contents, "'", "''");
 
-			int ret = pProcess->UpdaetQNS(pRequst->Index, pRequst->contents);
+			int ret = pProcess->UpdaetQNS(pRequst.Index, pRequst.contents);
 
 			ErrorCode code = ret == 0 ? ErrorCode::Success : ErrorCode::DataBaseError;
 
@@ -290,7 +281,7 @@ namespace Board	{
 
 		GSCLIENT_PTR pSession;
 
-		boost::shared_ptr<RequestLogout> pRequst;
+		RequestLogout pRequst;
 
 		void Execute(LPVOID Param)
 		{
@@ -300,7 +291,7 @@ namespace Board	{
 				return;
 			}
 
-			pProcess->ProcedureUserLogout(pRequst->Index);
+			pProcess->ProcedureUserLogout(pRequst.Index);
 		}
 
 		void Undo() {}
@@ -315,8 +306,6 @@ namespace Board	{
 		~MSG_PLAYER_QUERY() {}
 
 		GSCLIENT_PTR pSession;
-
-		boost::shared_ptr<RequestNotice> pRequst;
 
 		void Execute(LPVOID Param)
 		{
@@ -354,7 +343,7 @@ namespace Board	{
 
 		GSCLIENT_PTR pSession;
 
-		boost::shared_ptr<RequestPlayerAuth> pRequst;
+		RequestPlayerAuth pRequst;
 
 		std::vector<std::wstring> http_out;
 
@@ -450,9 +439,9 @@ namespace Board	{
 						return;
 				}
 
-				if (pRequst->Token.size() == 0 || pRequst->Token.size() < 10)
+				if (pRequst.Token.size() == 0 || pRequst.Token.size() < 10)
 				{
-					printf("DBPROCESSCONTAINER_CER.Search token size error %d \n", pRequst->Token.size());
+					printf("DBPROCESSCONTAINER_CER.Search token size error %d \n", pRequst.Token.size());
 
 					res.set_var_code(DataBaseError);
 
@@ -464,7 +453,7 @@ namespace Board	{
 
 				for (int i = 0; i < 1; i++)
 				{
-					GetGoogleAuth(pRequst->Token.c_str());
+					GetGoogleAuth(pRequst.Token.c_str());
 
 					if (http_out.size() == 6)
 						break;
@@ -568,7 +557,7 @@ namespace Board	{
 
 				SEND_PROTO_BUFFER(res, pSession)
 
-				pNewPlayer->SetChannel(pRequst->channel);
+				pNewPlayer->SetChannel(pRequst.channel);
 			}
 			catch (...)
 			{
@@ -606,11 +595,9 @@ namespace Board	{
 		MSG_PLAYER_QUERY() {  }
 		~MSG_PLAYER_QUERY() {}
 
-		GSCLIENT_PTR		pSession;
-
 		DBPROCESS_CER_PTR   pProcess;
 
-		boost::shared_ptr<RequestPlayerScore> pRequst;
+		RequestPlayerScore pRequst;
 
 		void Execute(LPVOID Param) 
 		{
@@ -621,11 +608,8 @@ namespace Board	{
 				return;
 			}
 
-			if (pRequst == NULL)
-				return;
-
 			// 로그인 절차 : 아이디의 접속확인 및 인증키값을 가져온다.
-			int nRet = pProcess->UpdaetPlayerScore(pRequst->Index, pRequst->Win, pRequst->Lose, pRequst->Draw, pRequst->Level, pRequst->Score);
+			int nRet = pProcess->UpdaetPlayerScore(pRequst.Index, pRequst.Win, pRequst.Lose, pRequst.Draw, pRequst.Level, pRequst.Score);
 			if (nRet != 0)
 			{
 				printf("UpdaetPlayerScore nRet is not 0\n");

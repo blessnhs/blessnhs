@@ -66,14 +66,12 @@ VOID BoardProcess::CHECK_NICKNAME(LPVOID Data, DWORD Length, boost::shared_ptr<G
 	if (_result_, nickname.var_name().size() <= 0 || nickname.var_name().size() >= 20)
 		return;
 
-	//로그인 쿼리를 날린다.
-	boost::shared_ptr<NickNameCheck> pRequest = ALLOCATOR.Create<NickNameCheck>();
-	pRequest->NickName = nickname.var_name();
-	pRequest->Index = Client->GetPair();
-
 	boost::shared_ptr<Board::MSG_PLAYER_QUERY<NickNameCheck>>		PLAYER_MSG = ALLOCATOR.Create<Board::MSG_PLAYER_QUERY<NickNameCheck>>();
 	PLAYER_MSG->pSession = Client;
-	PLAYER_MSG->pRequst = pRequest;
+	{
+		PLAYER_MSG->pRequst.NickName = nickname.var_name();
+		PLAYER_MSG->pRequst.Index = Client->GetPair();
+	}
 	PLAYER_MSG->Type = Client->GetMyDBTP();
 	PLAYER_MSG->SubType = ONQUERY;
 	MAINPROC.RegisterCommand(PLAYER_MSG);
@@ -83,12 +81,9 @@ VOID BoardProcess::NOTICE(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient>
 {
 	DECLARE_RECV_TYPE(NOTICE_REQ, version)
 
-	//로그인 쿼리를 날린다.
-	boost::shared_ptr<RequestNotice> pRequest = ALLOCATOR.Create<RequestNotice>();
 
 	boost::shared_ptr<Board::MSG_PLAYER_QUERY<RequestNotice>>		PLAYER_MSG = ALLOCATOR.Create<Board::MSG_PLAYER_QUERY<RequestNotice>>();
 	PLAYER_MSG->pSession = Client;
-	PLAYER_MSG->pRequst = pRequest;
 	PLAYER_MSG->Type = Client->GetMyDBTP();
 	PLAYER_MSG->SubType = ONQUERY;
 	MAINPROC.RegisterCommand(PLAYER_MSG);
@@ -126,15 +121,15 @@ VOID BoardProcess::LOGIN_PLAYER(LPVOID Data, DWORD Length, boost::shared_ptr<GSC
 	if (_result_, login.var_uid().size() >= 2000 || login.var_token().size() >= 2000)
 		return;
 
-	//로그인 쿼리를 날린다.
-	boost::shared_ptr<RequestPlayerAuth> pRequest = ALLOCATOR.Create<RequestPlayerAuth>();
-	pRequest->Uid.assign(login.var_uid().begin(), login.var_uid().end());
-	pRequest->Token.assign(login.var_token().begin(), login.var_token().end());
-	pRequest->channel = 1;// login.var_channel();
-
 	boost::shared_ptr<Board::MSG_PLAYER_QUERY<RequestPlayerAuth>>		PLAYER_MSG = ALLOCATOR.Create<Board::MSG_PLAYER_QUERY<RequestPlayerAuth>>();
 	PLAYER_MSG->pSession = Client;
-	PLAYER_MSG->pRequst = pRequest;
+
+	{
+		PLAYER_MSG->pRequst.Uid.assign(login.var_uid().begin(), login.var_uid().end());
+		PLAYER_MSG->pRequst.Token.assign(login.var_token().begin(), login.var_token().end());
+		PLAYER_MSG->pRequst.channel = 1;// login.var_channel();
+	}
+
 	PLAYER_MSG->Type = Client->GetMyDBTP();
 	PLAYER_MSG->SubType = ONQUERY; 
 	MAINPROC.RegisterCommand(PLAYER_MSG);
@@ -223,13 +218,11 @@ VOID BoardProcess::QNS(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Cl
 		return;
 	}
 
-	//로그인 쿼리를 날린다.
-	boost::shared_ptr<RequestQNS> pRequest = ALLOCATOR.Create<RequestQNS>();
-	pRequest->Index = pPlayer->GetId();
-	pRequest->contents = message.var_message();
-
 	boost::shared_ptr<Board::MSG_PLAYER_QUERY<RequestQNS>>		PLAYER_MSG = ALLOCATOR.Create<Board::MSG_PLAYER_QUERY<RequestQNS>>();
-	PLAYER_MSG->pRequst = pRequest;
+	{
+		PLAYER_MSG->pRequst.Index = pPlayer->GetId();
+		PLAYER_MSG->pRequst.contents = message.var_message();
+	}
 	PLAYER_MSG->Type = Client->GetMyDBTP();
 	PLAYER_MSG->SubType = ONQUERY;
 	PLAYER_MSG->pSession = Client;
@@ -311,12 +304,8 @@ VOID BoardProcess::ROOM_PASSTHROUGH(LPVOID Data, DWORD Length, boost::shared_ptr
 
 VOID BoardProcess::RANK(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client)
 {
-	//로그인 쿼리를 날린다.
-	boost::shared_ptr<RequestRank> pRequest = ALLOCATOR.Create<RequestRank>();
-
 	boost::shared_ptr<Board::MSG_PLAYER_QUERY<RequestRank>>		PLAYER_MSG = ALLOCATOR.Create<Board::MSG_PLAYER_QUERY<RequestRank>>();
 	PLAYER_MSG->pSession = Client;
-	PLAYER_MSG->pRequst = pRequest;
 	PLAYER_MSG->Type = Client->GetMyDBTP();
 	PLAYER_MSG->SubType = ONQUERY;
 	MAINPROC.RegisterCommand(PLAYER_MSG);
