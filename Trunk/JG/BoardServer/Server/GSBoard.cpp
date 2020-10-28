@@ -77,7 +77,7 @@ BOOL GSBoard::Initialize()
 
 	SYSTEM_INFO SystemInfo; 
 	GetSystemInfo(&SystemInfo);
-	DWORD dwThreadNum = 2*SystemInfo.dwNumberOfProcessors;
+	WORD dwThreadNum = 2*SystemInfo.dwNumberOfProcessors;
 
 	GSArgument _arg;
 
