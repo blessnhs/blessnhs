@@ -23,6 +23,10 @@ struct XDATA
 	DWORD Length;
 	WORD MainId;
 	WORD SubId;
+
+	//udp¸¸ ÇÊ¿ä
+	LPSTR LemoteAddress;
+	WORD RemotePort;
 };
 
 class GSPacket 

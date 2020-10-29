@@ -83,7 +83,8 @@ VOID	GSPacketUDP::MakePacket(LPSTR LemoteAddress,WORD RemotePort,DWORD dwDataLen
 			pBuffer->m_Buffer.SetBuffer(Packet,dwDataLength);
 			pBuffer->MainId = MainProtocol;
 			pBuffer->Length = dwDataLength;
-
+			pBuffer->LemoteAddress = LemoteAddress;
+			pBuffer->RemotePort = RemotePort;
 			m_PacketList.push(pBuffer);
 
 			MakeMsg(MainProtocol,SubProtocol,dwPacketLength);
@@ -143,20 +144,19 @@ BOOL	GSPacketUDP::WriteToPacket(LPCSTR remoteAddress, USHORT remotePort, WORD Ma
 	// WriteQueue를 이용해서 패킷이 전송 완료가 되었을까지 메모리를 살려둔다.
 
 #ifndef CLIENT_MODULE
-	boost::shared_ptr<WRITE_PACKET_INFO> pWriteData(m_WritePool.alloc());
+	//굳이 넣을 필요 없음
+
+	/*boost::shared_ptr<WRITE_PACKET_INFO> pWriteData(m_WritePool.alloc());
 
 	CopyMemory(pWriteData->Data,TempBuffer,sizeof(pWriteData->Data));
 	pWriteData->DataLength = PacketLength;
 	pWriteData->Object = this;
-	
-	m_WrietQueue.push(pWriteData); 
-#endif
 
-#ifndef CLIENT_MODULE
-	return GSSocketUDP::WriteTo(remoteAddress, remotePort, pWriteData->Data, PacketLength);
-#else
-	return GSSocketUDP::WriteTo(remoteAddress, remotePort, TempBuffer, PacketLength);
+	m_WrietQueue.push(pWriteData); */
 #endif
+	return GSSocketUDP::WriteTo2((LPSTR)remoteAddress, remotePort, TempBuffer, PacketLength);
+
+//	return GSSocketUDP::WriteTo(remoteAddress, remotePort, TempBuffer, PacketLength);
 }
 
 BOOL GSPacketUDP::WriteComplete(VOID)
