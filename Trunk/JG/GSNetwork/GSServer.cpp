@@ -63,16 +63,30 @@ VOID GSServer::OnRead(int client_id, DWORD dataLength)
 		return;
 	}
 
-	pClient->GetTCPSocket()->m_OLP_REMAIN_COUNT_REC.fetch_sub(1);
-
-	pClient->OnRecv(dataLength,pClient);
-
-	if (!pClient->InitializeReadForIocp())
+	if (pClient->GetCreateType() == TCP)
 	{
-		this->AddPlayerCount(1);
-		OnDisconnected(client_id);	//add 	
-	}
+		pClient->GetTCPSocket()->m_OLP_REMAIN_COUNT_REC.fetch_sub(1);
 
+		pClient->OnRecv(dataLength, pClient);
+
+		if (!pClient->InitializeReadForIocp())
+		{
+			this->AddPlayerCount(1);
+			OnDisconnected(client_id);	//add 	
+		}
+	}
+	else if (pClient->GetCreateType() == UDP)
+	{
+		pClient->OnRecv(dataLength, pClient);
+
+		if (!pClient->InitializeReadForIocp())
+		{
+		}
+	}
+	else
+	{
+		printf("%s cant found socket type\n", __LINE__, pClient->GetCreateType());
+	}
 }
 
 VOID GSServer::OnWrote(int client_id, DWORD dataLength)
@@ -253,15 +267,17 @@ BOOL GSServer::BeginTCP()
 BOOL GSServer::BeginUDP()
 {
 //	if (!GSIocp::Initialize()) return FALSE;
+	//test
+	m_Arguments.m_UdpPorts.push_back(30000);
+	m_Arguments.m_UdpPorts.push_back(30001);
+	m_Arguments.m_UdpPorts.push_back(30002);
 
 	int MaxPort = m_Arguments.m_UdpPorts.size();
 
 	for(int i=0;i<MaxPort;i++)
 	{
 		auto UDPListenPort = boost::make_shared<GSCLIENT>();
-		UDPListenPort->SetId(IncClinetId());
-
-		UDPListenPort->SetId(IncClinetId());
+		UDPListenPort->SetId(GetClientMgr().IncClientId());
 		UDPListenPort->Create(UDP);
 	
 		if (!UDPListenPort->GetUDPSocket()->Initialize())
@@ -290,6 +306,7 @@ BOOL GSServer::BeginUDP()
 		m_FreePorts.push(UDPListenPort->GetUDPSocket());
 		m_UDPListenPorts[UDPListenPort->GetId()] = UDPListenPort;
 
+		m_ClientMgr.AddClient(UDPListenPort);
 	}
 
 	return TRUE;
@@ -307,15 +324,6 @@ GSCLIENT_PTR	GSServer::GetClient(DWORD _Id)
 	auto client = m_ClientMgr.GetClient(_Id);
 
 	return client;
-}
-
-int GSServer::IncClinetId()
-{
-	static atomic<int> intAtomic = 0;
-
-	intAtomic.fetch_add(1);       
-
-	return intAtomic;
 }
 
 }	}

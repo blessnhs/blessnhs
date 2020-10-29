@@ -19,7 +19,7 @@ public:
 		int rows = csbi.srWindow.Bottom - csbi.srWindow.Top + 1;
 
 		COORD pos;
-		pos.X = columns - strlen(message);
+		pos.X = (SHORT)(columns - strlen(message));
 		pos.Y = (csbi.dwCursorPosition.Y - rows > 0 ? csbi.dwCursorPosition.Y - rows : 0) + 1;
 
 		SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), pos);

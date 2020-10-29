@@ -73,9 +73,6 @@ public:
 	void											SetAliveTime(DWORD Time);
 	DWORD											GetAliveTime();
 
-	void											SetType(BYTE _Type);
-	BYTE											GetType();
-
 	void											IncDBStamp();
 	void											DecDBStamp();
 	DWORD											GetDBStamp();
@@ -105,6 +102,8 @@ public:
 
 	VOID											Close();
 
+	BYTE											GetCreateType();
+
 private:
 
 
@@ -116,8 +115,6 @@ private:
 	boost::shared_ptr<GSPacketTCP>					m_TCPSocket;
 	boost::shared_ptr<GSPacketUDP>					m_UDPSocket;
 
-	BYTE											m_Type;			//server, player
-
 	DWORD											m_AliveTime;
 
 	BOOL											m_WillBeTerminated;
@@ -127,7 +124,7 @@ private:
 	std::map<std::wstring,stPacketContext>			m_CheckAbuseMap;
 	std::map<std::wstring,bool>						m_CheckCompleteMap;
 
-	DWORD 											m_PairPlayerId;
+	INT64 											m_PairPlayerId;
 
 public:
 	LPVOID											m_GSServer;

@@ -43,11 +43,10 @@ VOID GSClientMgr::CheckAliveTime()
 			int Diff = system_tick - (client_time + server_check_time);
 
 			if ((client_time + server_check_time) <= system_tick)
-				if (client.second->GetType() == _PLAYER_)
-				{
-				//	client.second->OnDisconnect(client.second);
-					client.second->Close();
-				}
+			{
+			//	client.second->OnDisconnect(client.second);
+				client.second->Close();
+			}
 		}
 	}
 
@@ -109,7 +108,7 @@ VOID GSClientMgr::CheckAliveTime()
 
 		char msg[256];
 		
-		sprintf(msg,"[Conncted Socket : %d] [Debug Count : %d] [Total Connect : %d] [Ttoal NewConnect : %d][Total Disconnect %d]\n",
+		sprintf_s(msg,256,"[Conncted Socket : %d] [Debug Count : %d] [Total Connect : %d] [Ttoal NewConnect : %d][Total Disconnect %d]\n",
 				pServer->CurrentPlayerCount(), DebugCount.fetch_add(0), ConnectCount.fetch_add(0), NewConnectount.fetch_add(0), DisConnectCount.fetch_add(0));
 
 		ConsoleHelper::DebugConsoleString(0, msg);
@@ -227,9 +226,10 @@ BOOL GSClientMgr::DelClientLoop(int id)
 BOOL GSClientMgr::AddClient(GSCLIENT_PTR newclient)
 {
 	CThreadSync sync;
-
+	
 	m_Clients[newclient->GetId()] = newclient;
 
+	newclient->m_GSServer = this->m_GSServer;
 	AddClientLoop(newclient);
 
 	return TRUE;
@@ -280,14 +280,12 @@ BOOL GSClientMgr::NewClient(SOCKET ListenSocket, LPVOID pServer)
 		m_MaxClients += NewClient;
 	}
 	
-	for (DWORD i = 0; i < NewClient; i++)
+	for (int i = 0; i < NewClient; i++)
 	{
 		GSCLIENT_PTR pClient = boost::make_shared<GSClient>();
 		pClient->SetId(IncClientId());
 		pClient->Create(TCP);
 		pClient->m_GSServer = pServer;
-
-		pClient->SetType(_PLAYER_);
 
 		if (AddClient(pClient) == FALSE)
 		{
@@ -342,7 +340,6 @@ BOOL GSClientMgr::Begin(SOCKET ListenSocket,WORD MaxClients,LPVOID pServer)
 			return FALSE;
 		}
 
-		pClient->SetType(_PLAYER_);
 		AddClient(pClient);
 	}
 

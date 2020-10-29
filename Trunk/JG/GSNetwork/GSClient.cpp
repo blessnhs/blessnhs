@@ -42,7 +42,7 @@ GSClient::~GSClient(void)
 	int count = GetTCPSocket()->m_OLP_REMAIN_COUNT_ACC + GetTCPSocket()->m_OLP_REMAIN_COUNT_REC + GetTCPSocket()->m_OLP_REMAIN_COUNT_SND;
 	if (count > 0)
 	{
-		printf("alert remain overlap event count acc %d recv %d send %d\n", GetTCPSocket()->m_OLP_REMAIN_COUNT_ACC.fetch_add(0), GetTCPSocket()->m_OLP_REMAIN_COUNT_REC.fetch_add(0), GetTCPSocket()->m_OLP_REMAIN_COUNT_SND.fetch_add(0));
+		printf("GetId() %d alert remain overlap event count acc %d recv %d send %d\n",GetId(), GetTCPSocket()->m_OLP_REMAIN_COUNT_ACC.fetch_add(0), GetTCPSocket()->m_OLP_REMAIN_COUNT_REC.fetch_add(0), GetTCPSocket()->m_OLP_REMAIN_COUNT_SND.fetch_add(0));
 	}
 
 	DebugCount.fetch_sub(1);
@@ -200,16 +200,6 @@ void GSClient::SetProcess(boost::shared_ptr<IProcess<int>> Process)
 		m_Process->pOwnerId = GetId();
 }
 
-void GSClient::SetType(BYTE _Type)
-{
-	m_Type = _Type;
-}
-
-BYTE GSClient::GetType()
-{
-	return m_Type;
-}
-
 VOID GSClient::OnResponse(LPVOID Data)
 {
 }
@@ -275,6 +265,11 @@ VOID GSClient::Close()
 	closesocket(GetSocket());
 }
 
+BYTE GSClient::GetCreateType()
+{
+	return m_CreateType;
+}
+
 VOID GSClient::ProcPacket(boost::shared_ptr<GSClient> pClient)
 {
 	CThreadSync Sync;
@@ -283,22 +278,45 @@ VOID GSClient::ProcPacket(boost::shared_ptr<GSClient> pClient)
 
 	SetAliveTime(GetTickCount());
 
-	int size = GetTCPSocket()->m_PacketList.unsafe_size();
-
-	while(GetTCPSocket()->m_PacketList.try_pop(pBuffer) == TRUE)
+	if (GetCreateType() == TCP)
 	{
-		size = (int)GetTCPSocket()->m_PacketList.unsafe_size();
+		int size = (int)GetTCPSocket()->m_PacketList.unsafe_size();
 
-		if(pBuffer == NULL) return ;
-
-		if(GetProcess() == NULL)
+		while (GetTCPSocket()->m_PacketList.try_pop(pBuffer) == TRUE)
 		{
-			printf("set process is null");
-			return ;
-		}
+			size = (int)GetTCPSocket()->m_PacketList.unsafe_size();
 
-		GetProcess()->Process(pBuffer->m_Buffer.GetBuffer(),pBuffer->Length,pBuffer->MainId,pBuffer->SubId, pClient);
+			if (pBuffer == NULL) return;
+
+			if (GetProcess() == NULL)
+			{
+				printf("set process is null");
+				return;
+			}
+
+			GetProcess()->Process(pBuffer->m_Buffer.GetBuffer(), pBuffer->Length, pBuffer->MainId, pBuffer->SubId, pClient);
+		}
 	}
+	else if (GetCreateType() == UDP)
+	{
+		int size = (int)GetUDPSocket()->m_PacketList.unsafe_size();
+
+		while (GetUDPSocket()->m_PacketList.try_pop(pBuffer) == TRUE)
+		{
+			size = (int)GetUDPSocket()->m_PacketList.unsafe_size();
+
+			if (pBuffer == NULL) return;
+
+			if (GetProcess() == NULL)
+			{
+				printf("set process is null");
+				return;
+			}
+
+			GetProcess()->Process(pBuffer->m_Buffer.GetBuffer(), pBuffer->Length, pBuffer->MainId, pBuffer->SubId, pClient);
+		}
+	}
+
 }
 
 VOID GSClient::ProcDisconnect(boost::shared_ptr<GSClient> pClient,bool isForce)
@@ -312,7 +330,7 @@ VOID GSClient::ProcDisconnect(boost::shared_ptr<GSClient> pClient,bool isForce)
 	//그래서 그넘들은 종료 처리를 해저야하기 때문에 아래에서 리턴시키면 안된다.
 	if(GetConnected() == FALSE && isForce == false && this->GetProcess() != NULL)
 	{
-		printf("Already Disconnected socket  %d %ld\n",GetSocket(),GetId());
+		printf("Already Disconnected socket  %d %I64d\n",GetSocket(),GetId());
 		return ;
 	}
 
@@ -381,9 +399,22 @@ void GSClient::OnRecv(DWORD Length, boost::shared_ptr<GSClient> client)
 	WORD  MainProtocol = 0,SubProtocol = 0;
 	DWORD dwPacketLength = 0;
 
-	GetTCPSocket()->MakePacket(Length,MainProtocol,SubProtocol,dwPacketLength);
+	if (client->GetCreateType() == TCP)
+	{
 
-	TakeMsg(client);
+		GetTCPSocket()->MakePacket(Length, MainProtocol, SubProtocol, dwPacketLength);
+
+		TakeMsg(client);
+	}
+	else if (client->GetCreateType() == UDP)
+	{
+		CHAR	RemoteAddress[32] = { 0, };
+		USHORT	RemotePort = 0;
+	
+		GetUDPSocket()->MakePacket(RemoteAddress, RemotePort, Length, MainProtocol, SubProtocol, dwPacketLength);
+
+		TakeMsg(client);
+	}
 }
 
 void GSClient::OnDisconnect(boost::shared_ptr<GSClient> client, bool isForce)

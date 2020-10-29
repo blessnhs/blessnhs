@@ -60,7 +60,6 @@ public:
 	}
 
 	GSCLIENT_PTR												  GetClient(DWORD _Id);
-	int															  IncClinetId();
 
 	virtual BOOL												  Disconnect(GSCLIENT_PTR object) = 0;
 	virtual VOID												  Accept(GSCLIENT_PTR object) = 0;

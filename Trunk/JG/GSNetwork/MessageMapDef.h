@@ -21,7 +21,7 @@ typedef void (SESSIONNAME::*NETFUNC)(LPVOID,DWORD,boost::shared_ptr<GSClient>);	
 {	\
 	if(SESSION->GetConnected() == true)	\
 	{	\
-	int _bufSize__ = NAME.ByteSizeLong();	\
+	size_t _bufSize__ = NAME.ByteSizeLong();	\
 	BYTE *_arr_send_ = new BYTE[_bufSize__];	\
 	google::protobuf::io::ArrayOutputStream os(_arr_send_, _bufSize__);	\
 	NAME.SerializeToZeroCopyStream(&os);	\

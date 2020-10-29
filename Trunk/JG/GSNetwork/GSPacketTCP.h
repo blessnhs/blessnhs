@@ -16,7 +16,7 @@ public:
 	BOOL	Termination(VOID);
 	
 	BOOL	ReadPacket(DWORD readLength);
-	BOOL	ReadPacketForEventSelect(VOID);
+	BOOL	ReadPacketForEventSelect();
 			
 	BOOL    SendPacking(LPVOID Packet,DWORD Size);
 	BOOL	Send(LPVOID Packet,DWORD Size);

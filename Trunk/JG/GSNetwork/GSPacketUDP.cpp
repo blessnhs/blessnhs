@@ -188,22 +188,14 @@ BOOL	GSPacketUDP::GetPacket(LPSTR remoteAddress, USHORT remotePort,WORD &MainPro
 	if (!packet)
 		return FALSE;
 
-	if (m_RemainLength < sizeof(WORD))
+	if (m_RemainLength < sizeof(WORD) + sizeof(WORD) + sizeof(WORD) + sizeof(DWORD))
 		return FALSE;
 
-	memcpy(&MainProtocol, m_PacketBuffer, sizeof(WORD));
-	
-//	INT PacketLength = 0;
-//	memcpy(&PacketLength, m_PacketBuffer, sizeof(WORD));
+	memcpy(&MainProtocol, m_PacketBuffer + sizeof(WORD), sizeof(WORD));
+		
+	dataLength = m_RemainLength - sizeof(WORD) - sizeof(WORD) - sizeof(WORD) - sizeof(DWORD);
 
-/*f (PacketLength > MAX_BUFFER_LENGTH || PacketLength <= 0) // Invalid Packet
-	{
-		m_RemainLength = 0;
-
-		return FALSE;
-	}*/
-
-	memcpy(packet, m_PacketBuffer+sizeof(WORD), dataLength - sizeof(WORD));
+	memcpy(packet, m_PacketBuffer+ sizeof(WORD) + sizeof(WORD) + sizeof(WORD) + sizeof(DWORD), dataLength - sizeof(WORD) + sizeof(WORD) + sizeof(WORD) + sizeof(DWORD));
 	m_RemainLength = 0;
 
 	return TRUE;
