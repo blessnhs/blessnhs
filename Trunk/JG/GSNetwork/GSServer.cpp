@@ -81,6 +81,7 @@ VOID GSServer::OnRead(int client_id, DWORD dataLength)
 
 		if (!pClient->InitializeReadForIocp())
 		{
+			printf("%s InitializeReadForIocp Fail\n", __LINE__);
 		}
 	}
 	else
