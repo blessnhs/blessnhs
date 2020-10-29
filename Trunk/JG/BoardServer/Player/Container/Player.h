@@ -17,7 +17,7 @@ public:
 	class Account
 	{
 	public:
-		Account() {}
+		Account() { RemoteUdpPort = 0; }
 		~Account() {}
 
 		std::string& GetName() { return m_Name;	}
@@ -38,6 +38,12 @@ public:
 		std::string m_FlatformId;
 		std::string m_EMail;
 		std::string m_Picture_url;
+	
+	public:
+
+		std::string RemoteUdpAddress;
+		int			RemoteUdpPort;
+
 	};
 
 	VOID SetChannel(DWORD _id);
