@@ -15,13 +15,13 @@ public:
 	BOOL	Initialize(VOID);
 	BOOL	Termination(VOID);
 
-	BOOL	ReadFromPacketForIocp(LPSTR remoteAddress, USHORT &remotePort, DWORD readLength);
+	BOOL	ReadFromPacketForIocp(LPSTR& remoteAddress, USHORT &remotePort, DWORD readLength);
 	BOOL	ReadFromPacketForEventSelect(LPSTR remoteAddress, USHORT &remotePort);
 
 	BOOL	WriteToPacket(LPCSTR remoteAddress, USHORT remotePort, WORD MainProtocol, WORD SubProtocol,const BYTE *packet, WORD packetLength);
 	BOOL	WriteComplete(VOID);
 
-	VOID	MakePacket(LPSTR LemoteAddress,WORD RemotePort,DWORD dwDataLength,WORD &Mainprotocol, WORD &Subprotocol,DWORD &dataLength);
+	VOID	MakePacket(DWORD dwDataLength,WORD &Mainprotocol, WORD &Subprotocol,DWORD &dataLength);
 	virtual VOID MakeMsg(WORD Mainprotocol, WORD Subprotocol,DWORD dataLength) {};
 
 	BOOL	ResetUdp(VOID);

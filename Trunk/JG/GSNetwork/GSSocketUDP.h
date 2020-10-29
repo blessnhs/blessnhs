@@ -17,7 +17,7 @@ public:
 
 	BOOL InitializeReadFromForIocp(VOID);
 
-	BOOL ReadFromForIocp(LPSTR remoteAddress, USHORT &remotePort, BYTE *data, DWORD &dataLength);
+	BOOL ReadFromForIocp(LPSTR& remoteAddress, USHORT &remotePort, BYTE *data, DWORD &dataLength);
 	BOOL ReadFromForEventSelect(LPSTR remoteAddress, USHORT &remotePort, BYTE *data, DWORD &dataLength);
 	BOOL WriteTo(LPCSTR remoteAddress, USHORT remotePort, BYTE *data, DWORD dataLength);
 	BOOL WriteTo2(LPSTR remoteAddress, USHORT remotePort, BYTE *data, DWORD dataLength);

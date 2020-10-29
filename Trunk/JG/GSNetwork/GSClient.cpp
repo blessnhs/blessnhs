@@ -309,7 +309,10 @@ VOID GSClient::ProcPacket(boost::shared_ptr<GSClient> pClient)
 
 			if (GetProcess() == NULL)
 			{
-				printf("set process is null");
+				printf("set process is null\n");
+
+				//echo
+				GetUDPSocket()->WriteTo2(const_cast<char *>(pBuffer->LemoteAddress.c_str()), pBuffer->RemotePort, pBuffer->m_Buffer.GetBuffer(), pBuffer->Length);
 				return;
 			}
 
@@ -408,10 +411,7 @@ void GSClient::OnRecv(DWORD Length, boost::shared_ptr<GSClient> client)
 	}
 	else if (client->GetCreateType() == UDP)
 	{
-		CHAR	RemoteAddress[32] = { 0, };
-		USHORT	RemotePort = 0;
-	
-		GetUDPSocket()->MakePacket(RemoteAddress, RemotePort, Length, MainProtocol, SubProtocol, dwPacketLength);
+		GetUDPSocket()->MakePacket(Length, MainProtocol, SubProtocol, dwPacketLength);
 
 		TakeMsg(client);
 	}

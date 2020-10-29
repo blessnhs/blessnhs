@@ -259,7 +259,7 @@ VOID GSSocketUDP::SetUdpWriteCompleteEvent(VOID)
 }
 
 
-BOOL	GSSocketUDP::ReadFromForIocp(LPSTR remoteAddress, USHORT &remotePort, BYTE *data, DWORD &dataLength)
+BOOL	GSSocketUDP::ReadFromForIocp(LPSTR& remoteAddress, USHORT &remotePort, BYTE *data, DWORD &dataLength)
 {
 	CThreadSync Sync;
 
@@ -274,8 +274,7 @@ BOOL	GSSocketUDP::ReadFromForIocp(LPSTR remoteAddress, USHORT &remotePort, BYTE 
 
 	memcpy(data, m_Buffer, dataLength);
 
-	//memcpy(remoteAddress, inet_ntoa(m_UdpRemoteInfo.sin_addr), 32);
-	strcpy(remoteAddress, inet_ntoa(m_UdpRemoteInfo.sin_addr));
+	remoteAddress =  inet_ntoa(m_UdpRemoteInfo.sin_addr);
 	remotePort	= ntohs(m_UdpRemoteInfo.sin_port);
 
 /*	USHORT Ack = 0;

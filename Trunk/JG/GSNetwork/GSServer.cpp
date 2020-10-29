@@ -97,7 +97,8 @@ VOID GSServer::OnWrote(int client_id, DWORD dataLength)
 		return;
 	}
 
-	pClient->GetTCPSocket()->m_OLP_REMAIN_COUNT_SND.fetch_sub(1);
+	if(pClient->GetCreateType() == TCP)
+		pClient->GetTCPSocket()->m_OLP_REMAIN_COUNT_SND.fetch_sub(1);
 
 	pClient->WriteComplete();
 }
@@ -170,20 +171,23 @@ VOID GSServer::OnDisconnected2(int client_id, int type)
 		return;
 	}
 
-	if (type == IO_TYPE::IO_ACCEPT)
+	if (pClient->GetCreateType() == TCP)
 	{
-		pClient->GetTCPSocket()->m_OLP_REMAIN_COUNT_ACC.fetch_sub(1);
-	}
-	else if (type == IO_TYPE::IO_READ)
-	{
-		pClient->GetTCPSocket()->m_OLP_REMAIN_COUNT_REC.fetch_sub(1);
-	}
-	else if (type == IO_TYPE::IO_WRITE)
-	{
-		pClient->GetTCPSocket()->m_OLP_REMAIN_COUNT_SND.fetch_sub(1);
-	}
+		if (type == IO_TYPE::IO_ACCEPT)
+		{
+			pClient->GetTCPSocket()->m_OLP_REMAIN_COUNT_ACC.fetch_sub(1);
+		}
+		else if (type == IO_TYPE::IO_READ)
+		{
+			pClient->GetTCPSocket()->m_OLP_REMAIN_COUNT_REC.fetch_sub(1);
+		}
+		else if (type == IO_TYPE::IO_WRITE)
+		{
+			pClient->GetTCPSocket()->m_OLP_REMAIN_COUNT_SND.fetch_sub(1);
+		}
 
-	OnDisconnected(client_id);
+		OnDisconnected(client_id);
+	}
 }
 
 GSCLIENT_PTR GSServer::GetTcpListen()
@@ -276,6 +280,8 @@ BOOL GSServer::BeginUDP()
 
 	for(int i=0;i<MaxPort;i++)
 	{
+		printf("Bind Udp Port %d\n", m_Arguments.m_UdpPorts[i]);
+
 		auto UDPListenPort = boost::make_shared<GSCLIENT>();
 		UDPListenPort->SetId(GetClientMgr().IncClientId());
 		UDPListenPort->Create(UDP);

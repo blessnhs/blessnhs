@@ -38,7 +38,7 @@ BOOL	GSPacketUDP::Termination(VOID)
 }
 
 
-BOOL	GSPacketUDP::ReadFromPacketForIocp(LPSTR remoteAddress, USHORT &remotePort, DWORD readLength)
+BOOL	GSPacketUDP::ReadFromPacketForIocp(LPSTR& remoteAddress, USHORT &remotePort, DWORD readLength)
 {
 	CThreadSync Sync;
 
@@ -68,22 +68,24 @@ BOOL	GSPacketUDP::ReadFromPacketForEventSelect(LPSTR remoteAddress, USHORT &remo
 
 }
 
-VOID	GSPacketUDP::MakePacket(LPSTR LemoteAddress,WORD RemotePort,DWORD dwDataLength,WORD &Mainprotocol, WORD &Subprotocol,DWORD &dataLength)
+VOID	GSPacketUDP::MakePacket(DWORD dwDataLength,WORD &Mainprotocol, WORD &Subprotocol,DWORD &dataLength)
 {
 	WORD  MainProtocol = 0,SubProtocol = 0;
 	DWORD dwPacketLength = 0;
 	BYTE Packet[MAX_BUFFER_LENGTH] = {0,};
 
-	if (ReadFromPacketForIocp(LemoteAddress,RemotePort,dwDataLength))
+	LPSTR	RemoteAddress="";
+	USHORT	RemotePort = 0;
+	
+	if (ReadFromPacketForIocp(RemoteAddress,RemotePort,dwDataLength))
 	{
-		while (GetPacket(LemoteAddress,RemotePort,MainProtocol,SubProtocol, Packet, dwDataLength))
+		while (GetPacket(RemoteAddress,RemotePort,MainProtocol,SubProtocol, Packet, dwDataLength))
 		{
-
 			boost::shared_ptr<XDATA> pBuffer = GetGSBufferPool().alloc();
 			pBuffer->m_Buffer.SetBuffer(Packet,dwDataLength);
 			pBuffer->MainId = MainProtocol;
 			pBuffer->Length = dwDataLength;
-			pBuffer->LemoteAddress = LemoteAddress;
+			pBuffer->LemoteAddress = RemoteAddress;
 			pBuffer->RemotePort = RemotePort;
 			m_PacketList.push(pBuffer);
 

@@ -25,7 +25,7 @@ struct XDATA
 	WORD SubId;
 
 	//udp¸¸ ÇÊ¿ä
-	LPSTR LemoteAddress;
+	string LemoteAddress;
 	WORD RemotePort;
 };
 
