@@ -19,9 +19,9 @@ IUdpProcess::~IUdpProcess(void)
 }
 
 
-VOID IUdpProcess::Process(LPVOID Data, DWORD Length, WORD MainProtocol, WORD SubProtocol, boost::shared_ptr<GSClient> pClient)
+VOID IUdpProcess::Process2(LPVOID Data, DWORD Length, WORD MainProtocol, WORD SubProtocol, boost::shared_ptr<GSClient> pClient, string remoteaddress, int remoteport)
 {
-	NET_FUNC_EXE(MainProtocol,Data,Length, pClient);
+	
 }
 //
 VOID IUdpProcess::ENTER_ROOM(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> pClient)

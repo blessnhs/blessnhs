@@ -1,15 +1,16 @@
 #include "StdAfx.h"
 #include "IUdpProcess.h"
-
+#include "../Player/Container/PlayerContainer.h"
+#include "../Room/RoomContainer.h"
 
 enum UDP_PROTOCOL
 {
-	ENTER_ROOM = 0,
+	REG_USER_UDP = 0,
 };
 
 IUdpProcess::IUdpProcess(void)
 {
-//	ADD_NET_FUNC(IUdpProcess, UDP_PROTOCOL::ENTER_ROOM,ENTER_ROOM);
+//	ADD_NET_FUNC(IUdpProcess, UDP_PROTOCOL::REG_USER_UDP,REG_USER_UDP);
 //	ADD_NET_FUNC(IUdpProcess,ID_CR_BROADCAST_NTY,BROADCAST_NTY);
 //	ADD_NET_FUNC(IUdpProcess,ID_RC_CREATE_UDP_RES,CREATE_UDP_SOCKET_NTY);
 }
@@ -19,15 +20,89 @@ IUdpProcess::~IUdpProcess(void)
 }
 
 
-VOID IUdpProcess::Process(LPVOID Data, DWORD Length, WORD MainProtocol, WORD SubProtocol, boost::shared_ptr<GSClient> pClient)
+VOID IUdpProcess::Process2(LPVOID Data, DWORD Length, WORD MainProtocol, WORD SubProtocol, boost::shared_ptr<GSClient> pClient, string remoteaddress, int remoteport)
 {
 	NET_FUNC_EXE(MainProtocol,Data,Length, pClient);
 }
 //
-VOID IUdpProcess::ENTER_ROOM(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> pClient)
+VOID IUdpProcess::REG_USER_UDP(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> pClient, string remoteaddress, int remoteport)
 {
+	if (sizeof(DWORD) + sizeof(DWORD) > Length)
+		return;
+
+	DWORD UID;
+	DWORD RID;
+
+
+	memcpy(&UID, Data, sizeof(DWORD));
+	memcpy(&RID, (char*)Data + sizeof(DWORD), sizeof(DWORD));
+
+
+	auto player = PLAYERMGR.Search(UID);
+	if (player == NULL)
+		return;
+
+	auto& channel = CHANNELMGR.Search(player->GetChannel());
+	if (channel == NULL)
+	{
+		return;
+	}
+
+	auto& room = channel->RoomContainer.Search(RID);
+	if (room == NULL)
+	{
+		return;
+	}
+
+
+	player->m_Account.RemoteUdpAddress = remoteaddress;
+	player->m_Account.RemoteUdpPort = remoteport;
 }
 
+VOID IUdpProcess::BROAD_CAST_ROOM_UDP(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> pClient, string remoteaddress, int remoteport)
+{
+	if (sizeof(DWORD) + sizeof(DWORD) > Length)
+		return;
+
+	DWORD UID;
+	DWORD RID;
+
+
+	memcpy(&UID, Data, sizeof(DWORD));
+	memcpy(&RID, (char*)Data + sizeof(DWORD), sizeof(DWORD));
+
+
+	auto player = PLAYERMGR.Search(UID);
+	if (player == NULL)
+		return;
+
+	auto& channel = CHANNELMGR.Search(player->GetChannel());
+	if (channel == NULL)
+	{
+		return;
+	}
+
+	auto& room = channel->RoomContainer.Search(RID);
+	if (room == NULL)
+	{
+		return;
+	}
+
+	for each(auto iter in room->m_PlayerMap)
+	{
+		PlayerPtr pPlayer = iter.second;
+		if (pPlayer == NULL)
+			continue;
+
+		GSCLIENT_PTR pSession = SERVER.GetClient(pPlayer->GetPair());
+		if (pSession)
+		{
+			pSession->GetUDPSocket()->WriteTo2(const_cast<char *>(remoteaddress.c_str()), remoteport, (BYTE*)Data, Length);
+		}
+	}
+
+
+}
 
 //
 //VOID IUdpProcess::CLOSE_RELAYSVR(LPVOID Data,DWORD Length)

@@ -2,6 +2,7 @@
 
 #include "GSBoard.h"
 #include "BoardProcess.h"
+#include "IUdpProcess.h"
 #include "../PLAYER/Container/PlayerContainer.h"
 #include "../Room/RoomContainer.h"
 #include "../DB/DBProxy/DBProcessContainer.h"
@@ -93,7 +94,10 @@ BOOL GSBoard::Initialize()
 	DeleteAllConcurrentUser();
 
 	Create(_arg);
-//	SetHandler<BoardProcess>();
+
+	//default
+	//
+	SetHandler<IUdpProcess>();
 
 
 	

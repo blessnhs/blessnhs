@@ -15,7 +15,8 @@ public:
 	~BoardProcess(void);
 
 
-	virtual VOID Process(LPVOID Data,DWORD Length,WORD MainProtocol,WORD SubProtocol, boost::shared_ptr<GSClient> Client);
+	virtual VOID Process(LPVOID Data, DWORD Length, WORD MainProtocol, WORD SubProtocol, boost::shared_ptr<GSClient> Client);
+	virtual VOID Process2(LPVOID Data, DWORD Length, WORD MainProtocol, WORD SubProtocol, boost::shared_ptr<GSClient> pClient, string remoteaddress, int remoteport) {}
 
 	VOID VERSION(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client);
 

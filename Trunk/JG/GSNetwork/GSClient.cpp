@@ -314,7 +314,8 @@ VOID GSClient::ProcPacket(boost::shared_ptr<GSClient> pClient)
 
 				//echo
 				GetUDPSocket()->WriteTo2(const_cast<char *>(pBuffer->LemoteAddress.c_str()), pBuffer->RemotePort, pBuffer->m_Buffer.GetBuffer(), pBuffer->Length);
-				return;			}
+				return;			
+			}
 
 			GetProcess()->Process(pBuffer->m_Buffer.GetBuffer(), pBuffer->Length, pBuffer->MainId, pBuffer->SubId, pClient);
 		}
