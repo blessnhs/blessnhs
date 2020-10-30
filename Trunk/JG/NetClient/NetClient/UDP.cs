@@ -6,94 +6,143 @@ using System.Text;
 using System.Net.Json;
 
 
-    namespace UDPEchoClient
+namespace NetClient
+{
+    public class UDPClient
     {
-       public  class UDPClient
+        // ManualResetEvent instances signal completion.
+        private ManualResetEvent connectDone =
+            new ManualResetEvent(false);
+        private ManualResetEvent sendDone =
+            new ManualResetEvent(false);
+        private ManualResetEvent receiveDone =
+            new ManualResetEvent(false);
+
+        // The response from the remote device.
+        private String response = String.Empty;
+        public Socket socket = null;
+        IPEndPoint remoteEP;
+
+
+        public UDPClient()
         {
-            public int ServerPortNumber = 0;
-            public UdpClient udpSocket;
-            public IPEndPoint remoteEP;
+        }
 
-            public UDPClient()
+        public void StartClient(string address, int port)
+        {
+            // Connect to a remote device.
+            try
             {
+                IPAddress ip = IPAddress.Parse(address);
+
+                remoteEP = new IPEndPoint(ip, port);
+
+                // Create a TCP/IP socket.
+                socket = new Socket(AddressFamily.InterNetwork,
+                    SocketType.Dgram, ProtocolType.Udp);
+
+                // Connect to the remote endpoint.
+                socket.BeginConnect(remoteEP,
+                    new AsyncCallback(ConnectCallback), socket);
+
+                connectDone.WaitOne();
+
+
             }
-
-            public void Init()
+            catch (Exception e)
             {
-                try
-                {
-                    udpSocket = new UdpClient();
-
-                    IPAddress ipAddress;
-                    IPAddress ip = IPAddress.Parse("127.0.0.1");
-
-                    remoteEP = new IPEndPoint(ip, ServerPortNumber);
-
-                  //  udpSocket.BeginReceive(udpReceiveCallback, udpSocket);
-                }
-                catch (SocketException se)
-                {
-                    Console.WriteLine(se.Message);
-                }
+                Console.WriteLine(e.ToString());
             }
+        }
 
-            void udpReceiveCallback(IAsyncResult ar)
+
+        private void ConnectCallback(IAsyncResult ar)
+        {
+            try
             {
-                
-                {
-                    UdpClient udpSocket = ar.AsyncState as UdpClient;
-                    IPEndPoint remoteEndPoint = null;
 
-                    byte[] receiveBytes = udpSocket.EndReceive(ar, ref remoteEndPoint);
+                // Retrieve the socket from the state object.
+                Socket client = (Socket)ar.AsyncState;
 
-                    string receiveData = Encoding.UTF8.GetString(receiveBytes);
+                // Complete the connection.
+                client.EndConnect(ar);
 
-                    Console.WriteLine(receiveData);
-                }
+                Send(0, 1, 1);
+
+                // Signal that the connection has been made.
+                connectDone.Set();
             }
-
-            public void Send(int protocol,int playerid,int groupidx)
+            catch (Exception e)
             {
-          
-                JsonObjectCollection collection = new JsonObjectCollection();
-                collection.Add(new JsonNumericValue("Id", playerid));
-                collection.Add(new JsonNumericValue("GroupIdx", groupidx));
-
-                Int32 PacketLength = sizeof(Int16) + sizeof(Int16);
-
-                byte[] TempBuffer = new byte[PacketLength + collection.ToString().Length];
-
-                byte[] bytesProtocol = BitConverter.GetBytes((Int16)protocol);
-                Buffer.BlockCopy(bytesProtocol, 0, TempBuffer, 0, sizeof(Int16));
-
-                Buffer.BlockCopy(System.Text.Encoding.UTF8.GetBytes(collection.ToString()), 0, TempBuffer, sizeof(Int16),collection.ToString().Length );
-
-                udpSocket.Send(TempBuffer, TempBuffer.Length, remoteEP);
+                Console.WriteLine(e.ToString());
             }
+        }
+     
+        void udpReceiveCallback(IAsyncResult ar)
+        {
+            UdpClient udpSocket = ar.AsyncState as UdpClient;
+            IPEndPoint remoteEndPoint = null;
 
-           public void Send(string Ip,int Port)
+            byte[] receiveBytes = udpSocket.EndReceive(ar, ref remoteEndPoint);
+
+            string receiveData = Encoding.UTF8.GetString(receiveBytes);
+
+            Console.WriteLine(receiveData);
+            
+        }
+
+        public void Send(int protocol, int playerid, int roomid)
+        {
+
+            Int32 PacketLength = sizeof(Int16) + sizeof(Int16);
+
+            byte[] TempBuffer = new byte[PacketLength];
+
+            byte[] bytesProtocol = BitConverter.GetBytes((Int16)playerid);
+            Buffer.BlockCopy(bytesProtocol, 0, TempBuffer, 0, sizeof(Int16));
+
+            byte[] bytesProtocol2 = BitConverter.GetBytes((Int16)roomid);
+            Buffer.BlockCopy(bytesProtocol2, 0, TempBuffer, sizeof(Int16), sizeof(Int16));
+
+            Send(0,TempBuffer, TempBuffer.Length, remoteEP);
+        }
+
+        public void Send(int protocol, byte[] packet, int packetLength, IPEndPoint remoteEP)
+        {
+  
+            //  lock (this)
             {
+                Int32 PacketLength = sizeof(Int16) +
+                    sizeof(Int16) +
+                    sizeof(Int16) +
+                    sizeof(Int32) +
+                    packetLength;
 
-                IPAddress ipAddress;
-                IPAddress ip = IPAddress.Parse(Ip);
-
-                remoteEP = new IPEndPoint(ip, Port);
-
-                Int32 PacketLength = sizeof(Int16) + sizeof(Int16);
+                int mCurrentPacketNumber = 0;
 
                 byte[] TempBuffer = new byte[PacketLength];
-
-                int protocol = 1;
+                byte[] byteslegnth = BitConverter.GetBytes((Int16)PacketLength);
+                Buffer.BlockCopy(byteslegnth, 0, TempBuffer, 0, sizeof(Int16));
 
                 byte[] bytesProtocol = BitConverter.GetBytes((Int16)protocol);
-                Buffer.BlockCopy(bytesProtocol, 0, TempBuffer, 0, sizeof(Int16));
+                Buffer.BlockCopy(bytesProtocol, 0, TempBuffer, sizeof(Int16), sizeof(Int16));
 
-                udpSocket.Send(TempBuffer, TempBuffer.Length, remoteEP);
+                byte[] bytesPacketNumber = BitConverter.GetBytes((Int32)mCurrentPacketNumber);
+                Buffer.BlockCopy(bytesPacketNumber, 0, TempBuffer, sizeof(Int16) + sizeof(Int16) + sizeof(Int16), sizeof(Int32));
+                Buffer.BlockCopy(packet, 0, TempBuffer, sizeof(Int16) + sizeof(Int16) + sizeof(Int16) + sizeof(Int32), packetLength);
 
-
-                udpSocket.Receive(ref remoteEP);
+                try
+                {
+                    socket.SendTo(TempBuffer, TempBuffer.Length, SocketFlags.None, remoteEP);
+                }
+                catch (SocketException e)
+                {
+                    // 10035 == WSAEWOULDBLOCK
+                    if (!e.NativeErrorCode.Equals(10035))
+                        Console.Write("Disconnected: error code :" + e.NativeErrorCode + "(" + e.Message + ")");
+                }              
             }
-           
         }
     }
+}
 
