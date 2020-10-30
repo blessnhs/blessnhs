@@ -317,7 +317,7 @@ VOID GSClient::ProcPacket(boost::shared_ptr<GSClient> pClient)
 				return;			
 			}
 
-			GetProcess()->Process(pBuffer->m_Buffer.GetBuffer(), pBuffer->Length, pBuffer->MainId, pBuffer->SubId, pClient);
+			GetProcess()->Process2(pBuffer->m_Buffer.GetBuffer(), pBuffer->Length, pBuffer->MainId, pBuffer->SubId, pClient, pBuffer->LemoteAddress, pBuffer->RemotePort);
 		}
 	}
 
@@ -414,7 +414,10 @@ void GSClient::OnRecv(DWORD Length, boost::shared_ptr<GSClient> client)
 	{
 		GetUDPSocket()->MakePacket(Length, MainProtocol, SubProtocol, dwPacketLength);
 
-		TakeMsg(client);
+		//udp의 경우 속도가 중요하고 connectionless이기 때문에 로직 스레드로 던지지 않고 그냥 처리해본다.
+		//TakeMsg(client);
+
+		client->ProcPacket(client);
 	}
 }
 

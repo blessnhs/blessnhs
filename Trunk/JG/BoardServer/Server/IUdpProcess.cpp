@@ -6,6 +6,7 @@
 enum UDP_PROTOCOL
 {
 	REG_USER_UDP = 0,
+	BROAD_ROOM = 1,
 };
 
 IUdpProcess::IUdpProcess(void)
@@ -22,7 +23,17 @@ IUdpProcess::~IUdpProcess(void)
 
 VOID IUdpProcess::Process2(LPVOID Data, DWORD Length, WORD MainProtocol, WORD SubProtocol, boost::shared_ptr<GSClient> pClient, string remoteaddress, int remoteport)
 {
-	NET_FUNC_EXE(MainProtocol,Data,Length, pClient);
+	switch (MainProtocol)
+	{
+	case UDP_PROTOCOL::REG_USER_UDP:
+		REG_USER_UDP(Data, Length, pClient, remoteaddress, remoteport);
+		break;
+	case UDP_PROTOCOL::BROAD_ROOM:
+		BROAD_CAST_ROOM_UDP(Data, Length, pClient, remoteaddress, remoteport);
+		break;
+
+
+	}
 }
 //
 VOID IUdpProcess::REG_USER_UDP(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> pClient, string remoteaddress, int remoteport)
@@ -94,11 +105,10 @@ VOID IUdpProcess::BROAD_CAST_ROOM_UDP(LPVOID Data, DWORD Length, boost::shared_p
 		if (pPlayer == NULL)
 			continue;
 
-		GSCLIENT_PTR pSession = SERVER.GetClient(pPlayer->GetPair());
-		if (pSession)
-		{
-			pSession->GetUDPSocket()->WriteTo2(const_cast<char *>(remoteaddress.c_str()), remoteport, (BYTE*)Data, Length);
-		}
+		if (player->m_Account.RemoteUdpAddress == "")
+			continue;
+
+		pClient->GetUDPSocket()->WriteTo2(const_cast<char *>(player->m_Account.RemoteUdpAddress.c_str()), player->m_Account.RemoteUdpPort, (BYTE*)Data, Length);
 	}
 
 
