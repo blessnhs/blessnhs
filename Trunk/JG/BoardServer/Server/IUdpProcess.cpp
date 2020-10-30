@@ -38,15 +38,15 @@ VOID IUdpProcess::Process2(LPVOID Data, DWORD Length, WORD MainProtocol, WORD Su
 //
 VOID IUdpProcess::REG_USER_UDP(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> pClient, string remoteaddress, int remoteport)
 {
-	if (sizeof(DWORD) + sizeof(DWORD) > Length)
+	if (sizeof(WORD) + sizeof(WORD) > Length)
 		return;
 
-	DWORD UID;
-	DWORD RID;
+	WORD UID;
+	WORD RID;
 
 
-	memcpy(&UID, Data, sizeof(DWORD));
-	memcpy(&RID, (char*)Data + sizeof(DWORD), sizeof(DWORD));
+	memcpy(&UID, Data, sizeof(WORD));
+	memcpy(&RID, (char*)Data + sizeof(WORD), sizeof(WORD));
 
 
 	auto player = PLAYERMGR.Search(UID);
@@ -72,15 +72,15 @@ VOID IUdpProcess::REG_USER_UDP(LPVOID Data, DWORD Length, boost::shared_ptr<GSCl
 
 VOID IUdpProcess::BROAD_CAST_ROOM_UDP(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> pClient, string remoteaddress, int remoteport)
 {
-	if (sizeof(DWORD) + sizeof(DWORD) > Length)
+	if (sizeof(WORD) + sizeof(WORD) > Length)
 		return;
 
-	DWORD UID;
-	DWORD RID;
+	WORD UID;
+	WORD RID;
 
 
-	memcpy(&UID, Data, sizeof(DWORD));
-	memcpy(&RID, (char*)Data + sizeof(DWORD), sizeof(DWORD));
+	memcpy(&UID, Data, sizeof(WORD));
+	memcpy(&RID, (char*)Data + sizeof(WORD), sizeof(WORD));
 
 
 	auto player = PLAYERMGR.Search(UID);
