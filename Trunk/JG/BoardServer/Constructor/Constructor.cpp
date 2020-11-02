@@ -20,17 +20,18 @@ BoardConstructor::BoardConstructor(void)
 	printf(("Alloc Client Count %d\n"), SERVER.GetClientMgr().ConnectableSocketCount());
 	printf("Server Start.................. \n");
 
-	BoardCommand _Command;
+	BoardCommand *_Command = new BoardCommand();
 	
 	while(TRUE)
 	{
 		CHAR command[256];
-		scanf_s("%s",command,sizeof(command));
+		memset(command, 0, sizeof(command));
+		scanf_s("%s",command,(int)sizeof(command));
 
-		_Command.Execute(command);
+		_Command->Execute(command);
 	}
 
-
+	delete _Command;
 }
 
 
