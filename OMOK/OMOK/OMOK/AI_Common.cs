@@ -113,6 +113,10 @@ namespace OMOK
             if (mode == 5) pOmok[curStone].initOmok((int)V1.WHITE_STONE);
             else pOmok[curStone].initOmok((int)V1.BLACK_STONE);
 
+
+
+            //기본 좌표계는 AI 는 1,1 부터 시작이나 UI는 0,0부터 시작
+            //AI좌표는 -1,-1 해준다.
             if (mode == 5) _renderer.UpdateStone(x, y, eTeam.White, true);
             else _renderer.UpdateStone(x, y, eTeam.Black, true);
         }
@@ -135,6 +139,8 @@ namespace OMOK
             if (User.Color == eTeam.Black)
             {
                 _renderer.UpdateTurnBackground(eTeam.Black);
+
+                if(ispvp == true)
                 NetProcess.SendPassThroughMessage(x-1, y-1, User.Color);
             }
             else
@@ -166,7 +172,7 @@ namespace OMOK
                 if (ret != 11 && isSend  == false) //삼삼   //내부 체크는 1,1부터 시작 하나 그래픽 ui는 0,0부터 시작
                     _renderer.UpdateStone(x, y, curStone == 0 ? eTeam.Black : eTeam.White);
 
-                if (isSend == true)
+                if (isSend == true) //네트워크는 기본 0,0 기준이라 변환해준다.
                     NetProcess.SendPassThroughMessage(x-1, y-1, User.Color);
 
                 return ret;
@@ -192,7 +198,7 @@ namespace OMOK
                 if (ret != 11 && ret != 10 && isSend == false) //삼삼 11 이미 놓여졌음 10
                     _renderer.UpdateStone(x, y, curStone == 0 ? eTeam.Black : eTeam.White,true);
 
-                if (isSend == true)
+                if (isSend == true) //네트워크는 기본 0,0 기준이라 변환해준다.
                     NetProcess.SendPassThroughMessage(x-1, y-1, User.Color == eTeam.White ? eTeam.Black : eTeam.White);
 
                 else
@@ -233,6 +239,7 @@ namespace OMOK
                             }
                         }
 
+                        if(User.Auto == false)
                         page.Navigation.PushPopupAsync(new AIGameResult(isWin));
                         return false;
                     }

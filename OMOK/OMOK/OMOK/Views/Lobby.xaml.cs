@@ -288,6 +288,13 @@ namespace OMOK.Views
 
         }
 
+        public void MatchAuto()
+        {
+            NetProcess.SendMatch();
+
+            Navigation.PushModalAsync(new MatchInfoPage()/*_MachPage*/);
+        }
+
         
         async void OnHistoryClicked(object sender, System.EventArgs e)
         {

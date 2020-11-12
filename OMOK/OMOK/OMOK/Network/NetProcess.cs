@@ -9,6 +9,7 @@ using System.Text;
 using System.Net;
 using OMOK.Popup;
 using Xamarin.Forms.PlatformConfiguration;
+using System.Threading;
 
 namespace OMOK.Network
 {
@@ -38,7 +39,7 @@ namespace OMOK.Network
    
         static public void start()
         {
-            string ip =  /*"211.212.37.238";//*/"192.168.0.9";//
+            string ip =  "211.212.37.238";//*/"192.168.0.9";//
 
 
             //연결중이면 안한다. 
@@ -134,6 +135,12 @@ namespace OMOK.Network
                                     {
                                         page.NickNamePopup();
                                     }
+                                    else
+                                    {
+                                        User.Auto = true;
+                                        page.MatchAuto();
+
+                                    }
                                 }
                                 else
                                 {
@@ -190,7 +197,6 @@ namespace OMOK.Network
                               
                                     User.state = PlayerState.Room;
 
-                                    pRoom = null;
                                     pRoom = new Room();
                                     page.PushRoomPopup(pRoom);
 
@@ -265,8 +271,11 @@ namespace OMOK.Network
 
                                     page.PopRoomPopup();
 
-                                    pRoom = null;
-
+                                    if (User.Auto == true)
+                                    {
+                                        Thread.Sleep(1000);
+                                        page.MatchAuto();
+                                    }
                                 }
 
                                 page.UpdatePlayerInfo();
@@ -283,7 +292,6 @@ namespace OMOK.Network
                                 {
                                     page.ClosePopup();
 
-                                    pRoom = null;
                                     pRoom = new Room();
 
                                     User.Color = eTeam.White;
@@ -300,8 +308,15 @@ namespace OMOK.Network
                                 GAME_RESULT_NTY res = new GAME_RESULT_NTY();
                                 res = GAME_RESULT_NTY.Parser.ParseFrom(data.Data);
 
-
-                                pRoom.GameResult(res);
+                                if (User.Auto == true)
+                                {
+                                    pRoom.GameResult(res);
+                                    pRoom.SendLeaveRoom();
+                                }
+                                else
+                                {
+                                    pRoom.GameResult(res);
+                                }
                             }
                             break;
                     }

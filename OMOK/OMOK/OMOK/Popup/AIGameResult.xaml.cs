@@ -28,7 +28,7 @@ namespace OMOK.Popup
 
         }
 
-        async void OnClosedClicked(object sender, System.EventArgs e)
+    async void OnClosedClicked(object sender, System.EventArgs e)
         {
             await Navigation.PopAllPopupAsync();
         }

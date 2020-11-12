@@ -123,6 +123,10 @@ namespace OMOK
 
             }
 
+            if (User.Auto == true)
+                Navigation.PopAllPopupAsync();
+
+
         }
         public bool IsAnimationEnabled { get; private set; } = true;
         protected override void OnAppearing()

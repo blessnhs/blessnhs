@@ -55,5 +55,7 @@ namespace OMOK
 
         public static bool IsLogin = false;
 
+        public static bool Auto = false;
+
     }
 }

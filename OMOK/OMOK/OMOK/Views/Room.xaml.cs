@@ -56,7 +56,7 @@ namespace OMOK
         /// /////////////////////////////////////////////////////////////////////
 
         /// </summary>
-
+        int debug;
         public Room()
         {
             InitializeComponent();
@@ -64,12 +64,13 @@ namespace OMOK
             InitTimer();
 
             _ai._renderer = _renderer;
-            User.myInfo.ai_reset_flag = true;
-
-
+    
             renjuRuleChecker.initBoard();
 
             InitBoardGrid();
+
+            if (User.Auto == true)
+                User.myInfo.ai_reset_flag = true;
 
             Button PrevBtn = new Button { Text = "◁", HorizontalOptions = LayoutOptions.Start };
             PrevBtn.Clicked += (sender, e) => {
@@ -105,9 +106,15 @@ namespace OMOK
 
                             if ((DateTime.Now - User.MytrunStartTime).TotalSeconds > 30)
                             {
-                             //   NetProcess.SendPassThroughMessage(-1, -1, User.Color);
+                                if (User.Auto == true)
+                                    NetProcess.SendLeaveRoom(0);
+                                else
+                                    NetProcess.SendPassThroughMessage(-1, -1, User.Color);
                             }
                         }
+
+                        if(debug > 90)
+                            NetProcess.SendLeaveRoom(0);
 
 
                         ///////////////////////////////////////////////////////////////////
@@ -129,7 +136,7 @@ namespace OMOK
                             isPlaying = true;
                             User.myInfo.ai_reset_flag = false;
                            
-                            _renderer.UpdateBattleInfo();
+                            UpdateBattleInfo();
 
 
                         }
@@ -188,6 +195,11 @@ namespace OMOK
 
         }
 
+        public void SendLeaveRoom()
+        {
+            NetProcess.SendLeaveRoom(0);
+        }
+
         public void ProcReceivePutStoneMessage(ROOM_PASS_THROUGH_RES res)
         {
 
@@ -203,6 +215,7 @@ namespace OMOK
                
                 _renderer.UpdateStone(x, y, color, false);
             }
+            debug++;
 
             //check turn
             {
@@ -369,7 +382,8 @@ namespace OMOK
         {
             try
             {
-                Navigation.PushPopupAsync(new GameResultPage(nty));
+                if (User.Auto != true)
+                    Navigation.PushPopupAsync(new GameResultPage(nty));
 
                 User.IsMyTurn = false;
 
