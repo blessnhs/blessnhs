@@ -39,7 +39,7 @@ public class Process
     {
         var ip = GetIPAddress("blessnhs.iptime.org");
 
-         client.StartClient("211.212.37.238", 21000);
+         client.StartClient(ip/*"211.212.37.238"*/, 20000);
 
         testcid = id;
 
@@ -71,7 +71,7 @@ public class Process
                                 LOGIN_REQ person = new LOGIN_REQ
                                 {
                                     Id = PROTOCOL.IdPktLoginRes,
-                                    VarToken = testcid.ToString(),
+                                    VarToken = testcid + "000000000",
                                     VarUid = testcid.ToString()
                                 };
                                 using (MemoryStream stream = new MemoryStream())
@@ -175,19 +175,15 @@ public static int Main(String[] args)
             Thread.Sleep(1);
 
 
-            foreach( var elem in array)
-            {
-                if (elem.client.socket.Connected == false)
-                {
-              //      array.Remove(elem);
-                    break;
-                }
-
-                elem.loop();
+    //        foreach( var elem in array)
+    //        {
+    //            elem.loop();
                 Thread.Sleep(5);
 
-            }
+            //        }
 
+            while (true) ;
+            
             Thread.Sleep(1);
         }
 

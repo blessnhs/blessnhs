@@ -143,20 +143,26 @@ namespace NetClient
                 // Retrieve the socket from the state object.
                 Socket client = (Socket)ar.AsyncState;
 
-                // Complete the connection.
-                client.EndConnect(ar);
+                //// Complete the connection.
+                //client.EndConnect(ar);
 
-                VERSION_REQ person = new VERSION_REQ
-                {
-                   
-                };
-                using (MemoryStream stream = new MemoryStream())
-                {
-                    person.WriteTo(stream);
+                //VERSION_REQ person = new VERSION_REQ
+                //{
 
-                    WritePacket((int)PROTOCOL.IdPktVersionReq, stream.ToArray(), stream.ToArray().Length);
-                }
+                //};
+                //using (MemoryStream stream = new MemoryStream())
+                //{
+                //    person.WriteTo(stream);
+
+                //    WritePacket((int)PROTOCOL.IdPktVersionReq, stream.ToArray(), stream.ToArray().Length);
+                //}
                 // Signal that the connection has been made.
+
+                byte[] str = new byte[1];
+
+                WritePacket((int)1024, str,1);
+
+
                 connectDone.Set();
             }
             catch (Exception e)

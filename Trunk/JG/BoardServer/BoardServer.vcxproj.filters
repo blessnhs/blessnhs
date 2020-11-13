@@ -162,6 +162,9 @@
     <ClInclude Include="Channel\ChannelContainer.hpp">
       <Filter>Channel</Filter>
     </ClInclude>
+    <ClInclude Include="Server\IUdpProcess.h">
+      <Filter>Server</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BoardServer.cpp">
@@ -244,6 +247,9 @@
     </ClCompile>
     <ClCompile Include="Channel\ChannelContainer.cpp">
       <Filter>Channel</Filter>
+    </ClCompile>
+    <ClCompile Include="Server\IUdpProcess.cpp">
+      <Filter>Server</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

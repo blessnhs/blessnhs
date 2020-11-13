@@ -99,6 +99,7 @@ VOID IUdpProcess::BROAD_CAST_ROOM_UDP(LPVOID Data, DWORD Length, boost::shared_p
 		return;
 	}
 
+
 	for each(auto iter in room->m_PlayerMap)
 	{
 		PlayerPtr pPlayer = iter.second;

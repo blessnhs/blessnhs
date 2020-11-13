@@ -154,15 +154,16 @@ static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_Str
   &scc_info_RoomUserInfo_Structure_2eproto.base,
 };
 static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_Structure_2eproto_once;
+static bool descriptor_table_Structure_2eproto_initialized = false;
 const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_Structure_2eproto = {
-  false, false, descriptor_table_protodef_Structure_2eproto, "Structure.proto", 381,
+  &descriptor_table_Structure_2eproto_initialized, descriptor_table_protodef_Structure_2eproto, "Structure.proto", 381,
   &descriptor_table_Structure_2eproto_once, descriptor_table_Structure_2eproto_sccs, descriptor_table_Structure_2eproto_deps, 3, 1,
   schemas, file_default_instances, TableStruct_Structure_2eproto::offsets,
   file_level_metadata_Structure_2eproto, 3, file_level_enum_descriptors_Structure_2eproto, file_level_service_descriptors_Structure_2eproto,
 };
 
 // Force running AddDescriptors() at dynamic initialization time.
-static bool dynamic_init_dummy_Structure_2eproto = (static_cast<void>(::PROTOBUF_NAMESPACE_ID::internal::AddDescriptors(&descriptor_table_Structure_2eproto)), true);
+static bool dynamic_init_dummy_Structure_2eproto = (  ::PROTOBUF_NAMESPACE_ID::internal::AddDescriptors(&descriptor_table_Structure_2eproto), true);
 
 // ===================================================================
 
@@ -182,25 +183,23 @@ class RoomUserInfo::_Internal {
   }
 };
 
-RoomUserInfo::RoomUserInfo(::PROTOBUF_NAMESPACE_ID::Arena* arena)
-  : ::PROTOBUF_NAMESPACE_ID::Message(arena) {
+RoomUserInfo::RoomUserInfo()
+  : ::PROTOBUF_NAMESPACE_ID::Message(), _internal_metadata_(nullptr) {
   SharedCtor();
-  RegisterArenaDtor(arena);
-  // @@protoc_insertion_point(arena_constructor:RoomUserInfo)
+  // @@protoc_insertion_point(constructor:RoomUserInfo)
 }
 RoomUserInfo::RoomUserInfo(const RoomUserInfo& from)
   : ::PROTOBUF_NAMESPACE_ID::Message(),
+      _internal_metadata_(nullptr),
       _has_bits_(from._has_bits_) {
-  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
   var_name_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
   if (from._internal_has_var_name()) {
-    var_name_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from._internal_var_name(),
-      GetArena());
+    var_name_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.var_name_);
   }
   picture_uri_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
   if (from._internal_has_picture_uri()) {
-    picture_uri_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from._internal_picture_uri(),
-      GetArena());
+    picture_uri_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.picture_uri_);
   }
   var_index_ = from.var_index_;
   // @@protoc_insertion_point(copy_constructor:RoomUserInfo)
@@ -216,21 +215,13 @@ void RoomUserInfo::SharedCtor() {
 RoomUserInfo::~RoomUserInfo() {
   // @@protoc_insertion_point(destructor:RoomUserInfo)
   SharedDtor();
-  _internal_metadata_.Delete<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
 void RoomUserInfo::SharedDtor() {
-  GOOGLE_DCHECK(GetArena() == nullptr);
   var_name_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
   picture_uri_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
 }
 
-void RoomUserInfo::ArenaDtor(void* object) {
-  RoomUserInfo* _this = reinterpret_cast< RoomUserInfo* >(object);
-  (void)_this;
-}
-void RoomUserInfo::RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena*) {
-}
 void RoomUserInfo::SetCachedSize(int size) const {
   _cached_size_.Set(size);
 }
@@ -249,21 +240,20 @@ void RoomUserInfo::Clear() {
   cached_has_bits = _has_bits_[0];
   if (cached_has_bits & 0x00000003u) {
     if (cached_has_bits & 0x00000001u) {
-      var_name_.ClearNonDefaultToEmpty();
+      var_name_.ClearNonDefaultToEmptyNoArena();
     }
     if (cached_has_bits & 0x00000002u) {
-      picture_uri_.ClearNonDefaultToEmpty();
+      picture_uri_.ClearNonDefaultToEmptyNoArena();
     }
   }
   var_index_ = PROTOBUF_LONGLONG(0);
   _has_bits_.Clear();
-  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+  _internal_metadata_.Clear();
 }
 
 const char* RoomUserInfo::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
 #define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
   _Internal::HasBits has_bits{};
-  ::PROTOBUF_NAMESPACE_ID::Arena* arena = GetArena(); (void)arena;
   while (!ctx->Done(&ptr)) {
     ::PROTOBUF_NAMESPACE_ID::uint32 tag;
     ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
@@ -281,7 +271,7 @@ const char* RoomUserInfo::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_I
       case 2:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 16)) {
           _Internal::set_has_var_index(&has_bits);
-          var_index_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+          var_index_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
@@ -299,9 +289,7 @@ const char* RoomUserInfo::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_I
           ctx->SetLastTag(tag);
           goto success;
         }
-        ptr = UnknownFieldParse(tag,
-            _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
-            ptr, ctx);
+        ptr = UnknownFieldParse(tag, &_internal_metadata_, ptr, ctx);
         CHK_(ptr != nullptr);
         continue;
       }
@@ -343,7 +331,7 @@ failure:
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
-        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+        _internal_metadata_.unknown_fields(), target, stream);
   }
   // @@protoc_insertion_point(serialize_to_array_end:RoomUserInfo)
   return target;
@@ -408,17 +396,19 @@ void RoomUserInfo::MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
 void RoomUserInfo::MergeFrom(const RoomUserInfo& from) {
 // @@protoc_insertion_point(class_specific_merge_from_start:RoomUserInfo)
   GOOGLE_DCHECK_NE(&from, this);
-  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
   cached_has_bits = from._has_bits_[0];
   if (cached_has_bits & 0x00000007u) {
     if (cached_has_bits & 0x00000001u) {
-      _internal_set_var_name(from._internal_var_name());
+      _has_bits_[0] |= 0x00000001u;
+      var_name_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.var_name_);
     }
     if (cached_has_bits & 0x00000002u) {
-      _internal_set_picture_uri(from._internal_picture_uri());
+      _has_bits_[0] |= 0x00000002u;
+      picture_uri_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.picture_uri_);
     }
     if (cached_has_bits & 0x00000004u) {
       var_index_ = from.var_index_;
@@ -447,10 +437,12 @@ bool RoomUserInfo::IsInitialized() const {
 
 void RoomUserInfo::InternalSwap(RoomUserInfo* other) {
   using std::swap;
-  _internal_metadata_.Swap<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(&other->_internal_metadata_);
+  _internal_metadata_.Swap(&other->_internal_metadata_);
   swap(_has_bits_[0], other->_has_bits_[0]);
-  var_name_.Swap(&other->var_name_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
-  picture_uri_.Swap(&other->picture_uri_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
+  var_name_.Swap(&other->var_name_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+    GetArenaNoVirtual());
+  picture_uri_.Swap(&other->picture_uri_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+    GetArenaNoVirtual());
   swap(var_index_, other->var_index_);
 }
 
@@ -480,20 +472,19 @@ class RoomInfo2::_Internal {
   }
 };
 
-RoomInfo2::RoomInfo2(::PROTOBUF_NAMESPACE_ID::Arena* arena)
-  : ::PROTOBUF_NAMESPACE_ID::Message(arena) {
+RoomInfo2::RoomInfo2()
+  : ::PROTOBUF_NAMESPACE_ID::Message(), _internal_metadata_(nullptr) {
   SharedCtor();
-  RegisterArenaDtor(arena);
-  // @@protoc_insertion_point(arena_constructor:RoomInfo2)
+  // @@protoc_insertion_point(constructor:RoomInfo2)
 }
 RoomInfo2::RoomInfo2(const RoomInfo2& from)
   : ::PROTOBUF_NAMESPACE_ID::Message(),
+      _internal_metadata_(nullptr),
       _has_bits_(from._has_bits_) {
-  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
   var_name_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
   if (from._internal_has_var_name()) {
-    var_name_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from._internal_var_name(),
-      GetArena());
+    var_name_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.var_name_);
   }
   ::memcpy(&var_id_, &from.var_id_,
     static_cast<size_t>(reinterpret_cast<char*>(&var_max_count_) -
@@ -512,20 +503,12 @@ void RoomInfo2::SharedCtor() {
 RoomInfo2::~RoomInfo2() {
   // @@protoc_insertion_point(destructor:RoomInfo2)
   SharedDtor();
-  _internal_metadata_.Delete<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
 void RoomInfo2::SharedDtor() {
-  GOOGLE_DCHECK(GetArena() == nullptr);
   var_name_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
 }
 
-void RoomInfo2::ArenaDtor(void* object) {
-  RoomInfo2* _this = reinterpret_cast< RoomInfo2* >(object);
-  (void)_this;
-}
-void RoomInfo2::RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena*) {
-}
 void RoomInfo2::SetCachedSize(int size) const {
   _cached_size_.Set(size);
 }
@@ -543,7 +526,7 @@ void RoomInfo2::Clear() {
 
   cached_has_bits = _has_bits_[0];
   if (cached_has_bits & 0x00000001u) {
-    var_name_.ClearNonDefaultToEmpty();
+    var_name_.ClearNonDefaultToEmptyNoArena();
   }
   if (cached_has_bits & 0x0000000eu) {
     ::memset(&var_id_, 0, static_cast<size_t>(
@@ -551,13 +534,12 @@ void RoomInfo2::Clear() {
         reinterpret_cast<char*>(&var_id_)) + sizeof(var_max_count_));
   }
   _has_bits_.Clear();
-  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+  _internal_metadata_.Clear();
 }
 
 const char* RoomInfo2::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
 #define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
   _Internal::HasBits has_bits{};
-  ::PROTOBUF_NAMESPACE_ID::Arena* arena = GetArena(); (void)arena;
   while (!ctx->Done(&ptr)) {
     ::PROTOBUF_NAMESPACE_ID::uint32 tag;
     ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
@@ -567,7 +549,7 @@ const char* RoomInfo2::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::
       case 1:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 8)) {
           _Internal::set_has_var_id(&has_bits);
-          var_id_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+          var_id_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
@@ -583,7 +565,7 @@ const char* RoomInfo2::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::
       case 3:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 24)) {
           _Internal::set_has_var_current_count(&has_bits);
-          var_current_count_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+          var_current_count_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
@@ -591,7 +573,7 @@ const char* RoomInfo2::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::
       case 4:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 32)) {
           _Internal::set_has_var_max_count(&has_bits);
-          var_max_count_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+          var_max_count_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
@@ -601,9 +583,7 @@ const char* RoomInfo2::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::
           ctx->SetLastTag(tag);
           goto success;
         }
-        ptr = UnknownFieldParse(tag,
-            _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
-            ptr, ctx);
+        ptr = UnknownFieldParse(tag, &_internal_metadata_, ptr, ctx);
         CHK_(ptr != nullptr);
         continue;
       }
@@ -651,7 +631,7 @@ failure:
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
-        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+        _internal_metadata_.unknown_fields(), target, stream);
   }
   // @@protoc_insertion_point(serialize_to_array_end:RoomInfo2)
   return target;
@@ -723,14 +703,15 @@ void RoomInfo2::MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
 void RoomInfo2::MergeFrom(const RoomInfo2& from) {
 // @@protoc_insertion_point(class_specific_merge_from_start:RoomInfo2)
   GOOGLE_DCHECK_NE(&from, this);
-  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
   cached_has_bits = from._has_bits_[0];
   if (cached_has_bits & 0x0000000fu) {
     if (cached_has_bits & 0x00000001u) {
-      _internal_set_var_name(from._internal_var_name());
+      _has_bits_[0] |= 0x00000001u;
+      var_name_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.var_name_);
     }
     if (cached_has_bits & 0x00000002u) {
       var_id_ = from.var_id_;
@@ -765,15 +746,13 @@ bool RoomInfo2::IsInitialized() const {
 
 void RoomInfo2::InternalSwap(RoomInfo2* other) {
   using std::swap;
-  _internal_metadata_.Swap<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(&other->_internal_metadata_);
+  _internal_metadata_.Swap(&other->_internal_metadata_);
   swap(_has_bits_[0], other->_has_bits_[0]);
-  var_name_.Swap(&other->var_name_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
-  ::PROTOBUF_NAMESPACE_ID::internal::memswap<
-      PROTOBUF_FIELD_OFFSET(RoomInfo2, var_max_count_)
-      + sizeof(RoomInfo2::var_max_count_)
-      - PROTOBUF_FIELD_OFFSET(RoomInfo2, var_id_)>(
-          reinterpret_cast<char*>(&var_id_),
-          reinterpret_cast<char*>(&other->var_id_));
+  var_name_.Swap(&other->var_name_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+    GetArenaNoVirtual());
+  swap(var_id_, other->var_id_);
+  swap(var_current_count_, other->var_current_count_);
+  swap(var_max_count_, other->var_max_count_);
 }
 
 ::PROTOBUF_NAMESPACE_ID::Metadata RoomInfo2::GetMetadata() const {
@@ -817,30 +796,27 @@ class Rank::_Internal {
   }
 };
 
-Rank::Rank(::PROTOBUF_NAMESPACE_ID::Arena* arena)
-  : ::PROTOBUF_NAMESPACE_ID::Message(arena) {
+Rank::Rank()
+  : ::PROTOBUF_NAMESPACE_ID::Message(), _internal_metadata_(nullptr) {
   SharedCtor();
-  RegisterArenaDtor(arena);
-  // @@protoc_insertion_point(arena_constructor:Rank)
+  // @@protoc_insertion_point(constructor:Rank)
 }
 Rank::Rank(const Rank& from)
   : ::PROTOBUF_NAMESPACE_ID::Message(),
+      _internal_metadata_(nullptr),
       _has_bits_(from._has_bits_) {
-  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
   var_name_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
   if (from._internal_has_var_name()) {
-    var_name_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from._internal_var_name(),
-      GetArena());
+    var_name_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.var_name_);
   }
   var_pic_uri_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
   if (from._internal_has_var_pic_uri()) {
-    var_pic_uri_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from._internal_var_pic_uri(),
-      GetArena());
+    var_pic_uri_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.var_pic_uri_);
   }
   var_contry_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
   if (from._internal_has_var_contry()) {
-    var_contry_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from._internal_var_contry(),
-      GetArena());
+    var_contry_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.var_contry_);
   }
   ::memcpy(&var_rank_, &from.var_rank_,
     static_cast<size_t>(reinterpret_cast<char*>(&var_draw_) -
@@ -861,22 +837,14 @@ void Rank::SharedCtor() {
 Rank::~Rank() {
   // @@protoc_insertion_point(destructor:Rank)
   SharedDtor();
-  _internal_metadata_.Delete<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
 void Rank::SharedDtor() {
-  GOOGLE_DCHECK(GetArena() == nullptr);
   var_name_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
   var_pic_uri_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
   var_contry_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
 }
 
-void Rank::ArenaDtor(void* object) {
-  Rank* _this = reinterpret_cast< Rank* >(object);
-  (void)_this;
-}
-void Rank::RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena*) {
-}
 void Rank::SetCachedSize(int size) const {
   _cached_size_.Set(size);
 }
@@ -895,13 +863,13 @@ void Rank::Clear() {
   cached_has_bits = _has_bits_[0];
   if (cached_has_bits & 0x00000007u) {
     if (cached_has_bits & 0x00000001u) {
-      var_name_.ClearNonDefaultToEmpty();
+      var_name_.ClearNonDefaultToEmptyNoArena();
     }
     if (cached_has_bits & 0x00000002u) {
-      var_pic_uri_.ClearNonDefaultToEmpty();
+      var_pic_uri_.ClearNonDefaultToEmptyNoArena();
     }
     if (cached_has_bits & 0x00000004u) {
-      var_contry_.ClearNonDefaultToEmpty();
+      var_contry_.ClearNonDefaultToEmptyNoArena();
     }
   }
   if (cached_has_bits & 0x000000f8u) {
@@ -911,13 +879,12 @@ void Rank::Clear() {
   }
   var_draw_ = 0;
   _has_bits_.Clear();
-  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+  _internal_metadata_.Clear();
 }
 
 const char* Rank::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
 #define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
   _Internal::HasBits has_bits{};
-  ::PROTOBUF_NAMESPACE_ID::Arena* arena = GetArena(); (void)arena;
   while (!ctx->Done(&ptr)) {
     ::PROTOBUF_NAMESPACE_ID::uint32 tag;
     ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
@@ -927,7 +894,7 @@ const char* Rank::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::inter
       case 1:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 8)) {
           _Internal::set_has_var_rank(&has_bits);
-          var_rank_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+          var_rank_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
@@ -943,7 +910,7 @@ const char* Rank::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::inter
       case 3:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 24)) {
           _Internal::set_has_var_level(&has_bits);
-          var_level_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+          var_level_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
@@ -959,7 +926,7 @@ const char* Rank::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::inter
       case 5:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 40)) {
           _Internal::set_has_var_index(&has_bits);
-          var_index_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+          var_index_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
@@ -967,7 +934,7 @@ const char* Rank::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::inter
       case 6:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 48)) {
           _Internal::set_has_var_win(&has_bits);
-          var_win_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+          var_win_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
@@ -975,7 +942,7 @@ const char* Rank::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::inter
       case 7:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 56)) {
           _Internal::set_has_var_lose(&has_bits);
-          var_lose_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+          var_lose_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
@@ -983,7 +950,7 @@ const char* Rank::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::inter
       case 8:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 64)) {
           _Internal::set_has_var_draw(&has_bits);
-          var_draw_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+          var_draw_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
@@ -1001,9 +968,7 @@ const char* Rank::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::inter
           ctx->SetLastTag(tag);
           goto success;
         }
-        ptr = UnknownFieldParse(tag,
-            _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
-            ptr, ctx);
+        ptr = UnknownFieldParse(tag, &_internal_metadata_, ptr, ctx);
         CHK_(ptr != nullptr);
         continue;
       }
@@ -1081,7 +1046,7 @@ failure:
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
-        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+        _internal_metadata_.unknown_fields(), target, stream);
   }
   // @@protoc_insertion_point(serialize_to_array_end:Rank)
   return target;
@@ -1188,20 +1153,23 @@ void Rank::MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
 void Rank::MergeFrom(const Rank& from) {
 // @@protoc_insertion_point(class_specific_merge_from_start:Rank)
   GOOGLE_DCHECK_NE(&from, this);
-  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
   cached_has_bits = from._has_bits_[0];
   if (cached_has_bits & 0x000000ffu) {
     if (cached_has_bits & 0x00000001u) {
-      _internal_set_var_name(from._internal_var_name());
+      _has_bits_[0] |= 0x00000001u;
+      var_name_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.var_name_);
     }
     if (cached_has_bits & 0x00000002u) {
-      _internal_set_var_pic_uri(from._internal_var_pic_uri());
+      _has_bits_[0] |= 0x00000002u;
+      var_pic_uri_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.var_pic_uri_);
     }
     if (cached_has_bits & 0x00000004u) {
-      _internal_set_var_contry(from._internal_var_contry());
+      _has_bits_[0] |= 0x00000004u;
+      var_contry_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.var_contry_);
     }
     if (cached_has_bits & 0x00000008u) {
       var_rank_ = from.var_rank_;
@@ -1245,17 +1213,20 @@ bool Rank::IsInitialized() const {
 
 void Rank::InternalSwap(Rank* other) {
   using std::swap;
-  _internal_metadata_.Swap<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(&other->_internal_metadata_);
+  _internal_metadata_.Swap(&other->_internal_metadata_);
   swap(_has_bits_[0], other->_has_bits_[0]);
-  var_name_.Swap(&other->var_name_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
-  var_pic_uri_.Swap(&other->var_pic_uri_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
-  var_contry_.Swap(&other->var_contry_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
-  ::PROTOBUF_NAMESPACE_ID::internal::memswap<
-      PROTOBUF_FIELD_OFFSET(Rank, var_draw_)
-      + sizeof(Rank::var_draw_)
-      - PROTOBUF_FIELD_OFFSET(Rank, var_rank_)>(
-          reinterpret_cast<char*>(&var_rank_),
-          reinterpret_cast<char*>(&other->var_rank_));
+  var_name_.Swap(&other->var_name_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+    GetArenaNoVirtual());
+  var_pic_uri_.Swap(&other->var_pic_uri_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+    GetArenaNoVirtual());
+  var_contry_.Swap(&other->var_contry_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+    GetArenaNoVirtual());
+  swap(var_rank_, other->var_rank_);
+  swap(var_level_, other->var_level_);
+  swap(var_index_, other->var_index_);
+  swap(var_win_, other->var_win_);
+  swap(var_lose_, other->var_lose_);
+  swap(var_draw_, other->var_draw_);
 }
 
 ::PROTOBUF_NAMESPACE_ID::Metadata Rank::GetMetadata() const {
@@ -1266,13 +1237,13 @@ void Rank::InternalSwap(Rank* other) {
 // @@protoc_insertion_point(namespace_scope)
 PROTOBUF_NAMESPACE_OPEN
 template<> PROTOBUF_NOINLINE ::RoomUserInfo* Arena::CreateMaybeMessage< ::RoomUserInfo >(Arena* arena) {
-  return Arena::CreateMessageInternal< ::RoomUserInfo >(arena);
+  return Arena::CreateInternal< ::RoomUserInfo >(arena);
 }
 template<> PROTOBUF_NOINLINE ::RoomInfo2* Arena::CreateMaybeMessage< ::RoomInfo2 >(Arena* arena) {
-  return Arena::CreateMessageInternal< ::RoomInfo2 >(arena);
+  return Arena::CreateInternal< ::RoomInfo2 >(arena);
 }
 template<> PROTOBUF_NOINLINE ::Rank* Arena::CreateMaybeMessage< ::Rank >(Arena* arena) {
-  return Arena::CreateMessageInternal< ::Rank >(arena);
+  return Arena::CreateInternal< ::Rank >(arena);
 }
 PROTOBUF_NAMESPACE_CLOSE
 

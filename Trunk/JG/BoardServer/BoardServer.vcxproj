@@ -99,8 +99,8 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
     <OutDir>../bin/debug</OutDir>
-    <IncludePath>../Common/boost_1_68_0;../GSPacket;../common/lib_json;../Protocol/Cpp;../Common/tbb/include;$(IncludePath)</IncludePath>
-    <LibraryPath>../Common/boost_1_68_0/lib;../Common/lib_json;$(LibraryPath)</LibraryPath>
+    <IncludePath>../Common/boost_1_68_0;../GSPacket;../common/lib_json;../Protocol/Cpp;../Common/tbb/include;../common/protobuf/include;$(IncludePath)</IncludePath>
+    <LibraryPath>../Common/boost_1_68_0/lib;../Common/lib_json;../Common/protobuf/lib;$(LibraryPath)</LibraryPath>
     <TargetName>$(ProjectName)_d_x64</TargetName>
     <IntDir>../BIN/debug/obj</IntDir>
   </PropertyGroup>
@@ -124,7 +124,7 @@
     <LinkIncremental>true</LinkIncremental>
     <OutDir>../bin/release</OutDir>
     <TargetName>$(ProjectName)_x64</TargetName>
-    <IncludePath>../Common/boost_1_68_0;../GSPacket;../common/lib_json;../common/protobuf/include;../common/Protocol/Cpp;../Protocol/Cpp;../Common/tbb/include;$(IncludePath)</IncludePath>
+    <IncludePath>../Common/boost_1_68_0;../GSPacket;../common/lib_json;../common/protobuf/include;../common/Protocol/Cpp;../Protocol/Cpp;$(IncludePath)</IncludePath>
     <LibraryPath>../Common/boost_1_68_0/lib;../Common/lib_json;../Common/protobuf/lib;$(LibraryPath)</LibraryPath>
     <IntDir>../BIN/release/obj</IntDir>
   </PropertyGroup>
@@ -144,7 +144,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>ws2_32.lib;Mswsock.lib;../Common/GSCore/GSNetwork_d.lib;%(AdditionalDependencies);kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib</AdditionalDependencies>
+      <AdditionalDependencies>ws2_32.lib;Mswsock.lib;../Common/GSCore/GSNetwork_d.lib;../Common/protobuf/debug/lib/libprotobufd.lib;%(AdditionalDependencies);kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseBuild|x64'">
@@ -237,7 +237,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>ws2_32.lib;Mswsock.lib;../Common/GSCore/GSNetwork.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>ws2_32.lib;Mswsock.lib;../Common/GSCore/GSNetwork.lib;../Common/protobuf/lib/libprotobuf.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -267,6 +267,7 @@
     <ClInclude Include="Room\RoomContainer.hpp" />
     <ClInclude Include="Server\BoardProcess.h" />
     <ClInclude Include="Server\GSBoard.h" />
+    <ClInclude Include="Server\IUdpProcess.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="Timer\ContentsTimer.h" />
     <ClInclude Include="Timer\ContentsTimerJob.h" />
@@ -312,6 +313,7 @@
     <ClCompile Include="Room\RoomContainer.cpp" />
     <ClCompile Include="Server\BoardProcess.cpp" />
     <ClCompile Include="Server\GSBoard.cpp" />
+    <ClCompile Include="Server\IUdpProcess.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='ReleaseBuild|x64'">Create</PrecompiledHeader>
