@@ -44,8 +44,9 @@ public:
 
 
 protected:
-	BYTE																	m_PacketBuffer[MAX_BUFFER_LENGTH * 5];
-	INT																		m_RemainLength;
+	DWORD																	m_CurrentPacketSize;
+	BYTE																	*m_PacketBuffer;
+	DWORD																	m_RemainLength;
 
 	DWORD																	m_CurrentPacketNumber;
 	DWORD																	m_LastReadPacketNumber;

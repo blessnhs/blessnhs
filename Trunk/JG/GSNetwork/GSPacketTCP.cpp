@@ -44,7 +44,21 @@ BOOL	GSPacketTCP::ReadPacket(DWORD readLength)
 {
 	CThreadSync Sync;
 
-	if (!GSSocketTCP::ReadForIocp(m_PacketBuffer, readLength, m_RemainLength))
+	if (m_CurrentPacketSize <= (readLength+m_RemainLength))
+	{
+		DWORD Resize = readLength + m_RemainLength + m_CurrentPacketSize;
+		BYTE* NewBuff = new BYTE[Resize];
+		memcpy(NewBuff, m_PacketBuffer, m_CurrentPacketSize);
+		delete m_PacketBuffer;
+
+		m_PacketBuffer = NewBuff;
+
+		m_CurrentPacketSize = Resize;
+
+		printf("ReadPacket Resize %d\n", Resize);
+	}
+
+	if (!GSSocketTCP::ReadForIocp(m_PacketBuffer, readLength, m_RemainLength, m_CurrentPacketSize))
 	{
 
 		return FALSE;
@@ -71,88 +85,79 @@ BOOL	GSPacketTCP::ReadPacketForEventSelect()
 	return TRUE;
 }
 
-BOOL    GSPacketTCP::SendPacking(LPVOID pData, DWORD dwbytes)
-{
-	char pTemp[4096] = {0,};
-	DWORD index=0;
+//BOOL    GSPacketTCP::SendPacking(LPVOID pData, DWORD dwbytes)
+//{
+//	char pTemp[4096] = {0,};
+//	DWORD index=0;
+//
+//	pTemp[index++] = (BYTE)_PACKET_START1;
+//	pTemp[index++] = (BYTE)_PACKET_START2;
+//	memcpy( pTemp+index, &dwbytes, 2 );	// unsigned short
+//	index += 2;
+//	memcpy( pTemp+index, pData, dwbytes );
+//	index += dwbytes;
+//	pTemp[index++] = (BYTE)_PACKET_END1;
+//	pTemp[index++] = (BYTE)_PACKET_END2;
+//
+////	printf("socket to : %d, pid : %d \n",Data->FROM, Data->MPID);
+//
+//	return (Send(pTemp, index));
+//}
+//
+//BOOL	GSPacketTCP::Send(LPVOID Packet,DWORD Size)
+//{
+//	CThreadSync Sync;
+//
+//	if (!Packet)
+//		return FALSE;
+//	
+//	boost::shared_ptr<WRITE_PACKET_INFO> pWriteData(m_WritePool.alloc());
+//
+//	CopyMemory(pWriteData->Data,Packet,sizeof(pWriteData->Data));
+//	pWriteData->DataLength = Size;
+//	pWriteData->Object = this;
+//#ifndef CLIENT_MODULE	
+//	m_WrietQueue.push(pWriteData);
+//#endif
+//	return GSSocketTCP::Write((BYTE*)pWriteData->Data, Size);
+//}
 
-	pTemp[index++] = (BYTE)_PACKET_START1;
-	pTemp[index++] = (BYTE)_PACKET_START2;
-	memcpy( pTemp+index, &dwbytes, 2 );	// unsigned short
-	index += 2;
-	memcpy( pTemp+index, pData, dwbytes );
-	index += dwbytes;
-	pTemp[index++] = (BYTE)_PACKET_END1;
-	pTemp[index++] = (BYTE)_PACKET_END2;
-
-//	printf("socket to : %d, pid : %d \n",Data->FROM, Data->MPID);
-
-	return (Send(pTemp, index));
-}
-
-BOOL	GSPacketTCP::Send(LPVOID Packet,DWORD Size)
-{
-	CThreadSync Sync;
-
-	if (!Packet)
-		return FALSE;
-	
-	boost::shared_ptr<WRITE_PACKET_INFO> pWriteData(m_WritePool.alloc());
-
-	CopyMemory(pWriteData->Data,Packet,sizeof(pWriteData->Data));
-	pWriteData->DataLength = Size;
-	pWriteData->Object = this;
-#ifndef CLIENT_MODULE	
-	m_WrietQueue.push(pWriteData);
-#endif
-	return GSSocketTCP::Write((BYTE*)pWriteData->Data, Size);
-}
-
-BOOL	GSPacketTCP::WritePacket(WORD MainProtocol,WORD SubProtocol, const BYTE *packet, WORD packetLength)
+BOOL	GSPacketTCP::WritePacket(WORD MainProtocol,WORD SubProtocol, const BYTE *packet, DWORD packetLength)
 {
 	CThreadSync Sync;
 
 	if (!packet)
 		return FALSE;
 
-//	if (GetConnected() == false)
-//		return FALSE;
-
-
-	WORD PacketLength = sizeof(WORD)  + 
-		sizeof(WORD)                  + 
-		sizeof(WORD)                  + 
-		sizeof(DWORD)                 + 
+	DWORD PacketLength = sizeof(DWORD)  + 
+		sizeof(WORD)					+ 
+		sizeof(WORD)					+ 
+		sizeof(DWORD)					+ 
 		packetLength;
 
-	if (PacketLength >= MAX_BUFFER_LENGTH)
-	{
-		return FALSE;
-	}
-
+	byte* sendBuff = new byte[PacketLength];
+	
 	m_CurrentPacketNumber++;
-
-	BYTE TempBuffer[MAX_BUFFER_LENGTH] = {0,};
 	
-	memcpy(TempBuffer, &PacketLength, sizeof(WORD));
+	memcpy(sendBuff, &PacketLength, sizeof(DWORD));
 	
-	memcpy(TempBuffer + 
-		sizeof(WORD), 
+	memcpy(sendBuff +
+		sizeof(DWORD), 
 		&MainProtocol, sizeof(WORD));
 	
-	memcpy(TempBuffer + 
-		sizeof(WORD)  + 
+	memcpy(sendBuff +
+		sizeof(DWORD)  + 
 		sizeof(WORD), 
 		&SubProtocol, sizeof(WORD));
 
-	memcpy(TempBuffer + 
-		sizeof(WORD)  + 
+	memcpy(sendBuff +
+		sizeof(DWORD)  + 
 		sizeof(WORD)  + 
 		sizeof(WORD), 
 		&m_CurrentPacketNumber, sizeof(DWORD));
 
-	memcpy(TempBuffer + 
-		sizeof(WORD)  + 
+	memcpy(sendBuff +
+		sizeof(DWORD)  + 
 		sizeof(WORD)  +
 		sizeof(WORD)  + 
 		sizeof(DWORD),
@@ -162,7 +167,7 @@ BOOL	GSPacketTCP::WritePacket(WORD MainProtocol,WORD SubProtocol, const BYTE *pa
 
 	boost::shared_ptr<WRITE_PACKET_INFO> pWriteData(/*new WRITE_PACKET_INFO*/m_WritePool.alloc());
 
-	CopyMemory(pWriteData->Data,TempBuffer,sizeof(pWriteData->Data));
+	pWriteData->Data = sendBuff;
 	pWriteData->DataLength = PacketLength;
 	pWriteData->Object = this;
 #ifndef CLIENT_MODULE	
@@ -181,7 +186,14 @@ BOOL GSPacketTCP::WriteComplete(VOID)
 
 	boost::shared_ptr<WRITE_PACKET_INFO> pWriteData;
 
-	m_WrietQueue.try_pop(pWriteData);
+	if (m_WrietQueue.try_pop(pWriteData) == true)
+	{
+		if (pWriteData != NULL)
+			if (pWriteData->Data != NULL)
+				delete pWriteData->Data;
+	}
+
+
 #endif	
 
 	
@@ -189,27 +201,15 @@ BOOL GSPacketTCP::WriteComplete(VOID)
 	return TRUE;
 }
 
-VOID GSPacketTCP::MakePacket(DWORD dwDataLength,WORD &Mainprotocol, WORD &Subprotocol,DWORD &dwPacketLength )
+VOID GSPacketTCP::MakePacket(DWORD &dwPacketLength )
 {
 	CThreadSync Sync;
-	
-	WORD  MainProtocol = 0,SubProtocol = 0;
-	BYTE Packet[MAX_BUFFER_LENGTH] = {0,};
-	memset(Packet,0,MAX_BUFFER_LENGTH);
 
-	if (ReadPacket(dwDataLength))
+	if (ReadPacket(dwPacketLength))
 	{
-		while (GetPacket(MainProtocol,SubProtocol, Packet, dwPacketLength))
+		while (GetPacket())
 		{
-			boost::shared_ptr<XDATA> pBuffer( m_GSBufferPool.alloc());
-			pBuffer->m_Buffer.SetBuffer(Packet,dwPacketLength);
-			pBuffer->MainId = MainProtocol;
-			pBuffer->SubId  = Subprotocol;
-			pBuffer->Length = dwPacketLength ;
-
-			m_PacketList.push(pBuffer);
-
-			MakeMsg(MainProtocol,SubProtocol,dwPacketLength);
+			
 		}
 	}
 }
@@ -218,29 +218,30 @@ VOID GSPacketTCP::MakeMsg(WORD Mainprotocol, WORD Subprotocol,DWORD dataLength)
 {
 }
 
-BOOL GSPacketTCP::GetPacket(WORD &MainProtocol, WORD &SubProtocol,BYTE *packet, DWORD &dataLength)
+BOOL GSPacketTCP::GetPacket()
 {
 	CThreadSync Sync;
 
-	if (!packet)
+	if (m_RemainLength <= sizeof(DWORD))
 		return FALSE;
 
-	if (m_RemainLength <= sizeof(WORD))
-		return FALSE;
+	//헤더를 제외한 실제 데이터 사이즈
+	DWORD PayLoadLength;
 
-	WORD PacketLength = 0;
-	memcpy(&PacketLength, m_PacketBuffer, sizeof(WORD));
+	//패킷 헤더를 포함한 전체 사이즈
+	DWORD PacketLength = 0;
+	memcpy(&PacketLength, m_PacketBuffer, sizeof(DWORD));
 
-	if (PacketLength >= MAX_BUFFER_LENGTH || PacketLength <= 0) 
+	if (PacketLength >= LMIT_BUFFER_LENGTH || PacketLength <= 0) 
 	{
-		printf("!!GetPacket Packet Size Wrong %d\n", PacketLength);
+		printf("!GetPacket Packet Size Wrong %d\n", PacketLength);
 		m_RemainLength = 0;
 		return FALSE;
 	}
 
 	//2020.10.13 서버 덤프없이 사라지는 버그 패킷 전송시 클라이언트에서 Size패킷을 변조해 헤더보다 작은 값으로 보내서
 	//복사하다 죽었다.
-	if (PacketLength < (sizeof(WORD) + sizeof(WORD) + sizeof(WORD) + sizeof(DWORD)))
+	if (PacketLength < (sizeof(DWORD) + sizeof(WORD) + sizeof(WORD) + sizeof(DWORD)))
 	{
 		printf("!!GetPacket Packet Size Wrong %d\n", PacketLength);
 		return FALSE;
@@ -252,18 +253,22 @@ BOOL GSPacketTCP::GetPacket(WORD &MainProtocol, WORD &SubProtocol,BYTE *packet, 
 	//		m_PacketBuffer + sizeof(WORD), 
 	//		PacketLength   - sizeof(WORD));
 
-		
-		
-		DWORD SequenceNumber     = 0;
-		WORD From;
-
-		memcpy(&MainProtocol   , m_PacketBuffer + sizeof(WORD),   sizeof(WORD));
-		memcpy(&SubProtocol    , m_PacketBuffer + sizeof(WORD)  + sizeof(WORD) , sizeof(WORD));
-		memcpy(&SequenceNumber , m_PacketBuffer + sizeof(WORD)  + sizeof(WORD)  + sizeof(WORD), sizeof(DWORD));
-		
-		dataLength = PacketLength - sizeof(WORD) - sizeof(WORD) - sizeof(WORD) - sizeof(DWORD);
 	
-		memcpy(packet, m_PacketBuffer + sizeof(WORD) + sizeof(WORD) + sizeof(WORD) + sizeof(DWORD), dataLength);
+		WORD MainProtocol = 0;
+		WORD SubProtocol = 0;
+		DWORD SequenceNumber     = 0;
+
+		memcpy(&MainProtocol   , m_PacketBuffer + sizeof(DWORD),   sizeof(WORD));
+		memcpy(&SubProtocol    , m_PacketBuffer + sizeof(DWORD)  + sizeof(WORD) , sizeof(WORD));
+		memcpy(&SequenceNumber , m_PacketBuffer + sizeof(DWORD)  + sizeof(WORD)  + sizeof(WORD), sizeof(DWORD));
+		
+		PayLoadLength = PacketLength - sizeof(DWORD) - sizeof(WORD) - sizeof(WORD) - sizeof(DWORD);
+
+		boost::shared_ptr<XDATA> pBuffer(m_GSBufferPool.alloc());
+
+		BYTE* Packet = pBuffer->m_Buffer.AllocBuffer(PayLoadLength);
+
+		memcpy(Packet, m_PacketBuffer + sizeof(DWORD) + sizeof(WORD) + sizeof(WORD) + sizeof(DWORD), PayLoadLength);
 
 		if (m_RemainLength - PacketLength > 0)
 			memmove(m_PacketBuffer, m_PacketBuffer + PacketLength, m_RemainLength - PacketLength);
@@ -275,6 +280,15 @@ BOOL GSPacketTCP::GetPacket(WORD &MainProtocol, WORD &SubProtocol,BYTE *packet, 
 			m_RemainLength = 0;
 			memset(m_PacketBuffer, 0, sizeof(m_PacketBuffer));
 		}
+	
+		pBuffer->MainId = MainProtocol;
+		pBuffer->SubId = SubProtocol;
+		pBuffer->Length = PayLoadLength;
+
+		m_PacketList.push(pBuffer);
+
+	//	MakeMsg(MainProtocol, SubProtocol, PayLoadLength);
+
 		return TRUE;
 
 	}

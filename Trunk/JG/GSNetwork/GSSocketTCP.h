@@ -13,7 +13,7 @@ public:
 	BOOL Initialize(VOID);
 	BOOL Termination(VOID);
 	
-	BOOL ReadForIocp(BYTE *data, DWORD dataLength,DWORD RemainLength);
+	BOOL ReadForIocp(BYTE * PacketBuffer, DWORD dataLength,DWORD RemainLength, DWORD MaxPacketBufferSize);
 	BOOL ReadForEventSelect(BYTE *data, DWORD &dataLength);
 	BOOL Write(BYTE *data, DWORD dataLength);
 

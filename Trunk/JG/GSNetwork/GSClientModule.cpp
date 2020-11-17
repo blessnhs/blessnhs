@@ -174,7 +174,7 @@ VOID GSClientModule::OnIoRead(VOID)
 	{
 		if (mTCPSession.ReadPacketForEventSelect())
 		{
-			while (mTCPSession.GetPacket(MainProtocol,SubProtocol, Packet, PacketLength))
+			while (mTCPSession.GetPacket())
 			{
 				std::shared_ptr<READ_PACKET_INFO> pReadData(new READ_PACKET_INFO());
 

@@ -81,6 +81,10 @@ BOOL GSSocketTCP::InitializeReadForIocp(VOID)
 		&m_Read_OLP->Overlapped,
 		NULL);
 
+
+	if (ReadBytes > MAX_BUFFER_LENGTH)
+		printf("wsa recv size over!!\n");
+
 	if (ReturnValue == SOCKET_ERROR && WSAGetLastError() != WSA_IO_PENDING && WSAGetLastError() != WSAEWOULDBLOCK)
 	{
 		m_OLP_REMAIN_COUNT_REC.fetch_sub(1);
@@ -92,7 +96,7 @@ BOOL GSSocketTCP::InitializeReadForIocp(VOID)
 	return TRUE;
 }
 
-BOOL			GSSocketTCP::ReadForIocp(BYTE *data, DWORD dataLength,DWORD RemainLength)
+BOOL			GSSocketTCP::ReadForIocp(BYTE *PacketBuffer, DWORD dataLength,DWORD RemainLength,DWORD MaxPacketBufferSize)
 {
 	//m_Buffer 이번에 읽은 버퍼
 	//m_PacketBuffer 누적 버퍼
@@ -103,13 +107,13 @@ BOOL			GSSocketTCP::ReadForIocp(BYTE *data, DWORD dataLength,DWORD RemainLength)
 	if (!m_Socket)
 		return FALSE;
 
-	if (!data || dataLength <= 0)
+	if (!PacketBuffer || dataLength <= 0)
 		return FALSE;
 
-	if(RemainLength + dataLength >= MAX_BUFFER_LENGTH * 3)
+	if(RemainLength + dataLength >= MaxPacketBufferSize)
 		return FALSE;
 
-	memcpy(data+RemainLength, m_Buffer, dataLength);
+	memcpy(PacketBuffer + RemainLength, m_Buffer, dataLength);
 
 	return TRUE;
 }

@@ -18,14 +18,14 @@ public:
 	BOOL	ReadPacket(DWORD readLength);
 	BOOL	ReadPacketForEventSelect();
 			
-	BOOL    SendPacking(LPVOID Packet,DWORD Size);
-	BOOL	Send(LPVOID Packet,DWORD Size);
-	BOOL	WritePacket(WORD MainProtocol,WORD SubProtocol, const BYTE *packet, WORD packetLength);
+	//BOOL    SendPacking(LPVOID Packet,DWORD Size);
+	//BOOL	Send(LPVOID Packet,DWORD Size);
+	BOOL	WritePacket(WORD MainProtocol,WORD SubProtocol, const BYTE *packet, DWORD packetLength);
 
 	BOOL	WriteComplete(VOID);
-	BOOL	GetPacket(WORD &Mainprotocol, WORD &Subprotocol,BYTE *packet, DWORD &dataLength);
+	BOOL	GetPacket();
 
-	VOID	MakePacket(DWORD dwDataLength,WORD &Mainprotocol, WORD &Subprotocol,DWORD &dataLength);
+	VOID	MakePacket(DWORD &dataLength);
 
 	virtual VOID MakeMsg(WORD Mainprotocol, WORD Subprotocol,DWORD dataLength);
 

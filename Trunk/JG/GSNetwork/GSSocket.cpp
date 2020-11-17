@@ -15,7 +15,6 @@ GSSocket::GSSocket(VOID)
 	m_OLP_REMAIN_COUNT_SND = 0;
 
 	memset(m_Buffer, 0, sizeof(m_Buffer));
-
 	m_Socket							= NULL;
 
 	m_Accept_OLP->IoType				= IO_ACCEPT;

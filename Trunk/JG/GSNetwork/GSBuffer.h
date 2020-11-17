@@ -16,6 +16,8 @@ private:
 	DWORD   mPos;
 
 public:
+
+	BYTE*   AllocBuffer(INT Size);
 	BOOL	SetBuffer(BYTE *buffer,INT Size);
 
 	BOOL	SetBuffer();

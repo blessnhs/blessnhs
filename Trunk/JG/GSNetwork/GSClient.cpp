@@ -406,7 +406,7 @@ void GSClient::OnRecv(DWORD Length, boost::shared_ptr<GSClient> client)
 	if (client->GetCreateType() == TCP)
 	{
 
-		GetTCPSocket()->MakePacket(Length, MainProtocol, SubProtocol, dwPacketLength);
+		GetTCPSocket()->MakePacket(Length);
 
 		TakeMsg(client);
 	}

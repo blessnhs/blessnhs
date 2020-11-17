@@ -91,14 +91,13 @@ BOOL GSBoard::Initialize()
 
 	DBPROCESSCONTAINER_CER.Initialize(_arg.m_DBThreadCnt);
 
-	DeleteAllConcurrentUser();
-
 	Create(_arg);
 
 	//default
 	//
 	SetHandler<IUdpProcess>();
 
+	DeleteAllConcurrentUser();
 
 	
 	return TRUE;

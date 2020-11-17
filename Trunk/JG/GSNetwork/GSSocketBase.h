@@ -21,10 +21,10 @@ typedef struct _OVERLAPPED_EX
 class WRITE_PACKET_INFO
 {
 public:
-	WRITE_PACKET_INFO(){}
+	WRITE_PACKET_INFO() { Data = NULL;  DataLength = 0;  }
 	virtual ~WRITE_PACKET_INFO() { }
 
-	BYTE	Data[MAX_BUFFER_LENGTH];
+	BYTE	*Data;
 	DWORD	DataLength;
 
 	VOID	*Object;

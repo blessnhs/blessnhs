@@ -1,6 +1,17 @@
 #pragma once
 
-#define MAX_BUFFER_LENGTH		1024 * 5
+
+//wsarecv wsabuff에 설정된 버퍼 이 버퍼 사이즈 만큼 온다 넘으면 짤라서 다시 온다. 건당 받는 사이즈
+//ex 1000byte  client send 1500   =>
+//1. 1000  byte
+//2. 500   byte   이렇게 온다.
+#define MAX_BUFFER_LENGTH		1024 * 64
+
+
+//한패킷당 올수 있는 최대 사이즈 
+//패킷 사이즈 4BYTE인데 여기에서 너무 크게 오면 서버에 메모리가 부족하거나 문제가된다.
+#define LMIT_BUFFER_LENGTH		20971520  //20MBYTE
+
 #define MAX_ID_LENGTH			50
 #define MAX_CHAR_LENGTH			512
 #define MAX_CHAR_CNT			5

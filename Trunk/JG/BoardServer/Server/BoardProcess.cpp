@@ -483,11 +483,6 @@ VOID BoardProcess::ROOM_CHAT(LPVOID Data, DWORD Length, boost::shared_ptr<GSClie
 		return;
 	}
 
-	if (message.var_message().length() > 1024 || message.var_message().length() <= 0)
-	{
-		return;
-	}
-
 	auto channel = CHANNELMGR.Search(pPlayer->GetChannel());
 	if (channel == NULL)
 	{
@@ -498,11 +493,13 @@ VOID BoardProcess::ROOM_CHAT(LPVOID Data, DWORD Length, boost::shared_ptr<GSClie
 	res.set_var_name(pPlayer->m_Account.GetName());
 
 	ROOM_PTR pPtr = channel->RoomContainer.Search(pPlayer->m_Char[0].GetRoom());
-	if (pPtr != NULL && pPtr->GetState() != State::End)
+	if (pPtr != NULL )
 	{
 		pPtr->SendToAll(res);
 
 	}
+
+	SEND_PROTO_BUFFER(res, Client)
 }
 
 VOID BoardProcess::ROOM_LIST(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client)

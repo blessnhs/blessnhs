@@ -17,6 +17,13 @@ GSBuffer::~GSBuffer(void)
 		delete mBufferPointer;
 }
 
+BYTE* GSBuffer::AllocBuffer(INT Size)
+{
+	mBufferPointer = new BYTE[Size + 1];
+	mLength = Size;
+	return mBufferPointer;
+}
+
 BOOL GSBuffer::SetBuffer(BYTE *buffer,INT Size)
 {
 

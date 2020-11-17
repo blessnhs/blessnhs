@@ -44,7 +44,7 @@ public:
 
 		default_db_name = db_name;
 
-		CreateIndex();
+	//	CreateIndex();
 	}
 
 	~MongoDB()

@@ -7,6 +7,9 @@ namespace GSNetwork	{ namespace GSSocket	{	namespace GSPacket	{
 
 GSPacket::GSPacket(VOID)
 {
+	m_CurrentPacketSize = MAX_BUFFER_LENGTH * 5;
+	m_PacketBuffer = new BYTE[m_CurrentPacketSize];
+
 	memset(m_PacketBuffer, 0, sizeof(m_PacketBuffer));
 
 	m_RemainLength			= 0;
@@ -19,6 +22,7 @@ GSPacket::GSPacket(VOID)
 
 GSPacket::~GSPacket(VOID)
 {
+	delete m_PacketBuffer;
 	//종료할때 비운다.
 
 	boost::shared_ptr<XDATA> pBuffer;
