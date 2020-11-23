@@ -15,6 +15,9 @@ using Android.Content;
 using Android.Gms.Ads;
 using OMOK.Network;
 using System.Text;
+using System.Collections.Generic;
+using Android.Support.V4.Content;
+using Android;
 
 namespace OMOK.Droid
 {
@@ -34,6 +37,8 @@ namespace OMOK.Droid
 
             base.OnCreate(savedInstanceState);
 
+            RequestPermissionsManually();
+
             MyApplication.activity = this;
 
             OxyPlot.Xamarin.Forms.Platform.Android.PlotViewRenderer.Init();
@@ -45,6 +50,15 @@ namespace OMOK.Droid
 
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
+
+
+        }
+
+        public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
+        {
+            Xamarin.Essentials.Platform.OnRequestPermissionsResult(requestCode, permissions, grantResults);
+
+            base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
 
             FirebaseApp.InitializeApp(Application.Context);
 
@@ -62,18 +76,9 @@ namespace OMOK.Droid
                 .AddApi(Auth.GOOGLE_SIGN_IN_API, signInOptions)
                 .Build();
 
-
             GoogleSignIn();
-
             LoadApplication(new App());
 
-
-        }
-        public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
-        {
-            Xamarin.Essentials.Platform.OnRequestPermissionsResult(requestCode, permissions, grantResults);
-
-            base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
         }
 
         const int SignInRequestCode = 9001;
@@ -129,6 +134,44 @@ namespace OMOK.Droid
             {
                
                
+            }
+        }
+
+        List<string> _permission = new List<string>();
+
+        private void RequestPermissionsManually()
+        {
+            try
+            {
+                if (ContextCompat.CheckSelfPermission(this, Manifest.Permission.RecordAudio) != Permission.Granted)
+                    _permission.Add(Manifest.Permission.RecordAudio);
+
+                if (ContextCompat.CheckSelfPermission(this, Manifest.Permission.Camera) != Permission.Granted)
+                    _permission.Add(Manifest.Permission.Camera);
+
+                if (ContextCompat.CheckSelfPermission(this, Manifest.Permission.WriteExternalStorage) != Permission.Granted)
+                    _permission.Add(Manifest.Permission.WriteExternalStorage);
+
+                if (ContextCompat.CheckSelfPermission(this, Manifest.Permission.CallPhone) != Permission.Granted)
+                    _permission.Add(Manifest.Permission.CallPhone);
+
+                if (ContextCompat.CheckSelfPermission(this, Manifest.Permission.AccessNetworkState) != Permission.Granted)
+                    _permission.Add(Manifest.Permission.AccessNetworkState);
+
+                if (ContextCompat.CheckSelfPermission(this, Manifest.Permission.Internet) != Permission.Granted)
+                    _permission.Add(Manifest.Permission.Internet);
+
+                if (_permission.Count > 0)
+                {
+                    string[] array = _permission.ToArray();
+
+                    RequestPermissions(array, array.Length);
+                }
+
+            }
+            catch (Exception ex)
+            {
+
             }
         }
     }

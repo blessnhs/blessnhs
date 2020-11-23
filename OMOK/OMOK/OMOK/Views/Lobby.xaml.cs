@@ -15,6 +15,8 @@ using Google.Protobuf.Collections;
 using Rg.Plugins.Popup.Extensions;
 using OMOK.Popup;
 using ToastMessage;
+using System.IO;
+using System.Threading;
 
 namespace OMOK.Views
 {
@@ -41,7 +43,7 @@ namespace OMOK.Views
       //      iIterstitia.ShowAd();
 
             mypicture.Source = null;
-
+    
             Device.StartTimer(TimeSpan.FromMilliseconds(50), () =>
             {
                 if (NoticeLabel.TranslationX > -(NoticeLabel.Width + (NoticeLabel.Width * 0.2)))
@@ -54,6 +56,16 @@ namespace OMOK.Views
                 }
 
                 return true;
+            });
+
+
+            Task.Run(() =>
+            {
+                while (true)
+                {
+                    NetProcess.client.Update();
+                    Thread.Sleep(5);
+                }
             });
 
 
@@ -74,7 +86,8 @@ namespace OMOK.Views
                 {
                     Device.BeginInvokeOnMainThread(() =>
                     {
-                        NetProcess.SendReqRoomList();
+                    
+                            NetProcess.SendReqRoomList();
                     });
                     return true; //if true repeat
                 });
@@ -282,13 +295,13 @@ namespace OMOK.Views
 
         async void OnMatchClicked(object sender, System.EventArgs e)
         {
-            NetProcess.SendMatch();
+           NetProcess.SendMatch();
 
             await Navigation.PushModalAsync(new MatchInfoPage()/*_MachPage*/);
 
         }
 
-        public void MatchAuto()
+       public void MatchAuto()
         {
             NetProcess.SendMatch();
 

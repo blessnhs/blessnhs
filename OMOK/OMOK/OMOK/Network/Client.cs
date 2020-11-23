@@ -24,12 +24,17 @@ namespace NetClient
         // Client socket.
         public Socket workSocket = null;
         // Size of receive buffer.
-        public static int MTU = 1024 * 20;
+        public static int MTU = 1024 * 1024 * 5;
 
         // Receive buffer.
         public byte[] buffer = new byte[MTU];
-        // Received data string.
-        public StringBuilder sb = new StringBuilder();
+      
+      
+        public void clear()
+        {
+            workSocket = null;
+            Buffer.BlockCopy(buffer, 0, buffer, 0, buffer.Length);
+        }
 
     }
 
@@ -97,7 +102,7 @@ namespace NetClient
 
                 Int32 PacketLength = 0;
 
-                PacketLength = BitConverter.ToInt16(m_PacketBuffer, 0);
+                PacketLength = BitConverter.ToInt32(m_PacketBuffer, 0);
 
                 if (PacketLength > StateObject.MTU || PacketLength <= 0) // Invalid Packet
                 {
@@ -107,14 +112,14 @@ namespace NetClient
 
                 if (PacketLength <= m_RemainLength)         //제대로된 패킷이 왔다
                 {
-                    dataLength = PacketLength - sizeof(Int16) - sizeof(Int16) - sizeof(Int16) - sizeof(Int32);
+                    dataLength = PacketLength - sizeof(Int32) - sizeof(Int16) - sizeof(Int16) - sizeof(Int32);
                     packet = new byte[dataLength];
                     Int32 PacketNumber = 0;
 
-                    protocol = BitConverter.ToInt16(m_PacketBuffer, sizeof(Int16));
-                    PacketNumber = BitConverter.ToInt32(m_PacketBuffer, sizeof(Int16) + sizeof(Int16) + sizeof(Int16));
+                    protocol = BitConverter.ToInt16(m_PacketBuffer, sizeof(Int32));
+                    PacketNumber = BitConverter.ToInt32(m_PacketBuffer, sizeof(Int32) + sizeof(Int16) + sizeof(Int16));
 
-                    Buffer.BlockCopy(m_PacketBuffer, sizeof(Int16) + sizeof(Int16) + sizeof(Int16) + sizeof(Int32), packet, 0, dataLength);
+                    Buffer.BlockCopy(m_PacketBuffer, sizeof(Int32) + sizeof(Int16) + sizeof(Int16) + sizeof(Int32), packet, 0, dataLength);
 
                     if (m_RemainLength - PacketLength > 0)
                     {
@@ -165,18 +170,40 @@ namespace NetClient
             Receive(socket);
         }
 
+        StateObject state = new StateObject();
+
 
         private void Receive(Socket client)
         {
             try
             {
-                // Create the state object.
-                StateObject state = new StateObject();
+                if (client == null || client.Connected == false)
+                    return;
+
+
+                state.clear();
+                 // Create the state object.
                 state.workSocket = client;
 
+                int bytesRead = client.Receive(state.buffer);
+
+                if (bytesRead > 0)
+                {
+
+                    Buffer.BlockCopy(state.buffer, 0, m_PacketBuffer, m_RemainLength, bytesRead);
+
+                    m_RemainLength += bytesRead;
+
+
+                    OnRecvThreadProc();
+
+                }
+             
+
+
                 // Begin receiving the data from the remote device.
-                client.BeginReceive(state.buffer, 0, StateObject.MTU, 0,
-                    new AsyncCallback(ReceiveCallback), state);
+                //      client.BeginReceive(state.buffer, 0, StateObject.MTU, 0,
+                //         new AsyncCallback(ReceiveCallback), state);
             }
             catch (Exception e)
             {
@@ -210,42 +237,38 @@ namespace NetClient
         {
             try
             {
-                // Retrieve the state object and the client socket 
-                // from the asynchronous state object.
-                StateObject state = (StateObject)ar.AsyncState;
-                Socket client = state.workSocket;
-
-                // Read data from the remote device.
-                int bytesRead = client.EndReceive(ar);
-
-                if (bytesRead > 0)
+                lock (this)
                 {
-                    // There might be more data, so store the data received so far.
-                    state.sb.Append(Encoding.ASCII.GetString(state.buffer, 0, bytesRead));
+                    // Retrieve the state object and the client socket 
+                    // from the asynchronous state object.
+                    StateObject state = (StateObject)ar.AsyncState;
+                    Socket client = state.workSocket;
 
-                    lock (this)
+                    // Read data from the remote device.
+                    int bytesRead = client.EndReceive(ar);
+
+                    if (bytesRead > 0)
                     {
-                        Buffer.BlockCopy(state.buffer, 0, m_PacketBuffer, m_RemainLength, bytesRead);
+                  
+                            Buffer.BlockCopy(state.buffer, 0, m_PacketBuffer, m_RemainLength, bytesRead);
 
-                        m_RemainLength += bytesRead;
+                            m_RemainLength += bytesRead;
 
-                   
-                        OnRecvThreadProc();
+
+                            OnRecvThreadProc();
+
+
+                        // Get the rest of the data.
+
+
+                        //     client.BeginReceive(state.buffer, 0, StateObject.MTU, 0,
+                        //         new AsyncCallback(ReceiveCallback), state);
                     }
-
-                    // Get the rest of the data.
-                    client.BeginReceive(state.buffer, 0, StateObject.MTU, 0,
-                        new AsyncCallback(ReceiveCallback), state);
-                }
-                else
-                {
-                    // All the data has arrived; put it in response.
-                    if (state.sb.Length > 1)
+                    else
                     {
-                        response = state.sb.ToString();
+                    
+                        receiveDone.Set();
                     }
-                    // Signal that all bytes have been received.
-                    receiveDone.Set();
                 }
             }
             catch (Exception e)
@@ -261,7 +284,7 @@ namespace NetClient
         {
             //  lock (this)
             {
-                Int32 PacketLength = sizeof(Int16) +
+                Int32 PacketLength = sizeof(Int32) +
                     sizeof(Int16) +
                     sizeof(Int16) +
                     sizeof(Int32) +
@@ -270,32 +293,44 @@ namespace NetClient
                 mCurrentPacketNumber++;
 
                 byte[] TempBuffer = new byte[PacketLength];
-                byte[] byteslegnth = BitConverter.GetBytes((Int16)PacketLength);
-                Buffer.BlockCopy(byteslegnth, 0, TempBuffer, 0, sizeof(Int16));
+                
+                byte[] byteslegnth = BitConverter.GetBytes((Int32)PacketLength);
+                Buffer.BlockCopy(byteslegnth, 0, TempBuffer, 0, sizeof(Int32));
 
                 byte[] bytesProtocol = BitConverter.GetBytes((Int16)protocol);
-                Buffer.BlockCopy(bytesProtocol, 0, TempBuffer, sizeof(Int16), sizeof(Int16));
+                Buffer.BlockCopy(bytesProtocol, 0, TempBuffer, sizeof(Int32), sizeof(Int16));
 
                 byte[] bytesPacketNumber = BitConverter.GetBytes((Int32)mCurrentPacketNumber);
-                Buffer.BlockCopy(bytesPacketNumber, 0, TempBuffer, sizeof(Int16) + sizeof(Int16) + sizeof(Int16), sizeof(Int32));
-                Buffer.BlockCopy(packet, 0, TempBuffer, sizeof(Int16) + sizeof(Int16) + sizeof(Int16) + sizeof(Int32), packetLength);
+                Buffer.BlockCopy(bytesPacketNumber, 0, TempBuffer, sizeof(Int32) + sizeof(Int16) + sizeof(Int16), sizeof(Int32));
+                Buffer.BlockCopy(packet, 0, TempBuffer, sizeof(Int32) + sizeof(Int16) + sizeof(Int16) + sizeof(Int32), packetLength);
 
                 try
                 {
                     // Begin sending the data to the remote device.
                     socket.BeginSend(TempBuffer, 0, PacketLength, 0,
                         new AsyncCallback(SendCallback), socket);
-                 }
+                }
                 catch (SocketException e)
                 {
                     // 10035 == WSAEWOULDBLOCK
                     if (!e.NativeErrorCode.Equals(10035))
                         Console.Write("Disconnected: error code :" + e.NativeErrorCode + "(" + e.Message + ")");
                 }
+
+                TempBuffer = null;
+
+
             }
             return true;
         }
 
+        public void Send(byte[] packet, int packetLength)
+        {
+
+            // Begin sending the data to the remote device.
+            socket.BeginSend(packet, 0, packetLength, 0,
+                new AsyncCallback(SendCallback), socket);
+        }
 
         private void Send(Socket client, String data)
         {

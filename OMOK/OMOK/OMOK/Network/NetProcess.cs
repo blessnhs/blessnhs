@@ -10,6 +10,9 @@ using System.Net;
 using OMOK.Popup;
 using Xamarin.Forms.PlatformConfiguration;
 using System.Threading;
+using System.Collections.Generic;
+using ToastMessage;
+using System.Collections.Concurrent;
 
 namespace OMOK.Network
 {
@@ -39,7 +42,7 @@ namespace OMOK.Network
    
         static public void start()
         {
-            string ip =  "211.212.37.238";//*/"192.168.0.9";//
+            string ip = "192.168.0.9";//"211.212.37.238";//
 
 
             //연결중이면 안한다. 
@@ -63,16 +66,17 @@ namespace OMOK.Network
             }
         }
 
-        static Room pRoom = null;
+        public static ConcurrentQueue<System.IO.MemoryStream> JpegStream = new ConcurrentQueue<System.IO.MemoryStream>();
 
+        public static CameraPage cameraPage;
+        static Room pRoom = null;
         static public void Loop(Lobby page)
         {
             
             if (client.socket == null || client.socket.Connected == false)
                 return;
 
-            client.Update();
-
+         
             CompletePacket data;
             if (client.PacketQueue.TryDequeue(out data) == true)
             {
@@ -137,8 +141,9 @@ namespace OMOK.Network
                                     }
                                     else
                                     {
-                                        User.Auto = true;
-                                        page.MatchAuto();
+										
+                                        if(User.Auto == true)
+                                        	page.MatchAuto();
 
                                     }
                                 }
@@ -230,10 +235,12 @@ namespace OMOK.Network
                             {
                                 BROADCAST_ROOM_MESSAGE_RES res = new BROADCAST_ROOM_MESSAGE_RES();
                                 res = BROADCAST_ROOM_MESSAGE_RES.Parser.ParseFrom(data.Data);
-                               
+
+                                JpegStream.Enqueue(new MemoryStream(res.VarMessage.ToByteArray()));
+
                             }
                             break;
-                        case (int)PROTOCOL.IdPktRoomPassThroughRes:
+                          case (int)PROTOCOL.IdPktRoomPassThroughRes:
                             {
                                 ROOM_PASS_THROUGH_RES res = new ROOM_PASS_THROUGH_RES();
                                 res = ROOM_PASS_THROUGH_RES.Parser.ParseFrom(data.Data);
@@ -274,6 +281,7 @@ namespace OMOK.Network
                                     if (User.Auto == true)
                                     {
                                         Thread.Sleep(1000);
+
                                         page.MatchAuto();
                                     }
                                 }
@@ -499,23 +507,20 @@ namespace OMOK.Network
             }
         }
 
-        static public void SendRoomMessage(string msg)
+        static public void SendRoomMessage(byte[] image)
         {
 
             if (client == null || client.socket == null || client.socket.Connected == false)
                 return;
-
-            var bytearray = System.Text.Encoding.UTF8.GetBytes(msg);
-
-            BROADCAST_ROOM_MESSAGE_REQ message = new BROADCAST_ROOM_MESSAGE_REQ
             {
-                VarMessage =  ByteString.CopyFrom(bytearray),
-              
-            };
-            using (MemoryStream stream = new MemoryStream())
-            {
-                message.WriteTo(stream);
-                client.WritePacket((int)PROTOCOL.IdPktBroadcastRoomMessageReq, stream.ToArray(), stream.ToArray().Length);
+                BROADCAST_ROOM_MESSAGE_REQ message = new BROADCAST_ROOM_MESSAGE_REQ
+                {
+                    VarMessage = ByteString.CopyFrom(image),
+                };
+
+   
+                client.WritePacket((int)PROTOCOL.IdPktBroadcastRoomMessageReq, message.ToByteArray(), message.ToByteArray().Length);
+
             }
              
         }
