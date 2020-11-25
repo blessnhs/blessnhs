@@ -31,15 +31,9 @@ namespace FullCameraApp.Droid
     {
         public ImageStreamingServer server = new ImageStreamingServer();
 
-        bool once = false;
         DateTime checktime = DateTime.Now;
         public void OnPreviewFrame(byte[] data, Android.Hardware.Camera camera)
         {
-  //          if (once == true)
- //               return;
-
-            once = true;
-
             var paras = camera.GetParameters();
             var imageformat = paras.PreviewFormat;
 
@@ -57,13 +51,13 @@ namespace FullCameraApp.Droid
 
                             System.IO.MemoryStream outStream = new System.IO.MemoryStream();
 
-                            bool didIt = img.CompressToJpeg(new Rect(0, 0, paras.PreviewSize.Width, paras.PreviewSize.Height), 30, outStream);
+                            img.CompressToJpeg(new Rect(0, 0, paras.PreviewSize.Width, paras.PreviewSize.Height), 30, outStream);
 
                             server.ImagesSource.Enqueue(outStream);
                             NetProcess.SendRoomMessage(outStream.ToArray());
 
 
-                            checktime = DateTime.Now.AddMilliseconds(310);
+                            checktime = DateTime.Now.AddMilliseconds(250);
                         }
                     }
                     break;
@@ -83,13 +77,15 @@ namespace FullCameraApp.Droid
         public CameraPageRenderer(Context context) : base(context)
         {
             _context = SynchronizationContext.Current;
+
+            Activity.SetContentView(OMOK.Droid.Resource.Layout.layout_camera);
+
+          
         }
 
-        RelativeLayout mainLayout;
         TextureView liveView;
         ImageView imageView;
-        ImageButton button;
-
+   
         Android.Hardware.Camera camera;
 
         Activity Activity => this.Context as Activity;
@@ -108,35 +104,11 @@ namespace FullCameraApp.Droid
 
         void SetupUserInterface()
         {
-            mainLayout = new RelativeLayout(Context);
-             //RelativeLayout.LayoutParams mainLayoutParams = new RelativeLayout.LayoutParams(
-            //	RelativeLayout.LayoutParams.MatchParent,
-            //	RelativeLayout.LayoutParams.MatchParent);
-            //mainLayout.LayoutParameters = mainLayoutParams;
+            liveView = Activity.FindViewById<TextureView>(OMOK.Droid.Resource.Id.textureView1);
+            imageView = Activity.FindViewById<ImageView>(OMOK.Droid.Resource.Id.imageView1);
+       //     imageView.RotationY = 180;
+      
 
-            liveView = new TextureView(Context);
-            imageView = new ImageView(Context);
-            button = new ImageButton(Context);
-
-            RelativeLayout.LayoutParams ViewParams = new RelativeLayout.LayoutParams(
-                400,
-                400);
-            liveView.LayoutParameters = ViewParams;
-
-            button.LayoutParameters = ViewParams;
-
-            RelativeLayout.LayoutParams imageParams = new RelativeLayout.LayoutParams(
-              800,
-              800);
-            imageView.LayoutParameters = imageParams;
-
-            mainLayout.AddView(liveView);
-            mainLayout.AddView(imageView);
-            mainLayout.AddView(button);
-
-            AddView(mainLayout);
-
-            button.Click += ButtonClicked;
         }
 
         protected override void OnLayout(bool changed, int l, int t, int r, int b)
@@ -144,10 +116,6 @@ namespace FullCameraApp.Droid
             base.OnLayout(changed, l, t, r, b);
             if (!changed)
                 return;
-            var msw = MeasureSpec.MakeMeasureSpec(r - l, MeasureSpecMode.Exactly);
-            var msh = MeasureSpec.MakeMeasureSpec(b - t, MeasureSpecMode.Exactly);
-            mainLayout.Measure(msw, msh);
-            mainLayout.Layout(0, 0, r - l, b - t);
         }
 
         public void SetupEventHandlers()
@@ -190,7 +158,7 @@ namespace FullCameraApp.Droid
 
         private void StartCamera()
         {
-            camera.SetDisplayOrientation(90);
+           // camera.SetDisplayOrientation(90);
             camera.SetPreviewCallback(callbackcamera);
             camera.StartPreview();
 
@@ -205,8 +173,7 @@ namespace FullCameraApp.Droid
         }
         private void Mjpeg_FrameReady(object sender, FrameReadyEventArgs e)
         {
-            button.SetImageBitmap(e.Bitmap);
-            imageView.SetImageBitmap(e.Bitmap);
+           imageView.SetImageBitmap(e.Bitmap);
         }
 
         #region TextureView.ISurfaceTextureListener implementations
@@ -244,12 +211,9 @@ namespace FullCameraApp.Droid
                 //                            .OrderBy(s => Math.Abs(s.Width / (decimal)s.Height - aspect))
                 //                            .First();
 
-                var previewSize = parameters.SupportedPreviewSizes[0];
-
-                System.Diagnostics.Debug.WriteLine($"Preview sizes: {parameters.SupportedPreviewSizes.Count}");
-
-                mainLayout.LayoutParameters.Height = previewSize.Height;
-                mainLayout.LayoutParameters.Width = previewSize.Width;
+                var previewSize = parameters.SupportedPreviewSizes[2];
+           //     mainLayout.LayoutParameters.Height = previewSize.Height;
+           //     mainLayout.LayoutParameters.Width = previewSize.Width;
 
                 parameters.SetPreviewSize(previewSize.Width, previewSize.Height);
                 camera.SetParameters(parameters);
@@ -257,7 +221,7 @@ namespace FullCameraApp.Droid
                 StartCamera();
 
                 System.Timers.Timer timer = new System.Timers.Timer();
-                timer.Interval = 10;
+                timer.Interval = 5;
                 timer.Elapsed += OnTimedEvent;
                 timer.Enabled = true;
 
@@ -292,8 +256,7 @@ namespace FullCameraApp.Droid
                                 {
                                     var bitmap = BitmapFactory.DecodeByteArray(ms2.ToArray(), 0, ms2.ToArray().Length);
 
-                                    button.SetImageBitmap(bitmap);
-
+                     
                                 }, null);
                             }
 
@@ -313,9 +276,7 @@ namespace FullCameraApp.Droid
         // used to marshal back to UI thread
         private SynchronizationContext _context;
 
-        // event to get the buffer above handed to you
-        public event EventHandler<FrameReadyEventArgs> FrameReady;
-
+   
 
         public bool OnSurfaceTextureDestroyed(Android.Graphics.SurfaceTexture surface)
         {

@@ -21,9 +21,6 @@ namespace NetClient
 
     public class StateObject
     {
-        // Client socket.
-        public Socket workSocket = null;
-        // Size of receive buffer.
         public static int MTU = 1024 * 1024 * 5;
 
         // Receive buffer.
@@ -32,7 +29,6 @@ namespace NetClient
       
         public void clear()
         {
-            workSocket = null;
             Buffer.BlockCopy(buffer, 0, buffer, 0, buffer.Length);
         }
 
@@ -180,11 +176,8 @@ namespace NetClient
                 if (client == null || client.Connected == false)
                     return;
 
-
                 state.clear();
-                 // Create the state object.
-                state.workSocket = client;
-
+        
                 int bytesRead = client.Receive(state.buffer);
 
                 if (bytesRead > 0)
@@ -198,12 +191,6 @@ namespace NetClient
                     OnRecvThreadProc();
 
                 }
-             
-
-
-                // Begin receiving the data from the remote device.
-                //      client.BeginReceive(state.buffer, 0, StateObject.MTU, 0,
-                //         new AsyncCallback(ReceiveCallback), state);
             }
             catch (Exception e)
             {
@@ -232,51 +219,6 @@ namespace NetClient
                 PacketQueue.Enqueue(complete);
             }
         }
-
-        private void ReceiveCallback(IAsyncResult ar)
-        {
-            try
-            {
-                lock (this)
-                {
-                    // Retrieve the state object and the client socket 
-                    // from the asynchronous state object.
-                    StateObject state = (StateObject)ar.AsyncState;
-                    Socket client = state.workSocket;
-
-                    // Read data from the remote device.
-                    int bytesRead = client.EndReceive(ar);
-
-                    if (bytesRead > 0)
-                    {
-                  
-                            Buffer.BlockCopy(state.buffer, 0, m_PacketBuffer, m_RemainLength, bytesRead);
-
-                            m_RemainLength += bytesRead;
-
-
-                            OnRecvThreadProc();
-
-
-                        // Get the rest of the data.
-
-
-                        //     client.BeginReceive(state.buffer, 0, StateObject.MTU, 0,
-                        //         new AsyncCallback(ReceiveCallback), state);
-                    }
-                    else
-                    {
-                    
-                        receiveDone.Set();
-                    }
-                }
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.ToString());
-            }
-        }
-
 
         public int mCurrentPacketNumber = 0;
 

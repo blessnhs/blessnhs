@@ -68,8 +68,9 @@ namespace OMOK.Network
 
         public static ConcurrentQueue<System.IO.MemoryStream> JpegStream = new ConcurrentQueue<System.IO.MemoryStream>();
 
-        public static CameraPage cameraPage;
+        static CameraPage cameraPage;
         static Room pRoom = null;
+
         static public void Loop(Lobby page)
         {
             

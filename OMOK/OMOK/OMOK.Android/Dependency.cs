@@ -49,11 +49,6 @@ namespace ToastMessage.Droid
             }
         }
 
-        public object JpegToBmp(byte[] array)
-        {
-            return Android.Graphics.BitmapFactory.DecodeByteArray(array, 0, array.Length);
-        }
-
         public void StartRecord(object video_obj)
         {
             VideoView video = video_obj as VideoView; 
