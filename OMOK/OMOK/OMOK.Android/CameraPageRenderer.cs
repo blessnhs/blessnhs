@@ -11,12 +11,14 @@ using Android.App;
 using Android.Content;
 using Android.Content.PM;
 using Android.Graphics;
+using Android.Support.Design.Widget;
 using Android.Support.V4.App;
 using Android.Support.V4.Content;
 using Android.Views;
 using Android.Widget;
 using FullCameraApp;
 using FullCameraApp.Droid;
+using OMOK;
 using OMOK.Network;
 using OMOK.Views;
 using Plugin.CurrentActivity;
@@ -30,6 +32,8 @@ namespace FullCameraApp.Droid
     public class mPreviewCallback : Java.Lang.Object, Android.Hardware.Camera.IPreviewCallback
     {
         public ImageStreamingServer server = new ImageStreamingServer();
+
+        public ConcurrentQueue<System.IO.MemoryStream> Frames = new ConcurrentQueue<System.IO.MemoryStream>();
 
         DateTime checktime = DateTime.Now;
         public void OnPreviewFrame(byte[] data, Android.Hardware.Camera camera)
@@ -47,22 +51,42 @@ namespace FullCameraApp.Droid
                         if (checktime < DateTime.Now)
                         {
                             Android.Graphics.YuvImage img = new Android.Graphics.YuvImage(data,
-                                    imageformat, paras.PreviewSize.Width, paras.PreviewSize.Height, null);
+                                                           imageformat, paras.PreviewSize.Width, paras.PreviewSize.Height, null);
 
                             System.IO.MemoryStream outStream = new System.IO.MemoryStream();
 
                             img.CompressToJpeg(new Rect(0, 0, paras.PreviewSize.Width, paras.PreviewSize.Height), 30, outStream);
 
-                            server.ImagesSource.Enqueue(outStream);
-                            NetProcess.SendRoomMessage(outStream.ToArray());
+                            Frames.Enqueue(outStream);
+                            
+                            foreach (var frame in Frames)
+                            {
 
+                                server.ImagesSource.Enqueue(outStream);
+                                NetProcess.SendRoomMessage(outStream.ToArray());
+                            }
 
                             checktime = DateTime.Now.AddMilliseconds(250);
+
+                            Frames.Clear();
                         }
                     }
                     break;
                 case ImageFormatType.Jpeg:
-                    server.ImagesSource.Enqueue(new System.IO.MemoryStream(data));
+
+                    Frames.Enqueue(new System.IO.MemoryStream(data));
+
+                    if (checktime < DateTime.Now)
+                    {
+                        foreach (var frame in Frames)
+                        {
+                            server.ImagesSource.Enqueue(frame);
+                        }
+
+                        Frames.Clear();
+                    }
+
+
                     break;
             }
         }
@@ -78,14 +102,16 @@ namespace FullCameraApp.Droid
         {
             _context = SynchronizationContext.Current;
 
-            Activity.SetContentView(OMOK.Droid.Resource.Layout.layout_camera);
+        //    Activity.SetContentView(OMOK.Droid.Resource.Layout.layout_camera);
 
-          
+         
         }
 
+        RelativeLayout mainLayout;
         TextureView liveView;
         ImageView imageView;
-   
+        Button ExitButton;
+
         Android.Hardware.Camera camera;
 
         Activity Activity => this.Context as Activity;
@@ -99,15 +125,66 @@ namespace FullCameraApp.Droid
 
         void ButtonClicked(object sender, EventArgs args)
         {
-            test();
+            var page = (Element as CameraPage);
+
+            page.Close();
         }
 
         void SetupUserInterface()
         {
-            liveView = Activity.FindViewById<TextureView>(OMOK.Droid.Resource.Id.textureView1);
-            imageView = Activity.FindViewById<ImageView>(OMOK.Droid.Resource.Id.imageView1);
-       //     imageView.RotationY = 180;
-      
+            mainLayout = new RelativeLayout(Context);
+            mainLayout.SetBackgroundColor(Color.Black);
+
+            liveView = new TextureView(Context);
+
+            RelativeLayout.LayoutParams liveViewParams = new RelativeLayout.LayoutParams(
+                RelativeLayout.LayoutParams.MatchParent,
+                RelativeLayout.LayoutParams.MatchParent);
+
+            liveViewParams.Height = 450;
+            liveViewParams.Width = 450;
+            liveView.LayoutParameters = liveViewParams;
+            liveView.Rotation = 90;
+            mainLayout.AddView(liveView);
+
+            TextView textview1 = new TextView(Context);
+            textview1.Text = User.myInfo.NickName;
+            textview1.SetX(450/2);
+            textview1.SetY(460);
+            textview1.SetTextColor(Color.White);
+            mainLayout.AddView(textview1);
+
+
+
+
+            imageView = new ImageView(Context);
+       
+            RelativeLayout.LayoutParams imageViewParams = new RelativeLayout.LayoutParams(
+             RelativeLayout.LayoutParams.MatchParent,
+             RelativeLayout.LayoutParams.MatchParent);
+            imageViewParams.Height = 450;
+            imageViewParams.Width = 450;
+
+            imageView.Rotation = 270;
+            imageView.LayoutParameters = imageViewParams;
+            imageView.SetScaleType(ImageView.ScaleType.FitXy);
+            mainLayout.AddView(imageView);
+
+            ExitButton = new Button(Context);
+            RelativeLayout.LayoutParams ButtonParams = new RelativeLayout.LayoutParams(
+            RelativeLayout.LayoutParams.MatchParent,
+            RelativeLayout.LayoutParams.MatchParent);
+            ButtonParams.Height = 50;
+            ButtonParams.Width = 150;
+            ExitButton.LayoutParameters = ButtonParams;
+
+            AddView(mainLayout);
+
+            //liveView = Activity.FindViewById<TextureView>(OMOK.Droid.Resource.Id.textureView1);
+            //imageView = Activity.FindViewById<ImageView>(OMOK.Droid.Resource.Id.imageView1);
+            //var button = Activity.FindViewById<Button>(OMOK.Droid.Resource.Id.button1);
+            //button.Click += ButtonClicked;
+
 
         }
 
@@ -116,6 +193,21 @@ namespace FullCameraApp.Droid
             base.OnLayout(changed, l, t, r, b);
             if (!changed)
                 return;
+            
+            var msw = MeasureSpec.MakeMeasureSpec(r - l, MeasureSpecMode.Exactly);
+            var msh = MeasureSpec.MakeMeasureSpec(b - t, MeasureSpecMode.Exactly);
+            mainLayout.Measure(msw, msh);
+            mainLayout.Layout(0, 0, r - l, b - t);
+
+            liveView.SetX(0);
+            liveView.SetY(0);
+
+            imageView.SetX(mainLayout.Width - 450);
+            imageView.SetY(0);
+
+            ExitButton.SetX((r - l)/2);
+            ExitButton.SetY((b - t) - 100);
+
         }
 
         public void SetupEventHandlers()
@@ -126,8 +218,7 @@ namespace FullCameraApp.Droid
         public override bool OnKeyDown(Keycode keyCode, KeyEvent e)
         {
             if (keyCode == Keycode.Back)
-            {
-                return false;
+            {               
             }
             return base.OnKeyDown(keyCode, e);
         }
@@ -150,15 +241,18 @@ namespace FullCameraApp.Droid
 
         private void StopCamera()
         {
+            camera.SetPreviewCallback(null);
+
             camera.StopPreview();
             camera.Release();
+            camera.Dispose();
+            camera = null;
         }
 
         mPreviewCallback callbackcamera = new mPreviewCallback();
 
         private void StartCamera()
         {
-           // camera.SetDisplayOrientation(90);
             camera.SetPreviewCallback(callbackcamera);
             camera.StartPreview();
 
@@ -220,56 +314,49 @@ namespace FullCameraApp.Droid
                 camera.SetPreviewTexture(surface);
                 StartCamera();
 
-                System.Timers.Timer timer = new System.Timers.Timer();
-                timer.Interval = 5;
-                timer.Elapsed += OnTimedEvent;
-                timer.Enabled = true;
 
-                void OnTimedEvent(object sender, System.Timers.ElapsedEventArgs e)
+                Task.Run(() =>
                 {
-                     Activity.RunOnUiThread(() =>
+                    while (true)
                     {
-                        lock(this)
+                        if (NetProcess.JpegStream.Count == 0)
+                            continue;
+
+                        Thread.Sleep(5);
+
+                        MemoryStream ms;
+                        if(NetProcess.JpegStream.TryDequeue(out ms) == true)
                         {
-                            if(NetProcess.JpegStream.Count == 0)
-                                return;
+                            if (ms == null)
+                                continue;
 
-
-
-                            MemoryStream ms;
-                            if(NetProcess.JpegStream.TryDequeue(out ms) == true)
+                            _context.Post(delegate
                             {
-                                _context.Post(delegate
-                                {
-                                    var bitmap = BitmapFactory.DecodeByteArray(ms.ToArray(), 0, ms.ToArray().Length);
+                                var bitmap = BitmapFactory.DecodeByteArray(ms?.ToArray(), 0, ms.ToArray().Length);
 
-                                    imageView.SetImageBitmap(bitmap);
+                                imageView.SetImageBitmap(bitmap);
 
-                                }, null);
-                            }
+                            }, null);
+                        }
 
 
-                            MemoryStream ms2;
-                            if (callbackcamera.server.ImagesSource.TryDequeue(out ms2) == true)
+                        MemoryStream ms2;
+                        if(callbackcamera.server.ImagesSource.TryDequeue(out ms2) == true)
+                        {
+                            if (ms2 == null)
+                                continue;
+
+                            _context.Post(delegate
                             {
-                                _context.Post(delegate
-                                {
-                                    var bitmap = BitmapFactory.DecodeByteArray(ms2.ToArray(), 0, ms2.ToArray().Length);
-
-                     
-                                }, null);
-                            }
+                                var bitmap = BitmapFactory.DecodeByteArray(ms2.ToArray(), 0, ms2.ToArray().Length);
 
 
-                            var result = ms.ToArray().SequenceEqual(ms2.ToArray());
+                            }, null);
+                        }
+                    }
+                });
 
-                            if (result == false)
-                            {
-                                return;
-                            }
-                        }                     
-                    });
-                }
+               
             }
         }
 

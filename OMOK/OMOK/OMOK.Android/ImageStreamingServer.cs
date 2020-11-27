@@ -5,6 +5,7 @@
 // Date         : April 2012
 // -------------------------------------------------
 using System.Collections.Concurrent;
+using System.IO;
 
 namespace rtaNetworking.Streaming
 {
@@ -181,13 +182,16 @@ namespace rtaNetworking.Streaming
                         // Writes the response header to the client.
                         wr.WriteHeader();
 
-                        // Streams the images from the source to the client.
-                        foreach (var imgStream in this.ImagesSource)
+                        MemoryStream ms;
+                        if (ImagesSource.TryDequeue(out ms) == true)
                         {
+                            if (ms == null)
+                                continue;
+
                             if (this.Interval > 0)
                                 System.Threading.Thread.Sleep(this.Interval);
 
-                            wr.Write(imgStream);
+                            wr.Write(ms);
                         }
                     }
 
