@@ -49,13 +49,16 @@ struct TableStruct_CLI_2eGS_2eproto {
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::PROTOBUF_NAMESPACE_ID::internal::AuxillaryParseTableField aux[]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
-  static const ::PROTOBUF_NAMESPACE_ID::internal::ParseTable schema[14]
+  static const ::PROTOBUF_NAMESPACE_ID::internal::ParseTable schema[15]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::PROTOBUF_NAMESPACE_ID::internal::FieldMetadata field_metadata[];
   static const ::PROTOBUF_NAMESPACE_ID::internal::SerializationTable serialization_table[];
   static const ::PROTOBUF_NAMESPACE_ID::uint32 offsets[];
 };
 extern const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_CLI_2eGS_2eproto;
+class AUDIO_MESSAGE_REQ;
+class AUDIO_MESSAGE_REQDefaultTypeInternal;
+extern AUDIO_MESSAGE_REQDefaultTypeInternal _AUDIO_MESSAGE_REQ_default_instance_;
 class BROADCAST_ROOM_MESSAGE_REQ;
 class BROADCAST_ROOM_MESSAGE_REQDefaultTypeInternal;
 extern BROADCAST_ROOM_MESSAGE_REQDefaultTypeInternal _BROADCAST_ROOM_MESSAGE_REQ_default_instance_;
@@ -99,6 +102,7 @@ class VERSION_REQ;
 class VERSION_REQDefaultTypeInternal;
 extern VERSION_REQDefaultTypeInternal _VERSION_REQ_default_instance_;
 PROTOBUF_NAMESPACE_OPEN
+template<> ::AUDIO_MESSAGE_REQ* Arena::CreateMaybeMessage<::AUDIO_MESSAGE_REQ>(Arena*);
 template<> ::BROADCAST_ROOM_MESSAGE_REQ* Arena::CreateMaybeMessage<::BROADCAST_ROOM_MESSAGE_REQ>(Arena*);
 template<> ::CANCEL_MATCH_REQ* Arena::CreateMaybeMessage<::CANCEL_MATCH_REQ>(Arena*);
 template<> ::CHECK_NICKNAME_REQ* Arena::CreateMaybeMessage<::CHECK_NICKNAME_REQ>(Arena*);
@@ -2280,6 +2284,168 @@ class CHECK_NICKNAME_REQ :
   int id_;
   friend struct ::TableStruct_CLI_2eGS_2eproto;
 };
+// -------------------------------------------------------------------
+
+class AUDIO_MESSAGE_REQ :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:AUDIO_MESSAGE_REQ) */ {
+ public:
+  AUDIO_MESSAGE_REQ();
+  virtual ~AUDIO_MESSAGE_REQ();
+
+  AUDIO_MESSAGE_REQ(const AUDIO_MESSAGE_REQ& from);
+  AUDIO_MESSAGE_REQ(AUDIO_MESSAGE_REQ&& from) noexcept
+    : AUDIO_MESSAGE_REQ() {
+    *this = ::std::move(from);
+  }
+
+  inline AUDIO_MESSAGE_REQ& operator=(const AUDIO_MESSAGE_REQ& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline AUDIO_MESSAGE_REQ& operator=(AUDIO_MESSAGE_REQ&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  inline const ::PROTOBUF_NAMESPACE_ID::UnknownFieldSet& unknown_fields() const {
+    return _internal_metadata_.unknown_fields();
+  }
+  inline ::PROTOBUF_NAMESPACE_ID::UnknownFieldSet* mutable_unknown_fields() {
+    return _internal_metadata_.mutable_unknown_fields();
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return GetMetadataStatic().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return GetMetadataStatic().reflection;
+  }
+  static const AUDIO_MESSAGE_REQ& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const AUDIO_MESSAGE_REQ* internal_default_instance() {
+    return reinterpret_cast<const AUDIO_MESSAGE_REQ*>(
+               &_AUDIO_MESSAGE_REQ_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    14;
+
+  friend void swap(AUDIO_MESSAGE_REQ& a, AUDIO_MESSAGE_REQ& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(AUDIO_MESSAGE_REQ* other) {
+    if (other == this) return;
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline AUDIO_MESSAGE_REQ* New() const final {
+    return CreateMaybeMessage<AUDIO_MESSAGE_REQ>(nullptr);
+  }
+
+  AUDIO_MESSAGE_REQ* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
+    return CreateMaybeMessage<AUDIO_MESSAGE_REQ>(arena);
+  }
+  void CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void CopyFrom(const AUDIO_MESSAGE_REQ& from);
+  void MergeFrom(const AUDIO_MESSAGE_REQ& from);
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  ::PROTOBUF_NAMESPACE_ID::uint8* _InternalSerialize(
+      ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  inline void SharedCtor();
+  inline void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(AUDIO_MESSAGE_REQ* other);
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "AUDIO_MESSAGE_REQ";
+  }
+  private:
+  inline ::PROTOBUF_NAMESPACE_ID::Arena* GetArenaNoVirtual() const {
+    return nullptr;
+  }
+  inline void* MaybeArenaPtr() const {
+    return nullptr;
+  }
+  public:
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+  private:
+  static ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadataStatic() {
+    ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&::descriptor_table_CLI_2eGS_2eproto);
+    return ::descriptor_table_CLI_2eGS_2eproto.file_level_metadata[kIndexInFileMessages];
+  }
+
+  public:
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kVarMessageFieldNumber = 2,
+    kIdFieldNumber = 1,
+  };
+  // required bytes var_message = 2;
+  bool has_var_message() const;
+  private:
+  bool _internal_has_var_message() const;
+  public:
+  void clear_var_message();
+  const std::string& var_message() const;
+  void set_var_message(const std::string& value);
+  void set_var_message(std::string&& value);
+  void set_var_message(const char* value);
+  void set_var_message(const void* value, size_t size);
+  std::string* mutable_var_message();
+  std::string* release_var_message();
+  void set_allocated_var_message(std::string* var_message);
+  private:
+  const std::string& _internal_var_message() const;
+  void _internal_set_var_message(const std::string& value);
+  std::string* _internal_mutable_var_message();
+  public:
+
+  // optional .PROTOCOL id = 1 [default = ID_PKT_AUDIO_MESSAGE_REQ];
+  bool has_id() const;
+  private:
+  bool _internal_has_id() const;
+  public:
+  void clear_id();
+  ::PROTOCOL id() const;
+  void set_id(::PROTOCOL value);
+  private:
+  ::PROTOCOL _internal_id() const;
+  void _internal_set_id(::PROTOCOL value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:AUDIO_MESSAGE_REQ)
+ private:
+  class _Internal;
+
+  ::PROTOBUF_NAMESPACE_ID::internal::InternalMetadataWithArena _internal_metadata_;
+  ::PROTOBUF_NAMESPACE_ID::internal::HasBits<1> _has_bits_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr var_message_;
+  int id_;
+  friend struct ::TableStruct_CLI_2eGS_2eproto;
+};
 // ===================================================================
 
 
@@ -3330,9 +3496,115 @@ inline void CHECK_NICKNAME_REQ::set_allocated_var_name(std::string* var_name) {
   // @@protoc_insertion_point(field_set_allocated:CHECK_NICKNAME_REQ.var_name)
 }
 
+// -------------------------------------------------------------------
+
+// AUDIO_MESSAGE_REQ
+
+// optional .PROTOCOL id = 1 [default = ID_PKT_AUDIO_MESSAGE_REQ];
+inline bool AUDIO_MESSAGE_REQ::_internal_has_id() const {
+  bool value = (_has_bits_[0] & 0x00000002u) != 0;
+  return value;
+}
+inline bool AUDIO_MESSAGE_REQ::has_id() const {
+  return _internal_has_id();
+}
+inline void AUDIO_MESSAGE_REQ::clear_id() {
+  id_ = 31;
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline ::PROTOCOL AUDIO_MESSAGE_REQ::_internal_id() const {
+  return static_cast< ::PROTOCOL >(id_);
+}
+inline ::PROTOCOL AUDIO_MESSAGE_REQ::id() const {
+  // @@protoc_insertion_point(field_get:AUDIO_MESSAGE_REQ.id)
+  return _internal_id();
+}
+inline void AUDIO_MESSAGE_REQ::_internal_set_id(::PROTOCOL value) {
+  assert(::PROTOCOL_IsValid(value));
+  _has_bits_[0] |= 0x00000002u;
+  id_ = value;
+}
+inline void AUDIO_MESSAGE_REQ::set_id(::PROTOCOL value) {
+  _internal_set_id(value);
+  // @@protoc_insertion_point(field_set:AUDIO_MESSAGE_REQ.id)
+}
+
+// required bytes var_message = 2;
+inline bool AUDIO_MESSAGE_REQ::_internal_has_var_message() const {
+  bool value = (_has_bits_[0] & 0x00000001u) != 0;
+  return value;
+}
+inline bool AUDIO_MESSAGE_REQ::has_var_message() const {
+  return _internal_has_var_message();
+}
+inline void AUDIO_MESSAGE_REQ::clear_var_message() {
+  var_message_.ClearToEmptyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline const std::string& AUDIO_MESSAGE_REQ::var_message() const {
+  // @@protoc_insertion_point(field_get:AUDIO_MESSAGE_REQ.var_message)
+  return _internal_var_message();
+}
+inline void AUDIO_MESSAGE_REQ::set_var_message(const std::string& value) {
+  _internal_set_var_message(value);
+  // @@protoc_insertion_point(field_set:AUDIO_MESSAGE_REQ.var_message)
+}
+inline std::string* AUDIO_MESSAGE_REQ::mutable_var_message() {
+  // @@protoc_insertion_point(field_mutable:AUDIO_MESSAGE_REQ.var_message)
+  return _internal_mutable_var_message();
+}
+inline const std::string& AUDIO_MESSAGE_REQ::_internal_var_message() const {
+  return var_message_.GetNoArena();
+}
+inline void AUDIO_MESSAGE_REQ::_internal_set_var_message(const std::string& value) {
+  _has_bits_[0] |= 0x00000001u;
+  var_message_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), value);
+}
+inline void AUDIO_MESSAGE_REQ::set_var_message(std::string&& value) {
+  _has_bits_[0] |= 0x00000001u;
+  var_message_.SetNoArena(
+    &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:AUDIO_MESSAGE_REQ.var_message)
+}
+inline void AUDIO_MESSAGE_REQ::set_var_message(const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  _has_bits_[0] |= 0x00000001u;
+  var_message_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:AUDIO_MESSAGE_REQ.var_message)
+}
+inline void AUDIO_MESSAGE_REQ::set_var_message(const void* value, size_t size) {
+  _has_bits_[0] |= 0x00000001u;
+  var_message_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:AUDIO_MESSAGE_REQ.var_message)
+}
+inline std::string* AUDIO_MESSAGE_REQ::_internal_mutable_var_message() {
+  _has_bits_[0] |= 0x00000001u;
+  return var_message_.MutableNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline std::string* AUDIO_MESSAGE_REQ::release_var_message() {
+  // @@protoc_insertion_point(field_release:AUDIO_MESSAGE_REQ.var_message)
+  if (!_internal_has_var_message()) {
+    return nullptr;
+  }
+  _has_bits_[0] &= ~0x00000001u;
+  return var_message_.ReleaseNonDefaultNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline void AUDIO_MESSAGE_REQ::set_allocated_var_message(std::string* var_message) {
+  if (var_message != nullptr) {
+    _has_bits_[0] |= 0x00000001u;
+  } else {
+    _has_bits_[0] &= ~0x00000001u;
+  }
+  var_message_.SetAllocatedNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), var_message);
+  // @@protoc_insertion_point(field_set_allocated:AUDIO_MESSAGE_REQ.var_message)
+}
+
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

@@ -17,7 +17,6 @@ BoardConstructor::BoardConstructor(void)
 
 	GetContentsTimer().Start();
 	
-	printf(("Alloc Client Count %d\n"), SERVER.GetClientMgr().ConnectableSocketCount());
 	printf("Server Start.................. \n");
 
 	BoardCommand *_Command = new BoardCommand();

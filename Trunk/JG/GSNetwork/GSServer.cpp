@@ -71,7 +71,6 @@ VOID GSServer::OnRead(int client_id, DWORD dataLength)
 
 		if (!pClient->InitializeReadForIocp())
 		{
-			this->AddPlayerCount(1);
 			OnDisconnected(client_id);	//add 	
 		}
 	}
@@ -126,7 +125,6 @@ VOID GSServer::OnConnected(int client_id)
 	{
 		printf("Connected exception ...1\n");
 		//이코드에서 그냥 close하면 gsclient는 서버에 접속도 못하는 미아 객체가 됨
-		this->AddPlayerCount(1);
 		OnDisconnected(client_id, true);
 		//pClient->Close();
 		return;
@@ -137,7 +135,6 @@ VOID GSServer::OnConnected(int client_id)
 	{ 
 		printf("Connected exception ...2\n");
 		//이코드에서 그냥 close하면 gsclient는 서버에 접속도 못하는 미아 객체가 됨
-		this->AddPlayerCount(1);
 		OnDisconnected(client_id,true);
 		//pClient->Close();
 		return; 
@@ -265,6 +262,11 @@ BOOL GSServer::BeginTCP()
 
 		return FALSE;
 	}
+
+//	string local_ip;
+//	m_pTCPListen->GetTCPSocket()->GetLocalIP(local_ip);
+
+//	printf("bind ip address %s\n", local_ip.c_str());
 
 	return TRUE;
 }

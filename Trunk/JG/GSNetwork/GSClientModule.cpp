@@ -94,7 +94,7 @@ BOOL GSClientModule::End(VOID)
 	return TRUE;
 }
 
-BOOL GSClientModule::GetLocalIP(WCHAR* pIP)
+BOOL GSClientModule::GetLocalIP(string pIP)
 {
 	if(IsUdp == TRUE)
 		return mUDPSession.GetLocalIP(pIP);

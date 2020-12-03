@@ -22,7 +22,13 @@ class WRITE_PACKET_INFO
 {
 public:
 	WRITE_PACKET_INFO() { Data = NULL;  DataLength = 0;  }
-	virtual ~WRITE_PACKET_INFO() { }
+	virtual ~WRITE_PACKET_INFO() 
+	{
+		if (Data != NULL)
+			delete Data;
+
+		Data = NULL;
+	}
 
 	BYTE	*Data;
 	DWORD	DataLength;

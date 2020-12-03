@@ -28,6 +28,8 @@ public:
 	VOID ROOM_START(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client);
 	VOID ROOM_READY(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client);
 	VOID ROOM_CHAT(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client);
+	VOID ROOM_AUDIO_CHAT(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client);
+
 	VOID ALL_COMPLETE(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client);
 
 	VOID AUTO_START(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client);

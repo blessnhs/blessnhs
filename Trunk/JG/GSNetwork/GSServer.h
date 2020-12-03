@@ -64,14 +64,7 @@ public:
 	virtual BOOL												  Disconnect(GSCLIENT_PTR object) = 0;
 	virtual VOID												  Accept(GSCLIENT_PTR object) = 0;
 
-	int															  CurrentPlayerCount() { return m_CurrentPlayerCount;  }
-
-	int															  AddPlayerCount(int count) { return m_CurrentPlayerCount.fetch_add(count); }
-	int															  SubPlayerCount(int count) { return m_CurrentPlayerCount.fetch_sub(count); }
-
 private:
-
-	atomic<int>													  m_CurrentPlayerCount;
 
 	GSClientMgr::GSClientMgr									  m_ClientMgr;
 

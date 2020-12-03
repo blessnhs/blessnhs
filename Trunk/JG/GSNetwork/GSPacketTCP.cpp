@@ -122,7 +122,7 @@ BOOL	GSPacketTCP::ReadPacketForEventSelect()
 //	return GSSocketTCP::Write((BYTE*)pWriteData->Data, Size);
 //}
 
-BOOL	GSPacketTCP::WritePacket(WORD MainProtocol,WORD SubProtocol, const BYTE *packet, DWORD packetLength)
+BOOL	GSPacketTCP::WritePacket(WORD MainProtocol,WORD SubProtocol, const BYTE *packet, DWORD PayloadSize)
 {
 	CThreadSync Sync;
 
@@ -133,7 +133,7 @@ BOOL	GSPacketTCP::WritePacket(WORD MainProtocol,WORD SubProtocol, const BYTE *pa
 		sizeof(WORD)					+ 
 		sizeof(WORD)					+ 
 		sizeof(DWORD)					+ 
-		packetLength;
+		PayloadSize;
 
 	byte* sendBuff = new byte[PacketLength];
 	
@@ -161,7 +161,7 @@ BOOL	GSPacketTCP::WritePacket(WORD MainProtocol,WORD SubProtocol, const BYTE *pa
 		sizeof(WORD)  +
 		sizeof(WORD)  + 
 		sizeof(DWORD),
-		packet, packetLength);
+		packet, PayloadSize);
 
 	//GSCrypt::Encrypt(TempBuffer + sizeof(WORD), TempBuffer + sizeof(WORD), PacketLength - sizeof(WORD));
 
@@ -188,9 +188,6 @@ BOOL GSPacketTCP::WriteComplete(VOID)
 
 	if (m_WrietQueue.try_pop(pWriteData) == true)
 	{
-		if (pWriteData != NULL)
-			if (pWriteData->Data != NULL)
-				delete pWriteData->Data;
 	}
 
 

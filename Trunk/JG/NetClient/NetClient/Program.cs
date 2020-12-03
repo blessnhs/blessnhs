@@ -5,7 +5,6 @@ using System.Threading;
 using System.Text;
 using System.Net.Json;
 using System.IO;
-using UDPEchoClient;
 
 using Google.Protobuf;
 using NetClient;
@@ -39,7 +38,7 @@ public class Process
     {
         var ip = GetIPAddress("blessnhs.iptime.org");
 
-         client.StartClient(ip/*"211.212.37.238"*/, 20000);
+         client.StartClient("192.168.0.9", 20000);
 
         testcid = id;
 
@@ -175,15 +174,6 @@ public static int Main(String[] args)
             Thread.Sleep(1);
 
 
-    //        foreach( var elem in array)
-    //        {
-    //            elem.loop();
-                Thread.Sleep(5);
-
-            //        }
-
-            while (true) ;
-            
             Thread.Sleep(1);
         }
 

@@ -74,6 +74,25 @@ public:
 		}
 	}
 
+	template<class T>
+	void SendToAll(T& snd,int PlayerId)
+	{
+		for each (auto iter in m_PlayerMap)
+		{
+			PlayerPtr pPlayer = iter.second;
+			if (pPlayer == NULL)
+				continue;
+
+			if (pPlayer->GetId() == PlayerId)
+				continue;
+
+			GSCLIENT_PTR pSession = SERVER.GetClient(pPlayer->GetPair());
+
+			if (pSession)
+				SEND_PROTO_BUFFER(snd, pSession)
+		}
+	}
+
 	void SendToAll(WORD MainId, BYTE* Data, WORD Length);
 
 	void ClearBoard();

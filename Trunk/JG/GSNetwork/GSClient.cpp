@@ -359,8 +359,7 @@ VOID GSClient::ProcDisconnect(boost::shared_ptr<GSClient> pClient,bool isForce)
 
 	PROC_REG_CLOSE_JOB(pClient,pServer)
 
-	//여기 부터는 소켓 정리
-	pServer->SubPlayerCount(1);
+
 	//상태값 초기화
 	SetConnected(FALSE);
 
@@ -474,7 +473,6 @@ void GSClient::OnConnect(boost::shared_ptr<GSClient> pClient)
 	SetAliveTime(GetTickCount());
 
 	pServer->Accept(pClient);
-	pServer->AddPlayerCount(1); //접속자 수 카운트
 	pClient->SetConnected(true);
 
 	//아래 함수를 로직 쓰레드로 던지게 되면 동기화 문제가 발생하여 

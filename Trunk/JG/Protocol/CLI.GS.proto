@@ -90,3 +90,9 @@ message CHECK_NICKNAME_REQ
     optional PROTOCOL   id                        = 1 [default = ID_PKT_CHECK_NICKNAME_REQ    ];
     required bytes     var_name    	              = 2;
 }
+
+message AUDIO_MESSAGE_REQ
+{
+    optional PROTOCOL   id                  = 1 [default = ID_PKT_AUDIO_MESSAGE_REQ ];
+    required bytes     var_message         = 2;
+}

@@ -95,7 +95,7 @@ namespace NetClient
 
                 Int32 PacketLength = 0;
 
-                PacketLength = BitConverter.ToInt16(m_PacketBuffer, 0);
+                PacketLength = BitConverter.ToInt32(m_PacketBuffer, 0);
 
                 if (PacketLength > StateObject.MTU || PacketLength <= 0) // Invalid Packet
                 {
@@ -105,14 +105,14 @@ namespace NetClient
 
                 if (PacketLength <= m_RemainLength)         //제대로된 패킷이 왔다
                 {
-                    dataLength = PacketLength - sizeof(Int16) - sizeof(Int16) - sizeof(Int16) - sizeof(Int32);
+                    dataLength = PacketLength - sizeof(Int32) - sizeof(Int16) - sizeof(Int16) - sizeof(Int32);
                     packet = new byte[dataLength];
                     Int32 PacketNumber = 0;
 
-                    protocol = BitConverter.ToInt16(m_PacketBuffer, sizeof(Int16));
-                    PacketNumber = BitConverter.ToInt32(m_PacketBuffer, sizeof(Int16) + sizeof(Int16) + sizeof(Int16));
+                    protocol = BitConverter.ToInt16(m_PacketBuffer, sizeof(Int32));
+                    PacketNumber = BitConverter.ToInt32(m_PacketBuffer, sizeof(Int32) + sizeof(Int16) + sizeof(Int16));
 
-                    Buffer.BlockCopy(m_PacketBuffer, sizeof(Int16) + sizeof(Int16) + sizeof(Int16) + sizeof(Int32), packet, 0, dataLength);
+                    Buffer.BlockCopy(m_PacketBuffer, sizeof(Int32) + sizeof(Int16) + sizeof(Int16) + sizeof(Int32), packet, 0, dataLength);
 
                     if (m_RemainLength - PacketLength > 0)
                     {
@@ -271,7 +271,7 @@ namespace NetClient
         {
             //  lock (this)
             {
-                Int32 PacketLength = sizeof(Int16) +
+                Int32 PacketLength = sizeof(Int32) +
                     sizeof(Int16) +
                     sizeof(Int16) +
                     sizeof(Int32) +
@@ -280,15 +280,15 @@ namespace NetClient
                 mCurrentPacketNumber++;
 
                 byte[] TempBuffer = new byte[PacketLength];
-                byte[] byteslegnth = BitConverter.GetBytes((Int16)PacketLength);
-                Buffer.BlockCopy(byteslegnth, 0, TempBuffer, 0, sizeof(Int16));
+                byte[] byteslegnth = BitConverter.GetBytes((Int32)PacketLength);
+                Buffer.BlockCopy(byteslegnth, 0, TempBuffer, 0, sizeof(Int32));
 
                 byte[] bytesProtocol = BitConverter.GetBytes((Int16)protocol);
-                Buffer.BlockCopy(bytesProtocol, 0, TempBuffer, sizeof(Int16), sizeof(Int16));
+                Buffer.BlockCopy(bytesProtocol, 0, TempBuffer, sizeof(Int32), sizeof(Int16));
 
                 byte[] bytesPacketNumber = BitConverter.GetBytes((Int32)mCurrentPacketNumber);
-                Buffer.BlockCopy(bytesPacketNumber, 0, TempBuffer, sizeof(Int16) + sizeof(Int16) + sizeof(Int16), sizeof(Int32));
-                Buffer.BlockCopy(packet, 0, TempBuffer, sizeof(Int16) + sizeof(Int16) + sizeof(Int16) + sizeof(Int32), packetLength);
+                Buffer.BlockCopy(bytesPacketNumber, 0, TempBuffer, sizeof(Int32) + sizeof(Int16) + sizeof(Int16), sizeof(Int32));
+                Buffer.BlockCopy(packet, 0, TempBuffer, sizeof(Int32) + sizeof(Int16) + sizeof(Int16) + sizeof(Int32), packetLength);
 
                 try
                 {

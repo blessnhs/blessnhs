@@ -31,7 +31,7 @@ public:
 
 	BOOL			End(VOID);
 
-	BOOL			GetLocalIP(WCHAR* pIP);
+	BOOL			GetLocalIP(string pIP);
 	USHORT			GetLocalPort(VOID);
 
 	BOOL			ReadPacket(WORD &protocol, BYTE *packet, WORD &packetLength);

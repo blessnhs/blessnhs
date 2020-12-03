@@ -109,20 +109,11 @@ VOID GSClientMgr::CheckAliveTime()
 		char msg[256];
 		
 		sprintf_s(msg,256,"[Conncted Socket : %d] [Debug Count : %d] [Total Connect : %d] [Ttoal NewConnect : %d][Total Disconnect %d]\n",
-				pServer->CurrentPlayerCount(), DebugCount.fetch_add(0), ConnectCount.fetch_add(0), NewConnectount.fetch_add(0), DisConnectCount.fetch_add(0));
+			GetActiveSocketCount(), DebugCount.fetch_add(0), ConnectCount.fetch_add(0), NewConnectount.fetch_add(0), DisConnectCount.fetch_add(0));
 
 		ConsoleHelper::DebugConsoleString(0, msg);
 
 	}
-}
-
-int  GSClientMgr::ConnectableSocketCount()
-{
-	GSServer::GSServer* pServer = (GSServer::GSServer*)m_GSServer;
-
-	int count = m_MaxClients - pServer->CurrentPlayerCount();
-
-	return count;
 }
 
 int GSClientMgr::GetActiveSocketCount()
@@ -272,13 +263,14 @@ BOOL GSClientMgr::NewClient(SOCKET ListenSocket, LPVOID pServer)
 	NewConnectount.fetch_add(1);
 
 	int NewClient = 1;
-	if (ConnectableSocketCount() < 20)
+	//임시 주석
+	/*if (ConnectableSocketCount() < 20)
 	{
 		NewClient = 100;
 		printf("Resize Client  %d \n", NewClient);
 
 		m_MaxClients += NewClient;
-	}
+	}*/
 	
 	for (int i = 0; i < NewClient; i++)
 	{

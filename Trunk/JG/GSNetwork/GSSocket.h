@@ -43,7 +43,7 @@ public:
 	BOOL			Accept(SOCKET listenSocket);
 	BOOL			Accept2(SOCKET listenSocket);
 
-	BOOL			GetLocalIP(WCHAR* pIP);
+	BOOL			GetLocalIP(string& ipaddress);
 	USHORT			GetLocalPort(VOID);
 	
 	BOOL			Connect(LPSTR address, USHORT port);

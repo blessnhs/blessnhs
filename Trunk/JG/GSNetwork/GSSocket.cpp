@@ -240,34 +240,23 @@ BOOL GSSocket::Connect(LPSTR address, USHORT port)
 	return TRUE;
 }
 
-BOOL GSSocket::GetLocalIP(WCHAR* pIP)
+BOOL GSSocket::GetLocalIP(string& ipaddress)
 {
 	CThreadSync Sync;
 
 	if(!m_Socket)
 		return FALSE;
 
-	//SOCKADDR_IN addr;
-	//ZeroMemory(&addr, sizeof(addr));
-
-	//int addrLength = sizeof(addr);
-	//if(getsockname(m_Socket, (sockaddr*)&addr, &addrLength ) != SOCKET_ERROR)
-	//{
-	//	if(MultiByteToWideChar(CP_ACP, 0, inet_ntoa(addr.sin_addr), 32, pIP, 32) > 0)
-	//		return TRUE;
-	//}
+	SOCKADDR_IN addr;
+	ZeroMemory(&addr, sizeof(addr));
 
 	CHAR	Name[256]	= {0,};
+	int client_len = sizeof(addr);
 
-	gethostname(Name, sizeof(Name));
+	getsockname(m_Socket, (struct sockaddr*)&addr,&client_len);
 
-	PHOSTENT host = gethostbyname(Name);
-	if (host)
-	{
-		if(MultiByteToWideChar(CP_ACP, 0, inet_ntoa(*(struct in_addr*)*host->h_addr_list), -1, pIP, 32) > 0)
-			return TRUE;
-	}
-
+	ipaddress = inet_ntoa(addr.sin_addr);
+	
 	return FALSE;
 }
 
