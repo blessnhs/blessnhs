@@ -11,5 +11,6 @@ namespace ToastMessage
         void Show(string message);
 
         void StartRecord(object view);
+
     }
 }

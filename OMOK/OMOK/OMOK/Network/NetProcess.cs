@@ -13,6 +13,7 @@ using System.Threading;
 using System.Collections.Generic;
 using ToastMessage;
 using System.Collections.Concurrent;
+using System.Threading.Tasks;
 
 namespace OMOK.Network
 {
@@ -42,7 +43,7 @@ namespace OMOK.Network
    
         static public void start()
         {
-            string ip = "192.168.0.9";//"211.212.37.238";//
+            string ip = "192.168.0.9";//"211.212.37.238";
 
 
             //연결중이면 안한다. 
@@ -61,14 +62,15 @@ namespace OMOK.Network
                 if (client.socket != null && client.socket.Connected == true)
                 {
                     notice_time = DateTime.Now;
-                    SendNociticeReq();
+                    SendNoticeReq();
+                    SendReqRoomList();
                 }
             }
         }
 
         public static ConcurrentQueue<System.IO.MemoryStream> JpegStream = new ConcurrentQueue<System.IO.MemoryStream>();
+        public static ConcurrentQueue<System.IO.MemoryStream> AudioStream = new ConcurrentQueue<System.IO.MemoryStream>();
 
-        static CameraPage cameraPage;
         static Room pRoom = null;
 
         static public void Loop(Lobby page)
@@ -134,7 +136,7 @@ namespace OMOK.Network
 
                                     User.state = PlayerState.Lobby;
 
-                                    SendNociticeReq();
+                                    SendNoticeReq();
 
                                     if (User.myInfo.NickName == "")
                                     {
@@ -232,12 +234,15 @@ namespace OMOK.Network
 
                             }
                             break;
-                        case (int)PROTOCOL.IdPktBroadcastRoomMessageRes:
+                        case (int)PROTOCOL.IdPktBitmapMessageRes:
                             {
-                                BROADCAST_ROOM_MESSAGE_RES res = new BROADCAST_ROOM_MESSAGE_RES();
-                                res = BROADCAST_ROOM_MESSAGE_RES.Parser.ParseFrom(data.Data);
+                                BITMAP_MESSAGE_RES res = new BITMAP_MESSAGE_RES();
+                                res = BITMAP_MESSAGE_RES.Parser.ParseFrom(data.Data);
 
-                                JpegStream.Enqueue(new MemoryStream(res.VarMessage.ToByteArray()));
+                                foreach (var msg in res.VarMessage)
+                                {
+                                    JpegStream.Enqueue(new MemoryStream(msg.ToByteArray()));
+                                }
 
                             }
                             break;
@@ -257,6 +262,17 @@ namespace OMOK.Network
                             }
                             break;
 
+                        case (int)PROTOCOL.IdPktAudioMessageRes:
+                            {
+                                AUDIO_MESSAGE_RES res = new AUDIO_MESSAGE_RES();
+                                res = AUDIO_MESSAGE_RES.Parser.ParseFrom(data.Data);
+
+                                foreach (var msg in res.VarMessage)
+                                {
+                                    AudioStream.Enqueue(new MemoryStream(msg.ToByteArray()));
+                                }
+                            }
+                            break;
                         case (int)PROTOCOL.IdPktRankRes:
                             {
                                 RANK_RES res = new RANK_RES();
@@ -353,7 +369,7 @@ namespace OMOK.Network
             }
         }
 
-        static public void SendNociticeReq()
+        static public void SendNoticeReq()
         {
             if (client == null || client.socket == null || client.socket.Connected == false)
                 return;
@@ -508,22 +524,43 @@ namespace OMOK.Network
             }
         }
 
-        static public void SendRoomMessage(byte[] image)
+        static public void SendRoomBITMAPMessage(ConcurrentQueue<System.IO.MemoryStream> list)
         {
 
             if (client == null || client.socket == null || client.socket.Connected == false)
                 return;
             {
-                BROADCAST_ROOM_MESSAGE_REQ message = new BROADCAST_ROOM_MESSAGE_REQ
+                BITMAP_MESSAGE_REQ message = new BITMAP_MESSAGE_REQ();
+
+                foreach(var msg in list)
                 {
-                    VarMessage = ByteString.CopyFrom(image),
+                    message.VarMessage.Add(ByteString.CopyFrom(msg.ToArray()));
                 };
 
    
-                client.WritePacket((int)PROTOCOL.IdPktBroadcastRoomMessageReq, message.ToByteArray(), message.ToByteArray().Length);
+                client.WritePacket((int)PROTOCOL.IdPktBitmapMessageReq, message.ToByteArray(), message.ToByteArray().Length);
 
             }
              
+        }
+
+        static public void SendAudioMessage(ConcurrentQueue<System.IO.MemoryStream> list)
+        {
+
+            if (client == null || client.socket == null || client.socket.Connected == false)
+                return;
+            {
+                AUDIO_MESSAGE_REQ message = new AUDIO_MESSAGE_REQ();
+
+                foreach (var msg in list)
+                {
+                    message.VarMessage.Add(ByteString.CopyFrom(msg.ToArray()));
+                };
+
+                client.WritePacket((int)PROTOCOL.IdPktAudioMessageReq, message.ToByteArray(), message.ToByteArray().Length);
+
+            }
+
         }
 
         static public void SendQNS(string msg)

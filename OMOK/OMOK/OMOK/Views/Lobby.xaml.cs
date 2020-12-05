@@ -59,41 +59,24 @@ namespace OMOK.Views
             });
 
 
+            //network thread
             Task.Run(() =>
             {
                 while (true)
-                {
-                    NetProcess.client.Update();
-                    Thread.Sleep(5);
-                }
-            });
-
-
-            //소켓 연결
-            {
-
-                Device.StartTimer(new TimeSpan(0, 0, 0, 0, 10), () =>
                 {
                     Device.BeginInvokeOnMainThread(() =>
                     {
                         NetProcess.start();
                         NetProcess.Loop(this);
+
+                        Thread.Sleep(25);
                     });
-                    return true; //if true repeat
-                });
 
-                Device.StartTimer(new TimeSpan(0, 0, 15), () =>
-                {
-                    Device.BeginInvokeOnMainThread(() =>
-                    {
-                    
-                            NetProcess.SendReqRoomList();
-                    });
-                    return true; //if true repeat
-                });
 
-            }
-
+                    NetProcess.client.Update();
+                    Thread.Sleep(25);
+                }
+            });
 
             UpdateLocalMenu();
 

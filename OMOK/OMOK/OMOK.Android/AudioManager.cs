@@ -19,18 +19,18 @@ using OMOK.Network;
 
 namespace OMOK.Droid
 {
-    static public class AudioManagerM
+    public class AudioManagerM
     {
-        static int sampleRate = 8000;
-        static ChannelOut channelOut = ChannelOut.Mono;
-        static ChannelIn channelIn = ChannelIn.Mono;
-        static Encoding encoding = Encoding.Pcm16bit;
+         int sampleRate = 44100;
+         ChannelOut channelOut = ChannelOut.Mono;
+         ChannelIn channelIn = ChannelIn.Mono;
+         Encoding encoding = Encoding.Pcm16bit;
 
 
-        static AudioRecord recorder;
-        static AudioTrack audioTrack;
+         AudioRecord recorder;
+         AudioTrack audioTrack;
 
-        static public void Clear()
+        public void Clear()
         {
             recorder?.Stop();
             recorder?.Release();
@@ -42,15 +42,11 @@ namespace OMOK.Droid
             audioTrack?.Dispose();
             audioTrack = null;
         }
-
-        static bool completefile = false;
-
-        static public void record()
+ 
+        public void record()
         {
             try
             {
-                InitAudioTrack();
-
                 recorder?.Stop();
                 recorder?.Release();
                 recorder?.Dispose();
@@ -62,14 +58,14 @@ namespace OMOK.Droid
                 byte[] buffer = new byte[minBufSize];
                 //     DatagramPacket packet;
                 //     InetAddress destination = InetAddress.GetByName(serverAddress);
-                recorder = new AudioRecord(AudioSource.Mic, sampleRate, channelIn, encoding, minBufSize*4);
+                recorder = new AudioRecord(AudioSource.VoiceCommunication, sampleRate, channelIn, encoding, minBufSize*4);
 
                 if (recorder.State != Android.Media.State.Initialized)
                 {
                     return;
                 }
 
-                string Path = System.IO.Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyDocuments), "temp.pcm");
+                 string Path = System.IO.Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyDocuments), "temp.pcm");
 
                 System.IO.File.Delete(Path);
 
@@ -105,11 +101,23 @@ namespace OMOK.Droid
                 //    }
                 //}
 
-                while (recorder.RecordingState == RecordState.Recording)
+                ConcurrentQueue<System.IO.MemoryStream> Frames = new ConcurrentQueue<System.IO.MemoryStream>();
+
+                while (recorder?.RecordingState == RecordState.Recording)
                 {
+                    if (recorder == null)
+                        return;
+
                     minBufSize = recorder.Read(buffer, 0, buffer.Length);
 
-                    NetProcess.SendAudioMessage(buffer);
+                    Frames.Enqueue(new MemoryStream(buffer));
+
+
+                    if (Frames.Count > 0)
+                    {
+                        NetProcess.SendAudioMessage(Frames);
+                        Frames.Clear();
+                    }
                 }
 
 
@@ -128,7 +136,7 @@ namespace OMOK.Droid
             }
         }
 
-        static public void InitAudioTrack()
+        public void InitAudioTrack()
         {
             int minBufSize = AudioTrack.GetMinBufferSize(sampleRate, channelOut, encoding);
             audioTrack = new AudioTrack(
@@ -142,14 +150,16 @@ namespace OMOK.Droid
                                    // Length of the audio clip.
                                    minBufSize * 4,
                                   // Mode. Stream or static.
-                                  AudioTrackMode.Stream);
+                                  AudioTrackMode.Stream);        
         }
 
-        static int overallBytes = 0;
+        int overallBytes = 0;
 
-        static public async void play(byte[] data)
+        public async void play(byte[] data)
         {
-  
+            if(audioTrack == null)
+                InitAudioTrack();
+
             if (audioTrack.State != AudioTrackState.Initialized)
                 return;
 
@@ -165,9 +175,6 @@ namespace OMOK.Droid
                 overallBytes = 0;
                 audioTrack.Play();
             }
-
-          
-
         }
     }
 }

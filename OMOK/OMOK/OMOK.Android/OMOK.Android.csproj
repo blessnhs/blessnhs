@@ -98,6 +98,7 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AudioManager.cs" />
     <Compile Include="BannerAd_ViewRenderer.cs" />
     <Compile Include="CameraPageRenderer.cs" />
     <Compile Include="Dependency.cs" />

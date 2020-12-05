@@ -355,6 +355,17 @@ namespace OMOK
             NetProcess.SendPassThroughMessage(_renderer.aimx, _renderer.aimy, User.Color);
         }
 
+        CameraPage cameraPage;
+
+        void OnChatting(object sender, System.EventArgs e)
+        {
+            cameraPage = null;
+            cameraPage = new CameraPage();
+            //Navigation.PushAsync((new CameraPage()/*_MachPage*/));
+            Navigation.PushPopupAsync(cameraPage);
+        }
+            
+
         void OnClickedDown(object sender, System.EventArgs e)
         {
             if (ConstValue.SIZE - 1 <= _renderer.aimy)
