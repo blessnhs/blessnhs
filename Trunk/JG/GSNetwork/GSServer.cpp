@@ -113,7 +113,6 @@ VOID GSServer::OnConnected(int client_id)
 		printf("!!!alert cant find onconnect client id\n");
 		return;
 	}
-	static int total_cnt = 0;
 
 	ConnectCount.fetch_add(1);
 

@@ -15,7 +15,7 @@ BoardProcess::BoardProcess(void)
 	ADD_NET_FUNC(BoardProcess, ID_PKT_CREATE_ROOM_REQ, ROOM_CREATE);
 	ADD_NET_FUNC(BoardProcess, ID_PKT_ENTER_ROOM_REQ, ROOM_ENTER);
 	ADD_NET_FUNC(BoardProcess, ID_PKT_LEAVE_ROOM_REQ, ROOM_LEAVE);
-	ADD_NET_FUNC(BoardProcess, ID_PKT_BROADCAST_ROOM_MESSAGE_REQ, ROOM_CHAT);
+	ADD_NET_FUNC(BoardProcess, ID_PKT_BITMAP_MESSAGE_REQ, ROOM_BITMAP_CHAT);
 	ADD_NET_FUNC(BoardProcess, ID_PKT_ROOM_LIST_REQ, ROOM_LIST);
 	ADD_NET_FUNC(BoardProcess, ID_PKT_MATCH_REQ, MATCH);
 	ADD_NET_FUNC(BoardProcess, ID_PKT_RANK_REQ, RANK);
@@ -491,7 +491,11 @@ VOID BoardProcess::ROOM_AUDIO_CHAT(LPVOID Data, DWORD Length, boost::shared_ptr<
 		return;
 	}
 
-	res.set_var_message(message.var_message());
+	for each (auto msg  in message.var_message())
+	{
+		res.add_var_message(msg);
+	}
+
 	res.set_var_name(pPlayer->m_Account.GetName());
 
 	ROOM_PTR pPtr = channel->RoomContainer.Search(pPlayer->m_Char[0].GetRoom());
@@ -505,11 +509,11 @@ VOID BoardProcess::ROOM_AUDIO_CHAT(LPVOID Data, DWORD Length, boost::shared_ptr<
 	}
 }
 
-VOID BoardProcess::ROOM_CHAT(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client)
+VOID BoardProcess::ROOM_BITMAP_CHAT(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client)
 {
-	DECLARE_RECV_TYPE(BROADCAST_ROOM_MESSAGE_REQ, message)
+	DECLARE_RECV_TYPE(BITMAP_MESSAGE_REQ, message)
 
-	BROADCAST_ROOM_MESSAGE_RES res;
+	BITMAP_MESSAGE_RES res;
 
 	PlayerPtr pPlayer = PLAYERMGR.Search(Client->GetPair());
 	if (pPlayer == NULL)
@@ -523,7 +527,11 @@ VOID BoardProcess::ROOM_CHAT(LPVOID Data, DWORD Length, boost::shared_ptr<GSClie
 		return;
 	}
 	
-	res.set_var_message(message.var_message());
+	for each (auto msg  in message.var_message())
+	{
+		res.add_var_message(msg);
+	}
+
 	res.set_var_name(pPlayer->m_Account.GetName());
 
 	ROOM_PTR pPtr = channel->RoomContainer.Search(pPlayer->m_Char[0].GetRoom());

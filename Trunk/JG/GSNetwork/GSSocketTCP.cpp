@@ -26,11 +26,14 @@ BOOL GSSocketTCP::Termination(VOID)
 BOOL GSSocketTCP::GetPeerInfo(LPSTR szAddr, unsigned short &usPort)
 {
 	struct sockaddr_in addr;
-	int addrsize = sizeof(addr);
+	int addrsize = sizeof(sockaddr_in);
 	memset((void *)&addr, 0, addrsize);
 	int nResult = getpeername(m_Socket, (sockaddr*)&addr, &addrsize);
-	if(nResult == SOCKET_ERROR)
+	if (nResult == SOCKET_ERROR)
+	{
+		auto error = GetLastError();
 		return false;
+	}
 	if(szAddr != NULL) {
 		strcpy((char*)szAddr, inet_ntoa(addr.sin_addr));
 		usPort = ntohs(addr.sin_port);

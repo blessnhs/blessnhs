@@ -63,14 +63,6 @@ message LEAVE_ROOM_RES
     optional  int64    var_index	             = 4;
 }
 
-message BROADCAST_ROOM_MESSAGE_RES
-{
-    optional PROTOCOL   id                  = 1 [default = ID_PKT_BROADCAST_ROOM_MESSAGE_RES ];
-    optional  ErrorCode    var_code         = 2;
-    optional bytes     var_message          = 3;
-    optional bytes     var_name	            = 4;
-}
-
 message ROOM_LIST_RES
 {
     optional  PROTOCOL   id                 = 1 [default = ID_PKT_ROOM_LIST_RES];
@@ -144,10 +136,18 @@ message CHECK_NICKNAME_RES
     required bytes     var_name    	     = 3;
 }
 
+message BITMAP_MESSAGE_RES
+{
+    optional PROTOCOL   id                  = 1 [default = ID_PKT_BITMAP_MESSAGE_RES ];
+    optional  ErrorCode    var_code         = 2;
+    repeated bytes     var_message          = 3;
+    optional bytes     var_name	            = 4;
+}
+
 message AUDIO_MESSAGE_RES
 {
     optional PROTOCOL   id                  = 1 [default = ID_PKT_AUDIO_MESSAGE_RES ];
     optional  ErrorCode    var_code         = 2;
-    optional bytes     var_message          = 3;
+    repeated bytes     var_message          = 3;
     optional bytes     var_name	            = 4;
 }

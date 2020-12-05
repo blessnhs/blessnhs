@@ -56,13 +56,6 @@ BOOL GSBoard::Disconnect(GSCLIENT_PTR pSession)
 VOID GSBoard::Accept(GSCLIENT_PTR object)
 {
 	object->SetHandler<BoardProcess>();
-
-	char ip[24];
-	memset(ip, 0, sizeof(ip));
-	unsigned short port = 0;
-	object->GetTCPSocket()->GetPeerInfo(ip, port);
-	printf("accept ip address %s\n", ip);
-
 }
 
 BOOL GSBoard::DeleteAllConcurrentUser()

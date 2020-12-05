@@ -39,12 +39,6 @@ message LEAVE_ROOM_REQ
     required int32      var_id                  = 2;
 }
 
-message BROADCAST_ROOM_MESSAGE_REQ
-{
-    optional PROTOCOL   id                  = 1 [default = ID_PKT_BROADCAST_ROOM_MESSAGE_REQ ];
-    required bytes     var_message         = 2;
-}
-
 message ROOM_LIST_REQ
 {
     optional PROTOCOL   id                  = 1 [default = ID_PKT_ROOM_LIST_REQ ];
@@ -91,8 +85,14 @@ message CHECK_NICKNAME_REQ
     required bytes     var_name    	              = 2;
 }
 
+message BITMAP_MESSAGE_REQ
+{
+    optional PROTOCOL   id                  = 1 [default = ID_PKT_BITMAP_MESSAGE_REQ ];
+    repeated bytes     var_message         = 2;
+}
+
 message AUDIO_MESSAGE_REQ
 {
     optional PROTOCOL   id                  = 1 [default = ID_PKT_AUDIO_MESSAGE_REQ ];
-    required bytes     var_message         = 2;
+    repeated bytes     var_message         = 2;
 }
