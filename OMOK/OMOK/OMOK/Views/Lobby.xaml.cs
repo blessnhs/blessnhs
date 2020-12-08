@@ -64,19 +64,21 @@ namespace OMOK.Views
             {
                 while (true)
                 {
-                    Device.BeginInvokeOnMainThread(() =>
-                    {
-                        NetProcess.start();
-                        NetProcess.Loop(this);
-
-                        Thread.Sleep(25);
-                    });
-
-
+                    NetProcess.start();
                     NetProcess.client.Update();
                     Thread.Sleep(25);
                 }
             });
+
+            Device.StartTimer(new TimeSpan(0, 0, 0, 0, 100), () =>
+            {
+                Device.BeginInvokeOnMainThread(() =>
+                {
+                    NetProcess.Loop(this);
+                });
+                return true; //if true repeat
+            });
+
 
             UpdateLocalMenu();
 

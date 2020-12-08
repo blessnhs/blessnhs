@@ -249,8 +249,7 @@ namespace NetClient
                 try
                 {
                     // Begin sending the data to the remote device.
-                    socket.BeginSend(TempBuffer, 0, PacketLength, 0,
-                        new AsyncCallback(SendCallback), socket);
+                    socket.Send(TempBuffer);
                 }
                 catch (SocketException e)
                 {
