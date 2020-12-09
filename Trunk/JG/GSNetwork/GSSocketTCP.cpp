@@ -1,5 +1,7 @@
 #include "StdAfx.h"
 #include "GSSocketTCP.h"
+#include "zip.h"
+#include "lzf.h"
 
 namespace GSNetwork	{ namespace GSSocket	{	namespace GSSocketTCP	{
 

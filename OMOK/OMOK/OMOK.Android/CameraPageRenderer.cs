@@ -76,17 +76,17 @@ namespace FullCameraApp.Droid
                             img.CompressToJpeg(new Rect(0, 0, paras.PreviewSize.Width, paras.PreviewSize.Height), 30, outStream);
 
                             Frames.Enqueue(outStream);
-                            server.ImagesSource.Enqueue(outStream);
+                            
+                            //서버쪽은 임시 주석
+                            //server.ImagesSource.Enqueue(outStream);
                       
-                            if (Frames.Count > 10)
+                            if (Frames.Count > 8)
                             {
                                 NetProcess.SendRoomBITMAPMessage(Frames);
                                 Frames.Clear();
                             }
 
-                            checktime = DateTime.Now.AddMilliseconds(10);
-
-                          
+                            checktime = DateTime.Now.AddMilliseconds(80);
                         }
                     }
                     break;
@@ -157,7 +157,6 @@ namespace FullCameraApp.Droid
 
         void SetupUserInterface()
         {
-
             var metrics = Resources.DisplayMetrics;
 
             half_width = metrics.WidthPixels / 2;
@@ -165,9 +164,6 @@ namespace FullCameraApp.Droid
 
             mainLayout = new RelativeLayout(Context);
             mainLayout.SetBackgroundColor(Color.Black);
-
-
-
 
             ///////////////////////////////////////////////////////////////////////////////
             liveView = new TextureView(Context);
@@ -228,8 +224,6 @@ namespace FullCameraApp.Droid
             ///////////////////////////////////////////////////////////////////////////////
 
             AddView(mainLayout);
-
-
         }
 
      
@@ -370,8 +364,6 @@ namespace FullCameraApp.Droid
                         if (NetProcess.JpegStream.Count == 0)
                             continue;
 
-                        Thread.Sleep(5);
-
                         MemoryStream ms;
                         if (NetProcess.JpegStream.TryDequeue(out ms) == true)
                         {
@@ -386,23 +378,7 @@ namespace FullCameraApp.Droid
 
                             }, null);
                         }
-
-
-                        MemoryStream ms2;
-                        if (callbackcamera.server.ImagesSource.TryDequeue(out ms2) == true)
-                        {
-                            if (ms2 == null)
-                                continue;
-
-                            _context.Post(delegate
-                            {
-                                var bitmap = BitmapFactory.DecodeByteArray(ms2.ToArray(), 0, ms2.ToArray().Length);
-
-
-                            }, null);
-                        }
-
-                        Thread.Sleep(20);
+                        Thread.Sleep(100);
                     }
                 });
 
@@ -430,6 +406,8 @@ namespace FullCameraApp.Droid
 
                             }, null);
                         }
+
+                        Thread.Sleep(1);
                     }
                    
                 });

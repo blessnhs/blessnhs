@@ -24,13 +24,11 @@ namespace NetClient
         // Client socket.
         public Socket workSocket = null;
         // Size of receive buffer.
-        public static int MTU = 1024 * 20;
+        public static int MTU = 1024 * 64;
 
         // Receive buffer.
         public byte[] buffer = new byte[MTU];
-        // Received data string.
-        public StringBuilder sb = new StringBuilder();
-
+    
         public AsynchronousClient Me;
     }
 
@@ -146,22 +144,16 @@ namespace NetClient
                 //// Complete the connection.
                 //client.EndConnect(ar);
 
-                //VERSION_REQ person = new VERSION_REQ
-                //{
+                VERSION_REQ person = new VERSION_REQ
+                {
 
-                //};
-                //using (MemoryStream stream = new MemoryStream())
-                //{
-                //    person.WriteTo(stream);
+                };
+                using (MemoryStream stream = new MemoryStream())
+                {
+                    person.WriteTo(stream);
 
-                //    WritePacket((int)PROTOCOL.IdPktVersionReq, stream.ToArray(), stream.ToArray().Length);
-                //}
-                // Signal that the connection has been made.
-
-                byte[] str = new byte[1];
-
-                WritePacket((int)1024, str,1);
-
+                    WritePacket((int)PROTOCOL.IdPktVersionReq, stream.ToArray(), stream.ToArray().Length);
+                }
 
                 connectDone.Set();
             }
@@ -231,12 +223,16 @@ namespace NetClient
 
                 if (bytesRead > 0)
                 {
-                    // There might be more data, so store the data received so far.
-                    state.sb.Append(Encoding.ASCII.GetString(state.buffer, 0, bytesRead));
+                    byte[] readrecv = new byte[bytesRead];
 
-                    Buffer.BlockCopy(state.buffer, 0, m_PacketBuffer, m_RemainLength, bytesRead);
+                    Buffer.BlockCopy(state.buffer, 0, readrecv, 0, bytesRead);
 
-                    m_RemainLength += bytesRead;
+
+                    var decompress = CLZF2.Decompress(readrecv);
+
+                    Buffer.BlockCopy(decompress, 0, m_PacketBuffer, m_RemainLength, decompress.Length);
+
+                    m_RemainLength += decompress.Length;
 
                     lock (this)
                     {
@@ -249,11 +245,6 @@ namespace NetClient
                 }
                 else
                 {
-                    // All the data has arrived; put it in response.
-                    if (state.sb.Length > 1)
-                    {
-                        response = state.sb.ToString();
-                    }
                     // Signal that all bytes have been received.
                     receiveDone.Set();
                 }
@@ -292,8 +283,10 @@ namespace NetClient
 
                 try
                 {
+                    var compress = CLZF2.Compress(TempBuffer);
+
                     // Begin sending the data to the remote device.
-                    socket.BeginSend(TempBuffer, 0, PacketLength, 0,
+                    socket.BeginSend(compress, 0, compress.Length, 0,
                         new AsyncCallback(SendCallback), socket);
                 }
                 catch (SocketException e)

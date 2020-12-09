@@ -366,6 +366,9 @@
     <ClInclude Include="CrashHandler\StackWalker.h">
       <Filter>CrashHandler</Filter>
     </ClInclude>
+    <ClInclude Include="zip.h">
+      <Filter>Network\Compress</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">

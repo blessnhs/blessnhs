@@ -4,6 +4,7 @@
 //
 
 #pragma once
+#define _SILENCE_FPOS_SEEKPOS_DEPRECATION_WARNING
 
 #include "targetver.h"
 

@@ -91,6 +91,7 @@
   <ItemGroup>
     <Compile Include="Client.cs" />
     <Compile Include="CLIGS.cs" />
+    <Compile Include="CLZF2.cs" />
     <Compile Include="Enum.cs" />
     <Compile Include="GSCLI.cs" />
     <Compile Include="Structure.cs" />

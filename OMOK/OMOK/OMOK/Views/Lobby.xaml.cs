@@ -62,29 +62,28 @@ namespace OMOK.Views
             //network thread
             Task.Run(() =>
             {
+                DateTime checktime = DateTime.Now;
+
                 while (true)
                 {
                     NetProcess.start();
                     NetProcess.client.Update();
-                    Thread.Sleep(25);
+
+                    if (checktime < DateTime.Now)
+                    {
+                        Device.BeginInvokeOnMainThread(() =>
+                        {
+                              NetProcess.Loop(this);
+                        });
+                        checktime = DateTime.Now.AddMilliseconds(50);
+                    }
+                    Thread.Sleep(50);
                 }
             });
-
-            Device.StartTimer(new TimeSpan(0, 0, 0, 0, 100), () =>
-            {
-                Device.BeginInvokeOnMainThread(() =>
-                {
-                    NetProcess.Loop(this);
-                });
-                return true; //if true repeat
-            });
-
 
             UpdateLocalMenu();
 
             Navigation.PushModalAsync(new Loading()/*_MachPage*/);
-
-
         }
 
         public void UpdateLocalMenu()

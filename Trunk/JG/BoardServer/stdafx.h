@@ -6,6 +6,7 @@
 #pragma once
 
 #define USE_MSSQL
+#define _SILENCE_FPOS_SEEKPOS_DEPRECATION_WARNING
 
 #include "targetver.h"
 

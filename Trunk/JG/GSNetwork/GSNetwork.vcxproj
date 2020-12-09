@@ -335,6 +335,7 @@
     <ClInclude Include="targetver.h" />
     <ClInclude Include="TemplateStrategyPattern.h" />
     <ClInclude Include="TypeList.h" />
+    <ClInclude Include="zip.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Adapt.cpp" />
