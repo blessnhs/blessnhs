@@ -44,8 +44,6 @@ protected:
 	friend unsigned int __stdcall ExecuteThread(LPVOID parameter);
 
 	HANDLE				m_InputJobEvt;
-
-	CRITICAL_SECTION m_Lock;
 };
 
 }	}

@@ -9,7 +9,7 @@ using System.IO;
 using Google.Protobuf;
 using NetClient;
 using System.Collections.Generic;
-
+using System.Threading.Tasks;
 
 public class Process
 {
@@ -38,7 +38,7 @@ public class Process
     {
         var ip = GetIPAddress("blessnhs.iptime.org");
 
-        client.StartClient("192.168.0.9", 20000);
+        client.StartClient("192.168.51.18", 1982);
 
         testcid = id;
 
@@ -50,10 +50,7 @@ public class Process
         {
             if (client.socket.Connected == false)
                 return;
-
-            client.Update();
-            Thread.Sleep(1);
-
+    
             if (client.PacketQueue.Count > 0)
             {
                 CompletePacket data;
@@ -69,7 +66,7 @@ public class Process
                            
                                 LOGIN_REQ person = new LOGIN_REQ
                                 {
-                                    Id = PROTOCOL.IdPktLoginRes,
+                                    Id = PROTOCOL.IdPktLoginReq,
                                     VarToken = testcid + "000000000",
                                     VarUid = testcid.ToString()
                                 };
@@ -80,6 +77,7 @@ public class Process
                                     client.WritePacket((int)PROTOCOL.IdPktLoginReq, stream.ToArray(), stream.ToArray().Length);
                                 }
 
+                                client.socket.Close();
                             }
 
                             break;
@@ -101,6 +99,8 @@ public class Process
                                         client.WritePacket((int)PROTOCOL.IdPktMatchReq, stream.ToArray(), stream.ToArray().Length);
                                     }
                                 }
+
+                                
                             }
                             break;
                         case (int)PROTOCOL.IdPktCreateRoomRes:
@@ -165,21 +165,36 @@ public static int Main(String[] args)
         int id = 1;
         List<Process> array = new List<Process>();
 
+        List<Process> removearray = new List<Process>();
+
 
         while (true)
         {
             var cli = new Process();
             array.Add(cli);
             cli.start(id++);
-            Thread.Sleep(1);
 
+            if(id % 2 == 0)
+                cli.client.socket.Close();
 
-            while (true)
+            Task.Run(() =>
             {
                 cli.client.Update();
                 cli.loop();
-                Thread.Sleep(1);
+            });
+
+
+            if (array.Count > 40)
+            {
+
+                foreach (var cl in array)
+                {
+                    cl.client.socket.Close();
+                }
+
+                array.Clear();
             }
+
         }
 
         return 0;

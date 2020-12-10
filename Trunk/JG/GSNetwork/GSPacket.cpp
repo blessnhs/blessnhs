@@ -23,8 +23,9 @@ GSPacket::GSPacket(VOID)
 GSPacket::~GSPacket(VOID)
 {
 	delete m_PacketBuffer;
-	//종료할때 비운다.
 
+
+	//종료할때 비운다.
 	boost::shared_ptr<XDATA> pBuffer;
 	while (m_PacketList.empty() == false)
 		m_PacketList.try_pop(pBuffer);

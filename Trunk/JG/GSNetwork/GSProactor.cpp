@@ -11,6 +11,7 @@ GSProactor::GSProactor(GSProactorImpl *ProactorImpl)
 
 GSProactor::~GSProactor(void)
 {
+	delete m_ProactorImpl;
 }
 
 bool GSProactor::Create(int InputTheadCnt)

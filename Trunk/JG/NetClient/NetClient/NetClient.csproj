@@ -89,11 +89,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\..\Protocol\CSharp\CLIGS.cs">
+      <Link>CLIGS.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Protocol\CSharp\Enum.cs">
+      <Link>Enum.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Protocol\CSharp\GSCLI.cs">
+      <Link>GSCLI.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Protocol\CSharp\Sample.cs">
+      <Link>Sample.cs</Link>
+    </Compile>
     <Compile Include="Client.cs" />
-    <Compile Include="CLIGS.cs" />
     <Compile Include="CLZF2.cs" />
-    <Compile Include="Enum.cs" />
-    <Compile Include="GSCLI.cs" />
     <Compile Include="Structure.cs" />
     <Compile Include="UDP.cs" />
     <Compile Include="Program.cs" />

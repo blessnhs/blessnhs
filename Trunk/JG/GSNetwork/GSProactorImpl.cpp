@@ -6,12 +6,16 @@ namespace GSFrames	{	namespace GSProactorImpl	{
 
 GSProactorImpl::GSProactorImpl(void)
 {
-	InitializeCriticalSectionAndSpinCount(&m_Lock,100);
 }
 
 
 GSProactorImpl::~GSProactorImpl(void)
 {
+	for each (auto job in m_JobMap)
+	{
+		if (job.second != NULL)
+			delete job.second;
+	}
 }
 
 bool GSProactorImpl::Create(int InputTheadCnt)
@@ -87,9 +91,7 @@ unsigned int __stdcall DistributionThread(LPVOID parameter)
 
 	while(TRUE)
 	{
-		if( WaitForSingleObject( Owner->m_hKillEvent, 10 ) == WAIT_OBJECT_0 ){ break; }
-
-//		WaitForSingleObject( Owner->m_InputJobEvt, 10 ) ;
+		if( WaitForSingleObject( Owner->m_hKillEvent, 1 ) == WAIT_OBJECT_0 ){ break; }
 		
 		IMessagePtr pJob;
 		if(Owner->m_InputJobList.try_pop(pJob) == FALSE) 
@@ -122,14 +124,14 @@ unsigned int __stdcall ExecuteThread(LPVOID parameter)
 
 	while(TRUE)
 	{
-		if( WaitForSingleObject( Owner->m_ProcactorImpl->m_hKillEvent, 10 ) == WAIT_OBJECT_0 ){ break; }
-
-//		WaitForSingleObject( Owner->m_ProcactorImpl->m_ExecuteJobEvt[ProcId], 10 ) ;
+		if( WaitForSingleObject( Owner->m_ProcactorImpl->m_hKillEvent, 1 ) == WAIT_OBJECT_0 ){ break; }
 
 		Owner->m_ProcactorImpl->Handle_Event(ProcId);
 
 		Sleep(0);
 	}
+
+	delete Owner;
 	
 	return 0;
 }

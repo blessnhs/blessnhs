@@ -41,13 +41,13 @@ BOOL	GSPacketTCP::Termination(VOID)
 
 }
 
-BOOL	GSPacketTCP::ReadPacket(DWORD readLength)
+BOOL	GSPacketTCP::ReadPacket(DWORD ReadSize)
 {
 	CThreadSync Sync;
 
-	if (m_CurrentPacketSize <= (readLength+m_RemainLength))
+	if (m_CurrentPacketSize <= (ReadSize +m_RemainLength))
 	{
-		DWORD Resize = readLength + m_RemainLength + m_CurrentPacketSize;
+		DWORD Resize = ReadSize + m_RemainLength + m_CurrentPacketSize;
 		BYTE* NewBuff = new BYTE[Resize];
 		memcpy(NewBuff, m_PacketBuffer, m_CurrentPacketSize);
 		delete m_PacketBuffer;
@@ -56,16 +56,16 @@ BOOL	GSPacketTCP::ReadPacket(DWORD readLength)
 
 		m_CurrentPacketSize = Resize;
 
-		printf("ReadPacket Resize %d\n", Resize);
+		printf("ReadPacket Resize %d bytes %d kbytes %d mbytes\n", Resize,Resize/1024,Resize/1024/1024);
 	}
 
-	if (!GSSocketTCP::ReadForIocp(m_PacketBuffer, readLength, m_RemainLength, m_CurrentPacketSize))
+	if (!GSSocketTCP::ReadForIocp(m_PacketBuffer, ReadSize, m_RemainLength, m_CurrentPacketSize))
 	{
 
 		return FALSE;
 	}
 
-	m_RemainLength	+= readLength;
+	m_RemainLength	+= ReadSize;
 
 	//return getPacket(protocol, packet, packetLength);
 	return TRUE;
@@ -139,7 +139,7 @@ BOOL	GSPacketTCP::WritePacketNoneCompress(WORD MainProtocol, WORD SubProtocol, c
 
 	byte* sendBuff = new byte[PacketLength];
 
-	m_CurrentPacketNumber = 0;
+	int compressflag = 0;
 
 	memcpy(sendBuff, &PacketLength, sizeof(DWORD));
 
@@ -156,7 +156,7 @@ BOOL	GSPacketTCP::WritePacketNoneCompress(WORD MainProtocol, WORD SubProtocol, c
 		sizeof(DWORD) +
 		sizeof(WORD) +
 		sizeof(WORD),
-		&m_CurrentPacketNumber, sizeof(DWORD));
+		&compressflag, sizeof(DWORD));
 
 	memcpy(sendBuff +
 		sizeof(DWORD) +
@@ -195,7 +195,10 @@ BOOL	GSPacketTCP::WritePacketCompress(WORD MainProtocol, WORD SubProtocol, const
 
 	if (out_lzf_size == 0)
 	{
-		printf("src size %d alloc size %d dst size %d \n", PayloadSize, lzf_compress_size, out_lzf_size);
+		printf("lzf_compress failed src size %d alloc size %d dst size %d mid %d payloadsize %d\n", PayloadSize, lzf_compress_size, out_lzf_size, MainProtocol, PayloadSize);
+
+		delete lzf_compress_buffer;
+		return false;
 	}
 	//
 
@@ -208,7 +211,7 @@ BOOL	GSPacketTCP::WritePacketCompress(WORD MainProtocol, WORD SubProtocol, const
 
 	byte* sendBuff = new byte[PacketLength];
 
-	m_CurrentPacketNumber = 1;
+	int compressflag = 1;
 
 	memcpy(sendBuff, &PacketLength, sizeof(DWORD));
 
@@ -225,7 +228,7 @@ BOOL	GSPacketTCP::WritePacketCompress(WORD MainProtocol, WORD SubProtocol, const
 		sizeof(DWORD) +
 		sizeof(WORD) +
 		sizeof(WORD),
-		&m_CurrentPacketNumber, sizeof(DWORD));
+		&compressflag, sizeof(DWORD));
 
 	memcpy(sendBuff +
 		sizeof(DWORD) +
@@ -373,7 +376,7 @@ BOOL GSPacketTCP::GetPacket()
 
 			if (success == false)
 			{
-				printf("decompress error\n");
+				printf("decompress error mid %d payloadsize %d\n", MainProtocol, PacketLength);
 				delete decompress_buff;
 				return -1;
 			}

@@ -11,10 +11,19 @@ inline std::string trim_right ( const std::string & source , const std::string &
 
 CDBProcess::CDBProcess(void)
 {
+	m_AccountDB = NULL;
+	m_GameDB = NULL;
+
 }
 
 CDBProcess::~CDBProcess(void)
 {
+	if (m_AccountDB != NULL)
+		delete m_AccountDB;
+
+	if (m_GameDB != NULL)
+		delete m_GameDB;
+
 }
 
 BOOL CDBProcess::Initalize(	CHAR *m_szDSNAcc,CHAR *m_szDSNGame,CHAR *m_szUID,CHAR *m_szPWD)
