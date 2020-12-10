@@ -11,7 +11,7 @@
 	ia >> STRUCTNAME;	\
 
 #define DESERIALIZE_END	\
-} catch (...) { printf("DESERIALIZE ERROR\n");return ; }\
+} catch (...) { SYSLOG().Write("DESERIALIZE ERROR\n");return ; }\
 
 class GSSerialize
 {
@@ -27,7 +27,7 @@ public:
 	Json::Reader	reader;	\
 	bool bParse = reader.parse((char *)Data, root);	\
 	if(!bParse) {	\
-		printf("Json String Parse Error...%s\r\n",Data);	\
+		SYSLOG().Write("Json String Parse Error...%s\r\n",Data);	\
 		return;	\
 	}	\
 

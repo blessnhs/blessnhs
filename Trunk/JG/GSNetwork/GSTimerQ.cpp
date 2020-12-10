@@ -70,7 +70,7 @@ bool GSTimerQ::AddTimerJob(GSTimerJob *pJob)
 	}
 
 	if(i >=  10000)
-		printf("erase evt = %d\n",i);
+		SYSLOG().Write("erase evt = %d\n",i);
 
 	return true;
 }
@@ -107,21 +107,21 @@ int GSTimerQ::Initialize(int frequence)
 	gDoneEvent = CreateEvent(NULL, TRUE, FALSE, NULL);
     if (NULL == gDoneEvent)
     {
-        printf("CreateEvent failed (%d)\n", GetLastError());
+        SYSLOG().Write("CreateEvent failed (%d)\n", GetLastError());
         return 1;
     }
 	
 	hTimerQueue = CreateTimerQueue();
     if (NULL == hTimerQueue)
     {
-        printf("CreateTimerQueue failed (%d)\n", GetLastError());
+        SYSLOG().Write("CreateTimerQueue failed (%d)\n", GetLastError());
         return 2;
     }
 
     if (!CreateTimerQueueTimer( &hTimer, hTimerQueue, 
             (WAITORTIMERCALLBACK)Expine, this , frequence, frequence, 0))
     {
-        printf("CreateTimerQueueTimer failed (%d)\n", GetLastError());
+        SYSLOG().Write("CreateTimerQueueTimer failed (%d)\n", GetLastError());
         return 3;
     }
 	return true;

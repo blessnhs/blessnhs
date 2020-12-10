@@ -29,7 +29,7 @@ void MSG_PLAYER_CLOSE::Execute(LPVOID Param)
 	}
 	else
 	{
-		printf("MSG_PLAYER_CLOSE!!!!!!!!!! pClient is NULL\n" );
+		SYSLOG().Write("MSG_PLAYER_CLOSE!!!!!!!!!! pClient is NULL\n" );
 	}
 }
 

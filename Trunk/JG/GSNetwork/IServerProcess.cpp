@@ -20,7 +20,7 @@ VOID IServerProcess::REGIST_SVR_REQ(LPVOID Data,DWORD Length)
 	/*DECLARE_JSON_READ
 	GET_JSON_INT_MEMBER("Id",Id)
 
-	printf("FontServer Regist Success \n");
+	SYSLOG().Write("FontServer Regist Success \n");
 
 
 	DECLARE_JSON_WRITER
@@ -39,7 +39,7 @@ VOID IServerProcess::REGIST_SERVER_RES(LPVOID Data,DWORD Length)
 
 	pSession->SetType(_SERVER_);
 
-	printf("Accept Field Server Regist Result = %d\n",Result);*/
+	SYSLOG().Write("Accept Field Server Regist Result = %d\n",Result);*/
 }
 
 }	}

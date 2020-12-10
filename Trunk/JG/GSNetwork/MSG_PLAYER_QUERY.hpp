@@ -68,7 +68,7 @@ namespace GSNetwork	{
 				if(res->Index != 0)
 					res->Result = pProcess->SelectCharacterInfo(res->Account.c_str(),*res);
 				else
-					printf("2.MSG_PLAYER_QUERY _PROTOCOL_DBA::DBP_GET_LOGIN_INFO index is  %s %s\n",res->Account.c_str(),res->SessionKey.c_str());
+					SYSLOG().Write("2.MSG_PLAYER_QUERY _PROTOCOL_DBA::DBP_GET_LOGIN_INFO index is  %s %s\n",res->Account.c_str(),res->SessionKey.c_str());
 
 				PROC_REG_QUERY_RES_JOB(res,pSession,res->Result,MSG_PLAYER_QUERY_RES,RequestPlayerAuth)
 

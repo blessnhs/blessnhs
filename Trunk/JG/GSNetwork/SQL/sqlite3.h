@@ -2019,7 +2019,7 @@ SQLITE_API void sqlite3_free_table(char **result);
 /*
 ** CAPI3REF: Formatted String Printing Functions
 **
-** These routines are work-alikes of the "printf()" family of functions
+** These routines are work-alikes of the "SYSLOG().Write()" family of functions
 ** from the standard C library.
 **
 ** ^The sqlite3_mprintf() and sqlite3_vmprintf() routines write their
@@ -2052,7 +2052,7 @@ SQLITE_API void sqlite3_free_table(char **result);
 **
 ** These routines all implement some additional formatting
 ** options that are useful for constructing SQL statements.
-** All of the usual printf() formatting options apply.  In addition, there
+** All of the usual SYSLOG().Write() formatting options apply.  In addition, there
 ** is are "%q", "%Q", and "%z" options.
 **
 ** ^(The %q option works like %s in that it substitutes a nul-terminated

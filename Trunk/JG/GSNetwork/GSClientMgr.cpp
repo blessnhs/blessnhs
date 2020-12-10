@@ -67,7 +67,7 @@ VOID GSClientMgr::CheckAliveTime()
 			{
 				if (DelClient(client->GetId()) == FALSE)
 				{
-					printf("DelClient is not 0 failed \n");
+					SYSLOG().Write("DelClient is not 0 failed \n");
 				}
 			}
 			else
@@ -75,7 +75,7 @@ VOID GSClientMgr::CheckAliveTime()
 
 			if ((ClientTime < SYSTime) && count != 0)
 			{
-				printf("count is not 0 %d \n", count);
+				SYSLOG().Write("count is not 0 %d \n", count);
 			}
 		}
 	}
@@ -94,22 +94,22 @@ VOID GSClientMgr::CheckAliveTime()
 	//SYSTEMTIME		sysTime;
 	//::GetLocalTime(&sysTime);
 
-	//printf("[ %04d-%02d-%02d %02d:%02d:%02d ] Current User Count %d connectable count %d Debug Count %d\n",
+	//SYSLOG().Write("[ %04d-%02d-%02d %02d:%02d:%02d ] Current User Count %d connectable count %d Debug Count %d\n",
 	//	sysTime.wYear, sysTime.wMonth, sysTime.wDay, sysTime.wHour, sysTime.wMinute, sysTime.wSecond, pServer->CurrentPlayerCount(), ConnectableSocketCount(), DebugCount.fetch_add(0));
 
-//	printf("\nre m_insert_queue queue %d\n", m_ReInsert_Queue.unsafe_size());
-//	printf("re m_remove_queue queue %d\n", m_Remove_Queue.unsafe_size());
-//	printf("\nconnect socket count %d GetActiveSocketCount %d ConnectableSocketCount %d\n", 
+//	SYSLOG().Write("\nre m_insert_queue queue %d\n", m_ReInsert_Queue.unsafe_size());
+//	SYSLOG().Write("re m_remove_queue queue %d\n", m_Remove_Queue.unsafe_size());
+//	SYSLOG().Write("\nconnect socket count %d GetActiveSocketCount %d ConnectableSocketCount %d\n", 
 //	pServer->CurrentPlayerCount(), GetActiveSocketCount(), ConnectableSocketCount());
 
-	//printf("[UserCount : %d] [Debug Count : %d]\n",
+	//SYSLOG().Write("[UserCount : %d] [Debug Count : %d]\n",
 	//	pServer->CurrentPlayerCount(), DebugCount.fetch_add(0));
 	{
 
 		char msg[256];
 		
-		sprintf_s(msg,256,"[Conncted Socket : %d] [Debug Count : %d] [Total Connect : %d] [Ttoal NewConnect : %d][Total Disconnect %d]\n",
-			GetActiveSocketCount(), DebugCount.fetch_add(0), ConnectCount.fetch_add(0), NewConnectount.fetch_add(0), DisConnectCount.fetch_add(0));
+		sprintf_s(msg,256,"[Conncted : %d] [Debug : %d] [RemoveQ : %d] [Total : %d] [Toal NewConnect : %d][Total Disconnect : %d]\n",
+			GetActiveSocketCount(), DebugCount.fetch_add(0), m_Remove_Queue.unsafe_size(), ConnectCount.fetch_add(0), NewConnectount.fetch_add(0), DisConnectCount.fetch_add(0));
 
 		ConsoleHelper::DebugConsoleString(0, msg);
 
@@ -254,7 +254,7 @@ BOOL GSClientMgr::NewClient(SOCKET ListenSocket, LPVOID pServer)
 {
 	if (!ListenSocket)
 	{
-		printf("NewClient !ListenSocket \n");
+		SYSLOG().Write("NewClient !ListenSocket \n");
 		return FALSE;
 	}
 
@@ -267,7 +267,7 @@ BOOL GSClientMgr::NewClient(SOCKET ListenSocket, LPVOID pServer)
 	/*if (ConnectableSocketCount() < 20)
 	{
 		NewClient = 100;
-		printf("Resize Client  %d \n", NewClient);
+		SYSLOG().Write("Resize Client  %d \n", NewClient);
 
 		m_MaxClients += NewClient;
 	}*/
@@ -281,13 +281,13 @@ BOOL GSClientMgr::NewClient(SOCKET ListenSocket, LPVOID pServer)
 
 		if (AddClient(pClient) == FALSE)
 		{
-			printf("NewClient failed...1 \n");
+			SYSLOG().Write("NewClient failed...1 \n");
 		}
 
 
 		if (!pClient->GetTCPSocket()->Initialize())
 		{
-			printf("NewClient failed...2 \n");
+			SYSLOG().Write("NewClient failed...2 \n");
 			DelClient(pClient->GetId());
 			End();
 			return FALSE;
@@ -295,7 +295,7 @@ BOOL GSClientMgr::NewClient(SOCKET ListenSocket, LPVOID pServer)
 
 		if (!pClient->GetTCPSocket()->Accept(ListenSocket))
 		{
-			printf("NewClient failed...3 \n");
+			SYSLOG().Write("NewClient failed...3 \n");
 			DelClient(pClient->GetId());
 			End();
 			return FALSE;

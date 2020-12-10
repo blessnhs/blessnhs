@@ -32,14 +32,14 @@ BOOL CDBProcess::Initalize(	CHAR *m_szDSNAcc,CHAR *m_szDSNGame,CHAR *m_szUID,CHA
 	//if( m_AccountDB->Open(m_szDSNAcc, m_szUID, m_szPWD) == false )
 	if( m_AccountDB->Open2(m_szDSNAcc, m_szUID, m_szPWD) == false )
 	{
-		printf("fail -> %s()\n", __FUNCTION__);
+		SYSLOG().Write("fail -> %s()\n", __FUNCTION__);
 		return false;
 	}
 	
 	m_GameDB = new COdbc;
 	if( m_GameDB->Open2(m_szDSNGame, m_szUID, m_szPWD) == false )
 	{
-		printf("fail -> %s()\n", __FUNCTION__);
+		SYSLOG().Write("fail -> %s()\n", __FUNCTION__);
 		return false;
 	}
 
@@ -143,20 +143,20 @@ int		CDBProcess::ProcedureUserLogin(const CHAR *Account,const CHAR *SessionKey,i
 	retcode = SQLBindParameter(hstmt, 1, SQL_PARAM_OUTPUT, SQL_C_SSHORT, SQL_SMALLINT, 0,0, &sParmRet,0, &cbParmRet );
 	if (retcode==SQL_ERROR)
 	{
-		printf("error SQLBindParameter \n" ); 
+		SYSLOG().Write("error SQLBindParameter \n" ); 
 		return 0; 
 	}
 
 	retcode = OdbcExecDirect(m_AccountDB, hstmt, szsql);
 	if (retcode==SQL_ERROR)
 	{
-			printf("error SQL_ERROR \n" ); 
+			SYSLOG().Write("error SQL_ERROR \n" ); 
 			return 0;
 	}
 	
 	if(sParmRet == 0)
 	{ 
-			printf("error sParmRet \n" ); 
+			SYSLOG().Write("error sParmRet \n" ); 
 			return 0;
 	}
 
@@ -211,12 +211,12 @@ bool CDBProcess::RecordAuthenticKeyFromDB(CHAR* id, CHAR* key, CHAR* ip)
 	{
 		if( m_AccountDB->SQLErrorMsg(hstmt, __FUNCTION__) == true ) 
 		{	
-			printf(_T("database server Network Error... %s() \n"), __FUNCTION__);
+			SYSLOG().Write(_T("database server Network Error... %s() \n"), __FUNCTION__);
 			m_AccountDB->Close();
 			m_AccountDB->ReConnect();
 			//odbc->SetRecconectFlag(true);
 		}
-		printf(_T("database server query Error... %s() \n"), __FUNCTION__);
+		SYSLOG().Write(_T("database server query Error... %s() \n"), __FUNCTION__);
 
 		return false;
 	}
@@ -248,12 +248,12 @@ WORD CDBProcess::GetAuthenticKeyFromDB(const CHAR* id, const CHAR* pw,CHAR* out,
 
 			if( m_AccountDB->SQLErrorMsg(hstmt, __FUNCTION__) == true ) 
 			{	
-				printf(_T("database server Network Error... %s() \n"), __FUNCTION__);
+				SYSLOG().Write(_T("database server Network Error... %s() \n"), __FUNCTION__);
 				m_AccountDB->Close();
 				m_AccountDB->ReConnect();
 				//odbc->SetRecconectFlag(true);
 			}
-			printf(_T("database server query Error... %s() \n"), __FUNCTION__);
+			SYSLOG().Write(_T("database server query Error... %s() \n"), __FUNCTION__);
 			return _ERR_NETWORK;
 		}
 	}
@@ -266,7 +266,7 @@ WORD CDBProcess::GetAuthenticKeyFromDB(const CHAR* id, const CHAR* pw,CHAR* out,
 	}
 	std::string szKey = (char*)(LPCTSTR)szSessionKey;
 
-	printf("recv session key = %s id = %s\n",(char*)(LPCTSTR)szSessionKey,id);
+	SYSLOG().Write("recv session key = %s id = %s\n",(char*)(LPCTSTR)szSessionKey,id);
 	szKey = trim_right(szKey);
 
 

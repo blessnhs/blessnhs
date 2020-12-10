@@ -128,7 +128,7 @@ bool COdbc::ReConnect()
 {
 	if(IsOpen()){ Close(); }
 	bool res = Open();
-	printf("function : %s()-> %s \n", __FUNCTION__, res ? "success":"fail");
+	SYSLOG().Write("function : %s()-> %s \n", __FUNCTION__, res ? "success":"fail");
 	SetRecconectFlag(!res);
 	return res;
 }
@@ -144,7 +144,7 @@ bool COdbc::SQLErrorMsg(SQLHSTMT hstmt, LPCSTR errfunction, char* error_str)
 	while ((rc2 = SQLGetDiagRec(SQL_HANDLE_STMT, hstmt, i, SqlState, &NativeError, Msg, sizeof(Msg), &MsgLen)) != SQL_NO_DATA)
 	{
 		sprintf(error_str,"*** fun[%s], state[%s], msg[%s], err[%d] ***", errfunction, SqlState, Msg, (int)NativeError);
-		printf( "%s\n", error_str);
+		SYSLOG().Write( "%s\n", error_str);
 		if(strcmp((char *)SqlState, "08S01")==0){ result = true; }
 		i++;
 	}
@@ -161,7 +161,7 @@ bool COdbc::SQLErrorMsg(SQLHSTMT hstmt, LPCSTR errfunction, int& error)
 	register int	i=1;
 	while ((rc2 = SQLGetDiagRec(SQL_HANDLE_STMT, hstmt, i, (SQLCHAR*)SqlState, &NativeError, (SQLCHAR*)Msg, sizeof(Msg), &MsgLen)) != SQL_NO_DATA)
 	{
-		printf( "*** fun[%s], state[%s], msg[%s], err[%d] ***\n", errfunction, SqlState, Msg, (int)NativeError);
+		SYSLOG().Write( "*** fun[%s], state[%s], msg[%s], err[%d] ***\n", errfunction, SqlState, Msg, (int)NativeError);
 		error = (int)NativeError;
 		if(strcmp((char *)SqlState, "08S01")==0){ result = true; }
 		i++;
@@ -179,7 +179,7 @@ bool COdbc::SQLErrorMsg(SQLHSTMT hstmt, LPCSTR errfunction)
 	register int	i=1;
 	while ((rc2 = SQLGetDiagRec(SQL_HANDLE_STMT, hstmt, i, SqlState, &NativeError, Msg, sizeof(Msg), &MsgLen)) != SQL_NO_DATA)
 	{
-		printf( "*** fun[%s], state[%s], msg[%s], err[%d] ***\n", errfunction, SqlState, Msg, (int)NativeError);
+		SYSLOG().Write( "*** fun[%s], state[%s], msg[%s], err[%d] ***\n", errfunction, SqlState, Msg, (int)NativeError);
 		if(!strcmp((char *)SqlState, "08S01")){ result = true; }
 		i++;
 	}
@@ -197,8 +197,8 @@ bool COdbc::SQLErrorMsg(SQLSMALLINT HandleType, SQLHANDLE Handle)
 	register int	i=1;
 	while ((rc2 = SQLGetDiagRec(HandleType, Handle, i, SqlState, &NativeError, Msg, sizeof(Msg), &MsgLen)) != SQL_NO_DATA)
 	{
-		//printf( L"*** %s, %d, %s, %d ***\n", SqlState, NativeError, Msg, MsgLen);
-		printf( "*** state[%s], msg[%s], err[%d] ***\n", SqlState, Msg, NativeError);
+		//SYSLOG().Write( L"*** %s, %d, %s, %d ***\n", SqlState, NativeError, Msg, MsgLen);
+		SYSLOG().Write( "*** state[%s], msg[%s], err[%d] ***\n", SqlState, Msg, NativeError);
 		if(!strcmp((char *)SqlState, "08S01") && HandleType == SQL_HANDLE_STMT){ result = true; }
 		i++;
 	}

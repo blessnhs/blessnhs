@@ -33,7 +33,7 @@ public:
 
 		if((m_AllocCount % 100 ) == 0)
 		{
-			printf("alloc %s %d\n",typeid(T).name(),m_AllocCount);
+			SYSLOG().Write("alloc %s %d\n",typeid(T).name(),m_AllocCount);
 		};
 
 		return boost::shared_ptr<T> (
@@ -49,7 +49,7 @@ private:
 
 		if((m_AllocCount % 10 ) == 0)
 		{
-			printf("dealloc %s %d\n",typeid(T).name(),m_AllocCount);
+			SYSLOG().Write("dealloc %s %d\n",typeid(T).name(),m_AllocCount);
 		};
 
 		m_AllocCount--;
@@ -92,10 +92,10 @@ public:
 
 		if(m_AllocCount != 0 && (m_AllocCount % 100 ) == 0)
 		{
-			printf("alloc %s %d\n",typeid(T).name(),m_AllocCount);
+			SYSLOG().Write("alloc %s %d\n",typeid(T).name(),m_AllocCount);
 		};
 
-	//	printf("alloc %s %d\n",typeid(T).name(),m_AllocCount);
+	//	SYSLOG().Write("alloc %s %d\n",typeid(T).name(),m_AllocCount);
 
 		return boost::shared_ptr<T> (
 			m_allocator.construct(),
@@ -114,7 +114,7 @@ private:
 
 		if (m_AllocCount != 0 && (m_AllocCount % 100) == 0)
 		{
-			printf("dealloc %s %d\n", typeid(T).name(), m_AllocCount);
+			SYSLOG().Write("dealloc %s %d\n", typeid(T).name(), m_AllocCount);
 		};
 	}
 

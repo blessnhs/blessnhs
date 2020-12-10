@@ -1225,7 +1225,7 @@ void CppSQLite3DB::openMemDB()
 {
 	/*int nRet = sqlite3_open_v2(":memory:", &mpDB,SQLITE_OPEN_READWRITE|SQLITE_OPEN_CREATE,NULL);*/
 	int nRet = sqlite3_open(":memory:", &mpDB);
-	printf("error :%d\n",nRet);
+	SYSLOG().Write("error :%d\n",nRet);
 	if (nRet != SQLITE_OK)
 	{
 		const char* szError = sqlite3_errmsg(mpDB);

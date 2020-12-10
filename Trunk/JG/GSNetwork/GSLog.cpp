@@ -70,7 +70,7 @@ bool			GSLog::Write(const char* fmt, ...)
 
 	CHAR			time_log[MAX_LOG_LEN + MAX_LOG_LEN];
 
-	sprintf_s(time_log, MAX_LOG_LEN + MAX_LOG_LEN, "[ %04d-%02d-%02d %02d:%02d:%02d:%03d ] : %s\n",
+	sprintf_s(time_log, MAX_LOG_LEN + MAX_LOG_LEN, "[ %04d-%02d-%02d %02d:%02d:%02d:%03d ] : %s",
 		sysTime.wYear, sysTime.wMonth, sysTime.wDay, sysTime.wHour, sysTime.wMinute, sysTime.wSecond, sysTime.wMilliseconds, arg_buffer);
 
 	DWORD	write_len = 0;

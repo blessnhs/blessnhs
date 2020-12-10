@@ -3,10 +3,10 @@
 #include "GSLog.h"
 #include "SingleTonHolder.h"
 
-class BoardLog : public GSLog<MultiThread> , public Singleton<BoardLog>
+class BoardLog : public GSLog , public Singleton<BoardLog>
 {
 public:
-	BoardLog(LPCTSTR file_name = ("BoardLogLog.txt"));
+	BoardLog(char *filename);
 	~BoardLog(void);
 };
 

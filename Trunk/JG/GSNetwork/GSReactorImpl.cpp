@@ -46,7 +46,7 @@ int GSReactorImpl::Initialize()
 	m_hKillEvent = CreateEvent(NULL, TRUE, FALSE, NULL);
     if (NULL == m_hKillEvent)
     {
-        printf("CreateEvent failed (%d)\n", GetLastError());
+        SYSLOG().Write("CreateEvent failed (%d)\n", GetLastError());
         return 1;
     }
 	unsigned int WorkerId = 0;

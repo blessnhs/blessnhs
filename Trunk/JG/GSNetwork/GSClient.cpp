@@ -43,7 +43,7 @@ GSClient::~GSClient(void)
 	int count = GetTCPSocket()->m_OLP_REMAIN_COUNT_ACC + GetTCPSocket()->m_OLP_REMAIN_COUNT_REC + GetTCPSocket()->m_OLP_REMAIN_COUNT_SND;
 	if (count > 0)
 	{
-		printf("GetId() %d alert remain overlap event count acc %d recv %d send %d\n",GetId(), GetTCPSocket()->m_OLP_REMAIN_COUNT_ACC.fetch_add(0), GetTCPSocket()->m_OLP_REMAIN_COUNT_REC.fetch_add(0), GetTCPSocket()->m_OLP_REMAIN_COUNT_SND.fetch_add(0));
+		SYSLOG().Write("GetId() %d alert remain overlap event count acc %d recv %d send %d\n",GetId(), GetTCPSocket()->m_OLP_REMAIN_COUNT_ACC.fetch_add(0), GetTCPSocket()->m_OLP_REMAIN_COUNT_REC.fetch_add(0), GetTCPSocket()->m_OLP_REMAIN_COUNT_SND.fetch_add(0));
 	}
 
 	DebugCount.fetch_sub(1);
@@ -291,7 +291,7 @@ VOID GSClient::ProcPacket(boost::shared_ptr<GSClient> pClient)
 
 			if (GetProcess() == NULL)
 			{
-				printf("set process is null");
+				SYSLOG().Write("set process is null");
 				return;
 			}
 
@@ -310,7 +310,7 @@ VOID GSClient::ProcPacket(boost::shared_ptr<GSClient> pClient)
 
 			if (GetProcess() == NULL)
 			{
-				printf("set process is null\n");
+				SYSLOG().Write("set process is null\n");
 
 				//echo
 				GetUDPSocket()->WriteTo2(const_cast<char *>(pBuffer->LemoteAddress.c_str()), pBuffer->RemotePort, pBuffer->m_Buffer.GetBuffer(), pBuffer->Length);
@@ -334,7 +334,7 @@ VOID GSClient::ProcDisconnect(boost::shared_ptr<GSClient> pClient,bool isForce)
 	//그래서 그넘들은 종료 처리를 해저야하기 때문에 아래에서 리턴시키면 안된다.
 	if(GetConnected() == FALSE && isForce == false && this->GetProcess() != NULL)
 	{
-		printf("Already Disconnected socket handle %lu getid() %lu \n",(unsigned long)GetSocket(),GetId());
+		SYSLOG().Write("Already Disconnected socket handle %lu getid() %lu \n",(unsigned long)GetSocket(),GetId());
 		return ;
 	}
 
@@ -377,7 +377,7 @@ WORD GSClient::GetMyTP()
 	WORD TP = (GetId() % pServer->GetArgument().m_LogicThreadCnt);
 	if(TP < 0)
 	{
-		printf("TP is low %d\n",TP);
+		SYSLOG().Write("TP is low %d\n",TP);
 	}
 
 	return TP;
@@ -430,24 +430,24 @@ void GSClient::OnDisconnect(boost::shared_ptr<GSClient> client, bool isForce)
 		{
 			if(m_PairPlayerId != ULONG_MAX)
 			{
-				printf("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! ERROR_NETNAME_DELETED\n");
+				SYSLOG().Write("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! ERROR_NETNAME_DELETED\n");
 			}
 
-			printf("Code %d ERROR_NETNAME_DELETED\n",Code);
+			SYSLOG().Write("Code %d ERROR_NETNAME_DELETED\n",Code);
 
 			ProcDisconnect(client,isForce);
 
 			return ;
 		}
 
-		printf("Overlapped.Internal != 0\n");
+		SYSLOG().Write("Overlapped.Internal != 0\n");
 	}
 
 	//소켓 접속 여유 풀이 없을때 만약 100명이면 100명다 붙어 있을때 클라에서 소켓 연결 요청하면
 	//connect에는 콜이 안떨어진다 그 상태에서 접속 종료하면 disconnected만 떨어짐 Connected exception ...2
 
 	if(GetProcess() == NULL)
-		printf("!!!!!!!!!!!!!OnDisconnect get process is nulll\n");
+		SYSLOG().Write("!!!!!!!!!!!!!OnDisconnect get process is nulll\n");
 
 	//GSServer::GSServer *pServer = (GSServer::GSServer *)m_GSServer;
 
@@ -464,7 +464,7 @@ void GSClient::OnConnect(boost::shared_ptr<GSClient> pClient)
 	//Accept가 떨어졌다.
 	CThreadSync Sync;
 
-	//printf("Accept Success Socket %d %d %d\n",GetSocket(),GetId(),GetMyTP());
+	//SYSLOG().Write("Accept Success Socket %d %d %d\n",GetSocket(),GetId(),GetMyTP());
 
 
 	GSServer::GSServer *pServer = (GSServer::GSServer *)m_GSServer;

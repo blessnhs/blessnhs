@@ -28,14 +28,14 @@ template<template<class T> class CreationPolicy1,template<class T> class Creatio
 	//if( m_AccountDB->Open(m_szDSNAcc, m_szUID, m_szPWD) == false )
 	if( m_AccountDB->Open2(m_szDSNAcc, m_szUID, m_szPWD) == false )
 	{
-		printf("fail -> %s()\n", __FUNCTION__);
+		SYSLOG().Write("fail -> %s()\n", __FUNCTION__);
 		return false;
 	}
 	
 	m_GameDB = new COdbc;
 	if( m_GameDB->Open2(m_szDSNGame, m_szUID, m_szPWD) == false )
 	{
-		printf("fail -> %s()\n", __FUNCTION__);
+		SYSLOG().Write("fail -> %s()\n", __FUNCTION__);
 		return false;
 	}
 
@@ -99,20 +99,20 @@ int		CDBProcess::ProcedureUserLogin(MW_PKT_USER_LOGIN* pv)
 	retcode = SQLBindParameter(hstmt, 1, SQL_PARAM_OUTPUT, SQL_C_SSHORT, SQL_SMALLINT, 0,0, &sParmRet,0, &cbParmRet );
 	if (retcode==SQL_ERROR)
 	{
-		printf("error SQLBindParameter \n" ); 
+		SYSLOG().Write("error SQLBindParameter \n" ); 
 		return 4; 
 	}
 
 	retcode = OdbcExecDirect(m_AccountDB, hstmt, szsql);
 	if (retcode==SQL_ERROR)
 	{
-			printf("error SQL_ERROR \n" ); 
+			SYSLOG().Write("error SQL_ERROR \n" ); 
 			return 5;
 	}
 	
 	if(sParmRet != 1)
 	{ 
-			printf("error sParmRet \n" ); 
+			SYSLOG().Write("error sParmRet \n" ); 
 			return 6;
 	}
 

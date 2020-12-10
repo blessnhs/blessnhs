@@ -25,7 +25,7 @@ bool GSProactorImpl::Create(int InputTheadCnt)
 
 	if (NULL == m_hKillEvent || NULL == m_InputJobEvt)
 	{
-		printf("Create Kill Event failed (%d)\n", GetLastError());
+		SYSLOG().Write("Create Kill Event failed (%d)\n", GetLastError());
 		return 1;
 	}
 
@@ -105,7 +105,7 @@ unsigned int __stdcall DistributionThread(LPVOID parameter)
 		}
 		else
 		{
-			printf("pJob is null");
+			SYSLOG().Write("pJob is null");
 		}
 
 //		if(Owner->m_InputJobList.unsafe_size() == 0)
@@ -153,7 +153,7 @@ bool GSProactorImpl::Handle_Event(int ProcId)
 	if(pJob != NULL)
 		pJob->Execute(pJob->Message);
 	else
-		printf("execute pjob is null");
+		SYSLOG().Write("execute pjob is null");
 
 //	if(m_JobList[ProcId].try_pop(pJob) == FALSE) 
 //		ResetEvent(m_ExecuteJobEvt[ProcId]);

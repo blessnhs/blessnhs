@@ -80,12 +80,12 @@ VOID GSServer::OnRead(int client_id, DWORD dataLength)
 
 		if (!pClient->InitializeReadForIocp())
 		{
-			printf("line %d file %s InitializeReadForIocp Fail\n", __LINE__, __FILE__);
+			SYSLOG().Write("line %d file %s InitializeReadForIocp Fail\n", __LINE__, __FILE__);
 		}
 	}
 	else
 	{
-		printf("%d cant found socket type\n",pClient->GetCreateType());
+		SYSLOG().Write("%d cant found socket type\n",pClient->GetCreateType());
 	}
 }
 
@@ -110,7 +110,7 @@ VOID GSServer::OnConnected(int client_id)
 	boost::shared_ptr<GSClient> pClient = GetClient(client_id);
 	if (pClient == NULL)
 	{
-		printf("!!!alert cant find onconnect client id\n");
+		SYSLOG().Write("!!!alert cant find onconnect client id\n");
 		return;
 	}
 
@@ -122,7 +122,7 @@ VOID GSServer::OnConnected(int client_id)
 
 	if (!GSIocp::RegIocpHandler(pClient->GetSocket(), reinterpret_cast<ULONG_PTR>(&m_EvtClientId)))
 	{
-		printf("Connected exception ...1\n");
+		SYSLOG().Write("Connected exception ...1\n");
 		//이코드에서 그냥 close하면 gsclient는 서버에 접속도 못하는 미아 객체가 됨
 		OnDisconnected(client_id, true);
 		//pClient->Close();
@@ -132,7 +132,7 @@ VOID GSServer::OnConnected(int client_id)
 
 	if (!pClient->InitializeReadForIocp())
 	{ 
-		printf("Connected exception ...2\n");
+		SYSLOG().Write("Connected exception ...2\n");
 		//이코드에서 그냥 close하면 gsclient는 서버에 접속도 못하는 미아 객체가 됨
 		OnDisconnected(client_id,true);
 		//pClient->Close();
@@ -149,7 +149,7 @@ VOID GSServer::OnDisconnected(int client_id, bool isForce)
 	boost::shared_ptr<GSClient> pClient = GetClient(client_id);
 	if (pClient == NULL)
 	{
-		printf("!!!alert cant find OnDisconnected client id\n");
+		SYSLOG().Write("!!!alert cant find OnDisconnected client id\n");
 		return;
 	}
 
@@ -164,7 +164,7 @@ VOID GSServer::OnDisconnected2(int client_id, int type)
 	boost::shared_ptr<GSClient> pClient = GetClient(client_id);
 	if (pClient == NULL)
 	{
-		printf("!!!alert cant find OnDisconnected2222 client id\n");
+		SYSLOG().Write("!!!alert cant find OnDisconnected2222 client id\n");
 		return;
 	}
 
@@ -265,7 +265,7 @@ BOOL GSServer::BeginTCP()
 //	string local_ip;
 //	m_pTCPListen->GetTCPSocket()->GetLocalIP(local_ip);
 
-//	printf("bind ip address %s\n", local_ip.c_str());
+//	SYSLOG().Write("bind ip address %s\n", local_ip.c_str());
 
 	return TRUE;
 }

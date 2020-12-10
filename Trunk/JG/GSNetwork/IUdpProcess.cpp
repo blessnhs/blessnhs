@@ -43,7 +43,7 @@ VOID IUdpProcess::ENTER_ROOM(LPVOID Data, DWORD Length, boost::shared_ptr<GSClie
 //	UDP_SESSION *CurrentSession = (UDP_SESSION *)pOwner;
 //
 //	char *ch =  inet_ntoa(CurrentSession->m_UdpRemoteInfo.sin_addr); 
-//	printf("ip = %s port = %d user id = %d CREATE_UDP_SOCKET_NTY\n",ch,CurrentSession->m_UdpRemoteInfo.sin_port,Id);
+//	SYSLOG().Write("ip = %s port = %d user id = %d CREATE_UDP_SOCKET_NTY\n",ch,CurrentSession->m_UdpRemoteInfo.sin_port,Id);
 //
 //	해당 유저가 진짜 유저인지 확인 여부
 //	그룹 입장 판단 여부 tcp소켓의 그 유저인지 유효성 판단이 필요함.
@@ -94,8 +94,8 @@ VOID IUdpProcess::ENTER_ROOM(LPVOID Data, DWORD Length, boost::shared_ptr<GSClie
 //							ADD_JSON_MEMBER("GroupID",GroupId)
 //							END_JSON_MEMBER(pSrcSession,ID_RC_REQUEST_STUN)
 //
-//							printf("===============================================\n");
-//							printf("send src %S_%d\n",_Destip.c_str(),SND.DestPort);
+//							SYSLOG().Write("===============================================\n");
+//							SYSLOG().Write("send src %S_%d\n",_Destip.c_str(),SND.DestPort);
 //						}
 //						dest 이다.
 //						{
@@ -107,8 +107,8 @@ VOID IUdpProcess::ENTER_ROOM(LPVOID Data, DWORD Length, boost::shared_ptr<GSClie
 //							ADD_JSON_MEMBER("GroupID",GroupId)
 //							END_JSON_MEMBER(pSession2,ID_RC_REQUEST_STUN)
 //
-//							printf("send src %S_%d\n",_SRCip.c_str(),SND.SrcPort);
-//							printf("===============================================\n");
+//							SYSLOG().Write("send src %S_%d\n",_SRCip.c_str(),SND.SrcPort);
+//							SYSLOG().Write("===============================================\n");
 //
 //						}
 //					}

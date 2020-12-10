@@ -90,9 +90,9 @@ bool GwSqlLiteMgr::SelectData(char *Accountid,char *Data)
 	 CppSQLite3Query pCountSql = m_db.execQuery(sQuery);
 	 while( ! pCountSql.eof() )
 	 { 
-		  printf("1.%s\n",pCountSql.fieldValue(0));
-		  printf("2.%s\n",pCountSql.fieldValue(1));
-		  printf("3.%s\n",pCountSql.fieldValue(2));
+		  SYSLOG().Write("1.%s\n",pCountSql.fieldValue(0));
+		  SYSLOG().Write("2.%s\n",pCountSql.fieldValue(1));
+		  SYSLOG().Write("3.%s\n",pCountSql.fieldValue(2));
 	  
 		  pCountSql.nextRow();
 		  find = true;
@@ -103,7 +103,7 @@ bool GwSqlLiteMgr::SelectData(char *Accountid,char *Data)
 
 bool  GwSqlLiteMgr::Authentication(const char *Accountid,const char *passwd)
 {
-	printf("authentication %s %s\n",Accountid,passwd);
+	SYSLOG().Write("authentication %s %s\n",Accountid,passwd);
 	 char sQuery[512];
 	 bool find = false;
 	 sprintf_s(sQuery,512,"SELECT* FROM users where accountid = '%s' and Passwd = '%s'",Accountid,passwd);
@@ -111,9 +111,9 @@ bool  GwSqlLiteMgr::Authentication(const char *Accountid,const char *passwd)
 	 CppSQLite3Query pCountSql = m_db.execQuery(sQuery);
 	 while( ! pCountSql.eof() )
 	 { 
-		  printf("1.%s\n",pCountSql.fieldValue(0));
-		  printf("2.%s\n",pCountSql.fieldValue(1));
-		  printf("3.%s\n",pCountSql.fieldValue(2));
+		  SYSLOG().Write("1.%s\n",pCountSql.fieldValue(0));
+		  SYSLOG().Write("2.%s\n",pCountSql.fieldValue(1));
+		  SYSLOG().Write("3.%s\n",pCountSql.fieldValue(2));
 	  
 		  pCountSql.nextRow();
 		  find = true;
@@ -136,7 +136,7 @@ void GwSqlLiteMgr::UpdateData(char *Accountid,char* Data)
 			__int64 memused = sqlite3_memory_used();//현재 사용량
 			//__int64 highused = sqlite3_memory_highwater(1);//메모리 사용량 최고점
 
-			printf("sqlite mem used (%lld)\n", memused);
+			SYSLOG().Write("sqlite mem used (%lld)\n", memused);
 
 			if(memused>=memdbLen)
 			{
@@ -174,7 +174,7 @@ void GwSqlLiteMgr::UpdateData(char *Accountid,char* Data)
 	}
 	catch (CppSQLite3Exception& e)
 	{
-		printf("WriteMEMlogThreadProc:%d,%s", e.errorCode(), e.errorMessage());
+		SYSLOG().Write("WriteMEMlogThreadProc:%d,%s", e.errorCode(), e.errorMessage());
 	}
 }
 
@@ -191,7 +191,7 @@ void GwSqlLiteMgr::writeChatLog(char* log)
 			__int64 memused = sqlite3_memory_used();//현재 사용량
 			//__int64 highused = sqlite3_memory_highwater(1);//메모리 사용량 최고점
 
-			printf("sqlite mem used (%lld)\n", memused);
+			SYSLOG().Write("sqlite mem used (%lld)\n", memused);
 
 			if(memused>=memdbLen)
 			{
@@ -216,7 +216,7 @@ void GwSqlLiteMgr::writeChatLog(char* log)
 	}
 	catch (CppSQLite3Exception& e)
 	{
-		printf("WriteMEMlogThreadProc:%d,%s", e.errorCode(), e.errorMessage());
+		SYSLOG().Write("WriteMEMlogThreadProc:%d,%s", e.errorCode(), e.errorMessage());
 	}
 }
 

@@ -5,6 +5,8 @@
 
 #define MAX_LOG_LEN  2048
 
+using namespace std;
+
 class GSLog
 {
 private:
@@ -12,7 +14,7 @@ private:
 
 	CRITICAL_SECTION cs;
 	HANDLE			handle_;
-	std::string			_name;
+	string			_name;
 
 public:
 

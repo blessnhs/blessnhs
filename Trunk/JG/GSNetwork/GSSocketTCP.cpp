@@ -88,7 +88,7 @@ BOOL GSSocketTCP::InitializeReadForIocp(VOID)
 
 
 	if (ReadBytes > MAX_BUFFER_LENGTH)
-		printf("wsa recv size over!!\n");
+		SYSLOG().Write("wsa recv size over!!\n");
 
 	if (ReturnValue == SOCKET_ERROR && WSAGetLastError() != WSA_IO_PENDING && WSAGetLastError() != WSAEWOULDBLOCK)
 	{

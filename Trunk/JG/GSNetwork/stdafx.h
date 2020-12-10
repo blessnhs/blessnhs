@@ -34,6 +34,7 @@
 #include "GSGuard.h"
 #include "GSMemPool.h"
 #include "GSObject.h"
+#include "GSLog.h"
 
 using namespace std;
 

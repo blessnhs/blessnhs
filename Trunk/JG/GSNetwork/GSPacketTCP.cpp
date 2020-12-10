@@ -56,7 +56,7 @@ BOOL	GSPacketTCP::ReadPacket(DWORD ReadSize)
 
 		m_CurrentPacketSize = Resize;
 
-		printf("ReadPacket Resize %d bytes %d kbytes %d mbytes\n", Resize,Resize/1024,Resize/1024/1024);
+		SYSLOG().Write("ReadPacket Resize %d bytes %d kbytes %d mbytes\n", Resize,Resize/1024,Resize/1024/1024);
 	}
 
 	if (!GSSocketTCP::ReadForIocp(m_PacketBuffer, ReadSize, m_RemainLength, m_CurrentPacketSize))
@@ -100,7 +100,7 @@ BOOL	GSPacketTCP::ReadPacketForEventSelect()
 //	pTemp[index++] = (BYTE)_PACKET_END1;
 //	pTemp[index++] = (BYTE)_PACKET_END2;
 //
-////	printf("socket to : %d, pid : %d \n",Data->FROM, Data->MPID);
+////	SYSLOG().Write("socket to : %d, pid : %d \n",Data->FROM, Data->MPID);
 //
 //	return (Send(pTemp, index));
 //}
@@ -195,7 +195,7 @@ BOOL	GSPacketTCP::WritePacketCompress(WORD MainProtocol, WORD SubProtocol, const
 
 	if (out_lzf_size == 0)
 	{
-		printf("lzf_compress failed src size %d alloc size %d dst size %d mid %d payloadsize %d\n", PayloadSize, lzf_compress_size, out_lzf_size, MainProtocol, PayloadSize);
+		SYSLOG().Write("lzf_compress failed src size %d alloc size %d dst size %d mid %d payloadsize %d\n", PayloadSize, lzf_compress_size, out_lzf_size, MainProtocol, PayloadSize);
 
 		delete lzf_compress_buffer;
 		return false;
@@ -317,7 +317,7 @@ BOOL GSPacketTCP::GetPacket()
 
 	if (PacketLength >= LMIT_BUFFER_LENGTH || PacketLength <= 0) 
 	{
-		printf("!GetPacket Packet Size Wrong %d\n", PacketLength);
+		SYSLOG().Write("!GetPacket Packet Size Wrong %d\n", PacketLength);
 		m_RemainLength = 0;
 		return FALSE;
 	}
@@ -326,7 +326,7 @@ BOOL GSPacketTCP::GetPacket()
 	//복사하다 죽었다.
 	if (PacketLength < (sizeof(DWORD) + sizeof(WORD) + sizeof(WORD) + sizeof(DWORD)))
 	{
-		printf("!!GetPacket Packet Size Wrong %d\n", PacketLength);
+		SYSLOG().Write("!!GetPacket Packet Size Wrong %d\n", PacketLength);
 		return FALSE;
 	}
 
@@ -363,7 +363,7 @@ BOOL GSPacketTCP::GetPacket()
 					PayLoadLength, decompress_buff, decompress_buffer_size);
 				if (decompress_out_size != 0)
 				{
-					//printf(" src size %d dst size %d\n", PayLoadLength, decompress_out_size);
+					//SYSLOG().Write(" src size %d dst size %d\n", PayLoadLength, decompress_out_size);
 					success = true;
 					break;
 				}
@@ -376,7 +376,7 @@ BOOL GSPacketTCP::GetPacket()
 
 			if (success == false)
 			{
-				printf("decompress error mid %d payloadsize %d\n", MainProtocol, PacketLength);
+				SYSLOG().Write("decompress error mid %d payloadsize %d\n", MainProtocol, PacketLength);
 				delete decompress_buff;
 				return -1;
 			}
