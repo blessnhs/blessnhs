@@ -20,7 +20,10 @@ public:
 			
 	//BOOL    SendPacking(LPVOID Packet,DWORD Size);
 	//BOOL	Send(LPVOID Packet,DWORD Size);
-	BOOL	WritePacket(WORD MainProtocol,WORD SubProtocol, const BYTE *packet, DWORD packetLength);
+	BOOL	WritePacket(WORD MainProtocol,WORD SubProtocol, const BYTE *Packet, DWORD PayloadSize);
+
+	BOOL	WritePacketCompress(WORD MainProtocol, WORD SubProtocol, const BYTE* Packet, DWORD PayloadSize);
+	BOOL	WritePacketNoneCompress(WORD MainProtocol, WORD SubProtocol, const BYTE* Packet, DWORD PayloadSize);
 
 	BOOL	WriteComplete(VOID);
 	BOOL	GetPacket();
