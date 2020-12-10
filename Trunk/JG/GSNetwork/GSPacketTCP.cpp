@@ -339,17 +339,17 @@ BOOL GSPacketTCP::GetPacket()
 	
 		WORD MainProtocol = 0;
 		WORD SubProtocol = 0;
-		DWORD SequenceNumber     = 0;
+		DWORD CompressFlag     = 0;
 
 		memcpy(&MainProtocol   , m_PacketBuffer + sizeof(DWORD),   sizeof(WORD));
 		memcpy(&SubProtocol    , m_PacketBuffer + sizeof(DWORD)  + sizeof(WORD) , sizeof(WORD));
-		memcpy(&SequenceNumber , m_PacketBuffer + sizeof(DWORD)  + sizeof(WORD)  + sizeof(WORD), sizeof(DWORD));
+		memcpy(&CompressFlag, m_PacketBuffer + sizeof(DWORD)  + sizeof(WORD)  + sizeof(WORD), sizeof(DWORD));
 		
 		PayLoadLength = PacketLength - sizeof(DWORD) - sizeof(WORD) - sizeof(WORD) - sizeof(DWORD);
 
 		boost::shared_ptr<XDATA> pBuffer(m_GSBufferPool.alloc());
 
-		if(SequenceNumber == 1)
+		if(CompressFlag == 1)
 		{
 
 			//압축해제 사이즈가 부족할수 있다. 최대 20번까지 시도
