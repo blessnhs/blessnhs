@@ -24,7 +24,7 @@ namespace GSNetwork	{	namespace DBProcessContainer	{
 
 	bool DBProcessContainer::Del(DBPROCESS_PTR &pObj)
 	{
-		std::map<DWORD,DBPROCESS_PTR>::iterator iter = m_List.find(pObj->GetId());
+		std::map<INT64,DBPROCESS_PTR>::iterator iter = m_List.find(pObj->GetId());
 		if(iter != m_List.end())
 		{
 			m_List.erase(iter);
@@ -37,7 +37,7 @@ namespace GSNetwork	{	namespace DBProcessContainer	{
 
 	DBPROCESS_PTR DBProcessContainer::Search(INT64 Id)
 	{
-		std::map<DWORD,DBPROCESS_PTR>::iterator iter = m_List.find(Id);
+		std::map<INT64,DBPROCESS_PTR>::iterator iter = m_List.find(Id);
 		if(iter != m_List.end())
 		{
 			return iter->second;
@@ -63,7 +63,7 @@ namespace GSNetwork	{	namespace DBProcessContainer	{
 
 	void DBProcessContainer::TryConnect()
 	{
-		std::map<DWORD,DBPROCESS_PTR>::iterator iter = m_List.begin();
+		std::map<INT64,DBPROCESS_PTR>::iterator iter = m_List.begin();
 
 		while(iter != m_List.end())
 		{

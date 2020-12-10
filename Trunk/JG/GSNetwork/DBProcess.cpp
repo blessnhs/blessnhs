@@ -56,7 +56,7 @@ int CDBProcess::SelectCharacterInfo(const CHAR *Account,RequestPlayerAuth &pRes)
 	SQLLEN			cbParmRet;
 	SQLRETURN		retcode = SQL_ERROR;
 	SQLCHAR			szsql[1024];
-	sprintf((char*)szsql, _T("SELECT * FROM Character WHERE Account = \'%s\'"), Account);
+	sprintf_s((char*)szsql,1024, _T("SELECT * FROM Character WHERE Account = \'%s\'"), Account);
 	retcode = OdbcExecDirect(m_GameDB, hstmt, szsql);
 	if (retcode==SQL_ERROR){ return _ERR_NETWORK; }
 
@@ -97,7 +97,7 @@ void CDBProcess::ClearConCurrentTable()
 	SQLSMALLINT		sParmRet=0;
 	SQLLEN			cbParmRet=0;
 
-	sprintf((char*)szsql, _T("delete GW_CONCURRENTUSER"));
+	sprintf_s((char*)szsql,1024, _T("delete GW_CONCURRENTUSER"));
 
 	retcode = OdbcExecDirect(m_AccountDB, hstmt, szsql);
 	if (retcode==SQL_ERROR)
@@ -117,7 +117,7 @@ void CDBProcess::ClosePlayer(CHAR *Account)
 	SQLSMALLINT		sParmRet=0;
 	SQLLEN			cbParmRet=0;
 
-	sprintf((char*)szsql, _T("delete GW_CONCURRENTUSER where szAccountid = \'%s\'"), Account);
+	sprintf_s((char*)szsql,1024, _T("delete GW_CONCURRENTUSER where szAccountid = \'%s\'"), Account);
 
 	retcode = OdbcExecDirect(m_AccountDB, hstmt, szsql);
 	if (retcode==SQL_ERROR)
@@ -139,7 +139,7 @@ int		CDBProcess::ProcedureUserLogin(const CHAR *Account,const CHAR *SessionKey,i
 	SQLSMALLINT		sParmRet=0;
 	SQLLEN			cbParmRet=0;
 	
-	sprintf((char*)szsql, _T("{call SP_GW_GAME_LOGIN (\'%s\',\'%s\',%d,?)}"),Account,SessionKey, ChannelId);
+	sprintf_s((char*)szsql,1024, _T("{call SP_GW_GAME_LOGIN (\'%s\',\'%s\',%d,?)}"),Account,SessionKey, ChannelId);
 	retcode = SQLBindParameter(hstmt, 1, SQL_PARAM_OUTPUT, SQL_C_SSHORT, SQL_SMALLINT, 0,0, &sParmRet,0, &cbParmRet );
 	if (retcode==SQL_ERROR)
 	{
@@ -205,7 +205,7 @@ bool CDBProcess::RecordAuthenticKeyFromDB(CHAR* id, CHAR* key, CHAR* ip)
 	CDBHandle		dbhandle(m_AccountDB->m_hdbc, &(m_AccountDB->m_csDBHandle));
 	SQLHSTMT		hstmt = dbhandle.GetHandle();
 
-	sprintf((char*)szsql, _T("{call SP_GW_INSERT_UUID (\'%s\', \'%s\', \'%s\')}"), id, key, ip);
+	sprintf_s((char*)szsql,1024, _T("{call SP_GW_INSERT_UUID (\'%s\', \'%s\', \'%s\')}"), id, key, ip);
 	retcode = SQLExecDirect (hstmt, szsql, SQL_NTS);
 	if (retcode==SQL_ERROR)
 	{
@@ -224,7 +224,7 @@ bool CDBProcess::RecordAuthenticKeyFromDB(CHAR* id, CHAR* key, CHAR* ip)
 }
 
 
-WORD CDBProcess::GetAuthenticKeyFromDB(const CHAR* id, const CHAR* pw,CHAR* out)
+WORD CDBProcess::GetAuthenticKeyFromDB(const CHAR* id, const CHAR* pw,CHAR* out, const int outsize)
 {
 	SQLRETURN		retcode = SQL_ERROR;
 	SQLCHAR			szSQL[1024];
@@ -235,7 +235,7 @@ WORD CDBProcess::GetAuthenticKeyFromDB(const CHAR* id, const CHAR* pw,CHAR* out)
 	SQLHSTMT		hstmt = dbhandle.GetHandle();
 
 
-	sprintf((char*)szSQL, _T("{call SP_GW_ACCOUNT_LOGIN (\'%s\', \'%s\', ? , ? )}"), id, pw);
+	sprintf_s((char*)szSQL,1024, _T("{call SP_GW_ACCOUNT_LOGIN (\'%s\', \'%s\', ? , ? )}"), id, pw);
 	retcode = SQLBindParameter(hstmt, 1, SQL_PARAM_OUTPUT, SQL_C_SSHORT, SQL_SMALLINT, 0,0, &sParmRet,0, &cbParmRet );
 	retcode = SQLBindParameter(hstmt, 2, SQL_PARAM_OUTPUT, SQL_C_CHAR, SQL_CHAR, 64,0, szSessionKey, sizeof(szSessionKey), &cbParmRet );
 
@@ -270,7 +270,7 @@ WORD CDBProcess::GetAuthenticKeyFromDB(const CHAR* id, const CHAR* pw,CHAR* out)
 	szKey = trim_right(szKey);
 
 
-	_tcscpy(out, (char*)(LPCTSTR)szKey.c_str());
+	_tcscpy_s(out, outsize, (char*)(LPCTSTR)szKey.c_str());
 
 	//MultiByteToWideChar(CP_ACP,0, (char*)(LPCTSTR)szKey.c_str(), MAX_SESSION_KEY_SIZE, out, MAX_SESSION_KEY_SIZE);
 

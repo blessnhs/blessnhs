@@ -1078,7 +1078,7 @@ const char* sz2 = sqlite3_bind_parameter_name(mpVM, 2);
 	if (!nParam)
 	{
 		char buf[128];
-		sprintf(buf, "Parameter '%s' is not valid for this statement", szParam);
+		sprintf_s(buf, 128,"Parameter '%s' is not valid for this statement", szParam);
 		throw CppSQLite3Exception(CPPSQLITE_ERROR, buf, DONT_DELETE_MSG);
 	}
 
@@ -1266,7 +1266,7 @@ CppSQLite3Statement CppSQLite3DB::compileStatement(const char* szSQL)
 bool CppSQLite3DB::tableExists(const char* szTable)
 {
 	char szSQL[256];
-	sprintf(szSQL,
+	sprintf_s(szSQL,256,
 			"select count(*) from sqlite_master where type='table' and name='%s'",
 			szTable);
 	int nRet = execScalar(szSQL);

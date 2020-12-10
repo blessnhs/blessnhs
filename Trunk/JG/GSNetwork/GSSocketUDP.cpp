@@ -84,7 +84,7 @@ BOOL GSSocketUDP::CreateUdpSocket(USHORT port)
 	RemoteAddressInfo.sin_port				= htons(port);
 	RemoteAddressInfo.sin_addr.S_un.S_addr	= htonl(INADDR_ANY);
 
-	m_Socket = WSASocket(AF_INET, SOCK_DGRAM, IPPROTO_UDP, NULL, 0, WSA_FLAG_OVERLAPPED);
+	m_Socket = WSASocketW(AF_INET, SOCK_DGRAM, IPPROTO_UDP, NULL, 0, WSA_FLAG_OVERLAPPED);
 
 	if (m_Socket == INVALID_SOCKET)
 		return FALSE;
@@ -375,7 +375,7 @@ BOOL			GSSocketUDP::WriteTo2(LPSTR remoteAddress, USHORT remotePort, BYTE *data,
 
 	RemoteAddressInfo.sin_family			= AF_INET;
 	RemoteAddressInfo.sin_addr.S_un.S_addr	= inet_addr(remoteAddress);
-	RemoteAddressInfo.sin_port				= htons(remotePort);
+    RemoteAddressInfo.sin_port				= htons(remotePort);
 
 	m_Write_OLP->ObjectId = m_ClientId;
 

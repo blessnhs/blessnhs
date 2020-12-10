@@ -23,7 +23,7 @@ public:
 
 	void Initialize();
 
-	std::map<DWORD,DBPROCESS_PTR> m_List;
+	std::map<INT64,DBPROCESS_PTR> m_List;
 };
 
 }	}

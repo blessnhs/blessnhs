@@ -40,7 +40,7 @@ int GwSqlLiteMgr::SaveMemDB()
 	SYSTEMTIME time;   
 	GetLocalTime(&time);
 
-	sprintf(tmp,"MS.sqlite",time.wYear, time.wMonth, time.wDay,
+	sprintf_s(tmp,512,"MS_%d_%d_%d_%d_%d_%d.sqlite",time.wYear, time.wMonth, time.wDay,
 	time.wHour, time.wMinute, time.wSecond);
 
 	rc = sqlite3_open(tmp, &fileDB);
@@ -85,7 +85,7 @@ bool GwSqlLiteMgr::SelectData(char *Accountid,char *Data)
 	 char sQuery[512];
 	 bool find = false;
 	 
-	 sprintf(sQuery,"SELECT* FROM log where accountid = '%s'",Accountid);
+	 sprintf_s(sQuery,512,"SELECT* FROM log where accountid = '%s'",Accountid);
 
 	 CppSQLite3Query pCountSql = m_db.execQuery(sQuery);
 	 while( ! pCountSql.eof() )
@@ -106,7 +106,7 @@ bool  GwSqlLiteMgr::Authentication(const char *Accountid,const char *passwd)
 	printf("authentication %s %s\n",Accountid,passwd);
 	 char sQuery[512];
 	 bool find = false;
-	 sprintf(sQuery,"SELECT* FROM users where accountid = '%s' and Passwd = '%s'",Accountid,passwd);
+	 sprintf_s(sQuery,512,"SELECT* FROM users where accountid = '%s' and Passwd = '%s'",Accountid,passwd);
 
 	 CppSQLite3Query pCountSql = m_db.execQuery(sQuery);
 	 while( ! pCountSql.eof() )
@@ -136,7 +136,7 @@ void GwSqlLiteMgr::UpdateData(char *Accountid,char* Data)
 			__int64 memused = sqlite3_memory_used();//현재 사용량
 			//__int64 highused = sqlite3_memory_highwater(1);//메모리 사용량 최고점
 
-			printf("sqlite mem used (%d)\n", memused);
+			printf("sqlite mem used (%lld)\n", memused);
 
 			if(memused>=memdbLen)
 			{
@@ -151,7 +151,7 @@ void GwSqlLiteMgr::UpdateData(char *Accountid,char* Data)
 //		const int a =1;
 //		WCHAR string[512];
 
-		sprintf(tmp,"insert into log values(DATETIME('now','localtime'), '%s','%s')",Accountid,Data);
+		sprintf_s(tmp,512,"insert into log values(DATETIME('now','localtime'), '%s','%s')",Accountid,Data);
 
 		m_db.execDML(tmp);
 
@@ -191,7 +191,7 @@ void GwSqlLiteMgr::writeChatLog(char* log)
 			__int64 memused = sqlite3_memory_used();//현재 사용량
 			//__int64 highused = sqlite3_memory_highwater(1);//메모리 사용량 최고점
 
-			printf("sqlite mem used (%d)\n", memused);
+			printf("sqlite mem used (%lld)\n", memused);
 
 			if(memused>=memdbLen)
 			{

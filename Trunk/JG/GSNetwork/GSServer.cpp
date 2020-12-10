@@ -80,12 +80,12 @@ VOID GSServer::OnRead(int client_id, DWORD dataLength)
 
 		if (!pClient->InitializeReadForIocp())
 		{
-			printf("%s InitializeReadForIocp Fail\n", __LINE__);
+			printf("line %d file %s InitializeReadForIocp Fail\n", __LINE__, __FILE__);
 		}
 	}
 	else
 	{
-		printf("%s cant found socket type\n", __LINE__, pClient->GetCreateType());
+		printf("%d cant found socket type\n",pClient->GetCreateType());
 	}
 }
 
@@ -278,7 +278,7 @@ BOOL GSServer::BeginUDP()
 	m_Arguments.m_UdpPorts.push_back(30001);
 	m_Arguments.m_UdpPorts.push_back(30002);
 
-	int MaxPort = m_Arguments.m_UdpPorts.size();
+	int MaxPort = (int)m_Arguments.m_UdpPorts.size();
 
 	for(int i=0;i<MaxPort;i++)
 	{
@@ -295,7 +295,7 @@ BOOL GSServer::BeginUDP()
 			return FALSE;
 		}
 
-		if (!UDPListenPort->GetUDPSocket()->CreateUdpSocket(m_Arguments.m_UdpPorts[i]))
+		if (!UDPListenPort->GetUDPSocket()->CreateUdpSocket((unsigned short)m_Arguments.m_UdpPorts[i]))
 		{
 			GSServer::End();
 

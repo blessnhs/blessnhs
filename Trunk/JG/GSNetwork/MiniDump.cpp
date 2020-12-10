@@ -40,7 +40,7 @@ LONG WINAPI UnHandledExceptionFilter(struct _EXCEPTION_POINTERS *exceptionInfo)
 
 
 
-			_sntprintf(DumpPath, MAX_PATH, _T("%d-%d-%d %d_%d_%d_%s.dmp"), 
+			_sntprintf_s(DumpPath, MAX_PATH, _T("%d-%d-%d %d_%d_%d_%s.dmp"), 
 				SystemTime.wYear,
 				SystemTime.wMonth,
 				SystemTime.wDay,

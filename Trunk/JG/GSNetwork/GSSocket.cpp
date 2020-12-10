@@ -129,7 +129,7 @@ BOOL GSSocket::Accept(SOCKET listenSocket)
 	if (m_Socket)
 		return FALSE;
 
-	m_Socket	= WSASocket(AF_INET, SOCK_STREAM, IPPROTO_TCP, NULL, 0, WSA_FLAG_OVERLAPPED);
+	m_Socket	= WSASocketW(AF_INET, SOCK_STREAM, IPPROTO_TCP, NULL, 0, WSA_FLAG_OVERLAPPED);
 
 	if (m_Socket == INVALID_SOCKET)
 	{

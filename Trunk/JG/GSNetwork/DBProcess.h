@@ -21,7 +21,7 @@ public:
 	void ClosePlayer(CHAR *Account);
 	void ClearConCurrentTable();
 
-	WORD GetAuthenticKeyFromDB(const CHAR* id, const CHAR* pw, CHAR* out);	
+	WORD GetAuthenticKeyFromDB(const CHAR* id, const CHAR* pw, CHAR* out,const int outsize);	
 
 	bool RecordAuthenticKeyFromDB( CHAR* id,  CHAR* key,  CHAR* ip);
 

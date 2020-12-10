@@ -141,7 +141,7 @@ protected:
     CHAR loadedImageName[STACKWALK_MAX_NAMELEN];
   } CallstackEntry;
 
-  typedef enum CallstackEntryType {firstEntry, nextEntry, lastEntry};
+  enum CallstackEntryType {firstEntry, nextEntry, lastEntry};
   //enum class CallstackEntryType {firstEntry, nextEntry, lastEntry};
 
   virtual void OnSymInit(LPCSTR szSearchPath, DWORD symOptions, LPCSTR szUserName);

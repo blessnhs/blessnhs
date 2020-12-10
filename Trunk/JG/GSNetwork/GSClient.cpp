@@ -334,7 +334,7 @@ VOID GSClient::ProcDisconnect(boost::shared_ptr<GSClient> pClient,bool isForce)
 	//그래서 그넘들은 종료 처리를 해저야하기 때문에 아래에서 리턴시키면 안된다.
 	if(GetConnected() == FALSE && isForce == false && this->GetProcess() != NULL)
 	{
-		printf("Already Disconnected socket  %d %I64d\n",GetSocket(),GetId());
+		printf("Already Disconnected socket handle %lu getid() %lu \n",(unsigned long)GetSocket(),GetId());
 		return ;
 	}
 
