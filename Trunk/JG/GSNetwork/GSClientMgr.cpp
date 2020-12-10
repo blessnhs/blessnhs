@@ -108,8 +108,9 @@ VOID GSClientMgr::CheckAliveTime()
 
 		char msg[256];
 		
-		sprintf_s(msg,256,"[Conncted : %d] [Debug : %d] [RemoveQ : %d] [Total : %d] [Toal NewConnect : %d][Total Disconnect : %d]\n",
-			GetActiveSocketCount(), DebugCount.fetch_add(0), m_Remove_Queue.unsafe_size(), ConnectCount.fetch_add(0), NewConnectount.fetch_add(0), DisConnectCount.fetch_add(0));
+		sprintf_s(msg,256,"[Conncted:%d] [Debug:%d] [RemoveQ:%d] [Total:%d] [Toal New : %d][Total Close : %d] [Total Recv : %llu] [Total Send : %llu]\n",
+			GetActiveSocketCount(), DebugCount.fetch_add(0), m_Remove_Queue.unsafe_size(), ConnectCount.fetch_add(0), NewConnectount.fetch_add(0), DisConnectCount.fetch_add(0),
+			pServer->TotalRecvBytes.fetch_add(0)/1024/1024,pServer->TotalSendBytes.fetch_add(0) / 1024 / 1024);
 
 		ConsoleHelper::DebugConsoleString(0, msg);
 

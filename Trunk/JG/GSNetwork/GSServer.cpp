@@ -57,6 +57,8 @@ bool GSServer::Create(GSArgument arg)
 
 VOID GSServer::OnRead(int client_id, DWORD dataLength)
 {
+	TotalRecvBytes.fetch_add(dataLength);
+
 	boost::shared_ptr<GSClient> pClient = GetClient(client_id);
 	if (pClient == NULL)
 	{
@@ -91,6 +93,8 @@ VOID GSServer::OnRead(int client_id, DWORD dataLength)
 
 VOID GSServer::OnWrote(int client_id, DWORD dataLength)
 {
+	TotalSendBytes.fetch_add(dataLength);
+
 	boost::shared_ptr<GSClient> pClient = GetClient(client_id);
 	if (pClient == NULL)
 	{

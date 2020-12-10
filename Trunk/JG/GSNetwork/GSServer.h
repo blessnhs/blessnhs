@@ -64,7 +64,14 @@ public:
 	virtual BOOL												  Disconnect(GSCLIENT_PTR object) = 0;
 	virtual VOID												  Accept(GSCLIENT_PTR object) = 0;
 
+public:
+	atomic<unsigned long long>		TotalRecvBytes;
+
+	atomic<unsigned long long>		TotalSendBytes;
+
+
 private:
+
 
 	GSClientMgr::GSClientMgr									  m_ClientMgr;
 
