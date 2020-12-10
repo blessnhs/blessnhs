@@ -224,7 +224,9 @@ BOOL GSSocket::Connect(LPSTR address, USHORT port)
 
 	RemoteAddressInfo.sin_family			= AF_INET;
 	RemoteAddressInfo.sin_port				= htons(port);
-	RemoteAddressInfo.sin_addr.S_un.S_addr	= inet_addr(address);
+//	RemoteAddressInfo.sin_addr.S_un.S_addr	= inet_addr(address);
+
+	inet_pton(AF_INET, address, &RemoteAddressInfo.sin_addr.S_un.S_addr);
 
 	if (WSAConnect(m_Socket, (LPSOCKADDR) &RemoteAddressInfo, sizeof(SOCKADDR_IN), NULL, NULL, NULL, NULL) == SOCKET_ERROR)
 	{
@@ -255,8 +257,14 @@ BOOL GSSocket::GetLocalIP(string& ipaddress)
 
 	getsockname(m_Socket, (struct sockaddr*)&addr,&client_len);
 
-	ipaddress = inet_ntoa(addr.sin_addr);
-	
+	//char ip[128];
+	//inet_ntop(AF_INET, &(addr.sin_addr), (PSTR)ip, 128);
+
+	//InetNtop(AF_INET, &(addr), (PSTR)ip, 128);
+	//ipaddress = ip;
+
+	inet_ntoa(addr.sin_addr);
+
 	return FALSE;
 }
 

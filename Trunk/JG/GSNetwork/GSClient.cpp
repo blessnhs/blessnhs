@@ -477,6 +477,10 @@ void GSClient::OnConnect(boost::shared_ptr<GSClient> pClient)
 	//아래 함수를 로직 쓰레드로 던지게 되면 동기화 문제가 발생하여 
 	//바로 콜하는 것으로 대체
 
+
+	string ip;
+	pClient->GetTCPSocket()->GetLocalIP(ip);
+
 	/*
 	GSServer::GSServer *pServer = (GSServer::GSServer *)m_GSServer;
 
