@@ -1,6 +1,5 @@
 #pragma once
 
-#include <boost/shared_ptr.hpp>
 class GSClient;
 
 namespace GSNetwork	{	namespace GSIocp	{

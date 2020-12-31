@@ -1,9 +1,9 @@
 #pragma once
 
-#include "GSGuard.h"
+template <class T>
+class GSGuard;
 
 namespace GSNetwork	{	namespace GSMemPool	{	
-
 
 template <class T, int ALLOC_BLOCK_SIZE = 500>
 class GSMemPool : public GSGuard<T>

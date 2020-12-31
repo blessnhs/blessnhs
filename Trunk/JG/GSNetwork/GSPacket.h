@@ -1,12 +1,9 @@
 #pragma once
 
-#include <boost/pool/object_pool.hpp>
-#include <boost/shared_ptr.hpp>
+
 
 #include "./GSFactory.h"
-#ifndef CLIENT_MODULE
 #include <concurrent_queue.h>
-#endif
 #include "GSBuffer.h"
 
 

@@ -3,8 +3,7 @@
 #include "GSArgument.h"
 #include "GSIocp.h"
 #include "GSClientMgr.h"
-#include <vector>
-#include "SingleTonHolder.h"
+
 
 namespace GSNetwork	{	namespace GSServer	{
 

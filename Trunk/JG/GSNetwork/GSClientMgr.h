@@ -1,8 +1,7 @@
 #pragma once
 
 #include "GSClient.h"
-#include <concurrent_unordered_map.h>
-#include <concurrent_unordered_set.h>
+
 
 namespace GSNetwork	{	namespace GSClientMgr	{
 

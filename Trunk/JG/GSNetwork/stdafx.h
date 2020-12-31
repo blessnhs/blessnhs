@@ -30,20 +30,43 @@
 
 #include <concurrent_unordered_map.h>
 #include <concurrent_unordered_set.h>
+#include <concurrent_queue.h>
+#include <boost/pool/object_pool.hpp>
+
+
+#include "common.h"
+#include "GSGuard.h"
+#include "SysTimerJob.h"
+#include "GSTimerQ.h"
+#include "GSSocketBase.h"
+#include "GSSocket.h"
 
 #include "PacketBuffer.h"
 #include "core.h"
-#include "GSGuard.h"
+#include "GSFactory.h"
+#include "GSBuffer.h"
+
+
+
 #include "GSMemPool.h"
 #include "GSObject.h"
 #include "GSLog.h"
+
+#include "GSPacket.h"
+#include "GSSocketUDP.h"
+#include "GSPacketTCP.h"
+#include "GSPacketUDP.h"
+
 #include "GSClient.h"
+
+#include "GSArgument.h"
+#include "GSIocp.h"
+#include "GSClientMgr.h"
+#include "SingleTonHolder.h"
 
 using namespace std;
 
 #define WIN32_LEAN_AND_MEAN             // Exclude rarely-used stuff from Windows headers
-
-//#define REMOVE_BOOST
 
 
 #pragma warning(disable : 4101)

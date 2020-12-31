@@ -1,7 +1,5 @@
 #pragma once
 
-#include "common.h"
-
 namespace GSNetwork	{	namespace GSMemPool	{	namespace GSBUffer	{
 
 class GSBuffer // : public GSMemPool<GSBuffer>

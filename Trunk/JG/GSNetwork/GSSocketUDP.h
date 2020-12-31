@@ -1,6 +1,5 @@
 #pragma once
-#include <memory> 
-#include "GSSocket.h"
+
 
 namespace GSNetwork	{ namespace GSSocket	{	namespace GSSocketUDP	{
 

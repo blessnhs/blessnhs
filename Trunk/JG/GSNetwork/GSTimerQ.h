@@ -1,7 +1,10 @@
 #pragma once
 
 #include "GSTimerJob.h"
-//#include "../Common/tbb/include/tbb/concurrent_unordered_map."
+
+
+template <class T>
+class GSGuard;
 
 namespace GSFrames	{	namespace GSTimerQ	{
 

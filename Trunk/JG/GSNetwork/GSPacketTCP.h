@@ -1,8 +1,6 @@
 #pragma once
 
 #include "GSSocketTCP.h"
-#include "GSPacket.h"
-#include "GSBuffer.h"
 
 namespace GSNetwork	{ namespace GSSocket	{	namespace GSPacket	{	namespace GSPacketTCP	{
 

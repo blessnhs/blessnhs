@@ -1,7 +1,5 @@
 #pragma once
 
-#include "GSSocket.h"
-
 namespace GSNetwork	{ namespace GSSocket	{	namespace GSSocketTCP	{
 
 class GSSocketTCP : public GSSocket

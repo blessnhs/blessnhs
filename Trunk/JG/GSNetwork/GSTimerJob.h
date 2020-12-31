@@ -3,6 +3,7 @@
 #include "GSObject.h"
 #include "GSMemPool.h"
 
+
 namespace GSFrames	{	namespace GSTimerJob	{
 
 class GSTimerJob : public GSNetwork::GSObject::GSObject 

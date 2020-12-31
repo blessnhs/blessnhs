@@ -42,7 +42,7 @@ public:
 	BOOL			Accept(SOCKET listenSocket);
 	BOOL			Accept2(SOCKET listenSocket);
 
-	BOOL			GetLocalIP(string& ipaddress);
+	BOOL			GetLocalIP(std::string& ipaddress);
 	USHORT			GetLocalPort(VOID);
 	
 	BOOL			Connect(LPSTR address, USHORT port);

@@ -242,7 +242,7 @@ BOOL GSSocket::Connect(LPSTR address, USHORT port)
 	return TRUE;
 }
 
-BOOL GSSocket::GetLocalIP(string& ipaddress)
+BOOL GSSocket::GetLocalIP(std::string& ipaddress)
 {
 	CThreadSync Sync;
 

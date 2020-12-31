@@ -1,11 +1,5 @@
 #pragma once
 
-#include "GSTimerQ.h"
-
-#include <boost/pool/object_pool.hpp>
-
-#include "SysTimerJob.h"
-
 class SysTimer : public GSFrames::GSTimerQ::GSTimerQ  
 {
 public:

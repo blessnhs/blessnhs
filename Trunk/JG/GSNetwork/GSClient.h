@@ -1,5 +1,7 @@
 #pragma once
 
+#include <boost/enable_shared_from_this.hpp>
+
 #include "GSPacketTCP.h"
 #include "GSPacketUDP.h"
 #include "IProcess.h"
@@ -7,9 +9,6 @@
 #include "IHandler.h"
 #include "./IMessage.h"
 #include "IClientSession.h"
-
-#include <boost/pool/object_pool.hpp>
-#include <boost/enable_shared_from_this.hpp>
 
 using namespace GSNetwork;
 //namespace GSNetwork	{	namespace GSClient	{

@@ -1,7 +1,5 @@
 #pragma once
 
-#include <boost/make_shared.hpp>
-
 class GSClient;
 
 namespace GSNetwork	{	namespace IClientSession	{

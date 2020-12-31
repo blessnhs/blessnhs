@@ -1,7 +1,5 @@
 #pragma once
 
-#include "common.h"
-#include <boost/shared_ptr.hpp>
 class GSClient;
 
 enum IO_TYPE
