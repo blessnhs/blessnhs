@@ -28,10 +28,13 @@ VOID GSClientMgr::CheckAliveTime()
 {
 	GSServer::GSServer* pServer = (GSServer::GSServer*)m_GSServer;
 
-	for each (auto client in m_ClientsForLoop)
+	int debug_null_cnt = 0;
+
+	for each (auto client in m_Clients)
 	{
 		if (client.second == NULL)
 		{
+			debug_null_cnt++;
 			continue;
 		}
 
@@ -121,7 +124,7 @@ int GSClientMgr::GetActiveSocketCount()
 {
 	int count = 0;
 
-	for each (auto client in m_ClientsForLoop)
+	for each (auto client in m_Clients)
 	{
 		if (client.second == NULL)
 		{
@@ -147,23 +150,6 @@ int GSClientMgr::IncClientId()
 	return idx;
 }
 
-GSCLIENT_PTR GSClientMgr::GetClientLoop(int id)
-{
-
-	for each (auto client in m_ClientsForLoop)
-	{
-		if (client.second == NULL)
-		{
-			continue;
-		}
-
-		if (client.second->GetId() == id)
-			return client.second;
-	}
-
-	return NULL;
-}
-
 
 GSCLIENT_PTR GSClientMgr::GetClient(int id)
 {
@@ -175,54 +161,21 @@ GSCLIENT_PTR GSClientMgr::GetClient(int id)
 
 }
 
-BOOL GSClientMgr::AddClientLoop(GSCLIENT_PTR newclient)
-{
-	bool find = false;
-
-	for each (auto client in m_ClientsForLoop)
-	{
-		if (client.second == NULL)
-		{
-			m_ClientsForLoop[client.first] = newclient;
-			return TRUE;
-		}
-	}
-
-	if (find == false)
-	{
-		m_ClientsForLoop[newclient->GetId()] = newclient;
-		return TRUE;
-	}
-
-	return FALSE;
-}
-
-BOOL GSClientMgr::DelClientLoop(int id)
-{
-	for each (auto client in m_ClientsForLoop)
-	{
-		if (client.second == NULL)
-		{
-			continue;
-		}
-
-		if (client.second->GetId() == id)
-		{
-			m_ClientsForLoop[client.first] = NULL;
-			return TRUE;
-		}
-	}
-	return FALSE;
-}
-
 BOOL GSClientMgr::AddClient(GSCLIENT_PTR newclient)
 {
 	CThreadSync sync;
 	
+	auto find = m_Clients.find(newclient->GetId());
+	if (find != m_Clients.end())
+	{
+		if (find->second != NULL)
+			printf("alert add client id is exist\n");
+	}
+
 	m_Clients[newclient->GetId()] = newclient;
 
 	newclient->m_GSServer = this->m_GSServer;
-	AddClientLoop(newclient);
+
 
 	return TRUE;
 }
@@ -246,9 +199,21 @@ BOOL GSClientMgr::DelClient(int id)
 {
 	m_Clients[id] = NULL;
 
-	DelClientLoop(id);
-
 	return TRUE;
+}
+
+int GSClientMgr::PopRecycleId()
+{
+	int id;
+	if (m_Reycle_Id_Queue.try_pop(id) == true)
+		return id;
+
+	return -1;
+}
+
+void GSClientMgr::InsertRecycleId(int _id)
+{
+	m_Reycle_Id_Queue.push(_id);
 }
 
 BOOL GSClientMgr::NewClient(SOCKET ListenSocket, LPVOID pServer)
@@ -276,7 +241,12 @@ BOOL GSClientMgr::NewClient(SOCKET ListenSocket, LPVOID pServer)
 	for (int i = 0; i < NewClient; i++)
 	{
 		GSCLIENT_PTR pClient = boost::make_shared<GSClient>();
-		pClient->SetId(IncClientId());
+
+		int newid = PopRecycleId();
+		if (newid == -1)
+			newid = IncClientId();
+
+		pClient->SetId(newid);
 		pClient->Create(TCP);
 		pClient->m_GSServer = pServer;
 

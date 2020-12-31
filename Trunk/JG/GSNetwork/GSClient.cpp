@@ -47,6 +47,10 @@ GSClient::~GSClient(void)
 	}
 
 	DebugCount.fetch_sub(1);
+
+	GSServer::GSServer* pServer = (GSServer::GSServer*)m_GSServer;
+
+	pServer->GetClientMgr().InsertRecycleId(GetId());
 }
 
 BOOL  GSClient::Create(BYTE Type)
