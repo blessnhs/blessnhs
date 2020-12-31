@@ -101,7 +101,7 @@ BOOL GSSocketTCP::InitializeReadForIocp(VOID)
 	return TRUE;
 }
 
-BOOL			GSSocketTCP::ReadForIocp(DWORD dataLength,DWORD RemainLength,DWORD MaxPacketBufferSize)
+BOOL			GSSocketTCP::ReadForIocp(BYTE* PacketBuffer, DWORD DataLength,DWORD RemainLength,DWORD MaxPacketBufferSize)
 {
 	//m_Buffer 이번에 읽은 버퍼
 	//m_PacketBuffer 누적 버퍼
@@ -112,25 +112,25 @@ BOOL			GSSocketTCP::ReadForIocp(DWORD dataLength,DWORD RemainLength,DWORD MaxPac
 	if (!m_Socket)
 		return FALSE;
 
-	if (!PacketBuffer || dataLength <= 0)
+	if (!PacketBuffer || DataLength <= 0)
 		return FALSE;
 
-	if(RemainLength + dataLength >= MaxPacketBufferSize)
+	if(RemainLength + DataLength >= MaxPacketBufferSize)
 		return FALSE;
 
-	memcpy(PacketBuffer + RemainLength, m_Buffer, dataLength);
+	memcpy(PacketBuffer + RemainLength, m_Buffer, DataLength);
 
 	return TRUE;
 }
 
-BOOL			GSSocketTCP::ReadForEventSelect(BYTE *data, DWORD &dataLength)
+BOOL			GSSocketTCP::ReadForEventSelect(BYTE *Data, DWORD &DataLength)
 {
 	CThreadSync Sync;
 
 	if (!m_Socket)
 		return FALSE;
 
-	if (!data)
+	if (!Data)
 		return FALSE;
 
 	if (!m_Socket)
@@ -163,8 +163,8 @@ BOOL			GSSocketTCP::ReadForEventSelect(BYTE *data, DWORD &dataLength)
 		return FALSE;
 	}
 
-	memcpy(data, m_Buffer, ReadBytes);
-	dataLength = ReadBytes;
+	memcpy(Data, m_Buffer, ReadBytes);
+	DataLength = ReadBytes;
 
 	return TRUE;
 
@@ -181,14 +181,14 @@ BOOL GSSocketTCP::GetConnected(VOID)
 	return m_bConnected; 
 }
 
-BOOL GSSocketTCP::Write(BYTE *data, DWORD dataLength)
+BOOL GSSocketTCP::Write(BYTE * Data, DWORD DataLength)
 {
 	CThreadSync Sync;
 
 	if (!m_Socket)
 		return FALSE;
 
-	if (!data || dataLength <=0)
+	if (!Data || DataLength <=0)
 		return FALSE;
 	
 
@@ -196,8 +196,8 @@ BOOL GSSocketTCP::Write(BYTE *data, DWORD dataLength)
 	DWORD	WriteBytes	= 0;
 	DWORD	WriteFlag	= 0;
 
-	WsaBuf.buf			= (CHAR*) data;
-	WsaBuf.len			= dataLength;
+	WsaBuf.buf			= (CHAR*)Data;
+	WsaBuf.len			= DataLength;
 
 	m_OLP_REMAIN_COUNT_SND.fetch_add(1);
 

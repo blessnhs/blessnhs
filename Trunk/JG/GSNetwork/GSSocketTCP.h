@@ -13,9 +13,9 @@ public:
 	BOOL Initialize(VOID);
 	BOOL Termination(VOID);
 	
-	int  ReadForIocp(BYTE * PacketBuffer, DWORD dataLength,DWORD RemainLength, DWORD MaxPacketBufferSize);
-	BOOL ReadForEventSelect(BYTE *data, DWORD &dataLength);
-	BOOL Write(BYTE *data, DWORD dataLength);
+	int  ReadForIocp(BYTE * PacketBuffer, DWORD DataLength,DWORD RemainLength, DWORD MaxPacketBufferSize);
+	BOOL ReadForEventSelect(BYTE *Data, DWORD &DataLength);
+	BOOL Write(BYTE *Data, DWORD DataLength);
 
 
 	BOOL CreateTcpSocket(VOID);
