@@ -24,15 +24,17 @@ GSPacket::~GSPacket(VOID)
 {
 	delete m_PacketBuffer;
 
+	m_PacketList.clear();
+	m_WrietQueue.clear();
 
-	//종료할때 비운다.
-	boost::shared_ptr<XDATA> pBuffer;
-	while (m_PacketList.empty() == false)
-		m_PacketList.try_pop(pBuffer);
+	////종료할때 비운다.
+	//boost::shared_ptr<XDATA> pBuffer;
+	//while (m_PacketList.empty() == false)
+	//	m_PacketList.try_pop(pBuffer);
 
-	boost::shared_ptr<WRITE_PACKET_INFO> pWrite;
-	while (m_WrietQueue.empty() == false)
-		m_WrietQueue.try_pop(pWrite);
+	//boost::shared_ptr<WRITE_PACKET_INFO> pWrite;
+	//while (m_WrietQueue.empty() == false)
+	//	m_WrietQueue.try_pop(pWrite);
 
 }
 
