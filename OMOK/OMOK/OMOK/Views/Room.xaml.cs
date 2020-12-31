@@ -14,6 +14,7 @@ using ToastMessage;
 using OMOK.Control;
 using Xamarin.Essentials;
 using Xamarin.Forms.Shapes;
+using System.Threading;
 
 namespace OMOK
 {
@@ -61,6 +62,9 @@ namespace OMOK
         {
             InitializeComponent();
 
+            if (User.IsEnableScreenChat == true)
+                Chatting.IsEnabled = true;
+
             InitTimer();
 
             _ai._renderer = _renderer;
@@ -70,7 +74,12 @@ namespace OMOK
             InitBoardGrid();
 
             if (User.Auto == true)
+            {
                 User.myInfo.ai_reset_flag = true;
+
+                if (User.Color == eTeam.Black)
+                    Thread.Sleep(1000);
+            }
 
             Button PrevBtn = new Button { Text = "◁", HorizontalOptions = LayoutOptions.Start };
             PrevBtn.Clicked += (sender, e) => {
@@ -86,80 +95,88 @@ namespace OMOK
 
             Device.StartTimer(TimeSpan.FromSeconds(1), () =>
             {
-                Device.BeginInvokeOnMainThread(() =>
-                {
-                    try
-                    {
-                        if (User.IsMyTurn == true)
+               
+                 try
+                 {
+                     if (User.IsMyTurn == true)
+                     {
+                         var current = ((DateTime.Now - User.MytrunStartTime).TotalSeconds * 0.033);
+                         ProgressRoom.Progress = current;
+
+                         int remainseconds = 30 - (int)((DateTime.Now - User.MytrunStartTime).TotalSeconds);
+                         if (remainseconds < 0)
+                             remainseconds = 0;
+
+                        Device.BeginInvokeOnMainThread(() =>
                         {
-                            var current = ((DateTime.Now - User.MytrunStartTime).TotalSeconds * 0.033);
-                            ProgressRoom.Progress = current;
-
-                            int remainseconds = 30 - (int)((DateTime.Now - User.MytrunStartTime).TotalSeconds);
-                            if (remainseconds < 0)
-                                remainseconds = 0;
-
                             timeLabel.Text = remainseconds.ToString();
-                         //   DependencyService.Get<Toast>().Show(timeLabel.Text);
+                        });
 
-                            //   ToastNotification.TostMessage(timeLabel.Text);
+                      //   DependencyService.Get<Toast>().Show(timeLabel.Text);
 
-                            if ((DateTime.Now - User.MytrunStartTime).TotalSeconds > 30)
-                            {
-                                if (User.Auto == true)
-                                    NetProcess.SendLeaveRoom(0);
-                                else
-                                    NetProcess.SendPassThroughMessage(-1, -1, User.Color);
-                            }
-                        }
+                         //   ToastNotification.TostMessage(timeLabel.Text);
 
-                        if(debug > 90)
-                            NetProcess.SendLeaveRoom(0);
+                         if ((DateTime.Now - User.MytrunStartTime).TotalSeconds > 30)
+                         {
+                             if (User.Auto == true)
+                                 NetProcess.SendLeaveRoom(0);
+                             else
+                                 NetProcess.SendPassThroughMessage(-1, -1, User.Color);
+                         }
+                     }
+
+                     if(debug > 90)
+                         NetProcess.SendLeaveRoom(0);
 
 
-                        ///////////////////////////////////////////////////////////////////
-                        if (User.myInfo.ai_reset_flag == true)
+                     ///////////////////////////////////////////////////////////////////
+                     if (User.myInfo.ai_reset_flag == true)
+                     {
+                         //흑ai
+                         if (User.Color == eTeam.Black)
+                         {
+                             User.myInfo.ai_rule = 3;
+                             User.myInfo.ai_mode = 1;
+                         }
+                         else//백ai
+                         {
+                             User.myInfo.ai_rule = 3;
+                             User.myInfo.ai_mode = 2;
+                         }
+
+                        Device.BeginInvokeOnMainThread(() =>
                         {
-                            //흑ai
-                            if (User.Color == eTeam.Black)
-                            {
-                                User.myInfo.ai_rule = 3;
-                                User.myInfo.ai_mode = 1;
-                            }
-                            else//백ai
-                            {
-                                User.myInfo.ai_rule = 3;
-                                User.myInfo.ai_mode = 2;
-                            }
-
-                            _ai.PlayGame(User.myInfo.ai_rule, User.myInfo.ai_mode,true);
+                            _ai.PlayGame(User.myInfo.ai_rule, User.myInfo.ai_mode, true);
                             isPlaying = true;
                             User.myInfo.ai_reset_flag = false;
-                           
+
                             UpdateBattleInfo();
+                        });
 
+                     }
 
-                        }
-
-                        if (isPlaying == true)
+                     if (isPlaying == true)
+                     {
+                        Device.BeginInvokeOnMainThread(() =>
                         {
                             isPlaying = _ai.PlaygameLoop(this, User.myInfo.ai_mode,true);
+                        });
 
-                            if (isPlaying == false) //종료
-                            {
-                                isPlaying = false;
+                        if (isPlaying == false) //종료
+                         {
+                             isPlaying = false;
 
-                            }
-                        }
+                         }
+                     }
 
-                    }
-                    catch (Exception e)
-                    {
-                        Console.WriteLine(e.ToString());
-                    }
-                });
+                 }
+                 catch (Exception e)
+                 {
+                     Console.WriteLine(e.ToString());
+                 }
+              
 
-                return !isExist;
+                return !isExit;
             });
 
 
@@ -272,16 +289,16 @@ namespace OMOK
 
             return true;
         }
-        bool isExist = false;
+        bool isExit = false;
 
         protected override void OnDisappearing()
         {
-            isExist = true;
+            isExit = true;
             NetProcess.SendLeaveRoom(0);
         }
         public void ShowLeaveAd()
         {
-            rewardVideo.ShowAd();
+        //    rewardVideo.ShowAd();
         }
 
         async void OnLeaveClicked(object sender, System.EventArgs e)

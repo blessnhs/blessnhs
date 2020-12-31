@@ -30,7 +30,7 @@
                 <AdFire:CtBannerView eBannerSize="Standardbanner"   BackgroundColor="White" x:Name="banner"/>
             </Frame>-->
             <control:GradientButton  x:Name="PutStoneBtn" Text="착수"   Grid.Row="0" Grid.Column="2" Clicked="OnPutStone" StartColor="#71c4d1" EndColor="#77bfd4" Margin="4" ContentLayout="Top" />
-            <control:GradientButton  x:Name="Chatting" Text="화상채팅"   Grid.Row="0" Grid.Column="3" Clicked="OnChatting" StartColor="#71c4d1" EndColor="#77bfd4" Margin="4" ContentLayout="Top" />
+            <control:GradientButton  x:Name="Chatting" Text="화상채팅" IsEnabled="false"  Grid.Row="0" Grid.Column="3" Clicked="OnChatting" StartColor="#71c4d1" EndColor="#77bfd4" Margin="4" ContentLayout="Top" />
 
 
             <control:GradientButton x:Name="LeaveRoom" StartColor="#71c4d1" EndColor="#77bfd4" Text="나가기"  Grid.Row="0" Grid.Column="4" Clicked="OnLeaveClicked" BackgroundColor="#E6DEDE"/>

@@ -4,16 +4,11 @@ using OMOK.Views;
 using System;
 using System.IO;
 using Xamarin.Essentials;
-using Xamarin.Forms;
 using System.Text;
 using System.Net;
-using OMOK.Popup;
-using Xamarin.Forms.PlatformConfiguration;
 using System.Threading;
-using System.Collections.Generic;
-using ToastMessage;
 using System.Collections.Concurrent;
-using System.Threading.Tasks;
+using Xamarin.Forms;
 
 namespace OMOK.Network
 {
@@ -43,13 +38,13 @@ namespace OMOK.Network
    
         static public void start()
         {
-            string ip = "192.168.0.9";//"211.212.37.238";
+            string ip = "211.212.37.238";
 
 
             //연결중이면 안한다. 
             if (client.socket == null || client.socket.Connected == false)
             {
-                if ((DateTime.Now - time).TotalSeconds > 1)
+                if ((DateTime.Now - time).TotalSeconds > 5)
                 {
                     time = DateTime.Now;
                     if(User.Token != null && User.Token != "")
@@ -68,8 +63,8 @@ namespace OMOK.Network
             }
         }
 
-        public static ConcurrentQueue<System.IO.MemoryStream> JpegStream = new ConcurrentQueue<System.IO.MemoryStream>();
-        public static ConcurrentQueue<System.IO.MemoryStream> AudioStream = new ConcurrentQueue<System.IO.MemoryStream>();
+        public static ConcurrentQueue<MemoryStream> JpegStream = new ConcurrentQueue<MemoryStream>();
+        public static ConcurrentQueue<MemoryStream> AudioStream = new ConcurrentQueue<MemoryStream>();
 
         static Room pRoom = null;
 
@@ -78,7 +73,6 @@ namespace OMOK.Network
             
             if (client.socket == null || client.socket.Connected == false)
                 return;
-
          
             CompletePacket data;
             if (client.PacketQueue.TryDequeue(out data) == true)
@@ -114,7 +108,10 @@ namespace OMOK.Network
                                 LOGIN_RES res = new LOGIN_RES();
                                 res = LOGIN_RES.Parser.ParseFrom(data.Data);
 
-                                page.ClosePopup();
+                                Device.BeginInvokeOnMainThread(() =>
+                                {
+                                    page.ClosePopup();
+                                });
 
                                 if (res.VarCode == ErrorCode.Success)
                                 {
@@ -131,24 +128,28 @@ namespace OMOK.Network
                                     User.myInfo.NickName = Helper.ToStr(res.VarName.ToByteArray()); ;
                                     User.Locale = Helper.ToStr(res.VarLocale.ToByteArray());
 
-                                    page.UpdatePlayerInfo();
-                                    page.UpdateLocalMenu();
-
                                     User.state = PlayerState.Lobby;
 
                                     SendNoticeReq();
 
-                                    if (User.myInfo.NickName == "")
+                                    Device.BeginInvokeOnMainThread(() =>
                                     {
-                                        page.NickNamePopup();
-                                    }
-                                    else
-                                    {
-										
-                                        if(User.Auto == true)
-                                        	page.MatchAuto();
+                                        page.UpdatePlayerInfo();
+                                        page.UpdateLocalMenu();
 
-                                    }
+                                        if (User.myInfo.NickName == "")
+                                        {
+                                            page.NickNamePopup();
+                                        }
+                                        else
+                                        {
+
+                                            if (User.Auto == true)
+                                                page.MatchAuto();
+                                        }
+                                    });
+
+                                   
                                 }
                                 else
                                 {
@@ -167,7 +168,10 @@ namespace OMOK.Network
                                 NOTICE_RES res = new NOTICE_RES();
                                 res = NOTICE_RES.Parser.ParseFrom(data.Data);
 
-                                page.SetNotice(Helper.ToStr(res.VarMessage.ToByteArray()));
+                                Device.BeginInvokeOnMainThread(() =>
+                                {
+                                    page.SetNotice(Helper.ToStr(res.VarMessage.ToByteArray()));
+                                });
                             }
                             break;
 
@@ -176,18 +180,20 @@ namespace OMOK.Network
                                 CHECK_NICKNAME_RES res = new CHECK_NICKNAME_RES();
                                 res = CHECK_NICKNAME_RES.Parser.ParseFrom(data.Data);
 
-                                if (res.VarCode != ErrorCode.Success)
-                                    page.SendNickNamePopupMessage();
-                                else
+                                Device.BeginInvokeOnMainThread(() =>
                                 {
-                                    User.myInfo.NickName = Helper.ToStr(res.VarName.ToByteArray());
+                                    if (res.VarCode != ErrorCode.Success)
+                                        page.SendNickNamePopupMessage();
+                                    else
+                                    {
+                                        User.myInfo.NickName = Helper.ToStr(res.VarName.ToByteArray());
 
-                                    page.CloseAllPopup();
+                                        page.CloseAllPopup();
 
-                                    page.UpdatePlayerInfo();
-                                }
+                                        page.UpdatePlayerInfo();
+                                    }
+                                });
 
-                               
                             }
                             break;
 
@@ -198,15 +204,18 @@ namespace OMOK.Network
 
                                 if (res.VarCode == ErrorCode.Success)
                                 {
-                                    page.ClosePopup();
+                                    Device.BeginInvokeOnMainThread(() =>
+                                    {
+                                        page.ClosePopup();
 
-                                    User.Color = eTeam.Black;
-                                    User.IsMyTurn = true;
+                                        User.Color = eTeam.Black;
+                                        User.IsMyTurn = true;
                               
-                                    User.state = PlayerState.Room;
+                                        User.state = PlayerState.Room;
 
-                                    pRoom = new Room();
-                                    page.PushRoomPopup(pRoom);
+                                        pRoom = new Room();
+                                        page.PushRoomPopup(pRoom);
+                                    });
 
                                 }
                                 else
@@ -229,9 +238,10 @@ namespace OMOK.Network
 
                                     User.OppInfo.NickName = Helper.ToStr(res.VarRoomUser.VarName.ToByteArray());
                                 }
-
-                                pRoom.UpdateBattleInfo();
-
+                                Device.BeginInvokeOnMainThread(() =>
+                                {
+                                    pRoom.UpdateBattleInfo();
+                                });
                             }
                             break;
                         case (int)PROTOCOL.IdPktBitmapMessageRes:
@@ -252,13 +262,19 @@ namespace OMOK.Network
                                 res = ROOM_PASS_THROUGH_RES.Parser.ParseFrom(data.Data);
                                 if(res.VarCode == ErrorCode.Success)
                                 {
-                                    pRoom.ProcReceivePutStoneMessage(res);
+                                    Device.BeginInvokeOnMainThread(() =>
+                                    {
+                                        pRoom.ProcReceivePutStoneMessage(res);
+                                    });
                                 }
                             }
                             break;
                         case (int)PROTOCOL.IdPktRoomListRes:
                             {
-                                page.UpdateMessage(data);
+                                Device.BeginInvokeOnMainThread(() =>
+                                {
+                                    page.UpdateMessage(data);
+                                });
                             }
                             break;
 
@@ -278,7 +294,10 @@ namespace OMOK.Network
                                 RANK_RES res = new RANK_RES();
                                 res = RANK_RES.Parser.ParseFrom(data.Data);
 
-                                page.CreateRankPage(res.VarRankList);
+                                Device.BeginInvokeOnMainThread(() =>
+                                {
+                                    page.CreateRankPage(res.VarRankList);
+                                });
                             }
                             break;
 
@@ -291,19 +310,28 @@ namespace OMOK.Network
                                 {
                                     User.state = PlayerState.Lobby;
 
-                                    pRoom.ShowLeaveAd();
+                                    Device.BeginInvokeOnMainThread(() =>
+                                    {
+                                        pRoom.ShowLeaveAd();
 
-                                    page.PopRoomPopup();
+                                        page.PopRoomPopup();
+                                    });
 
                                     if (User.Auto == true)
                                     {
                                         Thread.Sleep(1000);
 
-                                        page.MatchAuto();
+                                        Device.BeginInvokeOnMainThread(() =>
+                                        {
+                                            page.MatchAuto();
+                                        });
                                     }
                                 }
 
-                                page.UpdatePlayerInfo();
+                                Device.BeginInvokeOnMainThread(() =>
+                                {
+                                    page.UpdatePlayerInfo();
+                                });
 
                             }
                             break;
@@ -315,15 +343,18 @@ namespace OMOK.Network
 
                                 if (res.VarCode == ErrorCode.Success)
                                 {
-                                    page.ClosePopup();
+                                    Device.BeginInvokeOnMainThread(() =>
+                                    {
+                                        page.ClosePopup();
 
-                                    pRoom = new Room();
+                                        pRoom = new Room();
 
-                                    User.Color = eTeam.White;
-                                    User.IsMyTurn = false;
+                                        User.Color = eTeam.White;
+                                        User.IsMyTurn = false;
 
-                                    User.state = PlayerState.Room;
-                                    page.PushRoomPopup(pRoom);
+                                        User.state = PlayerState.Room;
+                                        page.PushRoomPopup(pRoom);
+                                    });
                                 }
                             }
                             break;
@@ -333,15 +364,18 @@ namespace OMOK.Network
                                 GAME_RESULT_NTY res = new GAME_RESULT_NTY();
                                 res = GAME_RESULT_NTY.Parser.ParseFrom(data.Data);
 
-                                if (User.Auto == true)
+                                Device.BeginInvokeOnMainThread(() =>
                                 {
-                                    pRoom.GameResult(res);
-                                    pRoom.SendLeaveRoom();
-                                }
-                                else
-                                {
-                                    pRoom.GameResult(res);
-                                }
+                                    if (User.Auto == true)
+                                    {
+                                        pRoom.GameResult(res);
+                                        pRoom.SendLeaveRoom();
+                                    }
+                                    else
+                                    {
+                                        pRoom.GameResult(res);
+                                    }
+                                });
                             }
                             break;
                     }

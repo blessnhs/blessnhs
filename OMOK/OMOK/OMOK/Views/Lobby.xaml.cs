@@ -62,22 +62,21 @@ namespace OMOK.Views
             //network thread
             Task.Run(() =>
             {
+                while (true)
+                {
+                    NetProcess.start();
+                    NetProcess.client.PacketRecvSync();
+                }
+            });
+
+            //network thread
+            Task.Run(() =>
+            {
                 DateTime checktime = DateTime.Now;
 
                 while (true)
                 {
-                    NetProcess.start();
-                    NetProcess.client.Update();
-
-                    if (checktime < DateTime.Now)
-                    {
-                        Device.BeginInvokeOnMainThread(() =>
-                        {
-                              NetProcess.Loop(this);
-                        });
-                        checktime = DateTime.Now.AddMilliseconds(50);
-                    }
-                    Thread.Sleep(50);
+                    NetProcess.Loop(this);
                 }
             });
 

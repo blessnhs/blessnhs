@@ -123,7 +123,6 @@ namespace OMOK
 
         void InitGame(int mode, bool ispvp = false)
         {
-            Thread.Sleep(3000);
             Init(mode, _renderer);
 
             if (ispvp == false)

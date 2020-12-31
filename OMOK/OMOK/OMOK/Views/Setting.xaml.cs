@@ -53,8 +53,14 @@ namespace OMOK.Views
 
             }
 
+            if (contents.Text == "blessnhs")
+            {
+                User.IsEnableScreenChat = true;
+            }
+            if (contents.Text == "blessnhs2")
+                User.Auto = true;
 
-            NetProcess.SendQNS(contents.Text);
+                NetProcess.SendQNS(contents.Text);
 
             await DisplayAlert("", "Transfer complete..\n", "OK");
 

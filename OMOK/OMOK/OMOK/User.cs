@@ -57,5 +57,7 @@ namespace OMOK
 
         public static bool Auto = false;
 
+        public static bool IsEnableScreenChat = false;
+
     }
 }

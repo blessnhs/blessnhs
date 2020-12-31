@@ -80,13 +80,14 @@ namespace FullCameraApp.Droid
                             //서버쪽은 임시 주석
                             //server.ImagesSource.Enqueue(outStream);
                       
-                            if (Frames.Count > 8)
+                            if (Frames.Count > 5)
                             {
                                 NetProcess.SendRoomBITMAPMessage(Frames);
+
                                 Frames.Clear();
                             }
 
-                            checktime = DateTime.Now.AddMilliseconds(80);
+                            checktime = DateTime.Now.AddMilliseconds(100);
                         }
                     }
                     break;
@@ -400,11 +401,11 @@ namespace FullCameraApp.Droid
                             if (ms == null)
                                 continue;
 
-                            _context.Post(delegate
-                            {
+                      //      _context.Post(delegate
+                     //       {
                                 audiomgr?.play(ms.ToArray());
 
-                            }, null);
+                        //    }, null);
                         }
 
                         Thread.Sleep(1);

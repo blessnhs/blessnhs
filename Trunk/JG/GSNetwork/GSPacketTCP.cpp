@@ -59,7 +59,7 @@ BOOL	GSPacketTCP::ReadPacket(DWORD ReadSize)
 		SYSLOG().Write("ReadPacket Resize %d bytes %d kbytes %d mbytes\n", Resize,Resize/1024,Resize/1024/1024);
 	}
 
-	if (!GSSocketTCP::ReadForIocp(m_PacketBuffer, ReadSize, m_RemainLength, m_CurrentPacketSize))
+	if (!ReadForIocp(m_PacketBuffer, ReadSize, m_RemainLength, m_CurrentPacketSize))
 	{
 
 		return FALSE;

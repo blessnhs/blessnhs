@@ -114,22 +114,14 @@ namespace NetClient
                 return false;
         }
 
-        public void Update()
-        {
-            Receive(socket);
-        }
-
-        RecvPacketBuffer state = new RecvPacketBuffer();
-
-
-        private void Receive(Socket client)
+        public void PacketRecvSync()
         {
             try
             {
-                if (client == null || client.Connected == false)
+                if (socket == null || socket.Connected == false)
                     return;
 
-                int bytesRead = client.Receive(state.buffer);
+                int bytesRead = socket.Receive(state.buffer);
 
                 if (bytesRead > 0)
                 {
@@ -145,6 +137,8 @@ namespace NetClient
                 Console.WriteLine(e.ToString());
             }
         }
+
+        RecvPacketBuffer state = new RecvPacketBuffer();
 
         public ConcurrentQueue<CompletePacket> PacketQueue = new ConcurrentQueue<CompletePacket>();
 

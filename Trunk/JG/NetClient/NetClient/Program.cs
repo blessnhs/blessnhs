@@ -38,7 +38,7 @@ public class Process
     {
         var ip = GetIPAddress("blessnhs.iptime.org");
 
-        client.StartClient("192.168.51.18", 1982);
+        client.StartClient("192.168.0.9", 20000);
 
         testcid = id;
 
@@ -119,15 +119,7 @@ public class Process
 
                                 Console.WriteLine("IdPktNewUserInRoomNty " + res.VarCode.ToString());
                             }
-                            break;
-                        case (int)PROTOCOL.IdPktBroadcastRoomMessageRes:
-                            {
-                                BROADCAST_ROOM_MESSAGE_RES res = new BROADCAST_ROOM_MESSAGE_RES();
-                                res = BROADCAST_ROOM_MESSAGE_RES.Parser.ParseFrom(data.Data);
-
-                                Console.WriteLine("IdPktBroadcastRoomMessageRes " + res.VarName + " " + res.VarMessage);
-
-                            }
+                    
                             break;
                         case (int)PROTOCOL.IdPktEnterRoomRes:
                             {
@@ -174,22 +166,24 @@ public static int Main(String[] args)
             array.Add(cli);
             cli.start(id++);
 
-            if(id % 2 == 0)
-                cli.client.socket.Close();
+            //Task.Run(() =>
+            //{
+            //    cli.client.Update();
+            //    cli.loop();
+            //});
 
-            Task.Run(() =>
+
+            if (array.Count > 100)
             {
-                cli.client.Update();
-                cli.loop();
-            });
-
-
-            if (array.Count > 40)
-            {
-
                 foreach (var cl in array)
                 {
+                    if (cl == null || cl.client == null || cl.client.socket == null)
+                        continue;
+
                     cl.client.socket.Close();
+                    cl.client.socket.Dispose();
+            
+                    cli.client = null;
                 }
 
                 array.Clear();

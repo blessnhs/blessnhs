@@ -13,8 +13,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BoardServer", "BoardServer\
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MongoDB", "MongoDB\MongoDB.vcxproj", "{D83663D1-4312-4F66-9CC3-895CEA218CE9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetClient", "NetClient\NetClient\NetClient.csproj", "{5F39477C-8A8C-4FF4-AECB-818B3BE8F617}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Mixed Platforms = Debug|Mixed Platforms
@@ -127,35 +125,6 @@ Global
 		{D83663D1-4312-4F66-9CC3-895CEA218CE9}.ReleaseBuild|x64.Build.0 = Release|x64
 		{D83663D1-4312-4F66-9CC3-895CEA218CE9}.ReleaseBuild|x86.ActiveCfg = Release|Win32
 		{D83663D1-4312-4F66-9CC3-895CEA218CE9}.ReleaseBuild|x86.Build.0 = Release|Win32
-		{5F39477C-8A8C-4FF4-AECB-818B3BE8F617}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
-		{5F39477C-8A8C-4FF4-AECB-818B3BE8F617}.Debug|Mixed Platforms.Build.0 = Debug|x86
-		{5F39477C-8A8C-4FF4-AECB-818B3BE8F617}.Debug|Win32.ActiveCfg = Debug|x86
-		{5F39477C-8A8C-4FF4-AECB-818B3BE8F617}.Debug|Win32.Build.0 = Debug|x86
-		{5F39477C-8A8C-4FF4-AECB-818B3BE8F617}.Debug|x64.ActiveCfg = Debug|x86
-		{5F39477C-8A8C-4FF4-AECB-818B3BE8F617}.Debug|x86.ActiveCfg = Debug|x86
-		{5F39477C-8A8C-4FF4-AECB-818B3BE8F617}.Debug|x86.Build.0 = Debug|x86
-		{5F39477C-8A8C-4FF4-AECB-818B3BE8F617}.dummy|Mixed Platforms.ActiveCfg = Debug|x86
-		{5F39477C-8A8C-4FF4-AECB-818B3BE8F617}.dummy|Mixed Platforms.Build.0 = Debug|x86
-		{5F39477C-8A8C-4FF4-AECB-818B3BE8F617}.dummy|Win32.ActiveCfg = Debug|x86
-		{5F39477C-8A8C-4FF4-AECB-818B3BE8F617}.dummy|Win32.Build.0 = Debug|x86
-		{5F39477C-8A8C-4FF4-AECB-818B3BE8F617}.dummy|x64.ActiveCfg = Debug|x86
-		{5F39477C-8A8C-4FF4-AECB-818B3BE8F617}.dummy|x64.Build.0 = Debug|x86
-		{5F39477C-8A8C-4FF4-AECB-818B3BE8F617}.dummy|x86.ActiveCfg = Debug|x86
-		{5F39477C-8A8C-4FF4-AECB-818B3BE8F617}.dummy|x86.Build.0 = Debug|x86
-		{5F39477C-8A8C-4FF4-AECB-818B3BE8F617}.Release|Mixed Platforms.ActiveCfg = Release|x86
-		{5F39477C-8A8C-4FF4-AECB-818B3BE8F617}.Release|Mixed Platforms.Build.0 = Release|x86
-		{5F39477C-8A8C-4FF4-AECB-818B3BE8F617}.Release|Win32.ActiveCfg = Release|x86
-		{5F39477C-8A8C-4FF4-AECB-818B3BE8F617}.Release|Win32.Build.0 = Release|x86
-		{5F39477C-8A8C-4FF4-AECB-818B3BE8F617}.Release|x64.ActiveCfg = Release|x86
-		{5F39477C-8A8C-4FF4-AECB-818B3BE8F617}.Release|x86.ActiveCfg = Release|x86
-		{5F39477C-8A8C-4FF4-AECB-818B3BE8F617}.Release|x86.Build.0 = Release|x86
-		{5F39477C-8A8C-4FF4-AECB-818B3BE8F617}.ReleaseBuild|Mixed Platforms.ActiveCfg = ReleaseBuild|x86
-		{5F39477C-8A8C-4FF4-AECB-818B3BE8F617}.ReleaseBuild|Mixed Platforms.Build.0 = ReleaseBuild|x86
-		{5F39477C-8A8C-4FF4-AECB-818B3BE8F617}.ReleaseBuild|Win32.ActiveCfg = ReleaseBuild|x86
-		{5F39477C-8A8C-4FF4-AECB-818B3BE8F617}.ReleaseBuild|Win32.Build.0 = ReleaseBuild|x86
-		{5F39477C-8A8C-4FF4-AECB-818B3BE8F617}.ReleaseBuild|x64.ActiveCfg = ReleaseBuild|x86
-		{5F39477C-8A8C-4FF4-AECB-818B3BE8F617}.ReleaseBuild|x86.ActiveCfg = ReleaseBuild|x86
-		{5F39477C-8A8C-4FF4-AECB-818B3BE8F617}.ReleaseBuild|x86.Build.0 = ReleaseBuild|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
