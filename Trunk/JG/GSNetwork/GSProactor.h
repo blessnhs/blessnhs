@@ -1,7 +1,7 @@
 #pragma once
 
 #include "GSProactorImpl.h"
-#include "GSGuard.h"
+
 
 namespace GSFrames	{	namespace GSProactor	{
 

@@ -28,6 +28,8 @@
 #include <algorithm> 
 #include <process.h>
 
+#include <concurrent_unordered_map.h>
+#include <concurrent_unordered_set.h>
 
 #include "PacketBuffer.h"
 #include "core.h"
@@ -35,6 +37,7 @@
 #include "GSMemPool.h"
 #include "GSObject.h"
 #include "GSLog.h"
+#include "GSClient.h"
 
 using namespace std;
 

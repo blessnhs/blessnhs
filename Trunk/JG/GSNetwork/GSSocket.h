@@ -1,6 +1,5 @@
 #pragma once
 
-#include "GSGuard.h"
 #include "GSSocketBase.h"
 
 namespace GSNetwork	{ namespace GSSocket	{

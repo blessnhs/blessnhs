@@ -2,7 +2,7 @@
 #include <boost/shared_ptr.hpp>
 #include <boost/pool/object_pool.hpp>
 #include <boost/bind.hpp>
-#include "GSGuard.h"
+
 
 template<typename T,bool MultiThread = false>
 class GSFactory 
