@@ -7,7 +7,7 @@ class MSG_PLAYER : public IMessage
 {
 public:
 	MSG_PLAYER() {}
-	~MSG_PLAYER(){}
+	virtual  ~MSG_PLAYER(){}
 
 	BYTE SubType;
 };

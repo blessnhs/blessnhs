@@ -6,7 +6,7 @@ class GSSocketTCP : public GSSocket
 {
 public:
 	GSSocketTCP(void);
-	~GSSocketTCP(void);
+	virtual ~GSSocketTCP(void);
 
 	BOOL Initialize(VOID);
 	BOOL Termination(VOID);

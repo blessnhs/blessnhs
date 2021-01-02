@@ -8,7 +8,7 @@ class MSG_PACKET_UDP : public IMESSAGE
 {
 public:
 	MSG_PACKET_UDP();
-	~MSG_PACKET_UDP(){}
+	virtual ~MSG_PACKET_UDP(){}
 
 	GSCLIENT_PTR		pClient;
 

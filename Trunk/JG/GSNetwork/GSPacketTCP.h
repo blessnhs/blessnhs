@@ -8,7 +8,7 @@ class GSPacketTCP : public GSNetwork::GSSocket::GSSocketTCP::GSSocketTCP, public
 {
 public:
 	GSPacketTCP(void);
-	~GSPacketTCP(void);
+	virtual ~GSPacketTCP(void);
 
 	BOOL	Initialize(VOID);
 	BOOL	Termination(VOID);

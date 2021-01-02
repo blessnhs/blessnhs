@@ -13,7 +13,7 @@ class MSG_PLAYER_CLOSE :  public IMessage
 {
 public:
 	MSG_PLAYER_CLOSE();
-	~MSG_PLAYER_CLOSE();
+	virtual ~MSG_PLAYER_CLOSE();
 
 	GSCLIENT_PTR			pClient;
 	GSCLIENT_PTR			pListen;

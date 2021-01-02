@@ -10,7 +10,7 @@ class MSG_PLAYER_TIME :  public IMessage
 {
 public:
 	MSG_PLAYER_TIME();
-	~MSG_PLAYER_TIME();
+	virtual ~MSG_PLAYER_TIME();
 
 	virtual void Execute(LPVOID Param);
 	void Undo(){}

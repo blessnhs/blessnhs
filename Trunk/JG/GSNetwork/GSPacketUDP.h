@@ -8,7 +8,7 @@ class GSPacketUDP : public GSNetwork::GSSocket::GSSocketUDP::GSSocketUDP , publi
 {
 public:
 	GSPacketUDP(void);
-	~GSPacketUDP(void);
+	virtual ~GSPacketUDP(void);
 
 	BOOL	Initialize(VOID);
 	BOOL	Termination(VOID);

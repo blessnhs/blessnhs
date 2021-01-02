@@ -8,8 +8,8 @@ namespace GSNetwork	{
 class IMessage : public GSNetwork::GSObject::GSObject	
 {
 public:
-	IMessage() {}
-	~IMessage(){}
+	IMessage() { Message = NULL; pHandler = NULL; }
+	virtual ~IMessage(){}
 
 	IHandler<boost::shared_ptr<IMessage>>	*pHandler;
 	LPVOID		Message;

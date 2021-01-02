@@ -10,7 +10,7 @@ class MSG_PLAYER_ACCEPT : public IMessage
 {
 public:
 	MSG_PLAYER_ACCEPT();
-	~MSG_PLAYER_ACCEPT();
+	virtual ~MSG_PLAYER_ACCEPT();
 
 	GSCLIENT_PTR		pClient;
 
