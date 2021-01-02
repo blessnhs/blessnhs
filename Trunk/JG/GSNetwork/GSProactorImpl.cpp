@@ -96,6 +96,7 @@ unsigned int __stdcall DistributionThread(LPVOID parameter)
 		IMessagePtr pJob;
 		if(Owner->m_InputJobList.try_pop(pJob) == FALSE) 
 		{
+			Sleep(100);
 			continue;
 		}
 	
@@ -127,8 +128,6 @@ unsigned int __stdcall ExecuteThread(LPVOID parameter)
 		if( WaitForSingleObject( Owner->m_ProcactorImpl->m_hKillEvent, 1 ) == WAIT_OBJECT_0 ){ break; }
 
 		Owner->m_ProcactorImpl->Handle_Event(ProcId);
-
-		Sleep(0);
 	}
 
 	delete Owner;
@@ -147,6 +146,7 @@ bool GSProactorImpl::Handle_Event(int ProcId)
 	IMessagePtr pJob;
 	if(m_JobMap[ProcId]->try_pop(pJob) == FALSE)
 	{
+		Sleep(50);
 		return false;
 	}
 		
