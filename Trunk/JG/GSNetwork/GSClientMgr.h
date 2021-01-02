@@ -26,8 +26,8 @@ public:
 
 	VOID End();
 
-	GSCLIENT_PTR GetClient(int id);
-	BOOL AddClient(GSCLIENT_PTR client);
+	GSCLIENT_PTR& GetClient(int id);
+	BOOL AddClient(GSCLIENT_PTR& client);
 	BOOL BookDelClient(int id);
 	BOOL DelClient(int id);
 

@@ -6,7 +6,7 @@ class SysTimerJob : public GSFrames::GSTimerJob::GSTimerJob
 {
 public:
 	SysTimerJob();
-	~SysTimerJob();
+	virtual ~SysTimerJob();
 
 
 };

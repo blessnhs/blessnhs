@@ -6,7 +6,7 @@ class GSObject
 {
 public:
 	GSObject(void);
-	~GSObject(void);
+	virtual ~GSObject(void);
 
 	void SetId(unsigned long _Id)
 	{

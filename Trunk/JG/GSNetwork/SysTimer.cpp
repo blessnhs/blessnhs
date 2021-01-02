@@ -26,7 +26,7 @@ void SysTimer::Start(LPVOID pServer)
 {
 	pGSServer = pServer;
 
-	SysTimerJob *pJob = m_SysTimerJobPool.malloc();
+	SysTimerJob *pJob = new SysTimerJob(); //m_SysTimerJobPool.malloc();
 
 	pJob->Func = SysTimer::OnEvt;
 	pJob->SetExpineTime(GetTickCount());
@@ -54,7 +54,7 @@ void SysTimer::OnEvt(LPVOID Arg)
 
 			MAINPROC.RegisterCommand(pPlayerTime);
 			
-			SysTimerJob* pNewJob = GetSysTimer().m_SysTimerJobPool.malloc();
+			SysTimerJob* pNewJob = new SysTimerJob();//GetSysTimer().m_SysTimerJobPool.malloc();
 
 			pNewJob->Func = SysTimer::OnEvt;
 			pNewJob->SetExpineTime(GetTickCount() + 1000);
@@ -65,8 +65,9 @@ void SysTimer::OnEvt(LPVOID Arg)
 		break;
 	}
 
-	if(pJob != NULL)
-		GetSysTimer().m_SysTimerJobPool.destroy(pJob);
+	if (pJob != NULL)
+		//	GetSysTimer().m_SysTimerJobPool.destroy(pJob);
+		delete pJob;
 }
 
 SysTimer &GetSysTimer()

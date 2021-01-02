@@ -14,7 +14,7 @@ public:
 
 	void Start(LPVOID pServer);
 
-	boost::object_pool<SysTimerJob>									m_SysTimerJobPool;
+//	boost::object_pool<SysTimerJob>									m_SysTimerJobPool;
 
 	LPVOID pGSServer;
 };

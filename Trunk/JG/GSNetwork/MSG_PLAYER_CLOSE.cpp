@@ -16,7 +16,8 @@ MSG_PLAYER_CLOSE::MSG_PLAYER_CLOSE()
 
 MSG_PLAYER_CLOSE::~MSG_PLAYER_CLOSE()
 {
-
+	pClient = NULL;
+	pListen = NULL;
 }
 
 void MSG_PLAYER_CLOSE::Execute(LPVOID Param)
