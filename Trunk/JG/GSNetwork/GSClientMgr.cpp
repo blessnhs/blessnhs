@@ -3,6 +3,7 @@
 #include "GSServer.h"
 #include "ConsoleHelper.h"
 #include <boost/make_shared.hpp>
+#include "GSAllocator.h"
 
 extern atomic<int>		DebugCount;
 extern atomic<int>		ConnectCount;
@@ -30,7 +31,7 @@ VOID GSClientMgr::CheckAliveTime()
 
 	int debug_null_cnt = 0;
 
-	for each (auto client in m_Clients)
+	for each (auto& client in m_Clients)
 	{
 		if (client.second == NULL)
 		{
@@ -124,7 +125,7 @@ int GSClientMgr::GetActiveSocketCount()
 {
 	int count = 0;
 
-	for each (auto client in m_Clients)
+	for each (auto& client in m_Clients)
 	{
 		if (client.second == NULL)
 		{
@@ -153,7 +154,7 @@ int GSClientMgr::IncClientId()
 
 GSCLIENT_PTR& GSClientMgr::GetClient(int id)
 {
-	auto find = m_Clients.find(id);
+	auto& find = m_Clients.find(id);
 	if (find == m_Clients.end())
 		return boost::make_shared<GSCLIENT>();
 
@@ -182,7 +183,7 @@ BOOL GSClientMgr::AddClient(GSCLIENT_PTR& newclient)
 
 BOOL GSClientMgr::BookDelClient(int id)
 {
-	auto client = GetClient(id);
+	auto& client = GetClient(id);
 
 	if (client == NULL)
 		return FALSE;
@@ -216,8 +217,11 @@ void GSClientMgr::InsertRecycleId(int _id)
 	m_Reycle_Id_Queue.push(_id);
 }
 
-BOOL GSClientMgr::NewClient(SOCKET ListenSocket, LPVOID pServer)
+BOOL GSClientMgr::NewClient()
 {
+	GSServer::GSServer *pServer = (GSServer::GSServer *)m_GSServer;
+	SOCKET ListenSocket = pServer->GetTcpListen()->GetSocket();
+
 	if (!ListenSocket)
 	{
 		SYSLOG().Write("NewClient !ListenSocket \n");
@@ -240,7 +244,7 @@ BOOL GSClientMgr::NewClient(SOCKET ListenSocket, LPVOID pServer)
 	
 	for (int i = 0; i < NewClient; i++)
 	{
-		GSCLIENT_PTR pClient = boost::make_shared<GSClient>();
+		GSCLIENT_PTR pClient = ALLOCATOR.Create<GSClient>();
 
 		int newid = PopRecycleId();
 		if (newid == -1)
@@ -286,7 +290,7 @@ BOOL GSClientMgr::Begin(SOCKET ListenSocket,WORD MaxClients,LPVOID pServer)
 
 	for (DWORD i=0;i<MaxUser;i++)
 	{
-		GSCLIENT_PTR pClient = boost::make_shared<GSClient>();
+		GSCLIENT_PTR pClient = ALLOCATOR.Create<GSClient>();
 		pClient->SetId(IncClientId());
 		pClient->Create(TCP);
 		pClient->m_GSServer = pServer;

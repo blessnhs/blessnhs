@@ -19,10 +19,11 @@ public:
 	//연결되어있는 소켓 갯수
 	int  GetActiveSocketCount();
 
+	
 	int IncClientId();
 
 	BOOL Begin(SOCKET ListenSocket,WORD MaxClients,LPVOID PServer);
-	BOOL NewClient(SOCKET ListenSocket, LPVOID PServer);
+	BOOL NewClient();
 
 	VOID End();
 

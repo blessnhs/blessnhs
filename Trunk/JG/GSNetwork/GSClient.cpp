@@ -331,7 +331,6 @@ VOID GSClient::ProcDisconnect(boost::shared_ptr<GSClient> pClient,bool isForce)
 {
 	CThreadSync Sync;
 
-
 	GSServer::GSServer *pServer = (GSServer::GSServer *)m_GSServer;
 
 	//accpet를 안거치고 바로 disconnect되는 애들은 this->GetProcess() null이다 
@@ -369,7 +368,7 @@ VOID GSClient::ProcDisconnect(boost::shared_ptr<GSClient> pClient,bool isForce)
 
 	pServer->GetClientMgr().BookDelClient(pClient->GetId());
 
-	pServer->GetClientMgr().NewClient(pServer->GetTcpListen()->GetSocket(), pServer);
+	pServer->GetClientMgr().NewClient();
 
 }
 
