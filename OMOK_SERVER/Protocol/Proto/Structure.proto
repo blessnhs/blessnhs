@@ -1,0 +1,3163 @@
+// Caution : 1. 수정 시 Generater를 사용하여 코드를 생성하여야 수정내용이 적용됨니다.
+//           2. 수정 시 Client Protocol도 함께 변경됨니다.
+
+import "Generated.Enum.proto";
+import "Generated.CremaEnum.proto";
+import "Generated.Structure.proto";
+
+option optimize_for = SPEED;
+
+package Struct;
+
+message PlayerStats
+{
+    repeated int32          var_vital_stats              = 1;
+    repeated float          var_player_rating            = 2;
+
+    required float          var_fastball_velocity        = 3;
+
+    repeated int32          var_breaking_ball_type       = 4;
+    repeated float          var_breaking_ball_value      = 5;
+}
+
+//클라이언트용 팀정보 구조체
+message TeamInfo
+{
+    required int32          var_team_guid                =  1; // team guid
+    required bytes          var_user_name                =  2; // 구단주 이름 (2~8 characters)
+    required bytes          var_team_name                =  3; // 구단 이름   (2~8 characters)
+    required int32          var_fav_team_id              =  4; // favorite team id
+    required int32          var_emblem_id                =  5; // emblem id
+    required int32          var_special_emblem_id        =  6; // special emblem id
+    required int32          var_team_expoint             =  7; // 구단 경험치
+    required int32          var_pennant_grade            =  8; // 페넌트레이스 등급
+    required int32          var_vip_exp                  =  9; // 구매 VIP 등급 경험치
+    required Struct.GuildDataForTeamInfo    var_guild_data	= 10; // 해당 구단의 이사회 정보
+    optional int32          var_world_id                 =  11 [default = 0]; // 월드 번호 표시 필요한 부분만 체워서 사용, 0은 서버의 WorldId 설정과 동일하게 사용
+}
+
+//클라이언트용 팀 비공개 정보 구조체
+message TeamInfoPrivate
+{
+    required int32          var_game_cash                =  1; // 게임 캐쉬 - game cash
+	required int32          var_bonus_game_cash          =  2; // 보너스 게임 캐쉬 - bonus game cash
+    required int32          var_game_money               =  3; // 게임 머니 - game money
+    required int32          var_pennant_grade_point      =  4; // 페넌트레이스 등급 포인트
+    required int32          var_training_point           =  5; // 훈련 point
+    required int32          var_mastery_point            =  6; // 마스터리 point
+    required int32          var_card_inven_size_limit    =  7; // card inventory size limit
+    required int32          var_friendship_point         =  8; // 우정 포인트
+	optional int32			var_coach_inventory_limit_size	= 9 [default = 0];
+}
+
+// 선수 선호 플레이
+message PlayersStyle
+{
+    required int32          var_team_card_id             = 1; // team card id
+    repeated int32          var_tech_id                  = 2 [packed=true]; // technique id
+}
+
+message PlayerStat
+{
+    repeated int32          var_stat_array               =  1 [packed=true]; // eMajorStatType 총 10개
+}
+
+message TeamBuffStat
+{
+    repeated PlayerStat     var_player_stat              = 1; // 25명 로스터 멤버 버프 스텟
+}
+
+// 뮤지엄 사진 정보 - 로스터용
+message RosterMuseumPhoto
+{
+    required int32      var_level_effect_guid = 1; // 사진 Museum_LevelEffect 테이블 GUID
+    required int32      var_slot_number       = 2; // 장착 사진이라면 슬롯 번호가 들어가 있다.
+}
+
+// 로스터에 등록된 선수 정보
+message RosterMember
+{
+    required int32              var_slot_order           = 1; // slot order (1~25)
+    required int32              var_team_card_id         = 2; // team card id
+    required H3Enum.ePosition   var_position_id          = 3; // position id (Crema 참조)
+}
+
+// NPC 선수 정보
+message NpcPlayerInfo
+{
+    required int32              var_playercard_guid      = 1; // PlayerCardGuid
+    required int32              var_slot_order           = 2; // slot order (1~25)
+    required H3Enum.ePosition   var_position_id          = 3; // position id (Crema 참조)
+}
+
+// 로스터 슬롯 별 개인 전술 정보
+message RosterEntryStategy
+{
+    optional int32              var_slot_order           = 1; // 로스터 슬롯 (1~25)
+    repeated int32              var_gauge_number_list    = 2; // 게이지 번호 리스트. 포지션에 따라 다르며, 밴치는 size = 0
+}
+
+//// 로스터
+//message BriefRoster
+//{
+//    repeated int32            var_team_stat_grade     = 1 [packed=true]; //팀 능력치 등급
+//    required int32            var_team_color_guid     = 2; //팀 컬러
+//    repeated TeamColorGrade   var_team_color_grade    = 3; //팀 컬러 등급
+//
+//    repeated int32            var_relative_stat       = 4 [packed=true]; //팀 컬려 상대 능력치
+//
+//    repeated TeamSynergy      var_synergy_list        = 5; //팀 시너지 guid
+//    repeated TeamBuffStat     var_buff_stat           = 6; //팀 버프 스텟 eBuffCategory순서로 접근
+//
+//    repeated float            var_stat_ratio          = 7; //팀 스탯 비율
+//}
+//
+
+//// 팀컬러
+//message TeamColor
+//{
+//    required int32              var_slot_id             = 1; // 팀 컬러 슬롯 번호
+//    required int32              var_team_color_id       = 2; // 팀 컬러 Id
+//}
+
+// 팀 마스터리
+message TeamMasteryItem
+{
+    required int32              var_mastery_item_id     = 1; // 팀 마스터리 항목 Id
+    required int32              var_mastery_point       = 2; // 마스터리 포인트
+}
+
+// 로스터
+message BriefRoster
+{
+    optional int32                      var_batter_tactical_entry_id    = 1 [default = 1]; // 타자 택티컬 엔트리 id
+    optional int32                      var_pitcher_tactical_entry_id   = 2 [default = 1]; // 투수 택티컬 엔트리 id
+    repeated int32                      var_team_badge_slots            = 3; // 팀 배지 슬롯 (인덱스 [0 ~ 7]: 슬롯1 ~ 8)(값 0: 빈슬롯, 값 1이상: 팀 배지 ID)
+    repeated Struct.RosterEntryStategy  var_roster_entry_stategy_list   = 4; // 로스터 슬롯 별 개인 전술 정보 리스트 (인덱스 [0~24])
+    repeated Struct.RosterMuseumPhoto   var_roster_museum_photo_list    = 5; // 장착된 뮤지엄 사진 정보 리스트 (슬롯 1~3)
+    repeated int32                      var_bench_team_color_slots      = 6; // 밴치 팀컬러 슬롯 (인덱스 [0 ~]: 슬롯1 ~)(값 0: 빈슬롯, 값 1이상: 벤치 팀컬러 ID)
+	repeated Struct.CoachCardData		var_registered_coach_list		= 7; // 등록된 코치 리스트
+}
+
+// 로스터 정보
+message RosterInfo
+{
+    optional BriefRoster        var_brief_roster            = 1;
+    repeated RosterMember       var_roster_member           = 2;
+}
+
+//// 로스터 정보
+//message RosterInfo
+//{
+//    repeated RosterMember       var_roster_member             = 1; // 로스터 멤버 리스트
+//    repeated TeamColor          var_team_color                = 2; // 팀컬러 리스트
+//    repeated TeamMasteryItem    var_team_mastery_item         = 3; // 팀 마스터리 항목 리스트
+//    optional int32              var_batter_tactical_entry_id  = 4 [default = 0]; // 타자 택티컬 엔트리 id
+//    optional int32              var_pitcher_tactical_entry_id = 5 [default = 0]; // 투수 택티컬 엔트리 id
+//}
+
+//// 선수 체력
+//message PlayerStamina
+//{
+//    required int32 var_teamcard_id  = 1;
+//    optional int32 var_stamina      = 2 [default = 0];
+//}
+
+// 선수카드 라이프라인 성장단계 훈련슬롯 정보
+message PlayerCardLifeLineStep
+{
+    repeated int32              var_slots   = 1; // 훈련슬롯 설정 정보 (해당 라이프라인 성장단계의 훈련슬롯 개수만큼 할당)
+}
+
+// 선수 카드 기록
+message PlayerCardSimpleRecord
+{
+    required int32              var_teamcard_id     = 1; // 카드 guid
+    repeated int32              var_simple_record   = 2; // 기록 리스트(투수 : eCardSimpleRecordPitcher, 타자 : eCardSimpleRecordBatter 순으로 저장)
+}
+
+// 선수 카드 로스터 사용제한 정보. 선발 투수 교체 룰에 사용.
+// ; 설정된 시즌ID 의 라운드ID 까지 로스터에 등록할 수 없다.
+// ; 기본값은 0 이다.
+message PlayerCardLimitUse
+{
+    optional int32              var_season_id       = 1; // (0: 해당 없음, 0<: 로스터 등록 제한 시즌 ID)
+    optional int32              var_round_id        = 2; // (0: 해당 없음, 0<: 로스터 등록 제한 라운드 ID)
+}
+
+message OperationPlayerCard
+{
+    required int32                  var_teamcard_id                     = 1;  // 카드 guid
+    required int32                  var_playercard_guid                 = 2;  // 선수카드 guid
+    required int32                  var_lock_state_flags                = 3;  // lock status flags (LockStateFlag_xxx 비트 플래그)
+    required int32                  var_strength                        = 4;  // 선수체력
+    required int32                  var_condition                       = 5;  // 선수컨디션 - 시즌 기록으로 계산된 컨디션 수치
+    required int32                  var_condition_season_id             = 6;  // 선수컨디션 - 유효시즌
+    required int32                  var_condition_round_id              = 7;  // 선수컨디션 - 유효라운드(해당 라운드까지 포함)
+    repeated PlayerStat             var_extra_stat                      = 8;  //eStatCategory
+    repeated int32                  var_special_ability                 = 9;  // 특수 능력 id List
+    repeated PlayerCardLifeLineStep var_lifeline                        = 10; // 라이프라인 성장 정보 (사용자가 활성화한 성장단계까지 구성, [0] 1단계 ... [n] n+1단계)
+    required H3Enum.eCardGrade      var_playercard_grade                = 11; // 선수카드 등급 (활성화된 마지막 성장단계에 해당하는 선수카드 등급)
+    required int32                  var_condition_add                   = 12; // 선수컨디션 - 추가 포인트(전력 분석치 등과 같이 외부적인 영향으로 올라가는 컨디션 수치)
+    required PlayerCardLimitUse     var_limit_use                       = 13; // 선수 카드 로스터 사용제한 정보 (선발 투수 교체 룰에 사용)
+	optional int32					var_study_abroad_ability_id	        = 14 [default = 0]; // 유학지의 능력치 ID( AbroadResult 테이블 참조 )
+	optional int32					var_correct_count		            = 15 [default = 0]; // 교정 횟수
+    optional int32                  var_latent_ability_slot_open_flags  = 16 [default = 0]; // 잠재력 개방 슬롯 개방상태 플래그 (비트플래그 형식. 하위 비트부터 슬롯1.)
+    repeated int32                  var_latent_ability_slots            = 17; // 잠재력 개방 슬롯 장착 정보 (H3Enum::MAX_NUM_LATENT_ABILITY_SLOTS 값 만큼 슬롯 공간이 할당됨. [0] 부터 슬롯1. 장착 잠재력 ID 값 설정. 값 0 이면 빈슬롯.)
+}
+
+//message OperationPlayerCard
+//{
+//    required int32            var_teamcard_id             = 1; // 카드 guid
+//    required int32            var_playercard_guid         = 2; // 선수카드 guid
+//    required int32            var_synastry_guid           = 3; // 상대 특성 guid
+//    required int32            var_hash                    = 4; // 해쉬 정보
+//    required int32            var_exp                     = 5; // 경험치
+//    required int32            var_level                   = 6; // 레벨
+//    required bool             var_is_lock                 = 7; // lock status (0:Unlocked, 1:Locked)
+//    required int32            var_type                    = 8; //카드 type
+//
+//    optional int32            var_strength                = 9 [default = 100]; // 선수체력
+//
+//    //optional PlayerStat       var_default_stat            = 10;
+//    repeated PlayerStat       var_extra_stat              = 11; //eStatCategory
+//
+//    optional int32            var_potential_training_count = 16 [default = 0]; // 잠재력 각성 횟수
+//    optional int32            var_extra_max_level         = 17 [default = 0]; // 추가 최대 레벨(잠재력 각성에 의한)
+//    repeated int32            var_special_ability         = 18; // 특수 능력 id List
+//}
+
+message SeasonScore
+{
+    optional int32 var_win  = 1 [default = 0];
+    optional int32 var_draw = 2 [default = 0];
+    optional int32 var_lose = 3 [default = 0];
+}
+
+message Score
+{
+    optional int32              var_home        = 1 [default = 0];
+    optional int32              var_away        = 2 [default = 0];
+}
+
+message LineScore
+{
+    repeated int32              var_home        = 1 [packed=true];
+    repeated int32              var_away        = 2 [packed=true];
+}
+
+message  GameOptionInfo
+{
+    required int32              var_option_id          = 1; // game option id
+    required int32              var_value              = 2; // game option value (0: off, 1~: on)
+}
+
+//message NoticeInfo
+//{
+//    optional int32              var_notice_id           = 1;
+//    optional bytes              var_url                 = 2;
+//}
+
+message BillingInfo
+{
+    required bytes              var_purchase_token      = 1; // 구글(구매토큰), 티스토어(TXID), 애플(transaction_id)
+    required bytes              var_sku                 = 2; // 구글(상품코드), 티스토어(상품코드), 애플(상품코드)
+    required bytes              var_order_id            = 3; // 구글(주문번호), 티스트어(영수증), 애플(영수증)
+    required bytes              var_currency            = 4; // 단위
+    required bytes              var_price               = 5; // 가격
+}
+
+message PlayerAlbumLevel
+{
+    required int32              var_playercard_guid     = 1; // 선수 카드 GUID
+    required int32              var_album_level         = 2; // 선수 카드 album level
+}
+
+message PennantTeamMatchData
+{
+    repeated OperationPlayerCard        var_opc                         = 1;
+    repeated H3Enum.ePosition           var_position_id                 = 2 [packed=true]; // position id (Crema 참조)
+
+    required int32                      var_pitcher_card_id             = 3;
+
+    optional int32                      var_batter_tactical_entry_id    =  4 [default = 1]; // 타자 택티컬 엔트리 id
+    optional int32                      var_pitcher_tactical_entry_id   =  5 [default = 1]; // 투수 택티컬 엔트리 id
+    repeated int32                      var_team_badge_slots            =  6; // 팀 배지 슬롯 (인덱스 [0 ~ 7]: 슬롯1 ~ 8)(값 0: 빈슬롯, 값 0이상: 팀 배지 ID)
+    repeated int32                      var_team_mastery_ids            =  7; // 팀 마스터리 id List
+    repeated PlayerAlbumLevel           var_player_album_levels         =  8; // 선수 카드 앨범 레벨 list
+    repeated int32                      var_entry_fit_points            =  9; // 로스터 전력 분석 수치 list
+    repeated RosterEntryStategy         var_roster_entry_stategy_list   = 10; // 로스터 슬롯 별 개인 전술 정보 리스트 (인덱스 [0~24])
+    repeated Struct.RosterMuseumPhoto   var_roster_museum_photo_list    = 11; // 장착된 뮤지엄 사진 정보 리스트 (슬롯 1~3)
+    repeated int32                      var_bench_team_color_id_list    = 12; // 벤치 팀컬러 ID 목록
+    repeated int32                      var_debuff_stat_array           = 13; // eMajorStatType 총 10개
+    repeated Struct.CoachCardData       var_registered_coach_list		= 14; // 등록된 코치 리스트
+}
+
+message ManagementWorkInfo
+{
+    required int32              var_work_guid               = 1; // (매니지먼트 모드 크레마 테이블에 정의된) 업무 GUID
+    required int32              var_remain_time_sec         = 2; // 남은 시간 (초)
+    required int32              var_work_difficult_guid     = 3;
+    required int32              var_progress_message_guid   = 4;
+}
+
+message ManagementWorkerInfo
+{
+    required int32              var_worker_guid             = 1; // (매니지먼트 모드 크레마 테이블에 정의된) 고용인 GUID
+    required int32              var_remain_time_sec         = 2; // 남은 시간 (초)
+}
+
+message ManagementEventWorkInfo
+{
+    required int32              var_work_guid               = 1; // (매니지먼트 모드 크레마 테이블에 정의된) 업무 GUID
+    required TimeStamp          var_begin_time              = 2; // 이벤트 시작 시간
+    required TimeStamp          var_end_time                = 3; // 이벤트 종료 시간
+}
+
+// 승/무/패 전적
+message Record
+{
+    optional int32                  var_win                     = 1[default = 0]; // 승리 횟수
+    optional int32                  var_draw                    = 2[default = 0]; // 무승부 횟수
+    optional int32                  var_lose                    = 3[default = 0]; // 패배 횟수
+}
+
+// 상대 전적
+message VsRecord
+{
+    optional int32                  var_team_guid               = 1[default = -1]; // teamGuid
+    optional int32                  var_opp_team_guid           = 2[default = -1]; // 상대 TeamGuid
+    optional int32                  var_win                     = 3[default = 0];  // 승리 횟수
+    optional int32                  var_draw                    = 4[default = 0];  // 무승부 횟수
+    optional int32                  var_lose                    = 5[default = 0];  // 패배 횟수
+}
+
+// 순위 및 기록
+message RankRecord
+{
+    optional int32                  var_rank                    = 1[default = 1]; // 순위
+    optional int32                  var_win                     = 2[default = 0]; // 승리 횟수
+    optional int32                  var_draw                    = 3[default = 0]; // 무승부 횟수
+    optional int32                  var_lose                    = 4[default = 0]; // 패배 횟수
+}
+
+// 페넌트 레이스 기본 정보
+message PennantBasicInfo
+{
+    required int32                      var_season_id               = 1; // 시즌ID
+    required int32                      var_game_year               = 2; // 연도
+    required int32                      var_season_id_year          = 3; // 연도별 시즌ID
+    required TimeStamp                  var_start_date              = 4; // 시작일
+    required TimeStamp                  var_end_date                = 5; // 종료일
+    required int32                      var_game_per_round          = 6; // 라운드 별 게임수
+    required int32                      var_total_round             = 7; // 페넌트 레이스 총 라운드 수
+    required int32                      var_game_count_post         = 8; // 포스트 시즌 경기수
+}
+
+// 페넌트 레이스 다음 경기 정보
+message PennantNextGameInfo
+{
+    required int32                      var_schedule_id             = 1; // 스케줄ID
+    required int32                      var_round_id                = 2; // 라운드ID
+    required int32                      var_game_num                = 3; // 경기 차수
+    required int32                      var_round_game_count        = 4; // 라운에 진행할 경기 수
+    required H3Enum.ePennantGameType    var_game_type               = 5; // 경기 타입(0:정규시즌,1:와일드카드,2:준플레이오프,3:플레이오프,4:한국시리즈)
+    required int32                      var_game_day                = 6; // 경기 일수
+    required TimeStamp                  var_game_date               = 7; // 경기 진행 시간
+    required int32                      var_match_type_flags        = 8; // 매치 종류 (H3Enum::PennantMatchTypeFlag_xxx 비트 플래그 값)
+    required int32                      var_away_team_guid          = 9; // 원정 팀 GUID
+    required int32                      var_home_team_guid          = 10; // 원정 팀 GUID
+}
+
+// 페넌트 레이스 리그 기본 정보
+message PennantLeagueBasicInfo
+{
+    required int32                      var_league_id               = 1; // 리그ID
+    required int32                      var_league_grade            = 2; // 리그 등급
+    repeated PennantLeagueTeamInfo      var_teams                   = 3; // 리그 참가 구단 목록
+}
+
+// 페넌트 레이스 리그 구단 정보
+message PennantLeagueTeamInfo
+{
+    required int32                  var_team_guid                   = 1; // 구단 GUID
+    required bytes                  var_team_name                   = 2; // 구단 이름
+    required int32                  var_fav_team_id                 = 3; // 선호 구단 ID
+    required int32                  var_emblem_id                   = 4; // 엠블렘 ID
+    required int32                  var_special_emblem_id           = 5; // 스페셜 엠블렘 ID
+    required H3Enum.eLeagueTestType var_league_test_type            = 6; // 리그 시험 여부 (일반/승격/강등)
+    required int32                  var_prev_pennant_grade          = 7; // 이전 시즌 페넌트 레이스 등급
+}
+
+// 페넌트 레이스 경기 시합 정보
+message PennantGameMatchInfo
+{
+    required int32                      var_schedule_id              =  1; // 스케줄ID
+    required int32                      var_round_id                 =  2; // 라운드ID
+    required TimeStamp                  var_game_date                =  3; // 경기 진행 시간
+    required H3Enum.ePennantGameType    var_game_type                =  4; // 경기 타입(0:정규시즌,1:와일드카드,2:준플레이오프,3:플레이오프,4:한국시리즈)
+    required bool                       var_is_cancel                =  5; // 경기 취소 여부
+    required int32                      var_home_team_guid           =  6; // home 구단 GUID
+    required int32                      var_home_score               =  7; // home 구단 점수
+    required int32                      var_home_friendly_tactics_id =  8; // home 구단 작전 방침
+    required int32                      var_away_team_guid           =  9; // away 구단 GUID
+    required int32                      var_away_score               = 10; // away 구단 점수
+    required int32                      var_away_friendly_tactics_id = 11; // away 구단 작전 방침
+    required int32                      var_match_type_flags         = 12; // 매치 종류 (H3Enum::PennantMatchTypeFlag_xxx 비트 플래그 값)
+}
+
+// 페넌트 레이스 순위 정보
+message PennantRankingInfo
+{
+    required int32                  var_team_guid               = 1; // 구단 GUID
+    required int32                  var_ranking                 = 2; // 순위
+    required Struct.Record          var_record                  = 3; // 승무패 기록
+}
+
+// 페넌트 레이스 포스트 시즌 진출 순위 정보
+message PennantPostSeasonRankingInfo
+{
+    required int32                  var_team_guid               = 1; // 구단 GUID
+    required int32                  var_ranking                 = 2; // 순위
+}
+
+// 페넌트 경기 결과 구단 정보
+message PennantGameResultTeamInfo
+{
+    optional Struct.TeamInfo        var_teaminfo                = 1; // 팀 정보
+    optional Struct.RankRecord      var_rank_record             = 2; // 경기 이전 순위 정보
+    optional Struct.RankRecord      var_rank_record_after       = 3; // 경기 이후 순위 정보
+    optional int32                  var_match_up_type           = 4; // 매치업타입(1:친구,2:라이벌,4:투데이,8부스팅데이,10:추석연휴부스팅)
+    optional bool                   var_is_home                 = 5 [default = false]; // HomeTeam 유무
+}
+
+// 페넌트 경기 결과 부가 정보
+message PennantGameResultAddInfo
+{
+    optional int32                  var_schedule_id              =  1[default = 0]; // 스케쥴 Id
+    optional int32                  var_away_score               =  2[default = 0]; // 원정 팀 점수
+    optional int32                  var_home_score               =  3[default = 0]; // 홈 팀 점수
+    optional int32                  var_away_pitcher_index       =  4[default = 0]; // 어웨이팀 선발 투수 인덱스
+    optional int32                  var_home_pitcher_index       =  5[default = 0]; // 홈팀 선발 투수 인덱스
+    optional int32                  var_away_friendly_tactics_id =  6[default = 0]; // 원정 팀 방침 ID
+    optional int32                  var_home_friendly_tactics_id =  7[default = 0]; // 홈 팀 방침 ID
+//    optional int32                  var_away_reward_id           =  8[default = 0]; // 원정 보상 ID
+//    optional int32                  var_home_reward_id           =  9[default = 0]; // 홈 보상 ID
+    optional int32                  var_away_bonus_point         = 10[default = 0]; // 원정 보너스 포인트
+    optional int32                  var_home_bonus_point         = 11[default = 0]; // 홈 보너스 포인트
+}
+
+// 페넌트 레이스 기록실 및 순위표
+message PennantRecordTeamInfo
+{
+    required int32                  var_team_guid           = 1; // 구단 GUID
+    required bytes                  var_team_name           = 2; // 구단 이름
+    required int32                  var_fav_team_id         = 3; // 선호 구단 ID
+    required int32                  var_emblem_id           = 4; // 엠블렘 ID
+    required int32                  var_special_emblem_id   = 5; // 스페셜 엠블렘 ID
+    required int32                  var_rank                = 6; // 순위
+    required int32                  var_win                 = 7; // 승리 횟수
+    required int32                  var_draw                = 8; // 무승부 횟수
+    required int32                  var_lose                = 9; // 패배 횟수
+    optional bool                   var_is_friend           = 10 [default = false]; // 친구 유무
+    optional bool                   var_is_rival            = 11 [default = false]; // 라이벌 유무
+    //optional H3Enum.eLeagueTestType var_league_test_type  = 12; // 현재 리그 시험 여부 (일반/승격/강등)
+}
+
+message PennantRecordTeamBatter
+{
+    required int32      var_team_guid   =  1; // 구단 GUID
+    required int32      var_ab          =  2; // At Bat 타수
+    required int32      var_pa          =  3; // PLATE_APPEARANCES 타석
+    required int32      var_hits        =  4; // Hits all 안타
+    required int32      var_hit1        =  5; // single
+    required int32      var_hit2        =  6; // double
+    required int32      var_hit3        =  7; // triple
+    required int32      var_hr          =  8; // HomeRun 홈런
+    required int32      var_r           =  9; // Runs 득점
+    required int32      var_bb          = 10; // Base On Balls 볼넷
+    required int32      var_hbp         = 11; // Hit By Pitch 데드 볼
+    required int32      var_sb          = 12; // Stolen Bases 도루
+    required int32      var_cs          = 13; // Caught Stealing 도루 실패
+    required int32      var_gdp         = 14; // Grounded Into DoublePlay 병살
+    required int32      var_so          = 15; // Strike Outs 삼진
+    required int32      var_sf          = 16; // Sacrifice Fly 희생 플라이
+    optional int32      var_risp_ab     = 17 [default = 0]; // 득점권 타수
+    optional int32      var_risp_hits   = 18 [default = 0]; // 득점권 안타(Hits all)
+	required int32      var_sh          = 19; // Sacrifice Hit 희생 번트
+	required int32      var_rto         = 20; // Runners Thrown Out 도루 저지 수
+	required int32      var_e           = 21; // Error 실책 수
+}
+
+message PennantRecordTeamPitcher
+{
+    required int32      var_team_guid       =  1; // 구단 GUID
+    required int32      var_outs            =  2; // Out Count 아웃 카운트
+    required int32      var_er              =  3; // Earned Runs 자책점
+    required int32      var_hits            =  4; // Hits all 피안타(PH)
+    required int32      var_hit1            =  5; // single 피 1루타
+    required int32      var_hit2            =  6; // double 피 2루타
+    required int32      var_hit3            =  7; // triple 피 3루타
+    required int32      var_hr              =  8; // HomeRun 피홈런
+    required int32      var_k               =  9; // Strike Outs 삼진
+    required int32      var_bb              = 10; // Base On Balls 볼넷
+    required int32      var_start_win       = 11; // StartWin 선발승
+    required int32      var_relief_win      = 12; // ReliefWin 구원승
+    required int32      var_qs              = 13; // Quality Pitch 퀄리티 스타트
+	required int32      var_cg              = 14; // Complete Game 완투승
+	required int32      var_sv              = 15; // Save 세이브
+	required int32      var_hold            = 16; // Hold 홀드
+	required int32      var_gdp             = 17; // Batters Grounded Into Double Plays 병살타 유도
+}
+
+message PennantRecordBatter
+{
+    required int32      var_team_guid         =  1; // 구단 GUID
+    required bytes      var_team_name         =  2; // 구단 이름
+    required int32      var_fav_team_id       =  3; // 선호 구단 ID
+    required int32      var_teamcard_id       =  4; // 팀 카드 ID
+    required int32      var_emblem_id         =  5; // 구단 엠블럼 ID
+    required int32      var_special_emblem_id =  6; // 구단 스페셜 엠블럼 ID
+    required int32      var_playercard_guid   =  7; // 선수 카드 GUID
+    required int32      var_g                 =  8; // game 참여 여부
+    required int32      var_ab                =  9; // At Bat 타수
+    required int32      var_pa                = 10; // PLATE_APPEARANCES 타석
+    required int32      var_hits              = 11; // Hits all 안타
+    required int32      var_hit1              = 12; // single
+    required int32      var_hit2              = 13; // double
+    required int32      var_hit3              = 14; // triple
+    required int32      var_hr                = 15; // HomeRun 홈런
+    required int32      var_r                 = 16; // Runs 득점
+    required int32      var_rbi               = 17; // Run Batted In 타점
+    required int32      var_bb                = 18; // Base On Balls 볼넷
+    required int32      var_hbp               = 19; // Hit By Pitch 데드 볼
+    required int32      var_sb                = 20; // Stolen Bases 도루
+    required int32      var_cs                = 21; // Caught Stealing 도루 실패
+    required int32      var_gdp               = 22; // Grounded Into DoublePlay 병살
+    required int32      var_so                = 23; // Strike Outs 삼진
+    required int32      var_sh                = 24; // Sacrifice Hit 희생 번트
+    required int32      var_sf                = 25; // Sacrifice Fly 희생 플라이
+    required int32      var_e                 = 26; // Error 실책
+    required int32      var_lob               = 27; // Left on base 잔루
+    required int32      var_sba               = 28; // Stolen base allowed 도루 허용
+    required int32      var_rto               = 29; // Runners Thrown Out 도루 저지 횟수
+    optional bool       var_is_regulation     = 30 [default = false]; // 규정 타석 달성 유무
+    optional int32      var_risp_ab           = 31 [default = 0]; // 득점권 타수
+    optional int32      var_risp_hits         = 32 [default = 0]; // 득점권 안타(Hits all)
+}
+
+message PennantRecordPitcher
+{
+    required int32      var_team_guid         =  1; // 구단 GUID
+    required bytes      var_team_name         =  2; // 구단 이름
+    required int32      var_fav_team_id       =  3; // 선호 구단 ID
+    required int32      var_teamcard_id       =  4; // 팀 카드 ID
+    required int32      var_emblem_id         =  5; // 구단 엠블럼 ID
+    required int32      var_special_emblem_id =  6; // 구단 스페셜 엠블럼 ID
+    required int32      var_playercard_guid   =  7; // 선수 카드 GUID
+    required int32      var_bc                =  8; // Ball Count 투구수
+    required int32      var_outs              =  9; // Out Count 아웃 카운트(INN)
+    required int32      var_g                 = 10; // game 게임 참여 여부
+    required int32      var_w                 = 11; // Win 승리
+    required int32      var_l                 = 12; // lose 패배
+    required int32      var_hold              = 13; // Hold 홀드
+    required int32      var_sv                = 14; // Save 세이브
+    required int32      var_bs                = 15; // Blown Save 세이브
+    required int32      var_er                = 16; // Earned Runs 자책점 
+    required int32      var_ra                = 17; // Runs Allowed 실점
+    required int32      var_hits              = 18; // Hits all 피안타
+    required int32      var_hit1              = 19; // single 피 1루타
+    required int32      var_hit2              = 20; // double 피 2루타
+    required int32      var_hit3              = 21; // triple 피 3루타
+    required int32      var_hr                = 22; // HomeRun 피홈런
+    required int32      var_k                 = 23; // Strike Outs 삼진
+    required int32      var_bb                = 24; // Base On Balls 볼넷
+    required int32      var_hbp               = 25; // Hit By Pitch 데드 볼
+    required int32      var_wp                = 26; // wild Pitch 폭투
+    required int32      var_cg                = 27; // Complete Game 완투 승
+    required int32      var_shut_out          = 28; // ShutOut 완봉승
+    required int32      var_start_win         = 29; // StartWin 선발승
+    required int32      var_relief_win        = 30; // ReliefWin 구원승
+    required int32      var_qs                = 31; // Quality Pitch 퀄리티 스타트
+    required int32      var_osh               = 32; // Opponent Sacrifice Bunts 희생 번트 허용 수
+    required int32      var_osf               = 33; // Opponent Sacrifice Flies 희생 플라이 허용 수
+    required int32      var_perfect_game      = 34; // Perfect Game 퍼펙트 게임
+    required int32      var_no_hit_no_run     = 35; // no hit no run노히트 노런
+    optional bool       var_is_regulation     = 36 [default = false]; // 규정 이닝 달성 유무
+}
+
+// 리캡 파라미터 정보
+message RecapParamInfo
+{
+    optional int32                  var_script_id  = 1 [default = 0]; // 리캡 스크립트 Id
+    optional int32                  var_group_id   = 2 [default = 0]; // 리캡 그룹 Id
+    optional H3Enum.eRecapParamType var_prarm_type = 3 [default = eRecapParamType_None]; // 리캡 파라미터 타입
+    optional bytes                  var_value      = 4;               // 파라미터 value
+}
+
+// 리캡 정보
+message RecapNewsInfo
+{
+    required int32                          var_game_num           = 1; // 차전(총평은 0)
+    required int32                          var_news_id            = 2; // 리캡 뉴스 Id
+    required int32                          var_team_guid          = 3; // 리캡 대상 teamGuid
+    required int32                          var_team_card_id       = 4; // 관심 선수 teamcardId
+    required H3Enum.eRecapFocusPlayerType   var_focus_player_type  = 5; // 관심 선수 type
+    repeated Struct.RecapParamInfo          var_param_info_head    = 6; // 리캡 헤드라인 파라미터 정보 리스트
+    repeated Struct.RecapParamInfo          var_param_info_body    = 7; // 리캡 본문 파라미터 정보 리스트
+}
+
+// 페넌트 레이스 리포트 - 시즌 예상: 구단 평가 정보
+message PennantReportForecastTeamInfo
+{
+    required int32                  var_team_guid                   = 1; // 구단 ID
+    required int32                  var_ranking                     = 2; // 순위
+    required float                  var_rate                        = 3; // 득표율
+    required bytes                  var_team_name                   = 4; // 구단 이름
+    required int32                  var_fav_team_id                 = 5; // 선호 구단 ID
+    required int32                  var_emblem_id                   = 6; // 엠블렘 ID
+    required int32                  var_special_emblem_id           = 7; // 스페셜 엠블렘 ID
+    required int32                  var_prev_pennant_grade          = 8; // 이전 시즌 페넌트 레이스 등급
+    required int32                  var_prev_ranking                = 9; // 이전 시즌 페넌트 레이스 순위
+}
+
+// 페넌트 레이스 리포트 - 시즌 예상: 주목 선수 정보
+message PennantReportForecastAttentionPlayerInfo
+{
+    required int32      var_teamcard_id                             = 1; // 구단 카드 ID
+    required int32      var_playercard_guid                         = 2; // 선수 카드 ID
+    required int32      var_player_critic_text_id                   = 3; // 선수 비평 출력 텍스트 ID
+    required bool       var_is_select                               = 4; // 선택 여부
+}
+
+// 페넌트 레이스 리포트 - 시즌 예상: 인터뷰 정보
+message PennantReportForecastInterviewInfo
+{
+    required int32      var_interview_id                            = 1; // 인터뷰 ID
+    required int32      var_answer                                  = 2; // 선택 응답 (1 ~ 3)
+}
+
+// 페넌트 레이스 리포트: 구단 정보
+message PennantReportTeamInfo
+{
+    required int32                  var_team_guid                   = 1; // 구단 ID
+    required bytes                  var_team_name                   = 2; // 구단 이름
+    required int32                  var_fav_team_id                 = 3; // 선호 구단 ID
+    required int32                  var_emblem_id                   = 4; // 엠블렘 ID
+    required int32                  var_special_emblem_id           = 5; // 스페셜 엠블렘 ID
+    required int32                  var_ranking                     = 6; // 리그 순위
+    required int32                  var_post_ranking                = 7; // 포스트 시즌 진출 예상 순위
+    required Struct.Record          var_record                      = 8; // 승무패 기록
+}
+
+// 페넌트 레이스 리포트: 라이벌 구단과의 상대 전적 정보
+message PennantReportRivalVsRecord
+{
+    optional int32                  var_g                           =  1 [default = 0]; // Game 경기수
+    optional int32                  var_w                           =  2 [default = 0]; // Win 승리
+    optional int32                  var_r                           =  3 [default = 0]; // Runs 득점
+    optional int32                  var_ab                          =  4 [default = 0]; // At Bat 타수
+    optional int32                  var_hits                        =  5 [default = 0]; // Hits all 안타
+    optional int32                  var_outs                        =  6 [default = 0]; // Out Count 아웃수 (INN)
+    optional int32                  var_er                          =  7 [default = 0]; // Earned Runs 자책점 
+    optional int32                  var_rival_team_guid             =  8 [default = 0]; // 라이벌 구단 ID
+    optional int32                  var_rival_w                     =  9 [default = 0]; // 라이벌 Win 승리
+    optional int32                  var_rival_r                     = 10 [default = 0]; // 라이벌 Runs 득점
+    optional int32                  var_rival_ab                    = 11 [default = 0]; // 라이벌 At Bat 타수
+    optional int32                  var_rival_hits                  = 12 [default = 0]; // 라이벌 Hits all 안타
+    optional int32                  var_rival_outs                  = 13 [default = 0]; // 라이벌 Out Count 아웃수 (INN)
+    optional int32                  var_rival_er                    = 14 [default = 0]; // 라이벌 Earned Runs 자책점 
+}
+
+// 페넌트 레이스 리포트: 구단 타자 기록
+message PennantReportTeamBatterRecord
+{
+    required int32                  var_team_guid                   =  1; // 구단 ID
+    required H3Enum.ePositionFavor  var_position_favor              =  2; // 설정 포지션 (테이블세터, 클린업, 하위타선, 대타)
+    required int32                  var_g                           =  3; // Game 게임수
+    required int32                  var_ab                          =  4; // At Bat 타수
+    required int32                  var_pa                          =  5; // Plate Appearances 타석
+    required int32                  var_hits                        =  6; // Hits all 안타
+    required int32                  var_hit1                        =  7; // 1루타
+    required int32                  var_hit2                        =  8; // 2루타
+    required int32                  var_hit3                        =  9; // 3루타
+    required int32                  var_hr                          = 10; // Home Run 홈런
+    required int32                  var_bb                          = 11; // Base on Balls 볼넷
+    required int32                  var_hbp                         = 12; // Hit By Pitch 데드 볼
+    required int32                  var_sb                          = 13; // Stolen Bases 도루
+    required int32                  var_cs                          = 14; // Caught Stealing 도루 실패
+    required int32                  var_sf                          = 15; // Sacrifice Fly 희생 플라이
+    required int32                  var_so                          = 16; // Strike Outs 삼진
+    required int32                  var_risp_ab                     = 17; // 득점권 타수
+    required int32                  var_risp_hits                   = 18; // 득점권 안타
+}
+
+// 페넌트 레이스 리포트: 구단 투수 기록
+message PennantReportTeamPitcherRecord
+{
+    required int32                  var_team_guid                   =  1; // 구단 ID
+    required H3Enum.ePositionFavor  var_position_favor              =  2; // 설정 포지션 (선발, 중계, 셋업, 마무리)
+    required int32                  var_outs                        =  3; // Out Count 아웃수 (INN)
+    required int32                  var_g                           =  4; // Game 게임수
+    required int32                  var_w                           =  5; // Win 승리
+    required int32                  var_er                          =  6; // Earned Runs 자책점 
+    required int32                  var_hits                        =  7; // Hits all 피안타
+    required int32                  var_hr                          =  8; // Home Run 피홈런
+    required int32                  var_k                           =  9; // Strike Outs 삼진
+    required int32                  var_bb                          = 10; // Base on Balls 볼넷
+    required int32                  var_hbp                         = 11; // Hit By Pitch 사구
+}
+
+// 페넌트 레이스 리포트: 타자 기록
+message PennantReportBatterRecord
+{
+    required int32                  var_team_guid                   =  1; // 구단 ID
+    required int32                  var_teamcard_id                 =  2; // 구단 카드 ID
+    required int32                  var_playercard_guid             =  3; // 선수 카드 ID
+    required int32                  var_g                           =  4; // Game 게임수
+    required int32                  var_ab                          =  5; // At Bat 타수
+    required int32                  var_pa                          =  6; // Plate Appearances 타석
+    required int32                  var_hits                        =  7; // Hits all 안타
+    required int32                  var_hit1                        =  8; // 1루타
+    required int32                  var_hit2                        =  9; // 2루타
+    required int32                  var_hit3                        = 10; // 3루타
+    required int32                  var_hr                          = 11; // Home Run 홈런
+    required int32                  var_r                           = 12; // Runs 득점
+    required int32                  var_rbi                         = 13; // Run Batted In 타점
+    required int32                  var_bb                          = 14; // Base on Balls 볼넷
+    required int32                  var_hbp                         = 15; // Hit By Pitch 사구
+    required int32                  var_sb                          = 16; // Stolen Bases 도루
+    required int32                  var_sf                          = 17; // Sacrifice Fly 희생 플라이
+    required int32                  var_e                           = 18; // Error 실책
+    required int32                  var_risp_ab                     = 19; // 득점권 타수
+    required int32                  var_risp_hits                   = 20; // 득점권 안타
+    required bool                   var_is_regulation               = 21; // 규정 타석 달성 여부
+    optional int32                  var_total_score                 = 22 [default = 0]; // 공헌도 점수 (주의: 일부 리포트에서만 값이 설정된다.)
+}
+
+// 페넌트 레이스 리포트: 투수 기록
+message PennantReportPitcherRecord
+{
+    required int32                  var_team_guid                   =  1; // 구단 ID
+    required int32                  var_teamcard_id                 =  2; // 구단 카드 ID
+    required int32                  var_playercard_guid             =  3; // 선수 카드 ID
+    required int32                  var_outs                        =  4; // Out Count 아웃수 (INN)
+    required int32                  var_g                           =  5; // Game 게임수
+    required int32                  var_w                           =  6; // Win 승리
+    required int32                  var_l                           =  7; // lose 패배
+    required int32                  var_hold                        =  8; // Hold 홀드
+    required int32                  var_sv                          =  9; // Save 세이브
+    required int32                  var_er                          = 10; // Earned Runs 자책점
+    required int32                  var_r                           = 11; // Runs 실점
+    required int32                  var_hits                        = 12; // Hits all 피안타
+    required int32                  var_hit1                        = 13; // 피 1루타
+    required int32                  var_hit2                        = 14; // 피 2루타
+    required int32                  var_hit3                        = 15; // 피 3루타
+    required int32                  var_hr                          = 16; // Home Run 피홈런
+    required int32                  var_k                           = 17; // Strike Outs 삼진
+    required int32                  var_bb                          = 18; // Base on Balls 볼넷
+    required int32                  var_hbp                         = 19; // Hit By Pitch 데드 볼
+    required int32                  var_oab                         = 20; // Opponent At Bat 상대타수
+    required int32                  var_qs                          = 21; // Quality Pitch 퀄리티 스타트
+    required bool                   var_is_regulation               = 22; // 규정 이닝 달성 여부
+    optional int32                  var_total_score                 = 23 [default = 0]; // 공헌도 점수 (주의: 일부 리포트에서만 값이 설정된다.)
+}
+
+// 페넌트 레이스 리포트: 주목 선수 정보
+message PennantReportAttentionPlayerInfo
+{
+    required int32                  var_teamcard_id                 = 1; // 구단 카드 ID
+    required int32                  var_playercard_guid             = 2; // 선수 카드 ID
+    //required H3Enum.ePennantReportAttentionPlayerState  var_state   = 3; // 주목 선수 상태
+    required int32                  var_state                       = 3; // 주목 선수 상태 플래그 (H3Enum.ePennantReportAttentionPlayerState 비트 플래그 값)
+}
+
+// 페넌트 레이스 리포트: MVP 선수 정보
+message PennantReportMvpPlayerInfo
+{
+    required int32                  var_team_guid                   = 1; // 구단 ID
+    required int32                  var_teamcard_id                 = 2; // 구단 카드 ID
+    required int32                  var_playercard_guid             = 3; // 선수 카드 ID
+}
+
+// 페넌트 레이스 리포트 - 포스트 시즌: 구단 정보
+message PennantReportPostTeamInfo
+{
+    required int32                  var_team_guid                   = 1; // 구단 ID
+    required bytes                  var_team_name                   = 2; // 구단 이름
+    required int32                  var_fav_team_id                 = 3; // 선호 구단 ID
+    required int32                  var_emblem_id                   = 4; // 엠블렘 ID
+    required int32                  var_special_emblem_id           = 5; // 스페셜 엠블렘 ID
+    required int32                  var_ranking                     = 6; // 리그 순위
+    required int32                  var_post_ranking                = 7; // 포스트 시즌 진출 예상 순위
+}
+
+// 페넌트 레이스 리포트: 최고 기록 선수 정보
+message PennantReportTopRecordPlayer
+{
+    required int32                      var_team_guid                   = 1; // 구단 ID
+    required int32                      var_teamcard_id                 = 2; // 구단 카드 ID
+    required int32                      var_playercard_guid             = 3; // 선수 카드 ID
+    required H3Enum.eRecordLeaderType   var_type                        = 4; // 기록 종류
+    required int32                      var_value                       = 5; // 기록 값 (정수형 값이며, 소수형 기록의 경우 1000 이 곱해진다.)
+}
+
+// 페넌트 레이스 리포트: 특정 라운드 당시 순위 정보
+message PennantReportTeamRankRound
+{
+    required int32                  var_round_id                    = 1; // 라운드 ID
+    required int32                  var_ranking                     = 2; // 리그 순위
+    required int32                  var_post_ranking                = 3; // 포스트 시즌 진출 순위
+}
+
+// 페넌트 레이스 리포트: 라이벌 전적 정보
+message PennantReportRivalMatchResult
+{
+    required int32                  var_round_id                    = 1; // 라운드 ID
+    required int32                  var_team_id_away                = 2; // 구단 ID 원정
+    required int32                  var_team_id_home                = 3; // 구단 ID 홈
+    required int32                  var_score_away                  = 4; // 점수 원정
+    required int32                  var_score_home                  = 5; // 점수 홈
+}
+
+// 페넌트 레이스 리포트: KPI 기록 순위 정보
+message PennantReportRecordRank
+{
+    required int32                  var_team_guid                   = 1; // 구단 ID
+    required bytes                  var_team_name                   = 2; // 구단 이름
+    required int32                  var_fav_team_id                 = 3; // 선호 구단
+    required int32                  var_emblem_id                   = 4; // 엠블럼 ID
+    required int32                  var_special_emblem_id           = 5; // 스페셜 엠블럼 ID
+    required int32                  var_rank_1                      = 6; // 순위 1 (순위 1~3: KPI 예상 항목 순서에 대응)
+    required int32                  var_rank_2                      = 7; // 순위 2
+    required int32                  var_rank_3                      = 8; // 순위 3
+    required int32                  var_record_1                    = 9; // 기록 1 (기록 1~3: KPI 예상 항목 순서에 대응)
+    required int32                  var_record_2                    = 10; // 기록 2
+    required int32                  var_record_3                    = 11; // 기록 3
+}
+
+// 페넌트 레이스 경기 준비 : 팀 부가 정보
+message PennantPreparationTeamRankInfo
+{
+    required int32                      var_team_guid                   = 1; // 구단 ID
+    required int32                      var_league_rank                 = 2; // 리그 랭킹
+    required int32                      var_post_rank                   = 3; // 포스트 시즌 확정 랭킹
+    required int32                      var_w                           = 4; // 승
+    required int32                      var_l                           = 5; // 패
+    required int32                      var_d                           = 6; // 무
+}
+
+// 페넌트 레이스 경기 준비 : 팀 기록
+message PennantPreparationRecordTeam
+{
+    required int32                      var_team_guid         =  1; // 구단 ID
+    required int32                      var_w                 =  2; // Win 승리
+    required int32                      var_r                 =  3; // Runs 득점
+    required int32                      var_ra                =  4; // Runs Allowed 실점
+    required int32                      var_hits              =  5; // Hits all 안타
+    required int32                      var_hit1              =  6; // single
+    required int32                      var_hit2              =  7; // double
+    required int32                      var_hit3              =  8; // triple
+    required int32                      var_hr                =  9; // HomeRun 홈런
+    required int32                      var_ab                = 10; // At Bat 타수
+    required int32                      var_hbp               = 11; // Hit By Pitch 데드 볼
+    required int32                      var_bb                = 12; // Base On Balls 볼넷(타자)
+    required int32                      var_sf                = 13; // Sacrifice Fly 희생 플라이
+    required int32                      var_outs              = 14; // Out Count 아웃 카운트(INN)
+    required int32                      var_er                = 15; // Earned Runs 자책점 
+    required int32                      var_bb_pitcher        = 16; // Base On Balls 볼넷(투수)
+    required int32                      var_hits_pitcher      = 17; // Hits all(투수)
+    required int32                      var_oab_pitcher       = 18; // 상대 타수(투수)
+}
+
+// 페넌트 레이스 경기 준비 : 선발 투수 기록
+message PennantPreparationRecordPitcher
+{
+    required int32                      var_team_guid         =  1;              // 구단 ID
+    required int32                      var_teamcard_id       =  2;              // 팀 카드 ID
+    optional int32                      var_g                 =  3[default = 0]; // game 게임 참여 여부
+    optional int32                      var_w                 =  4[default = 0]; // Win 승리
+    optional int32                      var_l                 =  5[default = 0]; // lose 패배
+    optional int32                      var_outs              =  6[default = 0]; // Out Count 아웃 카운트(INN)
+    optional int32                      var_er                =  7[default = 0]; // Earned Runs 자책점 
+    optional int32                      var_k                 =  8[default = 0]; // Strike Outs 삼진
+    optional int32                      var_qs                =  9[default = 0]; // Quality Pitch 퀄리티 스타트
+    optional int32                      var_hits              = 10[default = 0]; // Hits all 피안타
+    optional int32                      var_hr                = 11[default = 0]; // HomeRun 피홈런
+    optional int32                      var_bb                = 12[default = 0]; // Base On Balls 볼넷
+}
+
+// 페넌트 레이스 경기 준비 : 선발 정보
+message PennantPreparationSpInfo
+{
+    required int32                      var_game_num               = 1; // 경기 차전
+    required int32                      var_teamcard_id            = 2; // 선발 투수 teamcardId
+    //required Struct.OperationPlayerCard var_opp_opc                = 3; // 상대 선발 투수 선수 카드 정보
+    required Struct.PennantPreparationRecordPitcher var_opp_record = 3; // 상대 선발 투수 선발 투수 기록
+}
+
+// 전력 비교(포지션별 Overall 평균)
+message PositionOverallInfo
+{
+    required int32                      var_team_guid         =  1; // 구단 ID
+    required int32                      var_table_setter      =  2; // 테이블 세터
+    required int32                      var_clean_up          =  3; // 클린업
+    required int32                      var_low               =  4; // 하위
+    required int32                      var_sp                =  5; // 선발 투수
+    required int32                      var_rp                =  6; // 중계 투수
+    required int32                      var_su_cp             =  7; // 셋업, 마무리 투수
+}
+
+// 방침 정보
+message TacticsInfo
+{
+    required int32                      var_game_num            =  1; // 경기 차전
+    required int32                      var_friendly_tactics_id =  2; // 방침 ID
+    required int32                      var_friendly_team_guid  =  3; // 사용 친구
+}
+
+// 선발 투수 정보
+message PennantStartPitcherInfo
+{
+    required int32                      var_team_guid           =  1; // 팀 guid
+    required int32                      var_teamcard_id         =  2; // 카드 id
+    required int32                      var_playercard_guid     =  3; // 선수카드 Guid
+}
+
+// 현재 시즌 정보
+message CurrentSeasonInfo
+{
+    optional int32                  var_season_id               = 1[default = 0]; // 시즌ID
+    optional int32                  var_game_year               = 2[default = 0]; // 연도
+    optional int32                  var_current_round_id        = 3[default = 0]; // 라운드ID
+    optional int32                  var_pennant_grade           = 4[default = 0]; // 페넌트레이스 등급
+    optional H3Enum.eLeagueTestType var_league_test_type        = 5[default = LeagueTestType_Normal]; // 리그 시험 여부 (일반/승격/강등)
+    optional int32                  var_ranking                 = 6[default = 10]; // 순위
+    optional int32                  var_post_ranking            = 7[default = 10]; // 순위
+    optional int32                  var_win                     = 8[default = 0]; // 승리 횟수
+    optional int32                  var_draw                    = 9[default = 0]; // 무승부 횟수
+    optional int32                  var_lose                    = 10[default = 0]; // 패배 횟수
+}
+
+// 과거 시즌 정보
+message BeforeSeasonInfo
+{
+    optional int32                  var_season_id               = 1; // 시즌ID
+    optional int32                  var_pennant_grade           = 2; // 페넌트레이스 등급
+    optional H3Enum.eLeagueTestType var_league_test_type        = 5; // 리그 시험 여부 (일반/승격/강등)
+    optional int32                  var_ranking                 = 3; // 순위
+    optional int32                  var_post_ranking            = 4; // 포스트 시즌 순위
+}
+
+// 페넌트레이스 등급별 우수 선수 정보
+message PennantGradeBastPlayer
+{
+    optional int32                      var_pennant_grade       = 1; // 페넌트레이스 등급
+    optional H3Enum.eBastPlayerSection  var_bast_section        = 2; // bast 부문(0~9)
+    optional int32                      var_teamcard_id         = 3; // 카드 guid
+    optional int32                      var_playercard_id       = 4; // 선수카드 guid
+    optional int32                      var_value               = 5; // 기록 수치 
+}
+
+// 보유 선수카드 등급 정보
+message HavePlayerCardGradeInfo
+{
+    optional bool                   var_is_batter           = 1 [default = true];  // 타자 여부 (true:타자, false:투수)
+    optional H3Enum.eCardGrade      var_playercard_grade    = 2; // 선수카드 등급
+    optional int32                  var_count               = 3; // 보유 수량 
+}
+
+// 보유 선수카드 등급 정보
+message HavePlayerCardMaterialInfo
+{
+    optional bool                   var_is_batter           = 1 [default = true];  // 타자 여부 (true:타자, false:투수)
+    optional H3Enum.eMaterialType   var_material_type       = 2; // 재료 타입 등급
+    optional int32                  var_count               = 3; // 보유 수량 
+}
+
+// 구단 정보 누적 팀 기록
+message TeamInfoRecordTotal
+{
+    optional int32                  var_win                     = 1; // 누적 승
+    optional int32                  var_draw                    = 2; // 누적 무
+    optional int32                  var_lose                    = 3; // 누적 패
+    optional int32                  var_r                       = 4; // 득점
+    optional int32                  var_ab                      = 5; // 타수
+    optional int32                  var_hits                    = 6; // 안타
+    optional int32                  var_hr                      = 7; // 홈런
+    optional int32                  var_sb                      = 8; // 도루
+    optional int32                  var_ra                      = 9; // 실점
+    optional int32                  var_er                      = 10; // 자책점
+    optional int32                  var_outs                    = 11; // 아웃 카운트(INN)
+    optional int32                  var_k                       = 12; // 탈삼진
+    optional int32                  var_sv                      = 13; // 세이브
+    optional int32                  var_hold                    = 14; // 홀드
+}
+
+// 구단 정보 누적 팀 기록 - 리그 등급 누적
+message TeamInfoRecordTotalGrade
+{
+    optional int32                      var_pennant_grade           = 1; // 페넌트레이스 등급 : 0:Total, 1:루키 ...
+    optional int32                      var_season_count            = 2; // 시즌 참여 횟수
+    optional Struct.TeamInfoRecordTotal var_team_info_record_total  = 3; // 누적 팀 기록
+	optional int32						var_trophy_regular_season	= 4; // 정규 시즌 우승
+	optional int32						var_trophy_post_season		= 5; // 포스트 시즌 우승
+	optional int32						var_trophy_total_season		= 6; // 통합 우승
+	optional int32						var_trophy_post_season_second = 7; // 포스트 시즌 준우승
+}
+
+// 구단 정보 누적 팀 기록 - 현제 시즌
+message TeamInfoRecordTotalCurrent
+{
+    optional int32                      var_season_id               = 1; // 시즌 id
+    optional int32                      var_game_year               = 2; // 연도
+    optional int32                      var_ranking                 = 3; // 순위
+    optional int32                      var_pennant_grade           = 4; // 페넌트레이스 등급
+    optional Struct.TeamInfoRecordTotal var_team_info_record_total  = 5; // 누적 팀 기록
+}
+
+// 선수카드 검색
+message PlayerCardFind
+{
+    required int32                      var_team_guid         =  1; // 구단 ID
+    required int32                      var_teamcard_id       =  2; // 팀 카드 ID
+}
+
+// 선수카드 검색 결과 정보
+message PlayerCardFindResult
+{
+    optional int32                         var_team_guid         = 1; // 구단 ID
+    repeated Struct.OperationPlayerCard    var_opc_list          = 2; // Opc list
+    repeated Struct.PlayerCardSimpleRecord var_card_record_list  = 3; // 선수카드 기록 정보 list
+}
+
+// 상점 상품 정보
+message ShopProductInfo
+{
+    optional H3Enum.eShopGroup          var_shop_group          =  1; // 상점 GroupIndex
+    optional int32                      var_slot_id             =  2; // 슬롯 번호(0~100: 이벤트, 101~: 일반)
+    optional int32                      var_product_id          =  3; // 상점 상품 id : Shop Table Id
+    optional int32                      var_item_guid           =  4; // 아이템 GUID  : ItemInfo Guid
+    optional int32                      var_remain_free_count   =  5; // 남은 무료 구매 수량
+    optional int32                      var_buy_count           =  6; // 구매 수량
+    optional int32                      var_max_buy_count       =  7; // 구매 가능 갯수
+    optional int32                      var_refresh_count       =  8; // 품목 갱신 횟수
+    required TimeStamp                  var_start_date          =  9; // 시작 일자
+    required TimeStamp                  var_expire_date         = 10; // 만료 일자
+}
+
+// 선물 정보
+message GiftItem
+{
+    optional H3Enum.eItemCategoryType   var_item_cartegory      =  1; // 선물 카테고리
+    optional int64                      var_gift_id             =  2; // 선물 ID
+    optional int32                      var_team_guid           =  3; // 보낸팀 GUID(-1 : 시스템, 운영툴)
+    optional bytes                      var_team_name           =  4; // 구단 이름 (2~8 characters)
+    optional int32                      var_message_id          =  5; // 메세지 ID(-1 : 커스텀 제목 및 메시지 사용)
+    optional int32                      var_item_guid           =  6; // 아이템 GUID : ItemInfo Guid
+    optional int32                      var_item_count          =  7; // 지급 수량
+    optional int32                      var_item_value          =  8; // 아이템 추가 값(별도의 값이 필요한 경우)
+    required TimeStamp                  var_expire_date         =  9; // 만료 일자
+    optional bytes                      var_custom_title        = 10; // 설정된 제목
+    optional bytes                      var_custom_message      = 11; // 설정된 메시지
+}
+
+// 선물 정보(서버용)
+message GiftItemEx
+{
+    optional GiftItem                   var_gift_item           = 1;
+    optional int32                      var_gift_type           = 2; // 선물 출처
+}
+
+//// 아이템 인벤토리 정보
+//message InvenItemInfo
+//{
+//    optional H3Enum.eInventoryJoinType  var_type                =  1; // 인벤토리 아이템 Type(Join Table Type)
+//    optional int32                      var_id                  =  2; // 인벤토리 아이템 ID
+//    optional int32                      var_count               =  3; // 보유 수량
+//}
+
+// 아이템 인벤토리 정보
+message InvenItemInfo
+{
+    optional int32                      var_id                  =  1; // 인벤토리 아이템 ID
+    optional int32                      var_count               =  2; // 보유 수량
+}
+
+// 기능성 카드 인벤토리 정보
+message FunctionalCardInfo
+{
+    optional int32                      var_id                  =  1; // 기능성 카드 ID
+    optional int32                      var_count               =  2; // 보유 수량
+}
+
+// 선수카드 상품 생성 정보
+message ShopItemPlayerCard
+{
+    optional Struct.OperationPlayerCard  var_opc                 = 1;    // 카드별 데이터 구조체
+    optional H3Enum.eCardPackResultGrade var_grade               = 2;    // 전조 연출 등급
+}
+
+// 선수카드 선물 생성 정보
+message GiftPlayerCard
+{
+    optional Struct.ShopItemPlayerCard  var_shop_item_player_card = 1;    // 선수카드 상품 생성 정보
+    optional int64                      var_gift_id               = 2;    // 선물 Guid
+}
+
+// 선물 받기 결과 정보
+message GiftResultItemInfo
+{
+    optional int32                      var_item_guid           = 1; // 아이템 GUID  : ItemInfo Guid
+    optional int32                      var_count               = 2; // 받은 수량(재화류는 수량 * Value 값)
+}
+
+//// 비기너 출석 정보
+//message PlayerCardFindResult
+//{
+//    optional int32                         var_slot_no         = 1; // 슬롯 번호
+//    optional int32                         var_state           = 2; // 상태 (-1: 해당사항 없음, 0: 미체크, 1: 선물 수령, 2: 선물 수령 완료)
+//}
+
+// 팀 배지에 등록된 재료 정보
+message TeamBadgeMaterialSetInfo
+{
+    required int32  var_team_badge_id           = 1; // 팀 배지 ID
+    required int32  var_material_slot_flags     = 2; // 재료 슬롯 플래그 (최하위 비트부터 첫번째 재료 슬롯 시작. 각 재료 슬롯에 재료가 등록되어 있는지 나타낸다.)
+}
+
+// 전지훈련 정보
+message TrainingCampInfo
+{
+    required int32  var_slot_id                 = 1; // 전지훈련 슬롯 ID
+    required int32  var_team_card_id            = 2; // 구단 선수카드 ID
+    required int32  var_remain_time_sec         = 3; // 남은 시간 (초)
+	optional Struct.TrainingCampBonusTypeData		var_training_camp_bonus_type_data		= 4; // 보너스 타입 정보
+	optional Struct.TrainingCampBonusRewardData		var_training_camp_bonus_reward_data		= 5; // 보너스 보상 정보
+}
+
+// 도전과제 정보
+message AchieveInfo
+{
+    required int32                  var_group_id                = 1; // 업적 도전과제 그룹 ID
+    required int32                  var_level                   = 2; // 단계 레벨
+    required int32                  var_value                   = 3; // 진행 값
+}
+
+// 완료 도전과제 정보
+message AchieveCompleteInfo
+{
+    required H3Enum.eAchieveType    var_type                    = 1; // 도전과제 종류
+    optional int32                  var_group_id                = 2; // 업적 도전과제 그룹 ID
+    optional int32                  var_level                   = 3; // 단계 레벨
+
+    optional int32                  var_guid                    = 4; // var_type이 뮤지엄 관련이라면 미션GUID
+    optional int32                  var_photo_id                = 5; // var_type이 뮤지엄 관련이라면 사진ID
+
+}
+
+// 싱글 모드 진행 정보
+message SingleModeProgressInfo
+{
+    required int32                  var_single_mode_id          =  1; // 싱글 모드 id (1:Normal 2:Special 3:Event1 4:Event2)
+    required int32                  var_season_id               =  2; // 진행 시즌 id
+    required int32                  var_area_id                 =  3; // 지역 id
+    required int32                  var_next_round_id           =  4; // 진행할 라운드 id (1 : 지역 오픈 시)
+    required int32                  var_total_w                 =  5; // 누적 승
+    required int32                  var_total_l                 =  6; // 누적 무
+    required int32                  var_total_d                 =  7; // 누적 패
+    required int32                  var_coupon_count            =  8; // 쿠폰 보유 수량
+    required int32                  var_special_tactics_id      =  9; // 추천 작전 방침 id
+    required bool                   var_special_tactics_state   = 10; // 추천 작전 방침 사용 유무
+    required Struct.TimeStamp       var_start_date              = 11; // 시작 일자
+    required Struct.TimeStamp       var_expire_date             = 12; // 만료 일자
+    repeated int32                  var_friendly_tactics_ids    = 13; // 사용한 작전 카드 id list
+}
+
+// 싱글 모드 라운드 정보
+message SingleModeRoundInfo
+{
+    required int32                  var_single_mode_id          =  1; // 싱글 모드 id (1:Normal 2:Special 3:Event1 4:Event2)
+    required int32                  var_area_id                 =  2; // 지역 id
+    required int32                  var_round_id                =  3; // 라운드 id
+    repeated H3Enum.eGameResultType var_game_results            =  4; // 누적 승
+}
+
+// 싱글 모드 미션 정보
+message SingleModeMissionInfo
+{
+    required int32                  var_game_num                =  1; // 차전
+    required int32                  var_team_card_id            =  2; // 팀 카드 id
+    required int32                  var_mission_id              =  3; // 미션 id
+    required int32                  var_reward_id               =  4; // 미션 성공 보상
+    required H3Enum.ePositionConstant var_position_constant     =  5; // 선정된 선수카드 슬롯 번호(서버 캐싱용)
+}
+
+// 싱글 모드 미션 결과 정보
+message SingleModeMissionResultInfo
+{
+    required int32                  var_game_num                = 1; // 차전
+    required int32                  var_team_card_id            = 2; // 팀 카드 id
+    required int32                  var_mission_id              = 3; // 미션 id
+    required int32                  var_result_val              = 4; // 미션 결과 값(탈삼진 x개)
+    required int32                  var_reward_id               = 5; // 미션 성공 보상
+    required bool                   var_is_success              = 6; // 미션 성공 유무(true : 성공, false : )
+}
+
+// 싱글 모드 결과 바이너리 
+message SingleModeResult
+{
+    required int32                  var_game_num                 = 1;  // 경기 차전
+    required uint32                 var_seed                     = 2;  // 랜덤 Seed
+    required bytes                  var_binary                   = 3;  // 결과 바이너리
+    optional int32                  var_away_score               = 4[default = 0]; // 원정 팀 점수
+    optional int32                  var_home_score               = 5[default = 0]; // 홈 팀 점수
+    optional int32                  var_away_pitcher_index       = 6[default = 0]; // 어웨이팀 선발 투수 인덱스
+    optional int32                  var_home_pitcher_index       = 7[default = 0]; // 홈팀 선발 투수 인덱스
+    optional int32                  var_away_friendly_tactics_id = 8[default = 0]; // 원정 팀 방침 ID
+    optional int32                  var_home_friendly_tactics_id = 9[default = 0]; // 홈 팀 방침 ID
+}
+
+// 앨범 카드 정보
+message AlbumCardInfo
+{
+    required int32                  var_player_card_guid                  = 1;   // 선수 카드 고유 GUID
+    required int32                  var_player_card_step                  = 2;   // 선수 카드 등급
+    required int32                  var_player_card_cur_level             = 3;   // 선수 카드 현재 레벨
+    required int32                  var_player_card_max_level             = 4;   // 선수 카드 최대 레벨
+    required int32                  var_player_card_cur_exp               = 5;   // 선수 카드 현재 EXP
+    required int32                  var_player_card_max_exp               = 6;   // 선수 카드 최대 EXP
+    required int32                  var_player_card_additional_stat_value = 7;   // 선수 카드가 추가해주는 스탯의 수치
+}
+
+// 친구
+message Friend
+{
+    optional int32              var_team_guid           = 1 [default = -1];
+    optional bytes              var_team_name           = 2; // 구단 이름 (2~8 characters)
+    optional int32              var_fav_team_id         = 3; // favorite team id
+    optional int32              var_emblem_id           = 4; // emblem id
+    optional int32              var_special_emblem_id   = 5; // special emblem id
+    optional int32              var_team_expoint        = 6; // 구단 경험치
+    optional int32              var_pennant_grade       = 7; // 페넌트레이스 등급
+    optional TimeStamp          var_logout_date         = 8; // 로그아웃시간(1900/01/01 : 로그인 중)
+}
+
+// 게시판 - 카드 정보
+message BoardPlayerCardInformation
+{
+    optional int32 var_reply_total_count = 1; // 전체 댓글개수
+    optional int32 var_reply_total_point = 2; // 전체 평가포인트
+    optional int32 var_reply_total_estimation_count = 3; // 전체 평가수
+}
+
+
+// 게시판 - 댓글정보
+message Reply
+{
+    optional int64 var_reply_no = 1; // 댓글번호
+    optional int32 var_reply_like_count = 2; // LIKE수
+    optional bytes var_reply_contents = 3; // 컨텐츠
+    optional int32 var_reply_team_id = 4; // 팀ID
+    optional bytes var_reply_team_name = 5; // 팀명
+    optional int32 var_reply_team_board_point = 6; // 게시판포인트
+    optional Struct.TimeStamp var_reply_create_date = 7; // 생성일
+    optional int32 var_reply_like_state = 8; // LIKE상태(1:참여,0:미참여)
+}
+
+// 게시판 - 랭크정보
+message BoardRank
+{
+    optional int32 var_player_card_id = 1;          // 선수카드ID
+    optional int32 var_total_point = 2;             // 총 점수
+    optional int32 var_total_estimation_count = 3;  // 총 평가수
+}
+
+// 상점 - InApp 구매 상품 
+//message InAppShopItemInfo
+//{
+//    optional int32                  var_id                  = 1; // InAppShopId
+//    optional int32                  var_item_guid           = 2; // ItemGuid
+//    optional int32                  var_item_count          = 3; // ItemCount
+//    optional int32                  var_price_krw           = 4; // Price(원화 가격)
+//    optional int32                  var_price_usd           = 5; // Price(달러 가격)
+//    optional int32                  var_limit_date          = 6; // 기간 제한 상태(0: 상시 판매, 1: 기간 제한 판매)
+//    optional H3Enum.eInAppShopType  var_type                = 7; // InAppShopItemType
+//    optional TimeStamp              var_start_date          = 8; // 판매 시작 시간
+//    optional TimeStamp              var_end_date            = 9; // 판매 종료 시간
+//}
+
+message InAppShopItemInfo
+{
+    optional int32                  var_id                  = 1; // InAppShopId
+    optional bytes                  var_item_name           = 2; // Item 이름
+    optional int32                  var_display_group       = 3; // 디스플레이되는 상품 group
+    optional int32                  var_overlap_limit       = 4; // 중복 구매 제한 (0 : 중복 구매 가능 1~ : 하나의 상품을 가지고 있을 시 동일 번호의 상품 구매 불가)
+    optional int32                  var_item_guid           = 5; // ItemGuid
+    optional int32                  var_item_count          = 6; // 구매한 수량 
+    optional int32                  var_item_quantity       = 7; // ItemCount
+    optional int32                  var_sale_quantity       = 8; // 판매 수량 제한 여부(0: 무한, 1~ 해당 판매 수량 만큼 제한)
+    optional int32                  var_price_krw           = 9; // Price(원화 가격)
+    optional int32                  var_price_usd           = 10; // Price(달러 가격)
+    optional int32                  var_limit_date          = 11; // 기간 제한 상태(0: 상시 판매, 1: 기간 제한 판매)
+    optional TimeStamp              var_start_date          = 12; // 판매 시작 시간
+    optional TimeStamp              var_end_date            = 13; // 판매 종료 시간
+    //optional H3Enum.eInAppShopType  var_category            = 14; // InAppShopItemType
+    optional H3Enum.eInAppShopSaleLimitType  var_sale_limit_type = 15; // eInAppShopSaleLimitType
+    optional bytes                  var_aos_goods_keys      = 16; // AOS 스토어 제품 id
+    optional bytes                  var_ios_goods_keys      = 17; // IOS 스토어 제품 id
+    optional TimeStamp              var_expire_date         = 18; // 월정액 상품 만료일
+    optional bytes                  var_one_store_goods_keys = 19; // 원 스토어 제품 id
+    optional H3Enum.eRecommendTag   var_recommend_tag = 20;         // recommend tag
+}
+
+// 예측 - 시즌 예측 상태
+message BettingSeasonState
+{
+    optional int32                  var_season_id           = 1[default = 0]; // 예측 설정 한 페넌트레이스 시즌 id(0이면 예측 않함)
+    optional int32                  var_forecast_result     = 2[default = 0]; // 시즌 예측 결과(BitFlag 0:경기 전, 1:결과 후, 2: 성공)
+}
+
+// 예측 - 경기 예측 상태
+message BettingGameState
+{
+    optional int32                  var_season_id                     = 1[default = 0]; // 예측 설정 시즌 id(0이면 예측 않함)
+    optional int32                  var_round_id                      = 2[default = 0]; // 예측 설정 라운드 id
+    optional bool                   var_is_win_count_batting          = 3[default = false]; // 승수 예측 참여 상태
+    optional bool                   var_is_card_forecast_batting      = 4[default = false]; // 기록 예측 참여 상태
+    optional int32                  var_forecast_result               = 5[default = 0]; // 시즌 예측 결과(BitFlag 0:경기 전, 1:결과 후, 2: 성공)
+    optional H3Enum.ePennantGameType  var_pennant_game_type           = 6[default = ePennantGameType_RegularSeason]; // 시즌 타입  // 포스트시즌예측
+    optional bool                   var_is_post_season_batting        = 7[default = false]; // 포스트시즌 예측 참여 상태  // 포스트시즌예측
+    optional bool                   var_is_post_season_batting_active = 8[default = false]; // 포스트시즌 예측 참여가능 상태 // 포스트시즌예측
+}
+
+// 예측 - 얘측 상태 정보
+message BettingStateInfo
+{
+    repeated BettingSeasonState     var_betting_season_state_list       = 1; // 시즌 예측 리스트
+    repeated BettingGameState       var_betting_game_state_list         = 2; // 경기 예측 리스트
+}
+
+// 예측 - 경기 예측 보상 정보
+message BettingReword
+{
+    optional H3Enum.eBettingRewardType  var_betting_reward_type         = 1; // 예측 보상 타입
+    optional int32                      var_reward_id                   = 2; // 예측 보상 ID
+}
+
+// 예측 - 경기 예측 보상 정보
+message BettingCardForecastSlot
+{
+    optional int32                      var_slot_id                     = 1; // 슬롯 id
+    optional int32                      var_card_forecast_id            = 2; // 기록 예측 항목 ID
+}
+
+// 예측 - 경기 예측 순위 보상 정보
+message BettingRankingReward
+{
+    optional int32                      var_rank                        = 1; // 순위
+    optional int32                      var_reward_id                   = 2; // 예측 보상 ID
+}
+
+// 예측 - 구단 랭크 정보
+message BettingTeamRankInfo
+{
+    required int32                      var_team_guid                   = 1; // 구단 ID
+    required bool                       var_is_home                     = 2; // 홈팀 유무
+    required int32                      var_league_rank                 = 3; // 리그 랭킹
+    required int32                      var_post_rank                   = 4; // 포스트 시즌 확정 랭킹
+    required int32                      var_w                           = 5; // 승
+    required int32                      var_l                           = 6; // 패
+    required int32                      var_d                           = 7; // 무
+    repeated H3Enum.eGameResultType     var_game_results                = 8; // 최근 전적
+}
+
+// 예측 - 경기 예측 정보
+message BettingGame
+{
+    optional int32                          var_season_id                     =  1; // 시즌 id
+    optional int32                          var_round_id                      =  2; // 라운드 id
+
+    optional int32                          var_win_count                     =  3; // 선택한 승수(0이면 미선택)
+    optional int32                          var_win_point_betting             =  4; // 승수 예측 포인트(0이면 미선택)
+
+    optional int32                          var_teamcard_id                   =  5; // 선수 예측 대상 선수 teamcard id
+    optional int32                          var_playercard_id                 =  6; // 선수 예측 대상 선수 playercard id
+    repeated BettingCardForecastSlot        var_card_forecast_slot_list       =  7; // 선수 예측 선택 항목 리스트
+    optional int32                          var_card_forecast_slot_check      =  8; // 베팅한 기록 슬롯 번호
+    optional int32                          var_card_forecast_point_betting   =  9; // 베팅한 기록 예측 포인트
+    optional int32                          var_card_forecast_slot_open_count = 10; // 슬롯 오픈 횟수
+
+    optional int32                          var_refill_count                  = 11; // 포인트 리필한 횟수
+    optional bool                           var_is_refill                     = 12; // 리필 상태(true : 리필 팝업 뛰움)
+    optional int32                          var_betting_point                 = 13; // 베팅 포인트
+
+    optional int32                          var_betting_rank                  = 14; // 예측 순위
+
+    optional H3Enum.ePennantGameType        var_pennant_game_type             = 15[default = ePennantGameType_RegularSeason]; // 시즌 타입  // 포스트시즌예측
+    optional int32                          var_post_season_question_id       = 16; // 포스트시즌 예측 질문 ID  // 포스트시즌예측
+    optional int32                          var_post_season_question_select_id = 17; // 포스트시즌 예측 선택값   // 포스트시즌예측
+    optional int32                          var_post_season_betting_point     = 18; // 포스트시즌 베팅 포인트
+}
+
+// 예측 - 경기 예측 추가 정보
+message BettingGameEx
+{
+    optional int32                          var_match_up_type                  =  1; // 매치업 타입
+    optional int32                          var_oppent_team_guid               =  2; // 상대 구단 GUID
+}
+
+// 예측 - 순위 정보
+message BettingRoundRank
+{
+    required int32          var_team_guid                =  1; // team guid
+    required bytes          var_user_name                =  2; // 구단주 이름 (2~8 characters)
+    required bytes          var_team_name                =  3; // 구단 이름   (2~8 characters)
+    required int32          var_fav_team_id              =  4; // favorite team id
+    required int32          var_emblem_id                =  5; // emblem id
+    required int32          var_special_emblem_id        =  6; // special emblem id
+    required int32          var_team_expoint             =  7; // 구단 경험치
+    required int32          var_pennant_grade            =  8; // 페넌트레이스 등급
+    required int32          var_betting_rank             =  9; // 예측 순위
+    required int32          var_betting_point            =  10; // 예측 포인트
+}
+
+// 예측 - 포스트 시즌 팀정보
+message BettingPostSeasonTeamInfo
+{
+    optional int32                          var_team_guid            = 1; // 구단 ID
+    optional bytes                          var_team_name            = 2; // 구단 이름   (2~8 characters)
+    optional int32                          var_fav_team_id          = 3; // favorite team id
+    optional int32                          var_emblem_id            = 4; // emblem id
+    optional int32                          var_special_emblem_id    = 5; // special emblem id
+    optional int32                          var_league_rank          = 6; // 리그 랭킹
+    optional int32                          var_league_w             = 7; // 리그 승
+    optional int32                          var_league_l             = 8; // 리그 패
+    optional int32                          var_league_d             = 9; // 리그 무
+    optional int32                          var_vs_w                 = 10; // 상대전적 승
+    optional int32                          var_vs_l                 = 11; // 상대전적 패
+    optional int32                          var_vs_d                 = 12; // 상대전적 무
+    optional bool                           var_is_home              = 13; // 홈 원정 유무
+}
+
+// 명성 정보
+message FameInfo
+{
+    required int32                      var_fame_season_id              = 1; // 명성 시즌 ID
+    required int32                      var_fame_point                  = 2; // 명성 포인트
+    required int32                      var_rank                        = 3; // 순위 (10000 초과 순위는 10001 순위로 고정)
+    required int32                      var_top_percent                 = 4; // 상위 퍼센트
+}
+
+// 구단 명성 정보
+message FameTeamInfo
+{
+    required int32                      var_team_guid                   = 1; // 구단 ID
+    required bytes                      var_team_name                   = 2; // 구단 이름
+    required int32                      var_fav_team_id                 = 3; // 선호구단 ID
+    required int32                      var_emblem_id                   = 4; // 엠블럼 ID
+    required int32                      var_special_emblem_id           = 5; // 엠블럼 ID
+    required int32                      var_team_expoint                = 6; // 구단 경험치
+    required int32                      var_pennant_grade               = 7; // 페넌트레이스 등급
+    required int32                      var_fame_point                  = 8; // 명성 포인트
+}
+
+// 명성 보상 정보
+message FameRewardInfo
+{
+    required int32                      var_fame_season_id              = 1; // 명성 시즌 ID
+    required int32                      var_fame_point                  = 2; // 명성 포인트
+    required int32                      var_rank                        = 3; // 순위 (10000 초과 순위는 10001 순위로 고정)
+    required int32                      var_top_percent                 = 4; // 상위 퍼센트
+    required int32                      var_rewarded_point              = 5; // 보상 누적 명성 포인트 (항목 var_fame_point 와 간격 구간의 보상 여부 확인 필요)
+    required int32                      var_rewarded_rank               = 6; // 보상 순위 (순위나 상위 퍼센트 값이 설정됨. 0 이 아니면 보상 받은 상태. 0 이면 순위 보상 가능한지 확인 필요.)
+}
+
+// 아이템 보상 정보
+// ; 컨텐츠에서 선물함 등으로 지급한 아이템 정보
+message RewardItemInfo
+{
+    required H3Enum.eContentRewardType  var_content_reward_type         = 1; // 컨텐츠 보상 종류
+    required int32                      var_item_guid                   = 2; // Item GUID
+    required int32                      var_item_count                  = 3; // Item Count
+}
+
+// 행운류 Point 정보
+message LuckyExchangePointInfo
+{
+    required H3Enum.eLuckyExchange      var_type                        = 1[default = eLuckyExchange_GameMoney]; // 행운류 포인트 아이템 타입
+    required int32                      var_point                       = 2[default = -1]; // 값
+}
+
+// 팝업 공지 정보
+message NoticePopUpInfo
+{
+    required H3Enum.eNoticePopUpType    var_type                        = 1; // 팝업 종류
+    required bytes                      var_msg                         = 2; // 공지 내용
+};
+
+// 롤링 공지 정보
+message NoticeRollingInfo
+{
+    required int32                      var_id                          = 1; // 공지 ID
+    required TimeStamp                  var_end_time                    = 2; // 종료 시간
+    required bytes                      var_msg                         = 3; // 공지 내용
+};
+
+// 월드 정보
+message WorldInfo
+{
+    required int32                          var_world_id                = 1; // 월드 ID
+    required H3Enum.eWorldActiveUsersState  var_active_users_state      = 2; // 활성 유저 상태
+    required bytes                          var_address                 = 3; // 서버 주소 (IP 또는 도메인네임)
+    required int32                          var_port                    = 4; // 서버 포트
+    required bool                           var_recommend               = 5; // 추천 여부
+};
+
+// 웹 이벤트 정보
+message WebEventInfo
+{
+    optional bytes                      var_event_code                  = 1;    // 이벤트 코드 : NC발급
+    optional bytes                      var_mission_code                = 2;    // 미션 코드 : NC발급
+    optional bool                       var_open                        = 3;    // 이벤트 진행 여부
+    optional bytes                      var_title                       = 4;    // 이벤트 이름
+    optional TimeStamp                  var_begin_time                  = 5;    // 이벤트 시작 날짜-시간
+    optional TimeStamp                  var_end_time                    = 6;    // 이벤트 종료 날짜-시간
+    optional bytes                      var_page_url                    = 7;    // 이벤트 웹 페이지 url
+    optional int32                      var_icon_type                   = 8;    // 이벤트 아이콘
+    optional bytes                      var_reserved_string_1           = 9;    // 예약 문자열 필드1
+    optional bytes                      var_reserved_string_2           = 10;   // 예약 문자열 필드2
+    optional bytes                      var_reserved_string_3           = 11;   // 예약 문자열 필드3
+    optional bytes                      var_reserved_string_4           = 12;   // 예약 문자열 필드4
+    optional bytes                      var_reserved_string_5           = 13;   // 예약 문자열 필드5
+    optional int32                      var_reserved_int_1              = 14;   // 예약 정수 필드1
+    optional int32                      var_reserved_int_2              = 15;   // 예약 정수 필드2
+    optional int32                      var_reserved_int_3              = 16;   // 예약 정수 필드3
+    optional int32                      var_reserved_int_4              = 17;   // 예약 정수 필드4
+    optional int32                      var_reserved_int_5              = 18;   // 예약 정수 필드5
+};
+
+// 인게임 이벤트 정보
+message InGameEventInfo
+{
+    optional int32                      var_event_id                    = 1;    // 이벤트 고유ID
+    optional H3Enum.eInGameActionType   var_ingame_action_type          = 2;    // 이벤트 타입 (패넌트레이스, 매니지먼트, 로그인 등등..)
+    optional bool                       var_open                        = 3;    // 이벤트 진행 여부
+    optional bytes                      var_title                       = 4;    // 이벤트 이름
+    optional bytes                      var_comment                     = 5;    // 이벤트 내용 - 코맨트
+    optional TimeStamp                  var_begin_time                  = 6;    // 이벤트 시작 날짜-시간
+    optional TimeStamp                  var_end_time                    = 7;    // 이벤트 종료 날짜-시간
+    optional H3Enum.eRewardType         var_reward_type                 = 8;    // 이벤트 보상 - 보상타입
+    optional int32                      var_reward_item_guid            = 9;    // 이벤트 보상 - 아이템 GUID
+    optional int32                      var_reward_item_count           = 10;    // 이벤트 보상 - 아이템 COUNT
+    optional int32                      var_affect_value_1              = 11;   // 이벤트 타입에 따른 적용 값(예> 할인율, 티켓소모 수량 변경,..) : 예약
+    optional int32                      var_affect_value_2              = 12;   // 이벤트 타입에 따른 적용 값(예> 할인율, 티켓소모 수량 변경,..) : 예약
+    optional int32                      var_affect_value_3              = 13;   // 이벤트 타입에 따른 적용 값(예> 할인율, 티켓소모 수량 변경,..) : 예약
+    optional int32                      var_affect_value_4              = 14;   // 이벤트 타입에 따른 적용 값(예> 할인율, 티켓소모 수량 변경,..) : 예약
+};
+
+// 인스턴트 이벤트 정보
+message InstantEventInfo
+{
+    optional int32                      var_event_id                    = 1;    // 이벤트 고유 번호(ID)
+    optional H3Enum.eInstantEventType   var_event_type                  = 2;    // 이벤트 타입
+    optional bool                       var_open                        = 3;    // 이벤트 진행 여부
+    optional bytes                      var_title                       = 4;    // 이벤트 이름
+    optional TimeStamp                  var_begin_time                  = 5;    // 이벤트 시작 날짜-시간
+    optional TimeStamp                  var_end_time                    = 6;    // 이벤트 종료 날짜-시간
+    optional bytes                      var_reserved_string_1           = 7;    // 예약 문자열 필드1
+    optional bytes                      var_reserved_string_2           = 8;    // 예약 문자열 필드2
+    optional bytes                      var_reserved_string_3           = 9;    // 예약 문자열 필드3
+    optional bytes                      var_reserved_string_4           = 10;   // 예약 문자열 필드4
+    optional bytes                      var_reserved_string_5           = 11;   // 예약 문자열 필드5
+    optional int32                      var_reserved_int_1              = 12;   // 예약 정수 필드1
+    optional int32                      var_reserved_int_2              = 13;   // 예약 정수 필드2
+    optional int32                      var_reserved_int_3              = 14;   // 예약 정수 필드3
+    optional int32                      var_reserved_int_4              = 15;   // 예약 정수 필드4
+    optional int32                      var_reserved_int_5              = 16;   // 예약 정수 필드5
+    optional bytes                      var_web_page_url_1              = 17;   // 웹 페이지 URL1
+    optional bytes                      var_web_page_url_2              = 18;   // 웹 페이지 URL2
+    optional bytes                      var_web_page_url_3              = 19;   // 웹 페이지 URL3
+};
+
+
+// 이벤트 샵 상품 정보 
+message EventShopProduct
+{
+    optional int32                      var_product_id        = 1;    // DB ID
+    optional int32                      var_order_seq         = 2;    // 정렬 순서 : 화면 표시 순서를 운영툴에서 정한다.
+    optional bytes                      var_product_name      = 3;    // 아이템 이름
+    optional bytes                      var_product_comment   = 4;    // 아이템 설명
+    optional int32                      var_buy_type          = 5;    // 구매 방법 (1: 인앱구매, 2: 상점구매(위닝볼,게임머니))
+    optional bool                       var_is_soldout        = 6;    // 개별 상품 완판 여부 (true: 구매불가, false: 구매가능)
+    optional int32                      var_cur_buy_count     = 7;    // 현재 구매 수량
+    optional int32                      var_max_buy_count     = 8;    // 최대 구매 수량
+    optional int32                      var_product_item_id   = 9;    // 인앱구매의 경우 inappitem_id, 위닝볼/게임머니의 경우 ID(테이블상의)
+    optional int32                      var_display_icon      = 10;   // 표시될 아이콘 종류 (0: 기본 아이콘, 1: 설정된 아이콘)
+}
+
+// 이벤트 샵 상품 구매 후 적용 정보
+message EventShopBuyResult
+{
+    optional int32                      var_event_id      = 1;       // 이벤트샵의 이벤트 id    
+    optional int32                      var_product_id    = 2;       // 이벤트샵의 Product id
+    optional int32                      var_item_id       = 3;       // 이벤트샵의 Item id (InAppShop 테이블에서의 ID)
+    optional bool                       var_is_soldout    = 4;       // 품절여부 (1:품절, 0:구매가능)
+    optional int32                      var_cur_buy_count = 5;       // 현재 구매 횟수
+    optional int32                      var_max_buy_count = 6;       // 최대 구매 가능 회수
+}
+// 이벤트 샵 정보
+message EventShopInfo
+{
+    optional int32                      var_event_id            = 1;    // 이벤트 고유 번호(ID)
+    optional bool                       var_open                = 2;    // 이벤트 진행 여부
+    optional bytes                      var_title               = 3;    // 이벤트 이름
+    optional TimeStamp                  var_begin_time          = 4;    // 이벤트 시작 날짜-시간
+    optional TimeStamp                  var_end_time            = 5;    // 이벤트 종료 날짜-시간
+    optional int32                      var_remain_sec          = 6;    // 이벤트 남은 시간 (초)
+    optional bool                       var_is_all_soldout      = 7;    // 전체 상품 완판 여부 (true: 구매불가, false: 구매가능)
+    repeated EventShopProduct           var_product_list        = 8;    // 상품 리스트
+
+    optional bytes                      var_reserved_string_1   = 9;    // 예약 문자열 필드1
+    optional bytes                      var_reserved_string_2   = 10;   // 예약 문자열 필드2
+    optional bytes                      var_reserved_string_3   = 11;   // 예약 문자열 필드3
+    optional int32                      var_reserved_int_1      = 12;   // 예약 정수 필드1
+    optional int32                      var_reserved_int_2      = 13;   // 예약 정수 필드2
+    optional int32                      var_reserved_int_3      = 14;   // 예약 정수 필드3
+}
+
+// 채팅 차단 유저 정보
+message ChatBlockUserInfo
+{
+    optional int32                      var_team_guid                   = 1;    // 대상 구단 GUID
+    optional bytes                      var_team_name                   = 2;    // 대상 구단 이름
+    optional int32                      var_fav_team_id                 = 3;    // Favorite Team ID
+    optional int32                      var_emblem_id                   = 4;    // emblem id
+    optional int32                      var_special_emblem_id           = 5;    // special emblem id
+};
+
+// 인앱 구매 제한 상품 정보
+message InAppLimitItemInfo
+{
+    optional int32                      var_inapp_item_id               = 1; // 인앱 아이템 id
+    optional int32                      var_group_id                    = 2; // 상호 배재 그룹 id
+    optional int32                      var_item_count                  = 3; // 사용 쿠폰 수량
+    optional TimeStamp                  var_expire_date                 = 4; // 만료일
+}
+
+// 인앱 제한 상품 구매 정보
+message InAppPeriodItemInfo
+{
+    optional int32                      var_inapp_item_id               = 1;    // 인앱 상품 ID
+    optional int32                      var_group_id                    = 2;    // 상호 배제 그룹 id
+    optional TimeStamp                  var_expire_date                 = 3;    // 만료일
+    optional TimeStamp                  var_reward_date                 = 4;    // 최종 보상 지급일
+    optional TimeStamp                  var_buy_date                    = 5;    // 상품 구매일
+	optional int32						var_display_group				= 6;	// CremaTable::InAppShop - DisplayGroup
+};
+
+// 보상 상품 정보
+message RewardInfo
+{
+    optional H3Enum.eRewardType         var_type                 = 1;    // 보상타입
+    optional int32                      var_item_guid            = 2;    // 아이템 GUID
+    optional int32                      var_item_count           = 3;    // 아이템 COUNT
+};
+
+// 챌린지 미니게임 정보
+message ChallengeMiniGameInfo
+{
+    required int32                      var_mini_game_id                = 1; // 미니게임 ID
+    required int32                      var_play_count                  = 2; // 현재 도전 횟수
+    required int32                      var_max_play_count              = 3; // 최대 도전 횟수
+    required int32                      var_top_difficulty              = 4; // 달성 난이도
+    required bool                       var_is_event                    = 5; // 이벤트 여부
+};
+
+// 인스턴트 이벤트: 홈런 레이스 진행 정보
+message InstantHomerunRaceEventProgressInfo
+{
+    required int32                       var_event_id                         = 1; // 이벤트 고유 번호(ID)
+    required bool                        var_is_open                          = 2; // 이벤트 오픈 여부 
+    required bool                        var_is_all_complete_step             = 3; // 이 이벤트를 모두 완료했는가?
+    required int32                       var_max_step                         = 4; // 최대 진행가능 스탭
+    required int32                       var_current_step_no                  = 5; // 현재까지 진행 스탭 (완료 스탭)
+    required int32                       var_current_step_spend_cash          = 6; // 현재까지 프리미엄 영입에 사용한 누적 사용 cash
+    required int32                       var_next_step_no                     = 7; // 다음 단계 (다음 단계가 없으면 MAX치로 보낸다. 완료 여부는 is_all_complete_step 값으로 확인)
+    required int32                       var_next_step_max_acquire_cash       = 8; // 다음 단계 얻을 수 있는 최대(max) cash (없으면 MAX STEP 값이다.)
+    required int32                       var_next_step_bet_cash               = 9; // 다음 단계 베팅 캐시  (다음 단계가 없으면 MAX STEP 값이다.)
+    required int32                       var_next_step_spend_require_cash     = 10; // 다음 단계 표시할 프리미엄 영입에 사용한 누적 사용 cash (다음 단계가 없으면 MAX STEP값이다, 필요하지 않으면 0이다.)
+}
+
+// 인스턴트 이벤트 : 위닝볼 마일리지 이벤트 안의 이벤트( 랭킹 또는 티어 보상 등 )의 진행 정보
+message InstantWinningBallMileageEventExtraProgress
+{
+	required H3Enum.eInstantEventWinningBallMileageExtraFlag	var_flag			= 1; // 랭킹 또는 티어 보상 등..
+	required TimeStamp											var_expiry_date		= 2; // 종료일
+	required int32												var_mileage			= 3; // 마일리지
+}
+
+// 인스턴트 이벤트 : 위닝볼 마일리지 이벤트 진행 정보
+message InstantWinningBallMileageEventProgressInfo
+{
+	required int32											var_event_id			= 1; // 이벤트 고유 ID
+    required bool                                           var_is_open             = 2; // 이벤트 오픈 여부 
+	required int32											var_available_mileage	= 3; // 사용가능한 마일리지
+	required H3Enum.eInstantEventWinningBallMileageStep		var_available_step		= 4; // 현재 상품 받기 가능한 단계
+	repeated InstantWinningBallMileageEventExtraProgress	var_extra_progress_list	= 5; // 랭킹 또는 티어 보상 등 마일리지 이벤트 내에서 기간이 다르게 셋팅되는 이벤트 종류의 정보
+}
+
+// 인스턴트 이벤트 : 위닝볼 마일리지 이벤트 랭킹 정보
+message InstantWinningBallMileageEventRankingInfo
+{
+	required int32						var_ranking				= 1; // 랭킹
+	required int32						var_mileage				= 2; // 랭킹 마일리지
+	optional bool						var_is_my_ranking		= 3 [default = false]; // 나의 랭킹 정보일땐 true~
+}
+
+
+// 인스턴트 이벤트 : 전설의 삼진왕 이벤트 진행 정보
+message InstantStrikeOutEventProgressInfo
+{
+	required int32											var_event_id			    = 1; // 이벤트 고유 ID
+    required bool                                           var_is_open                 = 2; // 이벤트 오픈 여부 
+    optional H3Enum.eInstantEventStrikeOutExtraFlag         var_extra_rank_flag         = 3; // 랭킹 지원 여부 (0: 랭킹 없음, 1: 랭킹 보상 있음)
+    optional TimeStamp										var_rank_expiry_date		= 4; // 랭킹 집계 종료일
+	optional bool                                           var_is_reward_possible      = 5; // 보상 가능 여부
+    optional bool                                           var_is_reward_all_complete  = 6; // 전체 보상 완료 여부
+    optional int32                                          var_max_step                = 7; // 최대 단계
+    optional int32											var_cur_goldenball	        = 8; // 사용가능한 골든볼
+	optional int32                                   		var_cur_step        	    = 9; // 현재 상품 받기 가능한 단계
+    optional int32                                          var_cur_step_need_point     = 10; // 현재 단계에서 보상에 필요한 포인트
+    repeated Struct.RewardInfo                              var_cur_step_reward_info    = 11; // 현재 단계 보상 정보
+    optional int32                                          var_cur_reward_point        = 12; // 보상용 포인트 (이벤트 기간 내내 누적)
+    optional int32                                          var_cur_ranking_point       = 13; // 랭킹용 포인트 (랭킹 집계 기간에만 누적)
+    optional int32                                          var_cur_ranking             = 14; // 현재 랭킹
+        
+}
+
+// 인스턴트 이벤트 : 전설의 삼진왕 이벤트 랭킹 정보
+message InstantStrikeOutEventRankingInfo
+{
+	required int32						var_ranking				= 1; // 랭킹
+	required int32						var_point 				= 2; // 삼진 포인트
+	optional bool						var_is_my_ranking		= 3 [default = false]; // 나의 랭킹 정보일땐 true~
+    optional bytes                      var_reserved_string_1   = 4; // 예약필드
+    optional int32                      var_reserved_integer_1  = 5; // 예약필드
+}
+
+// 인스턴트 이벤트 : 전설의 홈런왕 이벤트 진행 정보
+message InstantHomerunKingEventProgressInfo
+{
+	required int32											var_event_id			    = 1; // 이벤트 고유 ID
+    required bool                                           var_is_open                 = 2; // 이벤트 오픈 여부 
+    optional H3Enum.eInstantEventHomerunKingExtraFlag       var_extra_rank_flag         = 3; // 랭킹 지원 여부 (0: 랭킹 없음, 1: 랭킹 보상 있음)
+    optional TimeStamp										var_rank_expiry_date		= 4; // 랭킹 집계 종료일
+	optional bool                                           var_is_reward_possible      = 5; // 보상 가능 여부
+    optional bool                                           var_is_reward_all_complete  = 6; // 전체 보상 완료 여부
+    optional int32                                          var_max_step                = 7; // 최대 단계
+    optional int32											var_cur_goldenball	        = 8; // 사용가능한 골든볼
+	optional int32                                   		var_cur_step        	    = 9; // 현재 상품 받기 가능한 단계
+    optional int32                                          var_cur_step_need_point     = 10; // 현재 단계에서 보상에 필요한 포인트
+    repeated Struct.RewardInfo                              var_cur_step_reward_info    = 11; // 현재 단계 보상 정보
+    optional int32                                          var_cur_reward_point        = 12; // 보상용 포인트 (이벤트 기간 내내 누적)
+    optional int32                                          var_cur_ranking_point       = 13; // 랭킹용 포인트 (랭킹 집계 기간에만 누적)
+    optional int32                                          var_cur_ranking             = 14; // 현재 랭킹
+    optional int32                                          var_game_price              = 15; // 게임 비용
+        
+}
+
+// 인스턴트 이벤트 : 전설의 홈런왕 이벤트 랭킹 정보
+message InstantHomerunKingEventRankingInfo
+{
+	required int32						var_ranking				= 1; // 랭킹
+	required int32						var_point 				= 2; // 삼진 포인트
+	optional bool						var_is_my_ranking		= 3 [default = false]; // 나의 랭킹 정보일땐 true~
+    optional bytes                      var_reserved_string_1   = 4; // 예약필드
+    optional int32                      var_reserved_integer_1  = 5; // 예약필드
+
+}
+
+// 인스턴트 이벤트 : 전설의 홈런왕 이벤트 게임 결과
+message InstantHomerunKingEventGameResult
+{
+    optional int32                      var_result_id           = 1; // 결과 값 (crema 상에서의 id 값)
+    optional int32                      var_result_point        = 2; // 획득 포인트 (홈런 포인트)
+    optional int32                      var_result_distance     = 3; // 결과 비거리
+    repeated Struct.RewardInfo          var_reward_info         = 4; // 리워드 목록
+}
+
+
+// 유저캐어 이벤트 정보
+message UserCareEventInfo
+{
+    optional int32                      var_event_id                    = 1;    // 이벤트 고유 번호(ID)
+    optional H3Enum.eUserCareEventType  var_event_type                  = 2;    // 이벤트 타입
+    optional bool                       var_open                        = 3;    // 이벤트 진행 여부
+    optional bytes                      var_title                       = 4;    // 이벤트 이름
+    optional TimeStamp                  var_begin_time                  = 5;    // 이벤트 시작 날짜-시간
+    optional TimeStamp                  var_end_time                    = 6;    // 이벤트 종료 날짜-시간
+    optional int32                      var_cur_day_count               = 7;    // 현재 출석 날짜.
+    optional int32                      var_total_day_count             = 8;    // 이벤트 유지시간
+    optional int32                      var_tutorial_progress           = 9;    // 복귀유저의 경우 튜토리얼 단계 (0:진행전, 1:진행완료, 2:보상완료)
+    optional bool                       var_is_daily_reward_item        = 10;    // 오늘 보상받을게 있음? (0: 보상없음, 1:보상있음)
+};
+
+// 유저캐어 이벤트: 출석체크 관련 정보
+message UserCareEventAttendanceInfo
+{
+    optional int32						var_attendance_day				= 1; // 출석일
+	optional int64						var_reward_attendance_day		= 2; // 보상 받은 출석일 bitset
+};
+
+// 유저캐어 이벤트: 상품 정보
+message UserCareEventShopProductInfo
+{
+    optional int32                      var_guid              = 1;    // 아이템 고유 ID : 크레마 GUID
+    optional bytes                      var_product_desc      = 2;    // 아이템 설명
+    optional int32                      var_order_seq         = 3;    // 정렬 순서 : 화면 표시 순서를 운영툴에서 정한다.
+    optional int32                      var_buy_type          = 4;    // 구매 방법 (1: 인앱구매, 2: 상점구매(위닝볼,게임머니))
+    optional bool                       var_is_soldout        = 5;    // 개별 상품 완판 여부 (true: 구매불가, false: 구매가능)
+    optional int32                      var_cur_buy_count     = 6;    // 현재 구매 수량
+    optional int32                      var_max_buy_count     = 7;    // 최대 구매 수량
+    optional int32                      var_product_item_id   = 8;    // 인앱구매의 경우 inappitem_id, 위닝볼/게임머니의 경우 ID(테이블상의)
+
+}
+
+// 유저캐어 이벤트: 상품 구매 후 적용 정보
+message UserCareShopBuyResult
+{
+    optional int32                      var_guid              = 1;    // 아이템 고유 ID : 크레마 GUID
+    optional bool                       var_is_soldout        = 2;    // 개별 상품 완판 여부 (true: 구매불가, false: 구매가능)
+    optional int32                      var_cur_buy_count     = 3;    // 현재 구매 수량
+    optional int32                      var_max_buy_count     = 4;    // 최대 구매 수량
+    optional int32                      var_product_item_id   = 5;    // 인앱구매의 경우 inappitem_id, 위닝볼/게임머니의 경우 ID(테이블상의)
+
+}
+
+// 유학 시스템 : 유학 선수 데이터
+message StudyAbroadPlayerData
+{
+	required int32						var_center_id					= 1; // 유학지 ID
+	required int32						var_player_card_id				= 2; // 선수 카드 ID
+	required bool						var_is_complete					= 3; // 유학 종료 여부
+	required TimeStamp					var_study_abroad_start_date		= 4; // 유학 시작일
+	required TimeStamp					var_study_abroad_expiry_date	= 5; // 유학 만료일
+	required int32						var_experience					= 6; // 현재 경험치 maximum : 500
+	required int32						var_fatigue						= 7; // 현재 피로도 maximum : 100
+	required int32						var_training_id					= 8; // 현재 진행중인 훈련 ID( 상태이상 포함 )
+	required TimeStamp					var_training_expire_date		= 9; // 현재 진행중인 훈련 만료일
+	repeated int32						var_ability_id_list				= 10; // 유학 종료 후 선택해야 할 능력치 ID 리스트
+	required bool						var_is_expired					= 11; // 유학 시간이 만료 되었는가
+	optional bool						var_is_use_excellent_ticket		= 12 [default = false]; // 명인 등장 티켓 사용 여부
+}
+
+// 유학 시스템 : 유학 대륙 데이터
+message StudyAbroadContinentData
+{
+	required int32						var_continent_id				= 1; // 유학 대륙 ID
+	required bool						var_is_open						= 2; // 유학 대륙 오픈 여부
+	repeated int32						var_unlocked_center_id_list		= 3; // 오픈되어 있는 유학지 ID 리스트
+}
+
+// 등급 별 포스트 시즌 우승 횟수
+message StudyAbroadPennantGradeData
+{
+	required int32						var_pennant_grade				= 1; // 등급
+	required int32						var_post_season_trophy_count	= 2; // 포스트 시즌 우승 횟수
+}
+
+// 유학 시스템 : 유학지 데이터
+message StudyAbroadCenterData
+{
+	required int32						var_center_id					= 1; // 유학지 ID
+	required int32						var_complete_count				= 2; // 유학 완료 횟수
+}
+
+// 유학 시스템 : 유학 슬롯 데이터
+message StudyAbroadSlotData
+{
+	required int32						var_slot_id						= 1; // 유학 슬롯 ID
+	required bool						var_is_open						= 2; // 오픈 여부
+	optional StudyAbroadPlayerData		var_study_abroad_player_data	= 3; // 훈련 진행 중 또는 완료 된 선수 정보
+}
+
+// 랭킹전 정보
+message RankingModeInfo
+{
+    required int32          var_ranking_mode_season_id      =  1; // 랭킹전 시즌 ID (랭킹전 시즌 구분 유니크 값)
+    required TimeStamp      var_start_date                  =  2; // 랭킹전 시즌 시작일
+    required TimeStamp      var_end_date                    =  3; // 랭킹전 시즌 종료일
+    required int32          var_year                        =  4; // 랭킹전 시즌 년도
+    required int32          var_season_num_year             =  5; // 랭킹전 시즌 회차 (매년 1부터 시작)
+    optional int32          var_ranking_point               =  6 [default = 0]; // 랭킹 포인트
+    optional int32          var_win                         =  7 [default = 0]; // 승
+    optional int32          var_draw                        =  8 [default = 0]; // 무
+    optional int32          var_lose                        =  9 [default = 0]; // 패
+    optional int32          var_rank                        = 10 [default = 0]; // 순위
+    optional int32          var_fav_team_rank               = 11 [default = 0]; // 선호구단 순위
+    optional int32          var_remain_play_count           = 12 [default = 0]; // 무료 플레이 가능 횟수
+    optional int32          var_max_play_count              = 13 [default = 0]; // 무료 최대 플레이 가능 횟수
+    optional int32          var_play_count_cost             = 14 [default = 0]; // 유료 플레이 횟수 (비용 산출에 사용)
+}
+
+// 랭킹전 매치 정보
+message RankingModeMatchInfo
+{
+    required int32          var_game_id                         =  1; // 게임 ID
+    required int32          var_opp_team_guid                   =  2; // 상대 구단 GUID
+    required bytes          var_opp_team_name                   =  3; // 상대 구단 이름
+    required int32          var_opp_fav_team_id                 =  4; // 상대 구단 선호구단 ID
+    required int32          var_opp_emblem_id                   =  5; // 상대 구단 엠블럼 ID
+    required int32          var_opp_special_emblem_id           =  6; // 상대 구단 스페셜 엠블럼 ID
+    required int32          var_opp_ranking_point               =  7; // 상대 구단 랭킹 포인트
+    required int32          var_opp_win                         =  8; // 상대 구단 승
+    required int32          var_opp_draw                        =  9; // 상대 구단 무
+    required int32          var_opp_lose                        = 10; // 상대 구단 패
+    required int32          var_opp_rank                        = 11; // 상대 구단 순위
+    required int32          var_starter_pitcher_rotation_num    = 12; // 선발투수 로테이션 번호 (0 ~ 4)
+    required bool           var_is_special_match                = 13; // 스페셜 매치 여부
+}
+
+// 랭킹전 경기 결과 정보 1
+message RankingModeGameResultInfo1
+{
+    required int32          var_game_id                         =  1; // 게임 ID
+    required int32          var_opp_team_guid                   =  2; // 상대 구단 GUID
+    required int32          var_score                           =  3; // 경기 점수 - 본인
+    required int32          var_opp_score                       =  4; // 경기 점수 - 상대
+    required int32          var_prev_ranking_point              =  5; // 이전 랭킹 포인트
+    required int32          var_prev_rank                       =  6; // 이전 순위
+    required int32          var_prev_fav_team_rank              =  7; // 이전 선호구단 순위
+}
+
+// 랭킹전 경기 결과 정보 2
+message RankingModeGameResultInfo2
+{
+    required uint32         var_seed                            =  1; // 랜덤 Seed
+    required bytes          var_binary                          =  2; // 결과 바이너리
+    required int32          var_score                           =  3; // 경기 점수 - 본인
+    required int32          var_opp_score                       =  4; // 경기 점수 - 상대
+}
+
+// 랭킹전 경기 예측 정보
+message RankingModeGamePredictInfo
+{
+    required int32          var_game_predict_id                 =  1; // 경기 예측 항목 ID
+    required int32          var_result_value                    =  2; // 결과 값
+    required bool           var_is_hit                          =  3; // 적중 여부
+}
+
+// 랭킹전 구단 정보
+message RankingModeTeamInfo
+{
+    required int32          var_team_guid                       = 1; // 구단 ID
+    required bytes          var_team_name                       = 2; // 구단 이름
+    required int32          var_fav_team_id                     = 3; // 선호구단 ID
+    required int32          var_emblem_id                       = 4; // 엠블럼 ID
+    required int32          var_special_emblem_id               = 5; // 스페셜 엠블럼 ID
+    required int32          var_team_expoint                    = 6; // 구단 경험치
+    required int32          var_pennant_grade                   = 7; // 페넌트레이스 등급
+    required int32          var_ranking_point                   = 8; // 랭킹 포인트
+    required int32          var_win                             = 9; // 승수
+    required int32          var_win_rate                        = 10; // 승률
+}
+
+// 랭킹전 최고 기록 정보
+message RankingModeBestRecordInfo
+{
+    required int32          var_ranking_mode_season_id          =  1; // 랭킹전 시즌 ID (랭킹전 시즌 구분 유니크 값)
+    required int32          var_year                            =  2; // 랭킹전 시즌 년도
+    required int32          var_season_num_year                 =  3; // 랭킹전 시즌 회차 (매년 1부터 시작)
+    required int32          var_ranking_point                   =  4; // 랭킹 포인트
+    required int32          var_win                             =  5; // 승
+    required int32          var_draw                            =  6; // 무
+    required int32          var_lose                            =  7; // 패
+    required int32          var_rank                            =  8; // 순위
+    required int32          var_fav_team_rank                   =  9; // 선호구단 순위
+}
+
+// 랭킹전 기록 정보
+message RankingModeRecordInfo
+{
+    required int32          var_year                            =  1; // 랭킹전 시즌 년도
+    required int32          var_season_num_year                 =  2; // 랭킹전 시즌 회차 (매년 1부터 시작)
+    required int32          var_ranking_point                   =  3; // 랭킹 포인트
+    required int32          var_rank                            =  4; // 순위
+    required int32          var_fav_team_rank                   =  5; // 선호구단 순위
+}
+
+// 랭킹전 기록 정보 2 (구단 상세 정보 보기에서 사용)
+message RankingModeRecordInfo2
+{
+    optional int32          var_year                            =  1 [default = 0]; // 랭킹전 시즌 년도
+    optional int32          var_season_num_year                 =  2 [default = 0]; // 랭킹전 시즌 회차 (매년 1부터 시작)
+    optional int32          var_ranking_point                   =  3 [default = 0]; // 랭킹 포인트
+    optional int32          var_win                             =  4 [default = 0]; // 승
+    optional int32          var_draw                            =  5 [default = 0]; // 무
+    optional int32          var_lose                            =  6 [default = 0]; // 패
+    optional int32          var_rank                            =  7 [default = 0]; // 순위 (순위값이 0 이면 랭킹전에 참여하지 않은 상태)
+    optional int32          var_fav_team_rank                   =  8 [default = 0]; // 선호구단 순위
+}
+
+// 랭킹전 1위 기록 정보 (역대 1위 기록 조회에서 사용)
+message RankingModeRankTopRecordInfo
+{
+    required int32          var_ranking_mode_season_id          =  1; // 랭킹전 시즌 ID (랭킹전 시즌 구분 유니크 값)
+    required int32          var_year                            =  2; // 랭킹전 시즌 년도
+    required int32          var_season_num_year                 =  3; // 랭킹전 시즌 회차 (매년 1부터 시작)
+    required int32          var_team_guid                       =  4; // 구단 ID
+    required bytes          var_team_name                       =  5; // 구단 이름
+    required int32          var_fav_team_id                     =  6; // 선호구단 ID
+    required int32          var_emblem_id                       =  7; // 엠블럼 ID
+    required int32          var_special_emblem_id               =  8; // 스페셜 엠블럼 ID
+    required int32          var_ranking_point                   =  9; // 랭킹 포인트
+    required int32          var_win                             = 10; // 승
+    required int32          var_draw                            = 11; // 무
+    required int32          var_lose                            = 12; // 패
+}
+
+// [이사회] : 이사회 필수 정보
+message GuildEssentials
+{
+	required int32							var_guild_id					= 1; // 이사회 ID
+	required bytes							var_guild_name					= 2; // 이사회 명
+	required int32							var_emblem_id					= 3; // 이사회 엠블렘 ID
+	optional int32							var_member_count				= 4 [default = 0]; // 회원 수
+	optional int32							var_guild_guid					= 5 [default = 0]; // global guild guid
+}
+
+// [이사회] : 팀 정보에 들어갈 이사회 정보
+message GuildDataForTeamInfo
+{
+	required int32							var_guild_id					= 1; // 이사회 ID
+	required bytes							var_guild_name					= 2; // 이사회 명
+	required int32							var_emblem_id					= 3; // 이사회 엠블렘 ID
+	required H3Enum.eGuildMemberStateType	var_guild_member_state_type		= 4; // 이사회 멤버 상태 타입
+	optional Struct.TimeStamp				var_guild_activation_date		= 5; // 이사회 이용 가능 시간
+	optional int32							var_guild_league_season_id		= 6 [default = 0]; // 이사회 연고지 쟁탈전 시즌 ID
+	optional int32							var_guild_league_week_id		= 7 [default = 0]; // 이사회 연고지 쟁탈전 주차 ID
+	optional int32							var_guild_league_area_id		= 8 [default = 0]; // 이사회 연고지 쟁탈전 지역 ID
+	optional int32							var_guild_league_week_ranking	= 9 [default = 0]; // 이사회 연고지 쟁탈전 주차 랭킹
+	optional int32							var_guild_guid					= 10 [default = 0]; // global guild guid
+}
+
+// [이사회] : 이사회 기본 정보
+message GuildBasicData
+{
+	required int32			var_guild_id									= 1; // 이사회 ID
+	required bytes			var_guild_name									= 2; // 이사회 명
+	required int32			var_contribution_point							= 3; // 이사회 기여 포인트
+	required int32			var_emblem_id									= 4; // 이사회 엠블렘 ID
+	required int32			var_home_town_id								= 5; // 이사회 연고지 ID
+	required bytes			var_introduction								= 6; // 이사회 소개
+	required int32			var_ranking										= 7; // 이사회 순위
+	required int32			var_member_count								= 8; // 이사회원 수
+	required bytes			var_master_member_name							= 9; // 이사회 총재 이름
+	required int32			var_total_guild_count							= 10; // 총 이사회 수
+	required int32			var_ranking_member_ranking_mode_point			= 11; // 이사회 멤버 랭킹전 포인트 평균 순위
+	required int32			var_average_member_ranking_mode_point			= 12; // 이사회 멤버 랭킹전 포인트 평균 값
+	required int32			var_ranking_member_ranking_mode_point_variable	= 13; // 이사회 멤버 랭킹전 포인트 평균 순위 변동 폭
+	required int32			var_ranking_member_fame_point					= 14; // 이사회 멤버 명성 포인트 평균 순위
+	required int32			var_average_member_fame_point					= 15; // 이사회 멤버 명성 포인트 평균 값
+	required int32			var_ranking_member_fame_point_variable			= 16; // 이사회 멤버 명성 포인트 평균 순위 변동 폭
+	required bool			var_is_auto_join								= 17; // 자동 가입 가부
+	required bool			var_is_reserve_join								= 18; // 가입 승인 대기중인지 여부
+	optional int32			var_guild_guid									= 19 [default = 0]; // global guild guid
+}
+
+// [이사회] : 이사회 확장 정보
+message GuildExtendedData
+{
+	required Struct.GuildBasicData			var_guild_basic_data						= 1; // 이사회 기본 정보
+	repeated Struct.GuildMemberExtendedData	var_member_contribution_point_ranker_list	= 2; // 이사회 기여 포인트 랭커 정보 리스트
+	required int32							var_appointment								= 3; // 이사회 멤버 직책( ex. 가입 대기 : 0, 일반 : 1, 부총재 : 2, 총재 : 3 )
+	required bytes							var_notice									= 4; // 이사회 공지
+	required bool							var_is_available_daily_login				= 5; // 내가 오늘 이사회 출석 체크를 할 수 있는지 여부
+}
+
+// [이사회] : 이사회 멤버 기본 정보
+message GuildMemberBasicData
+{
+	required int32			var_team_guid						= 1; // 팀 GUID
+	required bytes			var_team_name						= 2; // 팀 명
+	required int32			var_team_level						= 3; // 팀 레벨
+	required int32          var_fav_team_id						= 4; // favorite team id
+    required int32          var_emblem_id						= 5; // 팀 emblem id
+    required int32          var_special_emblem_id				= 6; // 스페셜 emblem id
+	required int32			var_pennant_grade					= 7; // 페넌트 레이스 등급( ex. 메이저 )
+	required int32			var_contribution_point				= 8; // 이사회 멤버 기여 포인트
+}
+
+// [이사회] : 이사회 멤버 확장 정보
+message GuildMemberExtendedData
+{
+	required Struct.GuildMemberBasicData	var_guild_member_basic_data			= 1; // 이사회 멤버 기본 정보
+	required int32							var_appointment						= 2; // 이사회 멤버 직책( ex. 가입 대기 : 0, 일반 : 1, 부총재 : 2, 총재 : 3 )
+	required bool							var_is_online						= 3; // 온라인 여부
+	optional Struct.TimeStamp				var_logged_out_date					= 4; // 로그 아웃 시간
+	optional int32							var_guild_league_score				= 5 [default = 0]; // 연고지 쟁탈전 점수
+	optional int32							var_guild_league_challenge_count	= 6 [default = 0]; // 연고지 쟁탈전 참여 횟수
+}
+
+// [이사회] : 이사회 상점 정보
+message GuildShopData
+{
+	required int32						var_shop_index					= 1; // 현재 이사회 상점 인덱스
+	required int32						var_contribution_point			= 2; // 이사회 기여 포인트
+	required Struct.TimeStamp			var_expiry_date					= 3; // 상점 만료 기간
+	repeated Struct.GuildShopSlotData	var_guild_shop_slot_data_list	= 4; // 상품 데이터 리스트
+	optional int32						var_extended_slot_count			= 5 [default = 0]; // 슬롯이 몇개 더 확장 되었는가?
+}
+
+// [이사회] : 이사회 상점 슬롯 정보
+message GuildShopSlotData
+{
+	required int32			var_slot_id							= 1; // 슬롯 ID
+	required int32			var_shop_table_id					= 2; // 이사회 상점 테이블 ID
+	required int32			var_purchase_amount					= 3; // 구매한 개수
+}
+
+// 게임 내 재화 및 아이템 정보
+message CommonCurrencyData
+{
+	message ItemData
+	{
+		required int32		var_item_guid			= 1;
+		required int32		var_item_amount			= 2;
+	}
+	optional int32					var_cash							= 1;
+	optional int32					var_game_money						= 2;
+	optional int32					var_training_point					= 3;
+	optional int32					var_team_expoint					= 4;
+	repeated ItemData				var_item_data_list					= 5;
+	repeated FunctionalCardInfo		var_functional_card_info_list		= 6;
+}
+
+// KBO 예측: 경기 정보 (경기 일정 정보 조회에서 사용)
+message KboBettingGameInfo
+{
+    required bytes                      var_gmkey                       =  1; // GMKEY (경기 식별 KEY 문자열)
+    required H3Enum.eKboBettingGameCode var_game_code                   =  2; // 경기구분코드
+    required bool                       var_is_game_end                 =  3; // 경기 종료 여부
+    required bool                       var_is_game_cancel              =  4; // 경기 취소 여부
+    required bool                       var_is_doubleheader             =  5; // 더블헤더 여부
+    required bytes                      var_stadium_name                =  6; // 경기장 이름
+    required TimeStamp                  var_game_time                   =  7; // 경기 시간
+    required int32                      var_home_fav_team_id            =  8; // (Home) 선호구단 ID
+    required bytes                      var_home_spitcher_name          =  9; // (Home) 선발 투수 이름
+    required int32                      var_home_score                  = 10; // (Home) 점수
+    required int32                      var_away_fav_team_id            = 11; // (Away) 선호구단 ID
+    required bytes                      var_away_spitcher_name          = 12; // (Away) 선발 투수 이름
+    required int32                      var_away_score                  = 13; // (Away) 점수
+    required int32                      var_total_betting_count         = 14; // 예측 총 수
+    required int32                      var_home_betting_count          = 15; // (Home) 예측 수
+    required bool                       var_is_enable_betting           = 16; // 예측 가능 여부
+    required bool                       var_is_user_betting             = 17; // 예측 참여 여부
+    required int32                      var_user_betting_result_flags   = 18; // 예측 결과 비트 플래그 (H3Enum::eKboBettingResultFlag)
+}
+
+// KBO 예측: 경기 정보 2 (경기 세부 정보 조회에서 사용)
+message KboBettingGameInfo2
+{
+    optional int32                      var_fav_team_id                 =  1 [default = 1]; // 선호구단 ID
+    optional int32                      var_game_count                  =  2 [default = 0]; // 경기 수
+    optional int32                      var_win                         =  3 [default = 0]; // 승
+    optional int32                      var_lose                        =  4 [default = 0]; // 패
+    optional int32                      var_draw                        =  5 [default = 0]; // 무
+    optional int32                      var_last5                       =  6 [default = 0]; // 최근 5경기 결과 (정수 자료형으로 12312(승무패승무), 231(무패승), 0(전적없음) 형식으로 설정)
+    optional int32                      var_rank                        =  7 [default = 0]; // 순위
+}
+
+// KBO 예측: 경기 정보 3 (경기 예측 결과 확인 설정에서 사용)
+message KboBettingGameInfo3
+{
+    optional int32                      var_fav_team_id                 =  1 [default = 1]; // 선호구단 ID
+    optional int32                      var_win                         =  2 [default = 0]; // 승
+    optional int32                      var_lose                        =  3 [default = 0]; // 패
+    optional int32                      var_draw                        =  4 [default = 0]; // 무
+    optional int32                      var_rank                        =  5 [default = 0]; // 순위
+    optional int32                      var_score                       =  6 [default = 0]; // 점수
+    optional int32                      var_hr                          =  7 [default = 0]; // 홈런
+    optional int32                      var_so                          =  8 [default = 0]; // 탈삼진
+}
+
+// KBO 예측: 예측 설정 정보
+message KboBettingSettingInfo
+{
+    optional bool                       var_is_win_home                 =  1 [default = false]; // 예측 Home 승리 여부 (true: Home 승리, false: Away 승리)
+    optional int32                      var_kbo_point                   =  2 [default = 0]; // 사용 KBO 포인트
+    optional int32                      var_score_record_id             =  3 [default = 0]; // 예측 점수 기록 ID (크레마 KBO_Predict_Record::GUID)
+    optional int32                      var_hr_record_id                =  4 [default = 0]; // 예측 홈런 기록 ID (크레마 KBO_Predict_Record::GUID)
+    optional int32                      var_so_record_id                =  5 [default = 0]; // 예측 탈삼진 기록 ID (크레마 KBO_Predict_Record::GUID)
+}
+
+// KBO 예측: 예측 결과 정보
+message KboBettingResultInfo
+{
+    required bytes                          var_gmkey                       =  1; // GMKEY (경기 식별 KEY 문자열)
+    required TimeStamp                      var_game_time                   =  2; // 경기 시간
+    required bool                           var_is_game_cancel              =  3; // 경기 취소 여부
+    optional Struct.KboBettingGameInfo3     var_home_info                   =  4; // Home 정보
+    optional Struct.KboBettingGameInfo3     var_away_info                   =  5; // Away 정보
+    required int32                          var_total_betting_count         =  6; // 예측 총 수
+    required int32                          var_home_betting_count          =  7; // (Home) 예측 수
+    required Struct.KboBettingSettingInfo   var_user_betting_setting_info   =  8; // 예측 설정 정보
+    required int32                          var_user_betting_result_flags   =  9; // 예측 결과 비트 플래그 (H3Enum::eKboBettingResultFlag)
+    optional float                          var_dividend_rate               = 10 [default = 0]; // 배당률
+    optional int32                          var_reward_kbo_point            = 11 [default = 0]; // 기본 획득 KBO 포인트 (승리 예측 또는 경기 취소 환급)
+    optional int32                          var_reward_kbo_point_bonus      = 12 [default = 0]; // 추가 획득 KBO 포인트 (기록 예측 보너스)
+}
+
+// KBO 예측: 판매 상품 정보
+message KboBettingSellItemInfo
+{
+    required int32                      var_kbo_shop_id                 =  1; // KBO Shop ID
+    required int32                      var_buy_count                   =  2; // 구입한 수량
+}
+
+// KBO 예측: 구단 정보 (순위 목록 조회에 사용)
+message KboBettingTeamInfo
+{
+    required int32                      var_team_guid                   =  1; // 구단 ID
+    required bytes                      var_team_name                   =  2; // 구단 이름
+    required int32                      var_fav_team_id                 =  3; // 선호구단 ID
+    required int32                      var_emblem_id                   =  4; // 엠블럼 ID
+    required int32                      var_special_emblem_id           =  5; // 스페셜 엠블럼 ID
+    required int32                      var_team_expoint                =  6; // 구단 경험치
+    required int32                      var_pennant_grade               =  7; // 페넌트레이스 등급
+    required int32                      var_hit_count                   =  8; // 적중 횟수
+}
+
+// KBO 예측: KBO 순위 정보
+message KboBettingKboRankInfo
+{
+    required int32                      var_rank                        =  1; // 순위
+    required int32                      var_fav_team_id                 =  2; // 선호구단 ID
+    required int32                      var_win                         =  3; // 승
+    required int32                      var_lose                        =  4; // 패
+    required int32                      var_draw                        =  5; // 무
+}
+
+// KBO 예측: KBO 예상 라인업 정보
+message KboBettingKboLineUpInfo
+{
+    required Struct.KboLineUpSPitcherInfo      var_spitcher_info        =  1; // 라인업 선발 투수 정보
+    repeated Struct.KboLineUpHitterInfo        var_hitter_infos         =  2; // 라인업 선발 타선 정보
+}
+
+// KBO 예측: KBO 예상 라인업 선발 투수 정보
+message KboLineUpSPitcherInfo
+{
+    optional bytes                      var_pcode                       =  1 [default = "-"]; // 선수 코드
+    optional bytes                      var_name						=  2 [default = "-"]; // 선수 이름
+	optional int32                      var_game_cn                     =  3 [default = 0]; // 경기수
+	optional int32                      var_era							=  4 [default = 0]; // 평균자책점(백분율)
+    optional int32                      var_win                         =  5 [default = 0]; // 승
+    optional int32                      var_lose                        =  6 [default = 0]; // 패
+    optional int32                      var_save                        =  7 [default = 0]; // 세이브
+	optional bytes						var_inn							=  8 [default = "0"]; // 이닝
+	optional int32                      var_er							=  9 [default = 0]; // 자책점
+}
+
+// KBO 예측: KBO 예상 라인업 선발 타선 정보
+message KboLineUpHitterInfo
+{
+    required bytes                      var_pcode                       =  1; // 선수 코드
+    required bytes                      var_name						=  2; // 선수 이름
+	required int32                      var_turn                        =  3; // 타순(1 ~ 9)
+	required H3Enum.ePosition           var_position_id                 =  4; // 포지션 ID (Crema 참조)
+	optional int32                      var_game_cn                     =  5 [default = 0]; // 경기수
+	optional int32                      var_hra							=  6 [default = 0]; // 타율(천분율)
+	optional int32                      var_ab							=  7 [default = 0]; // 타수
+	optional int32                      var_hit							=  8 [default = 0]; // 안타
+	optional int32                      var_hr							=  9 [default = 0]; // 홈런
+	optional int32                      var_rbi							= 10 [default = 0]; // 타점
+	optional int32                      var_sb							= 11 [default = 0]; // 도루
+}
+
+
+// [이사회 연고지 쟁탈전] : 상태 정보
+message GuildLeagueStatusData
+{
+	required H3Enum.eGuildLeagueStatus	var_guild_league_status			= 1; // 상태
+	required Struct.TimeStamp			var_expiry_date					= 2; // 현재 상태의 종료 시간
+	required int32						var_season_id					= 3; // 시즌 ID
+	required int32						var_week_id						= 4; // 주차 ID
+	optional bool						var_is_rewardable				= 5 [default = false]; // 받을 보상이 있는가?
+	optional int32						var_open_period_table_id		= 6 [default = 0]; // GL_OpenPeriod Table ID
+	optional bool						var_is_exist_matchup_guild		= 7 [default = false]; // 도전할 이사회가 존재하는가?
+	optional int32						var_matchup_guild_id			= 8 [default = 0]; // 도전할 이사회 ID
+	optional int32						var_matchup_hometown_id			= 9 [default = 0]; // 도전할 연고지 ID
+}
+
+// [이사회 연고지 쟁탈전] : 참가 정보
+message GuildLeagueParticipationData
+{
+	required bool						var_is_participation						= 1; // 참가 여부
+	optional int32						var_area_id									= 2 [default = 0]; // 참가 신청한 지역 ID
+	optional bytes						var_participation_team_name					= 3 [default = ""]; // 참가 신청한 구단주명
+	optional int32						var_participation_member_appointment		= 4 [default = 0]; // 참가 신청한 구단주의 길드 내 직책
+}
+
+// [이사회 연고지 쟁탈전] : 연고지 정보
+message GuildLeagueHomeTownData
+{
+	required int32						var_hometown_id					= 1; // 연고지 ID
+	required bool						var_is_activation				= 2; // 연고지 활성화 여부
+	required int32						var_hometown_effect_table_id	= 3; // 연고지 선수 능력치 효과 테이블 ID
+}
+
+// [이사회 연고지 쟁탈전] : 개별 리그 시합 현황 정보
+message GuildLeagueIndividualLeagueRecordsData
+{
+	required int32										var_area_id						= 1; // 지역 ID
+	required bool										var_is_participation_team		= 2; // 리그에 참가한 구단인가?( 리그 시작 후 이사회 가입 유저는 false )
+	required int32										var_daily_challenge_count		= 3; // 나의 일일 도전 횟수
+	repeated Struct.GuildLeagueIndividualLeagueRecords	var_guild_league_records_list	= 4; // 길드별 시합 현황 기록
+}
+
+// [이사회 연고지 쟁탈전] : 전체 리그 전적 기록 정보
+message GuildLeagueTotalLeagueRecordsData
+{
+	required int32									var_records_season_id				= 1; // 시즌 ID
+	required int32									var_records_week_id					= 2; // 주차 ID
+	required int32									var_area_id							= 3; // 지역 ID
+	required H3Enum.eGuildLeagueRecordsType			var_guild_league_records_type		= 4; // 전적 기록 타입
+	repeated Struct.GuildLeagueTotalLeagueRecords	var_guild_league_records_list		= 5; // 전적 기록 리스트
+}
+
+// [이사회 연고지 쟁탈전] : 매치업 이사회 정보
+message GuildLeagueMatchupGuildData
+{
+	required int32									var_starting_pitcher_rotation		= 1; // 선발 투수 로테이션
+	required Struct.GuildEssentials					var_guild_essentials				= 2; // 상대 이사회 정보
+	required int32									var_hometown_id						= 3; // 경기 진행할 연고지 ID
+	repeated Struct.GuildLeagueMatchupTeam			var_matchup_team_list				= 4; // 매칭 후보 구단 정보 리스트
+}
+
+// [이사회 연고지 쟁탈전] : 경기 결과 정보
+message GuildLeagueMatchPlayResultData
+{
+	required Struct.GuildLeagueMatchupTeam			var_matchup_team					= 1; // 매칭 구단 정보
+	required Struct.GuildLeagueMatchPlayResult		var_match_play_result				= 2; // 경기 결과
+	required int32									var_hometown_id						= 3; // 경기 진행한 연고지 ID
+	optional int32									var_own_tactics_table_id			= 4 [default = 0]; // 나의 작전 방침 테이블 ID( FriendlytTactics_Table )
+	required int32									var_opp_tactics_table_id			= 5; // 매칭 구단 작전 방침 테이블 ID( FriendlytTactics_Table )
+}
+
+// [이사회 연고지 쟁탈전] : 보상 정보
+message GuildLeagueRewardData
+{
+	required H3Enum.eGuildLeagueRewardFlag				var_reward_flag						= 1; // 보상 플래그
+	required int32										var_season_id						= 2; // 시즌 ID
+	optional int32										var_week_id							= 3 [default = 0]; // 주차 ID
+	optional Struct.GuildLeagueWeekHomeTownReward		var_week_hometown_reward			= 4; // 주차 연고지 보상
+	optional Struct.GuildLeagueWeekRankingReward		var_week_ranking_reward				= 5; // 주차 개별 랭킹 보상
+	optional Struct.GuildLeagueWeekTotalRankingReward	var_week_total_ranking_reward		= 6; // 주차 통합 랭킹 보상
+	optional Struct.GuildLeagueSeasonTotalRankingReward	var_season_total_ranking_reward		= 7; // 시즌 통합 랭킹 보상
+	optional int32										var_week_total_challenge_count		= 8 [default = 0]; // 주차 누적 도전 횟수
+	optional int32										var_season_total_challenge_count	= 9 [default = 0]; // 시즌 누적 도전 횟수
+}
+
+// [이사회 연고지 쟁탈전] : 진행 중인 쟁탈전의 전적 현황
+message GuildLeagueScoreboardData
+{
+	required Struct.GuildEssentials						var_guild_essentials				= 1; // 이사회 정보
+	required int32										var_ranking							= 2; // 이사회 순위
+	required int32										var_colors_id						= 3; // 이사회 깃발 ID
+	repeated Struct.GuildLeagueScoreboardGuild			var_scoreboard_guild_list			= 4; // 이사회별 전적 현황
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// [이사회 연고지 쟁탈전] : 개별 이사회 전적 현황
+message GuildLeagueScoreboardGuild
+{
+	required int32								var_guild_id					= 1; // 이사회 ID
+	repeated Struct.GuildLeagueScoreboard		var_scoreboard_list				= 2; // 전적 현황
+}
+
+// [이사회 연고지 쟁탈전] : 전적 현황
+message GuildLeagueScoreboard
+{
+	required H3Enum.eGuildLeagueScoreboardType	var_scoreboard_type				= 1; // 전적 현황 타입
+	required Struct.GuildLeagueRecords			var_guild_league_records		= 2; // 전적 기록
+}
+
+// [이사회 연고지 쟁탈전] : 전체 리그 전적 기록
+message GuildLeagueTotalLeagueRecords
+{
+	required Struct.GuildEssentials				var_guild_essentials			= 1; // 이사회 정보
+	required Struct.GuildLeagueRecords			var_guild_league_records		= 2; // 전적 기록
+	optional bool								var_is_own_guild				= 3 [default = false]; // 나의 길드인가?
+}
+
+// [이사회 연고지 쟁탈전] : 개별 리그 전적 기록
+message GuildLeagueIndividualLeagueRecords
+{
+	required Struct.GuildEssentials				var_guild_essentials						= 1; // 이사회 정보
+	required Struct.GuildLeagueRecords			var_guild_league_records					= 2; // 전적 기록
+	optional bool								var_is_own_guild							= 3 [default = false]; // 나의 길드인가?
+	required int32								var_colors_id								= 4; // 이사회 깃발 ID
+	required int32								var_hometown_count							= 5; // 점령중인 연고지 개수
+	repeated Struct.GuildLeagueHomeTownRecords	var_guild_league_hometown_records_list		= 6; // 연고지별 전적 기록
+}
+
+// [이사회 연고지 쟁탈전] : 연고지 전적 기록
+message GuildLeagueHomeTownRecords
+{
+	required int32								var_hometown_id					= 1; // 연고지 ID
+	required Struct.GuildLeagueRecords			var_guild_league_records		= 2; // 전적 기록
+}
+
+// [이사회 연고지 쟁탈전] : 전적 기록
+message GuildLeagueRecords
+{
+	optional int32								var_ranking						= 1 [default = 0]; // 순위
+	optional int32								var_score						= 2 [default = 0]; // 점수
+	optional int32								var_win_count					= 3 [default = 0]; // 승
+	optional int32								var_draw_count					= 4 [default = 0]; // 무
+	optional int32								var_lose_count					= 5 [default = 0]; // 패
+}
+
+// [이사회 연고지 쟁탈전] : 매치업 이사회의 구단 정보
+message GuildLeagueMatchupTeam
+{
+	required Struct.TeamInfo					var_opp_team_info				    = 1; // 상대 구단 정보
+	required Struct.RosterInfo					var_opp_roster_info				    = 2; // 상대 구단 로스터 정보
+	repeated Struct.OperationPlayerCard			var_opp_opc_list				    = 3; // 상대 구단 선수 정보 목록
+
+    repeated Struct.AlbumCardInfo				var_team_album_card_info_list	    = 4; // 구단 앨범 목록
+	repeated int32								var_team_mastery_id_list		    = 5; // 구단 마스터리 ID 목록
+	required int32								var_match_winpoint_table_id		    = 6; // GL_MatchWinpoint 테이블 ID
+}
+
+// [이사회 연고지 쟁탈전] : 경기 결과
+message GuildLeagueMatchPlayResult
+{
+	required uint32									var_seed							= 1; // 랜덤 Seed
+	required bytes									var_binary							= 2; // 결과 바이너리
+	required int32									var_score							= 3; // 경기 점수 - 본인
+	required int32									var_opp_score						= 4; // 경기 점수 - 상대
+}
+
+// [이사회 연고지 쟁탈전] : 주차 연고지 보상
+message GuildLeagueWeekHomeTownReward
+{
+	repeated int32								var_reward_table_id_list		= 1; // 보상 타입에 따른 테이블의 ID
+	optional int32								var_area_id						= 2 [default = 0]; // 지역 ID( only server )
+}
+
+// [이사회 연고지 쟁탈전] : 주차 랭킹 보상
+message GuildLeagueWeekRankingReward
+{
+	message GuildRecords
+	{
+		required Struct.GuildEssentials				var_guild_essentials			= 1; // 이사회 정보
+		required Struct.GuildLeagueRecords			var_guild_league_records		= 2; // 전적 기록
+		optional bool								var_is_own_guild				= 3 [default = false]; // 나의 길드인가?
+	}
+
+	required int32								var_area_id						= 1; // 지역 ID
+	required int32								var_reward_table_id				= 2; // 보상 타입에 따른 테이블의 ID
+	optional int32								var_area_buff_id				= 3 [default = 0]; // 지역 점령 시 AreaReward Table ID
+	repeated GuildRecords						var_guild_records_list			= 4; // 이사회 전적 기록
+}
+
+// [이사회 연고지 쟁탈전] : 주차 통합 랭킹 보상
+message GuildLeagueWeekTotalRankingReward
+{
+	required int32								var_reward_table_id				= 1; // 보상 타입에 따른 테이블의 ID
+	optional int32								var_ranking						= 2 [default = 0]; // 랭킹( only server )
+}
+
+// [이사회 연고지 쟁탈전] : 시즌 통합 랭킹 보상
+message GuildLeagueSeasonTotalRankingReward
+{
+	required int32								var_reward_table_id				= 1; // 보상 타입에 따른 테이블의 ID
+	optional int32								var_ranking						= 2 [default = 0]; // 랭킹( only server )
+}
+
+message RandomResult
+{
+    required int32                      var_id              = 1; // ID 값 (선수카드, 작전카드, 아이템)
+    required int32                      var_count           = 2; // 수량
+}
+
+// 레전드 영입: 재료 슬롯 정보
+message LegendPlayerMaterialSlotInfo
+{
+    required int32                          var_material_slot       = 1; // 재료 슬롯 번호 (1부터 시작)
+    required int32                          var_player_card_id      = 2; // 선수카드 ID (양수: 등록된 재료, 음수: 대표 선수(해당 선수카드 ID 의 음수 값))
+}
+
+// 레전드 영입: 테마 슬롯 정보
+message LegendPlayerThemeSlotInfo
+{
+    required int32                          var_theme_slot          = 1; // 테마 슬롯 번호 (1부터 시작)
+    repeated LegendPlayerMaterialSlotInfo   var_material_slots      = 2; // 설정된 재료 슬롯 정보 목록
+}
+
+// 레전드 영입: 레전드 선수 정보
+message LegendPlayerInfo
+{
+    required int32                          var_player_card_id      = 1; // 선수카드 ID
+    repeated LegendPlayerThemeSlotInfo      var_theme_slots         = 2; // 설정된 테마 슬롯 정보 목록
+}
+
+// 어빌리티 정보
+message AbilitiesData
+{
+	required H3Enum.eContentBuff			var_category			= 1;
+	required int32							var_value				= 2;
+}
+
+// 버프 정보
+message BuffData
+{
+	required H3Enum.eContentCategory		var_category			= 1;
+	required int32							var_table_id			= 2;
+	optional Struct.TimeStamp				var_expiry_date			= 3;
+}
+
+// 평가전 경기 정보
+message TryoutMatchGameInfo
+{
+    required int64          var_game_id                         = 1; // 게임 ID
+    required bool           var_is_revenged                     = 2; // 리벤지 경기 여부 (리벤지로 진행한 경기인지를 나타낸다.)
+    required int32          var_score                           = 3; // 점수
+    required int32          var_add_point                       = 4; // 획득 포인트
+    required int32          var_point                           = 5; // 누적 포인트 (획득 포인트 반영)
+    required int32          var_opp_score                       = 6; // 상대 구단 점수
+    required int32          var_opp_add_point                   = 7; // 상대 구단 획득 포인트
+    required int32          var_opp_point                       = 8; // 상대 구단 누적 포인트 (획득 포인트 반영)
+    required int32          var_opp_team_guid                   = 9; // 상대 구단 ID
+    required bytes          var_opp_team_name                   = 10; // 상대 구단 이름
+    required int32          var_opp_fav_team_id                 = 11; // 상대 구단 선호구단 ID
+    required int32          var_opp_emblem_id                   = 12; // 상대 구단 엠블럼 ID
+    required int32          var_opp_special_emblem_id           = 13; // 상대 구단 스페셜 엠블럼 ID
+    required int32          var_opp_team_expoint                = 14; // 상대 구단 경험치
+    required int32          var_opp_pennant_grade               = 15; // 상대 구단 페넌트레이스 등급
+    required TimeStamp      var_opp_logout_time                 = 16; // 상대 구단 로그아웃 시간
+}
+
+// 평가전 구단 정보
+message TryoutMatchTeamInfo
+{
+    required int32          var_team_guid                       = 1; // 구단 ID
+    required bytes          var_team_name                       = 2; // 구단 이름
+    required int32          var_fav_team_id                     = 3; // 선호구단 ID
+    required int32          var_emblem_id                       = 4; // 엠블럼 ID
+    required int32          var_special_emblem_id               = 5; // 스페셜 엠블럼 ID
+    required int32          var_team_expoint                    = 6; // 구단 경험치
+    required int32          var_pennant_grade                   = 7; // 페넌트레이스 등급
+    required int32          var_point                           = 8; // 포인트
+}
+
+message TeamEntryInfoForBinaryFile
+{
+    required Struct.TeamInfo                var_team_info       = 1; // 구단 정보
+    required Struct.RosterInfo              var_roster_info     = 2; // 로스터 정보
+    repeated Struct.OperationPlayerCard     var_opc_list        = 3; // 선수 정보 목록
+}
+
+// [전지훈련 리뉴얼] : 보너스 타입 정보
+message TrainingCampBonusTypeData
+{
+	required int32			var_remain_bonus_refresh_count		= 1; // 남은 보너스 타입 리프레쉬 카운트
+	required int32			var_total_bonus_refresh_count		= 2; // 총 보너스 타입 리프레쉬 카운트
+	required int32			var_current_bonus_type_table_id		= 3; // 현재 보너스 타입 테이블 ID
+}
+
+// [전지훈련 리뉴얼] : 보너스 보상 정보
+message TrainingCampBonusRewardData
+{
+	required bool			var_is_rewardable					= 1; // 보상이 있는가?
+	optional bool			var_is_receive						= 2 [default = false]; // 보상을 받았는가?
+	optional int32			var_reward_table_id					= 3 [default = 0]; // 보상 테이블 ID
+}
+
+// [쪽지] : 쪽지(Memo)
+message Memo
+{
+    required int32          var_id                              = 1; // 쪽지 고유 ID
+    optional TimeStamp      var_time                            = 2; // 쪽지 생성 시간
+    optional int32          var_opp_team_guid                   = 3; // 대상 TEAM GUID
+    optional bytes          var_opp_team_name                   = 4; // 대상 TEAM NAME
+    optional int32          var_opp_fav_team_id                 = 5; // 대상 TEAM 선호구단ID
+    optional int32          var_opp_team_level                  = 6; // 대상 TEAM LEVEL
+    optional int32          var_opp_pennant_grade               = 7; // 대상 TEAM 패넌트 등급
+    optional bool           var_is_read                         = 8; // 메시지 읽었는지 표시 (true:읽음, false: 읽지 않음)
+    optional bytes          var_message                         = 9; // 메시지 본문
+}
+
+// [쪽지] : 차단(MemoBlock)
+message MemoBlock
+{
+    required int32          var_opp_team_guid                   = 1; // 차단한 TEAM GUID
+    optional TimeStamp      var_block_time                      = 2; // 차단 등록 시간
+    optional bytes          var_opp_team_name                   = 3; // 차단한 TEAM NAME
+    optional int32          var_opp_fav_team_id                 = 4; // 차단한 TEAM 선호구단ID
+    optional int32          var_opp_team_level                  = 5; // 차단한 TEAM LEVEL
+    optional int32          var_opp_pennant_grade               = 6; // 대상 TEAM 패넌트 등급
+}
+
+// [초청 경기] : 전반적인 정보
+message InvitationMatchOverallData
+{
+	required int32									var_match_group_id						= 1; // IM_Info crema table Match_Group column ID
+	required int32									var_remain_challenge_ticket_amount		= 2; // 남은 도전 티켓 수량
+	repeated Struct.InvitationMatchTeam				var_invitation_match_team_list			= 3; // 선정된 구단 정보 리스트
+	required int32									var_total_win_count						= 4; // 총 승 수
+	optional Struct.InvitationMatchSelectionData	var_selection_data						= 5; // 선정 구단 여부에 따른 필요 데이터
+}
+
+// [초청 경기] : 매치업 구단 정보
+message InvitationMatchMatchupTeamData
+{
+	required int32									var_starting_pitcher_rotation		= 1; // 선발 투수 로테이션
+	required Struct.MatchupTeam						var_matchup_team					= 2; // 매칭 구단 정보
+}
+
+// [초청 경기] : 경기 결과 정보
+message InvitationMatchPlayResultData
+{
+	required Struct.MatchupPlayResult				var_matchup_play_result				= 1; // 경기 결과
+	optional int32									var_own_tactics_table_id			= 2 [default = 0]; // 나의 작전 방침 테이블 ID( FriendlytTactics_Table )
+}
+
+// [초청 경기] : 보상 정보
+message InvitationMatchRewardData
+{
+	required int32								var_play_result_reward_table_id			= 1; // IM_Reward crema table GUID column ID
+	required int32								var_win_point_reward_table_id			= 2; // IM_WinPoint_Reward crema table GUID column ID
+}
+
+// [초청 경기] : 선정 정보
+message InvitationMatchSelectionData
+{
+	optional bool								var_show_selection_popup				= 1 [default = false]; // 선정 구단 팝업 출력 여부
+	optional int32								var_selection_match_group_id			= 2 [default = 0]; // 선정 매치 그룹 ID
+	optional int32								var_selection_round_id					= 3 [default = 0]; // 선정 라운드 ID
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// [초청 경기] : 선정 구단 정보
+message InvitationMatchTeam
+{
+	required int32								var_round_id					= 1; // 라운드 ID
+	required Struct.TeamInfo					var_opp_team_info				= 2; // 상대 구단 정보
+	required H3Enum.eResultType					var_result_type					= 3; // 승 패 무
+	optional H3Enum.eDifficultyLevel			var_difficulty_level			= 4; // 난이도
+}
+
+// 매치업 구단 정보
+message MatchupTeam
+{
+	required Struct.TeamInfo					var_opp_team_info				= 1; // 상대 구단 정보
+	required Struct.RosterInfo					var_opp_roster_info				= 2; // 상대 구단 로스터 정보
+	repeated Struct.OperationPlayerCard			var_opp_opc_list				= 3; // 상대 구단 선수 정보 목록
+    repeated Struct.AlbumCardInfo				var_team_album_card_info_list	= 4; // 구단 앨범 목록
+	repeated int32								var_team_mastery_id_list		= 5; // 구단 마스터리 ID 목록
+}
+
+// 매치업 경기 결과
+message MatchupPlayResult
+{
+	required uint32									var_seed							= 1; // 랜덤 Seed
+	required bytes									var_binary							= 2; // 결과 바이너리
+	required int32									var_score							= 3; // 경기 점수 - 본인
+	required int32									var_opp_score						= 4; // 경기 점수 - 상대
+}
+
+// [선수 컬렉션] 선수카드 컬렉션 등록 데이터
+message InstantPlayerCardCollectionData
+{
+    required int32                                  var_slot_id         = 1; // 슬롯 ID
+    required int32                                  var_playercard_id   = 2; // 선수카드 ID
+}
+
+// [선수 컬렉션] 선수카드 컬렉션 정보
+message InstantPlayerCardCollectionInfo
+{
+    required int32                                  var_mission_id              = 1; // 미션 ID
+    optional int32                                  var_mission_level           = 2 [default = 1]; // 미션 달성 Level
+    repeated Struct.InstantPlayerCardCollectionData var_collection_data_list    = 3; // 수집된 카드 리스트
+}
+
+// [구단 정보] 상대 구단 정보 
+message OppenentTeamInfo
+{
+    required int32                      var_team_guid               = 1; // teamGuid
+    optional Struct.TeamInfo            var_teaminfo                = 2; // 팀 정보
+    repeated Struct.OperationPlayerCard var_opc                     = 3; // 카드 전체 정보
+    optional Struct.RosterInfo          var_roster_info             = 4; // 로스터 정보
+    repeated Struct.PlayerCardSimpleRecord var_card_record          = 5; // 선수카드 기록 정보
+    repeated int32                      var_team_mastery_id_list    = 7; // 구단 마스터리 ID 목록
+    repeated Struct.AlbumCardInfo       var_team_album_card_info_list = 8; // 구단 앨범 목록
+}
+
+// [힛 더 하이라이트 이벤트] 이벤트 기본 정보
+message HitTheHighlightEventOverallData
+{
+	required H3Enum.ePriorConsentState					var_prior_consent_state					= 1; // 사전 동의 상태
+	required int32										var_current_combo_streak				= 2; // 현재 연속 적중 수
+	required int32										var_best_record_combo_streak			= 3; // 최고 연속 적중 수
+	required int32										var_ingame_reward_combo_streak			= 4; // 인게임 보상을 받은 연속 적중 수( 이하 연속 적중 보상은 모두 받은 상태 )
+	repeated Struct.HitTheHighlightEventGiveawayData	var_giveaway_data_list					= 5; // 경품에 대한 정보 리스트
+}
+
+// [힛 더 하이라이트 이벤트] 경품 정보
+message HitTheHighlightEventGiveawayData
+{
+	required int32						var_combo_streak							= 1; // 연속 적중 수
+	required int32						var_current_participants					= 2; // 현재 상품 신청 인원 수
+	required int32						var_maximum_participants					= 3; // 최대 상품 신청 인원 수
+	optional bool						var_is_participation						= 4 [default = false]; // 내가 참여 했는가
+}
+
+// [힛 더 하이라이트 이벤트] 사전 동의 정보
+message HitTheHighlightEventPriorConsentData
+{
+	optional bytes						var_name					= 1 [default = ""];
+	optional bytes						var_phone_number			= 2 [default = ""];
+	optional bytes						var_email					= 3 [default = ""];
+}
+
+message EntryStategyPennantRecordBatter
+{
+    optional int32      var_season_id         =  1; // 시즌 ID
+    optional int32      var_g                 =  2; // game 참여 여부
+    optional int32      var_ab                =  3; // At Bat 타수
+    optional int32      var_pa                =  4; // PLATE_APPEARANCES 타석
+    optional int32      var_hits              =  5; // Hits all 안타
+    optional int32      var_hit1              =  6; // single
+    optional int32      var_hit2              =  7; // double
+    optional int32      var_hit3              =  8; // triple
+    optional int32      var_hr                =  9; // HomeRun 홈런
+    optional int32      var_r                 = 10; // Runs 득점
+    optional int32      var_rbi               = 11; // Run Batted In 타점
+    optional int32      var_bb                = 12; // Base On Balls 볼넷
+    optional int32      var_hbp               = 13; // Hit By Pitch 데드 볼
+    optional int32      var_sb                = 14; // Stolen Bases 도루
+    optional int32      var_cs                = 15; // Caught Stealing 도루 실패
+    optional int32      var_gdp               = 16; // Grounded Into DoublePlay 병살
+    optional int32      var_so                = 17; // Strike Outs 삼진
+    optional int32      var_sh                = 18; // Sacrifice Hit 희생 번트
+    optional int32      var_sf                = 19; // Sacrifice Fly 희생 플라이
+    optional int32      var_e                 = 20; // Error 실책
+    optional int32      var_lob               = 21; // Left on base 잔루
+    optional int32      var_sba               = 22; // Stolen base allowed 도루 허용
+    optional int32      var_rto               = 23; // Runners Thrown Out 도루 저지 횟수
+    optional bool       var_is_regulation     = 24 [default = false]; // 규정 타석 달성 유무
+    optional int32      var_risp_ab           = 25 [default = 0]; // 득점권 타수
+    optional int32      var_risp_hits         = 26 [default = 0]; // 득점권 안타(Hits all)
+}
+
+message EntryStategyPennantRecordPitcher
+{
+    required int32      var_season_id       =  1; // 시즌 ID
+    required int32      var_bc              =  2; // Ball Count 투구수
+    required int32      var_outs            =  3; // Out Count 아웃 카운트(INN)
+    required int32      var_g               =  4; // game 게임 참여 여부
+    required int32      var_w               =  5; // Win 승리
+    required int32      var_l               =  6; // lose 패배
+    required int32      var_hold            =  7; // Hold 홀드
+    required int32      var_sv              =  8; // Save 세이브
+    required int32      var_bs              =  9; // Blown Save 세이브
+    required int32      var_er              = 10; // Earned Runs 자책점 
+    required int32      var_ra              = 11; // Runs Allowed 실점
+    required int32      var_hits            = 12; // Hits all 피안타
+    required int32      var_hit1            = 13; // single 피 1루타
+    required int32      var_hit2            = 14; // double 피 2루타
+    required int32      var_hit3            = 15; // triple 피 3루타
+    required int32      var_hr              = 16; // HomeRun 피홈런
+    required int32      var_k               = 17; // Strike Outs 삼진
+    required int32      var_bb              = 18; // Base On Balls 볼넷
+    required int32      var_hbp             = 19; // Hit By Pitch 데드 볼
+    required int32      var_wp              = 20; // wild Pitch 폭투
+    required int32      var_cg              = 21; // Complete Game 완투 승
+    required int32      var_shut_out        = 22; // ShutOut 완봉승
+    required int32      var_start_win       = 23; // StartWin 선발승
+    required int32      var_relief_win      = 24; // ReliefWin 구원승
+    required int32      var_qs              = 25; // Quality Pitch 퀄리티 스타트
+    required int32      var_osh             = 26; // Opponent Sacrifice Bunts 희생 번트 허용 수
+    required int32      var_osf             = 27; // Opponent Sacrifice Flies 희생 플라이 허용 수
+    required int32      var_perfect_game    = 28; // Perfect Game 퍼펙트 게임
+    required int32      var_no_hit_no_run   = 29; // no hit no run노히트 노런
+    optional bool       var_is_regulation   = 30 [default = false]; // 규정 이닝 달성 유무
+}
+
+// 뮤지엄 사진 정보
+message MuseumPhoto
+{
+    required int32      var_guid            = 1; // 사진 GUID
+    required int32      var_level           = 2; // 사진 레벨
+    optional int32      var_piece_bit       = 3; // 사진 조각 비트 (bit도 조각이란 의미가 있으나...여기서 bit는..bit로 된 정보임을 뜻함)
+    optional bool       var_is_photo_make   = 4; // 새로운 사진 제작인가? (true: 사진 제작, false: 사진 업그레이드)
+    optional int32      var_slot_number     = 5; // 장착 사진이라면 슬롯 번호가 들어가 있다.
+}
+
+// 잠재력 개방: 선수카드 잠재력 개발 정보
+message LatentAbilityDevInfo
+{
+    required int32      var_teamcard_id             = 1; // 구단 선수카드 ID
+    required int32      var_latent_ability_id       = 2; // 잠재력 ID
+    required int32      var_exp                     = 3; // 경험치
+    required int32      var_dev_count               = 4; // 개발 횟수
+}
+
+// 컨텐츠 제어 정보
+message ContentControlData
+{
+	repeated int32		var_unavailable_content_id_list		= 1; // 이용 불가능한 컨텐츠 ID 리스트
+}
+
+message CorrectStepAndStatData
+{
+	required int32						var_correct_id				= 1; // 교정장 ID
+	required H3Enum.eCorrectStepState	var_correct_step_state		= 2; // 교정 상태
+	optional Struct.PlayerStat			var_correct_new_stat		= 3; // 신규 교정 스탯
+}
+
+message ItemSwapCenterItemData
+{
+	optional int32		var_swap_guid			= 1; // 아이템 GUID
+	optional int32		var_season_id			= 2; // 시즌 ID
+	optional int32		var_item_swap_count		= 3; // 아이템 교환한 개수
+	optional int32		var_max_swap_count		= 4; // 최대 교환 개수
+	required TimeStamp	var_start_date			= 5; // 시작 일자
+	required TimeStamp	var_expire_date			= 6; // 만료 일자
+}
+
+message WorldwideSubTournamentScheduleData
+{
+	repeated Struct.WorldwideSubTournamentGame			var_game_list							= 1;
+	repeated Struct.WorldwideSubTournamentWinner		var_winner_list							= 2;
+	
+	optional H3Enum.eWWTournamentGameState				var_game_state							= 3;
+	optional Struct.TimeStamp							var_begin_date							= 4;
+	optional Struct.TimeStamp							var_end_date							= 5;
+	optional int32										var_current_round						= 6 [default = 0];
+	optional H3Enum.eWWTournamentRoundState				var_current_round_state					= 7;
+}
+
+message WorldwideSubTournamentGame
+{
+	required int32										var_game_id								= 1;
+	required H3Enum.eWWTournamentGameState				var_game_state							= 2;
+	required Struct.TimeStamp							var_begin_date							= 3;
+	required Struct.TimeStamp							var_end_date							= 4;
+	required int32										var_condition_table_id					= 5;
+	required int32										var_maximum_participants				= 6; // 최대 참가자 수
+	required int32										var_current_participants				= 7; // 현재 참가자 수
+	required int32										var_maximum_round						= 8; // 최대 라운드
+	optional int32										var_current_round						= 9 [default = 0];
+	optional H3Enum.eWWTournamentRoundState				var_current_round_state					= 10;
+	optional bytes										var_game_name							= 11 [default = ""];
+	optional bytes										var_game_description					= 12 [default = ""];
+	optional bool										var_is_participation					= 13 [default = false]; // 내가 참가 했는가
+	optional bool										var_can_participation					= 14 [default = false]; // 참가 가능 한가
+}
+
+message WorldwideSubTournamentWinner
+{
+	required int32										var_world_id							= 1;
+	required int32										var_fav_team_id							= 2;
+	required bytes										var_team_name							= 3;
+	optional int32										var_game_id								= 4 [default = 0];
+	optional int32										var_team_guid							= 5 [default = 0];
+	optional bytes										var_guild_name							= 6 [default = ""];
+}
+
+message WorldwideSubTournamentMatchupData
+{
+	repeated Struct.WorldwideSubTournamentMatchup		var_matchup_list						= 1;
+	optional int32										var_own_team_confirm_stamina			= 2 [default = 0]; // 확인한 경기만 반영된 팀 체력
+	optional int32										var_own_team_real_stamina				= 3 [default = 0]; // 실제 현재 팀 체력
+	optional bool										var_is_rewardable						= 4 [default = false]; // 받을 보상이 있는가?
+}
+
+message WorldwideSubTournamentMatchup
+{
+	required int32										var_round										= 1;
+	required Struct.TimeStamp							var_begin_date									= 2;
+	optional bool										var_is_confirm									= 3 [default = false]; // 해당 경기를 확인 하였는가
+	optional bool										var_can_confirm									= 4 [default = false]; // 해당 경기 확인 가능 여부
+	optional int32										var_own_team_confirm_stamina					= 5 [default = 0]; // 해당 경기 후 나의 팀 체력
+	optional int32										var_opp_team_confirm_stamina					= 6 [default = 0]; // 해당 경기 후 상대방 팀 체력
+	optional Struct.TeamInfo							var_opp_team									= 7;
+	optional bool										var_is_home										= 8 [default = false]; // 내가 홈인가
+	optional bool										var_is_win_by_default							= 9 [default = false]; // 부전승인가
+	optional int32										var_home_score									= 10 [default = 0];
+	optional int32										var_away_score									= 11 [default = 0];
+	optional int32										var_own_tactics_table_id						= 12 [default = 0]; // 나의 작전 방침 테이블 ID( FriendlytTactics_Table )
+	optional int32										var_opp_tactics_table_id						= 13 [default = 0]; // 상대방의 작전 방침 테이블 ID( FriendlytTactics_Table )
+	optional H3Enum.eWWTournamentGoStopState			var_next_round_go_stop_state					= 14; // GO & STOP 상태
+	optional int32										var_current_round_reward_table_id				= 15 [default = 0]; // SubTournament_Reward Table ID
+	optional int32										var_next_round_reward_table_id					= 16 [default = 0]; // SubTournament_Reward Table ID
+	optional bool										var_available_time_setup_tactics				= 17 [default = false]; // 작전방침 설정 가능한 시간인가?
+	optional bool										var_available_time_setup_next_round_go_stop		= 18 [default = false]; // 다음 라운드 go & stop 설정 가능한 시간인가?
+	optional bool										var_is_last_round								= 19 [default = false]; // 마지막 라운드인가?
+	optional int32										var_round_id									= 20 [default = 0]; // server only
+	optional bytes										var_simulation_path						        = 21; // server only
+	optional int32										var_match_group_id								= 22 [default = 0]; // server only
+}
+
+message WorldwideSubTournamentMatchupReplay
+{
+	required int32										var_round								= 1;
+	optional Struct.MatchupTeam							var_own_team							= 2;
+	optional Struct.MatchupTeam							var_opp_team							= 3;
+	optional int32										var_opp_team_stamina					= 4 [default = 0]; // 상대방 팀 체력
+	optional bool										var_is_home								= 5 [default = false]; // 내가 홈인가
+	optional Struct.MatchupPlayResult					var_match_play_result					= 6; // 경기 결과
+	optional int32										var_starting_pitcher_rotation			= 7 [default = 0]; // 선발 로테이션( 0 ~ 4 )
+	optional int32										var_own_tactics_table_id				= 8 [default = 0]; // 나의 작전 방침 테이블 ID( FriendlytTactics_Table )
+	optional int32										var_opp_tactics_table_id				= 9 [default = 0]; // 상대방의 작전 방침 테이블 ID( FriendlytTactics_Table )
+}
+
+message SpecialAbilityRecipeInfo
+{
+    optional int32                                  var_special_ability_card_id = 1; // 특수능력 카드 ID
+    optional int32                                  var_make_count              = 2; // 생성한 횟수
+    optional int32                                  var_max_count               = 3; // 생성 가능 횟수
+}
+
+message SpecialAbilityRecipeMaterialInfo
+{
+    optional int32                                  var_special_ability_card_id     = 1; // 레시피 ID
+    optional H3Enum.eSpecialAbilityRecipeMaterial   var_material_type               = 2; // 재료타입 1: 선수카드 2: 특수능력 카드
+    optional int32                                  var_slot_id                     = 3; // 슬롯 ID
+    optional int32                                  var_material_id                 = 4; // PlayerCardId / Functional Card Id
+}
+
+message CoachStat
+{
+	optional int32										var_index								= 1 [default = 0];
+	optional H3Enum.eMajorPlayerStat					var_stat_type							= 2;
+	optional int32										var_stat_value							= 3 [default = 0];
+}
+
+message CoachAbility
+{
+	required int32										var_filter_group_guid					= 1;
+	repeated Struct.CoachStat							var_stat_list							= 2;
+}
+
+message CoachSpecialAbility
+{
+	required int32										var_filter_group_guid					= 1;
+	required int32										var_ability_guid						= 2;
+}
+
+message CoachCardData
+{
+	optional int32										var_team_coach_id						= 1 [default = 0];
+	required int32										var_table_id							= 2;
+	optional int32										var_level								= 3 [default = 0];
+	repeated Struct.CoachAbility						var_base_ability_list					= 4;
+	optional Struct.CoachAbility						var_training_ability					= 5;
+	optional Struct.CoachSpecialAbility					var_special_ability						= 6;
+	optional Struct.CoachSpecialAbility					var_reserve_special_ability				= 7;
+	optional int32										var_slot_id								= 8 [default = 0];
+	optional bool										var_is_lock								= 9 [default = false];
+	repeated int32										var_registered_sa_material_slot_id_list	= 10; // 특능 재료에 등록 완료한 슬롯 번호 리스트
+}
+
+message CoachInventoryData
+{
+	required int32										var_limit_size							= 1;
+	repeated Struct.CoachCardData						var_coach_card_data_list				= 2;
+}
+
+message CoachSlot
+{
+	required int32										var_slot_id								= 1;
+	optional int32										var_team_coach_id						= 2 [default = 0];
+}
+
+message CoachSlotData
+{
+	repeated Struct.CoachSlot							var_coach_slot_list						= 1;
+}
+
+// 코치 상품 생성 정보
+message ShopItemCoachCard
+{
+    optional Struct.CoachCardData        var_coach_card          = 1;    // 카드별 데이터 구조체
+    optional H3Enum.eCardPackResultGrade var_grade               = 2;    // 전조 연출 등급
+}
+
+// 최강자전: 대회 전체 정보
+message WorldwideMainTournamentInfo
+{
+    optional int32                                      var_seq_id                              = 1 [default = 0]; // 대회 회차 ID
+    optional bytes                                      var_seq_name                            = 2 [default = ""]; // 대회 회차 이름
+    optional H3Enum.eWWMainTournamentGameState          var_seq_state                           = 3 [default = WWMainTournamentGameState_None]; // 대회 회차 상태 (표시용으로만 사용)
+    repeated Struct.WorldwideMainTournamentGameInfo     var_game_info_list                      = 4; // 대회 정보 목록
+}
+
+// 최강자전: 대회 정보
+message WorldwideMainTournamentGameInfo
+{
+    required int32                                      var_game_id                             = 1; // 대회 ID
+    required bytes                                      var_game_name                           = 2; // 대회 이름
+    required H3Enum.eWWMainTournamentGameState          var_game_state                          = 3; // 대회 상태
+	required Struct.TimeStamp							var_game_start_date						= 4; // 대회 시작 시간
+	required Struct.TimeStamp							var_game_end_date						= 5; // 대회 종료 시간
+    required int32								        var_condition_table_id                  = 6; // 참가 조건 ID
+    required int32                                      var_max_team_count                      = 7; // 모집 팀수
+    required int32                                      var_team_count                          = 8; // 참가 팀수
+    required int32								        var_max_round_step                      = 9; // 최대 라운드 차전
+    required int32								        var_round_step                          = 10; // 진행 라운드 차전
+    required H3Enum.eWWTournamentRoundState		        var_round_state                         = 11; // 진행 라운드 상태
+    required int32                                      var_round_reward_group_id               = 12; // 라운드 진출 보상 그룹 ID
+    required int32                                      var_rank_reward_group_id                = 13; // 최종 랭크 보상 그룹 ID
+    required H3Enum.eWWMainTournamentBettingState       var_betting_state                       = 14; // 예측 상태
+	required Struct.TimeStamp							var_betting_start_date					= 15; // 예측 시작 시간
+	required Struct.TimeStamp							var_betting_end_date					= 16; // 예측 종료 시간
+}
+
+// 최강자전: 경기 매치 팀 정보
+message WorldwideMainTournamentMatchTeam
+{
+    required int32                                      var_team_guid                           = 1; // (0 이면 상대 팀이 부전승 상태)
+    required int32                                      var_world_id                            = 2;
+    required bytes                                      var_team_name                           = 3;
+    required int32                                      var_fav_team_id                         = 4;
+    required int32                                      var_emblem_id                           = 5;
+    required int32                                      var_special_emblem_id                   = 6;
+    required int32                                      var_starting_pitcher_playercard_guid_1  = 7; // 선발투수 선수카드 ID (1선발)
+    required int32                                      var_starting_pitcher_playercard_guid_2  = 8; // 선발투수 선수카드 ID (2선발)
+    required int32                                      var_starting_pitcher_playercard_guid_3  = 9; // 선발투수 선수카드 ID (3선발)
+    required int32                                      var_tactics_id_1                        = 10; // 작전방침 ID (1차전 경기)
+    required int32                                      var_tactics_id_2                        = 11; // 작전방침 ID (2차전 경기)
+    required int32                                      var_tactics_id_3                        = 12; // 작전방침 ID (3차전 경기)
+    required int32                                      var_score_1                             = 13; // 점수 (1차전 경기)
+    required int32                                      var_score_2                             = 14; // 점수 (2차전 경기)
+    required int32                                      var_score_3                             = 15; // 점수 (3차전 경기)
+    required int32                                      var_betting_percent                     = 16; // 예측 퍼센트
+}
+
+// 최강자전: 경기 매치 팀 정보 2 (대진표용)
+message WorldwideMainTournamentMatchTeam_2
+{
+    required int32                                      var_team_guid                           = 1; // (0 이면 상대 팀이 부전승 상태)
+    required int32                                      var_world_id                            = 2;
+    required bytes                                      var_team_name                           = 3;
+    required int32                                      var_fav_team_id                         = 4;
+    required int32                                      var_emblem_id                           = 5;
+    required int32                                      var_special_emblem_id                   = 6;
+    required int32                                      var_score_1                             = 7; // 점수 (1차전 경기)
+    required int32                                      var_score_2                             = 8; // 점수 (2차전 경기)
+    required int32                                      var_score_3                             = 9; // 점수 (3차전 경기)
+}
+
+// 최강자전: 경기 매치 정보
+message WorldwideMainTournamentMatch
+{
+    required int32                                      var_round_step                          = 1; // 라운드 차전
+    required int32                                      var_round_id                            = 2; // 라운드 ID (경기 결과 조회 요청에 사용)
+    required int32                                      var_match_group                         = 3; // 매치 그룹 (경기 결과 조회 요청에 사용)
+	required Struct.TimeStamp							var_round_start_date					= 4; // 라운드 시작 시간
+    required H3Enum.eWWTournamentRoundState		        var_round_state                         = 5; // 라운드 상태
+    required int32                                      var_match_count                         = 6; // 진행 경기 차전수 (0 ~ 3)
+    repeated Struct.WorldwideMainTournamentMatchTeam    var_teams_away_home                     = 7; // 팀 정보 ([0]: away, [1]: home)
+    required bool                                       var_is_enable_tactics                   = 8; // 작전방침 설정 가능 여부
+    required bool                                       var_is_checked                          = 9; // 경기 확인 여부
+}
+
+// 최강자전: 경기 매치 정보 2 (대진표용)
+message WorldwideMainTournamentMatch_2
+{
+    required int32                                      var_round_step                          = 1; // 라운드 차전
+    required int32                                      var_round_id                            = 2; // 라운드 ID (경기 결과 조회 요청에 사용)
+    required int32                                      var_match_group                         = 3; // 매치 그룹 (경기 결과 조회 요청에 사용)
+    required H3Enum.eWWTournamentRoundState		        var_round_state                         = 4; // 라운드 상태
+    required int32                                      var_match_count                         = 5; // 진행 경기 차전수 (0 ~ 3)
+    repeated Struct.WorldwideMainTournamentMatchTeam_2  var_teams_away_home                     = 6; // 팀 정보 ([0]: away, [1]: home)
+}
+
+// 최강자전: 예측 팀 정보 (예측 팀 목록에 사용)
+message WorldwideMainTournamentBettingTeam
+{
+    required int32                                      var_team_guid                           = 1;
+    required int32                                      var_world_id                            = 2;
+    required bytes                                      var_team_name                           = 3;
+    required int32                                      var_fav_team_id                         = 4;
+    required int32                                      var_emblem_id                           = 5;
+    required int32                                      var_special_emblem_id                   = 6;
+    required int32                                      var_betting_percent                     = 7; // 예측 퍼센트
+    required int32                                      var_betting_result                      = 8; // 예측 결과 (1:우승, 2:준우승, 4:4강, 8:8강)
+}
+
+// 최강자전: 예측 팀 경기 결과 정보 (예측 결과의 결승전 경기 결과에 사용)
+message WorldwideMainTournamentBettingTeamResult
+{
+    required int32                                      var_team_guid                           = 1;
+    required int32                                      var_world_id                            = 2;
+    required bytes                                      var_team_name                           = 3;
+    required int32                                      var_fav_team_id                         = 4;
+    required int32                                      var_emblem_id                           = 5;
+    required int32                                      var_special_emblem_id                   = 6;
+    required int32                                      var_betting_percent                     = 7; // 예측 퍼센트
+    required int32                                      var_match_count                         = 8; // 진행 경기 차전수
+    required int32                                      var_score_1                             = 9; // 점수 (1차전 경기)
+    required int32                                      var_score_2                             = 10; // 점수 (2차전 경기)
+    required int32                                      var_score_3                             = 11; // 점수 (3차전 경기)
+}
+
+// 최강자젼: 대회 우승 팀 정보
+message WorldwideMainTournamentWinTeam
+{
+    required int32                                      var_game_id                             = 1;
+    required int32                                      var_team_guid                           = 2;
+    required int32                                      var_world_id                            = 3;
+    required bytes                                      var_team_name                           = 4;
+    required int32                                      var_fav_team_id                         = 5;
+    required int32                                      var_emblem_id                           = 6;
+    required int32                                      var_special_emblem_id                   = 7;
+}
+
+// 팀 엔트리 정보
+message TeamEntryInfo
+{
+    required Struct.TeamInfo                var_team_info                       = 1; // 팀 정보
+    repeated Struct.OperationPlayerCard     var_opc_list                        = 2; // 선수 정보 목록
+    required Struct.RosterInfo              var_roster_info                     = 3; // 로스터 정보
+    repeated int32                          var_team_mastery_id_list            = 4; // 팀 마스터리 ID 목록
+    repeated Struct.AlbumCardInfo           var_team_album_card_info_list       = 5; // 팀 앨범 목록
+}
+
+// 경기 리플레이 데이터
+message MatchReplayData
+{
+    required uint32                         var_seed                            = 1; // 시뮬레이션 Seed
+    required bytes                          var_binary                          = 2; // 리플레이 바이너리
+    required int32                          var_score_away                      = 3; // 경기 점수 Away
+    required int32                          var_score_home                      = 4; // 경기 점수 Home
+}
+
+// 마스터 영입: 재료 슬롯 정보
+
+message MasterPlayerMaterialSlotInfo
+{
+    required int32                              var_slot_number				= 1; // 재료 슬롯 번호 (1부터 시작)
+    optional int32                              var_material_id             = 2; // PlayerCardId / Functional Card Id
+}
+
+// 마스터 영입: 테마 슬롯 정보
+message MasterPlayerThemeSlotInfo
+{
+	//required int32                              var_theme_guid              = 1; // 테마 GUID
+    required int32								var_slot_number				= 1; // 테마 슬롯 번호 (1부터 시작)
+    repeated MasterPlayerMaterialSlotInfo		var_material_slots			= 2; // 설정된 재료 슬롯 정보 목록
+}
+
+// 마스터 영입: 마스터 선수 정보
+message MasterPlayerInfo
+{
+    required int32								var_master_card_id			= 1; // 선수카드 ID
+    repeated MasterPlayerThemeSlotInfo			var_theme_slots				= 2; // 설정된 재료 선수카드 테마 슬롯 정보 목록
+}

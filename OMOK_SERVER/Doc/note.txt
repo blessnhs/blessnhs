@@ -1,0 +1,39 @@
+- first create group
+	- CreateP2PGroup
+		- 그룹을 생성한다.
+	- MemberJoin_Ack	
+		- 해당 그룹에 입장한다.
+
+
+-second 
+	JoinP2PGroup_Internal
+	MemberJoin_Ack
+
+	P2PRecycleComplete all member
+
+	1.player 
+		RequestCreateUdpSocket
+		S2C_RequestCreateUdpSocket
+
+	2.player 
+		RequestCreateUdpSocket
+		S2C_RequestCreateUdpSocket
+
+
+
+-NotifyJitDirectP2PTriggered
+	udp소켓이 생성이 안되어 있으면 생성하라고 전송
+
+	NewDirectP2PConnection ack
+		연결을 시작해라 서버와의 홀펀칭을 서버에서 성공 패킷을 받으면
+		바로 상태를 peer 홀펀칭으로 바꿔 홀펀칭을 시도한다.
+
+	MessageType_PeerUdp_PeerHolepunchAck 해당 메시지를 보내며
+	이 메시지가 도착 하였을때 홀펀칭 성공을 서버에 노티한다.
+
+-C2S_NotifyP2PHolepunchSuccess
+	클라에서 서버로 홀펀칭 성공을 보낸다.
+
+
+-NotifyDirectP2PEstablish
+	서버에서 클라에게 홀펀칭이 성공햇음을 보낸다.

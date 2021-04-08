@@ -1,0 +1,270 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="소스 파일">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="헤더 파일">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="리소스 파일">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Command">
+      <UniqueIdentifier>{cf61b2f8-fd40-4a1b-91f0-8182fe0bb778}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Constructor">
+      <UniqueIdentifier>{b43417cb-3380-484c-8850-9615108f2021}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DB">
+      <UniqueIdentifier>{2f5809f2-21fa-49de-ba33-958350d02848}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="INI">
+      <UniqueIdentifier>{aa328d4b-ba5c-4121-91e4-6a3a8808c009}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainProc">
+      <UniqueIdentifier>{075c62af-acd9-4cbb-bc4b-ac8021c655bd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Server">
+      <UniqueIdentifier>{19f41fdd-fc85-4596-aeae-c01f54b9953d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainProc\MSG">
+      <UniqueIdentifier>{5e10a57d-2436-4aba-b4d4-8681dccc1f69}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DB\DBJob">
+      <UniqueIdentifier>{8770006e-f455-4190-97ea-9c52232e73ce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DB\DBProxy">
+      <UniqueIdentifier>{0b65a34d-6c5f-4fee-842b-62998dabeb0c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="LOG">
+      <UniqueIdentifier>{25649f53-fec2-4191-8359-a2b2c0f50984}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PLAYER">
+      <UniqueIdentifier>{6221bc03-faa1-4cdd-981b-a58dc14e8cdf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PLAYER\Container">
+      <UniqueIdentifier>{a643fd3e-1368-49fc-8b64-86e849df4b95}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PLAYER\Container\Character">
+      <UniqueIdentifier>{16710126-9a92-4932-819a-e39fe724a368}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ROOM">
+      <UniqueIdentifier>{c60e7b67-234a-4e2d-98d7-1712521593ee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PROTO">
+      <UniqueIdentifier>{c26e4cea-0fc7-4eb4-8dff-d438cf760093}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PROTO\script">
+      <UniqueIdentifier>{b4c601b3-4939-4153-a32c-008bda0e37b6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="TIMER">
+      <UniqueIdentifier>{e90add6f-368d-47b6-a8cc-9a74498a004f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="TIMER\Timer">
+      <UniqueIdentifier>{4b81a360-44e9-4410-9b48-27c82016cd23}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Channel">
+      <UniqueIdentifier>{5aaf3df1-ad0a-449c-b944-6402f741c47c}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Ini\INI.h">
+      <Filter>INI</Filter>
+    </ClInclude>
+    <ClInclude Include="stdafx.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Command\Command.h">
+      <Filter>Command</Filter>
+    </ClInclude>
+    <ClInclude Include="Constructor\Constructor.h">
+      <Filter>Constructor</Filter>
+    </ClInclude>
+    <ClInclude Include="DB\DBProxy\DBProcess.h">
+      <Filter>DB\DBProxy</Filter>
+    </ClInclude>
+    <ClInclude Include="DB\DBProxy\DBProcessContainer.h">
+      <Filter>DB\DBProxy</Filter>
+    </ClInclude>
+    <ClInclude Include="MainProcess\MSG\MSG_PLAYER_QUERY.h">
+      <Filter>MainProc\MSG</Filter>
+    </ClInclude>
+    <ClInclude Include="MainProcess\MSG\MSG_PLAYER_QUERY.hpp">
+      <Filter>MainProc\MSG</Filter>
+    </ClInclude>
+    <ClInclude Include="MainProcess\MSG\MSG_PLAYER_QUERY_RES.h">
+      <Filter>MainProc\MSG</Filter>
+    </ClInclude>
+    <ClInclude Include="Server\BoardProcess.h">
+      <Filter>Server</Filter>
+    </ClInclude>
+    <ClInclude Include="Server\GSBoard.h">
+      <Filter>Server</Filter>
+    </ClInclude>
+    <ClInclude Include="DB\DBJob\DBContext.h">
+      <Filter>DB\DBJob</Filter>
+    </ClInclude>
+    <ClInclude Include="LOG\Log.h">
+      <Filter>LOG</Filter>
+    </ClInclude>
+    <ClInclude Include="PLAYER\Container\Player.h">
+      <Filter>PLAYER\Container</Filter>
+    </ClInclude>
+    <ClInclude Include="PLAYER\Container\PlayerContainer.h">
+      <Filter>PLAYER\Container</Filter>
+    </ClInclude>
+    <ClInclude Include="PLAYER\Container\PlayerContainer.hpp">
+      <Filter>PLAYER\Container</Filter>
+    </ClInclude>
+    <ClInclude Include="PLAYER\Container\Character\Character.h">
+      <Filter>PLAYER\Container\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="Room\Room.h">
+      <Filter>ROOM</Filter>
+    </ClInclude>
+    <ClInclude Include="Room\RoomContainer.h">
+      <Filter>ROOM</Filter>
+    </ClInclude>
+    <ClInclude Include="Room\RoomContainer.hpp">
+      <Filter>ROOM</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Protocol\Cpp\CLI.GS.pb.h">
+      <Filter>PROTO</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Protocol\Cpp\Enum.pb.h">
+      <Filter>PROTO</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Protocol\Cpp\GS.CLI.pb.h">
+      <Filter>PROTO</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Protocol\Cpp\Structure.pb.h">
+      <Filter>PROTO</Filter>
+    </ClInclude>
+    <ClInclude Include="Timer\ContentsTimerJob.h">
+      <Filter>TIMER</Filter>
+    </ClInclude>
+    <ClInclude Include="Timer\RankTimerJob.h">
+      <Filter>TIMER</Filter>
+    </ClInclude>
+    <ClInclude Include="Timer\ContentsTimer.h">
+      <Filter>TIMER\Timer</Filter>
+    </ClInclude>
+    <ClInclude Include="Channel\Channel.h">
+      <Filter>Channel</Filter>
+    </ClInclude>
+    <ClInclude Include="Channel\ChannelContainer.h">
+      <Filter>Channel</Filter>
+    </ClInclude>
+    <ClInclude Include="Channel\ChannelContainer.hpp">
+      <Filter>Channel</Filter>
+    </ClInclude>
+    <ClInclude Include="Server\IUdpProcess.h">
+      <Filter>Server</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="BoardServer.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Ini\INI.cpp">
+      <Filter>INI</Filter>
+    </ClCompile>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Command\Command.cpp">
+      <Filter>Command</Filter>
+    </ClCompile>
+    <ClCompile Include="Constructor\Constructor.cpp">
+      <Filter>Constructor</Filter>
+    </ClCompile>
+    <ClCompile Include="DB\DBProxy\DBProcess.cpp">
+      <Filter>DB\DBProxy</Filter>
+    </ClCompile>
+    <ClCompile Include="DB\DBProxy\DBProcessContainer.cpp">
+      <Filter>DB\DBProxy</Filter>
+    </ClCompile>
+    <ClCompile Include="MainProcess\MSG\MSG_PLAYER_QUERY.cpp">
+      <Filter>MainProc\MSG</Filter>
+    </ClCompile>
+    <ClCompile Include="MainProcess\MSG\MSG_PLAYER_QUERY_RES.cpp">
+      <Filter>MainProc\MSG</Filter>
+    </ClCompile>
+    <ClCompile Include="Server\BoardProcess.cpp">
+      <Filter>Server</Filter>
+    </ClCompile>
+    <ClCompile Include="Server\GSBoard.cpp">
+      <Filter>Server</Filter>
+    </ClCompile>
+    <ClCompile Include="DB\DBJob\DBContext.cpp">
+      <Filter>DB\DBJob</Filter>
+    </ClCompile>
+    <ClCompile Include="LOG\Log.cpp">
+      <Filter>LOG</Filter>
+    </ClCompile>
+    <ClCompile Include="PLAYER\Container\Player.cpp">
+      <Filter>PLAYER\Container</Filter>
+    </ClCompile>
+    <ClCompile Include="PLAYER\Container\PlayerContainer.cpp">
+      <Filter>PLAYER\Container</Filter>
+    </ClCompile>
+    <ClCompile Include="PLAYER\Container\Character\Character.cpp">
+      <Filter>PLAYER\Container\Character</Filter>
+    </ClCompile>
+    <ClCompile Include="Room\Room.cpp">
+      <Filter>ROOM</Filter>
+    </ClCompile>
+    <ClCompile Include="Room\RoomContainer.cpp">
+      <Filter>ROOM</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Protocol\Cpp\CLI.GS.pb.cc">
+      <Filter>PROTO</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Protocol\Cpp\Enum.pb.cc">
+      <Filter>PROTO</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Protocol\Cpp\GS.CLI.pb.cc">
+      <Filter>PROTO</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Protocol\Cpp\Structure.pb.cc">
+      <Filter>PROTO</Filter>
+    </ClCompile>
+    <ClCompile Include="Timer\ContentsTimerJob.cpp">
+      <Filter>TIMER</Filter>
+    </ClCompile>
+    <ClCompile Include="Timer\RankTimerJob.cpp">
+      <Filter>TIMER</Filter>
+    </ClCompile>
+    <ClCompile Include="Timer\ContentsTimer.cpp">
+      <Filter>TIMER\Timer</Filter>
+    </ClCompile>
+    <ClCompile Include="Channel\Channel.cpp">
+      <Filter>Channel</Filter>
+    </ClCompile>
+    <ClCompile Include="Channel\ChannelContainer.cpp">
+      <Filter>Channel</Filter>
+    </ClCompile>
+    <ClCompile Include="Server\IUdpProcess.cpp">
+      <Filter>Server</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+    <None Include="..\Protocol\CLI.GS.proto">
+      <Filter>PROTO\script</Filter>
+    </None>
+    <None Include="..\Protocol\Enum.proto">
+      <Filter>PROTO\script</Filter>
+    </None>
+    <None Include="..\Protocol\GS.CLI.proto">
+      <Filter>PROTO\script</Filter>
+    </None>
+    <None Include="..\Protocol\Structure.proto">
+      <Filter>PROTO\script</Filter>
+    </None>
+  </ItemGroup>
+</Project>

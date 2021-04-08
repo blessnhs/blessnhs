@@ -1,0 +1,431 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="ReleaseBuild|Win32">
+      <Configuration>ReleaseBuild</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="ReleaseBuild|x64">
+      <Configuration>ReleaseBuild</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{5CC150A9-431C-400E-ADCA-287D34A466EC}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>GSNetwork</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0.18362.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseBuild|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseBuild|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>false</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseBuild|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseBuild|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>../Common/GSCore/</OutDir>
+    <IntDir>../bin/</IntDir>
+    <TargetName>$(ProjectName)_d</TargetName>
+    <IncludePath>../../../../boost_1_55_0/boost_1_55_0;$(IncludePath)</IncludePath>
+    <LibraryPath>../../../../boost_1_55_0/boost_1_55_0/stage64/lib;$(LibraryPath)../../../boost_1_57_0/boost_1_57_0/stage64_lib/lib;$(LibraryPath)../../../boost_1_57_0/boost_1_57_0/stage64_lib/lib;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseBuild|Win32'">
+    <OutDir>../Common/GSCore/</OutDir>
+    <IntDir>../bin/</IntDir>
+    <TargetName>$(ProjectName)_d</TargetName>
+    <IncludePath>../../../../boost_1_55_0/boost_1_55_0;$(IncludePath)</IncludePath>
+    <LibraryPath>../../../../boost_1_55_0/boost_1_55_0/stage64/lib;$(LibraryPath)../../../boost_1_57_0/boost_1_57_0/stage64_lib/lib;$(LibraryPath)../../../boost_1_57_0/boost_1_57_0/stage64_lib/lib;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <OutDir>../Common/GSCore/</OutDir>
+    <IntDir>$(Platform)\$(Configuration)\</IntDir>
+    <TargetName>$(ProjectName)_d</TargetName>
+    <IncludePath>../Common/boost_1_68_0;$(IncludePath)</IncludePath>
+    <LibraryPath>../Common/boost_1_68_0/lib;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseBuild|x64'">
+    <OutDir>../Common/GSCore/</OutDir>
+    <IntDir>$(Platform)\$(Configuration)\</IntDir>
+    <TargetName>$(ProjectName)_d</TargetName>
+    <IncludePath>../Common/boost_1_68_0;$(IncludePath)</IncludePath>
+    <LibraryPath>../Common/boost_1_68_0/lib;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>../Common/GSCore/</OutDir>
+    <IntDir>../bin/</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <OutDir>../Common/GSCore/</OutDir>
+    <IntDir>$(Platform)\$(Configuration)\</IntDir>
+    <IncludePath>../Common/boost_1_68_0;$(IncludePath)</IncludePath>
+    <LibraryPath>../Common/boost_1_68_0/lib;$(LibraryPath)</LibraryPath>
+    <ReferencePath>$(VC_ReferencesPath_x64);</ReferencePath>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>../common;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseBuild|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>../common;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;SQLITE_CORE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>../common;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+    <Lib>
+      <AdditionalLibraryDirectories>../Common/boost_1_68_0/lib;</AdditionalLibraryDirectories>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseBuild|x64'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;SQLITE_CORE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>../common;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <Optimization>Disabled</Optimization>
+      <FunctionLevelLinking>
+      </FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;SQLITE_CORE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>../common;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <SupportJustMyCode>true</SupportJustMyCode>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <BufferSecurityCheck>false</BufferSecurityCheck>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+    <Lib>
+      <AdditionalLibraryDirectories>../Common/boost_1_68_0/lib;</AdditionalLibraryDirectories>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <None Include="GSReactor.h.bak" />
+    <None Include="ReadMe.txt" />
+    <None Include="SQL\sqlite3.def" />
+    <None Include="SQL\sqlite3.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Adapt.h" />
+    <ClInclude Include="Base64.h" />
+    <ClInclude Include="CommonSock.h" />
+    <ClInclude Include="ConsoleHelper.h" />
+    <ClInclude Include="CrashHandler\CrashHandler.h" />
+    <ClInclude Include="CrashHandler\CrashRepoter.h" />
+    <ClInclude Include="CrashHandler\dump.h" />
+    <ClInclude Include="CrashHandler\SFCrashHandler.h" />
+    <ClInclude Include="CrashHandler\SFExceptionHandlerUtil.h" />
+    <ClInclude Include="CrashHandler\StackWalker.h" />
+    <ClInclude Include="DBJob\ClearConcurrent.h" />
+    <ClInclude Include="DBJob\ClosePlayer.h" />
+    <ClInclude Include="DBJob\RequestPlayerAuth.h" />
+    <ClInclude Include="DBProcess.h" />
+    <ClInclude Include="DBProcess.hpp" />
+    <ClInclude Include="DBProcessContainer.h" />
+    <ClInclude Include="Functor.h" />
+    <ClInclude Include="GSAllocator.h" />
+    <ClInclude Include="GSArgument.h" />
+    <ClInclude Include="GSBuffer.h" />
+    <ClInclude Include="GSClient.h" />
+    <ClInclude Include="GSClientMgr.h" />
+    <ClInclude Include="GSClientModule.h" />
+    <ClInclude Include="GSCommand.h" />
+    <ClInclude Include="GSCrypt.h" />
+    <ClInclude Include="GSDispatch.h" />
+    <ClInclude Include="GSEventSelect.h" />
+    <ClInclude Include="GSExecuteArgument.h" />
+    <ClInclude Include="GSFactory.h" />
+    <ClInclude Include="GSGuard.h" />
+    <ClInclude Include="GSIocp.h" />
+    <ClInclude Include="GSLog.h" />
+    <ClInclude Include="GSMainProcess.h" />
+    <ClInclude Include="GSMemPool.h" />
+    <ClInclude Include="GSObject.h" />
+    <ClInclude Include="GSOdbc.h" />
+    <ClInclude Include="GSPacket.h" />
+    <ClInclude Include="GSPacketTCP.h" />
+    <ClInclude Include="GSPacketUDP.h" />
+    <ClInclude Include="GSProactor.h" />
+    <ClInclude Include="GSProactorImpl.h" />
+    <ClInclude Include="GSReactor.h" />
+    <ClInclude Include="GSReactorImpl.h" />
+    <ClInclude Include="GSSerialize.h" />
+    <ClInclude Include="GSServer.h" />
+    <ClInclude Include="GSServerAgent.h" />
+    <ClInclude Include="GSServerAgentContainer.h" />
+    <ClInclude Include="GSSocket.h" />
+    <ClInclude Include="GSSocketBase.h" />
+    <ClInclude Include="GSSocketTCP.h" />
+    <ClInclude Include="GSSocketUDP.h" />
+    <ClInclude Include="GSTAllocator.h" />
+    <ClInclude Include="GSTimerJob.h" />
+    <ClInclude Include="GSTimerQ.h" />
+    <ClInclude Include="IClientSession.h" />
+    <ClInclude Include="IFactory.h" />
+    <ClInclude Include="IGSContainer.h" />
+    <ClInclude Include="IHandler.h" />
+    <ClInclude Include="IManager.h" />
+    <ClInclude Include="IMessage.h" />
+    <ClInclude Include="IPlayer.h" />
+    <ClInclude Include="IPlayerProcess.h" />
+    <ClInclude Include="IProcess.h" />
+    <ClInclude Include="IResponse.h" />
+    <ClInclude Include="IServerProcess.h" />
+    <ClInclude Include="IUdpProcess.h" />
+    <ClInclude Include="Lock.h" />
+    <ClInclude Include="lzf.h" />
+    <ClInclude Include="lzfP.h" />
+    <ClInclude Include="MessageMapDef.h" />
+    <ClInclude Include="MiniDump.h" />
+    <ClInclude Include="MinidumpHelp.h" />
+    <ClInclude Include="MSG_PACKET_UDP.h" />
+    <ClInclude Include="MSG_PLAYER.h" />
+    <ClInclude Include="MSG_PLAYER_ACCEPT.h" />
+    <ClInclude Include="MSG_PLAYER_CLOSE.h" />
+    <ClInclude Include="MSG_PLAYER_PACKET.h" />
+    <ClInclude Include="MSG_PLAYER_QUERY.h" />
+    <ClInclude Include="MSG_PLAYER_QUERY.hpp" />
+    <ClInclude Include="MSG_PLAYER_QUERY_RES.h" />
+    <ClInclude Include="MSG_PLAYER_QUERY_RES.hpp" />
+    <ClInclude Include="MSG_PLAYER_TIME.h" />
+    <ClInclude Include="PacketBuffer.h" />
+    <ClInclude Include="SingleTonHolder.h" />
+    <ClInclude Include="SQL\CppSQLite3.h" />
+    <ClInclude Include="SQL\GwSqlLiteMgr.h" />
+    <ClInclude Include="SQL\sqlite3.h" />
+    <ClInclude Include="SQL\sqlite3ext.h" />
+    <ClInclude Include="stdafx.h" />
+    <ClInclude Include="SysTimer.h" />
+    <ClInclude Include="SysTimerJob.h" />
+    <ClInclude Include="targetver.h" />
+    <ClInclude Include="TemplateStrategyPattern.h" />
+    <ClInclude Include="TypeList.h" />
+    <ClInclude Include="zip.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Adapt.cpp" />
+    <ClCompile Include="Base64.cpp" />
+    <ClCompile Include="CommonSock.cpp" />
+    <ClCompile Include="ConsoleHelper.cpp" />
+    <ClCompile Include="CrashHandler\CrashRepoter.cpp" />
+    <ClCompile Include="CrashHandler\dump.cpp" />
+    <ClCompile Include="CrashHandler\SFCrashHandler.cpp" />
+    <ClCompile Include="CrashHandler\SFExceptionHandlerUtil.cpp" />
+    <ClCompile Include="CrashHandler\StackWalker.cpp" />
+    <ClCompile Include="DBJob\ClearConcurrent.cpp" />
+    <ClCompile Include="DBJob\ClosePlayer.cpp" />
+    <ClCompile Include="DBJob\RequestPlayerAuth.cpp" />
+    <ClCompile Include="DBProcess.cpp" />
+    <ClCompile Include="DBProcessContainer.cpp" />
+    <ClCompile Include="Functor.cpp" />
+    <ClCompile Include="GSAllocator.cpp" />
+    <ClCompile Include="GSArgument.cpp" />
+    <ClCompile Include="GSBuffer.cpp" />
+    <ClCompile Include="GSClient.cpp" />
+    <ClCompile Include="GSClientMgr.cpp" />
+    <ClCompile Include="GSClientModule.cpp" />
+    <ClCompile Include="GSCommand.cpp" />
+    <ClCompile Include="GSCrypt.cpp" />
+    <ClCompile Include="GSDispatch.cpp" />
+    <ClCompile Include="GSEventSelect.cpp" />
+    <ClCompile Include="GSGuard.cpp" />
+    <ClCompile Include="GSIocp.cpp" />
+    <ClCompile Include="GSLog.cpp" />
+    <ClCompile Include="GSMainProcess.cpp" />
+    <ClCompile Include="GSMemPool.cpp" />
+    <ClCompile Include="GSObject.cpp" />
+    <ClCompile Include="GSOdbc.cpp" />
+    <ClCompile Include="GSPacket.cpp" />
+    <ClCompile Include="GSPacketTCP.cpp" />
+    <ClCompile Include="GSPacketUDP.cpp" />
+    <ClCompile Include="GSProactor.cpp" />
+    <ClCompile Include="GSProactorImpl.cpp" />
+    <ClCompile Include="GSReactor.cpp" />
+    <ClCompile Include="GSReactorImpl.cpp" />
+    <ClCompile Include="GSSerialize.cpp" />
+    <ClCompile Include="GSServer.cpp" />
+    <ClCompile Include="GSServerAgent.cpp" />
+    <ClCompile Include="GSSocket.cpp" />
+    <ClCompile Include="GSSocketTCP.cpp" />
+    <ClCompile Include="GSSocketUDP.cpp" />
+    <ClCompile Include="GSTAllocator.cpp" />
+    <ClCompile Include="GSTimerJob.cpp" />
+    <ClCompile Include="GSTimerQ.cpp" />
+    <ClCompile Include="IClientSession.cpp" />
+    <ClCompile Include="IFactory.cpp" />
+    <ClCompile Include="IGSContainer.cpp" />
+    <ClCompile Include="IManager.cpp" />
+    <ClCompile Include="IPlayer.cpp" />
+    <ClCompile Include="IPlayerProcess.cpp" />
+    <ClCompile Include="IProcess.cpp" />
+    <ClCompile Include="IServerProcess.cpp" />
+    <ClCompile Include="IUdpProcess.cpp" />
+    <ClCompile Include="Lock.cpp" />
+    <ClCompile Include="lzf_c.cpp" />
+    <ClCompile Include="lzf_d.cpp" />
+    <ClCompile Include="MiniDump.cpp" />
+    <ClCompile Include="MinidumpHelp.cpp" />
+    <ClCompile Include="MSG_PACKET_UDP.cpp" />
+    <ClCompile Include="MSG_PLAYER_ACCEPT.cpp" />
+    <ClCompile Include="MSG_PLAYER_CLOSE.cpp" />
+    <ClCompile Include="MSG_PLAYER_PACKET.cpp" />
+    <ClCompile Include="MSG_PLAYER_QUERY.cpp" />
+    <ClCompile Include="MSG_PLAYER_QUERY_RES.cpp" />
+    <ClCompile Include="MSG_PLAYER_TIME.cpp" />
+    <ClCompile Include="PacketBuffer.cpp" />
+    <ClCompile Include="SingleTonHolder.cpp" />
+    <ClCompile Include="SQL\CppSQLite3.cpp" />
+    <ClCompile Include="SQL\GwSqlLiteMgr.cpp" />
+    <ClCompile Include="SQL\shell.c" />
+    <ClCompile Include="SQL\sqlite3.c" />
+    <ClCompile Include="stdafx.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='ReleaseBuild|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='ReleaseBuild|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="SysTimer.cpp" />
+    <ClCompile Include="SysTimerJob.cpp" />
+    <ClCompile Include="TypeList.cpp" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

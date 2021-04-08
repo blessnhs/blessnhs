@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="CAboutDlg" Collapsed="true">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAABAABAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>CSVDlg.cpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CCSVApp" Collapsed="true">
+    <Position X="2.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAIAAQAAAAAAAAAAAA=</HashCode>
+      <FileName>CSV.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CCSVDlg">
+    <Position X="0.5" Y="1.5" Width="1.5" />
+    <NestedTypes>
+      <Enum Name="CCSVDlg::__unnamed_enum_0b3a_1" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>CSVDlg.h</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>EACACAEAAAAAAAAAABAAAAAAAAAAAAQAAgAAAAAQAAA=</HashCode>
+      <FileName>CSVDlg.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="맑은 고딕" Size="9" />
+</ClassDiagram>
