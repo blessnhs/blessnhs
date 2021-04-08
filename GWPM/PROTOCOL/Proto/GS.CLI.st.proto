@@ -1,0 +1,1841 @@
+// Caution : 1. 수정 시 Generater를 사용하여 코드를 생성하여야 수정내용이 적용됨니다.
+//           2. 수정 시 Client Protocol도 함께 변경됨니다.
+
+import "Generated.Id.proto";
+import "Generated.Enum.proto";
+import "Generated.CremaEnum.proto";
+import "Generated.Structure.proto";
+import "Generated.StructureGames.proto";
+import "Generated.Simulation.proto";
+
+option optimize_for = SPEED;
+
+package PROTOCOL_GS_TO_CLI; // gameserver -> client
+
+// 치트 응답
+message PKT_GS_TO_CLI_CHEAT_GLOBAL_ASSET
+{
+    optional PROTOID.GS_TO_CLI.ID       id                      = 1 [default = CHEAT_GLOBAL_ASSET];
+
+    optional H3Enum.PacketCode.eCode    var_code                = 2 [default = Success];
+    optional int32                      var_game_cash           = 3; // game cash
+    optional int32                      var_game_money          = 4; // game money
+    optional int32                      var_exp                 = 5;
+    optional int32                      var_season_rank         = 6;
+    repeated Struct.OperationPlayerCard var_opc                 = 7; // 획득 카드
+    optional int32                      var_inventory           = 8;
+    optional int32                      var_training_point      = 9;
+    optional int32                      var_board_write_count   = 10;
+    repeated Struct.FunctionalCardInfo  var_functional_card_info_list = 11; // 기능성 카드 정보 리스트
+    repeated Struct.InvenItemInfo       var_inven_item_info_list = 12; // 인벤토리 아이템 정보 리스트
+    repeated Struct.CoachCardData       var_coach_card_list      = 13; // 코치 카드 정보 리스트
+}
+
+// SeverCode 응답
+message PKT_GS_TO_CLI_CODE
+{
+    optional PROTOID.GS_TO_CLI.ID id        = 1 [default = CODE];
+
+    optional H3Enum.eServiceCode  var_code  = 2 [default = DatabaseErrors];
+}
+
+// 게스트 인증 응답
+message PKT_GS_TO_CLI_GUEST_AUTHENTICATE
+{
+    optional PROTOID.GS_TO_CLI.ID       id                          = 1 [default = GUEST_AUTHENTICATE];
+
+    optional H3Enum.PacketCode.eCode    var_code                    = 2 [default = DataBaseError];
+    optional bytes                      var_account_token           = 3;
+    optional int32                      var_world_id                = 4; // 서버 월드 ID (클라이언트가 접속한 월드 ID)
+    optional int32                      var_user_world_id           = 5; // 사용자 월드 ID (사용자 구단이 존재하는 월드 ID. 없으면 0.)
+}
+
+// 타 플랫폼 OAUTH 토큰 인증 요청
+message PKT_GS_TO_CLI_TOKEN_AUTHENTICATE
+{
+    optional PROTOID.GS_TO_CLI.ID       id                          = 1 [default = TOKEN_AUTHENTICATE];
+
+    optional H3Enum.PacketCode.eCode    var_code                    = 2 [default = TimeOut];
+    optional bytes                      var_account_token           = 3;
+    optional int32                      var_world_id                = 4; // 서버 월드 ID (클라이언트가 접속한 월드 ID)
+    optional int32                      var_user_world_id           = 5; // 사용자 월드 ID (사용자 구단이 존재하는 월드 ID. 없으면 0.)
+}
+
+// 플렛폼 변경 응답
+message PKT_GS_TO_CLI_CHANGE_ACCOUNT_PLATFORM
+{
+    optional PROTOID.GS_TO_CLI.ID   id       = 1 [default = CHANGE_ACCOUNT_PLATFORM];
+
+    optional H3Enum.PacketCode.eCode var_code = 2 [default = TimeOut];
+}
+
+// 로그인 응답
+message PKT_GS_TO_CLI_LOGIN
+{
+    optional PROTOID.GS_TO_CLI.ID   id                        = 1 [default = LOGIN];
+
+    optional H3Enum.PacketCode.eCode var_code                 = 2 [default = Success];
+    optional bytes                  var_account_token         = 3;
+    optional bytes                  var_addition_message      = 4; // 추가 메시지 (접속 차단, 서버 점검)
+    optional Struct.TimeStamp       var_addition_message_time = 5; // 종료 예상시간 (접속 차단, 서버 점검)
+}
+
+// 로그인 키 갱신
+message PKT_GS_TO_CLI_RENEWAL_KEY
+{
+    optional PROTOID.GS_TO_CLI.ID   id                = 1 [default = RENEWAL_KEY];
+
+    optional H3Enum.PacketCode.eCode var_code         = 2 [default = Success];
+    optional bytes                  var_account_token = 3;
+}
+
+// 재접속 응답
+message PKT_GS_TO_CLI_RECONNECT
+{
+    optional PROTOID.GS_TO_CLI.ID id                               = 1 [default = RECONNECT];
+
+    optional H3Enum.PacketCode.eCode    var_code                   = 2 [default = Success];
+    optional bytes                      var_account_token          = 3;
+    optional bytes                      var_addition_message       = 4; // 추가 메시지 (접속 차단, 서버 점검)
+    optional Struct.TimeStamp           var_addition_message_time  = 5; // 종료 예상시간 (접속 차단, 서버 점검)
+}
+
+// 구단 생성 응답
+message PKT_GS_TO_CLI_CREATE_TEAM
+{
+    optional PROTOID.GS_TO_CLI.ID   id                        = 1 [default = CREATE_TEAM];
+
+    optional H3Enum.PacketCode.eCode var_code                 = 2 [default = Success];
+    optional bytes                  var_addition_message      = 3; // 추가 메시지 (접속 차단, 서버 점검)
+    optional Struct.TimeStamp       var_addition_message_time = 4; // 종료 예상시간 (접속 차단, 서버 점검)
+}
+
+// 탈퇴 응답
+//message PKT_GS_TO_CLI_DROP_OUT_CANCEL
+//{
+//    optional PROTOID.GS_TO_CLI.ID   id                        = 1 [default = DROP_OUT_CANCEL];
+
+//    optional H3Enum.PacketCode.eCode var_code                 = 2 [default = Success];
+//    optional bytes                  var_account_token         = 3;
+//    optional bytes                  var_addition_message      = 4; // 추가 메시지 (접속 차단, 서버 점검)
+//    optional Struct.TimeStamp       var_addition_message_time = 5; // 종료 예상시간 (접속 차단, 서버 점검)
+//}
+
+// 로그인 정보
+message PKT_GS_TO_CLI_GET_LOGIN_INFO
+{
+    optional PROTOID.GS_TO_CLI.ID       id                      =  1 [default = GET_LOGIN_INFO];
+
+    optional H3Enum.PacketCode.eCode    var_code                =  2 [default = Success];
+    optional Struct.TeamInfo            var_teaminfo            =  3; // 팀 정보
+    optional Struct.TeamInfoPrivate     var_teaminfo_private    =  4; // 팀 비공개 정보
+    repeated Struct.OperationPlayerCard var_opc                 =  5; // 카드 전체 정보
+    optional Struct.RosterInfo          var_roster_info         =  6; // 로스터 정보
+    optional H3Enum.eAuthService        var_auth_type           =  7 [default = Guest] ; // 계정 인증 타입
+    repeated Struct.PlayerCardSimpleRecord var_card_record      =  8; // 선수카드 기록 정보
+    optional int32                      var_season_id           =  9; // 현재 시즌 Id(클라이언트 선수카드 캐싱용)
+    optional int32                      var_round_id            = 10; // 현재 라운드 Id(클라이언트 선수카드 캐싱용)
+    optional int32                      var_tutorial_id         = 11; // 튜토리얼 진행 단계
+    optional int32                      var_push_option         = 12; // 푸시 옵션 (0x00: 모두 ON, 0x01: 홍보성 푸시, 0x02: 야간 푸시, 0xFF: 모두 OFF) 최대 4바이트 크기지만, 최대 1바이트만 사용 합니다.
+                                                                      // 만약 옵션이 커질경우 fixed int 등을 사용해서 encoding으로부터 방어해야 합니다.
+
+    optional bytes                      var_xigncode_seed       = 13; // xigncode seed 값
+}
+
+// 푸시 메시지 서비스 토큰 등록
+message PKT_GS_TO_CLI_NOTIFICATION_REGISTERED_TOKEN
+{
+    optional PROTOID.GS_TO_CLI.ID   id           = 1 [default = NOTIFICATION_REGISTERED_TOKEN];
+
+    optional H3Enum.PacketCode.eCode var_code    = 2 [default = Success];
+}
+
+//-----------------------------------------------------------------------------
+// 공지 발송
+//-----------------------------------------------------------------------------
+message PKT_GS_TO_CLI_NOTICE
+{
+    optional PROTOID.GS_TO_CLI.ID   id           = 1 [default = NOTICE];
+
+    optional H3Enum.PacketCode.eCode var_code    = 2 [default = Success];
+    optional bytes                  var_message  = 3;
+}
+
+//-----------------------------------------------------------------------------
+// 로그 아웃 및 탈퇴
+//-----------------------------------------------------------------------------
+// logout 응답
+message PKT_GS_TO_CLI_LOGOUT
+{
+    optional PROTOID.GS_TO_CLI.ID   id            = 1 [default = LOGOUT];
+
+    optional H3Enum.PacketCode.eCode var_code     = 2 [default = Success];
+}
+
+// 탈퇴 응답
+//message PKT_GS_TO_CLI_DROP_OUT
+//{
+//    optional PROTOID.GS_TO_CLI.ID   id            = 1 [default = DROP_OUT];
+//
+//    optional H3Enum.PacketCode.eCode var_code     = 2 [default = Success];
+//}
+
+// 접속종료 요청(백그라운드)
+message PKT_GS_TO_CLI_GRACEFUL_DISCONNECT
+{
+    optional PROTOID.GS_TO_CLI.ID    id            = 1 [default = GRACEFUL_DISCONNECT];
+
+    optional H3Enum.PacketCode.eCode  var_code     = 2 [default = Success];
+}
+
+// 핑퐁(미사용)
+message PKT_GS_TO_CLI_APPLICATION_STATUS_SCAN
+{
+    optional PROTOID.GS_TO_CLI.ID id        = 1 [default = APPLICATION_STATUS_SCAN];
+
+    required int32                var_index = 2;
+}
+
+// 게임 옵션 변경 설정 응답
+message PKT_GS_TO_CLI_GAME_OPTION_INFO
+{
+    optional PROTOID.GS_TO_CLI.ID   id                      = 1 [default = GAME_OPTION_INFO];
+
+    optional H3Enum.PacketCode.eCode var_code               = 2 [default = Success];
+    repeated Struct.GameOptionInfo  var_options             = 3;
+}
+
+// 매니지먼트 모드 정보 조회 응답
+message PKT_GS_TO_CLI_MANAGEMENT_MODE_INFO
+{
+    optional PROTOID.GS_TO_CLI.ID           id                  = 1 [default = MANAGEMENT_MODE_INFO];
+
+    optional H3Enum.PacketCode.eCode        var_code            = 2 [default = Success];    // 결과 코드
+    repeated Struct.ManagementWorkInfo      var_works           = 3;                        // 진행 업무 목록
+    repeated Struct.ManagementWorkerInfo    var_specialWorkers  = 4;                        // 활성 특수 고용인 목록
+    repeated Struct.ManagementEventWorkInfo var_event_works     = 5;                        // 이벤트 업무 목록
+}
+
+// 매니지먼트 모드 업무 지정 응답
+message PKT_GS_TO_CLI_MANAGEMENT_MODE_SET_WORK
+{
+    optional PROTOID.GS_TO_CLI.ID           id                  = 1 [default = MANAGEMENT_MODE_SET_WORK];
+
+    optional H3Enum.PacketCode.eCode        var_code            = 2 [default = Success];    // 결과 코드
+    optional Struct.ManagementWorkInfo      var_work            = 3;                        // 진행 업무 정보
+}
+
+// 매니지먼트 모드 업무 결과 확인 응답 (즉시 완료, 취소 기능 포함)
+message PKT_GS_TO_CLI_MANAGEMENT_MODE_GET_WORK_RESULT
+{
+    optional PROTOID.GS_TO_CLI.ID           id                  = 1 [default = MANAGEMENT_MODE_GET_WORK_RESULT];
+
+    optional H3Enum.PacketCode.eCode        var_code            = 2 [default = Success];    // 결과 코드
+    optional int32                          var_work_guid       = 3;    // (매니지먼트 모드 크레마 테이블에 정의된) 업무 GUID
+    optional int32                          var_remain_time_sec = 4;    // 남은 시간 (초)
+    optional int32                          var_game_money      = 5;    // GameMoney 보유량
+    optional int32                          var_cash            = 6;    // Cash 보유량
+    optional int32                          var_training_point  = 7;    // 훈련포인트 보유량
+    optional int32                          var_team_exp        = 8;    // 구단 경험치 보유량
+}
+
+// 매니지먼트 모드 특수 고용인 활성화 응답
+message PKT_GS_TO_CLI_MANAGEMENT_MODE_SET_SPECIAL_WORKER
+{
+    optional PROTOID.GS_TO_CLI.ID           id                  = 1 [default = MANAGEMENT_MODE_SET_SPECIAL_WORKER];
+
+    optional H3Enum.PacketCode.eCode        var_code            = 2 [default = Success];    // 결과 코드
+    optional int32                          var_worker_guid     = 3;    // (매니지먼트 모드 크레마 테이블에 정의된) 고용인 GUID
+    optional int32                          var_remain_time_sec = 4;    // 남은 시간 (초)
+    optional int32                          var_cash            = 5;    // 갱신된 Cash
+}
+
+// 페넌트레이스 정보 조회 응답
+message PKT_GS_TO_CLI_PENNANT_INFO
+{
+    optional PROTOID.GS_TO_CLI.ID           id                                  =  1 [default = PENNANT_INFO];
+
+    // 페넌트 레이스 리포트 상태
+    enum ePennantReportState
+    {
+        PennantReportState_None     = 0;  // 미확인
+        PennantReportState_Check    = 1;  // 확인
+        PennantReportState_Complete = 2;  // 설정 완료 (보상 받기 등)
+    }
+
+    optional H3Enum.PacketCode.eCode        var_code                            =  2 [default = Success];    // 결과 코드
+    optional Struct.PennantBasicInfo        var_pennant_info                    =  3; // 현재 페넌트 레이스 정보
+    optional Struct.PennantNextGameInfo     var_next_game_info                  =  4; // 다음 경기 정보
+    optional Struct.PennantBasicInfo        var_last_checked_pennant_info       =  5; // 최근 확인 경기: 페넌트 레이스 정보
+    optional int32                          var_last_checked_round_id           =  6; // 최근 확인 경기: 라운드ID
+    optional ePennantReportState            var_last_checked_pennant_report_state_postend   =  7; // 최근 확인 경기: 포스트 시즌 결산 리포트 상태
+    optional int32                          var_league_ranking                  =  8; // 현재 리그 순위 (최근 확인 경기 기준)
+    optional Struct.Record                  var_league_record                   =  9; // 현재 리그 전적(승/무/패) (최근 확인 경기 기준)
+    optional Struct.Record                  var_post_record                     = 10; // 현재 포스트 시즌 전적(승/무/패) (최근 확인 경기 기준)
+    optional int32                          var_type                            = 11; // PKT_CLI_TO_GS_PENNANT_INFO::var_type 에 설정된 값 리턴
+    optional int32                          var_not_checked_game_count          = 12; // 확인 안한 경기 수
+    optional Struct.TimeStamp               var_pennant_time                    = 13; // 페넌트 레이스 시간
+    optional int32                          var_pennant_grade                   = 14; // 현재 리그 등급
+    optional H3Enum.eLeagueTestType         var_league_test_type                = 15 [default = LeagueTestType_Normal]; // 현재 리그 시험 여부 (일반/승격/강등)
+    optional int32                          var_last_checked_pennant_grade      = 16; // 최근 확인 경기: 리그 등급
+    optional H3Enum.eLeagueTestType         var_last_checked_league_test_type   = 17 [default = LeagueTestType_Normal]; // 최근 확인 경기: 리그 시험 여부 (일반/승격/강등)
+    optional int32                          var_next_season_d_day               = 18; // 다음 시즌 시작 일
+    optional int32                          var_next_pennant_grade              = 19; // 다음 시즌 리그 등급
+    optional Struct.FameInfo                var_fame_info                       = 20; // 명성 정보
+    optional int32                          var_best_pennant_grade              = 21; // 최고 달성 페넌트 레이스 등급
+    optional int32                          var_ranking_mode_season_id          = 22; // 랭킹전 시즌 ID
+    optional bool                           var_tryout_match_new_defense_flag   = 23 [default = false]; // 평가전 신규 수비 경기 존재여부 (패배, 무승부 경기 존재시 true)
+}
+
+// 페넌트레이스 리그 정보 조회 응답
+message PKT_GS_TO_CLI_PENNANT_LEAGUE_INFO
+{
+    optional PROTOID.GS_TO_CLI.ID           id                          = 1 [default = PENNANT_LEAGUE_INFO];
+
+    optional H3Enum.PacketCode.eCode        var_code                    = 2 [default = Success];    // 결과 코드
+    optional Struct.PennantBasicInfo        var_pennant_info            = 3;    // 페넌트 레이스 정보
+    optional Struct.PennantLeagueBasicInfo  var_league_info             = 4;    // 리그 정보
+}
+
+// 페넌트레이스 경기 일정 정보 조회 요청
+message PKT_GS_TO_CLI_PENNANT_SCHEDULE_INFO
+{
+    optional PROTOID.GS_TO_CLI.ID                   id                                  =  1 [default = PENNANT_SCHEDULE_INFO];
+
+    // 페넌트 레이스 리포트 상태
+    enum ePennantReportState
+    {
+        PennantReportState_None     = 0;  // 미확인
+        PennantReportState_Check    = 1;  // 확인
+        PennantReportState_Complete = 2;  // 설정 완료 (보상 받기, 선수 설정 등)
+    }
+
+    optional H3Enum.PacketCode.eCode                var_code                            =  2 [default = Success];    // 결과 코드
+    //optional int32                                  var_round_id_completed              =  3; // (첫 라운드 부터) 경기 진행 완료된 라운드ID
+    repeated Struct.PennantGameMatchInfo            var_games                           =  3; // 경기 정보 목록
+    repeated Struct.PennantPostSeasonRankingInfo    var_post_season_ranking             =  4; // 포스트 시즌 진출 순위 정보 목록
+    optional int32                                  var_mini_game_id                    =  5 [default = 0]; // 미니 게임 ID (0:없음)
+    optional int32                                  var_mini_game_round_id              =  6 [default = 0]; // 미니 게임 라운드 ID (해당 경기 라운드 ID)
+    optional int32                                  var_mini_game_data                  =  7 [default = 0]; // 미니 게임 데이터 (해당 경기의 보너스 포인트)
+    optional ePennantReportState                    var_pennant_report_state_forecast   =  8; // 페넌트 레이스 리포트 상태: 시즌 예상
+    optional ePennantReportState                    var_pennant_report_state_first      =  9; // 페넌트 레이스 리포트 상태: 전반기 결산
+    optional ePennantReportState                    var_pennant_report_state_second     = 10; // 페넌트 레이스 리포트 상태: 중반기 결산
+    optional ePennantReportState                    var_pennant_report_state_end        = 11; // 페넌트 레이스 리포트 상태: 시즌 결산
+    optional ePennantReportState                    var_pennant_report_state_postend    = 12; // 페넌트 레이스 리포트 상태: 포스트 시즌 결산
+    repeated Struct.PennantRankingInfo              var_next_pennant_ranking_infos      = 13; // 다음 경기 순위 정보
+    repeated Struct.PennantStartPitcherInfo         var_next_pennant_sp_infos           = 14; // 다음 경기 선발 투수
+    optional Struct.VsRecord                        var_vs_record_info                  = 15; // 상대 전적 정보
+}
+
+// 페넌트레이스 경기 결과 세부정보 조회 결과
+message PKT_GS_TO_CLI_PENNANT_GAME_RESULT_INFO
+{
+    optional PROTOID.GS_TO_CLI.ID               id                          =  1 [default = PENNANT_GAME_RESULT_INFO];
+
+    optional H3Enum.PacketCode.eCode            var_code                    =  2 [default = Success];    // 결과 코드
+    optional Struct.PennantGameResultTeamInfo   var_home_result_team_info   =  3; // 홈 팀 경기 결과 구단 정보
+    optional Struct.PennantGameResultTeamInfo   var_away_result_team_info   =  4; // 원정 팀 경기 결과 구단 정보
+    repeated Struct.OperationPlayerCard         var_home_opc                =  5; // 홈 카드 전체 정보
+    repeated Struct.OperationPlayerCard         var_away_opc                =  6; // 원정 카드 전체 정보
+    optional Struct.RosterInfo                  var_home_roster_info        =  7; // 홈 로스터 정보
+    optional Struct.RosterInfo                  var_away_roster_info        =  8; // 원정 로스터 정보
+    repeated Simulation.simPennantBinary        var_binary_info             =  9; // 경기 결과 바이너리 정보(1~3경기)
+    repeated Struct.PennantGameResultAddInfo    var_result_add_info         = 10; // 경기 결과 부가 정보(1~3경기)
+//    optional int32                              var_recap_news_id           = 11; // 리캡 뉴스 ID(프리프로토용)
+    repeated Struct.RecapNewsInfo               var_recap_news_info         = 11; // 리캡 정보(2~4개)
+
+    //-------------------------------------------------------------------------
+    // 삭제 예정!!!
+    enum eMiniGameState
+    {
+        MiniGameStateNone           = 0;    // 미니게임 없음
+        MiniGameStateReady          = 1;    // 미니게임 플레이 가능
+        MiniGameStateClearSuccess   = 2;    // 미니게임 클리어 성공
+        MiniGameStateClearFail      = 3;    // 미니게임 클리어 실패
+    }
+    optional eMiniGameState                     var_mini_game_state         = 12 [default = MiniGameStateNone]; // 미니게임 상태
+    //-------------------------------------------------------------------------
+
+    repeated int32                              var_home_team_mastery_id_list   = 13; // 홈 구단 마스터리 ID 목록
+    repeated int32                              var_away_team_mastery_id_list   = 14; // 원정 구단 마스터리 ID 목록
+    repeated Struct.AlbumCardInfo               var_home_team_album_card_info_list   = 15; // 홈 앨범 정보
+    repeated Struct.AlbumCardInfo               var_away_team_album_card_info_list   = 16; // 원정 앨범 정보
+}
+
+// 페넌트레이스 경기 결과 확인 설정 결과
+message PKT_GS_TO_CLI_PENNANT_GAME_RESULT_CHECK
+{
+    optional PROTOID.GS_TO_CLI.ID           id                          =  1 [default = PENNANT_GAME_RESULT_CHECK];
+
+    optional H3Enum.PacketCode.eCode        var_code                    =  2 [default = Success]; // 결과 코드
+    optional int32                          var_team_exp                =  3; // 갱신된 구단 경험치
+    optional int32                          var_training_point          =  4; // 갱신된 훈련 포인트
+    optional int32                          var_game_money              =  5; // 갱신된 GameMoney
+    optional int32                          var_cash                    =  6; // 갱신된 Cash
+    optional int32                          var_fame_point              =  7; // 갱신된 명성 포인트
+    optional int32                          var_mini_game_id            =  8; // 미니 게임 ID (0:없음)
+    optional int32                          var_mini_game_round_id      =  9; // 미니 게임 라운드 ID (해당 경기 라운드 ID)
+    optional int32                          var_mini_game_data          = 10; // 미니 게임 데이터 (해당 경기의 보너스 포인트)
+    repeated Struct.RewardItemInfo          var_reward_item_list        = 11; // 아이템 보상 정보
+}
+
+// 페넌트레이스 리그 순위표 및 기록실 조회 결과
+message PKT_GS_TO_CLI_PENNANT_LEAGUE_RECORD_INFO
+{
+    optional PROTOID.GS_TO_CLI.ID               id                      = 1 [default = PENNANT_LEAGUE_RECORD_INFO];
+
+    optional H3Enum.PacketCode.eCode            var_code                = 2 [default = Success];    // 결과 코드
+
+    optional int32                              var_pennant_grade       = 3; // 현재 리그 등급
+    optional H3Enum.eLeagueTestType             var_league_test_type    = 4 [default = LeagueTestType_Normal]; // 현재 리그 시험 여부 (일반/승격/강등)
+
+    //optional int32                              var_league_type         = 3; // 리그 상태(0: 일반 1: 승격 2: 강등)
+    //optional int32                              var_split_count         = 4; // 승격 및 강등 가능 구단수
+
+    repeated Struct.PennantRecordTeamInfo       var_team_info_list      = 5; // 구단 정보 및 구단 순위 정보 리스트
+    repeated Struct.PennantRecordTeamBatter     var_team_batter_list    = 6; // 구단 타자 기록 리스트
+    repeated Struct.PennantRecordTeamPitcher    var_team_pitcher_list   = 7; // 구단 투수 기록 리스트
+    repeated Struct.PennantRecordBatter         var_batter_list         = 8; // 타자 개인 기록 리스트
+    repeated Struct.PennantRecordPitcher        var_pitcher_list        = 9; // 투수 개인 기록 리스트
+    repeated Struct.VsRecord                    var_vs_record_list      = 10; // 상대 전적 정보 리스트
+}
+
+// 페넌트레이스 경기 작전 방침 설정 응답
+message PKT_GS_TO_CLI_PENNANT_GAME_SET_FRIENDLY_TACTICS
+{
+    optional PROTOID.GS_TO_CLI.ID       id                           = 1 [default = PENNANT_GAME_SET_FRIENDLY_TACTICS];
+
+    optional H3Enum.PacketCode.eCode    var_code                     = 2 [default = Success];    // 결과 코드
+
+    optional int32                      var_schedule_id              = 4 [default = 0]; // 스케쥴 Id
+    optional int32                      var_away_friendly_tactics_id = 5 [default = 0]; // 원정 팀 방침 ID
+    optional int32                      var_home_friendly_tactics_id = 6 [default = 0]; // 홈 팀 방침 ID
+
+    repeated Struct.FunctionalCardInfo    var_functional_card_info_list  = 7; // 기능성 카드 리스트
+}
+
+// 유저 상태 변경 통지(리그 시작, 시뮬레이션 완료 등)
+message PKT_GS_TO_CLI_INFO_UPDATE_NOTICE
+{
+    optional PROTOID.GS_TO_CLI.ID   id       = 1 [default = INFO_UPDATE_NOTICE];
+
+    optional H3Enum.eInfoUpdateType var_type = 2 [default = InfoUpdateType_PennantGameComp]; // 정보 갱신 타입
+}
+
+// 페넌트레이스 리포트: 시즌 예상 조회 응답
+message PKT_GS_TO_CLI_PENNANT_REPORT_FORECAST_INFO
+{
+    optional PROTOID.GS_TO_CLI.ID                               id                          = 1 [default = PENNANT_REPORT_FORECAST_INFO];
+
+    // 페넌트 레이스 리포트 상태
+    enum ePennantReportState
+    {
+        PennantReportState_None     = 0;  // 미확인 (최초 확인)
+        PennantReportState_Check    = 1;  // 확인
+        PennantReportState_Complete = 2;  // 설정 완료 (보상 받기, 선수 설정 등)
+    }
+
+    optional H3Enum.PacketCode.eCode                            var_code                    = 2 [default = Success]; // 결과 코드
+    optional int32                                              var_pennant_grade           = 3; // 페넌트 레이스 리그 등급
+    optional H3Enum.eLeagueTestType                             var_league_test_type        = 4 [default = LeagueTestType_Normal]; // 페넌트 레이스 리그 시험 여부
+    repeated Struct.PennantReportForecastTeamInfo               var_teams                   = 5; // 구단 평가 정보 목록
+    repeated Struct.PennantReportForecastAttentionPlayerInfo    var_players                 = 6; // 주목 선수 정보 목록
+    repeated Struct.PennantReportForecastInterviewInfo          var_interviews              = 7; // 인터뷰 정보 목록
+    optional ePennantReportState                                var_pennant_report_state    = 8; // 페넌트 레이스 리포트 상태
+    optional int32                                              var_kpi_interview_id        = 9 [default = 0]; // KPI 인터뷰 ID
+    optional int32                                              var_kpi_forecast_1          = 10 [default = 0]; // KPI 순위 예상 1
+    optional int32                                              var_kpi_forecast_2          = 11 [default = 0]; // KPI 순위 예상 2
+    optional int32                                              var_kpi_forecast_3          = 12 [default = 0]; // KPI 순위 예상 3
+}
+
+// 페넌트레이스 리포트: 시즌 예상 설정 응답
+message PKT_GS_TO_CLI_PENNANT_REPORT_FORECAST_SET
+{
+    optional PROTOID.GS_TO_CLI.ID                               id                  = 1 [default = PENNANT_REPORT_FORECAST_SET];
+
+    optional H3Enum.PacketCode.eCode                            var_code            = 2 [default = Success]; // 결과 코드
+    repeated Struct.OperationPlayerCard                         var_opc             = 3; // 컨디션 변경이 반영된 선수 카드 데이터 목록
+}
+
+// 페넌트레이스 리포트: 전반기 결산 조회 응답
+message PKT_GS_TO_CLI_PENNANT_REPORT_FIRST_INFO
+{
+    optional PROTOID.GS_TO_CLI.ID                       id                          =  1 [default = PENNANT_REPORT_FIRST_INFO];
+
+    // 페넌트 레이스 리포트 상태
+    enum ePennantReportState
+    {
+        PennantReportState_None     = 0;  // 미확인 (최초 확인)
+        PennantReportState_Check    = 1;  // 확인
+        PennantReportState_Complete = 2;  // 설정 완료 (보상 받기, 선수 설정 등)
+    }
+
+    optional H3Enum.PacketCode.eCode                    var_code                    =  2 [default = Success]; // 결과 코드
+    optional int32                                      var_pennant_grade           =  3; // 페넌트 레이스 리그 등급
+    optional H3Enum.eLeagueTestType                     var_league_test_type        =  4 [default = LeagueTestType_Normal]; // 페넌트 레이스 리그 시험 여부
+    repeated Struct.PennantReportTeamInfo               var_teams                   =  5; // 리그 구단 정보 목록
+    optional Struct.PennantReportRivalVsRecord          var_rival_vs_record         =  6; // 라이벌 구단과의 상대 전적
+    repeated Struct.PennantReportTeamBatterRecord       var_team_batter_records     =  7; // 리그 구단 기록 목록: 타자
+    repeated Struct.PennantReportTeamPitcherRecord      var_team_pitcher_records    =  8; // 리그 구단 기록 목록: 투수
+    repeated Struct.PennantReportBatterRecord           var_batter_records          =  9; // 리그 전체 선수 기록 목록: 타자
+    repeated Struct.PennantReportPitcherRecord          var_pitcher_records         = 10; // 리그 전체 선수 기록 목록: 투수
+    repeated Struct.PennantReportAttentionPlayerInfo    var_players                 = 11; // 주목 선수 정보 목록
+    optional ePennantReportState                        var_pennant_report_state    = 12; // 페넌트 레이스 리포트 상태
+    repeated Struct.PennantReportTeamRankRound          var_round_ranks             = 13; // 라운드별 구단 순위
+    repeated Struct.PennantReportRivalMatchResult       var_rival_match_results     = 14; // 라이벌 전적 목록 (목록에서 차전 순서대로 같은 라운드 ID 가 반복)
+    optional int32                                      var_kpi_interview_id        = 15 [default = 0]; // KPI 인터뷰 ID
+    optional int32                                      var_kpi_forecast_1          = 16 [default = 0]; // KPI 순위 예상 1
+    optional int32                                      var_kpi_forecast_2          = 17 [default = 0]; // KPI 순위 예상 2
+    optional int32                                      var_kpi_forecast_3          = 18 [default = 0]; // KPI 순위 예상 3
+    repeated Struct.PennantReportRecordRank             var_kpi_rank_records        = 19; // KPI 기록 순위 정보 목록
+}
+
+// 페넌트레이스 리포트: 전반기 결산 설정 결과
+message PKT_GS_TO_CLI_PENNANT_REPORT_FIRST_SET
+{
+    optional PROTOID.GS_TO_CLI.ID                       id                          = 1 [default = PENNANT_REPORT_FIRST_SET];
+
+    optional H3Enum.PacketCode.eCode                    var_code                    = 2 [default = Success]; // 결과 코드
+    optional int32                                      var_game_money              = 3; // GameMoney 보유량
+    optional int32                                      var_cash                    = 4; // Cash 보유량
+    optional int32                                      var_training_point          = 5; // 훈련포인트 보유량
+    optional int32                                      var_team_exp                = 6; // 구단 경험치 보유량
+    optional int32                                      var_fame_point              = 7; // 갱신된 명성 포인트
+    repeated Struct.InvenItemInfo                       var_inven_Item_Info_list    = 8; // 아이템 인벤토리 정보 목록
+}
+
+// 페넌트레이스 리포트: 중반기 결산 조회 결과
+message PKT_GS_TO_CLI_PENNANT_REPORT_SECOND_INFO
+{
+    optional PROTOID.GS_TO_CLI.ID                       id                          =  1 [default = PENNANT_REPORT_SECOND_INFO];
+
+    // 페넌트 레이스 리포트 상태
+    enum ePennantReportState
+    {
+        PennantReportState_None     = 0;  // 미확인 (최초 확인)
+        PennantReportState_Check    = 1;  // 확인
+        PennantReportState_Complete = 2;  // 설정 완료 (보상 받기, 선수 설정 등)
+    }
+
+    optional H3Enum.PacketCode.eCode                    var_code                    =  2 [default = Success]; // 결과 코드
+
+    optional int32                                      var_pennant_grade           =  3; // 페넌트 레이스 리그 등급
+    optional H3Enum.eLeagueTestType                     var_league_test_type        =  4 [default = LeagueTestType_Normal]; // 페넌트 레이스 리그 시험 여부
+    repeated Struct.PennantReportTeamInfo               var_teams                   =  5; // 리그 구단 정보 목록
+    optional Struct.PennantReportRivalVsRecord          var_rival_vs_record         =  6; // 라이벌 구단과의 상대 전적
+    repeated Struct.PennantReportTeamBatterRecord       var_team_batter_records     =  7; // 리그 구단 기록 목록: 타자
+    repeated Struct.PennantReportTeamPitcherRecord      var_team_pitcher_records    =  8; // 리그 구단 기록 목록: 투수
+    repeated Struct.PennantReportBatterRecord           var_batter_records          =  9; // 리그 전체 선수 기록 목록: 타자
+    repeated Struct.PennantReportPitcherRecord          var_pitcher_records         = 10; // 리그 전체 선수 기록 목록: 투수
+    repeated Struct.PennantReportAttentionPlayerInfo    var_players                 = 11; // 주목 선수 정보 목록
+    optional ePennantReportState                        var_pennant_report_state    = 12; // 페넌트 레이스 리포트 상태
+    repeated Struct.PennantReportTeamRankRound          var_round_ranks             = 13; // 라운드별 구단 순위
+    repeated Struct.PennantReportRivalMatchResult       var_rival_match_results     = 14; // 라이벌 전적 목록 (목록에서 차전 순서대로 같은 라운드 ID 가 반복)
+    optional int32                                      var_kpi_interview_id        = 15 [default = 0]; // KPI 인터뷰 ID
+    optional int32                                      var_kpi_forecast_1          = 16 [default = 0]; // KPI 순위 예상 1
+    optional int32                                      var_kpi_forecast_2          = 17 [default = 0]; // KPI 순위 예상 2
+    optional int32                                      var_kpi_forecast_3          = 18 [default = 0]; // KPI 순위 예상 3
+    repeated Struct.PennantReportRecordRank             var_kpi_rank_records        = 19; // KPI 기록 순위 정보 목록
+}
+
+// 페넌트레이스 리포트: 중반기 결산 설정 결과
+message PKT_GS_TO_CLI_PENNANT_REPORT_SECOND_SET
+{
+    optional PROTOID.GS_TO_CLI.ID                       id                          = 1 [default = PENNANT_REPORT_SECOND_SET];
+
+    optional H3Enum.PacketCode.eCode                    var_code                    = 2 [default = Success]; // 결과 코드
+    optional int32                                      var_game_money              = 3; // GameMoney 보유량
+    optional int32                                      var_cash                    = 4; // Cash 보유량
+    optional int32                                      var_training_point          = 5; // 훈련포인트 보유량
+    optional int32                                      var_team_exp                = 6; // 구단 경험치 보유량
+    optional int32                                      var_fame_point              = 7; // 갱신된 명성 포인트
+    repeated Struct.InvenItemInfo                       var_inven_Item_Info_list    = 8; // 아이템 인벤토리 정보 목록
+}
+
+// 페넌트레이스 리포트: 시즌 결산 조회 결과
+message PKT_GS_TO_CLI_PENNANT_REPORT_END_INFO
+{
+    optional PROTOID.GS_TO_CLI.ID                       id                          =  1 [default = PENNANT_REPORT_END_INFO];
+
+    // 페넌트 레이스 리포트 상태
+    enum ePennantReportState
+    {
+        PennantReportState_None     = 0;  // 미확인 (최초 확인)
+        PennantReportState_Check    = 1;  // 확인
+        PennantReportState_Complete = 2;  // 설정 완료 (보상 받기 등)
+    }
+
+    optional H3Enum.PacketCode.eCode                    var_code                    =  2 [default = Success]; // 결과 코드
+    optional int32                                      var_pennant_grade           =  3; // 페넌트 레이스 리그 등급
+    optional H3Enum.eLeagueTestType                     var_league_test_type        =  4 [default = LeagueTestType_Normal]; // 페넌트 레이스 리그 시험 여부
+    repeated Struct.PennantReportTeamInfo               var_teams                   =  5; // 리그 구단 정보 목록
+    optional int32                                      var_ranking_first           =  6; // 전반기 순위
+    optional int32                                      var_ranking_second          =  7; // 중반기 순위
+    optional Struct.PennantReportRivalVsRecord          var_rival_vs_record         =  8; // 라이벌 구단과의 상대 전적
+    repeated Struct.PennantReportBatterRecord           var_batter_records          =  9; // 리그 전체 선수 기록 목록: 타자
+    repeated Struct.PennantReportPitcherRecord          var_pitcher_records         = 10; // 리그 전체 선수 기록 목록: 투수
+    optional Struct.PennantReportAttentionPlayerInfo    var_player                  = 11; // 주목 선수 정보
+    repeated Struct.PennantReportTopRecordPlayer        var_top_record_players      = 12; // 최고 기록 선수 목록
+    repeated Struct.PennantReportMvpPlayerInfo          var_mvp_player              = 13; // MVP 선수
+    optional ePennantReportState                        var_pennant_report_state    = 14; // 페넌트 레이스 리포트 상태
+    repeated Struct.PennantReportTeamRankRound          var_round_ranks             = 15; // 라운드별 구단 순위
+    repeated Struct.PennantReportRivalMatchResult       var_rival_match_results     = 16; // 라이벌 전적 목록 (목록에서 차전 순서대로 같은 라운드 ID 가 반복)
+    optional int32                                      var_kpi_interview_id        = 17 [default = 0]; // KPI 인터뷰 ID
+    optional int32                                      var_kpi_forecast_1          = 18 [default = 0]; // KPI 순위 예상 1
+    optional int32                                      var_kpi_forecast_2          = 19 [default = 0]; // KPI 순위 예상 2
+    optional int32                                      var_kpi_forecast_3          = 20 [default = 0]; // KPI 순위 예상 3
+    repeated Struct.PennantReportRecordRank             var_kpi_rank_records        = 21; // KPI 기록 순위 정보 목록
+}
+
+// 페넌트레이스 리포트: 시즌 결산 설정 결과
+message PKT_GS_TO_CLI_PENNANT_REPORT_END_SET
+{
+    optional PROTOID.GS_TO_CLI.ID                       id                  = 1 [default = PENNANT_REPORT_END_SET];
+
+    optional H3Enum.PacketCode.eCode                    var_code            = 2 [default = Success]; // 결과 코드
+    optional int32                                      var_game_money      = 3;    // GameMoney 보유량
+    optional int32                                      var_cash            = 4;    // Cash 보유량
+    optional int32                                      var_training_point  = 5;    // 훈련포인트 보유량
+    optional int32                                      var_team_exp        = 6;    // 구단 경험치 보유량
+    optional int32                                      var_fame_point      = 7;    // 갱신된 명성 포인트
+    optional int32                                      var_reward_item_id  = 8 [default = 0]; // 보상 아이템 ID (해당 없으면 0) (아이템은 선물함으로 지급)
+    optional int32                                      var_reward_item_cnt = 9;               // 보상 아이템 수량
+}
+
+// 페넌트레이스 리포트: 포스트 시즌 결산 조회 결과
+message PKT_GS_TO_CLI_PENNANT_REPORT_POST_END_INFO
+{
+    optional PROTOID.GS_TO_CLI.ID                       id                          = 1 [default = PENNANT_REPORT_POST_END_INFO];
+
+    // 페넌트 레이스 리포트 상태
+    enum ePennantReportState
+    {
+        PennantReportState_None     = 0;  // 미확인 (최초 확인)
+        PennantReportState_Check    = 1;  // 확인
+        PennantReportState_Complete = 2;  // 설정 완료 (보상 받기 등)
+    }
+
+    optional H3Enum.PacketCode.eCode                    var_code                    = 2 [default = Success]; // 결과 코드
+    optional int32                                      var_pennant_grade           = 3; // 페넌트 레이스 리그 등급
+    repeated Struct.PennantReportPostTeamInfo           var_teams                   = 4; // 구단 정보 목록
+    repeated Struct.PennantReportBatterRecord           var_mvp_batter_record       = 5; // MVP 선수 기록: 타자
+    repeated Struct.PennantReportPitcherRecord          var_mvp_pitcher_record      = 6; // MVP 선수 기록: 투수
+    optional ePennantReportState                        var_pennant_report_state    = 7; // 페넌트 레이스 리포트 상태
+}
+
+// 페넌트레이스 리포트: 포스트 시즌 결산 설정 결과
+message PKT_GS_TO_CLI_PENNANT_REPORT_POST_END_SET
+{
+    optional PROTOID.GS_TO_CLI.ID                       id                  = 1 [default = PENNANT_REPORT_POST_END_SET];
+
+    optional H3Enum.PacketCode.eCode                    var_code            = 2 [default = Success]; // 결과 코드
+    optional int32                                      var_game_money      = 3;    // GameMoney 보유량
+    optional int32                                      var_cash            = 4;    // Cash 보유량
+    optional int32                                      var_training_point  = 5;    // 훈련포인트 보유량
+    optional int32                                      var_team_exp        = 6;    // 구단 경험치 보유량
+    optional int32                                      var_fame_point      = 7;    // 갱신된 명성 포인트
+    optional int32                                      var_reward_item_id  = 8 [default = 0]; // 보상 아이템 ID (해당 없으면 0) (아이템은 선물함으로 지급)
+    optional int32                                      var_reward_item_cnt = 9;               // 보상 아이템 수량
+}
+
+// 페넌트레이스 경기 준비 정보 결과
+message PKT_GS_TO_CLI_PENNANT_GAME_PREPARATION_INFO
+{
+    optional PROTOID.GS_TO_CLI.ID                   id                      =  1 [default = PENNANT_GAME_PREPARATION_INFO];
+
+    optional H3Enum.PacketCode.eCode                var_code                =  2 [default = Success]; // 결과 코드
+    optional int32                                  var_match_type_flags    =  3; // 매치 종류 (H3Enum::PennantMatchTypeFlag_xxx 비트 플래그 값)
+    repeated Struct.PennantPreparationTeamRankInfo  var_team_rank_infos     =  4; // 순위 정보 리스트
+    repeated Struct.TacticsInfo                     var_tactics_infos       =  5; // 방침 설정 정보
+    repeated Struct.OperationPlayerCard             var_opp_opc             =  6; // 상대 팀 카드 전체 정보
+    optional Struct.RosterInfo                      var_opp_roster_info     =  7; // 홈 로스터 정보
+    optional bool                                   var_opp_tactics_state   =  8; // 상대 팀 방침 설정 상태(true: 방침 설정, false: 방침 미설정)
+    repeated Struct.PennantPreparationSpInfo        var_opp_sp_infos        =  9; // 상대 팀 선발 투수 정보
+    repeated Struct.PennantPreparationRecordTeam    var_team_records        = 10; // 팀 기록 리스트(리그 전체 구단)
+    repeated int32                                  var_opp_team_mastery_id_list    = 11; // 상대 구단 마스터리 ID 목록
+    repeated Struct.AlbumCardInfo                   var_opp_team_album_card_info_list    = 12; // 상대 구단 앨범 목록
+    optional Struct.VsRecord                        var_vs_record_info      = 13; // 상대 전적 정보
+}
+
+// 선수 카드 정보 갱신 응답
+message PKT_GS_TO_CLI_PLAYER_CARD_GET_INFO_LIST
+{
+    optional PROTOID.GS_TO_CLI.ID          id                   = 1 [default = PLAYER_CARD_GET_INFO_LIST];
+
+    optional H3Enum.PacketCode.eCode       var_code             = 2 [default = Success];
+
+    optional int32                         var_team_guid        = 3; // 팀 guid
+    optional int32                         var_season_id        = 4; // 현재 시즌 Id
+    optional int32                         var_round_id         = 5; // 현재 라운드 Id
+
+    repeated Struct.OperationPlayerCard    var_opc              = 6; // 카드 전체 정보
+    repeated Struct.PlayerCardSimpleRecord var_card_record      = 7; // 선수카드 기록 정보
+    optional Struct.TeamInfo               var_teaminfo         = 8; // 팀 정보
+    optional Struct.RosterInfo             var_roster_info      = 9; // 로스터 정보
+}
+
+// 페넌트레이스 미니 게임 결과 설정 결과
+message PKT_GS_TO_CLI_PENNANT_MINI_GAME_RESULT
+{
+    optional PROTOID.GS_TO_CLI.ID                       id                  = 1 [default = PENNANT_MINI_GAME_RESULT];
+
+    optional H3Enum.PacketCode.eCode                    var_code            = 2 [default = Success]; // 결과 코드
+    optional int32                                      var_game_money      = 3;    // GameMoney 보유량
+    optional int32                                      var_cash            = 4;    // Cash 보유량
+    optional int32                                      var_training_point  = 5;    // 훈련포인트 보유량
+    optional int32                                      var_team_exp        = 6;    // 구단 경험치 보유량
+}
+
+// 팀 로스터 멤버 변경
+message PKT_GS_TO_CLI_ROSTER_MEMBER_SET
+{
+    optional PROTOID.GS_TO_CLI.ID       id                  = 1 [default = ROSTER_MEMBER_SET];
+
+    optional H3Enum.PacketCode.eCode    var_code            = 2 [default = Success]; // 결과 코드
+    optional Struct.RosterInfo          var_roster_info     = 3; // 로스터 설정 정보
+    repeated Struct.OperationPlayerCard var_opc             = 4; // 갱신된 사용자 선수 카드 정보 (선발투수 로스터 교체 제한정보 반영)
+}
+
+// 선수 카드 추가(공용)
+message PKT_GS_TO_CLI_PLAYER_CARD_ADD
+{
+    optional PROTOID.GS_TO_CLI.ID       id                  = 1 [default = PLAYER_CARD_ADD];
+
+    optional H3Enum.PacketCode.eCode    var_code            = 2 [default = Success]; // 결과 코드
+    repeated Struct.OperationPlayerCard var_opc_list        = 3; // 추가된 선수 카드 list
+}
+
+// 선수 카드 삭제(공용)
+message PKT_GS_TO_CLI_PLAYER_CARD_DELETE
+{
+    optional PROTOID.GS_TO_CLI.ID       id                   = 1 [default = PLAYER_CARD_DELETE];
+
+    optional H3Enum.PacketCode.eCode    var_code             = 2 [default = Success]; // 결과 코드
+    repeated int32                      var_teamcard_id_list = 3; // 삭제할 선수 카드 목록
+}
+
+// 선수카드 판매 결과
+message PKT_GS_TO_CLI_PLAYER_CARD_SELL
+{
+    optional PROTOID.GS_TO_CLI.ID       id                   = 1 [default = PLAYER_CARD_SELL];
+
+    optional H3Enum.PacketCode.eCode    var_code             = 2 [default = Success]; // 결과 코드
+    optional int32                      var_game_money       = 3; // GameMoney 보유량
+    optional int32                      var_training_point   = 4; // TrainingPoint 보유량
+}
+
+// 선수카드 구매 결과
+message PKT_GS_TO_CLI_PLAYER_CARD_BUY
+{
+    optional PROTOID.GS_TO_CLI.ID       id                       = 1 [default = PLAYER_CARD_BUY];
+
+    optional H3Enum.PacketCode.eCode    var_code                 = 2 [default = Success]; // 결과 코드
+
+    repeated int32                      var_playercard_guid_list = 3; // 구매한 PlayerCardGuid list
+    optional int32                      var_game_money           = 4; // GameMoney 보유량
+    optional int32                      var_cash                 = 5; // Cash 보유량
+}
+
+// 타구단 정보 검색 결과
+message PKT_GS_TO_CLI_OPPENENT_TEAM_INFO_FIND
+{
+    optional PROTOID.GS_TO_CLI.ID       id                      =  1 [default = OPPENENT_TEAM_INFO_FIND];
+
+    optional H3Enum.PacketCode.eCode    var_code                =  2 [default = Success];
+    optional Struct.TeamInfo            var_teaminfo            =  3; // 팀 정보
+    repeated Struct.OperationPlayerCard var_opc                 =  4; // 카드 전체 정보
+    optional Struct.RosterInfo          var_roster_info         =  5; // 로스터 정보
+    repeated Struct.PlayerCardSimpleRecord var_card_record      =  6; // 선수카드 기록 정보
+    repeated int32                      var_team_mastery_id_list    = 7; // 구단 마스터리 ID 목록
+    repeated Struct.AlbumCardInfo       var_team_album_card_info_list = 8; // 구단 앨범 목록
+}
+
+// 라이프라인 슬롯 설정 결과
+message PKT_GS_TO_CLI_LIFELINE_SLOT_SET
+{
+    optional PROTOID.GS_TO_CLI.ID       id                      = 1 [default = LIFELINE_SLOT_SET];
+
+    optional H3Enum.PacketCode.eCode    var_code                = 2 [default = Success];
+    optional int32                      var_lifeline_id         = 3; // 설정된 라이프라인 ID
+    optional Struct.OperationPlayerCard var_opc                 = 4; // 갱신된 선수카드 정보
+    optional int32                      var_training_point      = 5; // 훈련포인트 보유량
+    optional int32                      var_cash                = 6; // Cash 보유량
+    optional int32                      var_item_id             = 7; // 등급 확정 아이템 ID (해당 없으면 0)
+    optional int32                      var_item_count          = 8; // 등급 확정 아이템 보유량 (0 이면 인벤토리에서 삭제)
+}
+
+// 라이프라인 슬롯 초기화 결과
+message PKT_GS_TO_CLI_LIFELINE_SLOT_RESET
+{
+    optional PROTOID.GS_TO_CLI.ID       id                      = 1 [default = LIFELINE_SLOT_RESET];
+
+    optional H3Enum.PacketCode.eCode    var_code                = 2 [default = Success];
+    optional Struct.OperationPlayerCard var_opc                 = 3; // 갱신된 선수 카드 정보
+    optional int32                      var_cash                = 4; // Cash 보유량
+    optional int32                      var_item_id             = 5; // 재료 아이템 ID (해당 없으면 0)
+    optional int32                      var_item_count          = 6; // 재료 아이템 보유량 (0 이면 인벤토리에서 삭제)
+}
+
+// 라이프라인 등급 상승 결과
+message PKT_GS_TO_CLI_LIFELINE_GRADE_UP
+{
+    optional PROTOID.GS_TO_CLI.ID       id                          = 1 [default = LIFELINE_GRADE_UP];
+
+    optional H3Enum.PacketCode.eCode    var_code                    = 2 [default = Success];
+    optional Struct.OperationPlayerCard var_opc                     = 3; // 갱신된 선수 카드 정보
+    optional int32                      var_game_money              = 4; // GameMoney 보유량
+    optional int32                      var_training_point          = 5; // 훈련포인트 보유량
+    optional int32                      var_item_id                 = 6; // 재료 아이템 ID (해당 없으면 0)
+    optional int32                      var_item_count              = 7; // 재료 아이템 보유량 (0 이면 인벤토리에서 삭제)
+    optional int32                      var_material_teamcard_id    = 8 [default = 0]; // 재료 구단 선수카드 ID (0 아니면 선수카드 인벤토리에서 삭제)
+	optional int32                      var_material_teamcard_id_2	= 9 [default = 0]; // 재료 구단 선수카드 ID (0 아니면 선수카드 인벤토리에서 삭제)
+	optional Struct.AlbumCardInfo		var_give_album_card_info    = 10; // Give 선수앨범 정보
+    optional Struct.AlbumCardInfo		var_take_album_card_info    = 11; // Take 선수앨범 정보
+}
+
+// 선수카드 잠금 결과
+message PKT_GS_TO_CLI_PLAYER_CARD_LOCK
+{
+    optional PROTOID.GS_TO_CLI.ID   id                      = 1 [default = PLAYER_CARD_LOCK];
+
+    optional H3Enum.PacketCode.eCode    var_code            = 2 [default = Success]; // 결과 코드
+    optional bool                       var_lock_status     = 3;                     // true: 잠김, false: 풀림
+    repeated int32                      var_teamcard_id_list = 4 [packed=true];       // 잠긴 카드 guid
+}
+
+// 선수카드 인벤토리 확장 결과
+message PKT_GS_TO_CLI_PLAYER_CARD_INVENTORY_EXTEND
+{
+    optional PROTOID.GS_TO_CLI.ID     id                      = 1 [default = PLAYER_CARD_INVENTORY_EXTEND];
+
+    optional H3Enum.PacketCode.eCode      var_code            = 2 [default = Success]; // 결과 코드
+    optional int32                        var_size            = 3; // 확장된 인벤토리 사이즈
+    optional int32                        var_cash            = 4; // 캐쉬
+}
+
+// 구단 정보 : 세부 정보 결과
+message PKT_GS_TO_CLI_TEAM_INFO_DETAIL
+{
+    optional PROTOID.GS_TO_CLI.ID   id                              = 1 [default = TEAM_INFO_DETAIL];
+
+    optional H3Enum.PacketCode.eCode       var_code                        = 2 [default = Success]; // 결과 코드
+    optional Struct.TeamInfo               var_team_info                   = 3; // 구단 정보
+    optional Struct.CurrentSeasonInfo      var_current_season_info         = 4; // 잠긴 카드 guid
+    repeated Struct.BeforeSeasonInfo       var_before_season_info_list     = 5; // 잠긴 카드 guid
+    optional int32                         var_bast_pennant_grade          = 6; // 최고 성적의 시즌 등급
+    optional int32                         var_bast_ranking                = 7; // 최고 성적 순위(1~10, 0: 통합 우승, 1: 포스트 시즌 우승)
+    optional int32                         var_total_season_count          = 8; // 참여 시즌 수
+    optional Struct.Record                 var_total_record                = 9; // 참여 시즌 누적 기록(승/무/패)
+    repeated Struct.PennantGradeBastPlayer var_pennant_grade_bast_player   = 10; // 잠긴 카드 guid
+    optional int32                         var_card_inven_size_limit       = 11; // card inventory size limit
+    optional Struct.RankingModeRecordInfo2 var_ranking_mode_record_info    = 12; // 랭킹전 기록 정보
+    optional int32                         var_tryout_match_point          = 13; // 평가전 누적 포인트
+    optional int32                         var_tryout_match_standard_point = 14; // 평가전 기준 포인트
+    optional Struct.Record                 var_tryout_match_record         = 15; // 평가전 기록
+
+    //todo 팀 마스터리 추가해야 함.
+    //todo 길드 정보 추가해야 함.
+}
+
+// 구단 정보 : 보유 선수 정보 결과
+message PKT_GS_TO_CLI_TEAM_INFO_HAVE_PLAYER_CARD
+{
+    optional PROTOID.GS_TO_CLI.ID   id                                              = 1 [default = TEAM_INFO_HAVE_PLAYER_CARD];
+
+    optional H3Enum.PacketCode.eCode            var_code                            = 2 [default = Success]; // 결과 코드
+    repeated Struct.HavePlayerCardGradeInfo     var_have_playercard_grade_info      = 3; // 보유 선수카드 등급 정보
+    repeated Struct.HavePlayerCardMaterialInfo  var_have_playercard_material_info   = 4; // 보유 선수카드 재료 정보
+}
+
+// 구단 정보 : 누적 리그 성적 상세 결과
+message PKT_GS_TO_CLI_TEAM_INFO_RECORD_TOTAL
+{
+    optional PROTOID.GS_TO_CLI.ID   id                              = 1 [default = TEAM_INFO_RECORD_TOTAL];
+
+    optional H3Enum.PacketCode.eCode            var_code                             = 2 [default = Success]; // 결과 코드
+    optional Struct.TeamInfoRecordTotalCurrent  var_team_info_record_current         = 3; // 현제 시즌 구단 기록
+    repeated Struct.TeamInfoRecordTotalGrade    var_team_info_record_grade_total     = 4; // 페넌트레이스 등급별 팀 구단 누적 성적
+    optional int32                              var_main_tournament_win_count        = 5; // 최강자전 우승 횟수
+}
+
+// 선수카드 검색 결과
+message PKT_GS_TO_CLI_PLAYER_CARD_INFO_FIND
+{
+    optional PROTOID.GS_TO_CLI.ID         id                                = 1 [default = PLAYER_CARD_INFO_FIND];
+
+    optional H3Enum.PacketCode.eCode      var_code                          = 2 [default = Success]; // 결과 코드
+    repeated Struct.PlayerCardFindResult  var_player_card_find_result_list  = 3; // 선수카드 결과 검색 정보 리스트
+}
+
+// 팀 배지 정보 조회 결과
+message PKT_GS_TO_CLI_TEAM_BADGE_INFO
+{
+    optional PROTOID.GS_TO_CLI.ID               id                          = 1 [default = TEAM_BADGE_INFO];
+
+    optional H3Enum.PacketCode.eCode            var_code                    = 2 [default = Success]; // 결과 코드
+    repeated int32                              var_team_badge_id_list      = 3; // 보유 팀 배지 ID 목록
+    repeated Struct.TeamBadgeMaterialSetInfo    var_material_list           = 4; // 등록된 팀 배지 재료 목록
+}
+
+// 팀 배지 재료 등록 결과
+message PKT_GS_TO_CLI_TEAM_BADGE_MATERIAL_SET
+{
+    optional PROTOID.GS_TO_CLI.ID               id                          = 1 [default = TEAM_BADGE_MATERIAL_SET];
+
+    optional H3Enum.PacketCode.eCode            var_code                    = 2 [default = Success]; // 결과 코드
+    optional int32                              var_material_slot_flags     = 3; // 갱신된 재료 슬롯 플래그 (최하위 비트부터 첫번째 재료 슬롯 시작. 각 재료 슬롯에 재료가 등록되어 있는지 나타낸다.)
+}
+
+// 팀 배지 획득 결과
+message PKT_GS_TO_CLI_TEAM_BADGE_GET
+{
+    optional PROTOID.GS_TO_CLI.ID         id                                = 1 [default = TEAM_BADGE_GET];
+
+    optional H3Enum.PacketCode.eCode      var_code                          = 2 [default = Success]; // 결과 코드
+    optional int32                        var_game_money                    = 3; // GameMoney 보유량
+    optional int32                        var_cash                          = 4; // Cash 보유량
+    optional int32                        var_training_point                = 5; // 훈련포인트 보유량
+    repeated Struct.InvenItemInfo         var_inven_item_info_list          = 6; // 변경된 인벤토리 아이템 리스트
+}
+
+// 팀 배지 장착 결과
+message PKT_GS_TO_CLI_TEAM_BADGE_SET
+{
+    optional PROTOID.GS_TO_CLI.ID         id                                = 1 [default = TEAM_BADGE_SET];
+
+    optional H3Enum.PacketCode.eCode      var_code                          = 2 [default = Success]; // 결과 코드
+}
+
+// 선수카드 조합 응답
+message PKT_GS_TO_CLI_PLAYER_CARD_COMPOSE
+{
+    optional PROTOID.GS_TO_CLI.ID         id              = 1 [default = PLAYER_CARD_COMPOSE];
+
+    optional H3Enum.PacketCode.eCode      var_code        = 2 [default = Success]; // 결과 코드
+    optional Struct.OperationPlayerCard   var_opc         = 3; // 생성된 선수 카드 정보
+    optional int32                        var_cash        = 4; // 갱신된 캐쉬
+}
+
+// 비기너 출석 보상 경과
+message PKT_GS_TO_CLI_BEGINNER_LOGIN_CHECK
+{
+    optional PROTOID.GS_TO_CLI.ID         id                  = 1 [default = BEGINNER_LOGIN_CHECK];
+
+    optional H3Enum.PacketCode.eCode      var_code            = 2 [default = Success]; // 결과 코드
+    repeated int32                        var_stat_list       = 3; // 상태 리스트 (-1: 해당사항 없음, 0: 미체크, 1: 선물 수령, 2: 선물 수령 완료), Size : 4
+    optional int32                        var_check_index     = 4; // 체크된 list Index(0 ~ 3)
+    optional int32                        var_beginner_type   = 5; // 비기너 타입(0: 신규, 1: 휴면)
+    optional int32                        var_game_money      = 6; // GameMoney 보유량
+    optional int32                        var_training_point  = 7; // 훈련포인트 보유량
+    optional int32                        var_cash            = 8; // Cash 보유량
+    optional int32                        var_team_exp        = 9; // 구단 경험치 보유량
+}
+
+// 상점 : 상품 리스트 조회 결과
+message PKT_GS_TO_CLI_SHOP_PRODUCT_INFO_LIST
+{
+    optional PROTOID.GS_TO_CLI.ID         id                  = 1 [default = SHOP_PRODUCT_INFO_LIST];
+
+    optional H3Enum.PacketCode.eCode      var_code            = 2 [default = Success]; // 결과 코드
+    repeated Struct.ShopProductInfo       var_product_list    = 3; // 상점 상품 리스트
+}
+
+// 상점 : 아이템 구매 결과
+message PKT_GS_TO_CLI_SHOP_PRODUCT_BUY
+{
+    optional PROTOID.GS_TO_CLI.ID         id                  = 1 [default = SHOP_PRODUCT_BUY];
+
+    optional H3Enum.PacketCode.eCode      var_code            = 2 [default = Success]; // 결과 코드
+
+    optional Struct.ShopProductInfo       var_product_info    = 3; // 상품 구매 후 상품 정보
+    optional int32                        var_game_money      = 4; // GameMoney 보유량
+    optional int32                        var_training_point  = 5; // 훈련포인트 보유량
+    optional int32                        var_cash            = 6; // Cash 보유량
+    optional int32                        var_team_exp        = 7; // 구단 경험치 보유량
+
+    repeated Struct.InvenItemInfo         var_inven_item_info_list = 8; // 변경된 인벤토리 아이템 리스트
+
+    // 이벤트샵 구매인 경우 데이터 추가 됨.
+    optional bool                           var_is_eventshop_product    = 9;  // -추가- 이벤트샵 인앱 아이템 인가
+    optional Struct.EventShopBuyResult      var_eventshop_buy_result    = 10;  // -추가- 구매한 상품의 최종 정보 (구매 횟수, 품절 여부 등)
+
+    // 유저캐어샵 구매인 경우 데이터 추가 됨.
+    optional bool                           var_is_usercareshop_product = 11;   // 유저케어샵인 경우
+    optional Struct.UserCareShopBuyResult   var_usercareshop_buy_result = 12;   // 구매한 상품의 최종 정보 (구매 횟수, 품절 여부 등)
+}
+
+// 상점 : 노멀 선수카드팩 리셋 결과
+message PKT_GS_TO_CLI_SHOP_NORMAL_PACK_RESET
+{
+    optional PROTOID.GS_TO_CLI.ID         id              = 1 [default = SHOP_NORMAL_PACK_RESET];
+
+    optional H3Enum.PacketCode.eCode      var_code        = 2 [default = Success]; // 결과 코드
+    optional int32                        var_cash        = 3; // Cash 보유량
+}
+
+// 선물함 : 정보 조회 결과
+message PKT_GS_TO_CLI_GIFT_BOX_INFO_LIST
+{
+    optional PROTOID.GS_TO_CLI.ID         id                 = 1 [default = GIFT_BOX_INFO_LIST];
+
+    optional H3Enum.PacketCode.eCode      var_code           = 2 [default = Success]; // 결과 코드
+
+    repeated Struct.GiftItem              var_gift_item_list = 3; // 받은 선물 리스트
+}
+
+// 선물함 : 선물 받기 결과
+message PKT_GS_TO_CLI_GIFT_BOX_GET
+{
+    optional PROTOID.GS_TO_CLI.ID         id                        = 1 [default = GIFT_BOX_GET];
+
+    optional H3Enum.PacketCode.eCode      var_code                  = 2 [default = Success]; // 결과 코드
+
+    optional int32                        var_game_money            = 3; // GameMoney 보유량
+    optional int32                        var_training_point        = 4; // 훈련포인트 보유량
+    optional int32                        var_cash                  = 5; // Cash 보유량
+
+    optional int32                        var_gift_get_count        = 6; // 받은 선물 수량
+    repeated Struct.InvenItemInfo         var_inven_item_info_list  = 7; // 변경된 인벤토리 아이템 리스트
+    repeated Struct.GiftResultItemInfo    var_result_item_info_list = 8; // 선물 받은 아이템 정보 리스트
+}
+
+// 상점 : 선수카드 획득 정보
+message PKT_GS_TO_CLI_SHOP_PRODUCT_BUY_PLAYER_CARD
+{
+    optional PROTOID.GS_TO_CLI.ID         id                        = 1 [default = SHOP_PRODUCT_BUY_PLAYER_CARD];
+
+    repeated Struct.ShopItemPlayerCard    var_shop_item_player_card = 2; // 선수 카드 획득 정보
+}
+
+// 선물함 : 선수카드 획득 정보
+message PKT_GS_TO_CLI_GIFT_BOX_GET_PLAYER_CARD
+{
+    optional PROTOID.GS_TO_CLI.ID         id                     = 1 [default = GIFT_BOX_GET_PLAYER_CARD];
+
+    repeated Struct.GiftPlayerCard        var_gift_player_card   = 2; // 선수카드 획득 정보
+}
+
+// 아이템 보관함 : 정보 조회 걸과
+message PKT_GS_TO_CLI_ITEM_INVEN_INFO_LIST
+{
+    optional PROTOID.GS_TO_CLI.ID         id                            = 1 [default = ITEM_INVEN_INFO_LIST];
+
+    optional H3Enum.PacketCode.eCode      var_code                      = 2 [default = Success]; // 결과 코드
+    repeated Struct.InvenItemInfo         var_inven_item_info_list      = 3; // 인벤토리 아이템 리스트
+    repeated Struct.FunctionalCardInfo    var_functional_card_info_list = 4; // 기능성 카드 정보 리스트
+}
+
+// 아이템 보관함 : 정보 사용 결과
+message PKT_GS_TO_CLI_ITEM_INVEN_USE
+{
+    optional PROTOID.GS_TO_CLI.ID         id                       = 1 [default = ITEM_INVEN_USE];
+
+    optional H3Enum.PacketCode.eCode      var_code                 = 2 [default = Success]; // 결과 코드
+    optional Struct.InvenItemInfo         var_remain_inven_item    = 3; // 사용하고 남은 아이템 정보
+    //repeated Struct.OperationPlayerCard   var_opc_list             = 4; // 추가된 선수 카드 list
+    repeated Struct.ShopItemPlayerCard    var_player_card_list     = 4; // 선수 카드 획득 정보
+    repeated Struct.FunctionalCardInfo    var_functional_card_info_list = 5; // 기능성 카드 리스트
+    optional int32                        var_exp                  = 6;	// 구단 경험치.
+    repeated Struct.ShopItemCoachCard     var_coach_card_list      = 7; // 코치 카드 획득 정보
+}
+
+// 아이템 보관함 : 정보 판매 결과
+message PKT_GS_TO_CLI_ITEM_INVEN_SELL
+{
+    optional PROTOID.GS_TO_CLI.ID         id                          = 1 [default = ITEM_INVEN_SELL];
+
+    optional H3Enum.PacketCode.eCode      var_code                    = 2 [default = Success]; // 결과 코드
+    optional Struct.InvenItemInfo         var_remain_inven_item       = 3; // 판매하고 남은 아이템 정보 (남은 아이템 id, 남은 수량)
+    optional int32                        var_affected_game_money     = 4; // 아이템 판매후 : 적용된 게임 머니     (사용하지 않음: 기획X)
+    optional int32                        var_affected_cash           = 5; // 아이템 판매후 : 적용된 캐시          (사용하지 않음: 기획X)
+    optional int32                        var_affected_training_point = 6; // 아이템 판매후 : 적용된 훈련포인트    (**사용함**)
+}
+
+
+// 전지훈련 정보 조회 결과
+message PKT_GS_TO_CLI_TRAINING_CAMP_INFO
+{
+    optional PROTOID.GS_TO_CLI.ID           id                      = 1 [default = TRAINING_CAMP_INFO];
+
+    optional H3Enum.PacketCode.eCode        var_code                = 2 [default = Success]; // 결과 코드
+    repeated Struct.TrainingCampInfo        var_slot_infos          = 3; // 슬롯 정보 목록
+}
+
+// 선수카드 전지훈련 등록 결과
+message PKT_GS_TO_CLI_TRAINING_CAMP_SET
+{
+    optional PROTOID.GS_TO_CLI.ID           id                      = 1 [default = TRAINING_CAMP_SET];
+
+    optional H3Enum.PacketCode.eCode        var_code                = 2 [default = Success];    // 결과 코드
+    optional int32                          var_remain_time_sec     = 3; // 남은 시간 (초)
+    optional int32                          var_game_money          = 4; // GameMoney 보유량
+
+    optional Struct.TrainingCampBonusRewardData		var_training_camp_bonus_reward_data		= 5; // 보너스 보상 정보
+}
+
+// 선수카드 전지훈련 종료 결과
+message PKT_GS_TO_CLI_TRAINING_CAMP_END
+{
+    optional PROTOID.GS_TO_CLI.ID           id                      = 1 [default = TRAINING_CAMP_END];
+
+    optional H3Enum.PacketCode.eCode        var_code                = 2 [default = Success];    // 결과 코드
+
+    //-------------------------------------------------------------------------
+    // 전지훈련 완료 처리 성공일 경우에만 전송된다.
+    // 전지훈련 취소 등의 경우에는 전송되지 않는다.
+    optional int32                          var_lifeline_slot_num   = 3; // 현재 선수카드 등급의 라이프라인 슬롯 번호 (0부터 첫번째 슬롯 시작)
+    optional int32                          var_lifeline_id         = 4; // 설정된 라이프라인 ID
+    optional Struct.OperationPlayerCard     var_opc                 = 5; // 갱신된 선수카드 정보
+    //-------------------------------------------------------------------------
+
+    optional Struct.TrainingCampBonusTypeData		var_training_camp_bonus_type_data		= 6; // 보너스 타입 정보
+}
+
+// 전지훈련 슬롯 개방 결과
+message PKT_GS_TO_CLI_TRAINING_CAMP_SLOT_OPEN
+{
+    optional PROTOID.GS_TO_CLI.ID           id                  = 1 [default = TRAINING_CAMP_SLOT_OPEN];
+
+    optional H3Enum.PacketCode.eCode        var_code            = 2 [default = Success];    // 결과 코드
+    optional int32                          var_cash            = 3; // Cash 보유량
+
+    optional Struct.TrainingCampBonusTypeData		var_training_camp_bonus_type_data		= 4; // 보너스 타입 정보
+}
+
+// 도전과제 정보 조회 결과
+message PKT_GS_TO_CLI_ACHIEVE_INFO
+{
+    optional PROTOID.GS_TO_CLI.ID           id                          = 1 [default = ACHIEVE_INFO];
+
+    optional H3Enum.PacketCode.eCode        var_code                    = 2 [default = Success]; // 결과 코드
+    repeated Struct.AchieveInfo             var_achieve_list            = 3; // 업적 도전과제 목록
+    optional Struct.TimeStamp               var_achieve_daily_end_time  = 4; // 일일 도전과제 종료 일시
+    repeated Struct.AchieveInfo             var_achieve_daily_list      = 5; // 일일 도전과제 목록
+    optional Struct.TimeStamp               var_achieve_week_time       = 6; // 주간 도전과제 종료 일시
+    repeated Struct.AchieveInfo             var_achieve_week_list       = 7; // 주간 도전과제 목록
+}
+
+// 도전과제 달성 알림
+message PKT_GS_TO_CLI_ACHIEVE_COMPLETE_NOTICE
+{
+    optional PROTOID.GS_TO_CLI.ID           id                          = 1 [default = ACHIEVE_COMPLETE_NOTICE];
+
+    repeated Struct.AchieveCompleteInfo     var_complete                = 2; // 완료 도전과제 목록
+}
+
+// 도전과제 보상 받기 결과
+message PKT_GS_TO_CLI_ACHIEVE_REWARD
+{
+    optional PROTOID.GS_TO_CLI.ID           id                          = 1 [default = ACHIEVE_REWARD];
+
+    optional H3Enum.PacketCode.eCode        var_code                    = 2 [default = Success]; // 결과 코드
+    optional int32                          var_level                   = 3; // 갱신된 단계 레벨
+    optional int32                          var_value                   = 4; // 갱신된 진행 값
+    optional int32                          var_game_money              = 5; // GameMoney 보유량
+    optional int32                          var_cash                    = 6; // Cash 보유량
+    optional int32                          var_training_point          = 7; // 훈련포인트 보유량
+    optional int32                          var_team_exp                = 8; // 구단 경험치 보유량
+    optional int32                          var_mission_team_badge_id   = 9; // 미션 개방된 팀 배지 ID
+    optional int32                          var_special_emblem_id       = 10; // 스페셜 엠블럼 ID
+}
+
+// 싱글모드 정보 조회 결과
+message PKT_GS_TO_CLI_SINGLE_MODE_INFO
+{
+    optional PROTOID.GS_TO_CLI.ID           id                          = 1 [default = SINGLE_MODE_INFO];
+
+    optional H3Enum.PacketCode.eCode        var_code                    = 2 [default = Success]; // 결과 코드
+
+    repeated Struct.SingleModeProgressInfo  var_progress_infos          = 3; // 싱글 모드 진행 정보 리스트
+}
+
+// 싱글모드 진행 정보 조회 결과
+message PKT_GS_TO_CLI_SINGLE_MODE_PROGRESS_INFO
+{
+    optional PROTOID.GS_TO_CLI.ID           id                          = 1 [default = SINGLE_MODE_PROGRESS_INFO];
+
+    optional H3Enum.PacketCode.eCode        var_code                    = 2 [default = Success]; // 결과 코드
+
+    repeated Struct.SingleModeRoundInfo     var_round_infos             = 3; // 진행된 라운드 정보 리스트
+}
+
+// 싱글모드 경기 정보 조회 결과
+message PKT_GS_TO_CLI_SINGLE_MODE_GAME_INFO
+{
+    optional PROTOID.GS_TO_CLI.ID            id                          = 1 [default = SINGLE_MODE_GAME_INFO];
+
+    optional H3Enum.PacketCode.eCode         var_code                    = 2 [default = Success]; // 결과 코드
+
+    optional Struct.TeamInfo                 var_home_teaminfo           = 3; // 홈 팀 정보(npc)
+    repeated Struct.OperationPlayerCard      var_home_opc                = 4; // 홈 카드 전체 정보
+    optional Struct.RosterInfo               var_home_roster_info        = 5; // 홈 로스터 정보
+    repeated Struct.PennantPreparationSpInfo var_opp_sp_infos            = 6; // 상대 팀 선발 투수 정보
+
+    optional int32                           var_sp_lotation_id          = 7; // 선발 로테이션 Id
+    repeated Struct.SingleModeMissionInfo    var_mission_infos           = 8; // 미션 정보 리스트
+}
+
+// 싱글모드 경기 결과
+message PKT_GS_TO_CLI_SINGLE_MODE_GAME_RESULT
+{
+    optional PROTOID.GS_TO_CLI.ID       id                        =  1 [default = SINGLE_MODE_GAME_RESULT];
+
+    optional H3Enum.PacketCode.eCode    var_code                  =  2 [default = Success]; // 결과 코드
+
+    optional int32                      var_single_mode_id        =  3; // 싱글 모드 id
+    optional int32                      var_area_id               =  4; // 지역 id
+    optional int32                      var_next_round_id         =  5; // 진행할 라운드 id
+
+    optional Struct.TeamInfo            var_home_teaminfo         =  6; // 홈 팀 정보(npc)
+    repeated Struct.OperationPlayerCard var_home_opc              =  7; // 홈 카드 전체 정보
+    optional Struct.RosterInfo          var_home_roster_info      =  8; // 홈 로스터 정보
+
+    repeated Struct.SingleModeResult    var_game_result_infos     =  9; // 경기 결과 데이터(1~3경기)
+
+    repeated int32                      var_friendly_tactics_ids  = 10; // 사용한 작전 카드 id list
+    optional bool                       var_special_tactics_state = 11; // 체험 작전 방침 상태
+
+    optional int32                      var_game_money            = 12; // GameMoney 보유량
+    optional int32                      var_coupon_count          = 13; // 쿠폰 보유 수량
+
+    optional int32                      var_total_w               = 14; // 누적 승
+    optional int32                      var_total_l               = 15; // 누적 무
+    optional int32                      var_total_d               = 16; // 누적 패
+
+    repeated H3Enum.eGameResultType     var_game_results          = 17; // 결과 리스트
+
+    repeated Struct.SingleModeMissionResultInfo  var_mission_results = 18; // 미션 결과 리스트
+    optional int32                      var_win_point_reward_id   = 19 [default = -1]; // 승리 포인트 보상 Id (미지급 시 -1)
+    optional int32                      var_result_reward_item_id = 20 [default = -1]; // 결과 보상 Id (미지급 시 -1)
+    optional int32                      var_result_reward_item_count = 21; // 결과 보상 Id (미지급 시 -1)
+
+    repeated Struct.FunctionalCardInfo  var_functional_card_info_list = 22; // 기능성 카드 정보 리스트
+}
+
+// 싱글모드 경기 결과
+message PKT_GS_TO_CLI_SINGLE_MODE_GAME_SWEEP
+{
+    optional PROTOID.GS_TO_CLI.ID       id                        = 1 [default = SINGLE_MODE_GAME_SWEEP];
+
+    optional H3Enum.PacketCode.eCode    var_code                  = 2 [default = Success]; // 결과 코드
+
+    optional int32                      var_single_mode_id        = 3; // 싱글 모드 id
+    optional int32                      var_area_id               = 4; // 지역 id
+    optional int32                      var_round_id              = 5; // 라운드 id
+
+    optional int32                      var_game_money            = 6; // GameMoney 보유량
+    optional int32                      var_coupon_count          = 7; // 쿠폰 보유 수량
+
+    // 보상 관련 정보 추가
+}
+
+// 싱글모드 지역 개방 결과
+message PKT_GS_TO_CLI_SINGLE_MODE_AREA_OPEN
+{
+    optional PROTOID.GS_TO_CLI.ID           id                          = 1 [default = SINGLE_MODE_AREA_OPEN];
+
+    optional H3Enum.PacketCode.eCode        var_code                    = 2 [default = Success]; // 결과 코드
+
+    optional int32                          var_single_mode_id          = 3; // 싱글 모드 id
+    optional int32                          var_area_id                 = 4; // 지역 id
+    optional int32                          var_next_round_id           = 5; // 라운드 id
+
+    optional int32                          var_special_tactics_id      = 6; // 신규 체험 작전 방침 id
+    optional bool                           var_special_tactics_state   = 7; // 체험 작전 방침 상태
+}
+
+// 싱글모드 작전 방침 초기화 결과
+message PKT_GS_TO_CLI_SINGLE_MODE_TACTICS_RESET
+{
+    optional PROTOID.GS_TO_CLI.ID           id                          = 1 [default = SINGLE_MODE_TACTICS_RESET];
+
+    optional H3Enum.PacketCode.eCode        var_code                    = 2 [default = Success]; // 결과 코드
+
+    optional int32                          var_special_tactics_id      = 3; // 신규 체험 작전 방침 id
+    optional bool                           var_special_tactics_state   = 4; // 체험 작전 방침 상태
+
+    optional int32                          var_game_money              = 5; // GameMoney 보유량
+}
+
+// 구단 마스터리 정보 조회 결과
+message PKT_GS_TO_CLI_TEAM_MASTERY_INFO
+{
+    optional PROTOID.GS_TO_CLI.ID           id                              = 1 [default = TEAM_MASTERY_INFO];
+
+    optional H3Enum.PacketCode.eCode        var_code                        = 2 [default = Success]; // 결과 코드
+    optional int32                          var_team_mastery_point_ex       = 3; // 확장 구단 마스터리 포인트
+    repeated int32                          var_team_mastery_id_list        = 4; // 설정된 구단 마스터리 ID 목록
+    optional int32                          var_accumul_ranking_mode_point  = 5; // 누적 랭킹전 포인트
+    optional int32                          var_accumul_pennant_point       = 6; // 누적 페너트레이스 우승 포인트
+}
+
+// 구단 마스터리 설정 결과
+message PKT_GS_TO_CLI_TEAM_MASTERY_SET
+{
+    optional PROTOID.GS_TO_CLI.ID           id                          = 1 [default = TEAM_MASTERY_SET];
+
+    optional H3Enum.PacketCode.eCode        var_code                    = 2 [default = Success]; // 결과 코드
+}
+
+// 구단 마스터리 초기화 결과
+message PKT_GS_TO_CLI_TEAM_MASTERY_RESET
+{
+    optional PROTOID.GS_TO_CLI.ID           id                              = 1 [default = TEAM_MASTERY_RESET];
+
+    optional H3Enum.PacketCode.eCode        var_code                        = 2 [default = Success]; // 결과 코드
+    optional int32                          var_game_money                  = 3; // GameMoney 보유량
+    optional int32                          var_cash                        = 4; // Cash 보유량
+    optional int32                          var_batter_tactical_entry_id    = 5 [default = 1]; // 타자 택티컬 엔트리 ID
+    optional int32                          var_pitcher_tactical_entry_id   = 6 [default = 1]; // 투수 택티컬 엔트리 ID
+}
+
+// 구단 마스터리 포인트 구입 결과
+message PKT_GS_TO_CLI_TEAM_MASTERY_POINT_BUY
+{
+    optional PROTOID.GS_TO_CLI.ID           id                          = 1 [default = TEAM_MASTERY_POINT_BUY];
+
+    optional H3Enum.PacketCode.eCode        var_code                    = 2 [default = Success]; // 결과 코드
+    optional int32                          var_team_mastery_point_ex   = 3; // 확장 구단 마스터리 포인트
+    optional int32                          var_cash                    = 4; // Cash 보유량
+}
+/*
+ALBUM_INFO                          = 610; // 앨범: 전체 조회 결과 - 선수카드 수집 수행 목록 전체
+        ALBUM_LEVEL_UP                      = 611; // 앨범: 선수카드 레벨업 요청 결과
+        ALBUM_MISSION_COMPLETE_INFO         = 612; // 앨범/미션: 미션 수행 완료 목록 결과
+        ALBUM_MISSION_COMPLETE              = 613; // 앨범/미션: 미션 수행 완료,보상 요청 결과
+*/
+// 앨범 전체 조회 결과 - 선수카드 수집 수행 목록
+message PKT_GS_TO_CLI_TEAM_CARD_ALBUM_INFO
+{
+    optional PROTOID.GS_TO_CLI.ID           id                          = 1 [default = TEAM_CARD_ALBUM_INFO];
+
+    optional H3Enum.PacketCode.eCode        var_code                    = 2 [default = Success]; // 결과 코드
+    repeated Struct.AlbumCardInfo           var_album_card_info_list    = 3;    // 카드 정보 목록
+    repeated int32                          var_album_mission_id        = 4;    // 앨범 미션 완료 목록
+}
+message PKT_GS_TO_CLI_TEAM_CARD_ALBUM_LEVEL_UP
+{
+    optional PROTOID.GS_TO_CLI.ID           id                          = 1 [default = TEAM_CARD_ALBUM_LEVEL_UP];
+
+    optional H3Enum.PacketCode.eCode        var_code                    = 2 [default = Success]; // 결과 코드
+    optional Struct.AlbumCardInfo           var_album_card_info         = 3;    // 카드 정보
+}
+
+message PKT_GS_TO_CLI_TEAM_CARD_ALBUM_MISSION_REGISTER
+{
+    optional PROTOID.GS_TO_CLI.ID           id                          = 1 [default = TEAM_CARD_ALBUM_MISSION_REGISTER];
+
+    optional H3Enum.PacketCode.eCode        var_code                    = 2 [default = Success]; // 결과 코드
+    optional int32                          var_album_mission_id        = 3;    // 앨범 미션 목록 (완료된 목록)
+    optional int32                          var_affected_game_money     = 4;    // 최종 적용된 게임 머니
+    optional int32                          var_affected_cash           = 5;    // 최종 적용된 캐시
+    optional int32                          var_affected_training_point = 6;    // 최종 적용된 트레이닝 포인트
+    optional int32                          var_affected_team_exp       = 7;    // 최종 적용된 팀 경험치
+    // 보상 정보의 경우 crema 테이블을 클라이언트가 가지고 있으므로 별도로 알리지 않는다.
+}
+
+// 친구: 친구 리스트 조회 결과
+message PKT_GS_TO_CLI_FRIEND_INFO
+{
+    optional PROTOID.GS_TO_CLI.ID           id                          = 1 [default = FRIEND_INFO];
+
+    optional H3Enum.PacketCode.eCode        var_code                    = 2 [default = Success]; // 결과 코드
+    repeated Struct.Friend                  var_friend_list             = 3; // 친구 정보
+    optional int32                          var_max_friend_count        = 4; // 최대 친구 보유수
+    optional int32                          var_friend_delete_count     = 5; // 친구 삭제 가능수
+}
+
+// 친구: 친구 맺기 리스트 조회 결과(추천친구, 받은친구, 보낸친구)
+message PKT_GS_TO_CLI_FRIEND_STANDBY_INFO
+{
+    optional PROTOID.GS_TO_CLI.ID           id                          = 1 [default = FRIEND_STANDBY_INFO];
+
+    optional H3Enum.PacketCode.eCode        var_code                    = 2 [default = Success]; // 결과 코드
+    repeated Struct.Friend                  var_friend_list             = 3; // 친구 정보
+}
+
+// 친구: 친구 수락 요청 결과
+message PKT_GS_TO_CLI_FRIEND_ACCEPT
+{
+    optional PROTOID.GS_TO_CLI.ID           id                          = 1 [default = FRIEND_ACCEPT];
+
+    optional H3Enum.PacketCode.eCode        var_code                    = 2 [default = Success]; // 결과 코드
+    optional Struct.Friend                  var_friend                  = 3; // 친구 정보
+}
+
+ // 친구: 친구 삭제 요청 결과
+message PKT_GS_TO_CLI_FRIEND_DELETE
+{
+    optional PROTOID.GS_TO_CLI.ID           id                          = 1 [default = FRIEND_DELETE];
+
+    optional H3Enum.PacketCode.eCode        var_code                    = 2 [default = Success]; // 결과 코드
+}
+
+// 친구: 친구 맺기 취소 요청 결과(친구 거절, 보낸 신청 취소)
+message PKT_GS_TO_CLI_FRIEND_STANDBY_CANCEL
+{
+    optional PROTOID.GS_TO_CLI.ID           id                          = 1 [default = FRIEND_STANDBY_CANCEL];
+
+    optional H3Enum.PacketCode.eCode        var_code                    = 2 [default = Success]; // 결과 코드
+}
+
+// 친구: 친구 찾기 요청 결과
+message PKT_GS_TO_CLI_FRIEND_FIND
+{
+    optional PROTOID.GS_TO_CLI.ID           id                          = 1 [default = FRIEND_FIND];
+
+    optional H3Enum.PacketCode.eCode        var_code                    = 2 [default = Success]; // 결과 코드
+    optional Struct.Friend                  var_friend                  = 3; // 친구 정보
+    optional int32                          var_friend_state            = 4; // 친구 상태(0: 가능, 1: 친구, 2: 보낸신청, 3: 받은 신청)
+}
+
+// 친구: 친구 요청 보내기 결과
+message PKT_GS_TO_CLI_FRIEND_REQUEST
+{
+    optional PROTOID.GS_TO_CLI.ID           id                          = 1 [default = FRIEND_REQUEST];
+
+    optional H3Enum.PacketCode.eCode        var_code                    = 2 [default = Success]; // 결과 코드
+    optional Struct.Friend                  var_friend                  = 3; // 친구 정보
+}
+
+// 친구: 친구 맺기 리스트 모든 리스트 요청결과
+message PKT_GS_TO_CLI_FRIEND_STANDBY_INFO_ALL
+{
+    optional PROTOID.GS_TO_CLI.ID           id                          = 1 [default = FRIEND_STANDBY_INFO_ALL];
+
+    optional H3Enum.PacketCode.eCode        var_code                    = 2 [default = Success]; // 결과 코드
+    repeated Struct.Friend                  var_friend_list_send        = 3; // 보낸 친구 정보
+    repeated Struct.Friend                  var_friend_list_receive     = 4; // 받은 친구 정보
+    repeated Struct.Friend                  var_friend_list_recommand   = 5; // 추천 친구 정보
+}
+
+// 게시판: 선수 게시판 목록 요청
+message PKT_GS_TO_CLI_BOARD_REPLY_LIST
+{
+    optional PROTOID.GS_TO_CLI.ID           id                          = 1 [default = BOARD_REPLY_LIST];
+    optional H3Enum.PacketCode.eCode        var_code                    = 2 [default = Success]; // 결과 코드
+
+    optional int32                          var_my_team_board_point        = 3; // 선수게시판포인트
+    optional int32                          var_my_write_cur_count         = 4; // 쓰기가능회수
+    optional int32                          var_my_write_max_count         = 5; // 쓰기가능회수
+    optional Struct.TimeStamp               var_my_modify_date_write       = 6; // 쓰기갱신일(충전)
+    optional int32                          var_my_estimation_point        = 7; // 내 평점
+
+    optional Struct.BoardPlayerCardInformation     var_board_player_card_information   = 8;
+    repeated Struct.Reply                          var_best_reply_list                 = 9;
+    repeated Struct.Reply                          var_reply_list                      = 10;
+}
+
+// 게시판: 선수 게시판 댓글 쓰기
+message PKT_GS_TO_CLI_BOARD_REPLY_WRITE
+{
+    optional PROTOID.GS_TO_CLI.ID           id                          = 1 [default = BOARD_REPLY_WRITE];
+    optional H3Enum.PacketCode.eCode        var_code                    = 2 [default = Success]; // 결과 코드
+}
+
+// 게시판: 선수 게시판 좋아요 누르기
+message PKT_GS_TO_CLI_BOARD_REPLY_LIKE
+{
+    optional PROTOID.GS_TO_CLI.ID           id                              = 1 [default = BOARD_REPLY_LIKE];
+    optional H3Enum.PacketCode.eCode        var_code                        = 2 [default = Success]; // 결과 코드
+
+    optional int64                          var_affected_reply_no           = 3; // 좋아요 처리 된 댓글
+}
+
+// 게시판: 선수 게시판 내 댓글 지우기
+message PKT_GS_TO_CLI_BOARD_REPLY_REMOVE
+{
+    optional PROTOID.GS_TO_CLI.ID           id                          = 1 [default = BOARD_REPLY_REMOVE];
+    optional H3Enum.PacketCode.eCode        var_code                    = 2 [default = Success]; // 결과 코드
+
+    optional int64                          var_affected_reply_no       = 3; // 삭제 처리된 댓글 id
+}
+
+// 게시판: 선수 게시판 카드 평가하기
+message PKT_GS_TO_CLI_BOARD_CARD_ESTIMATION
+{
+    optional PROTOID.GS_TO_CLI.ID           id          = 1 [default = BOARD_CARD_ESTIMATION];
+    optional H3Enum.PacketCode.eCode        var_code    = 2 [default = Success]; // 결과 코드
+
+    optional int32                          var_affected_total_point              = 3; // 전체 평가포인트
+    optional int32                          var_affected_total_estimation_count   = 4; // 전체 평가수
+
+}
+
+// 게시판: 선수 게시판 카드 순위조회
+message PKT_GS_TO_CLI_BOARD_CARD_RANK
+{
+    optional PROTOID.GS_TO_CLI.ID           id                          = 1 [default = BOARD_CARD_RANK];
+    optional H3Enum.PacketCode.eCode        var_code                    = 2 [default = Success]; // 결과 코드
+
+    repeated Struct.BoardRank               var_position_rank_list      = 3;    // 포지션 랭크 리스트
+    repeated Struct.BoardRank               var_player_type_rank_list   = 4;    // 선수 상태(타자, 투수) 랭크 리스트
+}
+
+// 게시판: 선수 게시판 카드 벌크 입력 (댓글 입력기) (-삭제예정-)
+message PKT_GS_TO_CLI_BOARD_DEV_TEST_BULK_ADD
+{
+    optional PROTOID.GS_TO_CLI.ID           id                          = 1 [default = BOARD_DEV_TEST_BULK_ADD];
+    optional H3Enum.PacketCode.eCode        var_code                    = 2 [default = Success]; // 결과 코드
+
+}
+
+// 상점 : InAppItem List 요청 결과
+message PKT_GS_TO_CLI_SHOP_IN_APP_ITEM_LIST
+{
+    optional PROTOID.GS_TO_CLI.ID                       id                          = 1 [default = SHOP_IN_APP_ITEM_LIST];
+    optional H3Enum.PacketCode.eCode                    var_code                    = 2 [default = Success]; // 결과 코드
+
+    repeated Struct.InAppShopItemInfo                   var_inapp_shop_item_list    = 3; // 인앱 상점 상품
+    optional H3Enum.ePaymentReputationPolicyDetailType  var_policy_detail_type      = 4 [default = PaymentReputationPolicyDetailType_None]; // 모바일 환불 제재 세부 정책 타입
+}
+
+// 상점 : InAppItem 구매
+message PKT_GS_TO_CLI_SHOP_IN_APP_ITEM_BUY
+{
+    optional PROTOID.GS_TO_CLI.ID           id                          = 1 [default = SHOP_IN_APP_ITEM_BUY];
+    optional H3Enum.PacketCode.eCode        var_code                    = 2 [default = Success]; // 결과 코드
+    optional int32                          var_game_money              = 3; // GameMoney 보유량
+    optional int32                          var_training_point          = 4; // 훈련포인트 보유량
+    optional int32                          var_cash                    = 5; // Cash 보유량
+
+    repeated Struct.InvenItemInfo           var_inven_item_info_list    = 6; // 변경된 인벤토리 아이템 리스트
+    optional Struct.InAppShopItemInfo       var_inapp_shop_item         = 7; // 구매 후 인앱 상품 정보
+
+    // 이벤트샵 구매인 경우 데이터 추가 됨.
+    optional bool                           var_is_eventshop_product    = 8;  // -추가- 이벤트샵 인앱 아이템 인가
+    optional Struct.EventShopBuyResult      var_eventshop_buy_result    = 9;  // -추가- 구매한 상품의 최종 정보 (구매 횟수, 품절 여부 등)
+
+    // 유저캐어샵 구매인 경우 데이터 추가 됨.
+    optional bool                           var_is_usercareshop_product = 10;   // 유저케어샵인 경우
+    optional Struct.UserCareShopBuyResult   var_usercareshop_buy_result = 11;   // 구매한 상품의 최종 정보 (구매 횟수, 품절 여부 등)
+}
+
+// 상점 : 게임머니 충전
+message PKT_GS_TO_CLI_SHOP_GAME_MONEY_CHARGE
+{
+    optional PROTOID.GS_TO_CLI.ID           id                          = 1 [default = SHOP_GAME_MONEY_CHARGE];
+    optional H3Enum.PacketCode.eCode        var_code                    = 2 [default = Success]; // 결과 코드
+
+    optional int32                          var_cash                    = 3; // game cash
+    optional int32                          var_game_money              = 4; // game money
+}
+
+// 튜토리얼 : 미니게임 보너스 요청 결과
+message PKT_GS_TO_CLI_TUTORIAL_MINI_GAME_BONUS_GET
+{
+    optional PROTOID.GS_TO_CLI.ID       id                       = 1 [default = TUTORIAL_MINI_GAME_BONUS_GET];
+
+    optional H3Enum.PacketCode.eCode    var_code                 = 2 [default = Success]; // 결과 코드
+
+    repeated Struct.OperationPlayerCard var_opc_list             = 3; // 추가된 선수 카드 list
+    optional int32                      var_game_money           = 4; // GameMoney 보유량
+    optional int32                      var_cash                 = 5; // Cash 보유량
+    optional int32                      var_tutorial_id          = 6; // 튜토이얼 id
+}
+
+// 튜토리얼 : 경기 결과 요청 결과
+message PKT_GS_TO_CLI_TUTORIAL_GAME_RESULT
+{
+    optional PROTOID.GS_TO_CLI.ID               id                          =  1 [default = TUTORIAL_GAME_RESULT];
+
+    optional H3Enum.PacketCode.eCode            var_code                    =  2 [default = Success];    // 결과 코드
+    optional Struct.PennantGameResultTeamInfo   var_home_result_team_info   =  3; // 홈 팀 경기 결과 구단 정보
+    optional Struct.PennantGameResultTeamInfo   var_away_result_team_info   =  4; // 원정 팀 경기 결과 구단 정보
+    repeated Struct.OperationPlayerCard         var_home_opc                =  5; // 홈 카드 전체 정보
+    repeated Struct.OperationPlayerCard         var_away_opc                =  6; // 원정 카드 전체 정보
+    optional Struct.RosterInfo                  var_home_roster_info        =  7; // 홈 로스터 정보
+    optional Struct.RosterInfo                  var_away_roster_info        =  8; // 원정 로스터 정보
+    repeated Simulation.simPennantBinary        var_binary_info             =  9; // 경기 결과 바이너리 정보(1~3경기)
+    repeated Struct.PennantGameResultAddInfo    var_result_add_info         = 10; // 경기 결과 부가 정보(1~3경기)
+    repeated Struct.RecapNewsInfo               var_recap_news_info         = 11; // 리캡 정보(2~4개)
+
+    optional int32                              var_tutorial_id             = 12; // 튜토이얼 id
+    optional int32                              var_game_money              = 13; // GameMoney 보유량
+}
+
+// 튜토리얼 : ID 저장 요청 결과
+message PKT_GS_TO_CLI_TUTORIAL_ID_SET
+{
+    optional PROTOID.GS_TO_CLI.ID           id                          = 1 [default = TUTORIAL_ID_SET];
+    optional H3Enum.PacketCode.eCode        var_code                    = 2 [default = Success]; // 결과 코드
+
+    optional int32                          var_tutorial_id             = 3; // 튜토이얼 id
+}
+
+// 예측 : 정보 요청 결과
+message PKT_GS_TO_CLI_BETTING_INFO
+{
+    optional PROTOID.GS_TO_CLI.ID           id                          = 1 [default = BETTING_INFO];
+    optional H3Enum.PacketCode.eCode        var_code                    = 2 [default = Success]; // 결과 코드
+
+    optional Struct.BettingStateInfo        var_betting_state_info      = 3; // 예측 상태 정보
+}
+
+// 예측 : 경기 예측 결과
+message PKT_GS_TO_CLI_BETTING_GAME_RESULT
+{
+    optional PROTOID.GS_TO_CLI.ID           id                              = 1 [default = BETTING_GAME_RESULT];
+    optional H3Enum.PacketCode.eCode        var_code                        = 2 [default = Success]; // 결과 코드
+
+    optional int32                          var_season_id                   = 3;  // 시즌 id
+    optional int32                          var_round_id                    = 4;  // 라운드 id
+
+    optional int32                          var_win_count_betting_point     = 5;  // 승수 예측 획득 포인트 획득량
+    optional int32                          var_card_forecast_betting_point = 6;  // 기록 예측 포인트 획득량
+
+    optional int32                          var_betting_point               = 7;  // 예측 포인트 보유량
+    optional int32                          var_game_money                  = 8;  // GameMoney 보유량
+    optional int32                          var_training_point              = 9;  // 훈련포인트 보유량
+    optional int32                          var_team_exp                    = 10; // 구단 경험치 보유량
+    optional int32                          var_cash                        = 11; // Cash 보유량
+
+    optional bytes                          var_team_name                   = 12; // 구단 이름   (2~8 characters)
+    optional int32                          var_fav_team_id                 = 13; // favorite team id
+    optional int32                          var_emblem_id                   = 14; // emblem id
+    optional int32                          var_special_emblem_id           = 15; // special emblem id
+
+    repeated Struct.BettingReword           var_betting_reward_list         = 16; // 예측 보상 리스트
+
+    // 적중 정보
+    optional int32                          var_combo_count                 = 17; // 콤보 수
+    optional int32                          var_combo_count_max             = 18; // 최대 콤보 수
+    optional int32                          var_combo_post_season_total     = 19; // 포스트 시즌 누적 콤보 수 // 포스트시즌예측
+
+    // 포스트시즌 예측 관련 추가
+    optional H3Enum.ePennantGameType        var_pennant_game_type              = 20 [default = ePennantGameType_RegularSeason]; // 시즌 타입
+    optional int32                          var_post_season_question_id        = 21; // 포스트시즌 예측 질문 ID  // 포스트시즌예측
+    optional int32                          var_post_season_question_select_id = 22; // 포스트시즌 예측 선택값   // 포스트시즌예측
+
+    optional int32                          var_post_season_betting_point      = 23; // 포스트시즌 예측 획득 포인트 획득량
+    repeated Struct.BettingPostSeasonTeamInfo var_post_season_team_info_list   = 24; // 포스트 시즌 팀 정보 리스트 // 포스트시즌예측
+    repeated Struct.Score                   var_post_season_score_list         = 25; // 포스트 시즌 점수 리스트
+
+    optional int32                          var_betting_point_before           = 26; // 결과 확인 전 예측 포인트 보유량
+}
+
+// 예측 : 경기 예측(승수 예측, 기록 예측) 정보 요청 결과
+message PKT_GS_TO_CLI_BETTING_GAME_INFO
+{
+    optional PROTOID.GS_TO_CLI.ID           id                                = 1 [default = BETTING_GAME_INFO];
+    optional H3Enum.PacketCode.eCode        var_code                          = 2 [default = Success]; // 결과 코드
+
+    optional int32                          var_combo_total                   = 3; // 누적 콤보 수
+    optional int32                          var_combo_count                   = 4; // 콤보 수
+    optional int32                          var_combo_count_max               = 5; // 최대 콤보 수
+    optional int32                          var_betting_point_max             = 6; // 최대 예측 포인트
+    optional int32                          var_add_lucky_ratio               = 7; // 추가 적중 배율(0보다 크면 럭키 발생)
+
+    optional Struct.BettingGame             var_betting_game                  = 8; // 경기 예측 정보
+
+    //optional int32                          var_betting_point                 = 9; // 예측 포인트 보유량
+
+    optional int32                          var_game_money                    = 10; // GameMoney 보유량
+    optional int32                          var_training_point                = 11; // 훈련포인트 보유량
+    optional int32                          var_team_exp                      = 12; // 구단 경험치 보유량
+    optional int32                          var_cash                          = 13; // Cash 보유량
+
+    repeated Struct.BettingReword           var_betting_reward_list           = 14; // 예측 보상 리스트
+
+    optional int32                          var_refill_count                  = 15;  // 리필 카운트
+    optional int32                          var_refill_point                  = 16;  // 리필 포인트
+
+    optional int32                          var_opp_team_guid                 = 17; // 상대 구단 ID
+    optional int32                          var_opp_team_league_rank          = 18; // 상대 구단 리그 랭킹
+    optional int32                          var_opp_team_post_rank            = 19; // 상대 구단 포스트 시즌 확정 랭킹
+    optional int32                          var_opp_team_w                    = 20; // 상대 구단 승
+    optional int32                          var_opp_team_l                    = 21; // 상대 구단 패
+    optional int32                          var_opp_team_d                    = 22; // 상대 구단 무
+
+    optional bool                           var_is_season_initialize          = 23; // 시즌 초기화 상태
+    optional Struct.TimeStamp               var_start_date                    = 24; // 베팅 시즌 시작일
+
+    optional bool                           var_is_season_rank_reward         = 25; // 배팅 시즌 랭크 보상 수령 상태
+
+    optional int32                          var_rank_reward_ranking           = 27[default = -1]; // 랭킹 보상 순위
+    optional int32                          var_rank_reward_id                = 28[default = -1]; // Cash 보유량
+
+    optional int32                          var_combo_post_season_total       = 29; // 포스트 시즌 누적 콤보 수 // 포스트시즌예측
+    repeated Struct.BettingPostSeasonTeamInfo var_post_season_team_info_list  = 30; // 포스트 시즌 팀 정보 리스트 // 포스트시즌예측
+}
+
+// 예측 : 선수 기록 추가 요청 결과
+message PKT_GS_TO_CLI_BETTING_GAME_PLAYER_RECORD_ADD
+{
+    optional PROTOID.GS_TO_CLI.ID           id                                = 1 [default = BETTING_GAME_PLAYER_RECORD_ADD];
+    optional H3Enum.PacketCode.eCode        var_code                          = 2 [default = Success]; // 결과 코드
+
+    optional int32                          var_card_forecast_slot_open_count = 3; // 슬롯 오픈 횟수
+    optional int32                          var_game_money                    = 4; // GameMoney 보유량
+}
+
+// 예측 : 승수 예측 엿보기 요청 결과
+message PKT_GS_TO_CLI_BETTING_GAME_WIN_COUNT_INFO
+{
+    optional PROTOID.GS_TO_CLI.ID           id                          = 1 [default = BETTING_GAME_WIN_COUNT_INFO];
+    optional H3Enum.PacketCode.eCode        var_code                    = 2 [default = Success]; // 결과 코드
+
+    repeated Struct.BettingTeamRankInfo     var_team_rank_info_list     = 3; // 구단 랭크 정보
+}
+
+// 예측 : 기록 예측 엿보기 요청 결과
+message PKT_GS_TO_CLI_BETTING_GAME_PLAYER_RECORD_INFO
+{
+    optional PROTOID.GS_TO_CLI.ID           id                          = 1 [default = BETTING_GAME_PLAYER_RECORD_INFO];
+    optional H3Enum.PacketCode.eCode        var_code                    = 2 [default = Success]; // 결과 코드
+
+    optional int32                          var_ab                      = 3 [default = 0]; // 타수
+    optional int32                          var_h                       = 4 [default = 0]; // 안타
+    optional int32                          var_rbi                     = 5 [default = 0]; // 타점
+    optional int32                          var_hr                      = 6 [default = 0]; // 홈런
+    optional int32                          var_r                       = 7 [default = 0]; // 득점
+    optional int32                          var_sb                      = 8 [default = 0]; // 도루
+    optional int32                          var_bb                      = 9 [default = 0]; // 볼넷
+}
+
+// 예측 : 승수 예측 설정
+message PKT_GS_TO_CLI_BETTING_GAME_WIN_COUNT_SET
+{
+    optional PROTOID.GS_TO_CLI.ID           id                          = 1 [default = BETTING_GAME_WIN_COUNT_SET];
+    optional H3Enum.PacketCode.eCode        var_code                    = 2 [default = Success]; // 결과 코드
+
+    optional int32                          var_betting_point           = 3;  // 예측 포인트 보유량
+    optional int32                          var_refill_count            = 4;  // 리필 카운트
+    optional int32                          var_refill_point            = 5;  // 리필 포인트
+}
+
+// 예측 : 기록 예측 설정 결과
+message PKT_GS_TO_CLI_BETTING_GAME_PLAYER_RECORD_SET
+{
+    optional PROTOID.GS_TO_CLI.ID           id                          = 1 [default = BETTING_GAME_PLAYER_RECORD_SET];
+    optional H3Enum.PacketCode.eCode        var_code                    = 2 [default = Success]; // 결과 코드
+
+    optional int32                          var_betting_point           = 3;  // 예측 포인트 보유량
+    optional int32                          var_refill_count            = 4;  // 리필 카운트
+    optional int32                          var_refill_point            = 5;  // 리필 포인트
+}
+
+// 예측 : 라운드 예측 정보 결과
+message PKT_GS_TO_CLI_BETTING_ROUND_INFO
+{
+    optional PROTOID.GS_TO_CLI.ID           id                          = 1 [default = BETTING_ROUND_INFO];
+    optional H3Enum.PacketCode.eCode        var_code                    = 2 [default = Success]; // 결과 코드
+}
+
+// 예측 : 이전 라운드 예측 보기 결과
+message PKT_GS_TO_CLI_BETTING_ROUND_INFO_HISTORY
+{
+    optional PROTOID.GS_TO_CLI.ID           id                          = 1 [default = BETTING_ROUND_INFO_HISTORY];
+    optional H3Enum.PacketCode.eCode        var_code                    = 2 [default = Success]; // 결과 코드
+}
+
+// 예측 : 라운드 예측 전체 순위 요청 결과
+message PKT_GS_TO_CLI_BETTING_ROUND_TOTAL_RANKING
+{
+    optional PROTOID.GS_TO_CLI.ID           id                          = 1 [default = BETTING_ROUND_TOTAL_RANKING];
+    optional H3Enum.PacketCode.eCode        var_code                    = 2 [default = Success]; // 결과 코드
+
+    repeated Struct.BettingRoundRank        var_betting_game_ranks      = 3; // 예측 순위 정보
+}
+
+// 예측 : 시즌 예측 정보 요청 결과
+message PKT_GS_TO_CLI_BETTING_SEASON_INFO
+{
+    optional PROTOID.GS_TO_CLI.ID           id                          = 1 [default = BETTING_SEASON_INFO];
+    optional H3Enum.PacketCode.eCode        var_code                    = 2 [default = Success]; // 결과 코드
+}
+
+// 예측 : 시즌 예측 설정 결과
+message PKT_GS_TO_CLI_BETTING_SEASON_SET
+{
+    optional PROTOID.GS_TO_CLI.ID           id                          = 1 [default = BETTING_SEASON_SET];
+    optional H3Enum.PacketCode.eCode        var_code                    = 2 [default = Success]; // 결과 코드
+}
+
+// 예측 : 예측 포인트 리필 결과
+message PKT_GS_TO_CLI_BETTING_POINT_REFILL
+{
+    optional PROTOID.GS_TO_CLI.ID           id                          = 1 [default = BETTING_POINT_REFILL];
+
+    optional H3Enum.PacketCode.eCode        var_code                    = 2 [default = Success]; // 결과 코드
+    optional int32                          var_game_money              = 3; // GameMoney 보유량
+    optional int32                          var_cash                    = 4; // Cash 보유량
+    optional int32                          var_training_point          = 5; // 훈련포인트 보유량
+    optional int32                          var_betting_point           = 6; // 배팅포인트
+}
+
+// 예측 : 포스트시즌 질문 생성 요청
+message PKT_GS_TO_CLI_BETTING_GAME_POST_SEASON_QUESTION_ADD
+{
+    optional PROTOID.GS_TO_CLI.ID           id                          = 1 [default = BETTING_GAME_POST_SEASON_QUESTION_ADD];
+    optional H3Enum.PacketCode.eCode        var_code                    = 2 [default = Success]; // 결과 코드
+    optional int32                          var_question_id             = 3 [default = 0]; // 질문ID
+}
+
+// 예측 : 승수 예측 설정
+message PKT_GS_TO_CLI_BETTING_GAME_POST_SEASON_SET
+{
+    optional PROTOID.GS_TO_CLI.ID           id                          = 1 [default = BETTING_GAME_POST_SEASON_SET];
+    optional H3Enum.PacketCode.eCode        var_code                    = 2 [default = Success]; // 결과 코드
+
+    optional int32                          var_betting_point           = 3;  // 예측 포인트 보유량
+    optional int32                          var_refill_count            = 4;  // 리필 카운트
+    optional int32                          var_refill_point            = 5;  // 리필 포인트
+}
+
+// 명성 정보 조회 결과
+message PKT_GS_TO_CLI_FAME_INFO
+{
+    optional PROTOID.GS_TO_CLI.ID           id                                  = 1 [default = FAME_INFO];
+
+    optional H3Enum.PacketCode.eCode        var_code                            = 2 [default = Success]; // 결과 코드
+    optional Struct.FameInfo                var_fame_info                       = 3; // 명성 정보
+    optional Struct.TimeStamp               var_fame_season_begin_date          = 4; // 명성 시즌 시작일
+    optional int32                          var_rewarded_point                  = 5; // 보상 누적 명성 포인트 (항목 var_fame_info::var_fame_point 와 간격 구간의 보상 여부 확인 필요)
+    repeated Struct.FameTeamInfo            var_team_fame_ranks                 = 6; // 구단 명성 순위 목록 (최대 3개. 인덱스 0 부터 1위.)
+    repeated Struct.FameRewardInfo          var_prev_fame_reward_info           = 7; // 이전 명성 시즌 보상 정보 (size=1: 이전 시즌 정보 있음. size=0: 이전 시즌 정보 없음.(참여 안된 경우 등))
+    optional int32                          var_fav_team_id                     = 8; // 참여 선호구단 ID
+    optional int32                          var_emblem_id                       = 9; // 참여 엠블럼 ID
+    optional int32                          var_special_emblem_id               = 10; // 참여 스페셜 엠블럼 ID
+}
+
+// 명성 이전 기록 조회 결과
+message PKT_GS_TO_CLI_FAME_HISTORY
+{
+    optional PROTOID.GS_TO_CLI.ID           id                                  = 1 [default = FAME_HISTORY];
+
+    optional H3Enum.PacketCode.eCode        var_code                            = 2 [default = Success]; // 결과 코드
+    repeated Struct.FameInfo                var_fame_histories                  = 3; // 이전 명성 기록 목록 (최대 2개)
+}
+
+// 명성 순위 목록 조회 결과
+message PKT_GS_TO_CLI_FAME_RANK_LIST
+{
+    optional PROTOID.GS_TO_CLI.ID           id                                  = 1 [default = FAME_RANK_LIST];
+
+    optional H3Enum.PacketCode.eCode        var_code                            = 2 [default = Success]; // 결과 코드
+    repeated Struct.FameTeamInfo            var_team_fame_ranks                 = 3; // 구단 명성 순위 목록
+    repeated Struct.FameTeamInfo            var_before_top_ranker               = 4; // 이전 명성 시즌 1위 구단 정보 (존재하지 않으면 빈목록)
+}
+
+// 명성 보상 받기 결과
+message PKT_GS_TO_CLI_FAME_REWARD
+{
+    optional PROTOID.GS_TO_CLI.ID           id                                  = 1 [default = FAME_REWARD];
+
+    optional H3Enum.PacketCode.eCode        var_code                            = 2 [default = Success]; // 결과 코드
+}
+
+
+// 구단 마스터리 초기화 결과
+message PKT_GS_TO_CLI_TEAM_MASTERY_PARTIAL_RESET
+{
+    optional PROTOID.GS_TO_CLI.ID           id                              = 1 [default = TEAM_MASTERY_PARTIAL_RESET];
+
+    optional H3Enum.PacketCode.eCode        var_code                        = 2 [default = Success]; // 결과 코드
+    optional int32                          var_game_money                  = 3; // GameMoney 보유량
+    optional int32                          var_cash                        = 4; // Cash 보유량
+    optional int32                          var_batter_tactical_entry_id    = 5 [default = 1]; // 타자 택티컬 엔트리 ID
+    optional int32                          var_pitcher_tactical_entry_id   = 6 [default = 1]; // 투수 택티컬 엔트리 ID
+	optional int32							var_category					= 7; // 마스터리 카테고리 번호
+}

@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="WBA.Notice"
+            Title=" 공지">
+    <StackLayout Orientation="Vertical" Spacing="10" Padding="20,20,20,20">
+        <ScrollView>
+            <Grid x:Name="main_grid">
+            <Grid.RowDefinitions BackgroundColor="White">
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <Frame BorderColor="Gray" Grid.Row="0" Grid.Column="0">
+                <StackLayout  BackgroundColor="White" Padding="3,3,3,3">
+                    <Label x:Name="label_2020msg" Text=" 원단 메세지 보기 " HorizontalTextAlignment="Center" VerticalTextAlignment="Center"  TextColor="Black" />
+                </StackLayout>
+            </Frame>
+
+            <Frame BorderColor="Gray" Grid.Row="0" Grid.Column="1">
+                <StackLayout  BackgroundColor="White"  >
+                    <Label x:Name="label_jubo" Text=" 금주 주보 보기" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" TextColor="Black" Padding="3,3,3,3"/>
+                </StackLayout>
+            </Frame>
+ 
+            <Frame BorderColor="Gray" Grid.Row="1" Grid.Column="0" VerticalOptions="Start" Grid.ColumnSpan="2">
+                <StackLayout BackgroundColor= "White" Padding="3,3,3,3">
+                <Label  Text=" 금주 성경 읽기표 " HorizontalTextAlignment="Center" VerticalTextAlignment="Center" TextColor="Black"/>
+                    <Frame BorderColor="Black"  Padding="3,3,3,3" >
+                        <Label x:Name="label_mon" Text=" 월요일 " HorizontalTextAlignment="Center" TextColor="Black" VerticalTextAlignment="Center"/>
+                    </Frame>
+                    <Frame BorderColor="Black"  Padding="3,3,3,3">
+                        <Label x:Name="label_tue" Text=" 화요일 " HorizontalTextAlignment="Center"  TextColor="Black" VerticalTextAlignment="Center"/>
+                    </Frame>
+                    <Frame BorderColor="Black" Padding="3,3,3,3">
+                        <Label x:Name="label_wed" Text=" 수요일 " HorizontalTextAlignment="Center"  TextColor="Black" VerticalTextAlignment="Center"/>
+                    </Frame>
+                    <Frame BorderColor="Black" Padding="3,3,3,3">
+                        <Label x:Name="label_thu" Text=" 목요일 " HorizontalTextAlignment="Center"  TextColor="Black" VerticalTextAlignment="Center"/>
+                    </Frame>
+                    <Frame BorderColor="Black" Padding="3,3,3,3">
+                        <Label x:Name="label_fri" Text=" 금요일 " HorizontalTextAlignment="Center"  TextColor="Black" VerticalTextAlignment="Center"/>
+                    </Frame>
+                    <Frame BorderColor="Black" Padding="3,3,3,3">
+                        <Label x:Name="label_sat" Text=" 토요일 " HorizontalTextAlignment="Center"  TextColor="Black" VerticalTextAlignment="Center"/>
+                    </Frame>
+                    <Frame BorderColor="Black" Padding="3,3,3,3">
+                        <Label x:Name="label_sun" Text=" 일요일 " HorizontalTextAlignment="Center"  TextColor="Black" VerticalTextAlignment="Center"/>
+                    </Frame>
+             </StackLayout>
+            </Frame>
+
+            <Frame BorderColor="Gray"  CornerRadius="5"  Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2">
+                <StackLayout BackgroundColor="White" Padding="3,3,3,3">
+                        <Label x:Name="notify" Text="중고등부 공지" HorizontalTextAlignment="Start" VerticalTextAlignment="Center" TextColor="Black"/>
+                </StackLayout>
+            </Frame>
+            
+            <Frame BorderColor="Gray"  CornerRadius="5"  Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2">
+                <StackLayout BackgroundColor="White" Padding="3,3,3,3">
+                        <Label x:Name="worship" Text="예배 위원" HorizontalTextAlignment="Start" VerticalTextAlignment="Center" TextColor="Black"/>
+               </StackLayout>
+            </Frame>
+
+        </Grid>
+        </ScrollView>
+    </StackLayout>
+
+ </ContentPage>

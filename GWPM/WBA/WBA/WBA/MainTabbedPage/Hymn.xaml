@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="WBA.MainTabbedPage.Hymn"
+             Title="찬송">
+    <ContentPage.Content>
+        <StackLayout Orientation="Vertical" Padding="20,20,20,20">
+            <ScrollView>
+                <Grid>
+                <Grid.RowDefinitions BackgroundColor="White">
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <Frame BorderColor="Gray" Grid.Row="0" Grid.Column="0">
+                        <StackLayout  BackgroundColor="White">
+                            <Entry x:Name="IndexEntry" Placeholder="장이나 제목을 입력하세요" TextChanged="Entry_TextChanged" />
+                    </StackLayout>
+                </Frame>
+
+                <Frame BorderColor="Gray" Grid.Row="1" Grid.Column="0">
+                    <StackLayout  BackgroundColor="White">
+                            <ListView x:Name="listView" ItemSelected="Handle_ItemSelected"   ItemsSource="{Binding HymnTableInfo}" IsVisible="True">
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextCell Text="{Binding Display}" TextColor="Black" />
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+                        </StackLayout>
+                </Frame>
+            </Grid>
+         </ScrollView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

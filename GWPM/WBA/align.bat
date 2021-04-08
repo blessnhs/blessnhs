@@ -1,0 +1,1 @@
+zipalign -f -v 4 ./com.blessnhs.BAC.apk ./com.blessnhs.BAC_align.apk

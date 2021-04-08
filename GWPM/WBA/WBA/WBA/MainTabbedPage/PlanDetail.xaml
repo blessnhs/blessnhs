@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="WBA.MainTabbedPage.PlanDetail"
+             Title=" 계획">
+    <ContentPage.Content>
+        <StackLayout VerticalOptions="StartAndExpand" HorizontalOptions="StartAndExpand" Padding="20,20,20,20">
+            <ScrollView>
+
+                <Grid>
+                <Grid.RowDefinitions BackgroundColor="White">
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <Frame BorderColor="Gray" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="1">
+                    <StackLayout  BackgroundColor="White">
+                        <Label Text="성경 읽기 시작일 " HorizontalOptions="Start" HorizontalTextAlignment="Center"  />
+                        <DatePicker x:Name="StartTime" Date="{Binding FromTime, Mode=TwoWay}"/>
+                    </StackLayout>
+                </Frame>
+
+
+                <Frame BorderColor="Gray" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="1">
+                    <StackLayout VerticalOptions="StartAndExpand">
+                        <Label Text="매일 읽을 장수 " HorizontalOptions="Center" HorizontalTextAlignment="Center"  />
+                        <Entry x:Name="ReadChapterCount" Placeholder="3" />
+                    </StackLayout>
+                </Frame>
+                          
+                <Frame BorderColor="Gray" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="1">
+
+                    <Button x:Name="ScheduleSaveButton" Text="시작"  Clicked="OnButtonClicked" BackgroundColor="White"/>
+
+                </Frame>
+
+                <Frame BorderColor="Gray" Grid.Row="0" Grid.Column="1" Grid.RowSpan="3">
+                    <ListView x:Name="listView" ItemSelected="Handle_ItemSelected"   ItemsSource="{Binding BibleListInfo}" IsVisible="True">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <TextCell Text="{Binding Name}" TextColor="Black" />
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </Frame>
+
+                 <Frame BorderColor="Gray" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2">
+                        <Label  x:Name="Info" Text="총 장 수  " HorizontalOptions="Start" HorizontalTextAlignment="Start"  />
+                 </Frame>
+
+                </Grid>
+           </ScrollView>
+        </StackLayout>
+    </ContentPage.Content>
+
+</ContentPage>

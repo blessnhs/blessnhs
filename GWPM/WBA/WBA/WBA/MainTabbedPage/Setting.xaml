@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="WBA.MainTabbedPage.Setting"
+             Title="설정">
+
+    <StackLayout Orientation="Vertical" Spacing="10" Padding="20,20,20,20">
+        <ScrollView>
+            <Grid>
+            <Grid.RowDefinitions BackgroundColor="White">
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <Frame BorderColor="Gray" Grid.Row="0" Grid.Column="0">
+                <StackLayout  BackgroundColor="White">
+                    <Label x:Name="TextSizeLabel" Text="  글자 크기 보기 " HorizontalTextAlignment="Center" VerticalTextAlignment="Center"  TextColor="Black" />
+                    <Slider x:Name="TextSizeSlider" Maximum="50" Minimum="0" BackgroundColor="Gray"/>
+                </StackLayout>
+            </Frame>
+            
+            <Frame BorderColor="Gray" Grid.Row="1" Grid.Column="0">
+                <StackLayout VerticalOptions="StartAndExpand">
+                    <Label Text="KJV  성경" />
+                    <Switch x:Name="KJVOption"  IsToggled="true" Toggled="OnToggledKJV"/>
+                </StackLayout>
+            </Frame>
+
+
+            <Frame BorderColor="Gray" Grid.Row="2" Grid.Column="0">
+                <StackLayout VerticalOptions="StartAndExpand">
+                    <Label Text="본명" />
+                    <Entry x:Name="usernameEntry" Placeholder="username" />
+                    <Label Text="비밀번호 숫자 4자리" />
+                    <Entry x:Name="passwordEntry" IsPassword="true" />
+                    <Button  x:Name="loginbutton" Text="Login" Clicked="OnLoginButtonClicked" />
+                    <Label x:Name="messageLabel" />
+                </StackLayout>
+            </Frame>
+        
+
+            <Frame BorderColor="Gray" Grid.Row="3" Grid.Column="0">
+                <StackLayout  BackgroundColor="White">
+                    <Label  Text="성경전서 개역한글판의 저작권은" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"  TextColor="Black"/>
+                    <Label  Text=" ( 재 ) 대한성서공회에 있습니다" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"  TextColor="Black"/>
+                    <Label  Text="Last Build 2020-01-25 " HorizontalTextAlignment="Center" VerticalTextAlignment="Center"  TextColor="Black" />
+                    <Label  Text="admin E-mail: blessnhs@nate.com" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"  TextColor="Black" />
+                </StackLayout>
+            </Frame>
+
+            </Grid>
+        </ScrollView>
+    </StackLayout>
+
+</ContentPage>

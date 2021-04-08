@@ -1,0 +1,135 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:WBA.MainTabbedPage"
+             x:Class="WBA.MainTabbedPage.Planxaml"
+             Title=" 알림 ">
+    <ContentPage.Content>
+        <ScrollView>
+
+            <StackLayout  x:Name="MainLayout" Orientation="Vertical">
+            <StackLayout.BindingContext>
+                <local:CalendarViewModel x:Name="ViewModel" />
+            </StackLayout.BindingContext>
+
+            <!-- Calendar -->
+            <StackLayout HorizontalOptions="Center" Orientation="Horizontal">
+                <Label x:Name="MonthLabel" Text="{Binding CurrentDateTime.Month}" />
+                <Label x:Name="YearLabel" Text="{Binding CurrentDateTime.Year}" />
+            </StackLayout>
+
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <Label Text="월" HorizontalOptions="Center" HorizontalTextAlignment="Center" Grid.Row="0"
+                       Grid.Column="0" />
+                <Label Text="화" HorizontalOptions="Center" HorizontalTextAlignment="Center" Grid.Row="0"
+                       Grid.Column="1" />
+                <Label Text="수" HorizontalOptions="Center" HorizontalTextAlignment="Center" Grid.Row="0"
+                       Grid.Column="2" />
+                <Label Text="목" HorizontalOptions="Center" HorizontalTextAlignment="Center" Grid.Row="0"
+                       Grid.Column="3" />
+                <Label Text="금" HorizontalOptions="Center" HorizontalTextAlignment="Center" Grid.Row="0"
+                       Grid.Column="4" />
+                <Label Text="토" HorizontalOptions="Center" HorizontalTextAlignment="Center" Grid.Row="0"
+                       Grid.Column="5" />
+                <Label Text="일" HorizontalOptions="Center" HorizontalTextAlignment="Center" Grid.Row="0"
+                       Grid.Column="6" TextColor="Red" />
+            </Grid>
+
+            <Grid x:Name="CalendarGrid">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    
+                </Grid.RowDefinitions>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+            </Grid>
+
+            <StackLayout Orientation="Horizontal" HorizontalOptions="End" Margin="10,0">
+                    <Button Text="하루등록" Clicked="OneDayRegButtonClicked"/>
+                    <Button Text="범위등록" Clicked="ManyDayRegButtonClicked"/>
+                <Button Text="Back" Command="{Binding Back}" />
+                <Button Text="Next" Command="{Binding Next}" />
+            </StackLayout>
+
+            <!-- Range -->
+                <StackLayout x:Name="RangeStackLayout" Orientation="Horizontal" IsVisible="False">
+                <DatePicker x:Name="RangeFrom" Date="{Binding FromTime, Mode=TwoWay}"/>
+                <DatePicker x:Name="RangeUntil" Date="{Binding UntilTime, Mode=TwoWay}" />
+                    <Button Text="select" Command="{Binding SelectRange}" Clicked="SelectButtonClicked" />
+            </StackLayout>
+
+                <Grid x:Name="ScheduleGrid" RowSpacing="1" HorizontalOptions="StartAndExpand"  IsVisible="False">
+                <Grid.RowDefinitions BackgroundColor="White">
+                    <RowDefinition Height="auto" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*" />
+                    <ColumnDefinition Width="8*" />
+                    <ColumnDefinition Width="2*" />
+                </Grid.ColumnDefinitions>
+
+                <Frame BorderColor="Gray" Grid.Row="0" Grid.Column="0" BackgroundColor="White" Padding="3,3,3,3">
+                    <StackLayout  BackgroundColor="White" >
+                        <TimePicker x:Name="timePicker1" Format="HH:mm" FontSize="Small"  WidthRequest="100"></TimePicker>
+                    </StackLayout>
+                </Frame>
+
+                <Frame BorderColor="Gray" Grid.Row="0" Grid.Column="1" BackgroundColor="White" Padding="3,3,3,3">
+                    <StackLayout  BackgroundColor="White" >
+                        <Editor x:Name="ScheduleEdit" Text="" AutoSize="TextChanges"/>
+                    </StackLayout>
+                </Frame>
+
+                <Frame BorderColor="Gray" Grid.Row="0" Grid.Column="2" BackgroundColor="White" Padding="3,3,3,3">
+                    <StackLayout  BackgroundColor="White" >
+                        <Button x:Name="ScheduleSaveButton" Text="저장"  Clicked="OnScheduleSaveButtonClicked" BackgroundColor="White"/>
+                    </StackLayout>
+                </Frame>
+
+                </Grid>
+             <!-- List -->
+           <ListView x:Name="SchedueListView"
+            ItemsSource="{Binding ScheduleViewItem}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                            <ViewCell>
+                                <ViewCell.View>
+                                    <Grid x:Name="Item">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="8*"/>
+                                            <ColumnDefinition Width="2*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Label Text="{Binding Display}" TextColor="Black"></Label>
+                                        <Button Grid.Column="1" Text="삭제"  Clicked="OnScheduleDelButtonClicked" CommandParameter="{Binding Id}" ></Button>
+                                    </Grid>
+                                </ViewCell.View>
+                            </ViewCell>
+                        </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackLayout>
+        </ScrollView>
+
+    </ContentPage.Content>
+</ContentPage>

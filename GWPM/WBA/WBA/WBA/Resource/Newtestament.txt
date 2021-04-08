@@ -1,0 +1,27 @@
+마태복음,Matthew,28
+마가복음,Mark,16
+누가복음,Luke,24
+요한복음,John,21
+사도행전,Acts,28
+로마서,	Romans,16
+고린도전서,1 Corinthians,16
+고린도후서,2 Corinthians,13
+갈라디아서,Galatians,6
+에베소서,Ephesians,6
+빌립보서,Philippians,4
+골로새서,Colossians,4
+데살로니가전서,1 Thessalonians,5
+데살로니가후서,2 Thessalonians,3
+디모데전서,1 Timothy,6
+디모데후서,2 Timothy,4
+디도서,Titus,3
+빌레몬서,Philemon,1
+히브리서,Hebrews,13
+야고보서,James,5
+베드로전서,1 Peter,5
+베드로후서,2 Peter,3
+요한1서,1 John,5
+요한2서,2 John,1
+요한3서,3 John,1
+유다서,Jude,1
+요한계시록,Revelation,22

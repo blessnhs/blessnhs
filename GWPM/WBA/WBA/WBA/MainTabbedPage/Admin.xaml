@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="WBA.MainTabbedPage.Admin"
+             Title="관리">
+    <ContentPage.Content>
+        <StackLayout Orientation="Vertical" Spacing="10" Padding="20,20,20,20" HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand">
+            <ScrollView>
+            <Grid VerticalOptions="StartAndExpand">
+                <Grid.RowDefinitions BackgroundColor="White">
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                  </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <Frame BorderColor="Gray" Grid.Row="0" Grid.Column="0">
+                    <StackLayout  BackgroundColor="White" >
+                        <Label x:Name="Notice" Text="   공지 내용 작성 " HorizontalTextAlignment="Center" VerticalTextAlignment="Center"  TextColor="Black"/>
+                         <Editor   HeightRequest="400">
+
+                        </Editor>
+                        <Button Text="등록" Clicked="OnNoticeButtonClicked" />
+                    </StackLayout>
+                </Frame>
+
+                <Frame BorderColor="Gray" Grid.Row="1" Grid.Column="0">
+                    <StackLayout  BackgroundColor="White" Grid.Row="3" Grid.Column="0">
+                        <Label x:Name="Worship" Text="   금주 예배위원 작성 " HorizontalTextAlignment="Center" VerticalTextAlignment="Center"  TextColor="Black" />
+                            <Editor   HeightRequest="400">
+                            
+                        </Editor>
+                        <Button Text="등록" Clicked="OnWorshipButtonClicked" />
+                    </StackLayout>
+                </Frame>
+
+            </Grid>
+            </ScrollView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

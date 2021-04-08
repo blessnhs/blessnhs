@@ -1,0 +1,21 @@
+#pragma once
+
+#include "GSObject.h"
+#include "common.h"
+#include <boost/shared_ptr.hpp>
+
+typedef GSNetwork::GSObject::GSObject GSObject;
+
+class ResponsePlayerAuth : public GSObject
+{
+public:
+	ResponsePlayerAuth(void) {}
+	~ResponsePlayerAuth(void) {}
+
+	char CharName[MAX_CHAR_CNT][MAX_CHAR_LENGTH];
+	char AccoutName[MAX_CHAR_LENGTH];
+
+	DWORD Index;
+};
+
+//typedef boost::shared_ptr<_ResponsePlayerAuth>  ResponsePlayerAuth;
