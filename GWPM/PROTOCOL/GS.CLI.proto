@@ -21,15 +21,8 @@ message LOGIN_RES
 
     optional  int64      var_index         = 3;
 
-
-    optional int32	 var_win 		= 4;
-    optional int32	 var_lose 		= 5;
-    optional int32	 var_draw 		= 6;
-    optional int32	 var_score 		= 7;
-    optional int32	 var_rank		= 8;
-    optional int32	 var_level		= 9;
-    optional bytes   var_locale     = 10;
-    optional bytes   var_name       = 11;
+    optional bytes   var_locale     = 4;
+    optional bytes   var_name       = 5;
 }
 
 message CREATE_ROOM_RES
@@ -70,43 +63,6 @@ message ROOM_LIST_RES
     repeated RoomInfo2 var_room_list 	     = 3;
 }
 
-message MATCH_RES
-{
-    optional PROTOCOL   id                  = 1 [default = ID_PKT_MATCH_RES ];
-    optional  ErrorCode    var_code         = 2;
-}
-
- message GAME_RESULT_NTY
-{
-    optional PROTOCOL   	id                        = 1 [default = ID_PKT_GAME_RESULT_NTY ];
-    optional  int64    		var_index	            = 2;
-    optional bytes 		var_name              = 3;
-    optional  ErrorCode    	var_code               = 4;
-    optional eTeam  		var_color               = 5;
-
-    optional  int64    		var_index_1	 = 6;
-    optional int32 		var_level_1                = 7;
-    optional int32 		var_level_point_1        = 8;
-
-    optional  int64    		var_index_2	 = 9;
-    optional int32 		var_level_2                = 10;
-    optional int32 		var_level_point_2        = 11;
-
-}
-
-
-message RANK_RES
-{
-    optional PROTOCOL   id                        = 1 [default = ID_PKT_RANK_RES  ];
-    repeated Rank var_rank_list     = 2;
-    optional  ErrorCode    var_code               = 3;
-}
-
-message QNS_RES
-{
-    optional PROTOCOL   id                        = 1 [default = ID_PKT_QNS_RES   ];
-    optional  ErrorCode    var_code               = 3;
-}
 
 message ROOM_PASS_THROUGH_RES
 {
@@ -116,25 +72,12 @@ message ROOM_PASS_THROUGH_RES
     required int32     var_message_int         = 4;
 }
 
-message CANCEL_MATCH_RES
-{
-    optional PROTOCOL   id                        = 1 [default = ID_PKT_CANCEL_MATCH_RES    ];
-}
-
-
-
 message NOTICE_RES
 {
     optional PROTOCOL   id                        = 1 [default = ID_PKT_NOTICE_RES    ];
     required bytes     var_message    	     = 2;
 }
 
-message CHECK_NICKNAME_RES
-{
-    optional PROTOCOL   id                        = 1 [default = ID_PKT_CHECK_NICKNAME_RES    ];
-    optional  ErrorCode    var_code         = 2;
-    required bytes     var_name    	     = 3;
-}
 
 message BITMAP_MESSAGE_RES
 {

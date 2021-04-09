@@ -6,7 +6,7 @@
 #include "CrashHandler/SFCrashHandler.h"
 #include "../Timer/ContentsTimer.h"
 
-BoardConstructor::BoardConstructor(void)
+HubConstructor::HubConstructor(void)
 {
 	//프로젝트 속성에 c/c++ => 코드 생성 항목에서 기본 런타임 검사를 기본값으로 설정해야함
 	SFCrashHandler handler;
@@ -19,7 +19,7 @@ BoardConstructor::BoardConstructor(void)
 	
 	printf("Server Start.................. \n");
 
-	BoardCommand *_Command = new BoardCommand();
+	HubCommand *_Command = new HubCommand();
 	
 	while(TRUE)
 	{
@@ -34,6 +34,6 @@ BoardConstructor::BoardConstructor(void)
 }
 
 
-BoardConstructor::~BoardConstructor(void)
+HubConstructor::~HubConstructor(void)
 {
 }

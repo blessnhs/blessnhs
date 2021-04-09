@@ -1,11 +1,11 @@
 #pragma once
 #include "SingleTonHolder.h"
 
-class BoardINI : public Singleton<BoardINI>
+class HubINI : public Singleton<HubINI>
 {
 public:
-	BoardINI(void) {} 
-	~BoardINI(void) {}
+	HubINI(void) {} 
+	~HubINI(void) {}
 
 	VOID Load();
 
@@ -25,4 +25,4 @@ public:
 
 };
 
-#define  INI Singleton<BoardINI>::Instance()
+#define  INI Singleton<HubINI>::Instance()

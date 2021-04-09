@@ -31,7 +31,7 @@ using namespace web::http;
 using namespace web::http::client;
 using namespace web::json;
 
-namespace Board	{
+namespace Hub	{
 
 
 	template<class T>
@@ -122,96 +122,7 @@ namespace Board	{
 		void Undo() {}
 	};
 
-	template<>
-	class MSG_PLAYER_QUERY<NickNameCheck> : public IMESSAGE
-	{
-	public:
-		MSG_PLAYER_QUERY() { }
-		~MSG_PLAYER_QUERY() {}
-
-		NickNameCheck pRequst;
-		GSCLIENT_PTR pSession;
-
-		void Execute(LPVOID Param)
-		{
-			DBPROCESS_CER_PTR pProcess = DBPROCESSCONTAINER_CER.Search(Type);
-			if (pProcess == NULL || pProcess->m_IsOpen == false)
-			{
-				return;
-			}
-
-			CHECK_NICKNAME_RES res;
-			
-			bool ret = pProcess->NickNameCheck(pRequst.NickName, pRequst.Index);
-			ErrorCode code = ret == true ? ErrorCode::Success : ErrorCode::DataBaseError;
-
-			res.set_var_code(code);
-			res.set_var_name(pRequst.NickName);
-
-			SEND_PROTO_BUFFER(res, pSession)
-
-		}
-
-
-		void Undo() {}
-	};
-
-
-	template<>
-	class MSG_PLAYER_QUERY<RequestRank> : public IMESSAGE
-	{
-	public:
-		MSG_PLAYER_QUERY() { }
-		~MSG_PLAYER_QUERY() {}
-
-		GSCLIENT_PTR pSession;
-
-		void Execute(LPVOID Param)
-		{
-			RANK_RES res;
-
-			if (pSession == NULL || pSession->GetConnected() == false)
-			{
-				res.set_var_code(DataBaseError);
-
-				SEND_PROTO_BUFFER(res, pSession)
-				return;
-			}
-
-			DBPROCESS_CER_PTR pProcess = DBPROCESSCONTAINER_CER.Search(Type);
-			if (pProcess == NULL || pProcess->m_IsOpen == false)
-			{
-				res.set_var_code(DataBaseError);
-
-				SEND_PROTO_BUFFER(res, pSession)
-				return;
-			}
-
-			std::list<Rank> list;
-			// 로그인 절차 : 아이디의 접속확인 및 인증키값을 가져온다.
-			pProcess->RequestRank(list);
-
-			for each (auto r in list)
-			{
-				if (r.var_win() == 0)
-					continue;
-
-				auto rank = res.mutable_var_rank_list()->Add();
-
-				*rank = r;
-			}
-
-
-			res.set_var_code(Success);
-
-			SEND_PROTO_BUFFER(res, pSession)
-		}
-
-
-		void Undo() {}
-	};
-
-
+	
 	template<>
 	class MSG_PLAYER_QUERY<RequestDeleteAllConcurrentUser> : public IMESSAGE
 	{
@@ -230,41 +141,6 @@ namespace Board	{
 			}
 
 			pProcess->DeleteAllConcurrentUser();
-		}
-
-		void Undo() {}
-	};
-
-
-	template<>
-	class MSG_PLAYER_QUERY<RequestQNS> : public IMESSAGE
-	{
-	public:
-		MSG_PLAYER_QUERY() { }
-		~MSG_PLAYER_QUERY() {}
-
-		GSCLIENT_PTR pSession;
-
-		RequestQNS pRequst;
-
-		void Execute(LPVOID Param)
-		{
-			DBPROCESS_CER_PTR pProcess = DBPROCESSCONTAINER_CER.Search(Type);
-			if (pProcess == NULL || pProcess->m_IsOpen == false)
-			{
-				return;
-			}
-
-			boost::replace_all(pRequst.contents, "'", "''");
-
-			int ret = pProcess->UpdaetQNS(pRequst.Index, pRequst.contents);
-
-			ErrorCode code = ret == 0 ? ErrorCode::Success : ErrorCode::DataBaseError;
-
-			QNS_RES res;
-			res.set_var_code(code);
-
-			SEND_PROTO_BUFFER(res, pSession)
 		}
 
 		void Undo() {}
@@ -544,12 +420,6 @@ namespace Board	{
 				res.set_var_code(Success);
 				res.set_var_index(Index);
 
-				res.set_var_win(win);
-				res.set_var_lose(lose);
-				res.set_var_draw(draw);
-				res.set_var_score(score);
-				res.set_var_rank(rank);
-				res.set_var_level(level);
 				res.set_var_locale(locale);
 				res.set_var_name(nickname);
 

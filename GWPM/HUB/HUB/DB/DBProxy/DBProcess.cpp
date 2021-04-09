@@ -12,7 +12,7 @@ CDBProcessCer::CDBProcessCer(void)
 	m_IsOpen = false;
 	InitializeCriticalSection(&m_CS);
 
-	m_DB = new MongoDB("Board");
+	m_DB = new MongoDB("Hub");
 	
 }
 

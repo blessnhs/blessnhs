@@ -1,9 +1,9 @@
 #pragma once
 
-class BoardConstructor
+class HubConstructor
 {
 public:
-	BoardConstructor(void);
-	~BoardConstructor(void);
+	HubConstructor(void);
+	~HubConstructor(void);
 };
 

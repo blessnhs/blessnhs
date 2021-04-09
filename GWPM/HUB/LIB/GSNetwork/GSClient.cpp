@@ -89,26 +89,6 @@ void GSClient::SetPair(INT64 Player)
 	m_PairPlayerId = Player;
 }
 
-/*BOOL GSClient::Recycle(SOCKET hListenSocket)
-{
-	CThreadSync Sync;
-
-	if(m_CreateType == TCP)
-	{
-		m_TCPSocket->Termination();
-
-		return m_TCPSocket->Initialize() && m_TCPSocket->Accept(hListenSocket);
-	}
-	else if(m_CreateType == UDP)
-	{
-		m_UDPSocket->Termination();
-
-		return m_UDPSocket->Initialize() && m_UDPSocket->Accept(hListenSocket);
-	}
-
-	return FALSE;
-}*/
-
 SOCKET GSClient::GetSocket(VOID)
 {
 	

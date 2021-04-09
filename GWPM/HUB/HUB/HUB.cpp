@@ -5,8 +5,8 @@
 
 int main()
 {
-	BoardCommand _Command;
-	BoardConstructor			_Constructor;
+	HubCommand _Command;
+	HubConstructor			_Constructor;
 
 	return 0;
 

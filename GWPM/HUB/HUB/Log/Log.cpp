@@ -2,12 +2,12 @@
 #include "Log.h"
 
 
-BoardLog::BoardLog(char* file_name)
+HubLog::HubLog(char* file_name)
 	:GSLog(file_name,true)
 {
 }
 
 
-BoardLog::~BoardLog(void)
+HubLog::~HubLog(void)
 {
 }

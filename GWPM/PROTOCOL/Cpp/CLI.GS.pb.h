@@ -49,7 +49,7 @@ struct TableStruct_CLI_2eGS_2eproto {
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::PROTOBUF_NAMESPACE_ID::internal::AuxillaryParseTableField aux[]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
-  static const ::PROTOBUF_NAMESPACE_ID::internal::ParseTable schema[15]
+  static const ::PROTOBUF_NAMESPACE_ID::internal::ParseTable schema[10]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::PROTOBUF_NAMESPACE_ID::internal::FieldMetadata field_metadata[];
   static const ::PROTOBUF_NAMESPACE_ID::internal::SerializationTable serialization_table[];
@@ -62,12 +62,6 @@ extern AUDIO_MESSAGE_REQDefaultTypeInternal _AUDIO_MESSAGE_REQ_default_instance_
 class BITMAP_MESSAGE_REQ;
 class BITMAP_MESSAGE_REQDefaultTypeInternal;
 extern BITMAP_MESSAGE_REQDefaultTypeInternal _BITMAP_MESSAGE_REQ_default_instance_;
-class CANCEL_MATCH_REQ;
-class CANCEL_MATCH_REQDefaultTypeInternal;
-extern CANCEL_MATCH_REQDefaultTypeInternal _CANCEL_MATCH_REQ_default_instance_;
-class CHECK_NICKNAME_REQ;
-class CHECK_NICKNAME_REQDefaultTypeInternal;
-extern CHECK_NICKNAME_REQDefaultTypeInternal _CHECK_NICKNAME_REQ_default_instance_;
 class CREATE_ROOM_REQ;
 class CREATE_ROOM_REQDefaultTypeInternal;
 extern CREATE_ROOM_REQDefaultTypeInternal _CREATE_ROOM_REQ_default_instance_;
@@ -80,18 +74,9 @@ extern LEAVE_ROOM_REQDefaultTypeInternal _LEAVE_ROOM_REQ_default_instance_;
 class LOGIN_REQ;
 class LOGIN_REQDefaultTypeInternal;
 extern LOGIN_REQDefaultTypeInternal _LOGIN_REQ_default_instance_;
-class MATCH_REQ;
-class MATCH_REQDefaultTypeInternal;
-extern MATCH_REQDefaultTypeInternal _MATCH_REQ_default_instance_;
 class NOTICE_REQ;
 class NOTICE_REQDefaultTypeInternal;
 extern NOTICE_REQDefaultTypeInternal _NOTICE_REQ_default_instance_;
-class QNS_REQ;
-class QNS_REQDefaultTypeInternal;
-extern QNS_REQDefaultTypeInternal _QNS_REQ_default_instance_;
-class RANK_REQ;
-class RANK_REQDefaultTypeInternal;
-extern RANK_REQDefaultTypeInternal _RANK_REQ_default_instance_;
 class ROOM_LIST_REQ;
 class ROOM_LIST_REQDefaultTypeInternal;
 extern ROOM_LIST_REQDefaultTypeInternal _ROOM_LIST_REQ_default_instance_;
@@ -104,16 +89,11 @@ extern VERSION_REQDefaultTypeInternal _VERSION_REQ_default_instance_;
 PROTOBUF_NAMESPACE_OPEN
 template<> ::AUDIO_MESSAGE_REQ* Arena::CreateMaybeMessage<::AUDIO_MESSAGE_REQ>(Arena*);
 template<> ::BITMAP_MESSAGE_REQ* Arena::CreateMaybeMessage<::BITMAP_MESSAGE_REQ>(Arena*);
-template<> ::CANCEL_MATCH_REQ* Arena::CreateMaybeMessage<::CANCEL_MATCH_REQ>(Arena*);
-template<> ::CHECK_NICKNAME_REQ* Arena::CreateMaybeMessage<::CHECK_NICKNAME_REQ>(Arena*);
 template<> ::CREATE_ROOM_REQ* Arena::CreateMaybeMessage<::CREATE_ROOM_REQ>(Arena*);
 template<> ::ENTER_ROOM_REQ* Arena::CreateMaybeMessage<::ENTER_ROOM_REQ>(Arena*);
 template<> ::LEAVE_ROOM_REQ* Arena::CreateMaybeMessage<::LEAVE_ROOM_REQ>(Arena*);
 template<> ::LOGIN_REQ* Arena::CreateMaybeMessage<::LOGIN_REQ>(Arena*);
-template<> ::MATCH_REQ* Arena::CreateMaybeMessage<::MATCH_REQ>(Arena*);
 template<> ::NOTICE_REQ* Arena::CreateMaybeMessage<::NOTICE_REQ>(Arena*);
-template<> ::QNS_REQ* Arena::CreateMaybeMessage<::QNS_REQ>(Arena*);
-template<> ::RANK_REQ* Arena::CreateMaybeMessage<::RANK_REQ>(Arena*);
 template<> ::ROOM_LIST_REQ* Arena::CreateMaybeMessage<::ROOM_LIST_REQ>(Arena*);
 template<> ::ROOM_PASS_THROUGH_REQ* Arena::CreateMaybeMessage<::ROOM_PASS_THROUGH_REQ>(Arena*);
 template<> ::VERSION_REQ* Arena::CreateMaybeMessage<::VERSION_REQ>(Arena*);
@@ -1060,448 +1040,6 @@ class ROOM_LIST_REQ :
 };
 // -------------------------------------------------------------------
 
-class MATCH_REQ :
-    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:MATCH_REQ) */ {
- public:
-  MATCH_REQ();
-  virtual ~MATCH_REQ();
-
-  MATCH_REQ(const MATCH_REQ& from);
-  MATCH_REQ(MATCH_REQ&& from) noexcept
-    : MATCH_REQ() {
-    *this = ::std::move(from);
-  }
-
-  inline MATCH_REQ& operator=(const MATCH_REQ& from) {
-    CopyFrom(from);
-    return *this;
-  }
-  inline MATCH_REQ& operator=(MATCH_REQ&& from) noexcept {
-    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
-      if (this != &from) InternalSwap(&from);
-    } else {
-      CopyFrom(from);
-    }
-    return *this;
-  }
-
-  inline const ::PROTOBUF_NAMESPACE_ID::UnknownFieldSet& unknown_fields() const {
-    return _internal_metadata_.unknown_fields();
-  }
-  inline ::PROTOBUF_NAMESPACE_ID::UnknownFieldSet* mutable_unknown_fields() {
-    return _internal_metadata_.mutable_unknown_fields();
-  }
-
-  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
-    return GetDescriptor();
-  }
-  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
-    return GetMetadataStatic().descriptor;
-  }
-  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
-    return GetMetadataStatic().reflection;
-  }
-  static const MATCH_REQ& default_instance();
-
-  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
-  static inline const MATCH_REQ* internal_default_instance() {
-    return reinterpret_cast<const MATCH_REQ*>(
-               &_MATCH_REQ_default_instance_);
-  }
-  static constexpr int kIndexInFileMessages =
-    6;
-
-  friend void swap(MATCH_REQ& a, MATCH_REQ& b) {
-    a.Swap(&b);
-  }
-  inline void Swap(MATCH_REQ* other) {
-    if (other == this) return;
-    InternalSwap(other);
-  }
-
-  // implements Message ----------------------------------------------
-
-  inline MATCH_REQ* New() const final {
-    return CreateMaybeMessage<MATCH_REQ>(nullptr);
-  }
-
-  MATCH_REQ* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
-    return CreateMaybeMessage<MATCH_REQ>(arena);
-  }
-  void CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
-  void MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
-  void CopyFrom(const MATCH_REQ& from);
-  void MergeFrom(const MATCH_REQ& from);
-  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
-  bool IsInitialized() const final;
-
-  size_t ByteSizeLong() const final;
-  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
-  ::PROTOBUF_NAMESPACE_ID::uint8* _InternalSerialize(
-      ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
-  int GetCachedSize() const final { return _cached_size_.Get(); }
-
-  private:
-  inline void SharedCtor();
-  inline void SharedDtor();
-  void SetCachedSize(int size) const final;
-  void InternalSwap(MATCH_REQ* other);
-  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
-  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
-    return "MATCH_REQ";
-  }
-  private:
-  inline ::PROTOBUF_NAMESPACE_ID::Arena* GetArenaNoVirtual() const {
-    return nullptr;
-  }
-  inline void* MaybeArenaPtr() const {
-    return nullptr;
-  }
-  public:
-
-  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
-  private:
-  static ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadataStatic() {
-    ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&::descriptor_table_CLI_2eGS_2eproto);
-    return ::descriptor_table_CLI_2eGS_2eproto.file_level_metadata[kIndexInFileMessages];
-  }
-
-  public:
-
-  // nested types ----------------------------------------------------
-
-  // accessors -------------------------------------------------------
-
-  enum : int {
-    kIdFieldNumber = 1,
-  };
-  // optional .PROTOCOL id = 1 [default = ID_PKT_MATCH_REQ];
-  bool has_id() const;
-  private:
-  bool _internal_has_id() const;
-  public:
-  void clear_id();
-  ::PROTOCOL id() const;
-  void set_id(::PROTOCOL value);
-  private:
-  ::PROTOCOL _internal_id() const;
-  void _internal_set_id(::PROTOCOL value);
-  public:
-
-  // @@protoc_insertion_point(class_scope:MATCH_REQ)
- private:
-  class _Internal;
-
-  ::PROTOBUF_NAMESPACE_ID::internal::InternalMetadataWithArena _internal_metadata_;
-  ::PROTOBUF_NAMESPACE_ID::internal::HasBits<1> _has_bits_;
-  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
-  int id_;
-  friend struct ::TableStruct_CLI_2eGS_2eproto;
-};
-// -------------------------------------------------------------------
-
-class RANK_REQ :
-    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:RANK_REQ) */ {
- public:
-  RANK_REQ();
-  virtual ~RANK_REQ();
-
-  RANK_REQ(const RANK_REQ& from);
-  RANK_REQ(RANK_REQ&& from) noexcept
-    : RANK_REQ() {
-    *this = ::std::move(from);
-  }
-
-  inline RANK_REQ& operator=(const RANK_REQ& from) {
-    CopyFrom(from);
-    return *this;
-  }
-  inline RANK_REQ& operator=(RANK_REQ&& from) noexcept {
-    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
-      if (this != &from) InternalSwap(&from);
-    } else {
-      CopyFrom(from);
-    }
-    return *this;
-  }
-
-  inline const ::PROTOBUF_NAMESPACE_ID::UnknownFieldSet& unknown_fields() const {
-    return _internal_metadata_.unknown_fields();
-  }
-  inline ::PROTOBUF_NAMESPACE_ID::UnknownFieldSet* mutable_unknown_fields() {
-    return _internal_metadata_.mutable_unknown_fields();
-  }
-
-  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
-    return GetDescriptor();
-  }
-  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
-    return GetMetadataStatic().descriptor;
-  }
-  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
-    return GetMetadataStatic().reflection;
-  }
-  static const RANK_REQ& default_instance();
-
-  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
-  static inline const RANK_REQ* internal_default_instance() {
-    return reinterpret_cast<const RANK_REQ*>(
-               &_RANK_REQ_default_instance_);
-  }
-  static constexpr int kIndexInFileMessages =
-    7;
-
-  friend void swap(RANK_REQ& a, RANK_REQ& b) {
-    a.Swap(&b);
-  }
-  inline void Swap(RANK_REQ* other) {
-    if (other == this) return;
-    InternalSwap(other);
-  }
-
-  // implements Message ----------------------------------------------
-
-  inline RANK_REQ* New() const final {
-    return CreateMaybeMessage<RANK_REQ>(nullptr);
-  }
-
-  RANK_REQ* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
-    return CreateMaybeMessage<RANK_REQ>(arena);
-  }
-  void CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
-  void MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
-  void CopyFrom(const RANK_REQ& from);
-  void MergeFrom(const RANK_REQ& from);
-  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
-  bool IsInitialized() const final;
-
-  size_t ByteSizeLong() const final;
-  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
-  ::PROTOBUF_NAMESPACE_ID::uint8* _InternalSerialize(
-      ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
-  int GetCachedSize() const final { return _cached_size_.Get(); }
-
-  private:
-  inline void SharedCtor();
-  inline void SharedDtor();
-  void SetCachedSize(int size) const final;
-  void InternalSwap(RANK_REQ* other);
-  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
-  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
-    return "RANK_REQ";
-  }
-  private:
-  inline ::PROTOBUF_NAMESPACE_ID::Arena* GetArenaNoVirtual() const {
-    return nullptr;
-  }
-  inline void* MaybeArenaPtr() const {
-    return nullptr;
-  }
-  public:
-
-  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
-  private:
-  static ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadataStatic() {
-    ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&::descriptor_table_CLI_2eGS_2eproto);
-    return ::descriptor_table_CLI_2eGS_2eproto.file_level_metadata[kIndexInFileMessages];
-  }
-
-  public:
-
-  // nested types ----------------------------------------------------
-
-  // accessors -------------------------------------------------------
-
-  enum : int {
-    kIdFieldNumber = 1,
-  };
-  // optional .PROTOCOL id = 1 [default = ID_PKT_RANK_REQ];
-  bool has_id() const;
-  private:
-  bool _internal_has_id() const;
-  public:
-  void clear_id();
-  ::PROTOCOL id() const;
-  void set_id(::PROTOCOL value);
-  private:
-  ::PROTOCOL _internal_id() const;
-  void _internal_set_id(::PROTOCOL value);
-  public:
-
-  // @@protoc_insertion_point(class_scope:RANK_REQ)
- private:
-  class _Internal;
-
-  ::PROTOBUF_NAMESPACE_ID::internal::InternalMetadataWithArena _internal_metadata_;
-  ::PROTOBUF_NAMESPACE_ID::internal::HasBits<1> _has_bits_;
-  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
-  int id_;
-  friend struct ::TableStruct_CLI_2eGS_2eproto;
-};
-// -------------------------------------------------------------------
-
-class QNS_REQ :
-    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:QNS_REQ) */ {
- public:
-  QNS_REQ();
-  virtual ~QNS_REQ();
-
-  QNS_REQ(const QNS_REQ& from);
-  QNS_REQ(QNS_REQ&& from) noexcept
-    : QNS_REQ() {
-    *this = ::std::move(from);
-  }
-
-  inline QNS_REQ& operator=(const QNS_REQ& from) {
-    CopyFrom(from);
-    return *this;
-  }
-  inline QNS_REQ& operator=(QNS_REQ&& from) noexcept {
-    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
-      if (this != &from) InternalSwap(&from);
-    } else {
-      CopyFrom(from);
-    }
-    return *this;
-  }
-
-  inline const ::PROTOBUF_NAMESPACE_ID::UnknownFieldSet& unknown_fields() const {
-    return _internal_metadata_.unknown_fields();
-  }
-  inline ::PROTOBUF_NAMESPACE_ID::UnknownFieldSet* mutable_unknown_fields() {
-    return _internal_metadata_.mutable_unknown_fields();
-  }
-
-  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
-    return GetDescriptor();
-  }
-  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
-    return GetMetadataStatic().descriptor;
-  }
-  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
-    return GetMetadataStatic().reflection;
-  }
-  static const QNS_REQ& default_instance();
-
-  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
-  static inline const QNS_REQ* internal_default_instance() {
-    return reinterpret_cast<const QNS_REQ*>(
-               &_QNS_REQ_default_instance_);
-  }
-  static constexpr int kIndexInFileMessages =
-    8;
-
-  friend void swap(QNS_REQ& a, QNS_REQ& b) {
-    a.Swap(&b);
-  }
-  inline void Swap(QNS_REQ* other) {
-    if (other == this) return;
-    InternalSwap(other);
-  }
-
-  // implements Message ----------------------------------------------
-
-  inline QNS_REQ* New() const final {
-    return CreateMaybeMessage<QNS_REQ>(nullptr);
-  }
-
-  QNS_REQ* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
-    return CreateMaybeMessage<QNS_REQ>(arena);
-  }
-  void CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
-  void MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
-  void CopyFrom(const QNS_REQ& from);
-  void MergeFrom(const QNS_REQ& from);
-  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
-  bool IsInitialized() const final;
-
-  size_t ByteSizeLong() const final;
-  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
-  ::PROTOBUF_NAMESPACE_ID::uint8* _InternalSerialize(
-      ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
-  int GetCachedSize() const final { return _cached_size_.Get(); }
-
-  private:
-  inline void SharedCtor();
-  inline void SharedDtor();
-  void SetCachedSize(int size) const final;
-  void InternalSwap(QNS_REQ* other);
-  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
-  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
-    return "QNS_REQ";
-  }
-  private:
-  inline ::PROTOBUF_NAMESPACE_ID::Arena* GetArenaNoVirtual() const {
-    return nullptr;
-  }
-  inline void* MaybeArenaPtr() const {
-    return nullptr;
-  }
-  public:
-
-  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
-  private:
-  static ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadataStatic() {
-    ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&::descriptor_table_CLI_2eGS_2eproto);
-    return ::descriptor_table_CLI_2eGS_2eproto.file_level_metadata[kIndexInFileMessages];
-  }
-
-  public:
-
-  // nested types ----------------------------------------------------
-
-  // accessors -------------------------------------------------------
-
-  enum : int {
-    kVarMessageFieldNumber = 2,
-    kIdFieldNumber = 1,
-  };
-  // required bytes var_message = 2;
-  bool has_var_message() const;
-  private:
-  bool _internal_has_var_message() const;
-  public:
-  void clear_var_message();
-  const std::string& var_message() const;
-  void set_var_message(const std::string& value);
-  void set_var_message(std::string&& value);
-  void set_var_message(const char* value);
-  void set_var_message(const void* value, size_t size);
-  std::string* mutable_var_message();
-  std::string* release_var_message();
-  void set_allocated_var_message(std::string* var_message);
-  private:
-  const std::string& _internal_var_message() const;
-  void _internal_set_var_message(const std::string& value);
-  std::string* _internal_mutable_var_message();
-  public:
-
-  // optional .PROTOCOL id = 1 [default = ID_PKT_QNS_REQ];
-  bool has_id() const;
-  private:
-  bool _internal_has_id() const;
-  public:
-  void clear_id();
-  ::PROTOCOL id() const;
-  void set_id(::PROTOCOL value);
-  private:
-  ::PROTOCOL _internal_id() const;
-  void _internal_set_id(::PROTOCOL value);
-  public:
-
-  // @@protoc_insertion_point(class_scope:QNS_REQ)
- private:
-  class _Internal;
-
-  ::PROTOBUF_NAMESPACE_ID::internal::InternalMetadataWithArena _internal_metadata_;
-  ::PROTOBUF_NAMESPACE_ID::internal::HasBits<1> _has_bits_;
-  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
-  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr var_message_;
-  int id_;
-  friend struct ::TableStruct_CLI_2eGS_2eproto;
-};
-// -------------------------------------------------------------------
-
 class ROOM_PASS_THROUGH_REQ :
     public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:ROOM_PASS_THROUGH_REQ) */ {
  public:
@@ -1551,7 +1089,7 @@ class ROOM_PASS_THROUGH_REQ :
                &_ROOM_PASS_THROUGH_REQ_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    9;
+    6;
 
   friend void swap(ROOM_PASS_THROUGH_REQ& a, ROOM_PASS_THROUGH_REQ& b) {
     a.Swap(&b);
@@ -1682,146 +1220,6 @@ class ROOM_PASS_THROUGH_REQ :
 };
 // -------------------------------------------------------------------
 
-class CANCEL_MATCH_REQ :
-    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:CANCEL_MATCH_REQ) */ {
- public:
-  CANCEL_MATCH_REQ();
-  virtual ~CANCEL_MATCH_REQ();
-
-  CANCEL_MATCH_REQ(const CANCEL_MATCH_REQ& from);
-  CANCEL_MATCH_REQ(CANCEL_MATCH_REQ&& from) noexcept
-    : CANCEL_MATCH_REQ() {
-    *this = ::std::move(from);
-  }
-
-  inline CANCEL_MATCH_REQ& operator=(const CANCEL_MATCH_REQ& from) {
-    CopyFrom(from);
-    return *this;
-  }
-  inline CANCEL_MATCH_REQ& operator=(CANCEL_MATCH_REQ&& from) noexcept {
-    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
-      if (this != &from) InternalSwap(&from);
-    } else {
-      CopyFrom(from);
-    }
-    return *this;
-  }
-
-  inline const ::PROTOBUF_NAMESPACE_ID::UnknownFieldSet& unknown_fields() const {
-    return _internal_metadata_.unknown_fields();
-  }
-  inline ::PROTOBUF_NAMESPACE_ID::UnknownFieldSet* mutable_unknown_fields() {
-    return _internal_metadata_.mutable_unknown_fields();
-  }
-
-  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
-    return GetDescriptor();
-  }
-  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
-    return GetMetadataStatic().descriptor;
-  }
-  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
-    return GetMetadataStatic().reflection;
-  }
-  static const CANCEL_MATCH_REQ& default_instance();
-
-  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
-  static inline const CANCEL_MATCH_REQ* internal_default_instance() {
-    return reinterpret_cast<const CANCEL_MATCH_REQ*>(
-               &_CANCEL_MATCH_REQ_default_instance_);
-  }
-  static constexpr int kIndexInFileMessages =
-    10;
-
-  friend void swap(CANCEL_MATCH_REQ& a, CANCEL_MATCH_REQ& b) {
-    a.Swap(&b);
-  }
-  inline void Swap(CANCEL_MATCH_REQ* other) {
-    if (other == this) return;
-    InternalSwap(other);
-  }
-
-  // implements Message ----------------------------------------------
-
-  inline CANCEL_MATCH_REQ* New() const final {
-    return CreateMaybeMessage<CANCEL_MATCH_REQ>(nullptr);
-  }
-
-  CANCEL_MATCH_REQ* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
-    return CreateMaybeMessage<CANCEL_MATCH_REQ>(arena);
-  }
-  void CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
-  void MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
-  void CopyFrom(const CANCEL_MATCH_REQ& from);
-  void MergeFrom(const CANCEL_MATCH_REQ& from);
-  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
-  bool IsInitialized() const final;
-
-  size_t ByteSizeLong() const final;
-  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
-  ::PROTOBUF_NAMESPACE_ID::uint8* _InternalSerialize(
-      ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
-  int GetCachedSize() const final { return _cached_size_.Get(); }
-
-  private:
-  inline void SharedCtor();
-  inline void SharedDtor();
-  void SetCachedSize(int size) const final;
-  void InternalSwap(CANCEL_MATCH_REQ* other);
-  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
-  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
-    return "CANCEL_MATCH_REQ";
-  }
-  private:
-  inline ::PROTOBUF_NAMESPACE_ID::Arena* GetArenaNoVirtual() const {
-    return nullptr;
-  }
-  inline void* MaybeArenaPtr() const {
-    return nullptr;
-  }
-  public:
-
-  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
-  private:
-  static ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadataStatic() {
-    ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&::descriptor_table_CLI_2eGS_2eproto);
-    return ::descriptor_table_CLI_2eGS_2eproto.file_level_metadata[kIndexInFileMessages];
-  }
-
-  public:
-
-  // nested types ----------------------------------------------------
-
-  // accessors -------------------------------------------------------
-
-  enum : int {
-    kIdFieldNumber = 1,
-  };
-  // optional .PROTOCOL id = 1 [default = ID_PKT_CANCEL_MATCH_REQ];
-  bool has_id() const;
-  private:
-  bool _internal_has_id() const;
-  public:
-  void clear_id();
-  ::PROTOCOL id() const;
-  void set_id(::PROTOCOL value);
-  private:
-  ::PROTOCOL _internal_id() const;
-  void _internal_set_id(::PROTOCOL value);
-  public:
-
-  // @@protoc_insertion_point(class_scope:CANCEL_MATCH_REQ)
- private:
-  class _Internal;
-
-  ::PROTOBUF_NAMESPACE_ID::internal::InternalMetadataWithArena _internal_metadata_;
-  ::PROTOBUF_NAMESPACE_ID::internal::HasBits<1> _has_bits_;
-  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
-  int id_;
-  friend struct ::TableStruct_CLI_2eGS_2eproto;
-};
-// -------------------------------------------------------------------
-
 class NOTICE_REQ :
     public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:NOTICE_REQ) */ {
  public:
@@ -1871,7 +1269,7 @@ class NOTICE_REQ :
                &_NOTICE_REQ_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    11;
+    7;
 
   friend void swap(NOTICE_REQ& a, NOTICE_REQ& b) {
     a.Swap(&b);
@@ -1962,168 +1360,6 @@ class NOTICE_REQ :
 };
 // -------------------------------------------------------------------
 
-class CHECK_NICKNAME_REQ :
-    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:CHECK_NICKNAME_REQ) */ {
- public:
-  CHECK_NICKNAME_REQ();
-  virtual ~CHECK_NICKNAME_REQ();
-
-  CHECK_NICKNAME_REQ(const CHECK_NICKNAME_REQ& from);
-  CHECK_NICKNAME_REQ(CHECK_NICKNAME_REQ&& from) noexcept
-    : CHECK_NICKNAME_REQ() {
-    *this = ::std::move(from);
-  }
-
-  inline CHECK_NICKNAME_REQ& operator=(const CHECK_NICKNAME_REQ& from) {
-    CopyFrom(from);
-    return *this;
-  }
-  inline CHECK_NICKNAME_REQ& operator=(CHECK_NICKNAME_REQ&& from) noexcept {
-    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
-      if (this != &from) InternalSwap(&from);
-    } else {
-      CopyFrom(from);
-    }
-    return *this;
-  }
-
-  inline const ::PROTOBUF_NAMESPACE_ID::UnknownFieldSet& unknown_fields() const {
-    return _internal_metadata_.unknown_fields();
-  }
-  inline ::PROTOBUF_NAMESPACE_ID::UnknownFieldSet* mutable_unknown_fields() {
-    return _internal_metadata_.mutable_unknown_fields();
-  }
-
-  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
-    return GetDescriptor();
-  }
-  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
-    return GetMetadataStatic().descriptor;
-  }
-  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
-    return GetMetadataStatic().reflection;
-  }
-  static const CHECK_NICKNAME_REQ& default_instance();
-
-  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
-  static inline const CHECK_NICKNAME_REQ* internal_default_instance() {
-    return reinterpret_cast<const CHECK_NICKNAME_REQ*>(
-               &_CHECK_NICKNAME_REQ_default_instance_);
-  }
-  static constexpr int kIndexInFileMessages =
-    12;
-
-  friend void swap(CHECK_NICKNAME_REQ& a, CHECK_NICKNAME_REQ& b) {
-    a.Swap(&b);
-  }
-  inline void Swap(CHECK_NICKNAME_REQ* other) {
-    if (other == this) return;
-    InternalSwap(other);
-  }
-
-  // implements Message ----------------------------------------------
-
-  inline CHECK_NICKNAME_REQ* New() const final {
-    return CreateMaybeMessage<CHECK_NICKNAME_REQ>(nullptr);
-  }
-
-  CHECK_NICKNAME_REQ* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
-    return CreateMaybeMessage<CHECK_NICKNAME_REQ>(arena);
-  }
-  void CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
-  void MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
-  void CopyFrom(const CHECK_NICKNAME_REQ& from);
-  void MergeFrom(const CHECK_NICKNAME_REQ& from);
-  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
-  bool IsInitialized() const final;
-
-  size_t ByteSizeLong() const final;
-  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
-  ::PROTOBUF_NAMESPACE_ID::uint8* _InternalSerialize(
-      ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
-  int GetCachedSize() const final { return _cached_size_.Get(); }
-
-  private:
-  inline void SharedCtor();
-  inline void SharedDtor();
-  void SetCachedSize(int size) const final;
-  void InternalSwap(CHECK_NICKNAME_REQ* other);
-  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
-  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
-    return "CHECK_NICKNAME_REQ";
-  }
-  private:
-  inline ::PROTOBUF_NAMESPACE_ID::Arena* GetArenaNoVirtual() const {
-    return nullptr;
-  }
-  inline void* MaybeArenaPtr() const {
-    return nullptr;
-  }
-  public:
-
-  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
-  private:
-  static ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadataStatic() {
-    ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&::descriptor_table_CLI_2eGS_2eproto);
-    return ::descriptor_table_CLI_2eGS_2eproto.file_level_metadata[kIndexInFileMessages];
-  }
-
-  public:
-
-  // nested types ----------------------------------------------------
-
-  // accessors -------------------------------------------------------
-
-  enum : int {
-    kVarNameFieldNumber = 2,
-    kIdFieldNumber = 1,
-  };
-  // required bytes var_name = 2;
-  bool has_var_name() const;
-  private:
-  bool _internal_has_var_name() const;
-  public:
-  void clear_var_name();
-  const std::string& var_name() const;
-  void set_var_name(const std::string& value);
-  void set_var_name(std::string&& value);
-  void set_var_name(const char* value);
-  void set_var_name(const void* value, size_t size);
-  std::string* mutable_var_name();
-  std::string* release_var_name();
-  void set_allocated_var_name(std::string* var_name);
-  private:
-  const std::string& _internal_var_name() const;
-  void _internal_set_var_name(const std::string& value);
-  std::string* _internal_mutable_var_name();
-  public:
-
-  // optional .PROTOCOL id = 1 [default = ID_PKT_CHECK_NICKNAME_REQ];
-  bool has_id() const;
-  private:
-  bool _internal_has_id() const;
-  public:
-  void clear_id();
-  ::PROTOCOL id() const;
-  void set_id(::PROTOCOL value);
-  private:
-  ::PROTOCOL _internal_id() const;
-  void _internal_set_id(::PROTOCOL value);
-  public:
-
-  // @@protoc_insertion_point(class_scope:CHECK_NICKNAME_REQ)
- private:
-  class _Internal;
-
-  ::PROTOBUF_NAMESPACE_ID::internal::InternalMetadataWithArena _internal_metadata_;
-  ::PROTOBUF_NAMESPACE_ID::internal::HasBits<1> _has_bits_;
-  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
-  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr var_name_;
-  int id_;
-  friend struct ::TableStruct_CLI_2eGS_2eproto;
-};
-// -------------------------------------------------------------------
-
 class BITMAP_MESSAGE_REQ :
     public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:BITMAP_MESSAGE_REQ) */ {
  public:
@@ -2173,7 +1409,7 @@ class BITMAP_MESSAGE_REQ :
                &_BITMAP_MESSAGE_REQ_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    13;
+    8;
 
   friend void swap(BITMAP_MESSAGE_REQ& a, BITMAP_MESSAGE_REQ& b) {
     a.Swap(&b);
@@ -2339,7 +1575,7 @@ class AUDIO_MESSAGE_REQ :
                &_AUDIO_MESSAGE_REQ_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    14;
+    9;
 
   friend void swap(AUDIO_MESSAGE_REQ& a, AUDIO_MESSAGE_REQ& b) {
     a.Swap(&b);
@@ -2930,176 +2166,6 @@ inline void ROOM_LIST_REQ::set_id(::PROTOCOL value) {
 
 // -------------------------------------------------------------------
 
-// MATCH_REQ
-
-// optional .PROTOCOL id = 1 [default = ID_PKT_MATCH_REQ];
-inline bool MATCH_REQ::_internal_has_id() const {
-  bool value = (_has_bits_[0] & 0x00000001u) != 0;
-  return value;
-}
-inline bool MATCH_REQ::has_id() const {
-  return _internal_has_id();
-}
-inline void MATCH_REQ::clear_id() {
-  id_ = 15;
-  _has_bits_[0] &= ~0x00000001u;
-}
-inline ::PROTOCOL MATCH_REQ::_internal_id() const {
-  return static_cast< ::PROTOCOL >(id_);
-}
-inline ::PROTOCOL MATCH_REQ::id() const {
-  // @@protoc_insertion_point(field_get:MATCH_REQ.id)
-  return _internal_id();
-}
-inline void MATCH_REQ::_internal_set_id(::PROTOCOL value) {
-  assert(::PROTOCOL_IsValid(value));
-  _has_bits_[0] |= 0x00000001u;
-  id_ = value;
-}
-inline void MATCH_REQ::set_id(::PROTOCOL value) {
-  _internal_set_id(value);
-  // @@protoc_insertion_point(field_set:MATCH_REQ.id)
-}
-
-// -------------------------------------------------------------------
-
-// RANK_REQ
-
-// optional .PROTOCOL id = 1 [default = ID_PKT_RANK_REQ];
-inline bool RANK_REQ::_internal_has_id() const {
-  bool value = (_has_bits_[0] & 0x00000001u) != 0;
-  return value;
-}
-inline bool RANK_REQ::has_id() const {
-  return _internal_has_id();
-}
-inline void RANK_REQ::clear_id() {
-  id_ = 19;
-  _has_bits_[0] &= ~0x00000001u;
-}
-inline ::PROTOCOL RANK_REQ::_internal_id() const {
-  return static_cast< ::PROTOCOL >(id_);
-}
-inline ::PROTOCOL RANK_REQ::id() const {
-  // @@protoc_insertion_point(field_get:RANK_REQ.id)
-  return _internal_id();
-}
-inline void RANK_REQ::_internal_set_id(::PROTOCOL value) {
-  assert(::PROTOCOL_IsValid(value));
-  _has_bits_[0] |= 0x00000001u;
-  id_ = value;
-}
-inline void RANK_REQ::set_id(::PROTOCOL value) {
-  _internal_set_id(value);
-  // @@protoc_insertion_point(field_set:RANK_REQ.id)
-}
-
-// -------------------------------------------------------------------
-
-// QNS_REQ
-
-// optional .PROTOCOL id = 1 [default = ID_PKT_QNS_REQ];
-inline bool QNS_REQ::_internal_has_id() const {
-  bool value = (_has_bits_[0] & 0x00000002u) != 0;
-  return value;
-}
-inline bool QNS_REQ::has_id() const {
-  return _internal_has_id();
-}
-inline void QNS_REQ::clear_id() {
-  id_ = 21;
-  _has_bits_[0] &= ~0x00000002u;
-}
-inline ::PROTOCOL QNS_REQ::_internal_id() const {
-  return static_cast< ::PROTOCOL >(id_);
-}
-inline ::PROTOCOL QNS_REQ::id() const {
-  // @@protoc_insertion_point(field_get:QNS_REQ.id)
-  return _internal_id();
-}
-inline void QNS_REQ::_internal_set_id(::PROTOCOL value) {
-  assert(::PROTOCOL_IsValid(value));
-  _has_bits_[0] |= 0x00000002u;
-  id_ = value;
-}
-inline void QNS_REQ::set_id(::PROTOCOL value) {
-  _internal_set_id(value);
-  // @@protoc_insertion_point(field_set:QNS_REQ.id)
-}
-
-// required bytes var_message = 2;
-inline bool QNS_REQ::_internal_has_var_message() const {
-  bool value = (_has_bits_[0] & 0x00000001u) != 0;
-  return value;
-}
-inline bool QNS_REQ::has_var_message() const {
-  return _internal_has_var_message();
-}
-inline void QNS_REQ::clear_var_message() {
-  var_message_.ClearToEmptyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
-  _has_bits_[0] &= ~0x00000001u;
-}
-inline const std::string& QNS_REQ::var_message() const {
-  // @@protoc_insertion_point(field_get:QNS_REQ.var_message)
-  return _internal_var_message();
-}
-inline void QNS_REQ::set_var_message(const std::string& value) {
-  _internal_set_var_message(value);
-  // @@protoc_insertion_point(field_set:QNS_REQ.var_message)
-}
-inline std::string* QNS_REQ::mutable_var_message() {
-  // @@protoc_insertion_point(field_mutable:QNS_REQ.var_message)
-  return _internal_mutable_var_message();
-}
-inline const std::string& QNS_REQ::_internal_var_message() const {
-  return var_message_.GetNoArena();
-}
-inline void QNS_REQ::_internal_set_var_message(const std::string& value) {
-  _has_bits_[0] |= 0x00000001u;
-  var_message_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), value);
-}
-inline void QNS_REQ::set_var_message(std::string&& value) {
-  _has_bits_[0] |= 0x00000001u;
-  var_message_.SetNoArena(
-    &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:QNS_REQ.var_message)
-}
-inline void QNS_REQ::set_var_message(const char* value) {
-  GOOGLE_DCHECK(value != nullptr);
-  _has_bits_[0] |= 0x00000001u;
-  var_message_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:QNS_REQ.var_message)
-}
-inline void QNS_REQ::set_var_message(const void* value, size_t size) {
-  _has_bits_[0] |= 0x00000001u;
-  var_message_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
-      ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:QNS_REQ.var_message)
-}
-inline std::string* QNS_REQ::_internal_mutable_var_message() {
-  _has_bits_[0] |= 0x00000001u;
-  return var_message_.MutableNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
-}
-inline std::string* QNS_REQ::release_var_message() {
-  // @@protoc_insertion_point(field_release:QNS_REQ.var_message)
-  if (!_internal_has_var_message()) {
-    return nullptr;
-  }
-  _has_bits_[0] &= ~0x00000001u;
-  return var_message_.ReleaseNonDefaultNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
-}
-inline void QNS_REQ::set_allocated_var_message(std::string* var_message) {
-  if (var_message != nullptr) {
-    _has_bits_[0] |= 0x00000001u;
-  } else {
-    _has_bits_[0] &= ~0x00000001u;
-  }
-  var_message_.SetAllocatedNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), var_message);
-  // @@protoc_insertion_point(field_set_allocated:QNS_REQ.var_message)
-}
-
-// -------------------------------------------------------------------
-
 // ROOM_PASS_THROUGH_REQ
 
 // optional .PROTOCOL id = 1 [default = ID_PKT_ROOM_PASS_THROUGH_REQ];
@@ -3111,7 +2177,7 @@ inline bool ROOM_PASS_THROUGH_REQ::has_id() const {
   return _internal_has_id();
 }
 inline void ROOM_PASS_THROUGH_REQ::clear_id() {
-  id_ = 23;
+  id_ = 17;
   _has_bits_[0] &= ~0x00000004u;
 }
 inline ::PROTOCOL ROOM_PASS_THROUGH_REQ::_internal_id() const {
@@ -3232,39 +2298,6 @@ inline void ROOM_PASS_THROUGH_REQ::set_var_message_int(::PROTOBUF_NAMESPACE_ID::
 
 // -------------------------------------------------------------------
 
-// CANCEL_MATCH_REQ
-
-// optional .PROTOCOL id = 1 [default = ID_PKT_CANCEL_MATCH_REQ];
-inline bool CANCEL_MATCH_REQ::_internal_has_id() const {
-  bool value = (_has_bits_[0] & 0x00000001u) != 0;
-  return value;
-}
-inline bool CANCEL_MATCH_REQ::has_id() const {
-  return _internal_has_id();
-}
-inline void CANCEL_MATCH_REQ::clear_id() {
-  id_ = 25;
-  _has_bits_[0] &= ~0x00000001u;
-}
-inline ::PROTOCOL CANCEL_MATCH_REQ::_internal_id() const {
-  return static_cast< ::PROTOCOL >(id_);
-}
-inline ::PROTOCOL CANCEL_MATCH_REQ::id() const {
-  // @@protoc_insertion_point(field_get:CANCEL_MATCH_REQ.id)
-  return _internal_id();
-}
-inline void CANCEL_MATCH_REQ::_internal_set_id(::PROTOCOL value) {
-  assert(::PROTOCOL_IsValid(value));
-  _has_bits_[0] |= 0x00000001u;
-  id_ = value;
-}
-inline void CANCEL_MATCH_REQ::set_id(::PROTOCOL value) {
-  _internal_set_id(value);
-  // @@protoc_insertion_point(field_set:CANCEL_MATCH_REQ.id)
-}
-
-// -------------------------------------------------------------------
-
 // NOTICE_REQ
 
 // optional .PROTOCOL id = 1 [default = ID_PKT_NOTICE_REQ];
@@ -3276,7 +2309,7 @@ inline bool NOTICE_REQ::has_id() const {
   return _internal_has_id();
 }
 inline void NOTICE_REQ::clear_id() {
-  id_ = 27;
+  id_ = 19;
   _has_bits_[0] &= ~0x00000001u;
 }
 inline ::PROTOCOL NOTICE_REQ::_internal_id() const {
@@ -3294,110 +2327,6 @@ inline void NOTICE_REQ::_internal_set_id(::PROTOCOL value) {
 inline void NOTICE_REQ::set_id(::PROTOCOL value) {
   _internal_set_id(value);
   // @@protoc_insertion_point(field_set:NOTICE_REQ.id)
-}
-
-// -------------------------------------------------------------------
-
-// CHECK_NICKNAME_REQ
-
-// optional .PROTOCOL id = 1 [default = ID_PKT_CHECK_NICKNAME_REQ];
-inline bool CHECK_NICKNAME_REQ::_internal_has_id() const {
-  bool value = (_has_bits_[0] & 0x00000002u) != 0;
-  return value;
-}
-inline bool CHECK_NICKNAME_REQ::has_id() const {
-  return _internal_has_id();
-}
-inline void CHECK_NICKNAME_REQ::clear_id() {
-  id_ = 29;
-  _has_bits_[0] &= ~0x00000002u;
-}
-inline ::PROTOCOL CHECK_NICKNAME_REQ::_internal_id() const {
-  return static_cast< ::PROTOCOL >(id_);
-}
-inline ::PROTOCOL CHECK_NICKNAME_REQ::id() const {
-  // @@protoc_insertion_point(field_get:CHECK_NICKNAME_REQ.id)
-  return _internal_id();
-}
-inline void CHECK_NICKNAME_REQ::_internal_set_id(::PROTOCOL value) {
-  assert(::PROTOCOL_IsValid(value));
-  _has_bits_[0] |= 0x00000002u;
-  id_ = value;
-}
-inline void CHECK_NICKNAME_REQ::set_id(::PROTOCOL value) {
-  _internal_set_id(value);
-  // @@protoc_insertion_point(field_set:CHECK_NICKNAME_REQ.id)
-}
-
-// required bytes var_name = 2;
-inline bool CHECK_NICKNAME_REQ::_internal_has_var_name() const {
-  bool value = (_has_bits_[0] & 0x00000001u) != 0;
-  return value;
-}
-inline bool CHECK_NICKNAME_REQ::has_var_name() const {
-  return _internal_has_var_name();
-}
-inline void CHECK_NICKNAME_REQ::clear_var_name() {
-  var_name_.ClearToEmptyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
-  _has_bits_[0] &= ~0x00000001u;
-}
-inline const std::string& CHECK_NICKNAME_REQ::var_name() const {
-  // @@protoc_insertion_point(field_get:CHECK_NICKNAME_REQ.var_name)
-  return _internal_var_name();
-}
-inline void CHECK_NICKNAME_REQ::set_var_name(const std::string& value) {
-  _internal_set_var_name(value);
-  // @@protoc_insertion_point(field_set:CHECK_NICKNAME_REQ.var_name)
-}
-inline std::string* CHECK_NICKNAME_REQ::mutable_var_name() {
-  // @@protoc_insertion_point(field_mutable:CHECK_NICKNAME_REQ.var_name)
-  return _internal_mutable_var_name();
-}
-inline const std::string& CHECK_NICKNAME_REQ::_internal_var_name() const {
-  return var_name_.GetNoArena();
-}
-inline void CHECK_NICKNAME_REQ::_internal_set_var_name(const std::string& value) {
-  _has_bits_[0] |= 0x00000001u;
-  var_name_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), value);
-}
-inline void CHECK_NICKNAME_REQ::set_var_name(std::string&& value) {
-  _has_bits_[0] |= 0x00000001u;
-  var_name_.SetNoArena(
-    &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
-  // @@protoc_insertion_point(field_set_rvalue:CHECK_NICKNAME_REQ.var_name)
-}
-inline void CHECK_NICKNAME_REQ::set_var_name(const char* value) {
-  GOOGLE_DCHECK(value != nullptr);
-  _has_bits_[0] |= 0x00000001u;
-  var_name_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:CHECK_NICKNAME_REQ.var_name)
-}
-inline void CHECK_NICKNAME_REQ::set_var_name(const void* value, size_t size) {
-  _has_bits_[0] |= 0x00000001u;
-  var_name_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
-      ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:CHECK_NICKNAME_REQ.var_name)
-}
-inline std::string* CHECK_NICKNAME_REQ::_internal_mutable_var_name() {
-  _has_bits_[0] |= 0x00000001u;
-  return var_name_.MutableNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
-}
-inline std::string* CHECK_NICKNAME_REQ::release_var_name() {
-  // @@protoc_insertion_point(field_release:CHECK_NICKNAME_REQ.var_name)
-  if (!_internal_has_var_name()) {
-    return nullptr;
-  }
-  _has_bits_[0] &= ~0x00000001u;
-  return var_name_.ReleaseNonDefaultNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
-}
-inline void CHECK_NICKNAME_REQ::set_allocated_var_name(std::string* var_name) {
-  if (var_name != nullptr) {
-    _has_bits_[0] |= 0x00000001u;
-  } else {
-    _has_bits_[0] &= ~0x00000001u;
-  }
-  var_name_.SetAllocatedNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), var_name);
-  // @@protoc_insertion_point(field_set_allocated:CHECK_NICKNAME_REQ.var_name)
 }
 
 // -------------------------------------------------------------------
@@ -3520,7 +2449,7 @@ inline bool AUDIO_MESSAGE_REQ::has_id() const {
   return _internal_has_id();
 }
 inline void AUDIO_MESSAGE_REQ::clear_id() {
-  id_ = 31;
+  id_ = 21;
   _has_bits_[0] &= ~0x00000001u;
 }
 inline ::PROTOCOL AUDIO_MESSAGE_REQ::_internal_id() const {
@@ -3617,16 +2546,6 @@ AUDIO_MESSAGE_REQ::mutable_var_message() {
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
-// -------------------------------------------------------------------
-
-// -------------------------------------------------------------------
-
-// -------------------------------------------------------------------
-
-// -------------------------------------------------------------------
-
-// -------------------------------------------------------------------
-
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

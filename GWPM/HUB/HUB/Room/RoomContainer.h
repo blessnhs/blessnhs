@@ -39,14 +39,6 @@ public:
 
 	const concurrency::concurrent_unordered_map<DWORD, ROOM_PTR>& GetRoomMap();
 
-	concurrency::concurrent_unordered_map<INT64, PLAYER_PTR>& GetMatchMap();
-
-	void AddMatchMap(PLAYER_PTR player);
-	void DelMatchMap(PLAYER_PTR player);
-	bool IsExistMatchMap(PLAYER_PTR player);
-
-	BOOL CreateMatchRoom(PLAYER_PTR target1, PLAYER_PTR target2);
-
 	void LeaveRoomPlayer(PLAYER_PTR player);
 
 
@@ -54,8 +46,6 @@ protected:
 
 	concurrency::concurrent_unordered_map<DWORD,ROOM_PTR>		m_RoomMap;
 	concurrency::concurrent_unordered_map<DWORD, ROOM_PTR>		m_RoomMapForLoop;
-
-	concurrency::concurrent_unordered_map<INT64, PLAYER_PTR>	m_MatchMap;
 
 	CRITICAL_SECTION											m_PublicLock;
 };

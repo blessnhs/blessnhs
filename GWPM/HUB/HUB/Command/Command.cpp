@@ -4,15 +4,15 @@
 
 extern atomic<int>		DebugCount;
 
-	void BoardCommand::Initialize()
+	void HubCommand::Initialize()
 	{
-		command["l"] = &BoardCommand::UserList;
-		command["r"] = &BoardCommand::RoomList;
-		command["c"] = &BoardCommand::CheckUserList;
+		command["l"] = &HubCommand::UserList;
+		command["r"] = &HubCommand::RoomList;
+		command["c"] = &HubCommand::CheckUserList;
 		
 	}
 
-	void BoardCommand::Execute(std::string _str)
+	void HubCommand::Execute(std::string _str)
 	{
 
 		int Pos = _str.find(':');
@@ -31,22 +31,22 @@ extern atomic<int>		DebugCount;
 		}
 	}
 
-	VOID BoardCommand::UserList(std::string)
+	VOID HubCommand::UserList(std::string)
 	{
 		printf("Current Count %d user count %d Debug Count %d\n", SERVER.GetClientMgr().GetActiveSocketCount(), PLAYERMGR.Count(), DebugCount.fetch_add(0));
 	}
 
-	VOID BoardCommand::RoomList(std::string)
+	VOID HubCommand::RoomList(std::string)
 	{
 	
 	}
 
-	VOID BoardCommand::CheckUserList(std::string)
+	VOID HubCommand::CheckUserList(std::string)
 	{
 		PLAYERMGR.CheckUserList();
 	}
 
 	
-	VOID BoardCommand::ChannelList(std::string)
+	VOID HubCommand::ChannelList(std::string)
 	{
 	}

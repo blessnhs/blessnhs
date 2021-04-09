@@ -208,12 +208,9 @@ template<template<class T> class CreationPolicy> void PlayerContainer<CreationPo
 				pPlayer->SetPair(ULONG_MAX);
 				PLAYERMGR.Del(pPlayer);
 
-				//매칭 큐에서 제거한다.
-				ROOMMGR.DelMatchMap(pPlayer);
-
 				//로그아웃 쿼리를 날린다.
 
-				boost::shared_ptr<Board::MSG_PLAYER_QUERY<RequestLogout>>		PLAYER_MSG = ALLOCATOR.Create<Board::MSG_PLAYER_QUERY<RequestLogout>>();
+				boost::shared_ptr<Hub::MSG_PLAYER_QUERY<RequestLogout>>		PLAYER_MSG = ALLOCATOR.Create<Hub::MSG_PLAYER_QUERY<RequestLogout>>();
 				PLAYER_MSG->pRequst.Index = pPlayer->GetId();
 				PLAYER_MSG->Type = MSG_TYPE_DB_1;				//그냥 디폴트
 				PLAYER_MSG->SubType = ONQUERY;

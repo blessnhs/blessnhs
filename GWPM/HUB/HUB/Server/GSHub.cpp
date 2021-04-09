@@ -8,22 +8,21 @@
 #include "../DB/DBProxy/DBProcessContainer.h"
 #include "../DB/DBJob/DBContext.h"
 
-GSBoard::GSBoard(void)
+GSHub::GSHub(void)
 {
 }
 
 
-GSBoard::~GSBoard(void)
+GSHub::~GSHub(void)
 {
 }
 
-BOOL GSBoard::Disconnect(GSCLIENT_PTR pSession)
+BOOL GSHub::Disconnect(GSCLIENT_PTR pSession)
 {
 	PlayerPtr pPlayer = PLAYERMGR.Search(pSession->GetPair());
 	if (pPlayer != NULL)
 	{
 		
-		ROOMMGR.DelMatchMap(pPlayer);
 		ROOMMGR.LeaveRoomPlayer(pPlayer);
 		
 		pPlayer->SetPair(ULONG_MAX);
@@ -32,7 +31,7 @@ BOOL GSBoard::Disconnect(GSCLIENT_PTR pSession)
 
 		//·Î±×¾Æ¿ô Äõ¸®¸¦ ³¯¸°´Ù.
 	
-		boost::shared_ptr<Board::MSG_PLAYER_QUERY<RequestLogout>>		PLAYER_MSG = ALLOCATOR.Create<Board::MSG_PLAYER_QUERY<RequestLogout>>();
+		boost::shared_ptr<Hub::MSG_PLAYER_QUERY<RequestLogout>>		PLAYER_MSG = ALLOCATOR.Create<Hub::MSG_PLAYER_QUERY<RequestLogout>>();
 		PLAYER_MSG->pSession = pSession;
 		PLAYER_MSG->pRequst.Index = pSession->GetPair();
 		PLAYER_MSG->Type = pSession->GetMyDBTP();
@@ -45,16 +44,16 @@ BOOL GSBoard::Disconnect(GSCLIENT_PTR pSession)
 	return TRUE;
 }
 
-VOID GSBoard::Accept(GSCLIENT_PTR object)
+VOID GSHub::Accept(GSCLIENT_PTR object)
 {
 	object->SetHandler<HubProcess>();
 }
 
-BOOL GSBoard::DeleteAllConcurrentUser()
+BOOL GSHub::DeleteAllConcurrentUser()
 {
 	//·Î±×¾Æ¿ô Äõ¸®¸¦ ³¯¸°´Ù.
 
-	boost::shared_ptr<Board::MSG_PLAYER_QUERY<RequestDeleteAllConcurrentUser>>		PLAYER_MSG = ALLOCATOR.Create<Board::MSG_PLAYER_QUERY<RequestDeleteAllConcurrentUser>>();
+	boost::shared_ptr<Hub::MSG_PLAYER_QUERY<RequestDeleteAllConcurrentUser>>		PLAYER_MSG = ALLOCATOR.Create<Hub::MSG_PLAYER_QUERY<RequestDeleteAllConcurrentUser>>();
 	PLAYER_MSG->Type = MSG_TYPE_DB_1;
 	PLAYER_MSG->SubType = ONQUERY;
 	MAINPROC.RegisterCommand(PLAYER_MSG);
@@ -64,7 +63,7 @@ BOOL GSBoard::DeleteAllConcurrentUser()
 
 
 
-BOOL GSBoard::Initialize()
+BOOL GSHub::Initialize()
 {
 	INI.Load();
 

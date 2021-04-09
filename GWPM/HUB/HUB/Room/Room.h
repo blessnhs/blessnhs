@@ -45,18 +45,9 @@ public:
 
 	bool RemovePlayer(PLAYER_PTR Player);
 
-	bool CreateGameRule(BYTE Type);
-
 	bool IsAllComplete();
 
-	void SetState(State state);
-	State GetState();
-
 	WORD GetCurrPlayer();
-	PLAYER_PTR GetOtherPlayer(DWORD INDEX);
-	eTeam      GetTeamPlayer(DWORD INDEX);
-
-	void RecoardResult(PLAYER_PTR Winner, PLAYER_PTR Loser);
 
 	template<class T>
 	void SendToAll(T &snd)
@@ -94,34 +85,13 @@ public:
 	}
 
 	void SendToAll(WORD MainId, BYTE* Data, WORD Length);
-
-	void ClearBoard();
-	void UpdateBoard(int x, int y, eTeam team);
-	bool GetBoard(int x, int y, eTeam& _team);
-	bool CheckGameResult(int _x, int _y, eTeam _stone);
-
-	void SetRoomState(State state);
 	
 	concurrency::concurrent_unordered_map<DWORD, PLAYER_PTR>		m_PlayerMap;
-
-	void SET_X_Y_COLOR(byte X, byte Y, byte COLOR, int& FLAG);
-	bool Get_X_Y_COLOR(byte& X, byte& Y, byte& Color, int FLAG);
-
-	DWORD GetTurnPlayerId();
-	void  IncTurnPlayerId();
-
-	string LevelConverter(int level);
 
 private:
 
 
 	CRITICAL_SECTION												m_PublicLock;
-
-	State															m_State;
-
-	eTeam															m_Board[COLS][ROWS];
-
-	int																m_TurnIndex;
 
 };
 

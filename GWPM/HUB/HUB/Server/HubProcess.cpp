@@ -15,13 +15,8 @@ HubProcess::HubProcess(void)
 	ADD_NET_FUNC(HubProcess, ID_PKT_LEAVE_ROOM_REQ, ROOM_LEAVE);
 	ADD_NET_FUNC(HubProcess, ID_PKT_BITMAP_MESSAGE_REQ, ROOM_BITMAP_CHAT);
 	ADD_NET_FUNC(HubProcess, ID_PKT_ROOM_LIST_REQ, ROOM_LIST);
-	ADD_NET_FUNC(HubProcess, ID_PKT_MATCH_REQ, MATCH);
-	ADD_NET_FUNC(HubProcess, ID_PKT_RANK_REQ, RANK);
 	ADD_NET_FUNC(HubProcess, ID_PKT_ROOM_PASS_THROUGH_REQ, ROOM_PASSTHROUGH);
-	ADD_NET_FUNC(HubProcess, ID_PKT_QNS_REQ, QNS);
-	ADD_NET_FUNC(HubProcess, ID_PKT_CANCEL_MATCH_REQ, CANCEL_MATCH);
 	ADD_NET_FUNC(HubProcess, ID_PKT_NOTICE_REQ, NOTICE);
-	ADD_NET_FUNC(HubProcess, ID_PKT_CHECK_NICKNAME_REQ, CHECK_NICKNAME);
 	ADD_NET_FUNC(HubProcess, ID_PKT_AUDIO_MESSAGE_REQ, ROOM_AUDIO_CHAT);
 
 }
@@ -63,20 +58,6 @@ VOID HubProcess::Process(LPVOID Data, DWORD Length, WORD MainProtocol, WORD SubP
 
 VOID HubProcess::CHECK_NICKNAME(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client)
 {
-	DECLARE_RECV_TYPE(CHECK_NICKNAME_REQ, nickname)
-
-	if (_result_, nickname.var_name().size() <= 0 || nickname.var_name().size() >= 20)
-		return;
-
-	boost::shared_ptr<Board::MSG_PLAYER_QUERY<NickNameCheck>>		PLAYER_MSG = ALLOCATOR.Create<Board::MSG_PLAYER_QUERY<NickNameCheck>>();
-	PLAYER_MSG->pSession = Client;
-	{
-		PLAYER_MSG->pRequst.NickName = nickname.var_name();
-		PLAYER_MSG->pRequst.Index = Client->GetPair();
-	}
-	PLAYER_MSG->Type = Client->GetMyDBTP();
-	PLAYER_MSG->SubType = ONQUERY;
-	MAINPROC.RegisterCommand(PLAYER_MSG);
 }
 
 VOID HubProcess::NOTICE(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client)
@@ -84,7 +65,7 @@ VOID HubProcess::NOTICE(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> C
 	DECLARE_RECV_TYPE(NOTICE_REQ, version)
 
 
-	boost::shared_ptr<Board::MSG_PLAYER_QUERY<RequestNotice>>		PLAYER_MSG = ALLOCATOR.Create<Board::MSG_PLAYER_QUERY<RequestNotice>>();
+	boost::shared_ptr<Hub::MSG_PLAYER_QUERY<RequestNotice>>		PLAYER_MSG = ALLOCATOR.Create<Hub::MSG_PLAYER_QUERY<RequestNotice>>();
 	PLAYER_MSG->pSession = Client;
 	PLAYER_MSG->Type = Client->GetMyDBTP();
 	PLAYER_MSG->SubType = ONQUERY;
@@ -105,7 +86,7 @@ VOID HubProcess::VERSION(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> 
 		////버전 쿼리를 날린다.
 		//boost::shared_ptr<RequestVersion> pRequest = ALLOCATOR.Create<RequestVersion>();
 		//
-		//boost::shared_ptr<Board::MSG_PLAYER_QUERY<RequestVersion>>		PLAYER_MSG = ALLOCATOR.Create<Board::MSG_PLAYER_QUERY<RequestVersion>>();
+		//boost::shared_ptr<Hub::MSG_PLAYER_QUERY<RequestVersion>>		PLAYER_MSG = ALLOCATOR.Create<Hub::MSG_PLAYER_QUERY<RequestVersion>>();
 		//PLAYER_MSG->pSession = Client;
 		//PLAYER_MSG->pRequst = pRequest;
 		//PLAYER_MSG->Type = Client->GetMyDBTP();
@@ -123,7 +104,7 @@ VOID HubProcess::LOGIN_PLAYER(LPVOID Data, DWORD Length, boost::shared_ptr<GSCli
 	if (_result_, login.var_uid().size() >= 2000 || login.var_token().size() >= 2000)
 		return;
 
-	boost::shared_ptr<Board::MSG_PLAYER_QUERY<RequestPlayerAuth>>		PLAYER_MSG = ALLOCATOR.Create<Board::MSG_PLAYER_QUERY<RequestPlayerAuth>>();
+	boost::shared_ptr<Hub::MSG_PLAYER_QUERY<RequestPlayerAuth>>		PLAYER_MSG = ALLOCATOR.Create<Hub::MSG_PLAYER_QUERY<RequestPlayerAuth>>();
 	PLAYER_MSG->pSession = Client;
 
 	{
@@ -179,44 +160,12 @@ VOID HubProcess::ROOM_CREATE(LPVOID Data, DWORD Length, boost::shared_ptr<GSClie
 
 VOID HubProcess::CANCEL_MATCH(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client)
 {
-	DECLARE_RECV_TYPE(CANCEL_MATCH_REQ, message)
-
-	PlayerPtr pPlayer = PLAYERMGR.Search(Client->GetPair());
-	if (pPlayer == NULL)
-	{
-		return;
-	}
-
-	ROOMMGR.DelMatchMap(pPlayer);
-
-	CANCEL_MATCH_RES res;
-	SEND_PROTO_BUFFER(res, Client)
+	
 }
 
 VOID HubProcess::QNS(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client)
 {
-	DECLARE_RECV_TYPE(QNS_REQ, message)
 
-	if (message.var_message().length() > 2048 || message.var_message().length() <= 0)
-	{
-		return;
-	}
-
-	PlayerPtr pPlayer = PLAYERMGR.Search(Client->GetPair());
-	if (pPlayer == NULL)
-	{
-		return;
-	}
-
-	boost::shared_ptr<Board::MSG_PLAYER_QUERY<RequestQNS>>		PLAYER_MSG = ALLOCATOR.Create<Board::MSG_PLAYER_QUERY<RequestQNS>>();
-	{
-		PLAYER_MSG->pRequst.Index = pPlayer->GetId();
-		PLAYER_MSG->pRequst.contents = message.var_message();
-	}
-	PLAYER_MSG->Type = Client->GetMyDBTP();
-	PLAYER_MSG->SubType = ONQUERY;
-	PLAYER_MSG->pSession = Client;
-	MAINPROC.RegisterCommand(PLAYER_MSG);
 }
 
 VOID HubProcess::ROOM_PASSTHROUGH(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client)
@@ -234,66 +183,20 @@ VOID HubProcess::ROOM_PASSTHROUGH(LPVOID Data, DWORD Length, boost::shared_ptr<G
 		return;
 	}
 
+	//ROOM_PTR RoomPtr = ROOMMGR.Search(pPlayer->);
+	//if (RoomPtr == NULL)
+	//{
+	//	return;
+	//}
 
-	ROOM_PTR pPtr = ROOMMGR.Search(pPlayer->m_Char[0].GetRoom());
-	if (pPtr != NULL && pPtr->GetState() != State::End)
-	{
-		ROOM_PASS_THROUGH_RES res;
-		res.set_var_code(Success);
+	//ROOM_PASS_THROUGH_RES res;
 
-		res.set_var_message(message.var_message());
-		res.set_var_message_int(message.var_message_int());
-
-		byte x, y, color;
-		pPtr->Get_X_Y_COLOR(x, y, color, message.var_message_int());
-
-		eTeam team_color = color == 0 ? WHITE : BLACK;
-
-		//해당위치에 돌이 이미 있다.
-		eTeam checkState;
-		bool valid = pPtr->GetBoard(x, y, checkState);
-		if (checkState != eTeam::None && valid == true)
-		{
-			res.set_var_code(SystemError);
-			SEND_PROTO_BUFFER(res, Client)
-				return;
-		}
-
-		int player1 = pPtr->GetTurnPlayerId();
-		int player2 = pPlayer->GetId();
-
-		if (player1 != player2)
-		{
-			return;
-		}
-
-		pPtr->IncTurnPlayerId();
-
-		pPtr->UpdateBoard(x, y, team_color);
-
-		pPtr->SendToAll(res);
-
-		if (pPtr->CheckGameResult(x, y, team_color) == true)
-		{
-			pPtr->ClearBoard();
-			pPtr->SetState(State::End);
-
-			auto OppPlayer = pPtr->GetOtherPlayer(pPlayer->GetId());
-			if (OppPlayer != NULL)
-			{
-				pPtr->RecoardResult(pPlayer, OppPlayer);
-			}
-		}
-	}
+	//RoomPtr->SendToAll(res);
+	
 }
 
 VOID HubProcess::RANK(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client)
 {
-	boost::shared_ptr<Board::MSG_PLAYER_QUERY<RequestRank>>		PLAYER_MSG = ALLOCATOR.Create<Board::MSG_PLAYER_QUERY<RequestRank>>();
-	PLAYER_MSG->pSession = Client;
-	PLAYER_MSG->Type = Client->GetMyDBTP();
-	PLAYER_MSG->SubType = ONQUERY;
-	MAINPROC.RegisterCommand(PLAYER_MSG);
 }
 
 VOID HubProcess::ROOM_ENTER(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client)
@@ -523,44 +426,6 @@ VOID HubProcess::ROOM_LIST(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient
 
 VOID HubProcess::MATCH(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client)
 {
-	DECLARE_RECV_TYPE(MATCH_REQ, roomlistreq)
-
-	MATCH_RES res;
-
-	PlayerPtr pPlayer = PLAYERMGR.Search(Client->GetPair());
-	if (pPlayer == NULL)
-	{
-		return;
-	}
-
-	if (pPlayer->m_Char[0].GetRoom() != 0)
-	{
-		return;
-	}
-
-	if (ROOMMGR.IsExistMatchMap(pPlayer) == true)
-	{
-		return;
-	}
-
-	res.set_var_code(Success);
-	SEND_PROTO_BUFFER(res, Client)
-
-		for each (auto player in ROOMMGR.GetMatchMap())
-		{
-			if (player.second == NULL)
-				continue;
-
-			if (player.first == pPlayer->GetId())
-				continue;
-
-			ROOMMGR.CreateMatchRoom(player.second, pPlayer);
-
-			return;
-		}
-
-	//여기 있으면 큐에 아무도 없는것임
-	ROOMMGR.AddMatchMap(pPlayer);
 }
 
 

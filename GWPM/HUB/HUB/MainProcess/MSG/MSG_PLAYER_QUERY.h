@@ -3,7 +3,7 @@
 #include "IMessage.h"
 #include "../../DB/DBProxy/DBProcess.h"
 
-namespace Board	{
+namespace Hub	{
 
 	class GSAllocator;
 

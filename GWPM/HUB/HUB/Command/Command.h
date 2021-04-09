@@ -1,11 +1,11 @@
 #pragma once
 #include "GSCommand.h"
 
-class BoardCommand : public GSCommand
+class HubCommand : public GSCommand
 {
 public:
-	BoardCommand(void) { Initialize() ; }
-	~BoardCommand(void) {}
+	HubCommand(void) { Initialize() ; }
+	~HubCommand(void) {}
 
 	void Initialize();
 	void Execute(std::string _str);

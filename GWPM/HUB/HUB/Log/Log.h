@@ -3,12 +3,12 @@
 #include "GSLog.h"
 #include "SingleTonHolder.h"
 
-class BoardLog : public GSLog , public Singleton<BoardLog>
+class HubLog : public GSLog , public Singleton<HubLog>
 {
 public:
-	BoardLog(char *filename);
-	~BoardLog(void);
+	HubLog(char *filename);
+	~HubLog(void);
 };
 
-#define LOG Singleton<BoardLog>::Instance()
+#define LOG Singleton<HubLog>::Instance()
 #define BLOG LOG.Write

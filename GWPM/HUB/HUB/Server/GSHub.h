@@ -4,21 +4,21 @@
 #include "GSArgument.h"
 #include "../Ini/INI.h"
 
-class GSBoard : public GSNetwork::GSServer::GSServer
+class GSHub : public GSNetwork::GSServer::GSServer
 {
 public:
-	GSBoard(void);
-	~GSBoard(void);
+	GSHub(void);
+	~GSHub(void);
 
 	BOOL Initialize();
 
 	BOOL Disconnect(GSCLIENT_PTR object);
 	VOID Accept(GSCLIENT_PTR object);
 
-	BoardINI			  m_Ini;
+	HubINI			  m_Ini;
 
 	BOOL DeleteAllConcurrentUser();
 	
 };
 
-#define SERVER Singleton<GSBoard>::Instance()
+#define SERVER Singleton<GSHub>::Instance()

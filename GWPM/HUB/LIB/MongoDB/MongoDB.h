@@ -20,9 +20,10 @@ public:
 	MongoDB(string db_name)
 	{
 		_client = mongocxx::client(mongocxx::uri("mongodb://localhost:27017/?minPoolSize=2&maxPoolSize=4"));
+		default_db_name = db_name;
+
 		db = _client[default_db_name];
 
-		default_db_name = db_name;
 
 	//	CreateIndex();
 	}

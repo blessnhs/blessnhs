@@ -3,7 +3,7 @@
 #include "ICommand.h"
 #include "IMessage.h"
 
-namespace Board	{
+namespace Hub	{
 
 template<class T>
 class MSG_PLAYER_QUERY_RES : public IMessage

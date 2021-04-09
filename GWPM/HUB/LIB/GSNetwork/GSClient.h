@@ -41,8 +41,6 @@ public:
 
 	VOID											Clear();
 
-
-//	BOOL											Recycle(SOCKET hListenSocket);
 	SOCKET											GetSocket(VOID);
 
 	boost::shared_ptr<GSPacketTCP>					GetTCPSocket();

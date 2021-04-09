@@ -44,23 +44,6 @@ message ROOM_LIST_REQ
     optional PROTOCOL   id                  = 1 [default = ID_PKT_ROOM_LIST_REQ ];
 }
 
-message MATCH_REQ
-{
-    optional PROTOCOL   id                  = 1 [default = ID_PKT_MATCH_REQ ];
-}
-
-
-message RANK_REQ
-{
-    optional PROTOCOL   id                        = 1 [default = ID_PKT_RANK_REQ  ];
-}
-
-message QNS_REQ
-{
-    optional PROTOCOL   id                        = 1 [default = ID_PKT_QNS_REQ   ];
-    required bytes     var_message         = 2;
-}
-
 message ROOM_PASS_THROUGH_REQ
 {
     optional PROTOCOL   id                        = 1 [default = ID_PKT_ROOM_PASS_THROUGH_REQ    ];
@@ -69,20 +52,9 @@ message ROOM_PASS_THROUGH_REQ
 }
 
 
-message CANCEL_MATCH_REQ
-{
-    optional PROTOCOL   id                        = 1 [default = ID_PKT_CANCEL_MATCH_REQ    ];
-}
-
 message NOTICE_REQ
 {
     optional PROTOCOL   id                        = 1 [default = ID_PKT_NOTICE_REQ    ];
-}
-
-message CHECK_NICKNAME_REQ
-{
-    optional PROTOCOL   id                        = 1 [default = ID_PKT_CHECK_NICKNAME_REQ    ];
-    required bytes     var_name    	              = 2;
 }
 
 message BITMAP_MESSAGE_REQ
