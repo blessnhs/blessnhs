@@ -16,5 +16,10 @@ namespace Antioch.View
         {
             InitializeComponent();
         }
+
+        void OnTapped(object sender, EventArgs e)
+        {
+            // Do stuff
+        }
     }
 }
