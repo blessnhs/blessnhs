@@ -648,11 +648,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Include="..\..\..\Trunk\JG\Protocol\CSharp\CLIGS.cs" Link="Protobuff\CLIGS.cs" />
-    <Compile Include="..\..\..\Trunk\JG\Protocol\CSharp\Enum.cs" Link="Protobuff\Enum.cs" />
-    <Compile Include="..\..\..\Trunk\JG\Protocol\CSharp\GSCLI.cs" Link="Protobuff\GSCLI.cs" />
-    <Compile Include="..\..\..\Trunk\JG\Protocol\CSharp\Sample.cs" Link="Protobuff\Sample.cs" />
-    <Compile Include="..\..\..\Trunk\JG\Protocol\CSharp\Structure.cs" Link="Protobuff\Structure.cs" />
+    <Compile Include="..\..\..\PROTOCOL\CSharp\CLIGS.cs" Link="Protobuff\CLIGS.cs" />
+    <Compile Include="..\..\..\PROTOCOL\CSharp\Enum.cs" Link="Protobuff\Enum.cs" />
+    <Compile Include="..\..\..\PROTOCOL\CSharp\GSCLI.cs" Link="Protobuff\GSCLI.cs" />
+    <Compile Include="..\..\..\PROTOCOL\CSharp\Sample.cs" Link="Protobuff\Sample.cs" />
+    <Compile Include="..\..\..\PROTOCOL\CSharp\Structure.cs" Link="Protobuff\Structure.cs" />
   </ItemGroup>
 
   <ItemGroup>

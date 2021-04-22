@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Antioch.MainPage">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="9*"/>
+        </Grid.RowDefinitions>
+
+        <!--first row-->
+        <Grid x:Name="NavigationButtons" Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="3*"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid Grid.Column="0" BackgroundColor="White">
+                <Image x:Name="symbol_image" />
+            </Grid>
+
+            <Grid Grid.Column="1" BackgroundColor="White">
+            </Grid>
+
+            <Grid Grid.Column="2" BackgroundColor="Bisque">
+            </Grid>
+            
+        </Grid>
+
+        <!--second row-->
+        <Grid x:Name="ContentViews" Grid.Row="1">
+            <!--<ContentViews:View1 x:Name="View1" IsVisible="True"/>
+            <ContentViews:View2 x:Name="View2" IsVisible="False"/>
+            <ContentViews:View3 x:Name="View3" IsVisible="False"/>-->
+        </Grid>
+    </Grid>
+
+</ContentPage>
