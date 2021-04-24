@@ -3980,21 +3980,19 @@
   },
   "packageFolders": {
     "C:\\Users\\nhs\\.nuget\\packages\\": {},
-    "C:\\ProgramData\\Xamarin\\NuGet\\": {},
-    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
+    "C:\\Microsoft\\Xamarin\\NuGet\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\work\\WBA\\WBA\\WBA\\WBA.csproj",
+      "projectUniqueName": "C:\\work\\blessnhs\\WBA\\WBA\\WBA\\WBA.csproj",
       "projectName": "WBA",
-      "projectPath": "D:\\work\\WBA\\WBA\\WBA\\WBA.csproj",
+      "projectPath": "C:\\work\\blessnhs\\WBA\\WBA\\WBA\\WBA.csproj",
       "packagesPath": "C:\\Users\\nhs\\.nuget\\packages\\",
-      "outputPath": "D:\\work\\WBA\\WBA\\WBA\\obj\\",
+      "outputPath": "C:\\work\\blessnhs\\WBA\\WBA\\WBA\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
-        "C:\\ProgramData\\Xamarin\\NuGet\\",
-        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        "C:\\Microsoft\\Xamarin\\NuGet\\"
       ],
       "configFilePaths": [
         "C:\\Users\\nhs\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -4010,6 +4008,7 @@
       },
       "frameworks": {
         "netstandard2.0": {
+          "targetAlias": "netstandard2.0",
           "projectReferences": {}
         }
       },
@@ -4021,6 +4020,7 @@
     },
     "frameworks": {
       "netstandard2.0": {
+        "targetAlias": "netstandard2.0",
         "dependencies": {
           "Google.Apis": {
             "target": "Package",
@@ -4062,10 +4062,16 @@
           }
         },
         "imports": [
-          "net461"
+          "net461",
+          "net462",
+          "net47",
+          "net471",
+          "net472",
+          "net48"
         ],
         "assetTargetFallback": true,
-        "warn": true
+        "warn": true,
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.102\\RuntimeIdentifierGraph.json"
       }
     }
   }

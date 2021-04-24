@@ -4691,7 +4691,7 @@
       ]
     },
     "Xamarin.Android.Arch.Core.Common/1.1.1.1": {
-      "sha512": "3ijpoWgfyNeyUgbhLz4V/xAuizoz3h1Myg8Ioe1sCkl27Vl3lDN9SR30sFDDKcGgqQXJ4gtPOr9POCfvdPc63Q==",
+      "sha512": "KuubEy2Ve5TLdAWkaa5L4Ud36FClJEQR5a9JRi/mwk8mRxUZ27zly65kpg/Mi/npfZxEotq4MCKIj88lW6Nqhg==",
       "type": "package",
       "path": "xamarin.android.arch.core.common/1.1.1.1",
       "files": [
@@ -4711,7 +4711,7 @@
       ]
     },
     "Xamarin.Android.Arch.Lifecycle.Common/1.1.1.1": {
-      "sha512": "1r89dmuYDlEzUT0e7WLKBYR8FbBm9hj2c/geDlSA4voCJnnWMCkQz2fO6VYnlygpIGLGE9VyKe0DcvNCIuZmvA==",
+      "sha512": "6BiurQ1KGWOU6qizRrmSpskNdaOnfpgO3SbtHEcUDn4PkmZ3lCqTGfPzeNaVFKpT3ZV2r3HQMvFFuNOilolWrQ==",
       "type": "package",
       "path": "xamarin.android.arch.lifecycle.common/1.1.1.1",
       "files": [
@@ -4731,7 +4731,7 @@
       ]
     },
     "Xamarin.Android.Arch.Lifecycle.Runtime/1.1.1.1": {
-      "sha512": "wNXPIo6PbxPuDdVjezZgbJVG2obPaIESa3tumft1xlDCWyTTQC/NAcOMXi7hZAoZpOYCbXGCttStuAp3jNqMcQ==",
+      "sha512": "VCHW18NpC/LoH6dJBuio4ypnv9wpn36OPbDU+xiutc0ydFZ1fRb4nm4d52zTiwpouS83cJURzrIISGbWj6RZpg==",
       "type": "package",
       "path": "xamarin.android.arch.lifecycle.runtime/1.1.1.1",
       "files": [
@@ -4753,7 +4753,7 @@
       ]
     },
     "Xamarin.Android.Support.Animated.Vector.Drawable/28.0.0.1": {
-      "sha512": "g2Cd95pNziHzTM5ChCNYGiUboZK5OfdWGv5EHa7H6GZqYWXbW7mM6WfNFIrt4MtBgfrABu3ecD5w+QdwXJBaFQ==",
+      "sha512": "6J6mp9j+vseKZ5QZQxuOSlpXb7PSRLA/8cmkC1ShqUIc/AzXh19EEcu4EpUda9WbnhOObmI7pHAMAjpjVWf6zA==",
       "type": "package",
       "path": "xamarin.android.support.animated.vector.drawable/28.0.0.1",
       "files": [
@@ -4777,7 +4777,7 @@
       ]
     },
     "Xamarin.Android.Support.Annotations/28.0.0.1": {
-      "sha512": "SSbE6B9G/DxaZaxEqUWIhmmNWup27gMfEs4lPoqr2kLlQb81KBOeWo0PDCJpRYNPzQxmgGs3WKhPomYA+hZbDg==",
+      "sha512": "BM3qTB9SPVdwRKV5d0hmfsuTh3zZycEr/2CMXOKCdNZAOXHWpmkMJqTJ7m9QybALWcKID04uDxgfatM0uFOgpw==",
       "type": "package",
       "path": "xamarin.android.support.annotations/28.0.0.1",
       "files": [
@@ -4798,7 +4798,7 @@
       ]
     },
     "Xamarin.Android.Support.Compat/28.0.0.1": {
-      "sha512": "HuOh5SGC5U487NJzv9lCwlVOdPEKjlqW7s/tHCRfaoJ8qtOXzJ9UZzmmPJnwgOnSx75BkSA7H39OVwmxo3WGNA==",
+      "sha512": "5DY2Xxpq2aMnp0OBqxxYgullg8GMJGMDd1toDsW2E1PysDR07zERor5nVKdkA8/tOXDmdrzjYnKA5vYKue0+pQ==",
       "type": "package",
       "path": "xamarin.android.support.compat/28.0.0.1",
       "files": [
@@ -4819,7 +4819,7 @@
       ]
     },
     "Xamarin.Android.Support.Core.UI/28.0.0.1": {
-      "sha512": "Eutx87/y/Rh2wFTfDsOwm2x6YgLABG4C4HepjJhO3xKhbhwdB1c3YOtfYwLGjoa8q2CWIzZ7WKnF8EkGj6rEew==",
+      "sha512": "ZdQ3dNnqINhlARTZJ3Ietlyp1M6fY2eFOuyCb1p7SafdfCpo1m74H5CViIHwXpLSGBeEYKVlb//TyrQ6gZTxtQ==",
       "type": "package",
       "path": "xamarin.android.support.core.ui/28.0.0.1",
       "files": [
@@ -4843,7 +4843,7 @@
       ]
     },
     "Xamarin.Android.Support.Core.Utils/28.0.0.1": {
-      "sha512": "eHCDHOQVQP557K6mB7wGw/MYvP24cO6bw8k9ZYUAsT7eDZwkN5cL0srEuasuw9QC1XrEtwuE4C6G34QOigV3aA==",
+      "sha512": "wG+KVTyct2GMUrsdJAFxkSE6LTO1ItGwkKeuE8MO3i160UUnoHsI8b/nm8mIlVr9GPfNsRCtLh0mHsK1P0+33Q==",
       "type": "package",
       "path": "xamarin.android.support.core.utils/28.0.0.1",
       "files": [
@@ -4864,7 +4864,7 @@
       ]
     },
     "Xamarin.Android.Support.CustomTabs/28.0.0.1": {
-      "sha512": "5qlW03KaJDkixyHNjAR4LKuWMGXU48mtHvDFFkdghDtyYskcH0uePXs+B4UUQErFmmJexR8NcIusI2BN6E5HUA==",
+      "sha512": "INbnBbSWwClVztNUkpyruXXkWWawbtOV6RxW0q7htqRWSUeLK8JhN6tboyhTGW3lV0iy8IebPyNyniNLOVVVFw==",
       "type": "package",
       "path": "xamarin.android.support.customtabs/28.0.0.1",
       "files": [
@@ -4885,7 +4885,7 @@
       ]
     },
     "Xamarin.Android.Support.Design/28.0.0.1": {
-      "sha512": "dIlputDvYwGEtS4DX5C4JeCetn5adeytsEN2MmY7JpS0QuQ6O8Of/XBNdgezvSgAFAQa4otpEcGAvzpdzkTY9Q==",
+      "sha512": "+wqsjk/GhDNtjZVEqHUUJSO5n9/Cr1ZKMOsbGIF9QvJS3UYOD/bD978bjwgjMmA/Pf43pxoP8sK10DQjQIc9Tw==",
       "type": "package",
       "path": "xamarin.android.support.design/28.0.0.1",
       "files": [
@@ -4909,7 +4909,7 @@
       ]
     },
     "Xamarin.Android.Support.Fragment/28.0.0.1": {
-      "sha512": "6ECFrKhslOVnvz70sHdhL4WqlmqoVkPbOh/T0tCZ5tj/pMJtasuQhF0JrQHcOCquEAS+pR9qi4nYPAXxyjdjiw==",
+      "sha512": "9CAHbSzb2Bu3nBHE3mOa7TsStPbSl0DFAPimhGbuFttCginDH5UaFtynwirojoiYOXnL5tPQhdMiT78ETRM9yw==",
       "type": "package",
       "path": "xamarin.android.support.fragment/28.0.0.1",
       "files": [
@@ -4930,7 +4930,7 @@
       ]
     },
     "Xamarin.Android.Support.Media.Compat/28.0.0.1": {
-      "sha512": "ltZcXL0COKRNj3aCiq3V8Xgynp50UUDCNEGH1TIkL9fGgQsUYmBzGY3cHYPo5aM/6a55am2shj4Sr4cLhx6iIg==",
+      "sha512": "9BWAR4kwdPE6nP3EJEq+B1t1INphxbYuRhP1z7EKBcos+3/i/d1vpaMFveAbieO7u/CF+qP/s8HmIcCblHxkgg==",
       "type": "package",
       "path": "xamarin.android.support.media.compat/28.0.0.1",
       "files": [
@@ -4953,7 +4953,7 @@
       ]
     },
     "Xamarin.Android.Support.Transition/28.0.0.1": {
-      "sha512": "pkBJTXvfvwSC5ddtK+pSsfLzYQ8FmW3zgjObF1OE4nkx+fn2HFYE4nOy/EdQdh5PU7JsqrV80fOCUv83Q0U+2A==",
+      "sha512": "bwEOyMgA1YBbihwKEd/yjwN9tsJKb060VItPc5DDAc3yjz/Ly8kBqEyEcYKekwTEsh7MgDxOqBuTUrnEDq6MXw==",
       "type": "package",
       "path": "xamarin.android.support.transition/28.0.0.1",
       "files": [
@@ -4975,7 +4975,7 @@
       ]
     },
     "Xamarin.Android.Support.v4/28.0.0.1": {
-      "sha512": "xvsqO9dqjP7v8rqEYXr/v/KELH597nCdMwROIDqHtIsCMWeNeY33CmmBA2bRzfLpgZICvdCrg/T1v0+4BFU8Ag==",
+      "sha512": "sKMHm0capUzlhFJSwW3fIh/IwOOVjn5mGNf7TVBzsorsSmrV9GIRv2NGHDGEbaUzJcM1ZkadUOn5vCeKy7KLZw==",
       "type": "package",
       "path": "xamarin.android.support.v4/28.0.0.1",
       "files": [
@@ -4996,7 +4996,7 @@
       ]
     },
     "Xamarin.Android.Support.v7.AppCompat/28.0.0.1": {
-      "sha512": "MEkm7hZNa/nxnZ3a7E6HcpaFL07scQbbFNZ+btCNIS2cfzWKRHpxwjXJ2JhZr2GEknfbgwrxmOILmrbt6QlLlA==",
+      "sha512": "7tF7B0ez0KZrOSEsky65CufGHtjAgR59jNXHq8nnXZhPYZE/3gtHnUpdwU7Ppn+s04OLQK8RkOCXAgZ7n9eN4Q==",
       "type": "package",
       "path": "xamarin.android.support.v7.appcompat/28.0.0.1",
       "files": [
@@ -5017,7 +5017,7 @@
       ]
     },
     "Xamarin.Android.Support.v7.CardView/28.0.0.1": {
-      "sha512": "cQxnwu8OWrGRz0Z300TA3NPr7ofsQ4I7tMw1NLFdKbfgPscLmPmiJiJsMcchCL/T9SVz4/3eRoUh6V1fg8iAqA==",
+      "sha512": "TpR/hIJiEhjdQCoessaitAKXnHI4p3J0uWfk9XqZhtvmOv7WobQQV7Di+MaYlsg+FHSipbl/d3GoocGtQaMIrA==",
       "type": "package",
       "path": "xamarin.android.support.v7.cardview/28.0.0.1",
       "files": [
@@ -5038,7 +5038,7 @@
       ]
     },
     "Xamarin.Android.Support.v7.MediaRouter/28.0.0.1": {
-      "sha512": "uoe/dRihug7V/SkR3v+c/3R45YjT3bevGKFt6ZB+vPPtN4rvbM+9ypNHfgi3pxX4ldvEla4cOjLnzaS/F1r/8Q==",
+      "sha512": "IGJnCLd3D9+9t6F8dlsF0BjH2ylTDXqF1lbAwHtLszVyr9B9Hd8S/eJ8xEdWRiuqTVD2iWCtCo0J2jqoIs5WNw==",
       "type": "package",
       "path": "xamarin.android.support.v7.mediarouter/28.0.0.1",
       "files": [
@@ -5059,7 +5059,7 @@
       ]
     },
     "Xamarin.Android.Support.v7.Palette/28.0.0.1": {
-      "sha512": "EM0sfN+Nyp/SrocJF6dysaWULbY+rDn2rYNT4MIQhxaZDB71G2tD+Y08+KboyAmegDo6Iz3BhAMf5rHEoTuO4A==",
+      "sha512": "GH0+acwQnBghcCK++RMZhbwvyKQFcRNoH4zoBwWat9T8KufJyuaX5WN2MG5Dzy+qSsbmDi9iH9YtM2xtszxaHg==",
       "type": "package",
       "path": "xamarin.android.support.v7.palette/28.0.0.1",
       "files": [
@@ -5080,7 +5080,7 @@
       ]
     },
     "Xamarin.Android.Support.v7.RecyclerView/28.0.0.1": {
-      "sha512": "tLMRB4+6pGI6wDEju+agdX3QSUsgzh0EBoXNV517Zy3FMhxF9SAOvLr5u4b2RNaF8E0JdNfzDKBORn116FgGYw==",
+      "sha512": "JdZStP71IBHVcFBzjyNa9CMQA09Dqkab5ZfmsZ0YU7I9YEIbDexCd4oFVDbe1ajoKLkwdU81cywDCGI3AdkC7A==",
       "type": "package",
       "path": "xamarin.android.support.v7.recyclerview/28.0.0.1",
       "files": [
@@ -5104,7 +5104,7 @@
       ]
     },
     "Xamarin.Android.Support.Vector.Drawable/28.0.0.1": {
-      "sha512": "e3mmsuYkgcbNqrxCD7wnlVagoBRhVfHsxEmROr8cp+rGKKqC/KaorsToqiQfDIHLK/ZfqgmE+wdOAPv3Rv0jVA==",
+      "sha512": "pGCJ4zbXLIrQm63flSIVUmoIizdI42ZbFVdVUGSXaYu+YZ3qUbYcFMAfMXHkzpzhjckQIXzMAxC6xifqcziA8w==",
       "type": "package",
       "path": "xamarin.android.support.vector.drawable/28.0.0.1",
       "files": [
@@ -5438,20 +5438,20 @@
   },
   "packageFolders": {
     "C:\\Users\\nhs\\.nuget\\packages\\": {},
-    "C:\\ProgramData\\Xamarin\\NuGet\\": {}
+    "C:\\Microsoft\\Xamarin\\NuGet\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\work\\WBA\\WBA\\WBA.Android\\WBA.Android.csproj",
+      "projectUniqueName": "C:\\work\\blessnhs\\WBA\\WBA\\WBA.Android\\WBA.Android.csproj",
       "projectName": "WBA.Android",
-      "projectPath": "D:\\work\\WBA\\WBA\\WBA.Android\\WBA.Android.csproj",
+      "projectPath": "C:\\work\\blessnhs\\WBA\\WBA\\WBA.Android\\WBA.Android.csproj",
       "packagesPath": "C:\\Users\\nhs\\.nuget\\packages\\",
-      "outputPath": "D:\\work\\WBA\\WBA\\WBA.Android\\obj\\",
+      "outputPath": "C:\\work\\blessnhs\\WBA\\WBA\\WBA.Android\\obj\\",
       "projectStyle": "PackageReference",
       "skipContentFileWrite": true,
       "fallbackFolders": [
-        "C:\\ProgramData\\Xamarin\\NuGet\\"
+        "C:\\Microsoft\\Xamarin\\NuGet\\"
       ],
       "configFilePaths": [
         "C:\\Users\\nhs\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -5468,8 +5468,8 @@
       "frameworks": {
         "monoandroid81": {
           "projectReferences": {
-            "D:\\work\\WBA\\WBA\\WBA\\WBA.csproj": {
-              "projectPath": "D:\\work\\WBA\\WBA\\WBA\\WBA.csproj"
+            "C:\\work\\blessnhs\\WBA\\WBA\\WBA\\WBA.csproj": {
+              "projectPath": "C:\\work\\blessnhs\\WBA\\WBA\\WBA\\WBA.csproj"
             }
           }
         }
@@ -5555,7 +5555,7 @@
       "code": "NU1605",
       "level": "Warning",
       "warningLevel": 1,
-      "message": "28.0.0.3에서 28.0.0.1(으)로 다운그레이드된 패키지 Xamarin.Android.Support.v4을(를) 발견했습니다. 프로젝트에서 패키지를 직접 참조하여 다른 버전을 선택하세요. \r\n WBA.Android -> Xamarin.Forms 4.4.0.991537 -> Xamarin.Android.Support.v4 (>= 28.0.0.3) \r\n WBA.Android -> Xamarin.Android.Support.v4 (>= 28.0.0.1)",
+      "message": "Detected package downgrade: Xamarin.Android.Support.v4 from 28.0.0.3 to 28.0.0.1. Reference the package directly from the project to select a different version. \r\n WBA.Android -> Xamarin.Forms 4.4.0.991537 -> Xamarin.Android.Support.v4 (>= 28.0.0.3) \r\n WBA.Android -> Xamarin.Android.Support.v4 (>= 28.0.0.1)",
       "libraryId": "Xamarin.Android.Support.v4",
       "targetGraphs": [
         "MonoAndroid,Version=v8.1"
@@ -5565,7 +5565,7 @@
       "code": "NU1605",
       "level": "Warning",
       "warningLevel": 1,
-      "message": "28.0.0.3에서 28.0.0.1(으)로 다운그레이드된 패키지 Xamarin.Android.Support.Design을(를) 발견했습니다. 프로젝트에서 패키지를 직접 참조하여 다른 버전을 선택하세요. \r\n WBA.Android -> Xamarin.Forms 4.4.0.991537 -> Xamarin.Android.Support.Design (>= 28.0.0.3) \r\n WBA.Android -> Xamarin.Android.Support.Design (>= 28.0.0.1)",
+      "message": "Detected package downgrade: Xamarin.Android.Support.Design from 28.0.0.3 to 28.0.0.1. Reference the package directly from the project to select a different version. \r\n WBA.Android -> Xamarin.Forms 4.4.0.991537 -> Xamarin.Android.Support.Design (>= 28.0.0.3) \r\n WBA.Android -> Xamarin.Android.Support.Design (>= 28.0.0.1)",
       "libraryId": "Xamarin.Android.Support.Design",
       "targetGraphs": [
         "MonoAndroid,Version=v8.1"
@@ -5575,7 +5575,7 @@
       "code": "NU1605",
       "level": "Warning",
       "warningLevel": 1,
-      "message": "28.0.0.3에서 28.0.0.1(으)로 다운그레이드된 패키지 Xamarin.Android.Support.v7.AppCompat을(를) 발견했습니다. 프로젝트에서 패키지를 직접 참조하여 다른 버전을 선택하세요. \r\n WBA.Android -> Xamarin.Forms 4.4.0.991537 -> Xamarin.Android.Support.v7.AppCompat (>= 28.0.0.3) \r\n WBA.Android -> Xamarin.Android.Support.v7.AppCompat (>= 28.0.0.1)",
+      "message": "Detected package downgrade: Xamarin.Android.Support.v7.AppCompat from 28.0.0.3 to 28.0.0.1. Reference the package directly from the project to select a different version. \r\n WBA.Android -> Xamarin.Forms 4.4.0.991537 -> Xamarin.Android.Support.v7.AppCompat (>= 28.0.0.3) \r\n WBA.Android -> Xamarin.Android.Support.v7.AppCompat (>= 28.0.0.1)",
       "libraryId": "Xamarin.Android.Support.v7.AppCompat",
       "targetGraphs": [
         "MonoAndroid,Version=v8.1"
@@ -5585,7 +5585,7 @@
       "code": "NU1605",
       "level": "Warning",
       "warningLevel": 1,
-      "message": "28.0.0.3에서 28.0.0.1(으)로 다운그레이드된 패키지 Xamarin.Android.Support.v7.CardView을(를) 발견했습니다. 프로젝트에서 패키지를 직접 참조하여 다른 버전을 선택하세요. \r\n WBA.Android -> Xamarin.Forms 4.4.0.991537 -> Xamarin.Android.Support.v7.CardView (>= 28.0.0.3) \r\n WBA.Android -> Xamarin.Android.Support.v7.CardView (>= 28.0.0.1)",
+      "message": "Detected package downgrade: Xamarin.Android.Support.v7.CardView from 28.0.0.3 to 28.0.0.1. Reference the package directly from the project to select a different version. \r\n WBA.Android -> Xamarin.Forms 4.4.0.991537 -> Xamarin.Android.Support.v7.CardView (>= 28.0.0.3) \r\n WBA.Android -> Xamarin.Android.Support.v7.CardView (>= 28.0.0.1)",
       "libraryId": "Xamarin.Android.Support.v7.CardView",
       "targetGraphs": [
         "MonoAndroid,Version=v8.1"
@@ -5595,7 +5595,7 @@
       "code": "NU1605",
       "level": "Warning",
       "warningLevel": 1,
-      "message": "28.0.0.3에서 28.0.0.1(으)로 다운그레이드된 패키지 Xamarin.Android.Support.CustomTabs을(를) 발견했습니다. 프로젝트에서 패키지를 직접 참조하여 다른 버전을 선택하세요. \r\n WBA.Android -> Xamarin.Forms 4.4.0.991537 -> Xamarin.Android.Support.CustomTabs (>= 28.0.0.3) \r\n WBA.Android -> Xamarin.Android.Support.CustomTabs (>= 28.0.0.1)",
+      "message": "Detected package downgrade: Xamarin.Android.Support.CustomTabs from 28.0.0.3 to 28.0.0.1. Reference the package directly from the project to select a different version. \r\n WBA.Android -> Xamarin.Forms 4.4.0.991537 -> Xamarin.Android.Support.CustomTabs (>= 28.0.0.3) \r\n WBA.Android -> Xamarin.Android.Support.CustomTabs (>= 28.0.0.1)",
       "libraryId": "Xamarin.Android.Support.CustomTabs",
       "targetGraphs": [
         "MonoAndroid,Version=v8.1"

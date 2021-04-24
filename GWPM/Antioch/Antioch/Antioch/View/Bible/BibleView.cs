@@ -1,0 +1,431 @@
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Reflection;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
+using Xamarin.Forms;
+using Xamarin.Forms.Xaml;
+using Xamarin.Essentials;
+using Antioch.Util;
+using Antioch.TestamentPage;
+
+namespace Antioch
+{
+
+    [XamlCompilation(XamlCompilationOptions.Compile)]
+    public partial class BibleView : ContentView
+    {
+        public void DrawTopButton(StackLayout MainLayout)
+        {
+            var ButtonLayout = new StackLayout { Orientation = StackOrientation.Horizontal };
+
+            Button PrevBtn = new Button { Text = "◁", HorizontalOptions = LayoutOptions.Start };
+            PrevBtn.Clicked += Handle_Clicked_Prev;
+
+            Button buttonOld = new Button { Text = "구약성경", HorizontalOptions = LayoutOptions.Start };
+            buttonOld.Clicked += Handle_Clicked_OldTestament;
+
+            Button buttonNew = new Button { Text = "신약성경", HorizontalOptions = LayoutOptions.End };
+            buttonNew.Clicked += Handle_Clicked_NewTestament;
+
+
+            Button NextBtn = new Button { Text = "▷", HorizontalOptions = LayoutOptions.End };
+            NextBtn.Clicked += Handle_Clicked_Next;
+
+
+            ButtonLayout.Children.Add(PrevBtn);
+
+            ButtonLayout.Children.Add(buttonOld);
+            ButtonLayout.Children.Add(buttonNew);
+
+            ButtonLayout.Children.Add(NextBtn);
+
+            {
+                var tapGestureRecognizer = new TapGestureRecognizer();
+                tapGestureRecognizer.Tapped += (s, e) => {
+
+
+                };
+
+                MainLayout.GestureRecognizers.Add(tapGestureRecognizer);
+
+            }
+
+            MainLayout.Children.Add(ButtonLayout);
+        }
+
+        private void CheckUnderLine(List<Underlining> list,Label labelText,int verse)
+        {
+            if(list != null)
+            {
+                foreach (var data in list)
+                {
+                    if(data.BibleName == User.CacheData.BibleName && data.Chapter == User.CacheData.Chapter && data.Verse == verse)
+                    {
+
+                        switch (data.Color)
+                        {
+                            case "빨강":
+                                labelText.BackgroundColor = Color.Red;
+                                break;
+                            case "노랑":
+                                labelText.BackgroundColor = Color.Yellow;
+                                break;
+                            case "녹색":
+                                labelText.BackgroundColor = Color.Green;
+                                break;
+                        }
+                    }
+                }
+            }
+        }
+
+        //자동이동을 위해 Label을 dictionary에 저장
+        private Dictionary<int, Label> MainTextLabel = new Dictionary<int, Label>();
+
+        public void DrawMainText(StackLayout MainLayout, BibleType type = BibleType.KRV)
+        {
+            //db에 밑줄 저장 데이터가 있는지 로딩한다. 
+            var list = new List<Underlining>();//    SQLLiteDB.ReadUnderlining();
+
+            MainTextLabel.Clear();
+
+            var TextLayout = new StackLayout { Orientation = StackOrientation.Vertical, Spacing = 5 };
+            int verseSize = BibleInfo.GetVerseSize(User.CacheData.BibleName, User.CacheData.Chapter);
+            int verseSizeEng = BibleInfo.GetVerseSize(User.CacheData.BibleName, User.CacheData.Chapter,BibleType.KJV);
+
+            int size = verseSize > verseSizeEng ? verseSize : verseSizeEng;
+
+            for (int i = 1; i <= size; i++)
+            {
+                string Text = BibleInfo.GetContextText(type, User.CacheData.BibleName, User.CacheData.Chapter, i);
+
+                string TextEnglish = BibleInfo.GetContextText(BibleType.KJV, User.CacheData.BibleName, User.CacheData.Chapter, i);
+
+                var Label = new Label { Text = Text, FontSize = User.CacheData.FontSize, LineBreakMode = LineBreakMode.WordWrap, TextColor = Xamarin.Forms.Color.FromRgb(0, 0, 0) };
+                var LabelEnglish = new Label { Text = TextEnglish, FontSize = User.CacheData.FontSize, LineBreakMode = LineBreakMode.WordWrap, TextColor = Xamarin.Forms.Color.FromRgb(0, 0, 0) };
+
+                //SQL DB에 저장되어 있는 데이터가 존재하면 해당 색으로 배경을 변경한다.
+                CheckUnderLine(list, Label,i);
+
+                //자동이동을 위해 따로 저장한다.
+                MainTextLabel[i] = Label;
+
+                // Your label tap event
+                var englishlabeltab = new TapGestureRecognizer();
+                englishlabeltab.Tapped += async (s, e) =>
+                {
+                    try
+                    {
+                        if (User.Username != "강병욱")
+                            return;
+
+                        var labelText = s as Label;
+
+                        string Context = labelText.Text;
+
+                        string[] words = Context.Split(' ');
+
+                        Dictionary<string, string> help = new Dictionary<string, string>();
+                        if (words != null || words.Length > 0)
+                        {
+                            for (int k = 0; k < words.Length; k++)
+                            {
+                                words[k] = words[k].ToLower();
+                                string outstr;
+                                if (Dic._dictionary.TryGetValue(words[k], out outstr) == true)
+                                {
+                                    help[words[k]] = outstr;
+                                }
+                                else
+                                {
+                                    if (words[k].Length > 3)
+                                    {
+                                        //끝에 하나버림
+                                        string sub1 = words[k].Substring(0, words[k].Length - 1);
+                                        if (Dic._dictionary.TryGetValue(sub1, out outstr) == true)
+                                        {
+                                            help[sub1] = outstr;
+                                        
+                                        }
+                                        else
+                                        {
+                                            //끝에 두개버림
+                                            sub1 = words[k].Substring(0, words[k].Length - 2);
+                                            if (Dic._dictionary.TryGetValue(sub1, out outstr) == true)
+                                            {
+                                                help[sub1] = outstr;
+                                            }
+                                        }
+
+                                    }
+                                }
+                            }
+                        }
+
+                        string context = "";
+                        foreach( var str in help)
+                        {
+                            context += str.Key;
+                            context += " : ";
+                            context += str.Value;
+                            context += "\n\n";
+                        }
+
+                        await App.Current.MainPage.DisplayAlert("Help", context, "OK");
+                    }
+                    catch (Exception)
+                    {
+
+                    }
+
+                };
+
+                var labeltab = new TapGestureRecognizer();
+                labeltab.Tapped += async (s, e) =>
+                {
+                    var labelText = s as Label;
+
+                    try
+                    {
+                        string action = await App.Current.MainPage.DisplayActionSheet("줄긋기", "안하기", null, "빨강", "노랑", "파랑");
+
+                        //선택한 라벨의 절수를 가져온다.
+                        int iverse = 1;
+                        string verse = labelText.Text;
+                        if (verse != null)
+                        {
+                            string[] header = verse.Split(' ');
+                            if (header.Length > 0)
+                            {
+                                iverse = Convert.ToInt32(header[0]);
+                            }
+                        }
+
+                        switch (action)
+                        {
+                            case "빨강":
+                                labelText.BackgroundColor = Color.Red;
+                             //   SQLLiteDB.InsertUnderlining(User.CacheData.BibleName, User.CacheData.Chapter, iverse, "빨강");
+                                break;
+                            case "노랑":
+                                labelText.BackgroundColor = Color.Yellow;
+                            //    SQLLiteDB.InsertUnderlining(User.CacheData.BibleName, User.CacheData.Chapter, iverse, "노랑");
+                                break;
+                            case "파랑":
+                                labelText.BackgroundColor = Color.Green;
+                           //     SQLLiteDB.InsertUnderlining(User.CacheData.BibleName, User.CacheData.Chapter, iverse, "파랑");
+                                break;
+                            case "안하기":
+                                labelText.BackgroundColor = Color.White;
+                           //     SQLLiteDB.DeleteUnderlining(User.CacheData.BibleName, User.CacheData.Chapter, iverse, "");
+                                break;
+                        }
+                    }
+                    catch(Exception)
+                    {
+
+                    }
+                };
+
+                Label.GestureRecognizers.Add(labeltab);
+                LabelEnglish.GestureRecognizers.Add(englishlabeltab);
+
+                TextLayout.Children.Add(Label);
+
+                if(User.CacheData.EnalbeKJV == true)
+                    TextLayout.Children.Add(LabelEnglish);
+                
+            }
+            MainLayout.Children.Add(TextLayout);
+
+        }
+
+        //하단 ui그리기
+        public void DrawBottomButton(StackLayout MainLayout)
+        {
+            var ButtonLayout = new StackLayout { Orientation = StackOrientation.Horizontal };
+
+            Button PrevBtn = new Button { Text = "◁", HorizontalOptions = LayoutOptions.Start };
+            PrevBtn.Clicked += Handle_Clicked_Prev;
+
+            Button NextBtn = new Button { Text = "▷", HorizontalOptions = LayoutOptions.End };
+            NextBtn.Clicked += Handle_Clicked_Next;
+
+            Button SharedBtn = new Button { Text = "공유", HorizontalOptions = LayoutOptions.End };
+            SharedBtn.Clicked += Handle_Clicked_Shared;
+
+
+            ButtonLayout.Children.Add(PrevBtn);
+            ButtonLayout.Children.Add(NextBtn);
+
+            ButtonLayout.Children.Add(SharedBtn);
+
+            MainLayout.Children.Add(ButtonLayout);
+        }
+
+        //선택한 절로 이동하기
+        private void GotoFocusLabel(ScrollView scrollView,int Verse)
+        {
+            Label Focus = null;
+            if(MainTextLabel.TryGetValue(Verse, out Focus) == true)
+            {
+                scrollView.ScrollToAsync(Focus, ScrollToPosition.Start, true);
+            }
+        }
+
+        //ui 갱신
+        public void RefreshData()
+        {
+    //        Title = User.CacheData.BibleName + " " + User.CacheData.Chapter.ToString() + "장  KRV";
+
+            var MainLayout = new StackLayout { Padding = new Thickness(5, 10) };
+
+            DrawTopButton(MainLayout);
+            DrawMainText(MainLayout);
+            DrawBottomButton(MainLayout);
+
+           // SQLLiteDB.Upsert(User.CacheData);
+
+            ScrollView scrollView = new ScrollView();
+            scrollView.Content = MainLayout;
+
+            Content = scrollView;
+            GotoFocusLabel(scrollView, User.CacheData.Verse);        
+        }
+
+        public BibleView()
+        {
+            RefreshData();
+
+        }
+
+        //구약 성경 버튼 클릭
+        async void Handle_Clicked_OldTestament(object sender, System.EventArgs e)
+        {
+            var grid = this.Parent as Grid;
+
+            PageOldTestament bible = new PageOldTestament();
+            grid.Children.Clear();
+            grid.Children.Add(bible);
+        }
+
+        //신약 성경 버튼 클릭
+        async void Handle_Clicked_NewTestament(object sender, System.EventArgs e)
+        {
+            var grid = this.Parent as Grid;
+
+            PageNewTestament bible = new PageNewTestament();
+            grid.Children.Clear();
+            grid.Children.Add(bible);
+        }
+
+        //공유 버튼 클릭
+        async void Handle_Clicked_Shared(object sender, System.EventArgs e)
+        {
+            await ShareText(User.CacheData.BibleName +" " + User.CacheData.Chapter + "장 까지 읽었습니다.");
+        }
+
+        //다음 성경 가져오기
+        async void Handle_Clicked_Next(object sender, System.EventArgs e)
+        {
+            int CurrentMaxChapter = BibleInfo.GetChapterSize(User.CacheData.BibleName);
+
+            if(User.CacheData.Chapter + 1 <= CurrentMaxChapter)
+            {
+                User.CacheData.Chapter += 1;
+
+                RefreshData();
+            }
+            else
+            {
+                //다음 성경 
+               string NextBible = User.CacheData.BibleName;
+               int currentPos = 0;
+               foreach( var bible in BibleInfo.List)
+               {
+                    if (bible.Name == User.CacheData.BibleName)
+                        break;
+
+                    currentPos++;
+               }
+
+               if(BibleInfo.List.Count > currentPos + 1)
+                {
+                    User.CacheData.BibleName = BibleInfo.List[currentPos + 1].Name;
+                    User.CacheData.Chapter = 1;
+                    User.CacheData.Verse = 1;
+
+                    RefreshData();
+                }
+            }
+        }
+        //이전 성경 가져오기
+        async void Handle_Clicked_Prev(object sender, System.EventArgs e)
+        {
+            int CurrentMaxChapter = BibleInfo.GetChapterSize(User.CacheData.BibleName);
+
+            //최소 1장보다 커야한다. 
+            if (User.CacheData.Chapter - 1 < 0)
+            {
+                User.CacheData.Chapter -= 1;
+
+                RefreshData();
+            }
+            else
+            {
+                //다음 성경 
+                string NextBible = User.CacheData.BibleName;
+                int currentPos = 0;
+                foreach (var bible in BibleInfo.List)
+                {
+                    if (bible.Name == User.CacheData.BibleName)
+                        break;
+
+                    currentPos++;
+                }
+
+                if (0 <= ( currentPos - 1) && User.CacheData.Chapter == 1)
+                {
+                    User.CacheData.BibleName = BibleInfo.List[currentPos - 1].Name;
+                    User.CacheData.Chapter = BibleInfo.GetChapterSize(User.CacheData.BibleName);
+                    User.CacheData.Verse = 1;
+                }
+                else
+                {
+                    int chapter = User.CacheData.Chapter - 1;
+                    if (chapter < 1)
+                        chapter = 1;
+
+                    User.CacheData.BibleName = BibleInfo.List[currentPos].Name;
+                    User.CacheData.Chapter = chapter;
+                    User.CacheData.Verse = 1;
+                }
+
+                RefreshData();
+            }
+        }
+
+        public async Task ShareText(string text)
+        {
+            await Share.RequestAsync(new ShareTextRequest
+            {
+                Text = text,
+                Title = "성경읽기 공유"
+            });
+        }
+
+        public async Task ShareUri(string uri)
+        {
+            await Share.RequestAsync(new ShareTextRequest
+            {
+                Uri = uri,
+                Title = "Share Web Link"
+            });
+        }
+    }
+
+
+}

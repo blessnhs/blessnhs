@@ -1,21 +1,21 @@
 {
   "format": 1,
   "restore": {
-    "D:\\work\\WBA\\WBA\\WBA.Android\\WBA.Android.csproj": {}
+    "C:\\work\\blessnhs\\WBA\\WBA\\WBA.Android\\WBA.Android.csproj": {}
   },
   "projects": {
-    "D:\\work\\WBA\\WBA\\WBA.Android\\WBA.Android.csproj": {
+    "C:\\work\\blessnhs\\WBA\\WBA\\WBA.Android\\WBA.Android.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\work\\WBA\\WBA\\WBA.Android\\WBA.Android.csproj",
+        "projectUniqueName": "C:\\work\\blessnhs\\WBA\\WBA\\WBA.Android\\WBA.Android.csproj",
         "projectName": "WBA.Android",
-        "projectPath": "D:\\work\\WBA\\WBA\\WBA.Android\\WBA.Android.csproj",
+        "projectPath": "C:\\work\\blessnhs\\WBA\\WBA\\WBA.Android\\WBA.Android.csproj",
         "packagesPath": "C:\\Users\\nhs\\.nuget\\packages\\",
-        "outputPath": "D:\\work\\WBA\\WBA\\WBA.Android\\obj\\",
+        "outputPath": "C:\\work\\blessnhs\\WBA\\WBA\\WBA.Android\\obj\\",
         "projectStyle": "PackageReference",
         "skipContentFileWrite": true,
         "fallbackFolders": [
-          "C:\\ProgramData\\Xamarin\\NuGet\\"
+          "C:\\Microsoft\\Xamarin\\NuGet\\"
         ],
         "configFilePaths": [
           "C:\\Users\\nhs\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -32,8 +32,8 @@
         "frameworks": {
           "monoandroid81": {
             "projectReferences": {
-              "D:\\work\\WBA\\WBA\\WBA\\WBA.csproj": {
-                "projectPath": "D:\\work\\WBA\\WBA\\WBA\\WBA.csproj"
+              "C:\\work\\blessnhs\\WBA\\WBA\\WBA\\WBA.csproj": {
+                "projectPath": "C:\\work\\blessnhs\\WBA\\WBA\\WBA\\WBA.csproj"
               }
             }
           }
@@ -114,18 +114,17 @@
         }
       }
     },
-    "D:\\work\\WBA\\WBA\\WBA\\WBA.csproj": {
+    "C:\\work\\blessnhs\\WBA\\WBA\\WBA\\WBA.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\work\\WBA\\WBA\\WBA\\WBA.csproj",
+        "projectUniqueName": "C:\\work\\blessnhs\\WBA\\WBA\\WBA\\WBA.csproj",
         "projectName": "WBA",
-        "projectPath": "D:\\work\\WBA\\WBA\\WBA\\WBA.csproj",
+        "projectPath": "C:\\work\\blessnhs\\WBA\\WBA\\WBA\\WBA.csproj",
         "packagesPath": "C:\\Users\\nhs\\.nuget\\packages\\",
-        "outputPath": "D:\\work\\WBA\\WBA\\WBA\\obj\\",
+        "outputPath": "C:\\work\\blessnhs\\WBA\\WBA\\WBA\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "C:\\ProgramData\\Xamarin\\NuGet\\",
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+          "C:\\Microsoft\\Xamarin\\NuGet\\"
         ],
         "configFilePaths": [
           "C:\\Users\\nhs\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -141,6 +140,7 @@
         },
         "frameworks": {
           "netstandard2.0": {
+            "targetAlias": "netstandard2.0",
             "projectReferences": {}
           }
         },
@@ -152,6 +152,7 @@
       },
       "frameworks": {
         "netstandard2.0": {
+          "targetAlias": "netstandard2.0",
           "dependencies": {
             "Google.Apis": {
               "target": "Package",
@@ -193,10 +194,16 @@
             }
           },
           "imports": [
-            "net461"
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
           ],
           "assetTargetFallback": true,
-          "warn": true
+          "warn": true,
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.102\\RuntimeIdentifierGraph.json"
         }
       }
     }
