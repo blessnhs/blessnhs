@@ -44,7 +44,7 @@ namespace Antioch.TestamentPage
                       new Setter { Property = Button.BackgroundColorProperty, Value = Color.FromHex ("#eee") },
                       new Setter { Property = Button.TextColorProperty, Value = Color.Black },
                       new Setter { Property = Button.BorderRadiusProperty, Value = 0 },
-                      new Setter { Property = Button.FontSizeProperty, Value = 30 }
+                      new Setter { Property = Button.FontSizeProperty, Value = 15 }
                 }
             };
 

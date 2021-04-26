@@ -17,45 +17,6 @@ namespace Antioch
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class BibleView : ContentView
     {
-        public void DrawTopButton(StackLayout MainLayout)
-        {
-            var ButtonLayout = new StackLayout { Orientation = StackOrientation.Horizontal };
-
-            Button PrevBtn = new Button { Text = "◁", HorizontalOptions = LayoutOptions.Start };
-            PrevBtn.Clicked += Handle_Clicked_Prev;
-
-            Button buttonOld = new Button { Text = "구약성경", HorizontalOptions = LayoutOptions.Start };
-            buttonOld.Clicked += Handle_Clicked_OldTestament;
-
-            Button buttonNew = new Button { Text = "신약성경", HorizontalOptions = LayoutOptions.End };
-            buttonNew.Clicked += Handle_Clicked_NewTestament;
-
-
-            Button NextBtn = new Button { Text = "▷", HorizontalOptions = LayoutOptions.End };
-            NextBtn.Clicked += Handle_Clicked_Next;
-
-
-            ButtonLayout.Children.Add(PrevBtn);
-
-            ButtonLayout.Children.Add(buttonOld);
-            ButtonLayout.Children.Add(buttonNew);
-
-            ButtonLayout.Children.Add(NextBtn);
-
-            {
-                var tapGestureRecognizer = new TapGestureRecognizer();
-                tapGestureRecognizer.Tapped += (s, e) => {
-
-
-                };
-
-                MainLayout.GestureRecognizers.Add(tapGestureRecognizer);
-
-            }
-
-            MainLayout.Children.Add(ButtonLayout);
-        }
-
         private void CheckUnderLine(List<Underlining> list,Label labelText,int verse)
         {
             if(list != null)
@@ -242,30 +203,7 @@ namespace Antioch
             MainLayout.Children.Add(TextLayout);
 
         }
-
-        //하단 ui그리기
-        public void DrawBottomButton(StackLayout MainLayout)
-        {
-            var ButtonLayout = new StackLayout { Orientation = StackOrientation.Horizontal };
-
-            Button PrevBtn = new Button { Text = "◁", HorizontalOptions = LayoutOptions.Start };
-            PrevBtn.Clicked += Handle_Clicked_Prev;
-
-            Button NextBtn = new Button { Text = "▷", HorizontalOptions = LayoutOptions.End };
-            NextBtn.Clicked += Handle_Clicked_Next;
-
-            Button SharedBtn = new Button { Text = "공유", HorizontalOptions = LayoutOptions.End };
-            SharedBtn.Clicked += Handle_Clicked_Shared;
-
-
-            ButtonLayout.Children.Add(PrevBtn);
-            ButtonLayout.Children.Add(NextBtn);
-
-            ButtonLayout.Children.Add(SharedBtn);
-
-            MainLayout.Children.Add(ButtonLayout);
-        }
-
+ 
         //선택한 절로 이동하기
         private void GotoFocusLabel(ScrollView scrollView,int Verse)
         {
@@ -279,27 +217,20 @@ namespace Antioch
         //ui 갱신
         public void RefreshData()
         {
-    //        Title = User.CacheData.BibleName + " " + User.CacheData.Chapter.ToString() + "장  KRV";
-
-            var MainLayout = new StackLayout { Padding = new Thickness(5, 10) };
-
-            DrawTopButton(MainLayout);
+            Title.Text = User.CacheData.BibleName + " " + User.CacheData.Chapter.ToString() + "장  KRV";
+            MainLayout.Children.Clear();
             DrawMainText(MainLayout);
-            DrawBottomButton(MainLayout);
-
+     
            // SQLLiteDB.Upsert(User.CacheData);
-
-            ScrollView scrollView = new ScrollView();
-            scrollView.Content = MainLayout;
-
-            Content = scrollView;
+ 
             GotoFocusLabel(scrollView, User.CacheData.Verse);        
         }
 
         public BibleView()
         {
-            RefreshData();
+            InitializeComponent();
 
+            RefreshData();
         }
 
         //구약 성경 버튼 클릭

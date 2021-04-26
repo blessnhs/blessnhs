@@ -21,12 +21,34 @@ namespace Antioch.View
 
         void OnTapped(object sender, EventArgs e)
         {
-
+            var sndObject = sender as StackLayout;
             var grid = this.Parent as Grid;
 
-            BibleView bible = new BibleView();
-            grid.Children.Clear();
-            grid.Children.Add(bible);
+            switch (sndObject.StyleId)
+            {
+                case "Notice":
+                    break;
+                case "Bulletin":
+                    break;
+                case "Sermon":
+                    break;
+                case "Community":
+                    break;
+                case "Worship":
+                    break;
+                case "Pray":
+                    break;
+                case "Bible":
+                    LoadView(new BibleView());
+                    break;
+                case "HomePage":
+                    break;
+                case "QNA":
+                    break;
+            }
+           
+
+           
 
         }
 

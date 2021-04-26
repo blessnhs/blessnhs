@@ -19,14 +19,25 @@ namespace Antioch
             InitializeComponent();
 
             LoadResourceData();
-            
 
             symbol_image.Source = ImageSource.FromResource("Antioch.Resource.Image.symbol.png");
-           
+            symbol_image.GestureRecognizers.Add(new TapGestureRecognizer
+            {
+                TappedCallback = (v, o) => {
+                    LoadView(lobby);
+                },
+                NumberOfTapsRequired = 1
+            });
+
+
             ContentViews.Children.Add(lobby);
         }
 
-        public void LoadView(ContentView _view)
+        void OnTapped(object sender, EventArgs e)
+        { 
+        }
+
+         public void LoadView(ContentView _view)
         {
             ContentViews.Children.Clear();
             ContentViews.Children.Add(_view);

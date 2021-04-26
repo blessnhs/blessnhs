@@ -17,8 +17,10 @@
                 <ColumnDefinition Width="3*" />
             </Grid.ColumnDefinitions>
 
+            
+            
             <Frame BorderColor="Gray" Grid.Row="0" Grid.Column="0" BackgroundColor="#D77186">
-                <StackLayout>
+                <StackLayout x:Name="Notice">
                     <Label Text=" 공 지 "   TextColor="White" FontSize="Large" FontAttributes="Bold" />
                     <Label Text=" Notice "   TextColor="White" FontSize="Body" FontAttributes="Bold"/>
                     <StackLayout.GestureRecognizers>
@@ -26,17 +28,25 @@
                     </StackLayout.GestureRecognizers>
                 </StackLayout>
             </Frame>
+            
+            
 
             <Frame BorderColor="Gray" Grid.Row="0" Grid.Column="1" BackgroundColor="#61A2DA">
-                <StackLayout >
+                <StackLayout x:Name="Bulletin">
                     <Label  Text="주보" TextColor="White" FontSize="Large" FontAttributes="Bold" />
                     <Label  Text="Bulletin" TextColor="White" FontSize="Large" FontAttributes="Bold" />
+                    <StackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnTapped"/>
+                    </StackLayout.GestureRecognizers>
                 </StackLayout>
             </Frame>
             <Frame BorderColor="Gray" Grid.Row="0" Grid.Column="2" BackgroundColor="#6CB7DA" >
-                <StackLayout >
+                <StackLayout x:Name="Sermon">
                     <Label  Text="말씀" TextColor="White" FontSize="Large" FontAttributes="Bold" />
                     <Label  Text="Sermon" TextColor="White" FontSize="Large" FontAttributes="Bold" />
+                    <StackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnTapped"/>
+                    </StackLayout.GestureRecognizers>
                 </StackLayout>
             </Frame>
 
@@ -44,16 +54,22 @@
 
 
             <Frame BorderColor="Gray"  CornerRadius="5"  Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"  BackgroundColor="#B5B5B3">
-                <StackLayout>
+                <StackLayout x:Name="Community">
                     <Label  Text="커뮤니티"  TextColor="White" FontSize="Large" FontAttributes="Bold" />
                     <Label  Text="Community"  TextColor="White" FontSize="Large" FontAttributes="Bold" />
+                    <StackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnTapped"/>
+                    </StackLayout.GestureRecognizers>
                 </StackLayout>
             </Frame>
 
             <Frame BorderColor="Gray"  CornerRadius="5"  Grid.Row="1" Grid.Column="2"  BackgroundColor="#D75725">
-                <StackLayout >
+                <StackLayout  x:Name="Worship">
                     <Label Text="찬송"  TextColor="White" FontSize="Large" FontAttributes="Bold" />
                     <Label Text="Worship"  TextColor="White" FontSize="Large" FontAttributes="Bold" />
+                    <StackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnTapped"/>
+                    </StackLayout.GestureRecognizers>
                 </StackLayout>
             </Frame>
 
@@ -61,43 +77,51 @@
 
 
             <Frame BorderColor="Gray"  CornerRadius="5"  Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"  BackgroundColor="#00225D">
-                <StackLayout >
+                <StackLayout x:Name="Pray">
                     <Label  Text="기도제목"  TextColor="White" FontSize="Large" FontAttributes="Bold" />
                     <Label  Text="Pray"  TextColor="White" FontSize="Large" FontAttributes="Bold" />
+                    <StackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnTapped"/>
+                    </StackLayout.GestureRecognizers>
                 </StackLayout>
             </Frame>
 
             <Frame BorderColor="Gray"  CornerRadius="5"  Grid.Row="2" Grid.Column="2"  BackgroundColor="#E9A621">
-                <StackLayout >
+                <StackLayout x:Name="Bible">
                     <Label Text="성경"  TextColor="White" FontSize="Large" FontAttributes="Bold" />
                     <Label Text="Bible"  TextColor="White" FontSize="Large" FontAttributes="Bold" />
+                    <StackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnTapped"/>
+                    </StackLayout.GestureRecognizers>
                 </StackLayout>
             </Frame>
 
 
             <Frame BorderColor="Gray"  CornerRadius="5"  Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2"  BackgroundColor="#763262">
-                <StackLayout >
+                <StackLayout x:Name="HomePage">
                     <Label  Text="홈페이지" TextColor="White" FontSize="Large" FontAttributes="Bold" />
                     <Label  Text="HomePage" TextColor="White" FontSize="Large" FontAttributes="Bold" />
+                    <StackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnTapped"/>
+                    </StackLayout.GestureRecognizers>
                 </StackLayout>
             </Frame>
 
             <Frame BorderColor="Gray"  CornerRadius="5"  Grid.Row="3" Grid.Column="2"  BackgroundColor="#171635">
-                <StackLayout >
+                <StackLayout  x:Name="QNA">
                     <Label Text="질문" TextColor="White" FontSize="Large" FontAttributes="Bold" />
                     <Label Text="QNA" TextColor="White" FontSize="Large" FontAttributes="Bold" />
+                    <StackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnTapped"/>
+                    </StackLayout.GestureRecognizers>
                 </StackLayout>
             </Frame>
 
-
-
-
-
-
-
             <Frame BorderColor="Gray"  CornerRadius="5"  Grid.Row="4" Grid.ColumnSpan="3"  BackgroundColor="#00225D">
                 <StackLayout >
-
+                    <StackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnTapped"/>
+                    </StackLayout.GestureRecognizers>
                 </StackLayout>
             </Frame>
 
