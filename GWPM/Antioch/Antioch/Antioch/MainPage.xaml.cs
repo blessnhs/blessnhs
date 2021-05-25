@@ -76,7 +76,7 @@ namespace Antioch
                 BibleInfo.LoadKRV();
                 BibleInfo.LoadKJV();
                 Dic.LoadDic();
-                //Hymn.LoadList();
+                Hymn.LoadList();
                 //BibleInfo.LoadNIV();
                 //BibleInfo.CheckValidate();
             }

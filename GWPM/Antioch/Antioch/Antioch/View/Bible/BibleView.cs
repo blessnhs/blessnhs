@@ -49,7 +49,7 @@ namespace Antioch
         public void DrawMainText(StackLayout MainLayout, BibleType type = BibleType.KRV)
         {
             //db에 밑줄 저장 데이터가 있는지 로딩한다. 
-            var list = new List<Underlining>();//    SQLLiteDB.ReadUnderlining();
+            var list = SQLLiteDB.ReadUnderlining();
 
             MainTextLabel.Clear();
 
@@ -169,19 +169,19 @@ namespace Antioch
                         {
                             case "빨강":
                                 labelText.BackgroundColor = Color.Red;
-                             //   SQLLiteDB.InsertUnderlining(User.CacheData.BibleName, User.CacheData.Chapter, iverse, "빨강");
+                                SQLLiteDB.InsertUnderlining(User.CacheData.BibleName, User.CacheData.Chapter, iverse, "빨강");
                                 break;
                             case "노랑":
                                 labelText.BackgroundColor = Color.Yellow;
-                            //    SQLLiteDB.InsertUnderlining(User.CacheData.BibleName, User.CacheData.Chapter, iverse, "노랑");
+                                SQLLiteDB.InsertUnderlining(User.CacheData.BibleName, User.CacheData.Chapter, iverse, "노랑");
                                 break;
                             case "파랑":
                                 labelText.BackgroundColor = Color.Green;
-                           //     SQLLiteDB.InsertUnderlining(User.CacheData.BibleName, User.CacheData.Chapter, iverse, "파랑");
+                                SQLLiteDB.InsertUnderlining(User.CacheData.BibleName, User.CacheData.Chapter, iverse, "파랑");
                                 break;
                             case "안하기":
                                 labelText.BackgroundColor = Color.White;
-                           //     SQLLiteDB.DeleteUnderlining(User.CacheData.BibleName, User.CacheData.Chapter, iverse, "");
+                                SQLLiteDB.DeleteUnderlining(User.CacheData.BibleName, User.CacheData.Chapter, iverse, "");
                                 break;
                         }
                     }
@@ -217,11 +217,11 @@ namespace Antioch
         //ui 갱신
         public void RefreshData()
         {
-            Title.Text = User.CacheData.BibleName + " " + User.CacheData.Chapter.ToString() + "장  KRV";
+            Title.Text = User.CacheData.BibleName + " " + User.CacheData.Chapter.ToString() + "장";
             MainLayout.Children.Clear();
             DrawMainText(MainLayout);
      
-           // SQLLiteDB.Upsert(User.CacheData);
+            SQLLiteDB.Upsert(User.CacheData);
  
             GotoFocusLabel(scrollView, User.CacheData.Verse);        
         }
@@ -267,6 +267,8 @@ namespace Antioch
             if(User.CacheData.Chapter + 1 <= CurrentMaxChapter)
             {
                 User.CacheData.Chapter += 1;
+
+                User.CacheData.Verse = 1;
 
                 RefreshData();
             }

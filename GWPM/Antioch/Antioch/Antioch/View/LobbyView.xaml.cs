@@ -27,14 +27,18 @@ namespace Antioch.View
             switch (sndObject.StyleId)
             {
                 case "Notice":
+                    LoadView(new NoticeView());
                     break;
                 case "Bulletin":
+                    Device.OpenUri(new Uri("http://www.antiochi.net/jubo.pdf"));
                     break;
                 case "Sermon":
+                    Device.OpenUri(new Uri("http://www.antiochi.net"));
                     break;
                 case "Community":
                     break;
                 case "Worship":
+                    LoadView(new Hymn());
                     break;
                 case "Pray":
                     break;
@@ -42,6 +46,7 @@ namespace Antioch.View
                     LoadView(new BibleView());
                     break;
                 case "HomePage":
+                    Device.OpenUri(new Uri("http://www.antiochi.net"));
                     break;
                 case "QNA":
                     break;
