@@ -3,8 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Antioch.View.Hymn" >
         <StackLayout Orientation="Vertical" Padding="20,20,20,20">
-            <ScrollView>
-                <Grid>
+            <Grid>
                 <Grid.RowDefinitions BackgroundColor="White">
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
@@ -31,6 +30,5 @@
                         </StackLayout>
                 </Frame>
             </Grid>
-         </ScrollView>
         </StackLayout>
 </ContentView>

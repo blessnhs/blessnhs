@@ -13,6 +13,8 @@
 
 atomic<int>		DebugCount = 0;
 
+extern atomic<int>		DisConnectCount;
+
 GSClient::GSClient(void)
 {
 	m_bConnected			= FALSE;
@@ -329,6 +331,7 @@ VOID GSClient::ProcDisconnect(boost::shared_ptr<GSClient> pClient,bool isForce)
 	//소켓을 종료 체크하는 alive 체크 함수 쓰레드와 ProcDisconnect쓰레드가 다른 경우 
 	//소켓 멤버를 clear()한 다음 유저 객체 초기화가 화출되어 유저를 못찾았을 가능성이 크다.
 
+	DisConnectCount.fetch_add(1);
 
 
 	//컨텐츠 종료 처리

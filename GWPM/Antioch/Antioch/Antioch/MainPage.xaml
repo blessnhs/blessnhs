@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Antioch.MainPage">
+             x:Class="Antioch.MainPage" BackgroundColor="White">
 
-    <Grid>
+    <Grid BackgroundColor="White">
         <Grid.RowDefinitions>
             <RowDefinition Height="1*"/>
             <RowDefinition Height="9*"/>
@@ -21,10 +21,39 @@
                 <Image x:Name="symbol_image" />
             </Grid>
 
-            <Grid Grid.Column="1" BackgroundColor="White">
-            </Grid>
+            <Grid Grid.Column="1" BackgroundColor="White" Grid.ColumnSpan="2">
+                <StackLayout Orientation="Horizontal" HorizontalOptions="End" Padding="0,0,0,0">
+                    <ImageButton x:Name="ico_notify" 
+                    BackgroundColor="Transparent"
+                    WidthRequest="50"
+                    HeightRequest="50"
+                    FlexLayout.AlignSelf="Center"
+                    FlexLayout.Grow="1"
+                    Clicked="ico_notify_clicked"
+                    Aspect="AspectFit"> 
+                    </ImageButton>
 
-            <Grid Grid.Column="2" BackgroundColor="Bisque">
+                    <ImageButton x:Name="ico_login" 
+                    BackgroundColor="Transparent"
+                    WidthRequest="50"
+                    HeightRequest="50"
+                    FlexLayout.AlignSelf="Center"
+                    FlexLayout.Grow="1"
+                    Clicked="ico_login_clicked"
+                    Aspect="AspectFit">
+                    </ImageButton>
+
+                    <ImageButton x:Name="ico_setting" 
+                    BackgroundColor="Transparent"
+                    WidthRequest="50"
+                    HeightRequest="50"
+                    FlexLayout.AlignSelf="Center"
+                    FlexLayout.Grow="1"
+                    Clicked="ico_setting_clicked"
+                    Aspect="AspectFit">
+                    </ImageButton>
+
+                </StackLayout>
             </Grid>
             
         </Grid>

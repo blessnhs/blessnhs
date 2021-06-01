@@ -88,7 +88,7 @@ namespace Antioch.View
             var contact = e.SelectedItem as HymnTableInfo;
 
             NavigationPage.SetHasNavigationBar(this, true);
-      //      NavigationPage.SetHasBackButton(this, true);
+            //      NavigationPage.SetHasBackButton(this, true);
 
             Navigation.PushModalAsync(new HymnViewer(contact.Id));
         }

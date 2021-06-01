@@ -157,8 +157,6 @@ VOID GSServer::OnDisconnected(int client_id, bool isForce)
 		return;
 	}
 
-	DisConnectCount.fetch_add(1);
-
 	pClient->OnDisconnect(pClient, isForce);
 
 }

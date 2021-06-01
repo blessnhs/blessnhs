@@ -30,7 +30,33 @@ namespace Antioch
             });
 
 
+            ico_notify.Source = ImageSource.FromResource("Antioch.Resource.Image.IcoNotify.png");
+
+            ico_login.Source = ImageSource.FromResource("Antioch.Resource.Image.IcoLogin.png");
+            ico_setting.Source = ImageSource.FromResource("Antioch.Resource.Image.IcoSetting.png");
+
+
             ContentViews.Children.Add(lobby);
+        }
+
+        protected override bool OnBackButtonPressed()
+        {
+            LoadView(lobby);
+            return true;
+        }
+
+        void ico_notify_clicked(object sender, EventArgs e)
+        {
+        }
+
+        void ico_login_clicked(object sender, EventArgs e)
+        {
+        }
+
+        void ico_setting_clicked(object sender, EventArgs e)
+        {
+            ContentViews.Children.Clear();
+            ContentViews.Children.Add(new SettingView());
         }
 
         void OnTapped(object sender, EventArgs e)

@@ -51,17 +51,26 @@
             </Frame>
 
 
-
-
-            <Frame BorderColor="Gray"  CornerRadius="5"  Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"  BackgroundColor="#B5B5B3">
-                <StackLayout x:Name="Community">
-                    <Label  Text="커뮤니티"  TextColor="White" FontSize="Large" FontAttributes="Bold" />
-                    <Label  Text="Community"  TextColor="White" FontSize="Large" FontAttributes="Bold" />
+            <Frame BorderColor="Gray"  CornerRadius="5"  Grid.Row="1" Grid.Column="0"  BackgroundColor="#B5B5B3">
+                <StackLayout x:Name="Lecture">
+                    <Label  Text="강의"  TextColor="White" FontSize="Large" FontAttributes="Bold" />
+                    <Label  Text="Lecture"  TextColor="White" FontSize="Large" FontAttributes="Bold" />
                     <StackLayout.GestureRecognizers>
                         <TapGestureRecognizer Tapped="OnTapped"/>
                     </StackLayout.GestureRecognizers>
                 </StackLayout>
             </Frame>
+
+            <Frame BorderColor="Gray"  CornerRadius="5"  Grid.Row="1" Grid.Column="1" BackgroundColor="#B5B5B3">
+                <StackLayout x:Name="Community">
+                    <Label  Text="채팅"  TextColor="White" FontSize="Large" FontAttributes="Bold" />
+                    <Label  Text="Chat"  TextColor="White" FontSize="Large" FontAttributes="Bold" />
+                    <StackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnTapped"/>
+                    </StackLayout.GestureRecognizers>
+                </StackLayout>
+            </Frame>
+
 
             <Frame BorderColor="Gray"  CornerRadius="5"  Grid.Row="1" Grid.Column="2"  BackgroundColor="#D75725">
                 <StackLayout  x:Name="Worship">
@@ -72,9 +81,6 @@
                     </StackLayout.GestureRecognizers>
                 </StackLayout>
             </Frame>
-
-
-
 
             <Frame BorderColor="Gray"  CornerRadius="5"  Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"  BackgroundColor="#00225D">
                 <StackLayout x:Name="Pray">
@@ -108,21 +114,17 @@
             </Frame>
 
             <Frame BorderColor="Gray"  CornerRadius="5"  Grid.Row="3" Grid.Column="2"  BackgroundColor="#171635">
-                <StackLayout  x:Name="QNA">
-                    <Label Text="질문" TextColor="White" FontSize="Large" FontAttributes="Bold" />
-                    <Label Text="QNA" TextColor="White" FontSize="Large" FontAttributes="Bold" />
+                <StackLayout  x:Name="Plan">
+                    <Label Text="계획" TextColor="White" FontSize="Large" FontAttributes="Bold" />
+                    <Label Text="Plan" TextColor="White" FontSize="Large" FontAttributes="Bold" />
                     <StackLayout.GestureRecognizers>
                         <TapGestureRecognizer Tapped="OnTapped"/>
                     </StackLayout.GestureRecognizers>
                 </StackLayout>
             </Frame>
 
-            <Frame BorderColor="Gray"  CornerRadius="5"  Grid.Row="4" Grid.ColumnSpan="3"  BackgroundColor="#00225D">
-                <StackLayout >
-                    <StackLayout.GestureRecognizers>
-                        <TapGestureRecognizer Tapped="OnTapped"/>
-                    </StackLayout.GestureRecognizers>
-                </StackLayout>
+            <Frame BorderColor="Gray"  CornerRadius="5"  Grid.Row="4" Grid.ColumnSpan="3"  BackgroundColor="White" Padding="0,0,0,0">
+                <Image x:Name="banner_image" Aspect="Fill" />
             </Frame>
 
         </Grid>

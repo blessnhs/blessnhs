@@ -17,7 +17,10 @@ namespace Antioch.View
         public LobbyView()
         {
             InitializeComponent();
+
+            banner_image.Source = ImageSource.FromResource("Antioch.Resource.Image.banner.png");
         }
+
 
         void OnTapped(object sender, EventArgs e)
         {
@@ -37,10 +40,19 @@ namespace Antioch.View
                     break;
                 case "Community":
                     break;
+
+                case "Lecture":
+                    LoadView(new Lecture()); 
+                    break;
+
+                case "Plan":
+                    LoadView(new BibleReadPlan()); 
+                    break;
                 case "Worship":
                     LoadView(new Hymn());
                     break;
                 case "Pray":
+                    LoadView(new PrayView());
                     break;
                 case "Bible":
                     LoadView(new BibleView());

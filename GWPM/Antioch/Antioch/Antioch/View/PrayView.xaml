@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Antioch.View.PrayView">
+       <Grid BackgroundColor="AliceBlue">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="9*" />
+                <RowDefinition Height="1*" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="8*" />
+                <ColumnDefinition Width="2*" />
+            </Grid.ColumnDefinitions>
+
+                <ListView Grid.Row="0" Grid.Column="0" x:Name="listView" ItemSelected="Handle_ItemSelected"   ItemsSource="{Binding HymnTableInfo}" IsVisible="True">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <TextCell Text="{Binding Display}" TextColor="Black" />
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                </ListView>
+
+               <Entry x:Name="IndexEntry" Grid.Row="1" Grid.Column="0" Placeholder="기도 제목을 입력하세요" TextChanged="Entry_TextChanged" />
+     
+
+                <Button Grid.Row="1" Grid.Column="1" Text="입력"/>
+        </Grid>
+</ContentView>

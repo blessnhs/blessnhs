@@ -46,7 +46,7 @@ VOID HubProcess::Process(LPVOID Data, DWORD Length, WORD MainProtocol, WORD SubP
 			}
 		}
 
-		SYSLOG().Write("%s MainProtocol %d Length %d", __LINE__, MainProtocol, Length);
+		SYSLOG().Write("%s MainProtocol %d Length %d\n", __FUNCTION__, MainProtocol, Length);
 
 		NET_FUNC_EXE(MainProtocol, Data, Length, Client);
 	}

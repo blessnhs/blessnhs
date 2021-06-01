@@ -643,7 +643,11 @@
     <None Remove="Resource\Hymn\557.gif" />
     <None Remove="Resource\Hymn\558.gif" />
     <None Remove="Resource\Image\2020Message.jpg" />
+    <None Remove="Resource\Image\banner.png" />
     <None Remove="Resource\Image\Blesss.jpg" />
+    <None Remove="Resource\Image\IcoLogin.png" />
+    <None Remove="Resource\Image\IcoNotify.png" />
+    <None Remove="Resource\Image\IcoSetting.png" />
     <None Remove="Resource\Image\Notice.jpg" />
     <None Remove="Resource\Image\symbol.png" />
     <None Remove="Resource\KJV.txt" />
@@ -1346,7 +1350,11 @@
     <EmbeddedResource Include="Resource\Hymn\557.gif" />
     <EmbeddedResource Include="Resource\Hymn\558.gif" />
     <EmbeddedResource Include="Resource\Image\2020Message.jpg" />
+    <EmbeddedResource Include="Resource\Image\banner.png" />
     <EmbeddedResource Include="Resource\Image\Blesss.jpg" />
+    <EmbeddedResource Include="Resource\Image\IcoLogin.png" />
+    <EmbeddedResource Include="Resource\Image\IcoNotify.png" />
+    <EmbeddedResource Include="Resource\Image\IcoSetting.png" />
     <EmbeddedResource Include="Resource\Image\Notice.jpg" />
     <EmbeddedResource Include="Resource\Image\symbol.png" />
     <EmbeddedResource Include="Resource\KJV.txt" />
@@ -1433,10 +1441,22 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Update="View\BibleReadPlan.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
     <EmbeddedResource Update="View\BulletinView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
+    <EmbeddedResource Update="View\Lecture.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
     <EmbeddedResource Update="View\NoticeView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="View\PrayView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="View\SettingView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
   </ItemGroup>
