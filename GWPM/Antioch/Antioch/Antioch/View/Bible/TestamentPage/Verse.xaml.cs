@@ -61,18 +61,18 @@ namespace Antioch.TestamentPage
                 controlGrid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
             }
 
-            var label = new Label
-            {
-                Text = "0",
-                HorizontalTextAlignment = TextAlignment.End,
-                VerticalTextAlignment = TextAlignment.End,
-                TextColor = Color.White,
-                FontSize = 20
-            };
-            controlGrid.Children.Add(label, 0, 0);
+            //var label = new Label
+            //{
+            //    Text = "0",
+            //    HorizontalTextAlignment = TextAlignment.End,
+            //    VerticalTextAlignment = TextAlignment.End,
+            //    TextColor = Color.White,
+            //    FontSize = 20
+            //};
+            //controlGrid.Children.Add(label, 0, 0);
 
 
-            Grid.SetColumnSpan(label, 3);
+            //Grid.SetColumnSpan(label, 3);
 
             int x = 0;
             int y = 0;

@@ -31,8 +31,6 @@ namespace Antioch
 
 
             ico_notify.Source = ImageSource.FromResource("Antioch.Resource.Image.IcoNotify.png");
-
-            ico_login.Source = ImageSource.FromResource("Antioch.Resource.Image.IcoLogin.png");
             ico_setting.Source = ImageSource.FromResource("Antioch.Resource.Image.IcoSetting.png");
 
 

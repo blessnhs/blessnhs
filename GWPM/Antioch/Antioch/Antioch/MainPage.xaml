@@ -21,32 +21,22 @@
                 <Image x:Name="symbol_image" />
             </Grid>
 
-            <Grid Grid.Column="1" BackgroundColor="White" Grid.ColumnSpan="2">
+            <Grid Grid.Column="2" BackgroundColor="White" Grid.ColumnSpan="1">
                 <StackLayout Orientation="Horizontal" HorizontalOptions="End" Padding="0,0,0,0">
                     <ImageButton x:Name="ico_notify" 
                     BackgroundColor="Transparent"
-                    WidthRequest="50"
-                    HeightRequest="50"
+                    WidthRequest="40"
+                    HeightRequest="40"
                     FlexLayout.AlignSelf="Center"
                     FlexLayout.Grow="1"
                     Clicked="ico_notify_clicked"
                     Aspect="AspectFit"> 
                     </ImageButton>
 
-                    <ImageButton x:Name="ico_login" 
-                    BackgroundColor="Transparent"
-                    WidthRequest="50"
-                    HeightRequest="50"
-                    FlexLayout.AlignSelf="Center"
-                    FlexLayout.Grow="1"
-                    Clicked="ico_login_clicked"
-                    Aspect="AspectFit">
-                    </ImageButton>
-
                     <ImageButton x:Name="ico_setting" 
                     BackgroundColor="Transparent"
-                    WidthRequest="50"
-                    HeightRequest="50"
+                    WidthRequest="40"
+                    HeightRequest="40"
                     FlexLayout.AlignSelf="Center"
                     FlexLayout.Grow="1"
                     Clicked="ico_setting_clicked"
