@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ViewCell xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Antioch.IncomingViewCell"
+            >
+    <Grid ColumnSpacing="2" Padding="5">
+        <Grid.ColumnDefinitions>
+           <ColumnDefinition Width="40"></ColumnDefinition>
+           <ColumnDefinition Width="*"></ColumnDefinition>
+           <ColumnDefinition Width="40"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Image
+                Grid.Row="0"
+                Grid.Column="0"
+                HeightRequest="35"
+                WidthRequest="35"
+                Aspect="AspectFit"
+                HorizontalOptions="Center"
+                VerticalOptions="Center" Source="{Binding ProfileUrl}"/>
+        <Frame Grid.Row="0" Grid.Column="1" BackgroundColor="#03A9F4">
+			<Frame.HasShadow>
+                <OnPlatform x:TypeArguments="x:Boolean" iOS="false" Android="true"/>
+			</Frame.HasShadow>
+			<StackLayout>
+				<Image IsVisible="{Binding HasAttachement}" HeightRequest="175" WidthRequest="175" Source="{Binding AttachementUrl}" />
+                <Label TextColor="White" Text="{Binding Text}" />
+			</StackLayout>
+        </Frame>
+		
+        <Label FontSize="Micro" Grid.Row="1" Grid.Column="1" Text="{Binding MessageDateTime, StringFormat='{0:MM/dd/yyyy hh:mm tt}'}" TextColor="Gray"></Label>  
+    </Grid>
+</ViewCell>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage 
+		xmlns="http://xamarin.com/schemas/2014/forms" 
+		xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+		x:Class="Antioch.RoomsPage"
+		Title="Monkey Chat">
+    <ContentPage.Content>
+		<Grid Padding="40">    
+			<Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+				<RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+			</Grid.RowDefinitions>
+
+			<Image Source="logo.png" Aspect="AspectFit"/>
+			<Button Grid.Row="1" Text="Connect To General" Command="{Binding ConnectCommand}"/>
+
+			<StackLayout IsVisible="{Binding IsBusy}" Grid.Row="2" HorizontalOptions="Center" VerticalOptions="Start">
+                <StackLayout.Orientation>
+                    <OnPlatform x:TypeArguments="StackOrientation" iOS="Horizontal"/>
+                </StackLayout.Orientation>
+                <ActivityIndicator IsRunning="{Binding IsBusy}" />
+                <Label Text="Connecting..." HorizontalOptions="Center" />
+           </StackLayout>
+		</Grid>
+    </ContentPage.Content>
+</ContentPage>
