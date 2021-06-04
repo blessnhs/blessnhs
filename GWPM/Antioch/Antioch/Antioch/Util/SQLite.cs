@@ -5,6 +5,10 @@ using System.IO;
 using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Xml.Linq;
+using DependencyHelper;
+using Xamarin.Essentials;
+using Xamarin.Forms;
+using Xamarin.Forms.PlatformConfiguration;
 
 namespace Antioch
 {
@@ -93,6 +97,23 @@ namespace Antioch
         {
         }
 
+        static public string GetPath()
+        {
+            // Platform (Android)
+            var platform = DeviceInfo.Platform;
+
+            if (platform == DevicePlatform.UWP)
+            {
+                return System.IO.Path.Combine(DependencyService.Get<FlatformPath>().GetPath(), "WBA.db");
+            }
+            else if (platform == DevicePlatform.Android)
+            {
+                return System.IO.Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyDocuments), "WBA.db");
+            }
+            else
+                return System.IO.Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyDocuments), "WBA.db");
+
+        }
         static public bool InsertUnderlining(string BibleName, int Chapter, int Verse, string color)
         {
             Underlining Data = new Underlining();
@@ -101,7 +122,7 @@ namespace Antioch
             Data.Verse = Verse;
             Data.Color = color;
 
-            string DBPath = System.IO.Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyDocuments), "WBA.db");
+            string DBPath = GetPath();
 
             var db = new SQLiteConnection(DBPath);
             db.CreateTable<Underlining>();
@@ -132,7 +153,7 @@ namespace Antioch
             Data.Verse = Verse;
             Data.Color = color;
 
-            string DBPath = System.IO.Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyDocuments), "WBA.db");
+            string DBPath = GetPath();
 
             var db = new SQLiteConnection(DBPath);
             db.CreateTable<Underlining>();
@@ -144,7 +165,7 @@ namespace Antioch
 
         static public List<Underlining> ReadUnderlining()
         {
-            string DBPath = System.IO.Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyDocuments), "WBA.db");
+            string DBPath = GetPath();
 
             var db = new SQLiteConnection(DBPath);
 
@@ -165,7 +186,7 @@ namespace Antioch
             Data.BibleName = Name;
             Data.Count = Count;
 
-            string DBPath = System.IO.Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyDocuments), "WBA.db");
+            string DBPath = GetPath();
 
             var db = new SQLiteConnection(DBPath);
             db.CreateTable<BibleReadPlan>();
@@ -184,7 +205,7 @@ namespace Antioch
 
         static public BibleReadPlan ReadBibleReadPlan()
         {
-            string DBPath = System.IO.Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyDocuments), "WBA.db");
+            string DBPath = GetPath();
 
             var db = new SQLiteConnection(DBPath);
 
@@ -207,7 +228,7 @@ namespace Antioch
             ScheduleLog Data = new ScheduleLog();
             Data.Time = Time;
 
-            string DBPath = System.IO.Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyDocuments), "WBA.db");
+            string DBPath = GetPath();
 
             var db = new SQLiteConnection(DBPath);
             db.CreateTable<ScheduleLog>();
@@ -219,7 +240,7 @@ namespace Antioch
 
         static public List<ScheduleLog> ReadScheduleLog()
         {
-            string DBPath = System.IO.Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyDocuments), "WBA.db");
+            string DBPath = GetPath();
 
             var db = new SQLiteConnection(DBPath);
 
@@ -275,7 +296,7 @@ namespace Antioch
         }
         static public bool Upsert(UserCacheData Data)
         {
-            string DBPath = System.IO.Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyDocuments), "WBA.db");
+            string DBPath = GetPath();
 
             var db = new SQLiteConnection(DBPath);
             db.CreateTable<UserCacheData>();
@@ -297,7 +318,7 @@ namespace Antioch
 
         static public UserCacheData ReadUserCache(int id = 1)
         {
-            string DBPath = System.IO.Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyDocuments), "WBA.db");
+            string DBPath = GetPath();
 
             var db = new SQLiteConnection(DBPath);
 
@@ -315,7 +336,7 @@ namespace Antioch
 
         static public bool Upsert(UserScheduleData Data, bool isInsert = true)
         {
-            string DBPath = System.IO.Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyDocuments), "WBA.db");
+            string DBPath = GetPath();
 
             var db = new SQLiteConnection(DBPath);
             db.CreateTable<UserScheduleData>();
@@ -331,7 +352,7 @@ namespace Antioch
 
         static public bool DelItem(long id)
         {
-            string DBPath = System.IO.Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyDocuments), "WBA.db");
+            string DBPath = GetPath();
 
             var db = new SQLiteConnection(DBPath);
             db.CreateTable<UserScheduleData>();
@@ -348,7 +369,7 @@ namespace Antioch
 
         static public List<UserScheduleData> ReadUserScheduleData()
         {
-            string DBPath = System.IO.Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyDocuments), "WBA.db");
+            string DBPath = GetPath();
 
             var db = new SQLiteConnection(DBPath);
 

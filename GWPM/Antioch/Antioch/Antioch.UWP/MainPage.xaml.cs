@@ -15,6 +15,7 @@ using Windows.UI.Xaml.Navigation;
 
 namespace Antioch.UWP
 {
+    
     public sealed partial class MainPage
     {
         public MainPage()

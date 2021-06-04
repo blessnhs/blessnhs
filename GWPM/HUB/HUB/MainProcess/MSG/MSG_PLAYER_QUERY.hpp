@@ -38,8 +38,8 @@ namespace Hub	{
 	class MSG_PLAYER_QUERY : public IMESSAGE
 	{
 	public:
-		MSG_PLAYER_QUERY() { pSession = NULL; }
-		~MSG_PLAYER_QUERY(){}
+		MSG_PLAYER_QUERY() = default;
+		~MSG_PLAYER_QUERY() = default;
 
 		DWORD			MsgId;
 
@@ -97,30 +97,6 @@ namespace Hub	{
 		void Undo() {}
 	};
 
-	template<>
-	class MSG_PLAYER_QUERY<CalcRank> : public IMESSAGE
-	{
-	public:
-		MSG_PLAYER_QUERY() { }
-		~MSG_PLAYER_QUERY() {}
-
-		void Execute(LPVOID Param)
-		{
-			DBPROCESS_CER_PTR pProcess = DBPROCESSCONTAINER_CER.Search(Type);
-			if (pProcess == NULL || pProcess->m_IsOpen == false)
-			{
-				return;
-			}
-
-			std::list<Rank> list;
-			// 로그인 절차 : 아이디의 접속확인 및 인증키값을 가져온다.
-			pProcess->CalcRank();
-
-		}
-
-
-		void Undo() {}
-	};
 
 	
 	template<>
@@ -313,9 +289,9 @@ namespace Hub	{
 						return;
 				}
 
-				if (pRequst.Token.size() == 0 || pRequst.Token.size() < 10)
+				if (pRequst.id.size() == 0 || pRequst.id.size() > 256 || pRequst.pwd.size() == 0 || pRequst.pwd.size() > 256)
 				{
-					printf("DBPROCESSCONTAINER_CER.Search token size error %d \n", pRequst.Token.size());
+					printf("DBPROCESSCONTAINER_CER.Search token size error %d \n", pRequst.id.size());
 
 					res.set_var_code(DataBaseError);
 
@@ -325,36 +301,12 @@ namespace Hub	{
 					return;
 				}
 
-				for (int i = 0; i < 1; i++)
-				{
-					GetGoogleAuth(pRequst.Token.c_str());
-
-					if (http_out.size() == 6)
-						break;
-				}
-	
-				if (http_out.size() != 6)
-				{
-					pSession->Close();
-					return;
-				}
-
-				std::string flatformid, google_name, picture_url, email, locale;
-
-				flatformid.assign(http_out[1].begin(), http_out[1].end());
-				email.assign(http_out[2].begin(), http_out[2].end());
-				picture_url.assign(http_out[4].begin(), http_out[4].end());
-				locale.assign(http_out[5].begin(), http_out[5].end());
-
-				Base64::convert_unicode_to_ansi_string(google_name, http_out[3].c_str(), http_out[3].size());
-
-				int rank, score, win, lose, draw, level;
-				string nickname;
-
+			
 				// 로그인 절차 : 아이디의 접속확인 및 인증키값을 가져온다.
-				std::string authentickey;
+				std::string authentickey, nickname;
 				INT64 Index = 0;
-				WORD nRet = pProcess->ProcedureUserLogin(flatformid.c_str(), 0/*0번은 구글 인증*/, picture_url.c_str(), email.c_str(), locale.c_str(), authentickey, rank, score, win, lose, draw, Index, level, nickname);
+				int score = 0,level = 0;
+				WORD nRet = pProcess->ProcedureUserLogin(pRequst.id, pRequst.pwd, authentickey,score, Index, level, nickname);
 
 				//이미 접속해 있는 세션이 있고(디비에 접속기록이 남아 있다.)
 				if (nRet != _ERR_NONE)
@@ -405,22 +357,16 @@ namespace Hub	{
 
 				pNewPlayer->Initialize();
 				pNewPlayer->m_Char[0].SetName(nickname);
-				pNewPlayer->m_Account.SetFlatformId(flatformid);
-				pNewPlayer->m_Account.SetEMail(email);
-				pNewPlayer->m_Account.SetPicture_url(picture_url);
-				pNewPlayer->m_Account.SetName(nickname);
-
+			
 				pNewPlayer->SetId(Index);
 				pNewPlayer->SetPair(pSession->GetId());
 				pSession->SetPair(Index);
-				pNewPlayer->m_Char[0].GetScore().SetScore(rank, score, win, lose, draw);
 				pNewPlayer->m_Char[0].SetLevel(level);
 				PLAYERMGR.Add(pNewPlayer);
 
 				res.set_var_code(Success);
 				res.set_var_index(Index);
 
-				res.set_var_locale(locale);
 				res.set_var_name(nickname);
 
 				SEND_PROTO_BUFFER(res, pSession)
@@ -455,38 +401,5 @@ namespace Hub	{
 
 		void Undo(){}
 	};
-
-	template<>
-	class MSG_PLAYER_QUERY<RequestPlayerScore> : public IMESSAGE
-	{
-	public:
-		MSG_PLAYER_QUERY() {  }
-		~MSG_PLAYER_QUERY() {}
-
-		DBPROCESS_CER_PTR   pProcess;
-
-		RequestPlayerScore pRequst;
-
-		void Execute(LPVOID Param) 
-		{
-			//유저가종료되어도 승패는 기록되어야 하기에 디폴트 디비 핸들러를 사용한다.
-			DBPROCESS_CER_PTR pProcess = DBPROCESSCONTAINER_CER.Search(Type);
-			if (pProcess == NULL || pProcess->m_IsOpen == false)
-			{
-				return;
-			}
-
-			// 로그인 절차 : 아이디의 접속확인 및 인증키값을 가져온다.
-			int nRet = pProcess->UpdaetPlayerScore(pRequst.Index, pRequst.Win, pRequst.Lose, pRequst.Draw, pRequst.Level, pRequst.Score);
-			if (nRet != 0)
-			{
-				printf("UpdaetPlayerScore nRet is not 0\n");
-			}
-		}
-
-
-		void Undo() {}
-	};
-	
 }
 

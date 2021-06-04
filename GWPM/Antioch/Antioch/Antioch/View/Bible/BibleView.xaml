@@ -4,7 +4,7 @@
              x:Class="Antioch.BibleView">
 
  
-        <Grid x:Name="main_grid" Padding="10,20,20,20">
+        <Grid x:Name="main_grid" Padding="0,0,0,0">
             <Grid.RowDefinitions BackgroundColor="White">
                 <RowDefinition Height="50" />
                 <RowDefinition Height="9*" />
@@ -41,7 +41,7 @@
                 </Button.GestureRecognizers>
             </Button>
 
-            <Button Grid.Row="0" Grid.Column="5" x:Name="Title" Grid.ColumnSpan="3"/>
+            <Label Grid.Row="0" Grid.Column="5" x:Name="Title" Grid.ColumnSpan="3" FontSize="Body" BackgroundColor="White" VerticalOptions="Center" HorizontalOptions="Center"/>
 
             <Button Grid.Row="0" Grid.Column="8" Text = "S" Clicked="Handle_Clicked_Shared">
                 <Button.GestureRecognizers>

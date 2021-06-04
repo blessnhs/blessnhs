@@ -82,7 +82,7 @@ namespace Antioch.TestamentPage
                 x = i % 3;
                 y = i / 3;
 
-                Button button = new Button { Text = (i + 1).ToString(), Style = plainButton };
+                Button button = new Button { Text = (i + 1).ToString(), Style = plainButton, FontSize = 10 };
 
                 button.Clicked += btn_Clicked;
 

@@ -5,8 +5,8 @@
 
     <Grid BackgroundColor="White">
         <Grid.RowDefinitions>
-            <RowDefinition Height="1*"/>
-            <RowDefinition Height="9*"/>
+            <RowDefinition Height="0.5*"/>
+            <RowDefinition Height="9.5*"/>
         </Grid.RowDefinitions>
 
         <!--first row-->

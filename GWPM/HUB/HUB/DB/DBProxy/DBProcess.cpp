@@ -40,24 +40,6 @@ float CDBProcessCer::ProcedureVersion()
 	return m_DB->ProcedureVersion(1);
 }
 
-
-int  CDBProcessCer::RequestRank(std::list<Rank> &list)
-{
-	m_DB->RequestRank(list);
-	return _ERR_NONE;
-}
-
-int  CDBProcessCer::CalcRank()
-{
-	m_DB->CalcRank();
-	return _ERR_NONE;
-}
-
-int CDBProcessCer::UpdaetPlayerScore(INT64 Index,int Win, int Lose, int Draw,int Level,int Score)
-{
-	return m_DB->UpdaetPlayerScore(Index, Win, Lose, Draw, Level, Score);
-}
-
 bool CDBProcessCer::NickNameCheck(string Name, INT64 Index)
 {
 	return m_DB->IsExistNickName(Name, Index);
@@ -84,7 +66,7 @@ int  CDBProcessCer::DeleteAllConcurrentUser()
 	return m_DB->DeleteAllConcurrentUser();
 }
 
-int		CDBProcessCer::ProcedureUserLogin(const CHAR* flatformid, const int flatformtype, const CHAR* picture_url, const CHAR* email, const CHAR* locale,std::string& szKey, int& Rank, int& Score, int& Win, int& Lose, int& Draw, INT64& Index, int& Level,string& name)
+int		CDBProcessCer::ProcedureUserLogin(const std::string id, const std::string pwd, std::string& szKey,int& Score, INT64& Index, int& Level,string& name)
 {
-	return m_DB->ProcedureUserLogin(flatformid, flatformtype, picture_url, email, locale, szKey, Rank, Score, Win, Lose, Draw, Index, Level, name);
+	return m_DB->ProcedureUserLogin(id, pwd, szKey, Score, Index, Level, name);
 }

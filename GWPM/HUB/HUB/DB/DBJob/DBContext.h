@@ -76,8 +76,8 @@ public:
 
 	~RequestPlayerAuth(void) {}
 
-	std::string Uid;
-	std::string Token;
+	std::string id;
+	std::string pwd;
 	std::string SessionKey;
 	INT64 Index;
 	int Result;

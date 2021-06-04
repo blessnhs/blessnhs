@@ -13,7 +13,7 @@ namespace Antioch
 
         public RoomsViewModel()
         {
-       //     twilioMessenger = DependencyService.Get<ITwilioMessenger>();
+            twilioMessenger = DependencyService.Get<ITwilioMessenger>();
 
             ConnectCommand = new Command(async () =>
             {

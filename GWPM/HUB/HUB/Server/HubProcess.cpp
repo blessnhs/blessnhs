@@ -18,7 +18,6 @@ HubProcess::HubProcess(void)
 	ADD_NET_FUNC(HubProcess, ID_PKT_ROOM_PASS_THROUGH_REQ, ROOM_PASSTHROUGH);
 	ADD_NET_FUNC(HubProcess, ID_PKT_NOTICE_REQ, NOTICE);
 	ADD_NET_FUNC(HubProcess, ID_PKT_AUDIO_MESSAGE_REQ, ROOM_AUDIO_CHAT);
-
 }
 
 
@@ -64,7 +63,6 @@ VOID HubProcess::NOTICE(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> C
 {
 	DECLARE_RECV_TYPE(NOTICE_REQ, version)
 
-
 	boost::shared_ptr<Hub::MSG_PLAYER_QUERY<RequestNotice>>		PLAYER_MSG = ALLOCATOR.Create<Hub::MSG_PLAYER_QUERY<RequestNotice>>();
 	PLAYER_MSG->pSession = Client;
 	PLAYER_MSG->Type = Client->GetMyDBTP();
@@ -98,18 +96,18 @@ VOID HubProcess::LOGIN_PLAYER(LPVOID Data, DWORD Length, boost::shared_ptr<GSCli
 {
 	DECLARE_RECV_TYPE(LOGIN_REQ, login)
 
-	if (_result_, login.var_uid().size() <= 0 || login.var_token().size() <= 0)
+	if (_result_, login.var_id().size() <= 0 || login.var_pwd().size() <= 0)
 		return;
 
-	if (_result_, login.var_uid().size() >= 2000 || login.var_token().size() >= 2000)
+	if (_result_, login.var_id().size() >= 256 || login.var_pwd().size() >= 256)
 		return;
 
 	boost::shared_ptr<Hub::MSG_PLAYER_QUERY<RequestPlayerAuth>>		PLAYER_MSG = ALLOCATOR.Create<Hub::MSG_PLAYER_QUERY<RequestPlayerAuth>>();
 	PLAYER_MSG->pSession = Client;
 
 	{
-		PLAYER_MSG->pRequst.Uid.assign(login.var_uid().begin(), login.var_uid().end());
-		PLAYER_MSG->pRequst.Token.assign(login.var_token().begin(), login.var_token().end());
+		PLAYER_MSG->pRequst.id.assign(login.var_id().begin(), login.var_id().end());
+		PLAYER_MSG->pRequst.pwd.assign(login.var_pwd().begin(), login.var_pwd().end());
 		PLAYER_MSG->pRequst.channel = 1;// login.var_channel();
 	}
 
@@ -183,15 +181,15 @@ VOID HubProcess::ROOM_PASSTHROUGH(LPVOID Data, DWORD Length, boost::shared_ptr<G
 		return;
 	}
 
-	//ROOM_PTR RoomPtr = ROOMMGR.Search(pPlayer->);
-	//if (RoomPtr == NULL)
-	//{
-	//	return;
-	//}
+	ROOM_PTR RoomPtr = ROOMMGR.Search(pPlayer->m_Char[0].GetRoom());
+	if (RoomPtr == NULL)
+	{
+		return;
+	}
 
-	//ROOM_PASS_THROUGH_RES res;
+	ROOM_PASS_THROUGH_RES res;
 
-	//RoomPtr->SendToAll(res);
+	RoomPtr->SendToAll(res);
 	
 }
 

@@ -44,6 +44,9 @@ namespace Antioch.View
                 case "Lecture":
                     LoadView(new Lecture()); 
                     break;
+                case "Chat":
+                    Navigation.PushModalAsync(new RoomsPage());
+                    break;
 
                 case "Plan":
                     LoadView(new BibleReadPlan()); 

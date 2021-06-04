@@ -1,12 +1,13 @@
 ﻿using System;
-
 using System.Linq;
 using Xamarin.Forms;
 
 namespace Antioch
 {
+
     static class Helper
     {
+       
         public static byte[] ToByteString(this string inStr, bool in64String = false)
         {
             if (string.IsNullOrEmpty(inStr) == true)
