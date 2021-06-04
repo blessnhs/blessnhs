@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Google.Protobuf;
+using System;
 using System.IO;
 using Xamarin.Essentials;
 using System.Text;
@@ -35,27 +36,9 @@ namespace Antioch
    
         static public void start()
         {
-            string ip = "211.212.37.238";
+            string ip = "192.168.0.9";
 
-
-            //연결중이면 안한다. 
-            if (client.socket == null || client.socket.Connected == false)
-            {
-                if ((DateTime.Now - time).TotalSeconds > 5)
-                {
-                    time = DateTime.Now;
-                    //if(User.Token != null && User.Token != "")
-                    //    client.StartClient(ip, 20000);
-                }
-            }
-
-            if ((DateTime.Now - notice_time).TotalSeconds > 30)
-            {
-                if (client.socket != null && client.socket.Connected == true)
-                {
-                    notice_time = DateTime.Now;
-                }
-            }
+            client.StartClient(ip, 20000);
         }
 
         public static ConcurrentQueue<MemoryStream> JpegStream = new ConcurrentQueue<MemoryStream>();
@@ -103,6 +86,24 @@ namespace Antioch
 
             //    client.WritePacket((int)PROTOCOL.IdPktVersionReq, stream.ToArray(), stream.ToArray().Length);
             //}
+        }
+
+        static public void SendLogin(string id,string pwd)
+        {
+            if (client == null || client.socket == null || client.socket.Connected == false)
+                return;
+
+            var data = new LOGIN_REQ
+            {
+                VarId = id,
+                VarPwd = pwd
+            };
+            using (MemoryStream stream = new MemoryStream())
+            {
+                data.WriteTo(stream);
+
+                client.WritePacket((int)PROTOCOL.IdPktLoginReq, stream.ToArray(), stream.ToArray().Length);
+            }
         }
 
     }

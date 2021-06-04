@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -11,6 +12,32 @@ namespace Antioch
             InitializeComponent();
 
             MainPage = new MainPage();
+
+            //network
+            {
+
+                //network thread
+                Task.Run(() =>
+                {
+                    while (true)
+                    {
+                        NetProcess.start();
+                        NetProcess.client.PacketRecvSync();
+                    }
+                });
+
+                //network thread
+                Task.Run(() =>
+                {
+                    DateTime checktime = DateTime.Now;
+
+                    while (true)
+                    {
+                        NetProcess.Loop();
+                    }
+                });
+
+            }
         }
 
 

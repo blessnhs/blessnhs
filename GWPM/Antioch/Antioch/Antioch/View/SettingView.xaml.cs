@@ -54,5 +54,10 @@ namespace Antioch.View
             User.CacheData.EnalbeKJV = e.Value;
             SQLLiteDB.Upsert(User.CacheData);
         }
+
+        async void Clicked(object sender, System.EventArgs e)
+        {
+            NetProcess.SendLogin(usernameEntry.Text, passwordEntry.Text);
+        }
     }
 }
