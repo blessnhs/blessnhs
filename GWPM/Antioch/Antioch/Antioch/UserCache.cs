@@ -11,5 +11,7 @@ namespace Antioch
 
         static public UserCacheData CacheData = new UserCacheData();
 
+        static public bool LoginSuccess = false;
+
     }
 }

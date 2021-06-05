@@ -42,7 +42,7 @@
                                     <TapGestureRecognizer Tapped="Clicked"/>
                                 </Button.GestureRecognizers>
                             </Button>
-                            <Label x:Name="messageLabel" />
+                            <Label x:Name="messageLabel" Text="{Binding message}"/>
                         </StackLayout>
                     </Frame>
 

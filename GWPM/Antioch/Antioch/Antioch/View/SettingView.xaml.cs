@@ -12,6 +12,8 @@ namespace Antioch.View
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class SettingView : ContentView
     {
+        public string message = "";
+
         private double StepValue = 1.0;
         public SettingView()
         {
@@ -34,19 +36,24 @@ namespace Antioch.View
                 SQLLiteDB.Upsert(User.CacheData);
             };
 
-
             KJVOption.IsToggled = User.CacheData.EnalbeKJV;
-
 
             usernameEntry.Focus();
 
-            ////이미 로그인 중이면 메세지 표시를 변경
-            //if (NetProcess.IsSuccessAuth == true)
-            //{
-            //    messageLabel.Text = "접속중";
-            //    usernameEntry.Text = NetProcess.UserId;
-            //    loginbutton.IsVisible = false;
-            //}
+            //이미 로그인 중이면 메세지 표시를 변경
+            if (User.LoginSuccess == true)
+            {
+                Device.BeginInvokeOnMainThread(() =>
+                {
+                    message = "접속중";
+                    usernameEntry.Text = User.CacheData.UserName;
+                    passwordEntry.Text = "****";
+                    loginbutton.IsVisible = false;
+                });
+               
+            }
+
+            BindingContext = this;
         }
 
         void OnToggledKJV(object sender, ToggledEventArgs e)
@@ -57,6 +64,8 @@ namespace Antioch.View
 
         async void Clicked(object sender, System.EventArgs e)
         {
+            User.Username = usernameEntry.Text;
+            User.Password = passwordEntry.Text;
             NetProcess.SendLogin(usernameEntry.Text, passwordEntry.Text);
         }
     }

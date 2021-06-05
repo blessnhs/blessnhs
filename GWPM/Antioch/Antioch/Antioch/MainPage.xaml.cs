@@ -13,7 +13,7 @@ namespace Antioch
 {
     public partial class MainPage : ContentPage
     {
-        LobbyView lobby = new LobbyView();
+        public LobbyView lobby = new LobbyView();
         public MainPage()
         {
             InitializeComponent();
