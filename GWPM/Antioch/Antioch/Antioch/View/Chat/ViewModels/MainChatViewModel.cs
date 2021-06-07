@@ -30,9 +30,27 @@ namespace Antioch
 
         public ICommand SendCommand { get; set; }
 
-
+        public ICommand ExitCommand { get; set; }
         public ICommand LocationCommand { get; set; }
 
+        public void AddMessage(string text)
+        {
+            var message = new Message
+            {
+                Text = text,
+                IsIncoming = false,
+                AttachementUrl = "",
+                MessageDateTime = DateTime.Now,
+                ProfileUrl = "https://lh4.googleusercontent.com/-MEdrkpWi6Yg/AAAAAAAAAAI/AAAAAAAAAAA/AMZuuckIeT9M_SOv920jGkFwWiOCWkZRJA/s96-c/photo.jpg"
+            };
+
+
+            Messages.Add(message);
+
+            twilioMessenger?.SendMessage(message.Text);
+
+            OutGoingText = string.Empty;
+        }
         public MainChatViewModel()
         {
             // Initialize with default values
@@ -44,21 +62,14 @@ namespace Antioch
 
             SendCommand = new Command(() =>
             {
-                var message = new Message
-                {
-                    Text = OutGoingText,
-                    IsIncoming = false,
-                    AttachementUrl = "",
-                    MessageDateTime = DateTime.Now,
-                    ProfileUrl = "https://lh4.googleusercontent.com/-MEdrkpWi6Yg/AAAAAAAAAAI/AAAAAAAAAAA/AMZuuckIeT9M_SOv920jGkFwWiOCWkZRJA/s96-c/photo.jpg"
-                };
+                
 
+                NetProcess.SendRoomMessage(OutGoingText);
+            });
 
-                Messages.Add(message);
-
-                twilioMessenger?.SendMessage(message.Text);
-
-                OutGoingText = string.Empty;
+            ExitCommand = new Command(() =>
+            {
+                NetProcess.SendLeaveRoom(0);
             });
 
 

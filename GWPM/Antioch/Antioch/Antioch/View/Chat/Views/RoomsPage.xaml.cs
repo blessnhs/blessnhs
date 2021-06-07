@@ -1,23 +1,11 @@
-﻿using System;
+﻿using MvvmHelpers;
+using System;
 using System.Collections.Generic;
 
 using Xamarin.Forms;
 
 namespace Antioch
 {
-
-    public class RoomInfo
-    {
-        public RoomInfo(string name)
-        {
-            Name = name;
-        }
-        public int Id { get; set; }
-        public string Name { get; set; }
-
-        public int Count { get; set; }
-    };
-
     public partial class RoomsPage : ContentPage
     {
         public RoomsPage()
@@ -25,7 +13,26 @@ namespace Antioch
             InitializeComponent();
             BindingContext = new RoomsViewModel();
 
-            NetProcess.SendRoomList();
+            Device.StartTimer(new TimeSpan(0, 0, 2), () =>
+            {
+                // do something every 60 seconds
+                Device.BeginInvokeOnMainThread(() =>
+                {
+                    NetProcess.SendRoomList();
+                });
+                return true; // runs again, or false to stop
+            });
+
+          
+        }
+
+        async void OnRoomEnterClicked(object sender, EventArgs args)
+        {
+            Button button = sender as Button;
+
+            int id = Convert.ToInt32(button.CommandParameter.ToString());
+
+            NetProcess.SendEnterRoom(id);
         }
 
         void Handle_ItemSelected(object sender, Xamarin.Forms.SelectedItemChangedEventArgs e)
@@ -34,18 +41,40 @@ namespace Antioch
             var contact = e.SelectedItem as RoomInfo;
         }
 
-        public void LoadRoomList()
+        public void LoadRoomList(ROOM_LIST_RES res)
         {
+            List<RoomInfo> roomList = new List<RoomInfo>();
+            foreach(var room in res.VarRoomList)
+            {
+                var info = new RoomInfo();
+                info.Id = room.VarId;
+                info.Name = Helper.ToStr(room.VarName.ToByteArray());
+                info.Count = room.VarCurrentCount;
 
-            List<RoomInfo> LoadInfo = new List<RoomInfo>();
+                roomList.Add(info);
+            }
 
-            LoadInfo.Add(new RoomInfo("123"));
-            LoadInfo.Add(new RoomInfo("124"));
-            LoadInfo.Add(new RoomInfo("125"));
-            LoadInfo.Add(new RoomInfo("126"));
+            listView.ItemsSource = roomList;
 
-            listView.ItemsSource = LoadInfo;
         }
+
+        async void Clicked_Create(object sender, System.EventArgs e)
+        {
+            string action = await DisplayActionSheet("Create Room", "Cancel", null, "개인", "지역", "전체");
+
+            switch (action)
+            {
+                case "전체":
+                case "지역":
+                case "개인":
+                    NetProcess.SendMakeRoom(User.CacheData.UserName + "+" + action);
+                    break;
+                default:
+                    NetProcess.SendMakeRoom(User.CacheData.UserName + "+" + "일반");
+                    break;
+            }
+        }
+
     }
 
   

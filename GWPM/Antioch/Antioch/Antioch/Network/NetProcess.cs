@@ -100,26 +100,85 @@ namespace Antioch
                             break;
                         case (int)PROTOCOL.IdPktRoomListRes:
                             {
+
+                                ROOM_LIST_RES res = new ROOM_LIST_RES();
+                                res = ROOM_LIST_RES.Parser.ParseFrom(data.Data);
+
                                 Device.BeginInvokeOnMainThread(() =>
                                 {
+                                    var mainpage = (MainPage)Application.Current.MainPage;
 
-                                    if (Application.Current.MainPage.Navigation.NavigationStack.Count > 0)
+                                    RoomsPage roompage = mainpage.lobby.roompage as RoomsPage;
+
+                                    roompage?.LoadRoomList(res);
+                                });
+                            }
+                            break;
+
+                        case (int)PROTOCOL.IdPktCreateRoomRes:
+                            {
+                                CREATE_ROOM_RES res = new CREATE_ROOM_RES();
+                                res = CREATE_ROOM_RES.Parser.ParseFrom(data.Data);
+
+                                Device.BeginInvokeOnMainThread(() =>
+                                {
+                                    var mainpage = (MainPage)Application.Current.MainPage;
+
+                                    RoomsPage roompage = mainpage.lobby.roompage as RoomsPage;
+
+
                                     {
-                                        //LIFO is the only game in town! - so send back the last page
-
-                                        int index = Application.Current.MainPage.Navigation.NavigationStack.Count - 1;
-
-                                        var currPage = Application.Current.MainPage.Navigation.NavigationStack[index];
-
+                                        mainpage.lobby.chatpage = null;
+                                        mainpage.lobby.chatpage = new MainChatPage();
+                                        MainChatPage chatpage = mainpage.lobby.chatpage as MainChatPage;
+                                        roompage.Navigation.PushModalAsync(chatpage);
                                     }
 
-                                    Page currentPage = Application.Current.MainPage.Navigation.NavigationStack.LastOrDefault();
-
-                                    RoomsPage pg = currentPage as RoomsPage;
-
-
-                                    pg.LoadRoomList();
+                                    
                                 });
+                            }
+                            break;
+                        case (int)PROTOCOL.IdPktEnterRoomRes:
+                            {
+                                ENTER_ROOM_RES res = new ENTER_ROOM_RES();
+                                res = ENTER_ROOM_RES.Parser.ParseFrom(data.Data);
+
+                                Device.BeginInvokeOnMainThread(() =>
+                                {
+                                    var mainpage = (MainPage)Application.Current.MainPage;
+
+                                    RoomsPage roompage = mainpage.lobby.roompage as RoomsPage;
+
+
+                                    {
+                                        mainpage.lobby.chatpage = null;
+                                        mainpage.lobby.chatpage = new MainChatPage();
+                                        MainChatPage chatpage = mainpage.lobby.chatpage as MainChatPage;
+                                        roompage.Navigation.PushModalAsync(chatpage);
+                                    }
+                                });
+                            }
+                            break;
+                        case (int)PROTOCOL.IdPktRoomPassThroughRes:
+                            {
+                                ROOM_PASS_THROUGH_RES res = new ROOM_PASS_THROUGH_RES();
+                                res = ROOM_PASS_THROUGH_RES.Parser.ParseFrom(data.Data);
+                                Device.BeginInvokeOnMainThread(() =>
+                                {
+                                    var mainpage = (MainPage)Application.Current.MainPage;
+
+                                    MainChatPage chatpage = mainpage.lobby.chatpage as MainChatPage;
+
+                                    chatpage.ReceiveMessage(Helper.ToStr(res.VarMessage.ToByteArray()));
+                                });
+                            }
+                            break;
+                        case (int)PROTOCOL.IdPktLeaveRoomRes:
+                            {
+                                var mainpage = (MainPage)Application.Current.MainPage;
+
+                                MainChatPage chatpage = mainpage.lobby.chatpage as MainChatPage;
+                                chatpage.Navigation.PopModalAsync();
                             }
                             break;
                     }
@@ -182,6 +241,79 @@ namespace Antioch
             }
         }
 
+        static public void SendMakeRoom(string Name)
+        {
+            if (client == null || client.socket == null || client.socket.Connected == false)
+                return;
+
+            byte[] in_Name = Helper.ToByteString(Name);
+
+            CREATE_ROOM_REQ person = new CREATE_ROOM_REQ
+            {
+                VarName = ByteString.CopyFrom(in_Name),
+            };
+            using (MemoryStream stream = new MemoryStream())
+            {
+                person.WriteTo(stream);
+
+                client.WritePacket((int)PROTOCOL.IdPktCreateRoomReq, stream.ToArray(), stream.ToArray().Length);
+            }
+        }
+
+        static public void SendEnterRoom(int id)
+        {
+            if (client == null || client.socket == null || client.socket.Connected == false)
+                return;
+
+            ENTER_ROOM_REQ person = new ENTER_ROOM_REQ
+            {
+                VarId = id,
+            };
+            using (MemoryStream stream = new MemoryStream())
+            {
+                person.WriteTo(stream);
+
+                client.WritePacket((int)PROTOCOL.IdPktEnterRoomReq, stream.ToArray(), stream.ToArray().Length);
+            }
+        }
+
+        static public void SendLeaveRoom(int id)
+        {
+            if (client == null || client.socket == null || client.socket.Connected == false)
+                return;
+
+            LEAVE_ROOM_REQ person = new LEAVE_ROOM_REQ
+            {
+                VarId = id,
+            };
+            using (MemoryStream stream = new MemoryStream())
+            {
+                person.WriteTo(stream);
+
+                client.WritePacket((int)PROTOCOL.IdPktLeaveRoomReq, stream.ToArray(), stream.ToArray().Length);
+            }
+        }
+
+        static public void SendRoomMessage(string msg)
+        {
+            if (client == null || client.socket == null || client.socket.Connected == false)
+                return;
+
+            var bytearray = System.Text.Encoding.UTF8.GetBytes(msg);
+
+            ROOM_PASS_THROUGH_REQ message = new ROOM_PASS_THROUGH_REQ
+            {
+                VarMessage = ByteString.CopyFrom(bytearray),
+                VarMessageInt = 0
+            };
+
+            using (MemoryStream stream = new MemoryStream())
+            {
+                message.WriteTo(stream);
+
+                client.WritePacket((int)PROTOCOL.IdPktRoomPassThroughReq, stream.ToArray(), stream.ToArray().Length);
+            }
+        }
     }
 }
 

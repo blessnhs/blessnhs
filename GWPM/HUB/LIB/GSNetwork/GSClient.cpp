@@ -42,11 +42,15 @@ boost::shared_ptr<GSPacketUDP>	GSClient::GetUDPSocket()
 
 GSClient::~GSClient(void)
 {
-	int count = GetTCPSocket()->m_OLP_REMAIN_COUNT_ACC + GetTCPSocket()->m_OLP_REMAIN_COUNT_REC + GetTCPSocket()->m_OLP_REMAIN_COUNT_SND;
-	if (count > 0)
+	if (GetTCPSocket() != NULL)
 	{
-		SYSLOG().Write("GetId() %d alert remain overlap event count acc %d recv %d send %d\n",GetId(), GetTCPSocket()->m_OLP_REMAIN_COUNT_ACC.fetch_add(0), GetTCPSocket()->m_OLP_REMAIN_COUNT_REC.fetch_add(0), GetTCPSocket()->m_OLP_REMAIN_COUNT_SND.fetch_add(0));
+		int count = GetTCPSocket()->m_OLP_REMAIN_COUNT_ACC + GetTCPSocket()->m_OLP_REMAIN_COUNT_REC + GetTCPSocket()->m_OLP_REMAIN_COUNT_SND;
+		if (count > 0)
+		{
+			SYSLOG().Write("GetId() %d alert remain overlap event count acc %d recv %d send %d\n", GetId(), GetTCPSocket()->m_OLP_REMAIN_COUNT_ACC.fetch_add(0), GetTCPSocket()->m_OLP_REMAIN_COUNT_REC.fetch_add(0), GetTCPSocket()->m_OLP_REMAIN_COUNT_SND.fetch_add(0));
+		}
 	}
+
 
 	DebugCount.fetch_sub(1);
 

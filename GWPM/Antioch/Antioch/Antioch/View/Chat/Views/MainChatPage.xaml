@@ -39,6 +39,10 @@
 			<Button 
 				Text="Send" 
 				Command="{Binding SendCommand}"/>
-		</StackLayout>
+
+            <Button 
+				Text="Exit" 
+				Command="{Binding ExitCommand}"/>
+        </StackLayout>
 	</Grid>
 </ContentPage>

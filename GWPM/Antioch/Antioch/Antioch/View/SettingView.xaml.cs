@@ -12,8 +12,6 @@ namespace Antioch.View
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class SettingView : ContentView
     {
-        public string message = "";
-
         private double StepValue = 1.0;
         public SettingView()
         {
@@ -45,7 +43,7 @@ namespace Antioch.View
             {
                 Device.BeginInvokeOnMainThread(() =>
                 {
-                    message = "접속중";
+                    messageLabel.Text = "접속중";
                     usernameEntry.Text = User.CacheData.UserName;
                     passwordEntry.Text = "****";
                     loginbutton.IsVisible = false;
@@ -62,7 +60,8 @@ namespace Antioch.View
             SQLLiteDB.Upsert(User.CacheData);
         }
 
-        async void Clicked(object sender, System.EventArgs e)
+
+        async void login_btn(object sender, System.EventArgs e)
         {
             User.Username = usernameEntry.Text;
             User.Password = passwordEntry.Text;

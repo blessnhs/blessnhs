@@ -37,12 +37,8 @@
                             <Entry x:Name="usernameEntry" Placeholder="username" />
                             <Label Text="비밀번호 숫자 4자리(7711)" />
                             <Entry x:Name="passwordEntry" IsPassword="true" />
-                            <Button  x:Name="loginbutton" Text="Login">
-                                <Button.GestureRecognizers>
-                                    <TapGestureRecognizer Tapped="Clicked"/>
-                                </Button.GestureRecognizers>
-                            </Button>
-                            <Label x:Name="messageLabel" Text="{Binding message}"/>
+                            <Button  x:Name="loginbutton" Text="Login" Clicked="login_btn"/>
+                            <Label x:Name="messageLabel"/>
                         </StackLayout>
                     </Frame>
 

@@ -188,6 +188,8 @@ VOID HubProcess::ROOM_PASSTHROUGH(LPVOID Data, DWORD Length, boost::shared_ptr<G
 	}
 
 	ROOM_PASS_THROUGH_RES res;
+	res.set_var_message_int(message.var_message_int());
+	res.set_var_message(message.var_message());
 
 	RoomPtr->SendToAll(res);
 	

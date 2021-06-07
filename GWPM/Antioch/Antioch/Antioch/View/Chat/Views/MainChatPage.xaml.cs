@@ -45,6 +45,11 @@ namespace Antioch
            
         }
 
+        public void ReceiveMessage(string text)
+        {
+            vm.AddMessage(text);
+        }
+
         void MyListView_OnItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
             MessagesListView.SelectedItem = null;
@@ -52,7 +57,7 @@ namespace Antioch
 
         void MyListView_OnItemTapped(object sender, ItemTappedEventArgs e)
         {
-            MessagesListView.SelectedItem = null;
+           MessagesListView.SelectedItem = null;
 
         }
     }

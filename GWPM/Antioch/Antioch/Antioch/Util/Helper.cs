@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Text;
 using Xamarin.Forms;
 
 namespace Antioch
@@ -13,25 +14,43 @@ namespace Antioch
             if (string.IsNullOrEmpty(inStr) == true)
                 return null;
 
-            byte[] btTemp = new byte[inStr.Length * sizeof(char)];
+            try
+            {
+
+                byte[] btTemp = new byte[inStr.Length * sizeof(char)];
 #if UNITY_IOS
         btTemp = _cp949.GetBytes(inStr);
 #else
-            btTemp = System.Text.Encoding.GetEncoding(949).GetBytes(inStr);
+                btTemp = System.Text.Encoding.GetEncoding(949).GetBytes(inStr);
 #endif
-            return btTemp;
+                return btTemp;
+            }
+            catch(Exception e)
+            {
+                byte[] bytes = Encoding.ASCII.GetBytes(inStr);
+                return bytes;
+            }
         }
 
         public static string ToStr(this byte[] inByte)
         {
             if (inByte == null || inByte.Length <= 0)
                 return "";
+
+            try
+            {
 #if UNITY_IOS
         string m_receive = _cp949.GetString(inByte);
 #else
-            string m_receive = System.Text.Encoding.GetEncoding(949).GetString(inByte);
+                string m_receive = System.Text.Encoding.GetEncoding(949).GetString(inByte);
 #endif
             return m_receive;
+
+            }
+            catch (Exception e)
+            {
+                return Encoding.ASCII.GetString(inByte);
+            }
         }
 
         static public void RemoveRowGrid(Grid grid, int pos = 0)
