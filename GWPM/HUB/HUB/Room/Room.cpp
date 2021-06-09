@@ -31,36 +31,16 @@ Room::~Room(void)
 
 bool Room::RemovePlayer(PLAYER_PTR Player)
 {
-	for each(auto iter in m_PlayerMap)
-	{
-		PlayerPtr pPlayer = iter.second;
-		if (pPlayer == NULL)
-			continue;
-
-		if (iter.second == Player)
-		{
-			m_PlayerMap[iter.first] = NULL;
-			return TRUE;
-		}
-	
-	}
+	m_PlayerMap[Player->GetId()] = NULL;
 
 	return FALSE;
 }
 
 bool Room::InsertPlayer(PLAYER_PTR Player)
 {
-	for(int i=0;i<m_Stock.MAX_PLAYER;i++)
-	{
-		if(m_PlayerMap.find(i) == m_PlayerMap.end())
-		{
-			m_PlayerMap[i] = Player;
-			Player->m_Char[0].SetRoom(GetId());
-			return true;
-		}
-	}
-
-	return false;
+	m_PlayerMap[Player->GetId()] = Player;
+	Player->m_Char[0].SetRoom(GetId());
+	return true;
 }
 
 void Room::SendNewUserInfo(PLAYER_PTR Player)

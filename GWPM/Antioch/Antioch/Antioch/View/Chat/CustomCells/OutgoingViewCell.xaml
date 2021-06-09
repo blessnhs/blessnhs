@@ -13,14 +13,15 @@
       <RowDefinition Height="Auto"></RowDefinition>
 
     </Grid.RowDefinitions>
-    <Image
+        <Label TextColor="Black" Grid.Row="0"   Grid.Column="2" Text="{Binding ProfileUrl}" HorizontalOptions="Center" VerticalOptions="Center"/>
+    <!--<Image
                       Grid.Row="0"
                       Grid.Column="2"
                       HeightRequest="35"
                       WidthRequest="35"
                       Aspect="AspectFill"
                       HorizontalOptions="Center"                     
-                      VerticalOptions="Center" Source="{Binding ProfileUrl}" ></Image>
+                      VerticalOptions="Center" Source="{Binding ProfileUrl}" ></Image>-->
     <Frame Grid.Row="0"  Grid.Column="1">
 		<Frame.HasShadow>
             <OnPlatform x:TypeArguments="x:Boolean" iOS="false" Android="true"/>

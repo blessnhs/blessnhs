@@ -169,7 +169,7 @@ namespace Antioch
 
                                     MainChatPage chatpage = mainpage.lobby.chatpage as MainChatPage;
 
-                                    chatpage.ReceiveMessage(Helper.ToStr(res.VarMessage.ToByteArray()));
+                                    chatpage.ReceiveMessage(Helper.ToStr(res.VarMessage.ToByteArray()), Helper.ToStr(res.VarName.ToByteArray()));
                                 });
                             }
                             break;
@@ -177,8 +177,11 @@ namespace Antioch
                             {
                                 var mainpage = (MainPage)Application.Current.MainPage;
 
-                                MainChatPage chatpage = mainpage.lobby.chatpage as MainChatPage;
-                                chatpage.Navigation.PopModalAsync();
+                                Device.BeginInvokeOnMainThread(() =>
+                                {
+                                    MainChatPage chatpage = mainpage.lobby.chatpage as MainChatPage;
+                                    chatpage.Navigation.PopModalAsync();
+                                });
                             }
                             break;
                     }

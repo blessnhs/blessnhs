@@ -303,10 +303,10 @@ namespace Hub	{
 
 			
 				// 로그인 절차 : 아이디의 접속확인 및 인증키값을 가져온다.
-				std::string authentickey, nickname;
+				std::string authentickey;
 				INT64 Index = 0;
 				int score = 0,level = 0;
-				WORD nRet = pProcess->ProcedureUserLogin(pRequst.id, pRequst.pwd, authentickey,score, Index, level, nickname);
+				WORD nRet = pProcess->ProcedureUserLogin(pRequst.id, pRequst.pwd, authentickey,score, Index, level);
 
 				//이미 접속해 있는 세션이 있고(디비에 접속기록이 남아 있다.)
 				if (nRet != _ERR_NONE)
@@ -348,15 +348,17 @@ namespace Hub	{
 					}
 
 			//		printf("2.Exist player client %d \n", Index);
-					res.set_var_code(LoginFailed);
-					SEND_PROTO_BUFFER(res, pSession)
-						return;
+			//		res.set_var_code(LoginFailed);
+			//		SEND_PROTO_BUFFER(res, pSession)
+			//			return;
 				}
 
 				PlayerPtr pNewPlayer = PLAYERMGR.Create();
 
 				pNewPlayer->Initialize();
-				pNewPlayer->m_Char[0].SetName(nickname);
+				pNewPlayer->m_Char[0].SetName(pRequst.id);
+				pNewPlayer->m_Account.SetName(pRequst.id);
+
 			
 				pNewPlayer->SetId(Index);
 				pNewPlayer->SetPair(pSession->GetId());
@@ -367,7 +369,7 @@ namespace Hub	{
 				res.set_var_code(Success);
 				res.set_var_index(Index);
 
-				res.set_var_name(nickname);
+				res.set_var_name(pRequst.id);
 
 				SEND_PROTO_BUFFER(res, pSession)
 

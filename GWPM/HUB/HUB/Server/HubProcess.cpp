@@ -132,6 +132,8 @@ VOID HubProcess::ROOM_CREATE(LPVOID Data, DWORD Length, boost::shared_ptr<GSClie
 
 	if (createroom.var_name().size() == 0)
 	{
+		res.set_var_code(SystemError);
+		SEND_PROTO_BUFFER(res, Client)
 		return;
 	}
 
@@ -190,7 +192,7 @@ VOID HubProcess::ROOM_PASSTHROUGH(LPVOID Data, DWORD Length, boost::shared_ptr<G
 	ROOM_PASS_THROUGH_RES res;
 	res.set_var_message_int(message.var_message_int());
 	res.set_var_message(message.var_message());
-
+	res.set_var_name(pPlayer->m_Char[0].GetName());
 	RoomPtr->SendToAll(res);
 	
 }
@@ -217,17 +219,17 @@ VOID HubProcess::ROOM_ENTER(LPVOID Data, DWORD Length, boost::shared_ptr<GSClien
 	{
 		res.set_var_code(SystemError);
 		SEND_PROTO_BUFFER(res, Client)
-			return;
+		return;
 	}
 
 
 	//이미 입장 해 있다면 
 	if (RoomPtr->FindPlayer(pPlayer) == TRUE)
 	{
+		res.set_var_code(SystemError);
+		SEND_PROTO_BUFFER(res, Client)
 		return;
 	}
-
-
 
 	RoomPtr->InsertPlayer(pPlayer);
 

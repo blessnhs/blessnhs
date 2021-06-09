@@ -152,17 +152,17 @@ int GSClientMgr::IncClientId()
 }
 
 
-GSCLIENT_PTR& GSClientMgr::GetClient(int id)
+GSCLIENT_PTR GSClientMgr::GetClient(int id)
 {
 	auto& find = m_Clients.find(id);
 	if (find == m_Clients.end())
-		return boost::make_shared<GSCLIENT>();
+		return NULL;
 
 	return m_Clients[id];
 
 }
 
-BOOL GSClientMgr::AddClient(GSCLIENT_PTR& newclient)
+BOOL GSClientMgr::AddClient(GSCLIENT_PTR newclient)
 {
 	CThreadSync sync;
 	

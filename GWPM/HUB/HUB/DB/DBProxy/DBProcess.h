@@ -16,7 +16,7 @@ public:
 	
 	BOOL Initalize();
 
-	int	 ProcedureUserLogin(const std::string id, const std::string pwd, std::string& szKey, int& Score, INT64& Index, int& Level, string& name);
+	int	 ProcedureUserLogin(const std::string id, const std::string pwd, std::string& szKey, int& Score, INT64& Index, int& Level);
 
 
 	int	 ProcedureUserLogout(const INT64 id);

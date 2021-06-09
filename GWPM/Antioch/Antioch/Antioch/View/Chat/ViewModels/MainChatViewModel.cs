@@ -33,15 +33,15 @@ namespace Antioch
         public ICommand ExitCommand { get; set; }
         public ICommand LocationCommand { get; set; }
 
-        public void AddMessage(string text)
+        public void AddMessage(string text,string name,bool isIncoming)
         {
             var message = new Message
             {
                 Text = text,
-                IsIncoming = false,
+                IsIncoming = isIncoming,
                 AttachementUrl = "",
                 MessageDateTime = DateTime.Now,
-                ProfileUrl = "https://lh4.googleusercontent.com/-MEdrkpWi6Yg/AAAAAAAAAAI/AAAAAAAAAAA/AMZuuckIeT9M_SOv920jGkFwWiOCWkZRJA/s96-c/photo.jpg"
+                ProfileUrl = name// "https://lh4.googleusercontent.com/-MEdrkpWi6Yg/AAAAAAAAAAI/AAAAAAAAAAA/AMZuuckIeT9M_SOv920jGkFwWiOCWkZRJA/s96-c/photo.jpg"
             };
 
 

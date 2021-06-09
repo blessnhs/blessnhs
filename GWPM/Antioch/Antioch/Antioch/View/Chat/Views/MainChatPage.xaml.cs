@@ -45,9 +45,12 @@ namespace Antioch
            
         }
 
-        public void ReceiveMessage(string text)
+        public void ReceiveMessage(string text, string name)
         {
-            vm.AddMessage(text);
+            if(name == User.CacheData.UserName)
+                vm.AddMessage(text,name,false);
+            else
+                vm.AddMessage(text,name,true);
         }
 
         void MyListView_OnItemSelected(object sender, SelectedItemChangedEventArgs e)

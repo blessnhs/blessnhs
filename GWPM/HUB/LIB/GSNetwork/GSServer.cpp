@@ -98,6 +98,7 @@ VOID GSServer::OnWrote(int client_id, DWORD dataLength)
 	boost::shared_ptr<GSClient> pClient = GetClient(client_id);
 	if (pClient == NULL)
 	{
+		SYSLOG().Write("!!!alert cant find onconnect client id\n");
 		return;
 	}
 

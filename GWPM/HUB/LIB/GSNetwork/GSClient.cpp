@@ -333,19 +333,17 @@ VOID GSClient::ProcDisconnect(boost::shared_ptr<GSClient> pClient,bool isForce)
 	//
 	//소켓을 close 시켜서 OnDisconnect가 떨어져도 player객체가 남아 있는 경우는 
 	//소켓을 종료 체크하는 alive 체크 함수 쓰레드와 ProcDisconnect쓰레드가 다른 경우 
-	//소켓 멤버를 clear()한 다음 유저 객체 초기화가 화출되어 유저를 못찾았을 가능성이 크다.
+	//소켓 멤버를 clear()한 다음 유저 객체 초기화가되어 유저를 못찾았을 가능성이 크다.
 
 	DisConnectCount.fetch_add(1);
 
 
 	//컨텐츠 종료 처리
-
-	//로직 스레드가 아니라 바로 db tp로 던진다.
-	//google auth에서 딜레이가 걸려서 아래 종료 처리 함수가 먼저 실행되면( concurrent 삭제 및 playermgr 제거 ,roommgr 제거)
-	//concurrent 함수에서 데이터를 지울수가 없다.
-	//그래서 closejob 실행되고 login 함수가 실행되면 순서가 엇갈려 유저가 남게 된다.
-	//그러나 완벽하지 않다 logic -> dbthread 2단계이기 때문
+	
+	//쉽게 말해서 iocp work -> logic -> db thread
+    // db thread에서 실행중일때  iocp work에서 disconnect가 먼저 떨어지면  그때는 유저가 없기 때문에 그냥 종료 처리 그 후에 db login처리가 되어 user가 미아가 됨
 	//고민하다가 그냥 logic tp로 던지고 유저 체크 함수를 만듬 (alive check usermgr)
+
 
 	PROC_REG_CLOSE_JOB(pClient,pServer)
 

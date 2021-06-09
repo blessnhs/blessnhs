@@ -70,7 +70,8 @@ namespace Antioch
                     NetProcess.SendMakeRoom(User.CacheData.UserName + "+" + action);
                     break;
                 default:
-                    NetProcess.SendMakeRoom(User.CacheData.UserName + "+" + "일반");
+                    if(action != "Cancel")
+                        NetProcess.SendMakeRoom(User.CacheData.UserName + "+" + "일반");
                     break;
             }
         }

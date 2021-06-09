@@ -66,7 +66,7 @@ int  CDBProcessCer::DeleteAllConcurrentUser()
 	return m_DB->DeleteAllConcurrentUser();
 }
 
-int		CDBProcessCer::ProcedureUserLogin(const std::string id, const std::string pwd, std::string& szKey,int& Score, INT64& Index, int& Level,string& name)
+int		CDBProcessCer::ProcedureUserLogin(const std::string id, const std::string pwd, std::string& szKey,int& Score, INT64& Index, int& Level)
 {
-	return m_DB->ProcedureUserLogin(id, pwd, szKey, Score, Index, Level, name);
+	return m_DB->ProcedureUserLogin(id, pwd, szKey, Score, Index, Level);
 }
