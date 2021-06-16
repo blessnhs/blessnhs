@@ -32,3 +32,9 @@ message Rank
 	optional bytes var_contry = 9 ;
 }
 
+
+message PrayInfo
+{
+	optional bytes var_name = 1 ;
+	optional bytes var_message = 2 ;
+}

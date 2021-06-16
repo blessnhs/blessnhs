@@ -30,13 +30,15 @@ public static partial class StructureReflection {
           "KAUSEAoIdmFyX25hbWUYAiABKAwSEQoJdmFyX2xldmVsGAMgASgFEhMKC3Zh",
           "cl9waWNfdXJpGAQgASgMEhEKCXZhcl9pbmRleBgFIAEoAxIPCgd2YXJfd2lu",
           "GAYgASgFEhAKCHZhcl9sb3NlGAcgASgFEhAKCHZhcl9kcmF3GAggASgFEhIK",
-          "CnZhcl9jb250cnkYCSABKAxCAkgB"));
+          "CnZhcl9jb250cnkYCSABKAwiMQoIUHJheUluZm8SEAoIdmFyX25hbWUYASAB",
+          "KAwSEwoLdmFyX21lc3NhZ2UYAiABKAxCAkgB"));
     descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
         new pbr::FileDescriptor[] { global::EnumReflection.Descriptor, },
         new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
           new pbr::GeneratedClrTypeInfo(typeof(global::RoomUserInfo), global::RoomUserInfo.Parser, new[]{ "VarName", "VarIndex", "PictureUri" }, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::RoomInfo2), global::RoomInfo2.Parser, new[]{ "VarId", "VarName", "VarCurrentCount", "VarMaxCount" }, null, null, null, null),
-          new pbr::GeneratedClrTypeInfo(typeof(global::Rank), global::Rank.Parser, new[]{ "VarRank", "VarName", "VarLevel", "VarPicUri", "VarIndex", "VarWin", "VarLose", "VarDraw", "VarContry" }, null, null, null, null)
+          new pbr::GeneratedClrTypeInfo(typeof(global::Rank), global::Rank.Parser, new[]{ "VarRank", "VarName", "VarLevel", "VarPicUri", "VarIndex", "VarWin", "VarLose", "VarDraw", "VarContry" }, null, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::PrayInfo), global::PrayInfo.Parser, new[]{ "VarName", "VarMessage" }, null, null, null, null)
         }));
   }
   #endregion
@@ -994,6 +996,187 @@ public sealed partial class Rank : pb::IMessage<Rank> {
         }
         case 74: {
           VarContry = input.ReadBytes();
+          break;
+        }
+      }
+    }
+  }
+
+}
+
+public sealed partial class PrayInfo : pb::IMessage<PrayInfo> {
+  private static readonly pb::MessageParser<PrayInfo> _parser = new pb::MessageParser<PrayInfo>(() => new PrayInfo());
+  private pb::UnknownFieldSet _unknownFields;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public static pb::MessageParser<PrayInfo> Parser { get { return _parser; } }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public static pbr::MessageDescriptor Descriptor {
+    get { return global::StructureReflection.Descriptor.MessageTypes[3]; }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  pbr::MessageDescriptor pb::IMessage.Descriptor {
+    get { return Descriptor; }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public PrayInfo() {
+    OnConstruction();
+  }
+
+  partial void OnConstruction();
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public PrayInfo(PrayInfo other) : this() {
+    varName_ = other.varName_;
+    varMessage_ = other.varMessage_;
+    _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public PrayInfo Clone() {
+    return new PrayInfo(this);
+  }
+
+  /// <summary>Field number for the "var_name" field.</summary>
+  public const int VarNameFieldNumber = 1;
+  private readonly static pb::ByteString VarNameDefaultValue = pb::ByteString.Empty;
+
+  private pb::ByteString varName_;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public pb::ByteString VarName {
+    get { return varName_ ?? VarNameDefaultValue; }
+    set {
+      varName_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+    }
+  }
+  /// <summary>Gets whether the "var_name" field is set</summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public bool HasVarName {
+    get { return varName_ != null; }
+  }
+  /// <summary>Clears the value of the "var_name" field</summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void ClearVarName() {
+    varName_ = null;
+  }
+
+  /// <summary>Field number for the "var_message" field.</summary>
+  public const int VarMessageFieldNumber = 2;
+  private readonly static pb::ByteString VarMessageDefaultValue = pb::ByteString.Empty;
+
+  private pb::ByteString varMessage_;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public pb::ByteString VarMessage {
+    get { return varMessage_ ?? VarMessageDefaultValue; }
+    set {
+      varMessage_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+    }
+  }
+  /// <summary>Gets whether the "var_message" field is set</summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public bool HasVarMessage {
+    get { return varMessage_ != null; }
+  }
+  /// <summary>Clears the value of the "var_message" field</summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void ClearVarMessage() {
+    varMessage_ = null;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public override bool Equals(object other) {
+    return Equals(other as PrayInfo);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public bool Equals(PrayInfo other) {
+    if (ReferenceEquals(other, null)) {
+      return false;
+    }
+    if (ReferenceEquals(other, this)) {
+      return true;
+    }
+    if (VarName != other.VarName) return false;
+    if (VarMessage != other.VarMessage) return false;
+    return Equals(_unknownFields, other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public override int GetHashCode() {
+    int hash = 1;
+    if (HasVarName) hash ^= VarName.GetHashCode();
+    if (HasVarMessage) hash ^= VarMessage.GetHashCode();
+    if (_unknownFields != null) {
+      hash ^= _unknownFields.GetHashCode();
+    }
+    return hash;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public override string ToString() {
+    return pb::JsonFormatter.ToDiagnosticString(this);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void WriteTo(pb::CodedOutputStream output) {
+    if (HasVarName) {
+      output.WriteRawTag(10);
+      output.WriteBytes(VarName);
+    }
+    if (HasVarMessage) {
+      output.WriteRawTag(18);
+      output.WriteBytes(VarMessage);
+    }
+    if (_unknownFields != null) {
+      _unknownFields.WriteTo(output);
+    }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public int CalculateSize() {
+    int size = 0;
+    if (HasVarName) {
+      size += 1 + pb::CodedOutputStream.ComputeBytesSize(VarName);
+    }
+    if (HasVarMessage) {
+      size += 1 + pb::CodedOutputStream.ComputeBytesSize(VarMessage);
+    }
+    if (_unknownFields != null) {
+      size += _unknownFields.CalculateSize();
+    }
+    return size;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void MergeFrom(PrayInfo other) {
+    if (other == null) {
+      return;
+    }
+    if (other.HasVarName) {
+      VarName = other.VarName;
+    }
+    if (other.HasVarMessage) {
+      VarMessage = other.VarMessage;
+    }
+    _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void MergeFrom(pb::CodedInputStream input) {
+    uint tag;
+    while ((tag = input.ReadTag()) != 0) {
+      switch(tag) {
+        default:
+          _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+          break;
+        case 10: {
+          VarName = input.ReadBytes();
+          break;
+        }
+        case 18: {
+          VarMessage = input.ReadBytes();
           break;
         }
       }

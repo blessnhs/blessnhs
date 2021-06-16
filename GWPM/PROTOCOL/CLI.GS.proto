@@ -14,8 +14,8 @@ message LOGIN_REQ
 {
     optional PROTOCOL   id                  = 1 [default = ID_PKT_LOGIN_REQ ];
 
-    required string  var_uid                = 2;
-    required string  var_token              = 3;
+    required string  var_id                = 2;
+    required string  var_pwd              = 3;
    
 }
 
@@ -67,4 +67,15 @@ message AUDIO_MESSAGE_REQ
 {
     optional PROTOCOL   id                  = 1 [default = ID_PKT_AUDIO_MESSAGE_REQ ];
     repeated bytes     var_message         = 2;
+}
+
+message PRAY_MESSAGE_REQ
+{
+    optional PROTOCOL   id                  = 1 [default = ID_PKT_PRAY_MESSAGE_REQ ];
+}
+
+message PRAY_MESSAGE_REG_REQ
+{
+    optional PROTOCOL   id                  = 1 [default = ID_PKT_PRAY_MESSAGE_REG_REQ ];
+    optional bytes     var_message         = 2;
 }

@@ -48,13 +48,16 @@ struct TableStruct_Structure_2eproto {
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::PROTOBUF_NAMESPACE_ID::internal::AuxillaryParseTableField aux[]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
-  static const ::PROTOBUF_NAMESPACE_ID::internal::ParseTable schema[3]
+  static const ::PROTOBUF_NAMESPACE_ID::internal::ParseTable schema[4]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::PROTOBUF_NAMESPACE_ID::internal::FieldMetadata field_metadata[];
   static const ::PROTOBUF_NAMESPACE_ID::internal::SerializationTable serialization_table[];
   static const ::PROTOBUF_NAMESPACE_ID::uint32 offsets[];
 };
 extern const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_Structure_2eproto;
+class PrayInfo;
+class PrayInfoDefaultTypeInternal;
+extern PrayInfoDefaultTypeInternal _PrayInfo_default_instance_;
 class Rank;
 class RankDefaultTypeInternal;
 extern RankDefaultTypeInternal _Rank_default_instance_;
@@ -65,6 +68,7 @@ class RoomUserInfo;
 class RoomUserInfoDefaultTypeInternal;
 extern RoomUserInfoDefaultTypeInternal _RoomUserInfo_default_instance_;
 PROTOBUF_NAMESPACE_OPEN
+template<> ::PrayInfo* Arena::CreateMaybeMessage<::PrayInfo>(Arena*);
 template<> ::Rank* Arena::CreateMaybeMessage<::Rank>(Arena*);
 template<> ::RoomInfo2* Arena::CreateMaybeMessage<::RoomInfo2>(Arena*);
 template<> ::RoomUserInfo* Arena::CreateMaybeMessage<::RoomUserInfo>(Arena*);
@@ -725,6 +729,175 @@ class Rank :
   ::PROTOBUF_NAMESPACE_ID::int32 var_win_;
   ::PROTOBUF_NAMESPACE_ID::int32 var_lose_;
   ::PROTOBUF_NAMESPACE_ID::int32 var_draw_;
+  friend struct ::TableStruct_Structure_2eproto;
+};
+// -------------------------------------------------------------------
+
+class PrayInfo :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:PrayInfo) */ {
+ public:
+  PrayInfo();
+  virtual ~PrayInfo();
+
+  PrayInfo(const PrayInfo& from);
+  PrayInfo(PrayInfo&& from) noexcept
+    : PrayInfo() {
+    *this = ::std::move(from);
+  }
+
+  inline PrayInfo& operator=(const PrayInfo& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline PrayInfo& operator=(PrayInfo&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  inline const ::PROTOBUF_NAMESPACE_ID::UnknownFieldSet& unknown_fields() const {
+    return _internal_metadata_.unknown_fields();
+  }
+  inline ::PROTOBUF_NAMESPACE_ID::UnknownFieldSet* mutable_unknown_fields() {
+    return _internal_metadata_.mutable_unknown_fields();
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return GetMetadataStatic().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return GetMetadataStatic().reflection;
+  }
+  static const PrayInfo& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const PrayInfo* internal_default_instance() {
+    return reinterpret_cast<const PrayInfo*>(
+               &_PrayInfo_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    3;
+
+  friend void swap(PrayInfo& a, PrayInfo& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(PrayInfo* other) {
+    if (other == this) return;
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline PrayInfo* New() const final {
+    return CreateMaybeMessage<PrayInfo>(nullptr);
+  }
+
+  PrayInfo* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
+    return CreateMaybeMessage<PrayInfo>(arena);
+  }
+  void CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void CopyFrom(const PrayInfo& from);
+  void MergeFrom(const PrayInfo& from);
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  ::PROTOBUF_NAMESPACE_ID::uint8* _InternalSerialize(
+      ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  inline void SharedCtor();
+  inline void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(PrayInfo* other);
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "PrayInfo";
+  }
+  private:
+  inline ::PROTOBUF_NAMESPACE_ID::Arena* GetArenaNoVirtual() const {
+    return nullptr;
+  }
+  inline void* MaybeArenaPtr() const {
+    return nullptr;
+  }
+  public:
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+  private:
+  static ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadataStatic() {
+    ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&::descriptor_table_Structure_2eproto);
+    return ::descriptor_table_Structure_2eproto.file_level_metadata[kIndexInFileMessages];
+  }
+
+  public:
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kVarNameFieldNumber = 1,
+    kVarMessageFieldNumber = 2,
+  };
+  // optional bytes var_name = 1;
+  bool has_var_name() const;
+  private:
+  bool _internal_has_var_name() const;
+  public:
+  void clear_var_name();
+  const std::string& var_name() const;
+  void set_var_name(const std::string& value);
+  void set_var_name(std::string&& value);
+  void set_var_name(const char* value);
+  void set_var_name(const void* value, size_t size);
+  std::string* mutable_var_name();
+  std::string* release_var_name();
+  void set_allocated_var_name(std::string* var_name);
+  private:
+  const std::string& _internal_var_name() const;
+  void _internal_set_var_name(const std::string& value);
+  std::string* _internal_mutable_var_name();
+  public:
+
+  // optional bytes var_message = 2;
+  bool has_var_message() const;
+  private:
+  bool _internal_has_var_message() const;
+  public:
+  void clear_var_message();
+  const std::string& var_message() const;
+  void set_var_message(const std::string& value);
+  void set_var_message(std::string&& value);
+  void set_var_message(const char* value);
+  void set_var_message(const void* value, size_t size);
+  std::string* mutable_var_message();
+  std::string* release_var_message();
+  void set_allocated_var_message(std::string* var_message);
+  private:
+  const std::string& _internal_var_message() const;
+  void _internal_set_var_message(const std::string& value);
+  std::string* _internal_mutable_var_message();
+  public:
+
+  // @@protoc_insertion_point(class_scope:PrayInfo)
+ private:
+  class _Internal;
+
+  ::PROTOBUF_NAMESPACE_ID::internal::InternalMetadataWithArena _internal_metadata_;
+  ::PROTOBUF_NAMESPACE_ID::internal::HasBits<1> _has_bits_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr var_name_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr var_message_;
   friend struct ::TableStruct_Structure_2eproto;
 };
 // ===================================================================
@@ -1452,9 +1625,157 @@ inline void Rank::set_allocated_var_contry(std::string* var_contry) {
   // @@protoc_insertion_point(field_set_allocated:Rank.var_contry)
 }
 
+// -------------------------------------------------------------------
+
+// PrayInfo
+
+// optional bytes var_name = 1;
+inline bool PrayInfo::_internal_has_var_name() const {
+  bool value = (_has_bits_[0] & 0x00000001u) != 0;
+  return value;
+}
+inline bool PrayInfo::has_var_name() const {
+  return _internal_has_var_name();
+}
+inline void PrayInfo::clear_var_name() {
+  var_name_.ClearToEmptyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline const std::string& PrayInfo::var_name() const {
+  // @@protoc_insertion_point(field_get:PrayInfo.var_name)
+  return _internal_var_name();
+}
+inline void PrayInfo::set_var_name(const std::string& value) {
+  _internal_set_var_name(value);
+  // @@protoc_insertion_point(field_set:PrayInfo.var_name)
+}
+inline std::string* PrayInfo::mutable_var_name() {
+  // @@protoc_insertion_point(field_mutable:PrayInfo.var_name)
+  return _internal_mutable_var_name();
+}
+inline const std::string& PrayInfo::_internal_var_name() const {
+  return var_name_.GetNoArena();
+}
+inline void PrayInfo::_internal_set_var_name(const std::string& value) {
+  _has_bits_[0] |= 0x00000001u;
+  var_name_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), value);
+}
+inline void PrayInfo::set_var_name(std::string&& value) {
+  _has_bits_[0] |= 0x00000001u;
+  var_name_.SetNoArena(
+    &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:PrayInfo.var_name)
+}
+inline void PrayInfo::set_var_name(const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  _has_bits_[0] |= 0x00000001u;
+  var_name_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:PrayInfo.var_name)
+}
+inline void PrayInfo::set_var_name(const void* value, size_t size) {
+  _has_bits_[0] |= 0x00000001u;
+  var_name_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:PrayInfo.var_name)
+}
+inline std::string* PrayInfo::_internal_mutable_var_name() {
+  _has_bits_[0] |= 0x00000001u;
+  return var_name_.MutableNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline std::string* PrayInfo::release_var_name() {
+  // @@protoc_insertion_point(field_release:PrayInfo.var_name)
+  if (!_internal_has_var_name()) {
+    return nullptr;
+  }
+  _has_bits_[0] &= ~0x00000001u;
+  return var_name_.ReleaseNonDefaultNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline void PrayInfo::set_allocated_var_name(std::string* var_name) {
+  if (var_name != nullptr) {
+    _has_bits_[0] |= 0x00000001u;
+  } else {
+    _has_bits_[0] &= ~0x00000001u;
+  }
+  var_name_.SetAllocatedNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), var_name);
+  // @@protoc_insertion_point(field_set_allocated:PrayInfo.var_name)
+}
+
+// optional bytes var_message = 2;
+inline bool PrayInfo::_internal_has_var_message() const {
+  bool value = (_has_bits_[0] & 0x00000002u) != 0;
+  return value;
+}
+inline bool PrayInfo::has_var_message() const {
+  return _internal_has_var_message();
+}
+inline void PrayInfo::clear_var_message() {
+  var_message_.ClearToEmptyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline const std::string& PrayInfo::var_message() const {
+  // @@protoc_insertion_point(field_get:PrayInfo.var_message)
+  return _internal_var_message();
+}
+inline void PrayInfo::set_var_message(const std::string& value) {
+  _internal_set_var_message(value);
+  // @@protoc_insertion_point(field_set:PrayInfo.var_message)
+}
+inline std::string* PrayInfo::mutable_var_message() {
+  // @@protoc_insertion_point(field_mutable:PrayInfo.var_message)
+  return _internal_mutable_var_message();
+}
+inline const std::string& PrayInfo::_internal_var_message() const {
+  return var_message_.GetNoArena();
+}
+inline void PrayInfo::_internal_set_var_message(const std::string& value) {
+  _has_bits_[0] |= 0x00000002u;
+  var_message_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), value);
+}
+inline void PrayInfo::set_var_message(std::string&& value) {
+  _has_bits_[0] |= 0x00000002u;
+  var_message_.SetNoArena(
+    &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:PrayInfo.var_message)
+}
+inline void PrayInfo::set_var_message(const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  _has_bits_[0] |= 0x00000002u;
+  var_message_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:PrayInfo.var_message)
+}
+inline void PrayInfo::set_var_message(const void* value, size_t size) {
+  _has_bits_[0] |= 0x00000002u;
+  var_message_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:PrayInfo.var_message)
+}
+inline std::string* PrayInfo::_internal_mutable_var_message() {
+  _has_bits_[0] |= 0x00000002u;
+  return var_message_.MutableNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline std::string* PrayInfo::release_var_message() {
+  // @@protoc_insertion_point(field_release:PrayInfo.var_message)
+  if (!_internal_has_var_message()) {
+    return nullptr;
+  }
+  _has_bits_[0] &= ~0x00000002u;
+  return var_message_.ReleaseNonDefaultNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline void PrayInfo::set_allocated_var_message(std::string* var_message) {
+  if (var_message != nullptr) {
+    _has_bits_[0] |= 0x00000002u;
+  } else {
+    _has_bits_[0] &= ~0x00000002u;
+  }
+  var_message_.SetAllocatedNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), var_message);
+  // @@protoc_insertion_point(field_set_allocated:PrayInfo.var_message)
+}
+
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

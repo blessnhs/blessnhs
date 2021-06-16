@@ -26,6 +26,24 @@ class RankDefaultTypeInternal {
  public:
   ::PROTOBUF_NAMESPACE_ID::internal::ExplicitlyConstructed<Rank> _instance;
 } _Rank_default_instance_;
+class PrayInfoDefaultTypeInternal {
+ public:
+  ::PROTOBUF_NAMESPACE_ID::internal::ExplicitlyConstructed<PrayInfo> _instance;
+} _PrayInfo_default_instance_;
+static void InitDefaultsscc_info_PrayInfo_Structure_2eproto() {
+  GOOGLE_PROTOBUF_VERIFY_VERSION;
+
+  {
+    void* ptr = &::_PrayInfo_default_instance_;
+    new (ptr) ::PrayInfo();
+    ::PROTOBUF_NAMESPACE_ID::internal::OnShutdownDestroyMessage(ptr);
+  }
+  ::PrayInfo::InitAsDefaultInstance();
+}
+
+::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_PrayInfo_Structure_2eproto =
+    {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 0, 0, InitDefaultsscc_info_PrayInfo_Structure_2eproto}, {}};
+
 static void InitDefaultsscc_info_Rank_Structure_2eproto() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
@@ -68,7 +86,7 @@ static void InitDefaultsscc_info_RoomUserInfo_Structure_2eproto() {
 ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_RoomUserInfo_Structure_2eproto =
     {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 0, 0, InitDefaultsscc_info_RoomUserInfo_Structure_2eproto}, {}};
 
-static ::PROTOBUF_NAMESPACE_ID::Metadata file_level_metadata_Structure_2eproto[3];
+static ::PROTOBUF_NAMESPACE_ID::Metadata file_level_metadata_Structure_2eproto[4];
 static constexpr ::PROTOBUF_NAMESPACE_ID::EnumDescriptor const** file_level_enum_descriptors_Structure_2eproto = nullptr;
 static constexpr ::PROTOBUF_NAMESPACE_ID::ServiceDescriptor const** file_level_service_descriptors_Structure_2eproto = nullptr;
 
@@ -120,17 +138,28 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_Structure_2eproto::offsets[] P
   7,
   8,
   2,
+  PROTOBUF_FIELD_OFFSET(::PrayInfo, _has_bits_),
+  PROTOBUF_FIELD_OFFSET(::PrayInfo, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  PROTOBUF_FIELD_OFFSET(::PrayInfo, var_name_),
+  PROTOBUF_FIELD_OFFSET(::PrayInfo, var_message_),
+  0,
+  1,
 };
 static const ::PROTOBUF_NAMESPACE_ID::internal::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
   { 0, 8, sizeof(::RoomUserInfo)},
   { 11, 20, sizeof(::RoomInfo2)},
   { 24, 38, sizeof(::Rank)},
+  { 47, 54, sizeof(::PrayInfo)},
 };
 
 static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] = {
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::_RoomUserInfo_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::_RoomInfo2_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::_Rank_default_instance_),
+  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::_PrayInfo_default_instance_),
 };
 
 const char descriptor_table_protodef_Structure_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
@@ -143,12 +172,14 @@ const char descriptor_table_protodef_Structure_2eproto[] PROTOBUF_SECTION_VARIAB
   "\002 \001(\014\022\021\n\tvar_level\030\003 \001(\005\022\023\n\013var_pic_uri\030"
   "\004 \001(\014\022\021\n\tvar_index\030\005 \001(\003\022\017\n\007var_win\030\006 \001("
   "\005\022\020\n\010var_lose\030\007 \001(\005\022\020\n\010var_draw\030\010 \001(\005\022\022\n"
-  "\nvar_contry\030\t \001(\014B\002H\001"
+  "\nvar_contry\030\t \001(\014\"1\n\010PrayInfo\022\020\n\010var_nam"
+  "e\030\001 \001(\014\022\023\n\013var_message\030\002 \001(\014B\002H\001"
   ;
 static const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable*const descriptor_table_Structure_2eproto_deps[1] = {
   &::descriptor_table_Enum_2eproto,
 };
-static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_Structure_2eproto_sccs[3] = {
+static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_Structure_2eproto_sccs[4] = {
+  &scc_info_PrayInfo_Structure_2eproto.base,
   &scc_info_Rank_Structure_2eproto.base,
   &scc_info_RoomInfo2_Structure_2eproto.base,
   &scc_info_RoomUserInfo_Structure_2eproto.base,
@@ -156,10 +187,10 @@ static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_Str
 static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_Structure_2eproto_once;
 static bool descriptor_table_Structure_2eproto_initialized = false;
 const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_Structure_2eproto = {
-  &descriptor_table_Structure_2eproto_initialized, descriptor_table_protodef_Structure_2eproto, "Structure.proto", 381,
-  &descriptor_table_Structure_2eproto_once, descriptor_table_Structure_2eproto_sccs, descriptor_table_Structure_2eproto_deps, 3, 1,
+  &descriptor_table_Structure_2eproto_initialized, descriptor_table_protodef_Structure_2eproto, "Structure.proto", 432,
+  &descriptor_table_Structure_2eproto_once, descriptor_table_Structure_2eproto_sccs, descriptor_table_Structure_2eproto_deps, 4, 1,
   schemas, file_default_instances, TableStruct_Structure_2eproto::offsets,
-  file_level_metadata_Structure_2eproto, 3, file_level_enum_descriptors_Structure_2eproto, file_level_service_descriptors_Structure_2eproto,
+  file_level_metadata_Structure_2eproto, 4, file_level_enum_descriptors_Structure_2eproto, file_level_service_descriptors_Structure_2eproto,
 };
 
 // Force running AddDescriptors() at dynamic initialization time.
@@ -1234,6 +1265,260 @@ void Rank::InternalSwap(Rank* other) {
 }
 
 
+// ===================================================================
+
+void PrayInfo::InitAsDefaultInstance() {
+}
+class PrayInfo::_Internal {
+ public:
+  using HasBits = decltype(std::declval<PrayInfo>()._has_bits_);
+  static void set_has_var_name(HasBits* has_bits) {
+    (*has_bits)[0] |= 1u;
+  }
+  static void set_has_var_message(HasBits* has_bits) {
+    (*has_bits)[0] |= 2u;
+  }
+};
+
+PrayInfo::PrayInfo()
+  : ::PROTOBUF_NAMESPACE_ID::Message(), _internal_metadata_(nullptr) {
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:PrayInfo)
+}
+PrayInfo::PrayInfo(const PrayInfo& from)
+  : ::PROTOBUF_NAMESPACE_ID::Message(),
+      _internal_metadata_(nullptr),
+      _has_bits_(from._has_bits_) {
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  var_name_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  if (from._internal_has_var_name()) {
+    var_name_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.var_name_);
+  }
+  var_message_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  if (from._internal_has_var_message()) {
+    var_message_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.var_message_);
+  }
+  // @@protoc_insertion_point(copy_constructor:PrayInfo)
+}
+
+void PrayInfo::SharedCtor() {
+  ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&scc_info_PrayInfo_Structure_2eproto.base);
+  var_name_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  var_message_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+
+PrayInfo::~PrayInfo() {
+  // @@protoc_insertion_point(destructor:PrayInfo)
+  SharedDtor();
+}
+
+void PrayInfo::SharedDtor() {
+  var_name_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  var_message_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+
+void PrayInfo::SetCachedSize(int size) const {
+  _cached_size_.Set(size);
+}
+const PrayInfo& PrayInfo::default_instance() {
+  ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&::scc_info_PrayInfo_Structure_2eproto.base);
+  return *internal_default_instance();
+}
+
+
+void PrayInfo::Clear() {
+// @@protoc_insertion_point(message_clear_start:PrayInfo)
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  cached_has_bits = _has_bits_[0];
+  if (cached_has_bits & 0x00000003u) {
+    if (cached_has_bits & 0x00000001u) {
+      var_name_.ClearNonDefaultToEmptyNoArena();
+    }
+    if (cached_has_bits & 0x00000002u) {
+      var_message_.ClearNonDefaultToEmptyNoArena();
+    }
+  }
+  _has_bits_.Clear();
+  _internal_metadata_.Clear();
+}
+
+const char* PrayInfo::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
+#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  _Internal::HasBits has_bits{};
+  while (!ctx->Done(&ptr)) {
+    ::PROTOBUF_NAMESPACE_ID::uint32 tag;
+    ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
+    CHK_(ptr);
+    switch (tag >> 3) {
+      // optional bytes var_name = 1;
+      case 1:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 10)) {
+          auto str = _internal_mutable_var_name();
+          ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // optional bytes var_message = 2;
+      case 2:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 18)) {
+          auto str = _internal_mutable_var_message();
+          ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      default: {
+      handle_unusual:
+        if ((tag & 7) == 4 || tag == 0) {
+          ctx->SetLastTag(tag);
+          goto success;
+        }
+        ptr = UnknownFieldParse(tag, &_internal_metadata_, ptr, ctx);
+        CHK_(ptr != nullptr);
+        continue;
+      }
+    }  // switch
+  }  // while
+success:
+  _has_bits_.Or(has_bits);
+  return ptr;
+failure:
+  ptr = nullptr;
+  goto success;
+#undef CHK_
+}
+
+::PROTOBUF_NAMESPACE_ID::uint8* PrayInfo::_InternalSerialize(
+    ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:PrayInfo)
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  cached_has_bits = _has_bits_[0];
+  // optional bytes var_name = 1;
+  if (cached_has_bits & 0x00000001u) {
+    target = stream->WriteBytesMaybeAliased(
+        1, this->_internal_var_name(), target);
+  }
+
+  // optional bytes var_message = 2;
+  if (cached_has_bits & 0x00000002u) {
+    target = stream->WriteBytesMaybeAliased(
+        2, this->_internal_var_message(), target);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields(), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:PrayInfo)
+  return target;
+}
+
+size_t PrayInfo::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:PrayInfo)
+  size_t total_size = 0;
+
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  cached_has_bits = _has_bits_[0];
+  if (cached_has_bits & 0x00000003u) {
+    // optional bytes var_name = 1;
+    if (cached_has_bits & 0x00000001u) {
+      total_size += 1 +
+        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::BytesSize(
+          this->_internal_var_name());
+    }
+
+    // optional bytes var_message = 2;
+    if (cached_has_bits & 0x00000002u) {
+      total_size += 1 +
+        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::BytesSize(
+          this->_internal_var_message());
+    }
+
+  }
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    return ::PROTOBUF_NAMESPACE_ID::internal::ComputeUnknownFieldsSize(
+        _internal_metadata_, total_size, &_cached_size_);
+  }
+  int cached_size = ::PROTOBUF_NAMESPACE_ID::internal::ToCachedSize(total_size);
+  SetCachedSize(cached_size);
+  return total_size;
+}
+
+void PrayInfo::MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:PrayInfo)
+  GOOGLE_DCHECK_NE(&from, this);
+  const PrayInfo* source =
+      ::PROTOBUF_NAMESPACE_ID::DynamicCastToGenerated<PrayInfo>(
+          &from);
+  if (source == nullptr) {
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:PrayInfo)
+    ::PROTOBUF_NAMESPACE_ID::internal::ReflectionOps::Merge(from, this);
+  } else {
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:PrayInfo)
+    MergeFrom(*source);
+  }
+}
+
+void PrayInfo::MergeFrom(const PrayInfo& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:PrayInfo)
+  GOOGLE_DCHECK_NE(&from, this);
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  cached_has_bits = from._has_bits_[0];
+  if (cached_has_bits & 0x00000003u) {
+    if (cached_has_bits & 0x00000001u) {
+      _has_bits_[0] |= 0x00000001u;
+      var_name_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.var_name_);
+    }
+    if (cached_has_bits & 0x00000002u) {
+      _has_bits_[0] |= 0x00000002u;
+      var_message_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.var_message_);
+    }
+  }
+}
+
+void PrayInfo::CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:PrayInfo)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void PrayInfo::CopyFrom(const PrayInfo& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:PrayInfo)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool PrayInfo::IsInitialized() const {
+  return true;
+}
+
+void PrayInfo::InternalSwap(PrayInfo* other) {
+  using std::swap;
+  _internal_metadata_.Swap(&other->_internal_metadata_);
+  swap(_has_bits_[0], other->_has_bits_[0]);
+  var_name_.Swap(&other->var_name_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+    GetArenaNoVirtual());
+  var_message_.Swap(&other->var_message_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+    GetArenaNoVirtual());
+}
+
+::PROTOBUF_NAMESPACE_ID::Metadata PrayInfo::GetMetadata() const {
+  return GetMetadataStatic();
+}
+
+
 // @@protoc_insertion_point(namespace_scope)
 PROTOBUF_NAMESPACE_OPEN
 template<> PROTOBUF_NOINLINE ::RoomUserInfo* Arena::CreateMaybeMessage< ::RoomUserInfo >(Arena* arena) {
@@ -1244,6 +1529,9 @@ template<> PROTOBUF_NOINLINE ::RoomInfo2* Arena::CreateMaybeMessage< ::RoomInfo2
 }
 template<> PROTOBUF_NOINLINE ::Rank* Arena::CreateMaybeMessage< ::Rank >(Arena* arena) {
   return Arena::CreateInternal< ::Rank >(arena);
+}
+template<> PROTOBUF_NOINLINE ::PrayInfo* Arena::CreateMaybeMessage< ::PrayInfo >(Arena* arena) {
+  return Arena::CreateInternal< ::PrayInfo >(arena);
 }
 PROTOBUF_NAMESPACE_CLOSE
 

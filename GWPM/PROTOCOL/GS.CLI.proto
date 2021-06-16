@@ -68,8 +68,10 @@ message ROOM_PASS_THROUGH_RES
 {
     optional PROTOCOL   id                        = 1 [default = ID_PKT_ROOM_PASS_THROUGH_RES    ];
     optional  ErrorCode    var_code         = 2;
-    required bytes     var_message    	     = 3;
-    required int32     var_message_int         = 4;
+
+    required bytes     var_name    	     = 3;
+    required bytes     var_message    	     = 4;
+    required int32     var_message_int         = 5;
 }
 
 message NOTICE_RES
@@ -93,4 +95,17 @@ message AUDIO_MESSAGE_RES
     optional  ErrorCode    var_code         = 2;
     repeated bytes     var_message          = 3;
     optional bytes     var_name	            = 4;
+}
+
+message PRAY_MESSAGE_RES
+{
+    optional PROTOCOL   id                  = 1 [default = ID_PKT_PRAY_MESSAGE_RES ];
+    optional  ErrorCode    var_code         = 2;
+    optional bytes     var_message          = 3;
+}
+
+message PRAY_MESSAGE_REG_RES
+{
+    optional PROTOCOL   id                  = 1 [default = ID_PKT_PRAY_MESSAGE_REG_RES ];
+    repeated PrayInfo     var_list         = 2;
 }

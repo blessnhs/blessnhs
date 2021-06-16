@@ -22,7 +22,7 @@ public static partial class EnumReflection {
   static EnumReflection() {
     byte[] descriptorData = global::System.Convert.FromBase64String(
         string.Concat(
-          "CgpFbnVtLnByb3RvKoIFCghQUk9UT0NPTBIWChJJRF9QS1RfVkVSU0lPTl9S",
+          "CgpFbnVtLnByb3RvKv4FCghQUk9UT0NPTBIWChJJRF9QS1RfVkVSU0lPTl9S",
           "RVEQABIWChJJRF9QS1RfVkVSU0lPTl9SRVMQARIUChBJRF9QS1RfTE9HSU5f",
           "UkVREAISFAoQSURfUEtUX0xPR0lOX1JFUxADEhoKFklEX1BLVF9DUkVBVEVf",
           "Uk9PTV9SRVEQBBIaChZJRF9QS1RfQ1JFQVRFX1JPT01fUkVTEAUSGQoVSURf",
@@ -36,10 +36,12 @@ public static partial class EnumReflection {
           "T09NX1BBU1NfVEhST1VHSF9SRVEQERIgChxJRF9QS1RfUk9PTV9QQVNTX1RI",
           "Uk9VR0hfUkVTEBISFQoRSURfUEtUX05PVElDRV9SRVEQExIVChFJRF9QS1Rf",
           "Tk9USUNFX1JFUxAUEhwKGElEX1BLVF9BVURJT19NRVNTQUdFX1JFURAVEhwK",
-          "GElEX1BLVF9BVURJT19NRVNTQUdFX1JFUxAWKmEKCUVycm9yQ29kZRILCgdT",
-          "dWNjZXNzEAASEQoNRGF0YUJhc2VFcnJvchABEhIKDkxvZ2luRHVwbGljYXRl",
-          "EAISDwoLU3lzdGVtRXJyb3IQAxIPCgtMb2dpbkZhaWxlZBAEQgJIAWIGcHJv",
-          "dG8z"));
+          "GElEX1BLVF9BVURJT19NRVNTQUdFX1JFUxAWEhsKF0lEX1BLVF9QUkFZX01F",
+          "U1NBR0VfUkVREBcSGwoXSURfUEtUX1BSQVlfTUVTU0FHRV9SRVMQGBIfChtJ",
+          "RF9QS1RfUFJBWV9NRVNTQUdFX1JFR19SRVEQGRIfChtJRF9QS1RfUFJBWV9N",
+          "RVNTQUdFX1JFR19SRVMQGiphCglFcnJvckNvZGUSCwoHU3VjY2VzcxAAEhEK",
+          "DURhdGFCYXNlRXJyb3IQARISCg5Mb2dpbkR1cGxpY2F0ZRACEg8KC1N5c3Rl",
+          "bUVycm9yEAMSDwoLTG9naW5GYWlsZWQQBEICSAFiBnByb3RvMw=="));
     descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
         new pbr::FileDescriptor[] { },
         new pbr::GeneratedClrTypeInfo(new[] {typeof(global::PROTOCOL), typeof(global::ErrorCode), }, null, null));
@@ -72,6 +74,10 @@ public enum PROTOCOL {
   [pbr::OriginalName("ID_PKT_NOTICE_RES")] IdPktNoticeRes = 20,
   [pbr::OriginalName("ID_PKT_AUDIO_MESSAGE_REQ")] IdPktAudioMessageReq = 21,
   [pbr::OriginalName("ID_PKT_AUDIO_MESSAGE_RES")] IdPktAudioMessageRes = 22,
+  [pbr::OriginalName("ID_PKT_PRAY_MESSAGE_REQ")] IdPktPrayMessageReq = 23,
+  [pbr::OriginalName("ID_PKT_PRAY_MESSAGE_RES")] IdPktPrayMessageRes = 24,
+  [pbr::OriginalName("ID_PKT_PRAY_MESSAGE_REG_REQ")] IdPktPrayMessageRegReq = 25,
+  [pbr::OriginalName("ID_PKT_PRAY_MESSAGE_REG_RES")] IdPktPrayMessageRegRes = 26,
 }
 
 public enum ErrorCode {
