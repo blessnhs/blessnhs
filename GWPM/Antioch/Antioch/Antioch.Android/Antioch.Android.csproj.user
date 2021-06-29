@@ -3,5 +3,7 @@
   <PropertyGroup>
     <SelectedDevice>pixel_2_1</SelectedDevice>
     <DefaultDevice>pixel_2_1</DefaultDevice>
+    <AndroidDesignerPreferredTheme>MainTheme</AndroidDesignerPreferredTheme>
+    <ActiveDebugProfile>pixel_2_1</ActiveDebugProfile>
   </PropertyGroup>
 </Project>

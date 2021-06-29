@@ -6,6 +6,13 @@ namespace Antioch
 {
     public class Message : ObservableObject
     {
+        public enum type
+        {
+            Incoming,
+            Outgoing,
+            Info,
+        };
+
         string text;
 
         public string Text
@@ -24,12 +31,12 @@ namespace Antioch
 
         public string MessageTimeDisplay => MessageDateTime.Humanize();
 
-        bool isIncoming;
+        type messageType;
 
-        public bool IsIncoming
+        public type MessageType
         {
-            get { return isIncoming; }
-            set { SetProperty(ref isIncoming, value); }
+            get { return messageType; }
+            set { SetProperty(ref messageType, value); }
         }
 
         public bool HasAttachement => !string.IsNullOrEmpty(attachementUrl);
@@ -48,6 +55,18 @@ namespace Antioch
         {
             get { return profileUrl; }
             set { SetProperty(ref profileUrl, value); }
+        }
+    }
+
+
+    public class ChatRoomUser : ObservableObject
+    {
+        string user;
+
+        public string User
+        {
+            get { return user; }
+            set { SetProperty(ref user, value); }
         }
     }
 }

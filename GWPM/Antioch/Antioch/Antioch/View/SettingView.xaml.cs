@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Antioch.View.Chat.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,6 +13,7 @@ namespace Antioch.View
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class SettingView : ContentView
     {
+        SettingViewModel vm = new SettingViewModel();
         private double StepValue = 1.0;
         public SettingView()
         {
@@ -51,13 +53,19 @@ namespace Antioch.View
                
             }
 
-            BindingContext = this;
+            BindingContext = vm;
+        }
+
+        public void UpdateLoginState(string id,string message)
+        {
+            vm.Message = message;
+            vm.Id = id;
         }
 
         void OnToggledKJV(object sender, ToggledEventArgs e)
         {
             User.CacheData.EnalbeKJV = e.Value;
-            SQLLiteDB.Upsert(User.CacheData);
+        //    SQLLiteDB.Upsert(User.CacheData);
         }
 
 

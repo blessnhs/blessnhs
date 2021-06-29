@@ -18,7 +18,9 @@ namespace Antioch
     {
 
         public ObservableRangeCollection<Message> Messages { get; }
-        ITwilioMessenger twilioMessenger;
+
+        public ObservableRangeCollection<ChatRoomUser> RoomUser { get; }
+        
 
         string outgoingText = string.Empty;
 
@@ -33,37 +35,40 @@ namespace Antioch
         public ICommand ExitCommand { get; set; }
         public ICommand LocationCommand { get; set; }
 
-        public void AddMessage(string text,string name,bool isIncoming)
+        public void AddMessage(string text,string name, Message.type type)
         {
             var message = new Message
             {
                 Text = text,
-                IsIncoming = isIncoming,
+                MessageType = type,
                 AttachementUrl = "",
                 MessageDateTime = DateTime.Now,
                 ProfileUrl = name// "https://lh4.googleusercontent.com/-MEdrkpWi6Yg/AAAAAAAAAAI/AAAAAAAAAAA/AMZuuckIeT9M_SOv920jGkFwWiOCWkZRJA/s96-c/photo.jpg"
             };
 
-
             Messages.Add(message);
-
-            twilioMessenger?.SendMessage(message.Text);
 
             OutGoingText = string.Empty;
         }
+
+        public void AddChatUserMessage(string name)
+        {
+            ChatRoomUser usr = new ChatRoomUser();
+            usr.User = name;
+
+            RoomUser.Add(usr);
+        }
+
+
         public MainChatViewModel()
         {
             // Initialize with default values
-            twilioMessenger = DependencyService.Get<ITwilioMessenger>();
-
-
-
             Messages = new ObservableRangeCollection<Message>();
+            RoomUser = new ObservableRangeCollection<ChatRoomUser>();
+
 
             SendCommand = new Command(() =>
             {
-                
-
                 NetProcess.SendRoomMessage(OutGoingText);
             });
 
@@ -71,7 +76,6 @@ namespace Antioch
             {
                 NetProcess.SendLeaveRoom(0);
             });
-
 
             LocationCommand = new Command(async () =>
             {
@@ -84,43 +88,17 @@ namespace Antioch
                     {
                         Text = "I am here",
                         AttachementUrl = map,
-                        IsIncoming = false,
+                        MessageType = Message.type.Outgoing,
                         MessageDateTime = DateTime.Now
                     };
 
                     Messages.Add(message);
-                    twilioMessenger?.SendMessage("attach:" + message.AttachementUrl);
 
                 }
                 catch (Exception ex)
                 {
 
                 }
-            });
-
-
-            if (twilioMessenger == null)
-                return;
-            
-            twilioMessenger.MessageAdded = (message) =>
-            {
-                Messages.Add(message);
-            };                      
-        }
-
-
-        public void InitializeMock()
-        {
-            Messages.ReplaceRange(new List<Message>
-                {
-                    new Message { Text = "Hi Squirrel! \uD83D\uDE0A", IsIncoming = true, MessageDateTime = DateTime.Now.AddMinutes(-25)},
-                    new Message { Text = "Hi Baboon, How are you? \uD83D\uDE0A", IsIncoming = false, MessageDateTime = DateTime.Now.AddMinutes(-24)},
-                    new Message { Text = "We've a party at Mandrill's. Would you like to join? We would love to have you there! \uD83D\uDE01", IsIncoming = true, MessageDateTime = DateTime.Now.AddMinutes(-23)},
-                    new Message { Text = "You will love it. Don't miss.", IsIncoming = true, MessageDateTime = DateTime.Now.AddMinutes(-23)},
-                    new Message { Text = "Sounds like a plan. \uD83D\uDE0E", IsIncoming = false, MessageDateTime = DateTime.Now.AddMinutes(-23)},
-
-                    new Message { Text = "\uD83D\uDE48 \uD83D\uDE49 \uD83D\uDE49", IsIncoming = false, MessageDateTime = DateTime.Now.AddMinutes(-23)},
-
             });
         }
 

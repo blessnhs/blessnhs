@@ -60,20 +60,27 @@ namespace Antioch
 
         async void Clicked_Create(object sender, System.EventArgs e)
         {
-            string action = await DisplayActionSheet("Create Room", "Cancel", null, "개인", "지역", "전체");
+            string action = await DisplayActionSheet("Room Create #General LEGION KOR ", "Cancel", null, "sector", "cluster", "global");
 
             switch (action)
             {
-                case "전체":
-                case "지역":
-                case "개인":
-                    NetProcess.SendMakeRoom(User.CacheData.UserName + "+" + action);
+                case "Individual":
+                case "Local":
+                case "Global":
+                    NetProcess.SendMakeRoom(User.CacheData.UserName + "_#" + action);
                     break;
                 default:
                     if(action != "Cancel")
-                        NetProcess.SendMakeRoom(User.CacheData.UserName + "+" + "일반");
+                        NetProcess.SendMakeRoom(User.CacheData.UserName + "_" + "general");
                     break;
             }
+        }
+
+        async void Clicked_Exit(object sender, System.EventArgs e)
+        {
+            var mainpage = (MainPage)Application.Current.MainPage;
+
+            await mainpage.Navigation.PopModalAsync();
         }
 
     }

@@ -51,6 +51,16 @@ int CDBProcessCer::NoticeInfoInfo(string& notice)
 	return m_DB->NoticeInfoInfo(notice);
 }
 
+list<tuple<string, string>> CDBProcessCer::PrayList()
+{
+	return m_DB->PrayList();
+}
+
+int CDBProcessCer::RegPray(string name, string contents)
+{
+	return m_DB->UpdaetPray(name, contents);
+}
+
 int CDBProcessCer::UpdaetQNS(INT64 Index, std::string contents)
 {
 	return m_DB->UpdaetQNS(Index, contents);

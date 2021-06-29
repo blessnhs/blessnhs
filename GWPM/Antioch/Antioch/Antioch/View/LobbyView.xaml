@@ -51,9 +51,9 @@
             </Frame>
 
 
-            <Frame BorderColor="Gray"  CornerRadius="5"  Grid.Row="1" Grid.Column="0"  BackgroundColor="#B5B5B3">
+            <Frame BorderColor="Gray"  CornerRadius="5"  Grid.Row="1" Grid.Column="0"  BackgroundColor="#65B9DC">
                 <StackLayout x:Name="Lecture">
-                    <Label  Text="강의"  TextColor="White" FontSize="Large" FontAttributes="Bold" />
+                    <Label  Text="강의1"  TextColor="White" FontSize="Large" FontAttributes="Bold" />
                     <Label  Text="Lecture"  TextColor="White" FontSize="Body" FontAttributes="Bold" />
                     <StackLayout.GestureRecognizers>
                         <TapGestureRecognizer Tapped="OnTapped"/>
@@ -71,28 +71,7 @@
                 </StackLayout>
             </Frame>
 
-
-            <Frame BorderColor="Gray"  CornerRadius="5"  Grid.Row="1" Grid.Column="2"  BackgroundColor="#D75725">
-                <StackLayout  x:Name="Worship">
-                    <Label Text="찬송"  TextColor="White" FontSize="Large" FontAttributes="Bold" />
-                    <Label Text="Worship"  TextColor="White" FontSize="Body" FontAttributes="Bold" />
-                    <StackLayout.GestureRecognizers>
-                        <TapGestureRecognizer Tapped="OnTapped"/>
-                    </StackLayout.GestureRecognizers>
-                </StackLayout>
-            </Frame>
-
-            <Frame BorderColor="Gray"  CornerRadius="5"  Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"  BackgroundColor="#00225D">
-                <StackLayout x:Name="Pray">
-                    <Label  Text="기도제목"  TextColor="White" FontSize="Large" FontAttributes="Bold" />
-                    <Label  Text="Pray"  TextColor="White" FontSize="Body" FontAttributes="Bold" />
-                    <StackLayout.GestureRecognizers>
-                        <TapGestureRecognizer Tapped="OnTapped"/>
-                    </StackLayout.GestureRecognizers>
-                </StackLayout>
-            </Frame>
-
-            <Frame BorderColor="Gray"  CornerRadius="5"  Grid.Row="2" Grid.Column="2"  BackgroundColor="#E9A621">
+            <Frame BorderColor="Gray"  CornerRadius="5"  Grid.Row="1" Grid.Column="2"  BackgroundColor="#E9A621">
                 <StackLayout x:Name="Bible">
                     <Label Text="성경"  TextColor="White" FontSize="Large" FontAttributes="Bold" />
                     <Label Text="Bible"  TextColor="White" FontSize="Body" FontAttributes="Bold" />
@@ -102,8 +81,50 @@
                 </StackLayout>
             </Frame>
 
+            <Frame BorderColor="Gray"  CornerRadius="5"  Grid.Row="2" Grid.Column="0"  BackgroundColor="#94B19F">
+                <StackLayout x:Name="Lecture2">
+                    <Label  Text="강의2"  TextColor="White" FontSize="Large" FontAttributes="Bold" />
+                    <Label  Text="Lecture2"  TextColor="White" FontSize="Body" FontAttributes="Bold" />
+                    <StackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnTapped"/>
+                    </StackLayout.GestureRecognizers>
+                </StackLayout>
+            </Frame>
 
-            <Frame BorderColor="Gray"  CornerRadius="5"  Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2"  BackgroundColor="#763262">
+
+            <Frame BorderColor="Gray"  CornerRadius="5"  Grid.Row="2" Grid.Column="1"  BackgroundColor="#00225D">
+                <StackLayout x:Name="Pray">
+                    <Label  Text="기도"  TextColor="White" FontSize="Large" FontAttributes="Bold" />
+                    <Label  Text="Pray"  TextColor="White" FontSize="Body" FontAttributes="Bold" />
+                    <StackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnTapped"/>
+                    </StackLayout.GestureRecognizers>
+                </StackLayout>
+            </Frame>
+
+            <Frame BorderColor="Gray"  CornerRadius="5"  Grid.Row="2" Grid.Column="2"  BackgroundColor="#D75725">
+                <StackLayout  x:Name="Worship">
+                    <Label Text="찬송"  TextColor="White" FontSize="Large" FontAttributes="Bold" />
+                    <Label Text="Worship"  TextColor="White" FontSize="Body" FontAttributes="Bold" />
+                    <StackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnTapped"/>
+                    </StackLayout.GestureRecognizers>
+                </StackLayout>
+            </Frame>
+
+
+            <Frame BorderColor="Gray"  CornerRadius="5"  Grid.Row="3" Grid.Column="0" BackgroundColor="#763262">
+                <StackLayout x:Name="Evangelize">
+                    <Label  Text="전도" TextColor="White" FontSize="Large" FontAttributes="Bold" />
+                    <Label  Text="Evangelize" TextColor="White" FontSize="Body" FontAttributes="Bold" />
+                    <StackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnTapped"/>
+                    </StackLayout.GestureRecognizers>
+                </StackLayout>
+            </Frame>
+
+
+            <Frame BorderColor="Gray"  CornerRadius="5"  Grid.Row="3" Grid.Column="1" BackgroundColor="#763262">
                 <StackLayout x:Name="HomePage">
                     <Label  Text="홈페이지" TextColor="White" FontSize="Large" FontAttributes="Bold" />
                     <Label  Text="HomePage" TextColor="White" FontSize="Body" FontAttributes="Bold" />

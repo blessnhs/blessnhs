@@ -3,6 +3,25 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Antioch.App">
     <Application.Resources>
+        <Style x:Key="buttonStyle" TargetType="Button">
+            <Setter Property="HorizontalOptions" Value="Center" />
+            <Setter Property="VerticalOptions" Value="CenterAndExpand" />
+            <Setter Property="BorderColor" Value="Black" />
+            <Setter Property="BorderRadius" Value="1" />
+            <Setter Property="BorderWidth" Value="1" />
+            <Setter Property="WidthRequest" Value="100" />
+            <Setter Property="TextColor" Value="Black" />
+            <Setter Property="BackgroundColor" Value="White" />
+        </Style>
 
+        <Style x:Key="buttonStyle2" TargetType="Button">
+            <Setter Property="HorizontalOptions" Value="Center" />
+            <Setter Property="VerticalOptions" Value="CenterAndExpand" />
+            <Setter Property="BorderColor" Value="Black" />
+            <Setter Property="BorderRadius" Value="1" />
+            <Setter Property="BorderWidth" Value="1" />
+            <Setter Property="TextColor" Value="Black" />
+            <Setter Property="BackgroundColor" Value="White" />
+        </Style>
     </Application.Resources>
 </Application>

@@ -13,7 +13,7 @@
       <RowDefinition Height="Auto"></RowDefinition>
 
     </Grid.RowDefinitions>
-        <Label TextColor="Black" Grid.Row="0"   Grid.Column="2" Text="{Binding ProfileUrl}" HorizontalOptions="Center" VerticalOptions="Center"/>
+        <Label TextColor="Black" BackgroundColor="White" Grid.Row="0"   Grid.Column="2" Text="{Binding ProfileUrl}" HorizontalOptions="Center" VerticalOptions="Center"/>
     <!--<Image
                       Grid.Row="0"
                       Grid.Column="2"

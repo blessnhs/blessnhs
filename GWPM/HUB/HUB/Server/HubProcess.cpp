@@ -18,6 +18,9 @@ HubProcess::HubProcess(void)
 	ADD_NET_FUNC(HubProcess, ID_PKT_ROOM_PASS_THROUGH_REQ, ROOM_PASSTHROUGH);
 	ADD_NET_FUNC(HubProcess, ID_PKT_NOTICE_REQ, NOTICE);
 	ADD_NET_FUNC(HubProcess, ID_PKT_AUDIO_MESSAGE_REQ, ROOM_AUDIO_CHAT);
+
+	ADD_NET_FUNC(HubProcess, ID_PKT_PRAY_MESSAGE_REQ, PRAY_LIST);
+	ADD_NET_FUNC(HubProcess, ID_PKT_PRAY_MESSAGE_REG_REQ, REG_PRAY);
 }
 
 
@@ -155,12 +158,44 @@ VOID HubProcess::ROOM_CREATE(LPVOID Data, DWORD Length, boost::shared_ptr<GSClie
 	res.mutable_var_name()->assign(RoomPtr->m_Stock.Name);
 	SEND_PROTO_BUFFER(res, Client)
 
-		RoomPtr->SendNewUserInfo(pPlayer);	//방에 있는 유저들에게 새로운 유저 정보전송
+	RoomPtr->SendNewUserInfo(pPlayer);	//방에 있는 유저들에게 새로운 유저 정보전송
 }
 
-VOID HubProcess::CANCEL_MATCH(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client)
+VOID HubProcess::PRAY_LIST(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client)
 {
+	DECLARE_RECV_TYPE(PRAY_MESSAGE_REQ, message)
+
+	boost::shared_ptr<Hub::MSG_PLAYER_QUERY<RequestPrayList>>		PLAYER_MSG = ALLOCATOR.Create<Hub::MSG_PLAYER_QUERY<RequestPrayList>>();
+	PLAYER_MSG->pSession = Client;
+
+	PLAYER_MSG->Type = Client->GetMyDBTP();
+	PLAYER_MSG->SubType = ONQUERY;
+	MAINPROC.RegisterCommand(PLAYER_MSG);
+}
+
+VOID HubProcess::REG_PRAY(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client)
+{
+	DECLARE_RECV_TYPE(PRAY_MESSAGE_REG_REQ, message)
+
+	PlayerPtr pPlayer = PLAYERMGR.Search(Client->GetPair());
+	if (pPlayer == NULL)
+	{
+		return;
+	}
 	
+	boost::shared_ptr<Hub::MSG_PLAYER_QUERY<RequestRegPray>>		PLAYER_MSG = ALLOCATOR.Create<Hub::MSG_PLAYER_QUERY<RequestRegPray>>();
+	PLAYER_MSG->pSession = Client;
+
+	{
+		PLAYER_MSG->pRequst.contents.assign(message.var_message().begin(), message.var_message().end());
+
+		PLAYER_MSG->pRequst.name.assign(pPlayer->m_Char[0].GetName().begin(), pPlayer->m_Char[0].GetName().end());
+	}
+
+	PLAYER_MSG->Type = Client->GetMyDBTP();
+	PLAYER_MSG->SubType = ONQUERY;
+	MAINPROC.RegisterCommand(PLAYER_MSG);
+
 }
 
 VOID HubProcess::QNS(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client)
@@ -246,7 +281,7 @@ VOID HubProcess::ROOM_ENTER(LPVOID Data, DWORD Length, boost::shared_ptr<GSClien
 				continue;
 
 			NEW_USER_IN_ROOM_NTY nty;
-
+			nty.set_var_type(0);
 			RoomUserInfo* userinfo = nty.mutable_var_room_user();
 
 			userinfo->set_var_index(iter.second->GetId());
@@ -267,7 +302,7 @@ VOID HubProcess::ROOM_ENTER(LPVOID Data, DWORD Length, boost::shared_ptr<GSClien
 			continue;
 
 		NEW_USER_IN_ROOM_NTY nty;
-
+		nty.set_var_type(1);
 		RoomUserInfo* userinfo = nty.mutable_var_room_user();
 
 		userinfo->set_var_index(iter.second->GetId());

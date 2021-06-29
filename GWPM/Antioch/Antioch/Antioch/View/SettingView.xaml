@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:ViewModels="clr-namespace:Antioch.View.Chat.ViewModels"
              x:Class="Antioch.View.SettingView">
   <ContentView.Content>
         <StackLayout Orientation="Vertical" Spacing="10" Padding="20,20,20,20">
@@ -34,11 +34,11 @@
                     <Frame BorderColor="Gray" Grid.Row="2" Grid.Column="0">
                         <StackLayout VerticalOptions="StartAndExpand">
                             <Label Text="아이디(ex 분당_나현수)" />
-                            <Entry x:Name="usernameEntry" Placeholder="username" />
+                            <Entry x:Name="usernameEntry" Placeholder="username" Text="{Binding Id}"/>
                             <Label Text="비밀번호 숫자 4자리(7711)" />
                             <Entry x:Name="passwordEntry" IsPassword="true" />
                             <Button  x:Name="loginbutton" Text="Login" Clicked="login_btn"/>
-                            <Label x:Name="messageLabel"/>
+                            <Label x:Name="messageLabel"  Text="{Binding Message}"/>
                         </StackLayout>
                     </Frame>
 

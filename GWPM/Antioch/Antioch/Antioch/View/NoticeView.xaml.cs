@@ -35,7 +35,17 @@ namespace Antioch.View
         public DateTime UtcToStandardTime()
         {
             DateTime currentTime = DateTime.UtcNow;
-            return TimeZoneInfo.ConvertTimeBySystemTimeZoneId(currentTime, "Asia/Seoul");
+
+            try
+            {
+                var ret = TimeZoneInfo.ConvertTimeBySystemTimeZoneId(currentTime, "Asia/Seoul");
+                return ret;
+            }
+            catch(Exception e)
+            {
+                return currentTime;
+
+            }
         }
 
         public DateTime WeekDateTime(DateTime dt, DayOfWeek startOfWeek)
@@ -283,17 +293,17 @@ namespace Antioch.View
                     {
                         try
                         {
-                            var labelText = sender as Label;
+                            //var labelText = sender as Label;
 
-                            var parentPage = this.Parent as TabbedPage;
+                            //var parentPage = this.Parent as TabbedPage;
 
-                            string[] words = labelText.Text.Split(' ');
+                            //string[] words = labelText.Text.Split(' ');
 
-                            User.CacheData.BibleName = words[1];
-                            User.CacheData.Chapter = Convert.ToInt32(words[2]);
-                            User.CacheData.Verse = 1;
+                            //User.CacheData.BibleName = words[1];
+                            //User.CacheData.Chapter = Convert.ToInt32(words[2]);
+                            //User.CacheData.Verse = 1;
 
-                            parentPage.CurrentPage = parentPage.Children[1];
+                            //parentPage.CurrentPage = parentPage.Children[1];
                         }
                         catch (Exception)
                         {

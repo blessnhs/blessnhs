@@ -15,7 +15,7 @@ namespace Antioch.Util
                 return;
 
             var assembly = IntrospectionExtensions.GetTypeInfo(typeof(Dic)).Assembly;
-            var list = assembly.GetManifestResourceNames().Where(r => r.StartsWith("WBA.Resource.Dic") /*&& r.EndsWith(".txt")*/).ToArray();
+            var list = assembly.GetManifestResourceNames().Where(r => r.StartsWith("Antioch.Resource.Dic") /*&& r.EndsWith(".txt")*/).ToArray();
 
             foreach (var book in list)
             {

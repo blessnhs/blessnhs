@@ -18,7 +18,6 @@ namespace Antioch
                 if (chatVM == null)
                 {
                     chatVM = new MainChatViewModel();
-                    chatVM.InitializeMock();
                 }
                 return chatVM;
 
@@ -34,7 +33,7 @@ namespace Antioch
         {
             InitializeComponent();
             Title = "#general";
-            BindingContext = vm =  new MainChatViewModel();
+            BindingContext = vm = new MainChatViewModel();
 
 
             vm.Messages.CollectionChanged += (sender, e) =>
@@ -42,15 +41,26 @@ namespace Antioch
                 var target = vm.Messages[vm.Messages.Count - 1];
                 MessagesListView.ScrollTo(target, ScrollToPosition.End, true);
             };
-           
+
+            entry_message.Completed += (sender, e) =>
+            {
+                NetProcess.SendRoomMessage(entry_message.Text);
+            };
         }
 
         public void ReceiveMessage(string text, string name)
         {
-            if(name == User.CacheData.UserName)
-                vm.AddMessage(text,name,false);
+            if (name != User.CacheData.UserName)
+                vm.AddMessage(text, name, Message.type.Incoming);
             else
-                vm.AddMessage(text,name,true);
+                vm.AddMessage(text, name, Message.type.Outgoing);
+        }
+
+        public void ReceiveMessage(string text, string name, Message.type type)
+        {
+            vm.AddMessage(text, name, type);
+
+            vm.AddChatUserMessage(name);
         }
 
         void MyListView_OnItemSelected(object sender, SelectedItemChangedEventArgs e)
@@ -60,8 +70,16 @@ namespace Antioch
 
         void MyListView_OnItemTapped(object sender, ItemTappedEventArgs e)
         {
-           MessagesListView.SelectedItem = null;
+            MessagesListView.SelectedItem = null;
 
+        }
+
+        private async void List_Clicked(object sender, EventArgs e)
+        {
+            if (UserList.IsVisible == true)
+                UserList.IsVisible = false;
+            else
+                UserList.IsVisible = true;
         }
     }
 }

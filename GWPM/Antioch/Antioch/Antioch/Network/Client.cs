@@ -40,6 +40,11 @@ namespace Antioch
                 {
                     if (socket.Connected == true)
                     {
+                        ////이미 접속은 했는데 로그인 실패면 다시 한다.
+                        //if(User.LoginSuccess == false)
+                        //{
+                        //    NetProcess.SendVersion();
+                        //}
                         return;
                     }
 

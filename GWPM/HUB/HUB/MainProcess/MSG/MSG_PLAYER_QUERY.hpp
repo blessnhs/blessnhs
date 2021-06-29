@@ -19,7 +19,7 @@
 #include <sstream>
 
 #include <boost/algorithm/string/replace.hpp>
-
+#include <boost/tuple/tuple.hpp>
 #include "Base64.h"
 
 using namespace ::pplx;
@@ -142,6 +142,76 @@ namespace Hub	{
 			}
 
 			pProcess->ProcedureUserLogout(pRequst.Index);
+		}
+
+		void Undo() {}
+	};
+
+	template<>
+	class MSG_PLAYER_QUERY<RequestPrayList> : public IMESSAGE
+	{
+	public:
+		MSG_PLAYER_QUERY() { }
+		~MSG_PLAYER_QUERY() {}
+
+		GSCLIENT_PTR pSession;
+
+		void Execute(LPVOID Param)
+		{
+			DBPROCESS_CER_PTR pProcess = DBPROCESSCONTAINER_CER.Search(Type);
+			if (pProcess == NULL || pProcess->m_IsOpen == false)
+			{
+				return;
+			}
+
+			auto praylist = pProcess->PrayList();
+
+
+			PRAY_MESSAGE_RES res;
+			res.set_var_code(Success);
+
+			for each (auto pray in praylist)
+			{
+				auto info = res.add_var_list();
+				info->mutable_var_name()->assign(std::get<0>(pray));
+				info->mutable_var_message()->assign(std::get<1>(pray));
+			}
+			SEND_PROTO_BUFFER(res, pSession)
+		}
+
+		void Undo() {}
+	};
+
+	template<>
+	class MSG_PLAYER_QUERY<RequestRegPray> : public IMESSAGE
+	{
+	public:
+		MSG_PLAYER_QUERY() { }
+		~MSG_PLAYER_QUERY() {}
+
+		GSCLIENT_PTR pSession;
+
+		RequestRegPray pRequst;
+
+		void Execute(LPVOID Param)
+		{
+			DBPROCESS_CER_PTR pProcess = DBPROCESSCONTAINER_CER.Search(Type);
+			if (pProcess == NULL || pProcess->m_IsOpen == false)
+			{
+				return;
+			}
+
+			pProcess->RegPray(pRequst.name, pRequst.contents);
+
+
+
+			PRAY_MESSAGE_RES res;
+			res.set_var_code(Success);
+
+		
+
+			SEND_PROTO_BUFFER(res, pSession)
+
 		}
 
 		void Undo() {}

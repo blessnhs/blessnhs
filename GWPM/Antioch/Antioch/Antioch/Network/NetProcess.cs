@@ -8,6 +8,7 @@ using System.Threading;
 using System.Collections.Concurrent;
 using Xamarin.Forms;
 using System.Linq;
+using Antioch.View;
 
 namespace Antioch
 {
@@ -31,15 +32,20 @@ namespace Antioch
             return string.Empty;
         }
 
-        private static DateTime time = new DateTime();
+        private static DateTime check_time = new DateTime();
    
         private static DateTime notice_time = new DateTime();
    
         static public void start()
         {
-            string ip = "192.168.0.9";
+            if (check_time < DateTime.Now)
+            {
+                string ip = "192.168.0.9";//"211.212.37.238";
 
-            client.StartClient(ip, 20000);
+                client.StartClient(ip, 20000);
+
+                check_time = DateTime.Now.AddSeconds(5);
+            }
         }
 
         public static ConcurrentQueue<MemoryStream> JpegStream = new ConcurrentQueue<MemoryStream>();
@@ -88,14 +94,33 @@ namespace Antioch
                                 LOGIN_RES res = new LOGIN_RES();
                                 res = LOGIN_RES.Parser.ParseFrom(data.Data);
 
+                                var mainpage = (MainPage)Application.Current.MainPage;
+
                                 if (res.VarCode == ErrorCode.Success)
                                 {
+
+                                    Device.BeginInvokeOnMainThread(() =>
+                                    {
+                                        mainpage.setting.UpdateLoginState(User.Username, "접속중");
+                                    });
+
                                     User.LoginSuccess = true;
-                                    SQLLiteDB.Upsert(User.CacheData.FontSize, User.CacheData.BibleName, User.CacheData.Chapter, User.CacheData.Verse, 
-                                        User.Username == null ?  User.CacheData.UserName : User.Username, User.Password == null ? User.CacheData.Passwd : User.Password);
+                                    SQLLiteDB.Upsert(User.CacheData.FontSize, User.CacheData.BibleName, User.CacheData.Chapter, User.CacheData.Verse,
+                                        User.Username == null ? User.CacheData.UserName : User.Username, User.Password == null ? User.CacheData.Passwd : User.Password);
+
+
+                                    User.CacheData.UserName = User.Username;
+                                    User.CacheData.Passwd = User.Password;
                                 }
                                 else
-                                    App.Current.MainPage.DisplayAlert("Help", "사용자 정보가 다릅니다.", "OK");
+                                {
+                                    Device.BeginInvokeOnMainThread(() =>
+                                    {
+                                        mainpage.setting.UpdateLoginState(User.Username, "인증 실패 ");
+                                    });
+
+                                    User.LoginSuccess = false;
+                                }
                             }
                             break;
                         case (int)PROTOCOL.IdPktRoomListRes:
@@ -114,7 +139,22 @@ namespace Antioch
                                 });
                             }
                             break;
+                        case (int)PROTOCOL.IdPktPrayMessageRes:
+                            {
 
+                                PRAY_MESSAGE_RES res = new PRAY_MESSAGE_RES();
+                                res = PRAY_MESSAGE_RES.Parser.ParseFrom(data.Data);
+
+                                Device.BeginInvokeOnMainThread(() =>
+                                {
+                                    var mainpage = (MainPage)Application.Current.MainPage;
+
+                                    PrayView prayview = mainpage.lobby.praypage as PrayView;
+
+                                    prayview?.LoadPrayList(res);
+                                });
+                            }
+                            break;
                         case (int)PROTOCOL.IdPktCreateRoomRes:
                             {
                                 CREATE_ROOM_RES res = new CREATE_ROOM_RES();
@@ -125,7 +165,6 @@ namespace Antioch
                                     var mainpage = (MainPage)Application.Current.MainPage;
 
                                     RoomsPage roompage = mainpage.lobby.roompage as RoomsPage;
-
 
                                     {
                                         mainpage.lobby.chatpage = null;
@@ -175,15 +214,49 @@ namespace Antioch
                             break;
                         case (int)PROTOCOL.IdPktLeaveRoomRes:
                             {
+                                LEAVE_ROOM_RES res = new LEAVE_ROOM_RES();
+                                res = LEAVE_ROOM_RES.Parser.ParseFrom(data.Data);
+
                                 var mainpage = (MainPage)Application.Current.MainPage;
 
                                 Device.BeginInvokeOnMainThread(() =>
                                 {
-                                    MainChatPage chatpage = mainpage.lobby.chatpage as MainChatPage;
-                                    chatpage.Navigation.PopModalAsync();
+                                    if (Helper.ToStr(res.VarName.ToByteArray()) == User.CacheData.UserName)
+                                    {
+                                        MainChatPage chatpage = mainpage.lobby.chatpage as MainChatPage;
+                                        chatpage.Navigation.PopModalAsync();
+                                    }
+                                    else 
+                                    {
+                                        MainChatPage chatpage = mainpage.lobby.chatpage as MainChatPage;
+                                        chatpage.ReceiveMessage(Helper.ToStr(res.VarName.ToByteArray()) + " leaved.",
+                                                Helper.ToStr(res.VarName.ToByteArray()), Message.type.Info);
+
+                                    }
                                 });
                             }
                             break;
+                        case (int)PROTOCOL.IdPktNewUserInRoomNty:
+                            {
+                                NEW_USER_IN_ROOM_NTY res = new NEW_USER_IN_ROOM_NTY();
+                                res = NEW_USER_IN_ROOM_NTY.Parser.ParseFrom(data.Data);
+
+                                Device.BeginInvokeOnMainThread(() =>
+                                {
+                                    var mainpage = (MainPage)Application.Current.MainPage;
+
+                                    MainChatPage chatpage = mainpage.lobby.chatpage as MainChatPage;
+                                    if(res.VarType == 0)
+                                    {
+                                        if (Helper.ToStr(res.VarRoomUser.VarName.ToByteArray()) != User.CacheData.UserName)
+                                            chatpage.ReceiveMessage(Helper.ToStr(res.VarRoomUser.VarName.ToByteArray()) + " entered.",
+                                            Helper.ToStr(res.VarRoomUser.VarName.ToByteArray()), Message.type.Info);
+                                    }
+
+                                });
+                            }
+                            break;
+                            
                     }
                 }
                 catch (Exception ex)
@@ -241,6 +314,42 @@ namespace Antioch
                 data.WriteTo(stream);
 
                 client.WritePacket((int)PROTOCOL.IdPktRoomListReq, stream.ToArray(), stream.ToArray().Length);
+            }
+        }
+
+        static public void SendMakePray(string Content)
+        {
+            if (client == null || client.socket == null || client.socket.Connected == false)
+                return;
+
+            byte[] in_Content = Helper.ToByteString(Content);
+
+            PRAY_MESSAGE_REG_REQ person = new PRAY_MESSAGE_REG_REQ
+            {
+                VarMessage = ByteString.CopyFrom(in_Content),
+            };
+            using (MemoryStream stream = new MemoryStream())
+            {
+                person.WriteTo(stream);
+
+                client.WritePacket((int)PROTOCOL.IdPktPrayMessageRegReq, stream.ToArray(), stream.ToArray().Length);
+            }
+        }
+
+        static public void SendPrayList()
+        {
+            if (client == null || client.socket == null || client.socket.Connected == false)
+                return;
+
+            var data = new PRAY_MESSAGE_REQ
+            {
+
+            };
+            using (MemoryStream stream = new MemoryStream())
+            {
+                data.WriteTo(stream);
+
+                client.WritePacket((int)PROTOCOL.IdPktPrayMessageReq, stream.ToArray(), stream.ToArray().Length);
             }
         }
 

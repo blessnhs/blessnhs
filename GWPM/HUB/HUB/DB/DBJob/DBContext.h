@@ -114,6 +114,25 @@ public:
 	~RequestDeleteAllConcurrentUser(void) {}
 };
 
+class RequestPrayList : public GSObject
+{
+public:
+	RequestPrayList(void) {}
+	~RequestPrayList(void) {}
+};
+
+
+class RequestRegPray : public GSObject
+{
+public:
+	RequestRegPray(void) {}
+	~RequestRegPray(void) {}
+
+	std::string name;
+	std::string contents;
+};
+
+
 //sample
 class RPA : public GSObject
 {

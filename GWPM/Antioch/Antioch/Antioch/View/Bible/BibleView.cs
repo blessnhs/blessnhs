@@ -75,9 +75,6 @@ namespace Antioch
                 {
                     try
                     {
-                        if (User.Username != "강병욱")
-                            return;
-
                         var labelText = s as Label;
 
                         string Context = labelText.Text;
@@ -195,6 +192,21 @@ namespace Antioch
                     TextLayout.Children.Add(LabelEnglish);
                 
             }
+
+
+            var LabelEndLine0 = new Label { Text = "", FontSize = User.CacheData.FontSize, LineBreakMode = LineBreakMode.WordWrap, TextColor = Xamarin.Forms.Color.FromRgb(0, 0, 0), HorizontalTextAlignment = TextAlignment.Center };
+            TextLayout.Children.Add(LabelEndLine0);
+
+            var LabelEndLine1 = new Label { Text = "성경전서 개역한글판의 저작권은", FontSize = User.CacheData.FontSize, LineBreakMode = LineBreakMode.WordWrap, TextColor = Xamarin.Forms.Color.FromRgb(0, 0, 0), HorizontalTextAlignment = TextAlignment.Center };
+            TextLayout.Children.Add(LabelEndLine1);
+
+            var LabelEndLine2 = new Label { Text = "( 재 ) 대한성서공회에 있습니다", FontSize = User.CacheData.FontSize, LineBreakMode = LineBreakMode.WordWrap, TextColor = Xamarin.Forms.Color.FromRgb(0, 0, 0), HorizontalTextAlignment = TextAlignment.Center };
+            TextLayout.Children.Add(LabelEndLine2);
+
+            var LabelEndLine3 = new Label { Text = "", FontSize = User.CacheData.FontSize, LineBreakMode = LineBreakMode.WordWrap, TextColor = Xamarin.Forms.Color.FromRgb(0, 0, 0) };
+            TextLayout.Children.Add(LabelEndLine3);
+
+
             MainLayout.Children.Add(TextLayout);
 
         }

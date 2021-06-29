@@ -3,68 +3,74 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Antioch.BibleView">
 
- 
-        <Grid x:Name="main_grid" Padding="0,0,0,0">
-            <Grid.RowDefinitions BackgroundColor="White">
-                <RowDefinition Height="50" />
-                <RowDefinition Height="9*" />
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="1*" />
-                <ColumnDefinition Width="1*" />
-                <ColumnDefinition Width="1*" />
-                <ColumnDefinition Width="1*" />
-                <ColumnDefinition Width="1*" />
-                <ColumnDefinition Width="1*" />
-                <ColumnDefinition Width="1*" />
-                <ColumnDefinition Width="1*" />
-                <ColumnDefinition Width="1*" />
-                <ColumnDefinition Width="1*" />
-            </Grid.ColumnDefinitions>
+
+    <Grid x:Name="main_grid" Padding="0,0,0,0"  >
+        <Grid.RowDefinitions BackgroundColor="White">
+            <RowDefinition Height="50" />
+            <RowDefinition Height="9*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="1*" />
+        </Grid.ColumnDefinitions>
 
 
-            <Button Grid.Row="0" Grid.Column="0" Text = "◁" Clicked="Handle_Clicked_Prev">
-                <Button.GestureRecognizers>
-                    <TapGestureRecognizer Tapped="Handle_Clicked_Prev"/>
-                </Button.GestureRecognizers>
-            </Button>
+        <Button Grid.Row="0" Grid.Column="0" Text = "◁" Clicked="Handle_Clicked_Prev"  Style="{StaticResource buttonStyle2}">
+            <Button.GestureRecognizers>
+                <TapGestureRecognizer Tapped="Handle_Clicked_Prev"/>
+            </Button.GestureRecognizers>
+        </Button>
 
-            <Button Grid.Row="0" Grid.Column="1" Text = "구약" Grid.ColumnSpan="2" Clicked="Handle_Clicked_OldTestament">
-                <Button.GestureRecognizers>
-                    <TapGestureRecognizer Tapped="Handle_Clicked_OldTestament"/>
-                </Button.GestureRecognizers>
-            </Button>
+        <Button Grid.Row="0" Grid.Column="1" Text = "구약" Grid.ColumnSpan="2" Clicked="Handle_Clicked_OldTestament" Style="{StaticResource buttonStyle2}">
+            <Button.GestureRecognizers>
+                <TapGestureRecognizer Tapped="Handle_Clicked_OldTestament"/>
+            </Button.GestureRecognizers>
+        </Button>
 
-            <Button Grid.Row="0" Grid.Column="3" Text = "신약" Grid.ColumnSpan="2"  Clicked="Handle_Clicked_NewTestament">
-                <Button.GestureRecognizers>
-                    <TapGestureRecognizer Tapped="Handle_Clicked_NewTestament"/>
-                </Button.GestureRecognizers>
-            </Button>
+        <Button Grid.Row="0" Grid.Column="3" Text = "신약" Grid.ColumnSpan="2"  Clicked="Handle_Clicked_NewTestament" Style="{StaticResource buttonStyle2}">
+            <Button.GestureRecognizers>
+                <TapGestureRecognizer Tapped="Handle_Clicked_NewTestament"/>
+            </Button.GestureRecognizers>
+        </Button>
 
-            <Label Grid.Row="0" Grid.Column="5" x:Name="Title" Grid.ColumnSpan="3" FontSize="Body" BackgroundColor="White" VerticalOptions="Center" HorizontalOptions="Center"/>
+        <Button Grid.Row="0" Grid.Column="3" Text = "신약" Grid.ColumnSpan="2"  Clicked="Handle_Clicked_NewTestament" Style="{StaticResource buttonStyle2}">
+            <Button.GestureRecognizers>
+                <TapGestureRecognizer Tapped="Handle_Clicked_NewTestament"/>
+            </Button.GestureRecognizers>
+        </Button>
 
-            <Button Grid.Row="0" Grid.Column="8" Text = "S" Clicked="Handle_Clicked_Shared">
-                <Button.GestureRecognizers>
-                    <TapGestureRecognizer Tapped="Handle_Clicked_Shared"/>
-                </Button.GestureRecognizers>
-            </Button>
+        <Label x:Name="Title"  Grid.Row="0" Grid.Column="5" Grid.ColumnSpan="3" FontSize="Body" BackgroundColor="White" VerticalOptions="Center" HorizontalOptions="Center" TextColor="Black"/>
+    
+        <Button Grid.Row="0" Grid.Column="8" Text = "S" Clicked="Handle_Clicked_Shared" Style="{StaticResource buttonStyle2}">
+            <Button.GestureRecognizers>
+                <TapGestureRecognizer Tapped="Handle_Clicked_Shared"/>
+            </Button.GestureRecognizers>
+        </Button>
 
 
-            <Button Grid.Row="0" Grid.Column="9" Text = "▷" Clicked="Handle_Clicked_Next">
-                <Button.GestureRecognizers>
-                    <TapGestureRecognizer Tapped="Handle_Clicked_Next"/>
-                </Button.GestureRecognizers>
-            </Button>
+        <Button Grid.Row="0" Grid.Column="9" Text = "▷" Clicked="Handle_Clicked_Next" Style="{StaticResource buttonStyle2}">
+            <Button.GestureRecognizers>
+                <TapGestureRecognizer Tapped="Handle_Clicked_Next"/>
+            </Button.GestureRecognizers>
+        </Button>
 
 
-            <ScrollView x:Name="scrollView"  Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="10">
+        <ScrollView x:Name="scrollView"  Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="10">
 
-                <StackLayout  x:Name="MainLayout">
-                </StackLayout>
+            <StackLayout  x:Name="MainLayout">
+            </StackLayout>
 
-            </ScrollView>
+        </ScrollView>
 
     </Grid>
 
-    
+
 </ContentView>

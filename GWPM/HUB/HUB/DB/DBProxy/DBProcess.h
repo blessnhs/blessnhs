@@ -28,6 +28,10 @@ public:
 	int NoticeInfoInfo(string& notice);
 	float ProcedureVersion();
 
+
+	list<tuple<string, string>> PrayList();
+	int RegPray(string name, string contents);
+
 	bool				m_IsOpen;
 
 	CRITICAL_SECTION	m_CS;

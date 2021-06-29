@@ -44,7 +44,8 @@ public:
 
 	VOID QNS(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client);
 
-	VOID CANCEL_MATCH(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client);
+	VOID PRAY_LIST(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client);
+	VOID REG_PRAY(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client);
 
 	VOID NOTICE(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client);
 

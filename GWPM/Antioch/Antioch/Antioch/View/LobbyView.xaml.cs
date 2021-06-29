@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -14,6 +14,8 @@ namespace Antioch.View
     {
         public RoomsPage roompage = new RoomsPage();
         public MainChatPage chatpage = new MainChatPage();
+        public PrayView praypage = new PrayView();
+
         public LobbyView()
         {
             InitializeComponent();
@@ -44,6 +46,11 @@ namespace Antioch.View
                 case "Lecture":
                     LoadView(new Lecture()); 
                     break;
+
+                case "Lecture2":
+                    LoadView(new Lecture2());
+                    break;
+
                 case "Chat":
                     Navigation.PushModalAsync(roompage);
                     break;
@@ -55,7 +62,7 @@ namespace Antioch.View
                     LoadView(new Hymn());
                     break;
                 case "Pray":
-                    LoadView(new PrayView());
+                    LoadView(praypage);
                     break;
                 case "Bible":
                     LoadView(new BibleView());
@@ -63,7 +70,13 @@ namespace Antioch.View
                 case "HomePage":
                     Device.OpenUri(new Uri("http://www.antiochi.net"));
                     break;
-                case "QNA":
+
+                case "Evangelize":
+                    Share.RequestAsync(new ShareTextRequest
+                    {
+                        Text = "https://youtu.be/Dm89UpFcHVQ",
+                        Title = "#전도 컨텐츠"
+                    });
                     break;
             }
            
