@@ -22,14 +22,28 @@ class RoomInfo2DefaultTypeInternal {
  public:
   ::PROTOBUF_NAMESPACE_ID::internal::ExplicitlyConstructed<RoomInfo2> _instance;
 } _RoomInfo2_default_instance_;
-class RankDefaultTypeInternal {
- public:
-  ::PROTOBUF_NAMESPACE_ID::internal::ExplicitlyConstructed<Rank> _instance;
-} _Rank_default_instance_;
 class PrayInfoDefaultTypeInternal {
  public:
   ::PROTOBUF_NAMESPACE_ID::internal::ExplicitlyConstructed<PrayInfo> _instance;
 } _PrayInfo_default_instance_;
+class NotifyInfoDefaultTypeInternal {
+ public:
+  ::PROTOBUF_NAMESPACE_ID::internal::ExplicitlyConstructed<NotifyInfo> _instance;
+} _NotifyInfo_default_instance_;
+static void InitDefaultsscc_info_NotifyInfo_Structure_2eproto() {
+  GOOGLE_PROTOBUF_VERIFY_VERSION;
+
+  {
+    void* ptr = &::_NotifyInfo_default_instance_;
+    new (ptr) ::NotifyInfo();
+    ::PROTOBUF_NAMESPACE_ID::internal::OnShutdownDestroyMessage(ptr);
+  }
+  ::NotifyInfo::InitAsDefaultInstance();
+}
+
+::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_NotifyInfo_Structure_2eproto =
+    {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 0, 0, InitDefaultsscc_info_NotifyInfo_Structure_2eproto}, {}};
+
 static void InitDefaultsscc_info_PrayInfo_Structure_2eproto() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
@@ -43,20 +57,6 @@ static void InitDefaultsscc_info_PrayInfo_Structure_2eproto() {
 
 ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_PrayInfo_Structure_2eproto =
     {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 0, 0, InitDefaultsscc_info_PrayInfo_Structure_2eproto}, {}};
-
-static void InitDefaultsscc_info_Rank_Structure_2eproto() {
-  GOOGLE_PROTOBUF_VERIFY_VERSION;
-
-  {
-    void* ptr = &::_Rank_default_instance_;
-    new (ptr) ::Rank();
-    ::PROTOBUF_NAMESPACE_ID::internal::OnShutdownDestroyMessage(ptr);
-  }
-  ::Rank::InitAsDefaultInstance();
-}
-
-::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_Rank_Structure_2eproto =
-    {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 0, 0, InitDefaultsscc_info_Rank_Structure_2eproto}, {}};
 
 static void InitDefaultsscc_info_RoomInfo2_Structure_2eproto() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
@@ -115,29 +115,6 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_Structure_2eproto::offsets[] P
   0,
   2,
   3,
-  PROTOBUF_FIELD_OFFSET(::Rank, _has_bits_),
-  PROTOBUF_FIELD_OFFSET(::Rank, _internal_metadata_),
-  ~0u,  // no _extensions_
-  ~0u,  // no _oneof_case_
-  ~0u,  // no _weak_field_map_
-  PROTOBUF_FIELD_OFFSET(::Rank, var_rank_),
-  PROTOBUF_FIELD_OFFSET(::Rank, var_name_),
-  PROTOBUF_FIELD_OFFSET(::Rank, var_level_),
-  PROTOBUF_FIELD_OFFSET(::Rank, var_pic_uri_),
-  PROTOBUF_FIELD_OFFSET(::Rank, var_index_),
-  PROTOBUF_FIELD_OFFSET(::Rank, var_win_),
-  PROTOBUF_FIELD_OFFSET(::Rank, var_lose_),
-  PROTOBUF_FIELD_OFFSET(::Rank, var_draw_),
-  PROTOBUF_FIELD_OFFSET(::Rank, var_contry_),
-  3,
-  0,
-  4,
-  1,
-  5,
-  6,
-  7,
-  8,
-  2,
   PROTOBUF_FIELD_OFFSET(::PrayInfo, _has_bits_),
   PROTOBUF_FIELD_OFFSET(::PrayInfo, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -145,50 +122,60 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_Structure_2eproto::offsets[] P
   ~0u,  // no _weak_field_map_
   PROTOBUF_FIELD_OFFSET(::PrayInfo, var_name_),
   PROTOBUF_FIELD_OFFSET(::PrayInfo, var_message_),
+  PROTOBUF_FIELD_OFFSET(::PrayInfo, var_time_),
+  0,
+  1,
+  2,
+  PROTOBUF_FIELD_OFFSET(::NotifyInfo, _has_bits_),
+  PROTOBUF_FIELD_OFFSET(::NotifyInfo, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  PROTOBUF_FIELD_OFFSET(::NotifyInfo, var_id_),
+  PROTOBUF_FIELD_OFFSET(::NotifyInfo, var_content_),
+  PROTOBUF_FIELD_OFFSET(::NotifyInfo, var_date_),
+  2,
   0,
   1,
 };
 static const ::PROTOBUF_NAMESPACE_ID::internal::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
   { 0, 8, sizeof(::RoomUserInfo)},
   { 11, 20, sizeof(::RoomInfo2)},
-  { 24, 38, sizeof(::Rank)},
-  { 47, 54, sizeof(::PrayInfo)},
+  { 24, 32, sizeof(::PrayInfo)},
+  { 35, 43, sizeof(::NotifyInfo)},
 };
 
 static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] = {
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::_RoomUserInfo_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::_RoomInfo2_default_instance_),
-  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::_Rank_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::_PrayInfo_default_instance_),
+  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::_NotifyInfo_default_instance_),
 };
 
 const char descriptor_table_protodef_Structure_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
-  "\n\017Structure.proto\032\nEnum.proto\"H\n\014RoomUse"
-  "rInfo\022\020\n\010var_name\030\001 \001(\014\022\021\n\tvar_index\030\002 \001"
-  "(\003\022\023\n\013picture_uri\030\003 \001(\014\"_\n\tRoomInfo2\022\016\n\006"
-  "var_id\030\001 \001(\005\022\020\n\010var_name\030\002 \001(\014\022\031\n\021var_cu"
-  "rrent_count\030\003 \001(\005\022\025\n\rvar_max_count\030\004 \001(\005"
-  "\"\256\001\n\004Rank\022\020\n\010var_rank\030\001 \001(\005\022\020\n\010var_name\030"
-  "\002 \001(\014\022\021\n\tvar_level\030\003 \001(\005\022\023\n\013var_pic_uri\030"
-  "\004 \001(\014\022\021\n\tvar_index\030\005 \001(\003\022\017\n\007var_win\030\006 \001("
-  "\005\022\020\n\010var_lose\030\007 \001(\005\022\020\n\010var_draw\030\010 \001(\005\022\022\n"
-  "\nvar_contry\030\t \001(\014\"1\n\010PrayInfo\022\020\n\010var_nam"
-  "e\030\001 \001(\014\022\023\n\013var_message\030\002 \001(\014B\002H\001"
+  "\n\017Structure.proto\"H\n\014RoomUserInfo\022\020\n\010var"
+  "_name\030\001 \001(\t\022\021\n\tvar_index\030\002 \001(\003\022\023\n\013pictur"
+  "e_uri\030\003 \001(\t\"_\n\tRoomInfo2\022\016\n\006var_id\030\001 \001(\005"
+  "\022\020\n\010var_name\030\002 \001(\t\022\031\n\021var_current_count\030"
+  "\003 \001(\005\022\025\n\rvar_max_count\030\004 \001(\005\"C\n\010PrayInfo"
+  "\022\020\n\010var_name\030\001 \001(\t\022\023\n\013var_message\030\002 \001(\t\022"
+  "\020\n\010var_time\030\003 \001(\t\"C\n\nNotifyInfo\022\016\n\006var_i"
+  "d\030\001 \001(\003\022\023\n\013var_content\030\002 \001(\t\022\020\n\010var_date"
+  "\030\003 \001(\tB\002H\001"
   ;
 static const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable*const descriptor_table_Structure_2eproto_deps[1] = {
-  &::descriptor_table_Enum_2eproto,
 };
 static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_Structure_2eproto_sccs[4] = {
+  &scc_info_NotifyInfo_Structure_2eproto.base,
   &scc_info_PrayInfo_Structure_2eproto.base,
-  &scc_info_Rank_Structure_2eproto.base,
   &scc_info_RoomInfo2_Structure_2eproto.base,
   &scc_info_RoomUserInfo_Structure_2eproto.base,
 };
 static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_Structure_2eproto_once;
 static bool descriptor_table_Structure_2eproto_initialized = false;
 const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_Structure_2eproto = {
-  &descriptor_table_Structure_2eproto_initialized, descriptor_table_protodef_Structure_2eproto, "Structure.proto", 432,
-  &descriptor_table_Structure_2eproto_once, descriptor_table_Structure_2eproto_sccs, descriptor_table_Structure_2eproto_deps, 4, 1,
+  &descriptor_table_Structure_2eproto_initialized, descriptor_table_protodef_Structure_2eproto, "Structure.proto", 330,
+  &descriptor_table_Structure_2eproto_once, descriptor_table_Structure_2eproto_sccs, descriptor_table_Structure_2eproto_deps, 4, 0,
   schemas, file_default_instances, TableStruct_Structure_2eproto::offsets,
   file_level_metadata_Structure_2eproto, 4, file_level_enum_descriptors_Structure_2eproto, file_level_service_descriptors_Structure_2eproto,
 };
@@ -290,11 +277,14 @@ const char* RoomUserInfo::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_I
     ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
     CHK_(ptr);
     switch (tag >> 3) {
-      // optional bytes var_name = 1;
+      // optional string var_name = 1;
       case 1:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 10)) {
           auto str = _internal_mutable_var_name();
           ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
+          #ifndef NDEBUG
+          ::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "RoomUserInfo.var_name");
+          #endif  // !NDEBUG
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
@@ -306,11 +296,14 @@ const char* RoomUserInfo::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_I
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
-      // optional bytes picture_uri = 3;
+      // optional string picture_uri = 3;
       case 3:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 26)) {
           auto str = _internal_mutable_picture_uri();
           ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
+          #ifndef NDEBUG
+          ::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "RoomUserInfo.picture_uri");
+          #endif  // !NDEBUG
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
@@ -342,9 +335,13 @@ failure:
   (void) cached_has_bits;
 
   cached_has_bits = _has_bits_[0];
-  // optional bytes var_name = 1;
+  // optional string var_name = 1;
   if (cached_has_bits & 0x00000001u) {
-    target = stream->WriteBytesMaybeAliased(
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->_internal_var_name().data(), static_cast<int>(this->_internal_var_name().length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SERIALIZE,
+      "RoomUserInfo.var_name");
+    target = stream->WriteStringMaybeAliased(
         1, this->_internal_var_name(), target);
   }
 
@@ -354,9 +351,13 @@ failure:
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt64ToArray(2, this->_internal_var_index(), target);
   }
 
-  // optional bytes picture_uri = 3;
+  // optional string picture_uri = 3;
   if (cached_has_bits & 0x00000002u) {
-    target = stream->WriteBytesMaybeAliased(
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->_internal_picture_uri().data(), static_cast<int>(this->_internal_picture_uri().length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SERIALIZE,
+      "RoomUserInfo.picture_uri");
+    target = stream->WriteStringMaybeAliased(
         3, this->_internal_picture_uri(), target);
   }
 
@@ -378,17 +379,17 @@ size_t RoomUserInfo::ByteSizeLong() const {
 
   cached_has_bits = _has_bits_[0];
   if (cached_has_bits & 0x00000007u) {
-    // optional bytes var_name = 1;
+    // optional string var_name = 1;
     if (cached_has_bits & 0x00000001u) {
       total_size += 1 +
-        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::BytesSize(
+        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
           this->_internal_var_name());
     }
 
-    // optional bytes picture_uri = 3;
+    // optional string picture_uri = 3;
     if (cached_has_bits & 0x00000002u) {
       total_size += 1 +
-        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::BytesSize(
+        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
           this->_internal_picture_uri());
     }
 
@@ -584,11 +585,14 @@ const char* RoomInfo2::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
-      // optional bytes var_name = 2;
+      // optional string var_name = 2;
       case 2:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 18)) {
           auto str = _internal_mutable_var_name();
           ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
+          #ifndef NDEBUG
+          ::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "RoomInfo2.var_name");
+          #endif  // !NDEBUG
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
@@ -642,9 +646,13 @@ failure:
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32ToArray(1, this->_internal_var_id(), target);
   }
 
-  // optional bytes var_name = 2;
+  // optional string var_name = 2;
   if (cached_has_bits & 0x00000001u) {
-    target = stream->WriteBytesMaybeAliased(
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->_internal_var_name().data(), static_cast<int>(this->_internal_var_name().length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SERIALIZE,
+      "RoomInfo2.var_name");
+    target = stream->WriteStringMaybeAliased(
         2, this->_internal_var_name(), target);
   }
 
@@ -678,10 +686,10 @@ size_t RoomInfo2::ByteSizeLong() const {
 
   cached_has_bits = _has_bits_[0];
   if (cached_has_bits & 0x0000000fu) {
-    // optional bytes var_name = 2;
+    // optional string var_name = 2;
     if (cached_has_bits & 0x00000001u) {
       total_size += 1 +
-        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::BytesSize(
+        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
           this->_internal_var_name());
     }
 
@@ -793,480 +801,6 @@ void RoomInfo2::InternalSwap(RoomInfo2* other) {
 
 // ===================================================================
 
-void Rank::InitAsDefaultInstance() {
-}
-class Rank::_Internal {
- public:
-  using HasBits = decltype(std::declval<Rank>()._has_bits_);
-  static void set_has_var_rank(HasBits* has_bits) {
-    (*has_bits)[0] |= 8u;
-  }
-  static void set_has_var_name(HasBits* has_bits) {
-    (*has_bits)[0] |= 1u;
-  }
-  static void set_has_var_level(HasBits* has_bits) {
-    (*has_bits)[0] |= 16u;
-  }
-  static void set_has_var_pic_uri(HasBits* has_bits) {
-    (*has_bits)[0] |= 2u;
-  }
-  static void set_has_var_index(HasBits* has_bits) {
-    (*has_bits)[0] |= 32u;
-  }
-  static void set_has_var_win(HasBits* has_bits) {
-    (*has_bits)[0] |= 64u;
-  }
-  static void set_has_var_lose(HasBits* has_bits) {
-    (*has_bits)[0] |= 128u;
-  }
-  static void set_has_var_draw(HasBits* has_bits) {
-    (*has_bits)[0] |= 256u;
-  }
-  static void set_has_var_contry(HasBits* has_bits) {
-    (*has_bits)[0] |= 4u;
-  }
-};
-
-Rank::Rank()
-  : ::PROTOBUF_NAMESPACE_ID::Message(), _internal_metadata_(nullptr) {
-  SharedCtor();
-  // @@protoc_insertion_point(constructor:Rank)
-}
-Rank::Rank(const Rank& from)
-  : ::PROTOBUF_NAMESPACE_ID::Message(),
-      _internal_metadata_(nullptr),
-      _has_bits_(from._has_bits_) {
-  _internal_metadata_.MergeFrom(from._internal_metadata_);
-  var_name_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
-  if (from._internal_has_var_name()) {
-    var_name_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.var_name_);
-  }
-  var_pic_uri_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
-  if (from._internal_has_var_pic_uri()) {
-    var_pic_uri_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.var_pic_uri_);
-  }
-  var_contry_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
-  if (from._internal_has_var_contry()) {
-    var_contry_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.var_contry_);
-  }
-  ::memcpy(&var_rank_, &from.var_rank_,
-    static_cast<size_t>(reinterpret_cast<char*>(&var_draw_) -
-    reinterpret_cast<char*>(&var_rank_)) + sizeof(var_draw_));
-  // @@protoc_insertion_point(copy_constructor:Rank)
-}
-
-void Rank::SharedCtor() {
-  ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&scc_info_Rank_Structure_2eproto.base);
-  var_name_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
-  var_pic_uri_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
-  var_contry_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
-  ::memset(&var_rank_, 0, static_cast<size_t>(
-      reinterpret_cast<char*>(&var_draw_) -
-      reinterpret_cast<char*>(&var_rank_)) + sizeof(var_draw_));
-}
-
-Rank::~Rank() {
-  // @@protoc_insertion_point(destructor:Rank)
-  SharedDtor();
-}
-
-void Rank::SharedDtor() {
-  var_name_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
-  var_pic_uri_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
-  var_contry_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
-}
-
-void Rank::SetCachedSize(int size) const {
-  _cached_size_.Set(size);
-}
-const Rank& Rank::default_instance() {
-  ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&::scc_info_Rank_Structure_2eproto.base);
-  return *internal_default_instance();
-}
-
-
-void Rank::Clear() {
-// @@protoc_insertion_point(message_clear_start:Rank)
-  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
-  // Prevent compiler warnings about cached_has_bits being unused
-  (void) cached_has_bits;
-
-  cached_has_bits = _has_bits_[0];
-  if (cached_has_bits & 0x00000007u) {
-    if (cached_has_bits & 0x00000001u) {
-      var_name_.ClearNonDefaultToEmptyNoArena();
-    }
-    if (cached_has_bits & 0x00000002u) {
-      var_pic_uri_.ClearNonDefaultToEmptyNoArena();
-    }
-    if (cached_has_bits & 0x00000004u) {
-      var_contry_.ClearNonDefaultToEmptyNoArena();
-    }
-  }
-  if (cached_has_bits & 0x000000f8u) {
-    ::memset(&var_rank_, 0, static_cast<size_t>(
-        reinterpret_cast<char*>(&var_lose_) -
-        reinterpret_cast<char*>(&var_rank_)) + sizeof(var_lose_));
-  }
-  var_draw_ = 0;
-  _has_bits_.Clear();
-  _internal_metadata_.Clear();
-}
-
-const char* Rank::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
-#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
-  _Internal::HasBits has_bits{};
-  while (!ctx->Done(&ptr)) {
-    ::PROTOBUF_NAMESPACE_ID::uint32 tag;
-    ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
-    CHK_(ptr);
-    switch (tag >> 3) {
-      // optional int32 var_rank = 1;
-      case 1:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 8)) {
-          _Internal::set_has_var_rank(&has_bits);
-          var_rank_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
-          CHK_(ptr);
-        } else goto handle_unusual;
-        continue;
-      // optional bytes var_name = 2;
-      case 2:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 18)) {
-          auto str = _internal_mutable_var_name();
-          ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
-          CHK_(ptr);
-        } else goto handle_unusual;
-        continue;
-      // optional int32 var_level = 3;
-      case 3:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 24)) {
-          _Internal::set_has_var_level(&has_bits);
-          var_level_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
-          CHK_(ptr);
-        } else goto handle_unusual;
-        continue;
-      // optional bytes var_pic_uri = 4;
-      case 4:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 34)) {
-          auto str = _internal_mutable_var_pic_uri();
-          ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
-          CHK_(ptr);
-        } else goto handle_unusual;
-        continue;
-      // optional int64 var_index = 5;
-      case 5:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 40)) {
-          _Internal::set_has_var_index(&has_bits);
-          var_index_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
-          CHK_(ptr);
-        } else goto handle_unusual;
-        continue;
-      // optional int32 var_win = 6;
-      case 6:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 48)) {
-          _Internal::set_has_var_win(&has_bits);
-          var_win_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
-          CHK_(ptr);
-        } else goto handle_unusual;
-        continue;
-      // optional int32 var_lose = 7;
-      case 7:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 56)) {
-          _Internal::set_has_var_lose(&has_bits);
-          var_lose_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
-          CHK_(ptr);
-        } else goto handle_unusual;
-        continue;
-      // optional int32 var_draw = 8;
-      case 8:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 64)) {
-          _Internal::set_has_var_draw(&has_bits);
-          var_draw_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
-          CHK_(ptr);
-        } else goto handle_unusual;
-        continue;
-      // optional bytes var_contry = 9;
-      case 9:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 74)) {
-          auto str = _internal_mutable_var_contry();
-          ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
-          CHK_(ptr);
-        } else goto handle_unusual;
-        continue;
-      default: {
-      handle_unusual:
-        if ((tag & 7) == 4 || tag == 0) {
-          ctx->SetLastTag(tag);
-          goto success;
-        }
-        ptr = UnknownFieldParse(tag, &_internal_metadata_, ptr, ctx);
-        CHK_(ptr != nullptr);
-        continue;
-      }
-    }  // switch
-  }  // while
-success:
-  _has_bits_.Or(has_bits);
-  return ptr;
-failure:
-  ptr = nullptr;
-  goto success;
-#undef CHK_
-}
-
-::PROTOBUF_NAMESPACE_ID::uint8* Rank::_InternalSerialize(
-    ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
-  // @@protoc_insertion_point(serialize_to_array_start:Rank)
-  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
-  (void) cached_has_bits;
-
-  cached_has_bits = _has_bits_[0];
-  // optional int32 var_rank = 1;
-  if (cached_has_bits & 0x00000008u) {
-    target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32ToArray(1, this->_internal_var_rank(), target);
-  }
-
-  // optional bytes var_name = 2;
-  if (cached_has_bits & 0x00000001u) {
-    target = stream->WriteBytesMaybeAliased(
-        2, this->_internal_var_name(), target);
-  }
-
-  // optional int32 var_level = 3;
-  if (cached_has_bits & 0x00000010u) {
-    target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32ToArray(3, this->_internal_var_level(), target);
-  }
-
-  // optional bytes var_pic_uri = 4;
-  if (cached_has_bits & 0x00000002u) {
-    target = stream->WriteBytesMaybeAliased(
-        4, this->_internal_var_pic_uri(), target);
-  }
-
-  // optional int64 var_index = 5;
-  if (cached_has_bits & 0x00000020u) {
-    target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt64ToArray(5, this->_internal_var_index(), target);
-  }
-
-  // optional int32 var_win = 6;
-  if (cached_has_bits & 0x00000040u) {
-    target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32ToArray(6, this->_internal_var_win(), target);
-  }
-
-  // optional int32 var_lose = 7;
-  if (cached_has_bits & 0x00000080u) {
-    target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32ToArray(7, this->_internal_var_lose(), target);
-  }
-
-  // optional int32 var_draw = 8;
-  if (cached_has_bits & 0x00000100u) {
-    target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32ToArray(8, this->_internal_var_draw(), target);
-  }
-
-  // optional bytes var_contry = 9;
-  if (cached_has_bits & 0x00000004u) {
-    target = stream->WriteBytesMaybeAliased(
-        9, this->_internal_var_contry(), target);
-  }
-
-  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
-        _internal_metadata_.unknown_fields(), target, stream);
-  }
-  // @@protoc_insertion_point(serialize_to_array_end:Rank)
-  return target;
-}
-
-size_t Rank::ByteSizeLong() const {
-// @@protoc_insertion_point(message_byte_size_start:Rank)
-  size_t total_size = 0;
-
-  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
-  // Prevent compiler warnings about cached_has_bits being unused
-  (void) cached_has_bits;
-
-  cached_has_bits = _has_bits_[0];
-  if (cached_has_bits & 0x000000ffu) {
-    // optional bytes var_name = 2;
-    if (cached_has_bits & 0x00000001u) {
-      total_size += 1 +
-        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::BytesSize(
-          this->_internal_var_name());
-    }
-
-    // optional bytes var_pic_uri = 4;
-    if (cached_has_bits & 0x00000002u) {
-      total_size += 1 +
-        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::BytesSize(
-          this->_internal_var_pic_uri());
-    }
-
-    // optional bytes var_contry = 9;
-    if (cached_has_bits & 0x00000004u) {
-      total_size += 1 +
-        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::BytesSize(
-          this->_internal_var_contry());
-    }
-
-    // optional int32 var_rank = 1;
-    if (cached_has_bits & 0x00000008u) {
-      total_size += 1 +
-        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32Size(
-          this->_internal_var_rank());
-    }
-
-    // optional int32 var_level = 3;
-    if (cached_has_bits & 0x00000010u) {
-      total_size += 1 +
-        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32Size(
-          this->_internal_var_level());
-    }
-
-    // optional int64 var_index = 5;
-    if (cached_has_bits & 0x00000020u) {
-      total_size += 1 +
-        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int64Size(
-          this->_internal_var_index());
-    }
-
-    // optional int32 var_win = 6;
-    if (cached_has_bits & 0x00000040u) {
-      total_size += 1 +
-        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32Size(
-          this->_internal_var_win());
-    }
-
-    // optional int32 var_lose = 7;
-    if (cached_has_bits & 0x00000080u) {
-      total_size += 1 +
-        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32Size(
-          this->_internal_var_lose());
-    }
-
-  }
-  // optional int32 var_draw = 8;
-  if (cached_has_bits & 0x00000100u) {
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32Size(
-        this->_internal_var_draw());
-  }
-
-  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
-    return ::PROTOBUF_NAMESPACE_ID::internal::ComputeUnknownFieldsSize(
-        _internal_metadata_, total_size, &_cached_size_);
-  }
-  int cached_size = ::PROTOBUF_NAMESPACE_ID::internal::ToCachedSize(total_size);
-  SetCachedSize(cached_size);
-  return total_size;
-}
-
-void Rank::MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
-// @@protoc_insertion_point(generalized_merge_from_start:Rank)
-  GOOGLE_DCHECK_NE(&from, this);
-  const Rank* source =
-      ::PROTOBUF_NAMESPACE_ID::DynamicCastToGenerated<Rank>(
-          &from);
-  if (source == nullptr) {
-  // @@protoc_insertion_point(generalized_merge_from_cast_fail:Rank)
-    ::PROTOBUF_NAMESPACE_ID::internal::ReflectionOps::Merge(from, this);
-  } else {
-  // @@protoc_insertion_point(generalized_merge_from_cast_success:Rank)
-    MergeFrom(*source);
-  }
-}
-
-void Rank::MergeFrom(const Rank& from) {
-// @@protoc_insertion_point(class_specific_merge_from_start:Rank)
-  GOOGLE_DCHECK_NE(&from, this);
-  _internal_metadata_.MergeFrom(from._internal_metadata_);
-  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
-  (void) cached_has_bits;
-
-  cached_has_bits = from._has_bits_[0];
-  if (cached_has_bits & 0x000000ffu) {
-    if (cached_has_bits & 0x00000001u) {
-      _has_bits_[0] |= 0x00000001u;
-      var_name_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.var_name_);
-    }
-    if (cached_has_bits & 0x00000002u) {
-      _has_bits_[0] |= 0x00000002u;
-      var_pic_uri_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.var_pic_uri_);
-    }
-    if (cached_has_bits & 0x00000004u) {
-      _has_bits_[0] |= 0x00000004u;
-      var_contry_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.var_contry_);
-    }
-    if (cached_has_bits & 0x00000008u) {
-      var_rank_ = from.var_rank_;
-    }
-    if (cached_has_bits & 0x00000010u) {
-      var_level_ = from.var_level_;
-    }
-    if (cached_has_bits & 0x00000020u) {
-      var_index_ = from.var_index_;
-    }
-    if (cached_has_bits & 0x00000040u) {
-      var_win_ = from.var_win_;
-    }
-    if (cached_has_bits & 0x00000080u) {
-      var_lose_ = from.var_lose_;
-    }
-    _has_bits_[0] |= cached_has_bits;
-  }
-  if (cached_has_bits & 0x00000100u) {
-    _internal_set_var_draw(from._internal_var_draw());
-  }
-}
-
-void Rank::CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
-// @@protoc_insertion_point(generalized_copy_from_start:Rank)
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
-}
-
-void Rank::CopyFrom(const Rank& from) {
-// @@protoc_insertion_point(class_specific_copy_from_start:Rank)
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
-}
-
-bool Rank::IsInitialized() const {
-  return true;
-}
-
-void Rank::InternalSwap(Rank* other) {
-  using std::swap;
-  _internal_metadata_.Swap(&other->_internal_metadata_);
-  swap(_has_bits_[0], other->_has_bits_[0]);
-  var_name_.Swap(&other->var_name_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
-    GetArenaNoVirtual());
-  var_pic_uri_.Swap(&other->var_pic_uri_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
-    GetArenaNoVirtual());
-  var_contry_.Swap(&other->var_contry_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
-    GetArenaNoVirtual());
-  swap(var_rank_, other->var_rank_);
-  swap(var_level_, other->var_level_);
-  swap(var_index_, other->var_index_);
-  swap(var_win_, other->var_win_);
-  swap(var_lose_, other->var_lose_);
-  swap(var_draw_, other->var_draw_);
-}
-
-::PROTOBUF_NAMESPACE_ID::Metadata Rank::GetMetadata() const {
-  return GetMetadataStatic();
-}
-
-
-// ===================================================================
-
 void PrayInfo::InitAsDefaultInstance() {
 }
 class PrayInfo::_Internal {
@@ -1277,6 +811,9 @@ class PrayInfo::_Internal {
   }
   static void set_has_var_message(HasBits* has_bits) {
     (*has_bits)[0] |= 2u;
+  }
+  static void set_has_var_time(HasBits* has_bits) {
+    (*has_bits)[0] |= 4u;
   }
 };
 
@@ -1298,6 +835,10 @@ PrayInfo::PrayInfo(const PrayInfo& from)
   if (from._internal_has_var_message()) {
     var_message_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.var_message_);
   }
+  var_time_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  if (from._internal_has_var_time()) {
+    var_time_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.var_time_);
+  }
   // @@protoc_insertion_point(copy_constructor:PrayInfo)
 }
 
@@ -1305,6 +846,7 @@ void PrayInfo::SharedCtor() {
   ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&scc_info_PrayInfo_Structure_2eproto.base);
   var_name_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
   var_message_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  var_time_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
 }
 
 PrayInfo::~PrayInfo() {
@@ -1315,6 +857,7 @@ PrayInfo::~PrayInfo() {
 void PrayInfo::SharedDtor() {
   var_name_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
   var_message_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  var_time_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
 }
 
 void PrayInfo::SetCachedSize(int size) const {
@@ -1333,12 +876,15 @@ void PrayInfo::Clear() {
   (void) cached_has_bits;
 
   cached_has_bits = _has_bits_[0];
-  if (cached_has_bits & 0x00000003u) {
+  if (cached_has_bits & 0x00000007u) {
     if (cached_has_bits & 0x00000001u) {
       var_name_.ClearNonDefaultToEmptyNoArena();
     }
     if (cached_has_bits & 0x00000002u) {
       var_message_.ClearNonDefaultToEmptyNoArena();
+    }
+    if (cached_has_bits & 0x00000004u) {
+      var_time_.ClearNonDefaultToEmptyNoArena();
     }
   }
   _has_bits_.Clear();
@@ -1353,19 +899,36 @@ const char* PrayInfo::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::i
     ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
     CHK_(ptr);
     switch (tag >> 3) {
-      // optional bytes var_name = 1;
+      // optional string var_name = 1;
       case 1:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 10)) {
           auto str = _internal_mutable_var_name();
           ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
+          #ifndef NDEBUG
+          ::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "PrayInfo.var_name");
+          #endif  // !NDEBUG
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
-      // optional bytes var_message = 2;
+      // optional string var_message = 2;
       case 2:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 18)) {
           auto str = _internal_mutable_var_message();
           ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
+          #ifndef NDEBUG
+          ::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "PrayInfo.var_message");
+          #endif  // !NDEBUG
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // optional string var_time = 3;
+      case 3:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 26)) {
+          auto str = _internal_mutable_var_time();
+          ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
+          #ifndef NDEBUG
+          ::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "PrayInfo.var_time");
+          #endif  // !NDEBUG
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
@@ -1397,16 +960,34 @@ failure:
   (void) cached_has_bits;
 
   cached_has_bits = _has_bits_[0];
-  // optional bytes var_name = 1;
+  // optional string var_name = 1;
   if (cached_has_bits & 0x00000001u) {
-    target = stream->WriteBytesMaybeAliased(
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->_internal_var_name().data(), static_cast<int>(this->_internal_var_name().length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SERIALIZE,
+      "PrayInfo.var_name");
+    target = stream->WriteStringMaybeAliased(
         1, this->_internal_var_name(), target);
   }
 
-  // optional bytes var_message = 2;
+  // optional string var_message = 2;
   if (cached_has_bits & 0x00000002u) {
-    target = stream->WriteBytesMaybeAliased(
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->_internal_var_message().data(), static_cast<int>(this->_internal_var_message().length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SERIALIZE,
+      "PrayInfo.var_message");
+    target = stream->WriteStringMaybeAliased(
         2, this->_internal_var_message(), target);
+  }
+
+  // optional string var_time = 3;
+  if (cached_has_bits & 0x00000004u) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->_internal_var_time().data(), static_cast<int>(this->_internal_var_time().length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SERIALIZE,
+      "PrayInfo.var_time");
+    target = stream->WriteStringMaybeAliased(
+        3, this->_internal_var_time(), target);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
@@ -1426,19 +1007,26 @@ size_t PrayInfo::ByteSizeLong() const {
   (void) cached_has_bits;
 
   cached_has_bits = _has_bits_[0];
-  if (cached_has_bits & 0x00000003u) {
-    // optional bytes var_name = 1;
+  if (cached_has_bits & 0x00000007u) {
+    // optional string var_name = 1;
     if (cached_has_bits & 0x00000001u) {
       total_size += 1 +
-        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::BytesSize(
+        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
           this->_internal_var_name());
     }
 
-    // optional bytes var_message = 2;
+    // optional string var_message = 2;
     if (cached_has_bits & 0x00000002u) {
       total_size += 1 +
-        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::BytesSize(
+        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
           this->_internal_var_message());
+    }
+
+    // optional string var_time = 3;
+    if (cached_has_bits & 0x00000004u) {
+      total_size += 1 +
+        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+          this->_internal_var_time());
     }
 
   }
@@ -1474,7 +1062,7 @@ void PrayInfo::MergeFrom(const PrayInfo& from) {
   (void) cached_has_bits;
 
   cached_has_bits = from._has_bits_[0];
-  if (cached_has_bits & 0x00000003u) {
+  if (cached_has_bits & 0x00000007u) {
     if (cached_has_bits & 0x00000001u) {
       _has_bits_[0] |= 0x00000001u;
       var_name_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.var_name_);
@@ -1482,6 +1070,10 @@ void PrayInfo::MergeFrom(const PrayInfo& from) {
     if (cached_has_bits & 0x00000002u) {
       _has_bits_[0] |= 0x00000002u;
       var_message_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.var_message_);
+    }
+    if (cached_has_bits & 0x00000004u) {
+      _has_bits_[0] |= 0x00000004u;
+      var_time_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.var_time_);
     }
   }
 }
@@ -1512,9 +1104,311 @@ void PrayInfo::InternalSwap(PrayInfo* other) {
     GetArenaNoVirtual());
   var_message_.Swap(&other->var_message_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
     GetArenaNoVirtual());
+  var_time_.Swap(&other->var_time_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+    GetArenaNoVirtual());
 }
 
 ::PROTOBUF_NAMESPACE_ID::Metadata PrayInfo::GetMetadata() const {
+  return GetMetadataStatic();
+}
+
+
+// ===================================================================
+
+void NotifyInfo::InitAsDefaultInstance() {
+}
+class NotifyInfo::_Internal {
+ public:
+  using HasBits = decltype(std::declval<NotifyInfo>()._has_bits_);
+  static void set_has_var_id(HasBits* has_bits) {
+    (*has_bits)[0] |= 4u;
+  }
+  static void set_has_var_content(HasBits* has_bits) {
+    (*has_bits)[0] |= 1u;
+  }
+  static void set_has_var_date(HasBits* has_bits) {
+    (*has_bits)[0] |= 2u;
+  }
+};
+
+NotifyInfo::NotifyInfo()
+  : ::PROTOBUF_NAMESPACE_ID::Message(), _internal_metadata_(nullptr) {
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:NotifyInfo)
+}
+NotifyInfo::NotifyInfo(const NotifyInfo& from)
+  : ::PROTOBUF_NAMESPACE_ID::Message(),
+      _internal_metadata_(nullptr),
+      _has_bits_(from._has_bits_) {
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  var_content_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  if (from._internal_has_var_content()) {
+    var_content_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.var_content_);
+  }
+  var_date_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  if (from._internal_has_var_date()) {
+    var_date_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.var_date_);
+  }
+  var_id_ = from.var_id_;
+  // @@protoc_insertion_point(copy_constructor:NotifyInfo)
+}
+
+void NotifyInfo::SharedCtor() {
+  ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&scc_info_NotifyInfo_Structure_2eproto.base);
+  var_content_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  var_date_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  var_id_ = PROTOBUF_LONGLONG(0);
+}
+
+NotifyInfo::~NotifyInfo() {
+  // @@protoc_insertion_point(destructor:NotifyInfo)
+  SharedDtor();
+}
+
+void NotifyInfo::SharedDtor() {
+  var_content_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  var_date_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+
+void NotifyInfo::SetCachedSize(int size) const {
+  _cached_size_.Set(size);
+}
+const NotifyInfo& NotifyInfo::default_instance() {
+  ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&::scc_info_NotifyInfo_Structure_2eproto.base);
+  return *internal_default_instance();
+}
+
+
+void NotifyInfo::Clear() {
+// @@protoc_insertion_point(message_clear_start:NotifyInfo)
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  cached_has_bits = _has_bits_[0];
+  if (cached_has_bits & 0x00000003u) {
+    if (cached_has_bits & 0x00000001u) {
+      var_content_.ClearNonDefaultToEmptyNoArena();
+    }
+    if (cached_has_bits & 0x00000002u) {
+      var_date_.ClearNonDefaultToEmptyNoArena();
+    }
+  }
+  var_id_ = PROTOBUF_LONGLONG(0);
+  _has_bits_.Clear();
+  _internal_metadata_.Clear();
+}
+
+const char* NotifyInfo::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
+#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  _Internal::HasBits has_bits{};
+  while (!ctx->Done(&ptr)) {
+    ::PROTOBUF_NAMESPACE_ID::uint32 tag;
+    ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
+    CHK_(ptr);
+    switch (tag >> 3) {
+      // optional int64 var_id = 1;
+      case 1:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 8)) {
+          _Internal::set_has_var_id(&has_bits);
+          var_id_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // optional string var_content = 2;
+      case 2:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 18)) {
+          auto str = _internal_mutable_var_content();
+          ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
+          #ifndef NDEBUG
+          ::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "NotifyInfo.var_content");
+          #endif  // !NDEBUG
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // optional string var_date = 3;
+      case 3:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 26)) {
+          auto str = _internal_mutable_var_date();
+          ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
+          #ifndef NDEBUG
+          ::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "NotifyInfo.var_date");
+          #endif  // !NDEBUG
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      default: {
+      handle_unusual:
+        if ((tag & 7) == 4 || tag == 0) {
+          ctx->SetLastTag(tag);
+          goto success;
+        }
+        ptr = UnknownFieldParse(tag, &_internal_metadata_, ptr, ctx);
+        CHK_(ptr != nullptr);
+        continue;
+      }
+    }  // switch
+  }  // while
+success:
+  _has_bits_.Or(has_bits);
+  return ptr;
+failure:
+  ptr = nullptr;
+  goto success;
+#undef CHK_
+}
+
+::PROTOBUF_NAMESPACE_ID::uint8* NotifyInfo::_InternalSerialize(
+    ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:NotifyInfo)
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  cached_has_bits = _has_bits_[0];
+  // optional int64 var_id = 1;
+  if (cached_has_bits & 0x00000004u) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt64ToArray(1, this->_internal_var_id(), target);
+  }
+
+  // optional string var_content = 2;
+  if (cached_has_bits & 0x00000001u) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->_internal_var_content().data(), static_cast<int>(this->_internal_var_content().length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SERIALIZE,
+      "NotifyInfo.var_content");
+    target = stream->WriteStringMaybeAliased(
+        2, this->_internal_var_content(), target);
+  }
+
+  // optional string var_date = 3;
+  if (cached_has_bits & 0x00000002u) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->_internal_var_date().data(), static_cast<int>(this->_internal_var_date().length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SERIALIZE,
+      "NotifyInfo.var_date");
+    target = stream->WriteStringMaybeAliased(
+        3, this->_internal_var_date(), target);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields(), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:NotifyInfo)
+  return target;
+}
+
+size_t NotifyInfo::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:NotifyInfo)
+  size_t total_size = 0;
+
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  cached_has_bits = _has_bits_[0];
+  if (cached_has_bits & 0x00000007u) {
+    // optional string var_content = 2;
+    if (cached_has_bits & 0x00000001u) {
+      total_size += 1 +
+        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+          this->_internal_var_content());
+    }
+
+    // optional string var_date = 3;
+    if (cached_has_bits & 0x00000002u) {
+      total_size += 1 +
+        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+          this->_internal_var_date());
+    }
+
+    // optional int64 var_id = 1;
+    if (cached_has_bits & 0x00000004u) {
+      total_size += 1 +
+        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int64Size(
+          this->_internal_var_id());
+    }
+
+  }
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    return ::PROTOBUF_NAMESPACE_ID::internal::ComputeUnknownFieldsSize(
+        _internal_metadata_, total_size, &_cached_size_);
+  }
+  int cached_size = ::PROTOBUF_NAMESPACE_ID::internal::ToCachedSize(total_size);
+  SetCachedSize(cached_size);
+  return total_size;
+}
+
+void NotifyInfo::MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:NotifyInfo)
+  GOOGLE_DCHECK_NE(&from, this);
+  const NotifyInfo* source =
+      ::PROTOBUF_NAMESPACE_ID::DynamicCastToGenerated<NotifyInfo>(
+          &from);
+  if (source == nullptr) {
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:NotifyInfo)
+    ::PROTOBUF_NAMESPACE_ID::internal::ReflectionOps::Merge(from, this);
+  } else {
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:NotifyInfo)
+    MergeFrom(*source);
+  }
+}
+
+void NotifyInfo::MergeFrom(const NotifyInfo& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:NotifyInfo)
+  GOOGLE_DCHECK_NE(&from, this);
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  cached_has_bits = from._has_bits_[0];
+  if (cached_has_bits & 0x00000007u) {
+    if (cached_has_bits & 0x00000001u) {
+      _has_bits_[0] |= 0x00000001u;
+      var_content_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.var_content_);
+    }
+    if (cached_has_bits & 0x00000002u) {
+      _has_bits_[0] |= 0x00000002u;
+      var_date_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.var_date_);
+    }
+    if (cached_has_bits & 0x00000004u) {
+      var_id_ = from.var_id_;
+    }
+    _has_bits_[0] |= cached_has_bits;
+  }
+}
+
+void NotifyInfo::CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:NotifyInfo)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void NotifyInfo::CopyFrom(const NotifyInfo& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:NotifyInfo)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool NotifyInfo::IsInitialized() const {
+  return true;
+}
+
+void NotifyInfo::InternalSwap(NotifyInfo* other) {
+  using std::swap;
+  _internal_metadata_.Swap(&other->_internal_metadata_);
+  swap(_has_bits_[0], other->_has_bits_[0]);
+  var_content_.Swap(&other->var_content_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+    GetArenaNoVirtual());
+  var_date_.Swap(&other->var_date_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+    GetArenaNoVirtual());
+  swap(var_id_, other->var_id_);
+}
+
+::PROTOBUF_NAMESPACE_ID::Metadata NotifyInfo::GetMetadata() const {
   return GetMetadataStatic();
 }
 
@@ -1527,11 +1421,11 @@ template<> PROTOBUF_NOINLINE ::RoomUserInfo* Arena::CreateMaybeMessage< ::RoomUs
 template<> PROTOBUF_NOINLINE ::RoomInfo2* Arena::CreateMaybeMessage< ::RoomInfo2 >(Arena* arena) {
   return Arena::CreateInternal< ::RoomInfo2 >(arena);
 }
-template<> PROTOBUF_NOINLINE ::Rank* Arena::CreateMaybeMessage< ::Rank >(Arena* arena) {
-  return Arena::CreateInternal< ::Rank >(arena);
-}
 template<> PROTOBUF_NOINLINE ::PrayInfo* Arena::CreateMaybeMessage< ::PrayInfo >(Arena* arena) {
   return Arena::CreateInternal< ::PrayInfo >(arena);
+}
+template<> PROTOBUF_NOINLINE ::NotifyInfo* Arena::CreateMaybeMessage< ::NotifyInfo >(Arena* arena) {
+  return Arena::CreateInternal< ::NotifyInfo >(arena);
 }
 PROTOBUF_NAMESPACE_CLOSE
 

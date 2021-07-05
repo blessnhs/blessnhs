@@ -22,23 +22,21 @@ public static partial class StructureReflection {
   static StructureReflection() {
     byte[] descriptorData = global::System.Convert.FromBase64String(
         string.Concat(
-          "Cg9TdHJ1Y3R1cmUucHJvdG8aCkVudW0ucHJvdG8iSAoMUm9vbVVzZXJJbmZv",
-          "EhAKCHZhcl9uYW1lGAEgASgMEhEKCXZhcl9pbmRleBgCIAEoAxITCgtwaWN0",
-          "dXJlX3VyaRgDIAEoDCJfCglSb29tSW5mbzISDgoGdmFyX2lkGAEgASgFEhAK",
-          "CHZhcl9uYW1lGAIgASgMEhkKEXZhcl9jdXJyZW50X2NvdW50GAMgASgFEhUK",
-          "DXZhcl9tYXhfY291bnQYBCABKAUirgEKBFJhbmsSEAoIdmFyX3JhbmsYASAB",
-          "KAUSEAoIdmFyX25hbWUYAiABKAwSEQoJdmFyX2xldmVsGAMgASgFEhMKC3Zh",
-          "cl9waWNfdXJpGAQgASgMEhEKCXZhcl9pbmRleBgFIAEoAxIPCgd2YXJfd2lu",
-          "GAYgASgFEhAKCHZhcl9sb3NlGAcgASgFEhAKCHZhcl9kcmF3GAggASgFEhIK",
-          "CnZhcl9jb250cnkYCSABKAwiMQoIUHJheUluZm8SEAoIdmFyX25hbWUYASAB",
-          "KAwSEwoLdmFyX21lc3NhZ2UYAiABKAxCAkgB"));
+          "Cg9TdHJ1Y3R1cmUucHJvdG8iSAoMUm9vbVVzZXJJbmZvEhAKCHZhcl9uYW1l",
+          "GAEgASgJEhEKCXZhcl9pbmRleBgCIAEoAxITCgtwaWN0dXJlX3VyaRgDIAEo",
+          "CSJfCglSb29tSW5mbzISDgoGdmFyX2lkGAEgASgFEhAKCHZhcl9uYW1lGAIg",
+          "ASgJEhkKEXZhcl9jdXJyZW50X2NvdW50GAMgASgFEhUKDXZhcl9tYXhfY291",
+          "bnQYBCABKAUiQwoIUHJheUluZm8SEAoIdmFyX25hbWUYASABKAkSEwoLdmFy",
+          "X21lc3NhZ2UYAiABKAkSEAoIdmFyX3RpbWUYAyABKAkiQwoKTm90aWZ5SW5m",
+          "bxIOCgZ2YXJfaWQYASABKAMSEwoLdmFyX2NvbnRlbnQYAiABKAkSEAoIdmFy",
+          "X2RhdGUYAyABKAlCAkgB"));
     descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
-        new pbr::FileDescriptor[] { global::EnumReflection.Descriptor, },
+        new pbr::FileDescriptor[] { },
         new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
           new pbr::GeneratedClrTypeInfo(typeof(global::RoomUserInfo), global::RoomUserInfo.Parser, new[]{ "VarName", "VarIndex", "PictureUri" }, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::RoomInfo2), global::RoomInfo2.Parser, new[]{ "VarId", "VarName", "VarCurrentCount", "VarMaxCount" }, null, null, null, null),
-          new pbr::GeneratedClrTypeInfo(typeof(global::Rank), global::Rank.Parser, new[]{ "VarRank", "VarName", "VarLevel", "VarPicUri", "VarIndex", "VarWin", "VarLose", "VarDraw", "VarContry" }, null, null, null, null),
-          new pbr::GeneratedClrTypeInfo(typeof(global::PrayInfo), global::PrayInfo.Parser, new[]{ "VarName", "VarMessage" }, null, null, null, null)
+          new pbr::GeneratedClrTypeInfo(typeof(global::PrayInfo), global::PrayInfo.Parser, new[]{ "VarName", "VarMessage", "VarTime" }, null, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::NotifyInfo), global::NotifyInfo.Parser, new[]{ "VarId", "VarContent", "VarDate" }, null, null, null, null)
         }));
   }
   #endregion
@@ -85,11 +83,11 @@ public sealed partial class RoomUserInfo : pb::IMessage<RoomUserInfo> {
 
   /// <summary>Field number for the "var_name" field.</summary>
   public const int VarNameFieldNumber = 1;
-  private readonly static pb::ByteString VarNameDefaultValue = pb::ByteString.Empty;
+  private readonly static string VarNameDefaultValue = "";
 
-  private pb::ByteString varName_;
+  private string varName_;
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  public pb::ByteString VarName {
+  public string VarName {
     get { return varName_ ?? VarNameDefaultValue; }
     set {
       varName_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
@@ -132,11 +130,11 @@ public sealed partial class RoomUserInfo : pb::IMessage<RoomUserInfo> {
 
   /// <summary>Field number for the "picture_uri" field.</summary>
   public const int PictureUriFieldNumber = 3;
-  private readonly static pb::ByteString PictureUriDefaultValue = pb::ByteString.Empty;
+  private readonly static string PictureUriDefaultValue = "";
 
-  private pb::ByteString pictureUri_;
+  private string pictureUri_;
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  public pb::ByteString PictureUri {
+  public string PictureUri {
     get { return pictureUri_ ?? PictureUriDefaultValue; }
     set {
       pictureUri_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
@@ -193,7 +191,7 @@ public sealed partial class RoomUserInfo : pb::IMessage<RoomUserInfo> {
   public void WriteTo(pb::CodedOutputStream output) {
     if (HasVarName) {
       output.WriteRawTag(10);
-      output.WriteBytes(VarName);
+      output.WriteString(VarName);
     }
     if (HasVarIndex) {
       output.WriteRawTag(16);
@@ -201,7 +199,7 @@ public sealed partial class RoomUserInfo : pb::IMessage<RoomUserInfo> {
     }
     if (HasPictureUri) {
       output.WriteRawTag(26);
-      output.WriteBytes(PictureUri);
+      output.WriteString(PictureUri);
     }
     if (_unknownFields != null) {
       _unknownFields.WriteTo(output);
@@ -212,13 +210,13 @@ public sealed partial class RoomUserInfo : pb::IMessage<RoomUserInfo> {
   public int CalculateSize() {
     int size = 0;
     if (HasVarName) {
-      size += 1 + pb::CodedOutputStream.ComputeBytesSize(VarName);
+      size += 1 + pb::CodedOutputStream.ComputeStringSize(VarName);
     }
     if (HasVarIndex) {
       size += 1 + pb::CodedOutputStream.ComputeInt64Size(VarIndex);
     }
     if (HasPictureUri) {
-      size += 1 + pb::CodedOutputStream.ComputeBytesSize(PictureUri);
+      size += 1 + pb::CodedOutputStream.ComputeStringSize(PictureUri);
     }
     if (_unknownFields != null) {
       size += _unknownFields.CalculateSize();
@@ -252,7 +250,7 @@ public sealed partial class RoomUserInfo : pb::IMessage<RoomUserInfo> {
           _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
           break;
         case 10: {
-          VarName = input.ReadBytes();
+          VarName = input.ReadString();
           break;
         }
         case 16: {
@@ -260,7 +258,7 @@ public sealed partial class RoomUserInfo : pb::IMessage<RoomUserInfo> {
           break;
         }
         case 26: {
-          PictureUri = input.ReadBytes();
+          PictureUri = input.ReadString();
           break;
         }
       }
@@ -334,11 +332,11 @@ public sealed partial class RoomInfo2 : pb::IMessage<RoomInfo2> {
 
   /// <summary>Field number for the "var_name" field.</summary>
   public const int VarNameFieldNumber = 2;
-  private readonly static pb::ByteString VarNameDefaultValue = pb::ByteString.Empty;
+  private readonly static string VarNameDefaultValue = "";
 
-  private pb::ByteString varName_;
+  private string varName_;
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  public pb::ByteString VarName {
+  public string VarName {
     get { return varName_ ?? VarNameDefaultValue; }
     set {
       varName_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
@@ -449,7 +447,7 @@ public sealed partial class RoomInfo2 : pb::IMessage<RoomInfo2> {
     }
     if (HasVarName) {
       output.WriteRawTag(18);
-      output.WriteBytes(VarName);
+      output.WriteString(VarName);
     }
     if (HasVarCurrentCount) {
       output.WriteRawTag(24);
@@ -471,7 +469,7 @@ public sealed partial class RoomInfo2 : pb::IMessage<RoomInfo2> {
       size += 1 + pb::CodedOutputStream.ComputeInt32Size(VarId);
     }
     if (HasVarName) {
-      size += 1 + pb::CodedOutputStream.ComputeBytesSize(VarName);
+      size += 1 + pb::CodedOutputStream.ComputeStringSize(VarName);
     }
     if (HasVarCurrentCount) {
       size += 1 + pb::CodedOutputStream.ComputeInt32Size(VarCurrentCount);
@@ -518,7 +516,7 @@ public sealed partial class RoomInfo2 : pb::IMessage<RoomInfo2> {
           break;
         }
         case 18: {
-          VarName = input.ReadBytes();
+          VarName = input.ReadString();
           break;
         }
         case 24: {
@@ -535,475 +533,6 @@ public sealed partial class RoomInfo2 : pb::IMessage<RoomInfo2> {
 
 }
 
-public sealed partial class Rank : pb::IMessage<Rank> {
-  private static readonly pb::MessageParser<Rank> _parser = new pb::MessageParser<Rank>(() => new Rank());
-  private pb::UnknownFieldSet _unknownFields;
-  private int _hasBits0;
-  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  public static pb::MessageParser<Rank> Parser { get { return _parser; } }
-
-  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  public static pbr::MessageDescriptor Descriptor {
-    get { return global::StructureReflection.Descriptor.MessageTypes[2]; }
-  }
-
-  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  pbr::MessageDescriptor pb::IMessage.Descriptor {
-    get { return Descriptor; }
-  }
-
-  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  public Rank() {
-    OnConstruction();
-  }
-
-  partial void OnConstruction();
-
-  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  public Rank(Rank other) : this() {
-    _hasBits0 = other._hasBits0;
-    varRank_ = other.varRank_;
-    varName_ = other.varName_;
-    varLevel_ = other.varLevel_;
-    varPicUri_ = other.varPicUri_;
-    varIndex_ = other.varIndex_;
-    varWin_ = other.varWin_;
-    varLose_ = other.varLose_;
-    varDraw_ = other.varDraw_;
-    varContry_ = other.varContry_;
-    _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
-  }
-
-  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  public Rank Clone() {
-    return new Rank(this);
-  }
-
-  /// <summary>Field number for the "var_rank" field.</summary>
-  public const int VarRankFieldNumber = 1;
-  private readonly static int VarRankDefaultValue = 0;
-
-  private int varRank_;
-  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  public int VarRank {
-    get { if ((_hasBits0 & 1) != 0) { return varRank_; } else { return VarRankDefaultValue; } }
-    set {
-      _hasBits0 |= 1;
-      varRank_ = value;
-    }
-  }
-  /// <summary>Gets whether the "var_rank" field is set</summary>
-  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  public bool HasVarRank {
-    get { return (_hasBits0 & 1) != 0; }
-  }
-  /// <summary>Clears the value of the "var_rank" field</summary>
-  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  public void ClearVarRank() {
-    _hasBits0 &= ~1;
-  }
-
-  /// <summary>Field number for the "var_name" field.</summary>
-  public const int VarNameFieldNumber = 2;
-  private readonly static pb::ByteString VarNameDefaultValue = pb::ByteString.Empty;
-
-  private pb::ByteString varName_;
-  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  public pb::ByteString VarName {
-    get { return varName_ ?? VarNameDefaultValue; }
-    set {
-      varName_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
-    }
-  }
-  /// <summary>Gets whether the "var_name" field is set</summary>
-  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  public bool HasVarName {
-    get { return varName_ != null; }
-  }
-  /// <summary>Clears the value of the "var_name" field</summary>
-  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  public void ClearVarName() {
-    varName_ = null;
-  }
-
-  /// <summary>Field number for the "var_level" field.</summary>
-  public const int VarLevelFieldNumber = 3;
-  private readonly static int VarLevelDefaultValue = 0;
-
-  private int varLevel_;
-  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  public int VarLevel {
-    get { if ((_hasBits0 & 2) != 0) { return varLevel_; } else { return VarLevelDefaultValue; } }
-    set {
-      _hasBits0 |= 2;
-      varLevel_ = value;
-    }
-  }
-  /// <summary>Gets whether the "var_level" field is set</summary>
-  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  public bool HasVarLevel {
-    get { return (_hasBits0 & 2) != 0; }
-  }
-  /// <summary>Clears the value of the "var_level" field</summary>
-  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  public void ClearVarLevel() {
-    _hasBits0 &= ~2;
-  }
-
-  /// <summary>Field number for the "var_pic_uri" field.</summary>
-  public const int VarPicUriFieldNumber = 4;
-  private readonly static pb::ByteString VarPicUriDefaultValue = pb::ByteString.Empty;
-
-  private pb::ByteString varPicUri_;
-  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  public pb::ByteString VarPicUri {
-    get { return varPicUri_ ?? VarPicUriDefaultValue; }
-    set {
-      varPicUri_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
-    }
-  }
-  /// <summary>Gets whether the "var_pic_uri" field is set</summary>
-  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  public bool HasVarPicUri {
-    get { return varPicUri_ != null; }
-  }
-  /// <summary>Clears the value of the "var_pic_uri" field</summary>
-  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  public void ClearVarPicUri() {
-    varPicUri_ = null;
-  }
-
-  /// <summary>Field number for the "var_index" field.</summary>
-  public const int VarIndexFieldNumber = 5;
-  private readonly static long VarIndexDefaultValue = 0L;
-
-  private long varIndex_;
-  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  public long VarIndex {
-    get { if ((_hasBits0 & 4) != 0) { return varIndex_; } else { return VarIndexDefaultValue; } }
-    set {
-      _hasBits0 |= 4;
-      varIndex_ = value;
-    }
-  }
-  /// <summary>Gets whether the "var_index" field is set</summary>
-  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  public bool HasVarIndex {
-    get { return (_hasBits0 & 4) != 0; }
-  }
-  /// <summary>Clears the value of the "var_index" field</summary>
-  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  public void ClearVarIndex() {
-    _hasBits0 &= ~4;
-  }
-
-  /// <summary>Field number for the "var_win" field.</summary>
-  public const int VarWinFieldNumber = 6;
-  private readonly static int VarWinDefaultValue = 0;
-
-  private int varWin_;
-  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  public int VarWin {
-    get { if ((_hasBits0 & 8) != 0) { return varWin_; } else { return VarWinDefaultValue; } }
-    set {
-      _hasBits0 |= 8;
-      varWin_ = value;
-    }
-  }
-  /// <summary>Gets whether the "var_win" field is set</summary>
-  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  public bool HasVarWin {
-    get { return (_hasBits0 & 8) != 0; }
-  }
-  /// <summary>Clears the value of the "var_win" field</summary>
-  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  public void ClearVarWin() {
-    _hasBits0 &= ~8;
-  }
-
-  /// <summary>Field number for the "var_lose" field.</summary>
-  public const int VarLoseFieldNumber = 7;
-  private readonly static int VarLoseDefaultValue = 0;
-
-  private int varLose_;
-  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  public int VarLose {
-    get { if ((_hasBits0 & 16) != 0) { return varLose_; } else { return VarLoseDefaultValue; } }
-    set {
-      _hasBits0 |= 16;
-      varLose_ = value;
-    }
-  }
-  /// <summary>Gets whether the "var_lose" field is set</summary>
-  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  public bool HasVarLose {
-    get { return (_hasBits0 & 16) != 0; }
-  }
-  /// <summary>Clears the value of the "var_lose" field</summary>
-  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  public void ClearVarLose() {
-    _hasBits0 &= ~16;
-  }
-
-  /// <summary>Field number for the "var_draw" field.</summary>
-  public const int VarDrawFieldNumber = 8;
-  private readonly static int VarDrawDefaultValue = 0;
-
-  private int varDraw_;
-  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  public int VarDraw {
-    get { if ((_hasBits0 & 32) != 0) { return varDraw_; } else { return VarDrawDefaultValue; } }
-    set {
-      _hasBits0 |= 32;
-      varDraw_ = value;
-    }
-  }
-  /// <summary>Gets whether the "var_draw" field is set</summary>
-  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  public bool HasVarDraw {
-    get { return (_hasBits0 & 32) != 0; }
-  }
-  /// <summary>Clears the value of the "var_draw" field</summary>
-  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  public void ClearVarDraw() {
-    _hasBits0 &= ~32;
-  }
-
-  /// <summary>Field number for the "var_contry" field.</summary>
-  public const int VarContryFieldNumber = 9;
-  private readonly static pb::ByteString VarContryDefaultValue = pb::ByteString.Empty;
-
-  private pb::ByteString varContry_;
-  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  public pb::ByteString VarContry {
-    get { return varContry_ ?? VarContryDefaultValue; }
-    set {
-      varContry_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
-    }
-  }
-  /// <summary>Gets whether the "var_contry" field is set</summary>
-  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  public bool HasVarContry {
-    get { return varContry_ != null; }
-  }
-  /// <summary>Clears the value of the "var_contry" field</summary>
-  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  public void ClearVarContry() {
-    varContry_ = null;
-  }
-
-  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  public override bool Equals(object other) {
-    return Equals(other as Rank);
-  }
-
-  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  public bool Equals(Rank other) {
-    if (ReferenceEquals(other, null)) {
-      return false;
-    }
-    if (ReferenceEquals(other, this)) {
-      return true;
-    }
-    if (VarRank != other.VarRank) return false;
-    if (VarName != other.VarName) return false;
-    if (VarLevel != other.VarLevel) return false;
-    if (VarPicUri != other.VarPicUri) return false;
-    if (VarIndex != other.VarIndex) return false;
-    if (VarWin != other.VarWin) return false;
-    if (VarLose != other.VarLose) return false;
-    if (VarDraw != other.VarDraw) return false;
-    if (VarContry != other.VarContry) return false;
-    return Equals(_unknownFields, other._unknownFields);
-  }
-
-  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  public override int GetHashCode() {
-    int hash = 1;
-    if (HasVarRank) hash ^= VarRank.GetHashCode();
-    if (HasVarName) hash ^= VarName.GetHashCode();
-    if (HasVarLevel) hash ^= VarLevel.GetHashCode();
-    if (HasVarPicUri) hash ^= VarPicUri.GetHashCode();
-    if (HasVarIndex) hash ^= VarIndex.GetHashCode();
-    if (HasVarWin) hash ^= VarWin.GetHashCode();
-    if (HasVarLose) hash ^= VarLose.GetHashCode();
-    if (HasVarDraw) hash ^= VarDraw.GetHashCode();
-    if (HasVarContry) hash ^= VarContry.GetHashCode();
-    if (_unknownFields != null) {
-      hash ^= _unknownFields.GetHashCode();
-    }
-    return hash;
-  }
-
-  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  public override string ToString() {
-    return pb::JsonFormatter.ToDiagnosticString(this);
-  }
-
-  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  public void WriteTo(pb::CodedOutputStream output) {
-    if (HasVarRank) {
-      output.WriteRawTag(8);
-      output.WriteInt32(VarRank);
-    }
-    if (HasVarName) {
-      output.WriteRawTag(18);
-      output.WriteBytes(VarName);
-    }
-    if (HasVarLevel) {
-      output.WriteRawTag(24);
-      output.WriteInt32(VarLevel);
-    }
-    if (HasVarPicUri) {
-      output.WriteRawTag(34);
-      output.WriteBytes(VarPicUri);
-    }
-    if (HasVarIndex) {
-      output.WriteRawTag(40);
-      output.WriteInt64(VarIndex);
-    }
-    if (HasVarWin) {
-      output.WriteRawTag(48);
-      output.WriteInt32(VarWin);
-    }
-    if (HasVarLose) {
-      output.WriteRawTag(56);
-      output.WriteInt32(VarLose);
-    }
-    if (HasVarDraw) {
-      output.WriteRawTag(64);
-      output.WriteInt32(VarDraw);
-    }
-    if (HasVarContry) {
-      output.WriteRawTag(74);
-      output.WriteBytes(VarContry);
-    }
-    if (_unknownFields != null) {
-      _unknownFields.WriteTo(output);
-    }
-  }
-
-  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  public int CalculateSize() {
-    int size = 0;
-    if (HasVarRank) {
-      size += 1 + pb::CodedOutputStream.ComputeInt32Size(VarRank);
-    }
-    if (HasVarName) {
-      size += 1 + pb::CodedOutputStream.ComputeBytesSize(VarName);
-    }
-    if (HasVarLevel) {
-      size += 1 + pb::CodedOutputStream.ComputeInt32Size(VarLevel);
-    }
-    if (HasVarPicUri) {
-      size += 1 + pb::CodedOutputStream.ComputeBytesSize(VarPicUri);
-    }
-    if (HasVarIndex) {
-      size += 1 + pb::CodedOutputStream.ComputeInt64Size(VarIndex);
-    }
-    if (HasVarWin) {
-      size += 1 + pb::CodedOutputStream.ComputeInt32Size(VarWin);
-    }
-    if (HasVarLose) {
-      size += 1 + pb::CodedOutputStream.ComputeInt32Size(VarLose);
-    }
-    if (HasVarDraw) {
-      size += 1 + pb::CodedOutputStream.ComputeInt32Size(VarDraw);
-    }
-    if (HasVarContry) {
-      size += 1 + pb::CodedOutputStream.ComputeBytesSize(VarContry);
-    }
-    if (_unknownFields != null) {
-      size += _unknownFields.CalculateSize();
-    }
-    return size;
-  }
-
-  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  public void MergeFrom(Rank other) {
-    if (other == null) {
-      return;
-    }
-    if (other.HasVarRank) {
-      VarRank = other.VarRank;
-    }
-    if (other.HasVarName) {
-      VarName = other.VarName;
-    }
-    if (other.HasVarLevel) {
-      VarLevel = other.VarLevel;
-    }
-    if (other.HasVarPicUri) {
-      VarPicUri = other.VarPicUri;
-    }
-    if (other.HasVarIndex) {
-      VarIndex = other.VarIndex;
-    }
-    if (other.HasVarWin) {
-      VarWin = other.VarWin;
-    }
-    if (other.HasVarLose) {
-      VarLose = other.VarLose;
-    }
-    if (other.HasVarDraw) {
-      VarDraw = other.VarDraw;
-    }
-    if (other.HasVarContry) {
-      VarContry = other.VarContry;
-    }
-    _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
-  }
-
-  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  public void MergeFrom(pb::CodedInputStream input) {
-    uint tag;
-    while ((tag = input.ReadTag()) != 0) {
-      switch(tag) {
-        default:
-          _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
-          break;
-        case 8: {
-          VarRank = input.ReadInt32();
-          break;
-        }
-        case 18: {
-          VarName = input.ReadBytes();
-          break;
-        }
-        case 24: {
-          VarLevel = input.ReadInt32();
-          break;
-        }
-        case 34: {
-          VarPicUri = input.ReadBytes();
-          break;
-        }
-        case 40: {
-          VarIndex = input.ReadInt64();
-          break;
-        }
-        case 48: {
-          VarWin = input.ReadInt32();
-          break;
-        }
-        case 56: {
-          VarLose = input.ReadInt32();
-          break;
-        }
-        case 64: {
-          VarDraw = input.ReadInt32();
-          break;
-        }
-        case 74: {
-          VarContry = input.ReadBytes();
-          break;
-        }
-      }
-    }
-  }
-
-}
-
 public sealed partial class PrayInfo : pb::IMessage<PrayInfo> {
   private static readonly pb::MessageParser<PrayInfo> _parser = new pb::MessageParser<PrayInfo>(() => new PrayInfo());
   private pb::UnknownFieldSet _unknownFields;
@@ -1012,7 +541,7 @@ public sealed partial class PrayInfo : pb::IMessage<PrayInfo> {
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public static pbr::MessageDescriptor Descriptor {
-    get { return global::StructureReflection.Descriptor.MessageTypes[3]; }
+    get { return global::StructureReflection.Descriptor.MessageTypes[2]; }
   }
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -1031,6 +560,7 @@ public sealed partial class PrayInfo : pb::IMessage<PrayInfo> {
   public PrayInfo(PrayInfo other) : this() {
     varName_ = other.varName_;
     varMessage_ = other.varMessage_;
+    varTime_ = other.varTime_;
     _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
   }
 
@@ -1041,11 +571,11 @@ public sealed partial class PrayInfo : pb::IMessage<PrayInfo> {
 
   /// <summary>Field number for the "var_name" field.</summary>
   public const int VarNameFieldNumber = 1;
-  private readonly static pb::ByteString VarNameDefaultValue = pb::ByteString.Empty;
+  private readonly static string VarNameDefaultValue = "";
 
-  private pb::ByteString varName_;
+  private string varName_;
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  public pb::ByteString VarName {
+  public string VarName {
     get { return varName_ ?? VarNameDefaultValue; }
     set {
       varName_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
@@ -1064,11 +594,11 @@ public sealed partial class PrayInfo : pb::IMessage<PrayInfo> {
 
   /// <summary>Field number for the "var_message" field.</summary>
   public const int VarMessageFieldNumber = 2;
-  private readonly static pb::ByteString VarMessageDefaultValue = pb::ByteString.Empty;
+  private readonly static string VarMessageDefaultValue = "";
 
-  private pb::ByteString varMessage_;
+  private string varMessage_;
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  public pb::ByteString VarMessage {
+  public string VarMessage {
     get { return varMessage_ ?? VarMessageDefaultValue; }
     set {
       varMessage_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
@@ -1083,6 +613,29 @@ public sealed partial class PrayInfo : pb::IMessage<PrayInfo> {
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public void ClearVarMessage() {
     varMessage_ = null;
+  }
+
+  /// <summary>Field number for the "var_time" field.</summary>
+  public const int VarTimeFieldNumber = 3;
+  private readonly static string VarTimeDefaultValue = "";
+
+  private string varTime_;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public string VarTime {
+    get { return varTime_ ?? VarTimeDefaultValue; }
+    set {
+      varTime_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+    }
+  }
+  /// <summary>Gets whether the "var_time" field is set</summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public bool HasVarTime {
+    get { return varTime_ != null; }
+  }
+  /// <summary>Clears the value of the "var_time" field</summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void ClearVarTime() {
+    varTime_ = null;
   }
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -1100,6 +653,7 @@ public sealed partial class PrayInfo : pb::IMessage<PrayInfo> {
     }
     if (VarName != other.VarName) return false;
     if (VarMessage != other.VarMessage) return false;
+    if (VarTime != other.VarTime) return false;
     return Equals(_unknownFields, other._unknownFields);
   }
 
@@ -1108,6 +662,7 @@ public sealed partial class PrayInfo : pb::IMessage<PrayInfo> {
     int hash = 1;
     if (HasVarName) hash ^= VarName.GetHashCode();
     if (HasVarMessage) hash ^= VarMessage.GetHashCode();
+    if (HasVarTime) hash ^= VarTime.GetHashCode();
     if (_unknownFields != null) {
       hash ^= _unknownFields.GetHashCode();
     }
@@ -1123,11 +678,15 @@ public sealed partial class PrayInfo : pb::IMessage<PrayInfo> {
   public void WriteTo(pb::CodedOutputStream output) {
     if (HasVarName) {
       output.WriteRawTag(10);
-      output.WriteBytes(VarName);
+      output.WriteString(VarName);
     }
     if (HasVarMessage) {
       output.WriteRawTag(18);
-      output.WriteBytes(VarMessage);
+      output.WriteString(VarMessage);
+    }
+    if (HasVarTime) {
+      output.WriteRawTag(26);
+      output.WriteString(VarTime);
     }
     if (_unknownFields != null) {
       _unknownFields.WriteTo(output);
@@ -1138,10 +697,13 @@ public sealed partial class PrayInfo : pb::IMessage<PrayInfo> {
   public int CalculateSize() {
     int size = 0;
     if (HasVarName) {
-      size += 1 + pb::CodedOutputStream.ComputeBytesSize(VarName);
+      size += 1 + pb::CodedOutputStream.ComputeStringSize(VarName);
     }
     if (HasVarMessage) {
-      size += 1 + pb::CodedOutputStream.ComputeBytesSize(VarMessage);
+      size += 1 + pb::CodedOutputStream.ComputeStringSize(VarMessage);
+    }
+    if (HasVarTime) {
+      size += 1 + pb::CodedOutputStream.ComputeStringSize(VarTime);
     }
     if (_unknownFields != null) {
       size += _unknownFields.CalculateSize();
@@ -1160,6 +722,9 @@ public sealed partial class PrayInfo : pb::IMessage<PrayInfo> {
     if (other.HasVarMessage) {
       VarMessage = other.VarMessage;
     }
+    if (other.HasVarTime) {
+      VarTime = other.VarTime;
+    }
     _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
   }
 
@@ -1172,11 +737,239 @@ public sealed partial class PrayInfo : pb::IMessage<PrayInfo> {
           _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
           break;
         case 10: {
-          VarName = input.ReadBytes();
+          VarName = input.ReadString();
           break;
         }
         case 18: {
-          VarMessage = input.ReadBytes();
+          VarMessage = input.ReadString();
+          break;
+        }
+        case 26: {
+          VarTime = input.ReadString();
+          break;
+        }
+      }
+    }
+  }
+
+}
+
+public sealed partial class NotifyInfo : pb::IMessage<NotifyInfo> {
+  private static readonly pb::MessageParser<NotifyInfo> _parser = new pb::MessageParser<NotifyInfo>(() => new NotifyInfo());
+  private pb::UnknownFieldSet _unknownFields;
+  private int _hasBits0;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public static pb::MessageParser<NotifyInfo> Parser { get { return _parser; } }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public static pbr::MessageDescriptor Descriptor {
+    get { return global::StructureReflection.Descriptor.MessageTypes[3]; }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  pbr::MessageDescriptor pb::IMessage.Descriptor {
+    get { return Descriptor; }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public NotifyInfo() {
+    OnConstruction();
+  }
+
+  partial void OnConstruction();
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public NotifyInfo(NotifyInfo other) : this() {
+    _hasBits0 = other._hasBits0;
+    varId_ = other.varId_;
+    varContent_ = other.varContent_;
+    varDate_ = other.varDate_;
+    _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public NotifyInfo Clone() {
+    return new NotifyInfo(this);
+  }
+
+  /// <summary>Field number for the "var_id" field.</summary>
+  public const int VarIdFieldNumber = 1;
+  private readonly static long VarIdDefaultValue = 0L;
+
+  private long varId_;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public long VarId {
+    get { if ((_hasBits0 & 1) != 0) { return varId_; } else { return VarIdDefaultValue; } }
+    set {
+      _hasBits0 |= 1;
+      varId_ = value;
+    }
+  }
+  /// <summary>Gets whether the "var_id" field is set</summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public bool HasVarId {
+    get { return (_hasBits0 & 1) != 0; }
+  }
+  /// <summary>Clears the value of the "var_id" field</summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void ClearVarId() {
+    _hasBits0 &= ~1;
+  }
+
+  /// <summary>Field number for the "var_content" field.</summary>
+  public const int VarContentFieldNumber = 2;
+  private readonly static string VarContentDefaultValue = "";
+
+  private string varContent_;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public string VarContent {
+    get { return varContent_ ?? VarContentDefaultValue; }
+    set {
+      varContent_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+    }
+  }
+  /// <summary>Gets whether the "var_content" field is set</summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public bool HasVarContent {
+    get { return varContent_ != null; }
+  }
+  /// <summary>Clears the value of the "var_content" field</summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void ClearVarContent() {
+    varContent_ = null;
+  }
+
+  /// <summary>Field number for the "var_date" field.</summary>
+  public const int VarDateFieldNumber = 3;
+  private readonly static string VarDateDefaultValue = "";
+
+  private string varDate_;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public string VarDate {
+    get { return varDate_ ?? VarDateDefaultValue; }
+    set {
+      varDate_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+    }
+  }
+  /// <summary>Gets whether the "var_date" field is set</summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public bool HasVarDate {
+    get { return varDate_ != null; }
+  }
+  /// <summary>Clears the value of the "var_date" field</summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void ClearVarDate() {
+    varDate_ = null;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public override bool Equals(object other) {
+    return Equals(other as NotifyInfo);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public bool Equals(NotifyInfo other) {
+    if (ReferenceEquals(other, null)) {
+      return false;
+    }
+    if (ReferenceEquals(other, this)) {
+      return true;
+    }
+    if (VarId != other.VarId) return false;
+    if (VarContent != other.VarContent) return false;
+    if (VarDate != other.VarDate) return false;
+    return Equals(_unknownFields, other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public override int GetHashCode() {
+    int hash = 1;
+    if (HasVarId) hash ^= VarId.GetHashCode();
+    if (HasVarContent) hash ^= VarContent.GetHashCode();
+    if (HasVarDate) hash ^= VarDate.GetHashCode();
+    if (_unknownFields != null) {
+      hash ^= _unknownFields.GetHashCode();
+    }
+    return hash;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public override string ToString() {
+    return pb::JsonFormatter.ToDiagnosticString(this);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void WriteTo(pb::CodedOutputStream output) {
+    if (HasVarId) {
+      output.WriteRawTag(8);
+      output.WriteInt64(VarId);
+    }
+    if (HasVarContent) {
+      output.WriteRawTag(18);
+      output.WriteString(VarContent);
+    }
+    if (HasVarDate) {
+      output.WriteRawTag(26);
+      output.WriteString(VarDate);
+    }
+    if (_unknownFields != null) {
+      _unknownFields.WriteTo(output);
+    }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public int CalculateSize() {
+    int size = 0;
+    if (HasVarId) {
+      size += 1 + pb::CodedOutputStream.ComputeInt64Size(VarId);
+    }
+    if (HasVarContent) {
+      size += 1 + pb::CodedOutputStream.ComputeStringSize(VarContent);
+    }
+    if (HasVarDate) {
+      size += 1 + pb::CodedOutputStream.ComputeStringSize(VarDate);
+    }
+    if (_unknownFields != null) {
+      size += _unknownFields.CalculateSize();
+    }
+    return size;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void MergeFrom(NotifyInfo other) {
+    if (other == null) {
+      return;
+    }
+    if (other.HasVarId) {
+      VarId = other.VarId;
+    }
+    if (other.HasVarContent) {
+      VarContent = other.VarContent;
+    }
+    if (other.HasVarDate) {
+      VarDate = other.VarDate;
+    }
+    _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void MergeFrom(pb::CodedInputStream input) {
+    uint tag;
+    while ((tag = input.ReadTag()) != 0) {
+      switch(tag) {
+        default:
+          _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+          break;
+        case 8: {
+          VarId = input.ReadInt64();
+          break;
+        }
+        case 18: {
+          VarContent = input.ReadString();
+          break;
+        }
+        case 26: {
+          VarDate = input.ReadString();
           break;
         }
       }

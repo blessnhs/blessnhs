@@ -22,7 +22,7 @@ public static partial class EnumReflection {
   static EnumReflection() {
     byte[] descriptorData = global::System.Convert.FromBase64String(
         string.Concat(
-          "CgpFbnVtLnByb3RvKv4FCghQUk9UT0NPTBIWChJJRF9QS1RfVkVSU0lPTl9S",
+          "CgpFbnVtLnByb3RvKqYGCghQUk9UT0NPTBIWChJJRF9QS1RfVkVSU0lPTl9S",
           "RVEQABIWChJJRF9QS1RfVkVSU0lPTl9SRVMQARIUChBJRF9QS1RfTE9HSU5f",
           "UkVREAISFAoQSURfUEtUX0xPR0lOX1JFUxADEhoKFklEX1BLVF9DUkVBVEVf",
           "Uk9PTV9SRVEQBBIaChZJRF9QS1RfQ1JFQVRFX1JPT01fUkVTEAUSGQoVSURf",
@@ -39,9 +39,10 @@ public static partial class EnumReflection {
           "GElEX1BLVF9BVURJT19NRVNTQUdFX1JFUxAWEhsKF0lEX1BLVF9QUkFZX01F",
           "U1NBR0VfUkVREBcSGwoXSURfUEtUX1BSQVlfTUVTU0FHRV9SRVMQGBIfChtJ",
           "RF9QS1RfUFJBWV9NRVNTQUdFX1JFR19SRVEQGRIfChtJRF9QS1RfUFJBWV9N",
-          "RVNTQUdFX1JFR19SRVMQGiphCglFcnJvckNvZGUSCwoHU3VjY2VzcxAAEhEK",
-          "DURhdGFCYXNlRXJyb3IQARISCg5Mb2dpbkR1cGxpY2F0ZRACEg8KC1N5c3Rl",
-          "bUVycm9yEAMSDwoLTG9naW5GYWlsZWQQBEICSAFiBnByb3RvMw=="));
+          "RVNTQUdFX1JFR19SRVMQGhISCg5JRF9QS1RfUU5BX1JFURAbEhIKDklEX1BL",
+          "VF9RTkFfUkVTEBwqYQoJRXJyb3JDb2RlEgsKB1N1Y2Nlc3MQABIRCg1EYXRh",
+          "QmFzZUVycm9yEAESEgoOTG9naW5EdXBsaWNhdGUQAhIPCgtTeXN0ZW1FcnJv",
+          "chADEg8KC0xvZ2luRmFpbGVkEARCAkgBYgZwcm90bzM="));
     descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
         new pbr::FileDescriptor[] { },
         new pbr::GeneratedClrTypeInfo(new[] {typeof(global::PROTOCOL), typeof(global::ErrorCode), }, null, null));
@@ -78,6 +79,8 @@ public enum PROTOCOL {
   [pbr::OriginalName("ID_PKT_PRAY_MESSAGE_RES")] IdPktPrayMessageRes = 24,
   [pbr::OriginalName("ID_PKT_PRAY_MESSAGE_REG_REQ")] IdPktPrayMessageRegReq = 25,
   [pbr::OriginalName("ID_PKT_PRAY_MESSAGE_REG_RES")] IdPktPrayMessageRegRes = 26,
+  [pbr::OriginalName("ID_PKT_QNA_REQ")] IdPktQnaReq = 27,
+  [pbr::OriginalName("ID_PKT_QNA_RES")] IdPktQnaRes = 28,
 }
 
 public enum ErrorCode {

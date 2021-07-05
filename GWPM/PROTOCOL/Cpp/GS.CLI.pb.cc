@@ -14,6 +14,7 @@
 #include <google/protobuf/wire_format.h>
 // @@protoc_insertion_point(includes)
 #include <google/protobuf/port_def.inc>
+extern PROTOBUF_INTERNAL_EXPORT_Structure_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_NotifyInfo_Structure_2eproto;
 extern PROTOBUF_INTERNAL_EXPORT_Structure_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_PrayInfo_Structure_2eproto;
 extern PROTOBUF_INTERNAL_EXPORT_Structure_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_RoomInfo2_Structure_2eproto;
 extern PROTOBUF_INTERNAL_EXPORT_Structure_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_RoomUserInfo_Structure_2eproto;
@@ -69,6 +70,10 @@ class PRAY_MESSAGE_REG_RESDefaultTypeInternal {
  public:
   ::PROTOBUF_NAMESPACE_ID::internal::ExplicitlyConstructed<PRAY_MESSAGE_REG_RES> _instance;
 } _PRAY_MESSAGE_REG_RES_default_instance_;
+class QNA_RESDefaultTypeInternal {
+ public:
+  ::PROTOBUF_NAMESPACE_ID::internal::ExplicitlyConstructed<QNA_RES> _instance;
+} _QNA_RES_default_instance_;
 static void InitDefaultsscc_info_AUDIO_MESSAGE_RES_GS_2eCLI_2eproto() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
@@ -179,8 +184,9 @@ static void InitDefaultsscc_info_NOTICE_RES_GS_2eCLI_2eproto() {
   ::NOTICE_RES::InitAsDefaultInstance();
 }
 
-::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_NOTICE_RES_GS_2eCLI_2eproto =
-    {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 0, 0, InitDefaultsscc_info_NOTICE_RES_GS_2eCLI_2eproto}, {}};
+::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<1> scc_info_NOTICE_RES_GS_2eCLI_2eproto =
+    {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 1, 0, InitDefaultsscc_info_NOTICE_RES_GS_2eCLI_2eproto}, {
+      &scc_info_NotifyInfo_Structure_2eproto.base,}};
 
 static void InitDefaultsscc_info_PRAY_MESSAGE_REG_RES_GS_2eCLI_2eproto() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
@@ -193,9 +199,8 @@ static void InitDefaultsscc_info_PRAY_MESSAGE_REG_RES_GS_2eCLI_2eproto() {
   ::PRAY_MESSAGE_REG_RES::InitAsDefaultInstance();
 }
 
-::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<1> scc_info_PRAY_MESSAGE_REG_RES_GS_2eCLI_2eproto =
-    {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 1, 0, InitDefaultsscc_info_PRAY_MESSAGE_REG_RES_GS_2eCLI_2eproto}, {
-      &scc_info_PrayInfo_Structure_2eproto.base,}};
+::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_PRAY_MESSAGE_REG_RES_GS_2eCLI_2eproto =
+    {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 0, 0, InitDefaultsscc_info_PRAY_MESSAGE_REG_RES_GS_2eCLI_2eproto}, {}};
 
 static void InitDefaultsscc_info_PRAY_MESSAGE_RES_GS_2eCLI_2eproto() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
@@ -208,8 +213,23 @@ static void InitDefaultsscc_info_PRAY_MESSAGE_RES_GS_2eCLI_2eproto() {
   ::PRAY_MESSAGE_RES::InitAsDefaultInstance();
 }
 
-::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_PRAY_MESSAGE_RES_GS_2eCLI_2eproto =
-    {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 0, 0, InitDefaultsscc_info_PRAY_MESSAGE_RES_GS_2eCLI_2eproto}, {}};
+::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<1> scc_info_PRAY_MESSAGE_RES_GS_2eCLI_2eproto =
+    {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 1, 0, InitDefaultsscc_info_PRAY_MESSAGE_RES_GS_2eCLI_2eproto}, {
+      &scc_info_PrayInfo_Structure_2eproto.base,}};
+
+static void InitDefaultsscc_info_QNA_RES_GS_2eCLI_2eproto() {
+  GOOGLE_PROTOBUF_VERIFY_VERSION;
+
+  {
+    void* ptr = &::_QNA_RES_default_instance_;
+    new (ptr) ::QNA_RES();
+    ::PROTOBUF_NAMESPACE_ID::internal::OnShutdownDestroyMessage(ptr);
+  }
+  ::QNA_RES::InitAsDefaultInstance();
+}
+
+::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_QNA_RES_GS_2eCLI_2eproto =
+    {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 0, 0, InitDefaultsscc_info_QNA_RES_GS_2eCLI_2eproto}, {}};
 
 static void InitDefaultsscc_info_ROOM_LIST_RES_GS_2eCLI_2eproto() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
@@ -254,7 +274,7 @@ static void InitDefaultsscc_info_VERSION_RES_GS_2eCLI_2eproto() {
 ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_VERSION_RES_GS_2eCLI_2eproto =
     {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 0, 0, InitDefaultsscc_info_VERSION_RES_GS_2eCLI_2eproto}, {}};
 
-static ::PROTOBUF_NAMESPACE_ID::Metadata file_level_metadata_GS_2eCLI_2eproto[13];
+static ::PROTOBUF_NAMESPACE_ID::Metadata file_level_metadata_GS_2eCLI_2eproto[14];
 static constexpr ::PROTOBUF_NAMESPACE_ID::EnumDescriptor const** file_level_enum_descriptors_GS_2eCLI_2eproto = nullptr;
 static constexpr ::PROTOBUF_NAMESPACE_ID::ServiceDescriptor const** file_level_service_descriptors_GS_2eCLI_2eproto = nullptr;
 
@@ -319,9 +339,11 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_GS_2eCLI_2eproto::offsets[] PR
   PROTOBUF_FIELD_OFFSET(::NEW_USER_IN_ROOM_NTY, id_),
   PROTOBUF_FIELD_OFFSET(::NEW_USER_IN_ROOM_NTY, var_room_user_),
   PROTOBUF_FIELD_OFFSET(::NEW_USER_IN_ROOM_NTY, var_code_),
-  2,
+  PROTOBUF_FIELD_OFFSET(::NEW_USER_IN_ROOM_NTY, var_type_),
+  3,
   0,
   1,
+  2,
   PROTOBUF_FIELD_OFFSET(::LEAVE_ROOM_RES, _has_bits_),
   PROTOBUF_FIELD_OFFSET(::LEAVE_ROOM_RES, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -367,9 +389,9 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_GS_2eCLI_2eproto::offsets[] PR
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
   PROTOBUF_FIELD_OFFSET(::NOTICE_RES, id_),
-  PROTOBUF_FIELD_OFFSET(::NOTICE_RES, var_message_),
-  1,
+  PROTOBUF_FIELD_OFFSET(::NOTICE_RES, var_list_),
   0,
+  ~0u,
   PROTOBUF_FIELD_OFFSET(::BITMAP_MESSAGE_RES, _has_bits_),
   PROTOBUF_FIELD_OFFSET(::BITMAP_MESSAGE_RES, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -403,34 +425,48 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_GS_2eCLI_2eproto::offsets[] PR
   ~0u,  // no _weak_field_map_
   PROTOBUF_FIELD_OFFSET(::PRAY_MESSAGE_RES, id_),
   PROTOBUF_FIELD_OFFSET(::PRAY_MESSAGE_RES, var_code_),
-  PROTOBUF_FIELD_OFFSET(::PRAY_MESSAGE_RES, var_message_),
-  2,
+  PROTOBUF_FIELD_OFFSET(::PRAY_MESSAGE_RES, var_list_),
   1,
   0,
+  ~0u,
   PROTOBUF_FIELD_OFFSET(::PRAY_MESSAGE_REG_RES, _has_bits_),
   PROTOBUF_FIELD_OFFSET(::PRAY_MESSAGE_REG_RES, _internal_metadata_),
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
   PROTOBUF_FIELD_OFFSET(::PRAY_MESSAGE_REG_RES, id_),
-  PROTOBUF_FIELD_OFFSET(::PRAY_MESSAGE_REG_RES, var_list_),
+  PROTOBUF_FIELD_OFFSET(::PRAY_MESSAGE_REG_RES, var_code_),
+  PROTOBUF_FIELD_OFFSET(::PRAY_MESSAGE_REG_RES, var_message_),
+  PROTOBUF_FIELD_OFFSET(::PRAY_MESSAGE_REG_RES, var_time_),
+  3,
+  2,
   0,
-  ~0u,
+  1,
+  PROTOBUF_FIELD_OFFSET(::QNA_RES, _has_bits_),
+  PROTOBUF_FIELD_OFFSET(::QNA_RES, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  PROTOBUF_FIELD_OFFSET(::QNA_RES, id_),
+  PROTOBUF_FIELD_OFFSET(::QNA_RES, var_code_),
+  1,
+  0,
 };
 static const ::PROTOBUF_NAMESPACE_ID::internal::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
   { 0, 8, sizeof(::VERSION_RES)},
   { 11, 21, sizeof(::LOGIN_RES)},
   { 26, 35, sizeof(::CREATE_ROOM_RES)},
   { 39, 48, sizeof(::ENTER_ROOM_RES)},
-  { 52, 60, sizeof(::NEW_USER_IN_ROOM_NTY)},
-  { 63, 72, sizeof(::LEAVE_ROOM_RES)},
-  { 76, 84, sizeof(::ROOM_LIST_RES)},
-  { 87, 97, sizeof(::ROOM_PASS_THROUGH_RES)},
-  { 102, 109, sizeof(::NOTICE_RES)},
-  { 111, 120, sizeof(::BITMAP_MESSAGE_RES)},
-  { 124, 133, sizeof(::AUDIO_MESSAGE_RES)},
-  { 137, 145, sizeof(::PRAY_MESSAGE_RES)},
-  { 148, 155, sizeof(::PRAY_MESSAGE_REG_RES)},
+  { 52, 61, sizeof(::NEW_USER_IN_ROOM_NTY)},
+  { 65, 74, sizeof(::LEAVE_ROOM_RES)},
+  { 78, 86, sizeof(::ROOM_LIST_RES)},
+  { 89, 99, sizeof(::ROOM_PASS_THROUGH_RES)},
+  { 104, 111, sizeof(::NOTICE_RES)},
+  { 113, 122, sizeof(::BITMAP_MESSAGE_RES)},
+  { 126, 135, sizeof(::AUDIO_MESSAGE_RES)},
+  { 139, 147, sizeof(::PRAY_MESSAGE_RES)},
+  { 150, 159, sizeof(::PRAY_MESSAGE_REG_RES)},
+  { 163, 170, sizeof(::QNA_RES)},
 };
 
 static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] = {
@@ -447,6 +483,7 @@ static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] =
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::_AUDIO_MESSAGE_RES_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::_PRAY_MESSAGE_RES_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::_PRAY_MESSAGE_REG_RES_default_instance_),
+  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::_QNA_RES_default_instance_),
 };
 
 const char descriptor_table_protodef_GS_2eCLI_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
@@ -456,50 +493,54 @@ const char descriptor_table_protodef_GS_2eCLI_2eproto[] PROTOBUF_SECTION_VARIABL
   "(\002\022\034\n\010var_code\030\003 \001(\0162\n.ErrorCode\"\213\001\n\tLOG"
   "IN_RES\022\'\n\002id\030\001 \001(\0162\t.PROTOCOL:\020ID_PKT_LO"
   "GIN_RES\022\034\n\010var_code\030\002 \001(\0162\n.ErrorCode\022\021\n"
-  "\tvar_index\030\003 \001(\003\022\022\n\nvar_locale\030\004 \001(\014\022\020\n\010"
-  "var_name\030\005 \001(\014\"\205\001\n\017CREATE_ROOM_RES\022-\n\002id"
+  "\tvar_index\030\003 \001(\003\022\022\n\nvar_locale\030\004 \001(\t\022\020\n\010"
+  "var_name\030\005 \001(\t\"\205\001\n\017CREATE_ROOM_RES\022-\n\002id"
   "\030\001 \001(\0162\t.PROTOCOL:\026ID_PKT_CREATE_ROOM_RE"
-  "S\022\020\n\010var_name\030\002 \001(\014\022\023\n\013var_room_id\030\003 \001(\005"
+  "S\022\020\n\010var_name\030\002 \001(\t\022\023\n\013var_room_id\030\003 \001(\005"
   "\022\034\n\010var_code\030\004 \001(\0162\n.ErrorCode\"\203\001\n\016ENTER"
   "_ROOM_RES\022,\n\002id\030\001 \001(\0162\t.PROTOCOL:\025ID_PKT"
-  "_ENTER_ROOM_RES\022\020\n\010var_name\030\002 \001(\014\022\023\n\013var"
+  "_ENTER_ROOM_RES\022\020\n\010var_name\030\002 \001(\t\022\023\n\013var"
   "_room_id\030\003 \001(\005\022\034\n\010var_code\030\004 \001(\0162\n.Error"
-  "Code\"\216\001\n\024NEW_USER_IN_ROOM_NTY\0222\n\002id\030\001 \001("
+  "Code\"\240\001\n\024NEW_USER_IN_ROOM_NTY\0222\n\002id\030\001 \001("
   "\0162\t.PROTOCOL:\033ID_PKT_NEW_USER_IN_ROOM_NT"
   "Y\022$\n\rvar_room_user\030\002 \001(\0132\r.RoomUserInfo\022"
-  "\034\n\010var_code\030\003 \001(\0162\n.ErrorCode\"\201\001\n\016LEAVE_"
-  "ROOM_RES\022,\n\002id\030\001 \001(\0162\t.PROTOCOL:\025ID_PKT_"
-  "LEAVE_ROOM_RES\022\020\n\010var_name\030\002 \001(\014\022\034\n\010var_"
-  "code\030\003 \001(\0162\n.ErrorCode\022\021\n\tvar_index\030\004 \001("
-  "\003\"}\n\rROOM_LIST_RES\022+\n\002id\030\001 \001(\0162\t.PROTOCO"
-  "L:\024ID_PKT_ROOM_LIST_RES\022\034\n\010var_code\030\002 \001("
-  "\0162\n.ErrorCode\022!\n\rvar_room_list\030\003 \003(\0132\n.R"
-  "oomInfo2\"\252\001\n\025ROOM_PASS_THROUGH_RES\0223\n\002id"
-  "\030\001 \001(\0162\t.PROTOCOL:\034ID_PKT_ROOM_PASS_THRO"
-  "UGH_RES\022\034\n\010var_code\030\002 \001(\0162\n.ErrorCode\022\020\n"
-  "\010var_name\030\003 \002(\014\022\023\n\013var_message\030\004 \002(\014\022\027\n\017"
-  "var_message_int\030\005 \002(\005\"K\n\nNOTICE_RES\022(\n\002i"
-  "d\030\001 \001(\0162\t.PROTOCOL:\021ID_PKT_NOTICE_RES\022\023\n"
-  "\013var_message\030\002 \002(\014\"\213\001\n\022BITMAP_MESSAGE_RE"
-  "S\0220\n\002id\030\001 \001(\0162\t.PROTOCOL:\031ID_PKT_BITMAP_"
-  "MESSAGE_RES\022\034\n\010var_code\030\002 \001(\0162\n.ErrorCod"
-  "e\022\023\n\013var_message\030\003 \003(\014\022\020\n\010var_name\030\004 \001(\014"
-  "\"\211\001\n\021AUDIO_MESSAGE_RES\022/\n\002id\030\001 \001(\0162\t.PRO"
-  "TOCOL:\030ID_PKT_AUDIO_MESSAGE_RES\022\034\n\010var_c"
-  "ode\030\002 \001(\0162\n.ErrorCode\022\023\n\013var_message\030\003 \003"
-  "(\014\022\020\n\010var_name\030\004 \001(\014\"u\n\020PRAY_MESSAGE_RES"
-  "\022.\n\002id\030\001 \001(\0162\t.PROTOCOL:\027ID_PKT_PRAY_MES"
-  "SAGE_RES\022\034\n\010var_code\030\002 \001(\0162\n.ErrorCode\022\023"
-  "\n\013var_message\030\003 \001(\014\"g\n\024PRAY_MESSAGE_REG_"
-  "RES\0222\n\002id\030\001 \001(\0162\t.PROTOCOL:\033ID_PKT_PRAY_"
-  "MESSAGE_REG_RES\022\033\n\010var_list\030\002 \003(\0132\t.Pray"
-  "InfoB\002H\001"
+  "\034\n\010var_code\030\003 \001(\0162\n.ErrorCode\022\020\n\010var_typ"
+  "e\030\004 \001(\005\"\201\001\n\016LEAVE_ROOM_RES\022,\n\002id\030\001 \001(\0162\t"
+  ".PROTOCOL:\025ID_PKT_LEAVE_ROOM_RES\022\020\n\010var_"
+  "name\030\002 \001(\t\022\034\n\010var_code\030\003 \001(\0162\n.ErrorCode"
+  "\022\021\n\tvar_index\030\004 \001(\003\"}\n\rROOM_LIST_RES\022+\n\002"
+  "id\030\001 \001(\0162\t.PROTOCOL:\024ID_PKT_ROOM_LIST_RE"
+  "S\022\034\n\010var_code\030\002 \001(\0162\n.ErrorCode\022!\n\rvar_r"
+  "oom_list\030\003 \003(\0132\n.RoomInfo2\"\252\001\n\025ROOM_PASS"
+  "_THROUGH_RES\0223\n\002id\030\001 \001(\0162\t.PROTOCOL:\034ID_"
+  "PKT_ROOM_PASS_THROUGH_RES\022\034\n\010var_code\030\002 "
+  "\001(\0162\n.ErrorCode\022\020\n\010var_name\030\003 \002(\t\022\023\n\013var"
+  "_message\030\004 \002(\t\022\027\n\017var_message_int\030\005 \002(\005\""
+  "U\n\nNOTICE_RES\022(\n\002id\030\001 \001(\0162\t.PROTOCOL:\021ID"
+  "_PKT_NOTICE_RES\022\035\n\010var_list\030\002 \003(\0132\013.Noti"
+  "fyInfo\"\213\001\n\022BITMAP_MESSAGE_RES\0220\n\002id\030\001 \001("
+  "\0162\t.PROTOCOL:\031ID_PKT_BITMAP_MESSAGE_RES\022"
+  "\034\n\010var_code\030\002 \001(\0162\n.ErrorCode\022\023\n\013var_mes"
+  "sage\030\003 \003(\014\022\020\n\010var_name\030\004 \001(\014\"\211\001\n\021AUDIO_M"
+  "ESSAGE_RES\022/\n\002id\030\001 \001(\0162\t.PROTOCOL:\030ID_PK"
+  "T_AUDIO_MESSAGE_RES\022\034\n\010var_code\030\002 \001(\0162\n."
+  "ErrorCode\022\023\n\013var_message\030\003 \003(\014\022\020\n\010var_na"
+  "me\030\004 \001(\014\"}\n\020PRAY_MESSAGE_RES\022.\n\002id\030\001 \001(\016"
+  "2\t.PROTOCOL:\027ID_PKT_PRAY_MESSAGE_RES\022\034\n\010"
+  "var_code\030\002 \001(\0162\n.ErrorCode\022\033\n\010var_list\030\003"
+  " \003(\0132\t.PrayInfo\"\217\001\n\024PRAY_MESSAGE_REG_RES"
+  "\0222\n\002id\030\001 \001(\0162\t.PROTOCOL:\033ID_PKT_PRAY_MES"
+  "SAGE_REG_RES\022\034\n\010var_code\030\002 \001(\0162\n.ErrorCo"
+  "de\022\023\n\013var_message\030\003 \001(\t\022\020\n\010var_time\030\004 \001("
+  "\t\"N\n\007QNA_RES\022%\n\002id\030\001 \001(\0162\t.PROTOCOL:\016ID_"
+  "PKT_QNA_RES\022\034\n\010var_code\030\002 \001(\0162\n.ErrorCod"
+  "eB\002H\001"
   ;
 static const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable*const descriptor_table_GS_2eCLI_2eproto_deps[2] = {
   &::descriptor_table_Enum_2eproto,
   &::descriptor_table_Structure_2eproto,
 };
-static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_GS_2eCLI_2eproto_sccs[13] = {
+static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_GS_2eCLI_2eproto_sccs[14] = {
   &scc_info_AUDIO_MESSAGE_RES_GS_2eCLI_2eproto.base,
   &scc_info_BITMAP_MESSAGE_RES_GS_2eCLI_2eproto.base,
   &scc_info_CREATE_ROOM_RES_GS_2eCLI_2eproto.base,
@@ -510,6 +551,7 @@ static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_GS_
   &scc_info_NOTICE_RES_GS_2eCLI_2eproto.base,
   &scc_info_PRAY_MESSAGE_REG_RES_GS_2eCLI_2eproto.base,
   &scc_info_PRAY_MESSAGE_RES_GS_2eCLI_2eproto.base,
+  &scc_info_QNA_RES_GS_2eCLI_2eproto.base,
   &scc_info_ROOM_LIST_RES_GS_2eCLI_2eproto.base,
   &scc_info_ROOM_PASS_THROUGH_RES_GS_2eCLI_2eproto.base,
   &scc_info_VERSION_RES_GS_2eCLI_2eproto.base,
@@ -517,10 +559,10 @@ static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_GS_
 static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_GS_2eCLI_2eproto_once;
 static bool descriptor_table_GS_2eCLI_2eproto_initialized = false;
 const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_GS_2eCLI_2eproto = {
-  &descriptor_table_GS_2eCLI_2eproto_initialized, descriptor_table_protodef_GS_2eCLI_2eproto, "GS.CLI.proto", 1728,
-  &descriptor_table_GS_2eCLI_2eproto_once, descriptor_table_GS_2eCLI_2eproto_sccs, descriptor_table_GS_2eCLI_2eproto_deps, 13, 2,
+  &descriptor_table_GS_2eCLI_2eproto_initialized, descriptor_table_protodef_GS_2eCLI_2eproto, "GS.CLI.proto", 1885,
+  &descriptor_table_GS_2eCLI_2eproto_once, descriptor_table_GS_2eCLI_2eproto_sccs, descriptor_table_GS_2eCLI_2eproto_deps, 14, 2,
   schemas, file_default_instances, TableStruct_GS_2eCLI_2eproto::offsets,
-  file_level_metadata_GS_2eCLI_2eproto, 13, file_level_enum_descriptors_GS_2eCLI_2eproto, file_level_service_descriptors_GS_2eCLI_2eproto,
+  file_level_metadata_GS_2eCLI_2eproto, 14, file_level_enum_descriptors_GS_2eCLI_2eproto, file_level_service_descriptors_GS_2eCLI_2eproto,
 };
 
 // Force running AddDescriptors() at dynamic initialization time.
@@ -945,19 +987,25 @@ const char* LOGIN_RES::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
-      // optional bytes var_locale = 4;
+      // optional string var_locale = 4;
       case 4:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 34)) {
           auto str = _internal_mutable_var_locale();
           ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
+          #ifndef NDEBUG
+          ::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "LOGIN_RES.var_locale");
+          #endif  // !NDEBUG
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
-      // optional bytes var_name = 5;
+      // optional string var_name = 5;
       case 5:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 42)) {
           auto str = _internal_mutable_var_name();
           ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
+          #ifndef NDEBUG
+          ::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "LOGIN_RES.var_name");
+          #endif  // !NDEBUG
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
@@ -1009,15 +1057,23 @@ failure:
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt64ToArray(3, this->_internal_var_index(), target);
   }
 
-  // optional bytes var_locale = 4;
+  // optional string var_locale = 4;
   if (cached_has_bits & 0x00000001u) {
-    target = stream->WriteBytesMaybeAliased(
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->_internal_var_locale().data(), static_cast<int>(this->_internal_var_locale().length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SERIALIZE,
+      "LOGIN_RES.var_locale");
+    target = stream->WriteStringMaybeAliased(
         4, this->_internal_var_locale(), target);
   }
 
-  // optional bytes var_name = 5;
+  // optional string var_name = 5;
   if (cached_has_bits & 0x00000002u) {
-    target = stream->WriteBytesMaybeAliased(
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->_internal_var_name().data(), static_cast<int>(this->_internal_var_name().length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SERIALIZE,
+      "LOGIN_RES.var_name");
+    target = stream->WriteStringMaybeAliased(
         5, this->_internal_var_name(), target);
   }
 
@@ -1039,17 +1095,17 @@ size_t LOGIN_RES::ByteSizeLong() const {
 
   cached_has_bits = _has_bits_[0];
   if (cached_has_bits & 0x0000001fu) {
-    // optional bytes var_locale = 4;
+    // optional string var_locale = 4;
     if (cached_has_bits & 0x00000001u) {
       total_size += 1 +
-        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::BytesSize(
+        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
           this->_internal_var_locale());
     }
 
-    // optional bytes var_name = 5;
+    // optional string var_name = 5;
     if (cached_has_bits & 0x00000002u) {
       total_size += 1 +
-        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::BytesSize(
+        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
           this->_internal_var_name());
     }
 
@@ -1271,11 +1327,14 @@ const char* CREATE_ROOM_RES::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPAC
           }
         } else goto handle_unusual;
         continue;
-      // optional bytes var_name = 2;
+      // optional string var_name = 2;
       case 2:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 18)) {
           auto str = _internal_mutable_var_name();
           ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
+          #ifndef NDEBUG
+          ::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "CREATE_ROOM_RES.var_name");
+          #endif  // !NDEBUG
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
@@ -1334,9 +1393,13 @@ failure:
       1, this->_internal_id(), target);
   }
 
-  // optional bytes var_name = 2;
+  // optional string var_name = 2;
   if (cached_has_bits & 0x00000001u) {
-    target = stream->WriteBytesMaybeAliased(
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->_internal_var_name().data(), static_cast<int>(this->_internal_var_name().length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SERIALIZE,
+      "CREATE_ROOM_RES.var_name");
+    target = stream->WriteStringMaybeAliased(
         2, this->_internal_var_name(), target);
   }
 
@@ -1371,10 +1434,10 @@ size_t CREATE_ROOM_RES::ByteSizeLong() const {
 
   cached_has_bits = _has_bits_[0];
   if (cached_has_bits & 0x0000000fu) {
-    // optional bytes var_name = 2;
+    // optional string var_name = 2;
     if (cached_has_bits & 0x00000001u) {
       total_size += 1 +
-        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::BytesSize(
+        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
           this->_internal_var_name());
     }
 
@@ -1590,11 +1653,14 @@ const char* ENTER_ROOM_RES::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE
           }
         } else goto handle_unusual;
         continue;
-      // optional bytes var_name = 2;
+      // optional string var_name = 2;
       case 2:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 18)) {
           auto str = _internal_mutable_var_name();
           ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
+          #ifndef NDEBUG
+          ::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "ENTER_ROOM_RES.var_name");
+          #endif  // !NDEBUG
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
@@ -1653,9 +1719,13 @@ failure:
       1, this->_internal_id(), target);
   }
 
-  // optional bytes var_name = 2;
+  // optional string var_name = 2;
   if (cached_has_bits & 0x00000001u) {
-    target = stream->WriteBytesMaybeAliased(
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->_internal_var_name().data(), static_cast<int>(this->_internal_var_name().length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SERIALIZE,
+      "ENTER_ROOM_RES.var_name");
+    target = stream->WriteStringMaybeAliased(
         2, this->_internal_var_name(), target);
   }
 
@@ -1690,10 +1760,10 @@ size_t ENTER_ROOM_RES::ByteSizeLong() const {
 
   cached_has_bits = _has_bits_[0];
   if (cached_has_bits & 0x0000000fu) {
-    // optional bytes var_name = 2;
+    // optional string var_name = 2;
     if (cached_has_bits & 0x00000001u) {
       total_size += 1 +
-        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::BytesSize(
+        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
           this->_internal_var_name());
     }
 
@@ -1811,7 +1881,7 @@ class NEW_USER_IN_ROOM_NTY::_Internal {
  public:
   using HasBits = decltype(std::declval<NEW_USER_IN_ROOM_NTY>()._has_bits_);
   static void set_has_id(HasBits* has_bits) {
-    (*has_bits)[0] |= 4u;
+    (*has_bits)[0] |= 8u;
   }
   static const ::RoomUserInfo& var_room_user(const NEW_USER_IN_ROOM_NTY* msg);
   static void set_has_var_room_user(HasBits* has_bits) {
@@ -1819,6 +1889,9 @@ class NEW_USER_IN_ROOM_NTY::_Internal {
   }
   static void set_has_var_code(HasBits* has_bits) {
     (*has_bits)[0] |= 2u;
+  }
+  static void set_has_var_type(HasBits* has_bits) {
+    (*has_bits)[0] |= 4u;
   }
 };
 
@@ -1854,8 +1927,8 @@ NEW_USER_IN_ROOM_NTY::NEW_USER_IN_ROOM_NTY(const NEW_USER_IN_ROOM_NTY& from)
 void NEW_USER_IN_ROOM_NTY::SharedCtor() {
   ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&scc_info_NEW_USER_IN_ROOM_NTY_GS_2eCLI_2eproto.base);
   ::memset(&var_room_user_, 0, static_cast<size_t>(
-      reinterpret_cast<char*>(&var_code_) -
-      reinterpret_cast<char*>(&var_room_user_)) + sizeof(var_code_));
+      reinterpret_cast<char*>(&var_type_) -
+      reinterpret_cast<char*>(&var_room_user_)) + sizeof(var_type_));
   id_ = 12;
 }
 
@@ -1888,8 +1961,10 @@ void NEW_USER_IN_ROOM_NTY::Clear() {
     GOOGLE_DCHECK(var_room_user_ != nullptr);
     var_room_user_->Clear();
   }
-  if (cached_has_bits & 0x00000006u) {
-    var_code_ = 0;
+  if (cached_has_bits & 0x0000000eu) {
+    ::memset(&var_code_, 0, static_cast<size_t>(
+        reinterpret_cast<char*>(&var_type_) -
+        reinterpret_cast<char*>(&var_code_)) + sizeof(var_type_));
     id_ = 12;
   }
   _has_bits_.Clear();
@@ -1935,6 +2010,14 @@ const char* NEW_USER_IN_ROOM_NTY::_InternalParse(const char* ptr, ::PROTOBUF_NAM
           }
         } else goto handle_unusual;
         continue;
+      // optional int32 var_type = 4;
+      case 4:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 32)) {
+          _Internal::set_has_var_type(&has_bits);
+          var_type_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
       default: {
       handle_unusual:
         if ((tag & 7) == 4 || tag == 0) {
@@ -1964,7 +2047,7 @@ failure:
 
   cached_has_bits = _has_bits_[0];
   // optional .PROTOCOL id = 1 [default = ID_PKT_NEW_USER_IN_ROOM_NTY];
-  if (cached_has_bits & 0x00000004u) {
+  if (cached_has_bits & 0x00000008u) {
     target = stream->EnsureSpace(target);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteEnumToArray(
       1, this->_internal_id(), target);
@@ -1985,6 +2068,12 @@ failure:
       3, this->_internal_var_code(), target);
   }
 
+  // optional int32 var_type = 4;
+  if (cached_has_bits & 0x00000004u) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32ToArray(4, this->_internal_var_type(), target);
+  }
+
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields(), target, stream);
@@ -2002,7 +2091,7 @@ size_t NEW_USER_IN_ROOM_NTY::ByteSizeLong() const {
   (void) cached_has_bits;
 
   cached_has_bits = _has_bits_[0];
-  if (cached_has_bits & 0x00000007u) {
+  if (cached_has_bits & 0x0000000fu) {
     // optional .RoomUserInfo var_room_user = 2;
     if (cached_has_bits & 0x00000001u) {
       total_size += 1 +
@@ -2016,8 +2105,15 @@ size_t NEW_USER_IN_ROOM_NTY::ByteSizeLong() const {
         ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::EnumSize(this->_internal_var_code());
     }
 
-    // optional .PROTOCOL id = 1 [default = ID_PKT_NEW_USER_IN_ROOM_NTY];
+    // optional int32 var_type = 4;
     if (cached_has_bits & 0x00000004u) {
+      total_size += 1 +
+        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32Size(
+          this->_internal_var_type());
+    }
+
+    // optional .PROTOCOL id = 1 [default = ID_PKT_NEW_USER_IN_ROOM_NTY];
+    if (cached_has_bits & 0x00000008u) {
       total_size += 1 +
         ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::EnumSize(this->_internal_id());
     }
@@ -2055,7 +2151,7 @@ void NEW_USER_IN_ROOM_NTY::MergeFrom(const NEW_USER_IN_ROOM_NTY& from) {
   (void) cached_has_bits;
 
   cached_has_bits = from._has_bits_[0];
-  if (cached_has_bits & 0x00000007u) {
+  if (cached_has_bits & 0x0000000fu) {
     if (cached_has_bits & 0x00000001u) {
       _internal_mutable_var_room_user()->::RoomUserInfo::MergeFrom(from._internal_var_room_user());
     }
@@ -2063,6 +2159,9 @@ void NEW_USER_IN_ROOM_NTY::MergeFrom(const NEW_USER_IN_ROOM_NTY& from) {
       var_code_ = from.var_code_;
     }
     if (cached_has_bits & 0x00000004u) {
+      var_type_ = from.var_type_;
+    }
+    if (cached_has_bits & 0x00000008u) {
       id_ = from.id_;
     }
     _has_bits_[0] |= cached_has_bits;
@@ -2093,6 +2192,7 @@ void NEW_USER_IN_ROOM_NTY::InternalSwap(NEW_USER_IN_ROOM_NTY* other) {
   swap(_has_bits_[0], other->_has_bits_[0]);
   swap(var_room_user_, other->var_room_user_);
   swap(var_code_, other->var_code_);
+  swap(var_type_, other->var_type_);
   swap(id_, other->id_);
 }
 
@@ -2209,11 +2309,14 @@ const char* LEAVE_ROOM_RES::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE
           }
         } else goto handle_unusual;
         continue;
-      // optional bytes var_name = 2;
+      // optional string var_name = 2;
       case 2:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 18)) {
           auto str = _internal_mutable_var_name();
           ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
+          #ifndef NDEBUG
+          ::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "LEAVE_ROOM_RES.var_name");
+          #endif  // !NDEBUG
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
@@ -2272,9 +2375,13 @@ failure:
       1, this->_internal_id(), target);
   }
 
-  // optional bytes var_name = 2;
+  // optional string var_name = 2;
   if (cached_has_bits & 0x00000001u) {
-    target = stream->WriteBytesMaybeAliased(
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->_internal_var_name().data(), static_cast<int>(this->_internal_var_name().length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SERIALIZE,
+      "LEAVE_ROOM_RES.var_name");
+    target = stream->WriteStringMaybeAliased(
         2, this->_internal_var_name(), target);
   }
 
@@ -2309,10 +2416,10 @@ size_t LEAVE_ROOM_RES::ByteSizeLong() const {
 
   cached_has_bits = _has_bits_[0];
   if (cached_has_bits & 0x0000000fu) {
-    // optional bytes var_name = 2;
+    // optional string var_name = 2;
     if (cached_has_bits & 0x00000001u) {
       total_size += 1 +
-        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::BytesSize(
+        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
           this->_internal_var_name());
     }
 
@@ -2836,19 +2943,25 @@ const char* ROOM_PASS_THROUGH_RES::_InternalParse(const char* ptr, ::PROTOBUF_NA
           }
         } else goto handle_unusual;
         continue;
-      // required bytes var_name = 3;
+      // required string var_name = 3;
       case 3:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 26)) {
           auto str = _internal_mutable_var_name();
           ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
+          #ifndef NDEBUG
+          ::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "ROOM_PASS_THROUGH_RES.var_name");
+          #endif  // !NDEBUG
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
-      // required bytes var_message = 4;
+      // required string var_message = 4;
       case 4:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 34)) {
           auto str = _internal_mutable_var_message();
           ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
+          #ifndef NDEBUG
+          ::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "ROOM_PASS_THROUGH_RES.var_message");
+          #endif  // !NDEBUG
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
@@ -2902,15 +3015,23 @@ failure:
       2, this->_internal_var_code(), target);
   }
 
-  // required bytes var_name = 3;
+  // required string var_name = 3;
   if (cached_has_bits & 0x00000001u) {
-    target = stream->WriteBytesMaybeAliased(
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->_internal_var_name().data(), static_cast<int>(this->_internal_var_name().length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SERIALIZE,
+      "ROOM_PASS_THROUGH_RES.var_name");
+    target = stream->WriteStringMaybeAliased(
         3, this->_internal_var_name(), target);
   }
 
-  // required bytes var_message = 4;
+  // required string var_message = 4;
   if (cached_has_bits & 0x00000002u) {
-    target = stream->WriteBytesMaybeAliased(
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->_internal_var_message().data(), static_cast<int>(this->_internal_var_message().length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SERIALIZE,
+      "ROOM_PASS_THROUGH_RES.var_message");
+    target = stream->WriteStringMaybeAliased(
         4, this->_internal_var_message(), target);
   }
 
@@ -2933,16 +3054,16 @@ size_t ROOM_PASS_THROUGH_RES::RequiredFieldsByteSizeFallback() const {
   size_t total_size = 0;
 
   if (_internal_has_var_name()) {
-    // required bytes var_name = 3;
+    // required string var_name = 3;
     total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::BytesSize(
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
         this->_internal_var_name());
   }
 
   if (_internal_has_var_message()) {
-    // required bytes var_message = 4;
+    // required string var_message = 4;
     total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::BytesSize(
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
         this->_internal_var_message());
   }
 
@@ -2960,14 +3081,14 @@ size_t ROOM_PASS_THROUGH_RES::ByteSizeLong() const {
   size_t total_size = 0;
 
   if (((_has_bits_[0] & 0x0000000b) ^ 0x0000000b) == 0) {  // All required fields are present.
-    // required bytes var_name = 3;
+    // required string var_name = 3;
     total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::BytesSize(
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
         this->_internal_var_name());
 
-    // required bytes var_message = 4;
+    // required string var_message = 4;
     total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::BytesSize(
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
         this->_internal_var_message());
 
     // required int32 var_message_int = 5;
@@ -3094,13 +3215,13 @@ class NOTICE_RES::_Internal {
  public:
   using HasBits = decltype(std::declval<NOTICE_RES>()._has_bits_);
   static void set_has_id(HasBits* has_bits) {
-    (*has_bits)[0] |= 2u;
-  }
-  static void set_has_var_message(HasBits* has_bits) {
     (*has_bits)[0] |= 1u;
   }
 };
 
+void NOTICE_RES::clear_var_list() {
+  var_list_.Clear();
+}
 NOTICE_RES::NOTICE_RES()
   : ::PROTOBUF_NAMESPACE_ID::Message(), _internal_metadata_(nullptr) {
   SharedCtor();
@@ -3109,19 +3230,15 @@ NOTICE_RES::NOTICE_RES()
 NOTICE_RES::NOTICE_RES(const NOTICE_RES& from)
   : ::PROTOBUF_NAMESPACE_ID::Message(),
       _internal_metadata_(nullptr),
-      _has_bits_(from._has_bits_) {
+      _has_bits_(from._has_bits_),
+      var_list_(from.var_list_) {
   _internal_metadata_.MergeFrom(from._internal_metadata_);
-  var_message_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
-  if (from._internal_has_var_message()) {
-    var_message_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.var_message_);
-  }
   id_ = from.id_;
   // @@protoc_insertion_point(copy_constructor:NOTICE_RES)
 }
 
 void NOTICE_RES::SharedCtor() {
   ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&scc_info_NOTICE_RES_GS_2eCLI_2eproto.base);
-  var_message_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
   id_ = 20;
 }
 
@@ -3131,7 +3248,6 @@ NOTICE_RES::~NOTICE_RES() {
 }
 
 void NOTICE_RES::SharedDtor() {
-  var_message_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
 }
 
 void NOTICE_RES::SetCachedSize(int size) const {
@@ -3149,13 +3265,8 @@ void NOTICE_RES::Clear() {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  cached_has_bits = _has_bits_[0];
-  if (cached_has_bits & 0x00000003u) {
-    if (cached_has_bits & 0x00000001u) {
-      var_message_.ClearNonDefaultToEmptyNoArena();
-    }
-    id_ = 20;
-  }
+  var_list_.Clear();
+  id_ = 20;
   _has_bits_.Clear();
   _internal_metadata_.Clear();
 }
@@ -3180,12 +3291,16 @@ const char* NOTICE_RES::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID:
           }
         } else goto handle_unusual;
         continue;
-      // required bytes var_message = 2;
+      // repeated .NotifyInfo var_list = 2;
       case 2:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 18)) {
-          auto str = _internal_mutable_var_message();
-          ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
-          CHK_(ptr);
+          ptr -= 1;
+          do {
+            ptr += 1;
+            ptr = ctx->ParseMessage(_internal_add_var_list(), ptr);
+            CHK_(ptr);
+            if (!ctx->DataAvailable(ptr)) break;
+          } while (::PROTOBUF_NAMESPACE_ID::internal::ExpectTag<18>(ptr));
         } else goto handle_unusual;
         continue;
       default: {
@@ -3217,16 +3332,18 @@ failure:
 
   cached_has_bits = _has_bits_[0];
   // optional .PROTOCOL id = 1 [default = ID_PKT_NOTICE_RES];
-  if (cached_has_bits & 0x00000002u) {
+  if (cached_has_bits & 0x00000001u) {
     target = stream->EnsureSpace(target);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteEnumToArray(
       1, this->_internal_id(), target);
   }
 
-  // required bytes var_message = 2;
-  if (cached_has_bits & 0x00000001u) {
-    target = stream->WriteBytesMaybeAliased(
-        2, this->_internal_var_message(), target);
+  // repeated .NotifyInfo var_list = 2;
+  for (unsigned int i = 0,
+      n = static_cast<unsigned int>(this->_internal_var_list_size()); i < n; i++) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+      InternalWriteMessage(2, this->_internal_var_list(i), target, stream);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
@@ -3241,19 +3358,20 @@ size_t NOTICE_RES::ByteSizeLong() const {
 // @@protoc_insertion_point(message_byte_size_start:NOTICE_RES)
   size_t total_size = 0;
 
-  // required bytes var_message = 2;
-  if (_internal_has_var_message()) {
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::BytesSize(
-        this->_internal_var_message());
-  }
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
+  // repeated .NotifyInfo var_list = 2;
+  total_size += 1UL * this->_internal_var_list_size();
+  for (const auto& msg : this->var_list_) {
+    total_size +=
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(msg);
+  }
+
   // optional .PROTOCOL id = 1 [default = ID_PKT_NOTICE_RES];
   cached_has_bits = _has_bits_[0];
-  if (cached_has_bits & 0x00000002u) {
+  if (cached_has_bits & 0x00000001u) {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::EnumSize(this->_internal_id());
   }
@@ -3289,16 +3407,9 @@ void NOTICE_RES::MergeFrom(const NOTICE_RES& from) {
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
-  cached_has_bits = from._has_bits_[0];
-  if (cached_has_bits & 0x00000003u) {
-    if (cached_has_bits & 0x00000001u) {
-      _has_bits_[0] |= 0x00000001u;
-      var_message_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.var_message_);
-    }
-    if (cached_has_bits & 0x00000002u) {
-      id_ = from.id_;
-    }
-    _has_bits_[0] |= cached_has_bits;
+  var_list_.MergeFrom(from.var_list_);
+  if (from._internal_has_id()) {
+    _internal_set_id(from._internal_id());
   }
 }
 
@@ -3317,7 +3428,6 @@ void NOTICE_RES::CopyFrom(const NOTICE_RES& from) {
 }
 
 bool NOTICE_RES::IsInitialized() const {
-  if ((_has_bits_[0] & 0x00000001) != 0x00000001) return false;
   return true;
 }
 
@@ -3325,8 +3435,7 @@ void NOTICE_RES::InternalSwap(NOTICE_RES* other) {
   using std::swap;
   _internal_metadata_.Swap(&other->_internal_metadata_);
   swap(_has_bits_[0], other->_has_bits_[0]);
-  var_message_.Swap(&other->var_message_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
-    GetArenaNoVirtual());
+  var_list_.InternalSwap(&other->var_list_);
   swap(id_, other->id_);
 }
 
@@ -3979,16 +4088,16 @@ class PRAY_MESSAGE_RES::_Internal {
  public:
   using HasBits = decltype(std::declval<PRAY_MESSAGE_RES>()._has_bits_);
   static void set_has_id(HasBits* has_bits) {
-    (*has_bits)[0] |= 4u;
-  }
-  static void set_has_var_code(HasBits* has_bits) {
     (*has_bits)[0] |= 2u;
   }
-  static void set_has_var_message(HasBits* has_bits) {
+  static void set_has_var_code(HasBits* has_bits) {
     (*has_bits)[0] |= 1u;
   }
 };
 
+void PRAY_MESSAGE_RES::clear_var_list() {
+  var_list_.Clear();
+}
 PRAY_MESSAGE_RES::PRAY_MESSAGE_RES()
   : ::PROTOBUF_NAMESPACE_ID::Message(), _internal_metadata_(nullptr) {
   SharedCtor();
@@ -3997,12 +4106,9 @@ PRAY_MESSAGE_RES::PRAY_MESSAGE_RES()
 PRAY_MESSAGE_RES::PRAY_MESSAGE_RES(const PRAY_MESSAGE_RES& from)
   : ::PROTOBUF_NAMESPACE_ID::Message(),
       _internal_metadata_(nullptr),
-      _has_bits_(from._has_bits_) {
+      _has_bits_(from._has_bits_),
+      var_list_(from.var_list_) {
   _internal_metadata_.MergeFrom(from._internal_metadata_);
-  var_message_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
-  if (from._internal_has_var_message()) {
-    var_message_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.var_message_);
-  }
   ::memcpy(&var_code_, &from.var_code_,
     static_cast<size_t>(reinterpret_cast<char*>(&id_) -
     reinterpret_cast<char*>(&var_code_)) + sizeof(id_));
@@ -4011,7 +4117,6 @@ PRAY_MESSAGE_RES::PRAY_MESSAGE_RES(const PRAY_MESSAGE_RES& from)
 
 void PRAY_MESSAGE_RES::SharedCtor() {
   ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&scc_info_PRAY_MESSAGE_RES_GS_2eCLI_2eproto.base);
-  var_message_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
   var_code_ = 0;
   id_ = 24;
 }
@@ -4022,7 +4127,6 @@ PRAY_MESSAGE_RES::~PRAY_MESSAGE_RES() {
 }
 
 void PRAY_MESSAGE_RES::SharedDtor() {
-  var_message_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
 }
 
 void PRAY_MESSAGE_RES::SetCachedSize(int size) const {
@@ -4040,11 +4144,9 @@ void PRAY_MESSAGE_RES::Clear() {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
+  var_list_.Clear();
   cached_has_bits = _has_bits_[0];
-  if (cached_has_bits & 0x00000001u) {
-    var_message_.ClearNonDefaultToEmptyNoArena();
-  }
-  if (cached_has_bits & 0x00000006u) {
+  if (cached_has_bits & 0x00000003u) {
     var_code_ = 0;
     id_ = 24;
   }
@@ -4084,12 +4186,16 @@ const char* PRAY_MESSAGE_RES::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPA
           }
         } else goto handle_unusual;
         continue;
-      // optional bytes var_message = 3;
+      // repeated .PrayInfo var_list = 3;
       case 3:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 26)) {
-          auto str = _internal_mutable_var_message();
-          ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
-          CHK_(ptr);
+          ptr -= 1;
+          do {
+            ptr += 1;
+            ptr = ctx->ParseMessage(_internal_add_var_list(), ptr);
+            CHK_(ptr);
+            if (!ctx->DataAvailable(ptr)) break;
+          } while (::PROTOBUF_NAMESPACE_ID::internal::ExpectTag<26>(ptr));
         } else goto handle_unusual;
         continue;
       default: {
@@ -4121,23 +4227,25 @@ failure:
 
   cached_has_bits = _has_bits_[0];
   // optional .PROTOCOL id = 1 [default = ID_PKT_PRAY_MESSAGE_RES];
-  if (cached_has_bits & 0x00000004u) {
+  if (cached_has_bits & 0x00000002u) {
     target = stream->EnsureSpace(target);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteEnumToArray(
       1, this->_internal_id(), target);
   }
 
   // optional .ErrorCode var_code = 2;
-  if (cached_has_bits & 0x00000002u) {
+  if (cached_has_bits & 0x00000001u) {
     target = stream->EnsureSpace(target);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteEnumToArray(
       2, this->_internal_var_code(), target);
   }
 
-  // optional bytes var_message = 3;
-  if (cached_has_bits & 0x00000001u) {
-    target = stream->WriteBytesMaybeAliased(
-        3, this->_internal_var_message(), target);
+  // repeated .PrayInfo var_list = 3;
+  for (unsigned int i = 0,
+      n = static_cast<unsigned int>(this->_internal_var_list_size()); i < n; i++) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+      InternalWriteMessage(3, this->_internal_var_list(i), target, stream);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
@@ -4156,23 +4264,23 @@ size_t PRAY_MESSAGE_RES::ByteSizeLong() const {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  cached_has_bits = _has_bits_[0];
-  if (cached_has_bits & 0x00000007u) {
-    // optional bytes var_message = 3;
-    if (cached_has_bits & 0x00000001u) {
-      total_size += 1 +
-        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::BytesSize(
-          this->_internal_var_message());
-    }
+  // repeated .PrayInfo var_list = 3;
+  total_size += 1UL * this->_internal_var_list_size();
+  for (const auto& msg : this->var_list_) {
+    total_size +=
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(msg);
+  }
 
+  cached_has_bits = _has_bits_[0];
+  if (cached_has_bits & 0x00000003u) {
     // optional .ErrorCode var_code = 2;
-    if (cached_has_bits & 0x00000002u) {
+    if (cached_has_bits & 0x00000001u) {
       total_size += 1 +
         ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::EnumSize(this->_internal_var_code());
     }
 
     // optional .PROTOCOL id = 1 [default = ID_PKT_PRAY_MESSAGE_RES];
-    if (cached_has_bits & 0x00000004u) {
+    if (cached_has_bits & 0x00000002u) {
       total_size += 1 +
         ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::EnumSize(this->_internal_id());
     }
@@ -4209,16 +4317,13 @@ void PRAY_MESSAGE_RES::MergeFrom(const PRAY_MESSAGE_RES& from) {
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
+  var_list_.MergeFrom(from.var_list_);
   cached_has_bits = from._has_bits_[0];
-  if (cached_has_bits & 0x00000007u) {
+  if (cached_has_bits & 0x00000003u) {
     if (cached_has_bits & 0x00000001u) {
-      _has_bits_[0] |= 0x00000001u;
-      var_message_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.var_message_);
-    }
-    if (cached_has_bits & 0x00000002u) {
       var_code_ = from.var_code_;
     }
-    if (cached_has_bits & 0x00000004u) {
+    if (cached_has_bits & 0x00000002u) {
       id_ = from.id_;
     }
     _has_bits_[0] |= cached_has_bits;
@@ -4247,8 +4352,7 @@ void PRAY_MESSAGE_RES::InternalSwap(PRAY_MESSAGE_RES* other) {
   using std::swap;
   _internal_metadata_.Swap(&other->_internal_metadata_);
   swap(_has_bits_[0], other->_has_bits_[0]);
-  var_message_.Swap(&other->var_message_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
-    GetArenaNoVirtual());
+  var_list_.InternalSwap(&other->var_list_);
   swap(var_code_, other->var_code_);
   swap(id_, other->id_);
 }
@@ -4266,13 +4370,19 @@ class PRAY_MESSAGE_REG_RES::_Internal {
  public:
   using HasBits = decltype(std::declval<PRAY_MESSAGE_REG_RES>()._has_bits_);
   static void set_has_id(HasBits* has_bits) {
+    (*has_bits)[0] |= 8u;
+  }
+  static void set_has_var_code(HasBits* has_bits) {
+    (*has_bits)[0] |= 4u;
+  }
+  static void set_has_var_message(HasBits* has_bits) {
     (*has_bits)[0] |= 1u;
+  }
+  static void set_has_var_time(HasBits* has_bits) {
+    (*has_bits)[0] |= 2u;
   }
 };
 
-void PRAY_MESSAGE_REG_RES::clear_var_list() {
-  var_list_.Clear();
-}
 PRAY_MESSAGE_REG_RES::PRAY_MESSAGE_REG_RES()
   : ::PROTOBUF_NAMESPACE_ID::Message(), _internal_metadata_(nullptr) {
   SharedCtor();
@@ -4281,15 +4391,27 @@ PRAY_MESSAGE_REG_RES::PRAY_MESSAGE_REG_RES()
 PRAY_MESSAGE_REG_RES::PRAY_MESSAGE_REG_RES(const PRAY_MESSAGE_REG_RES& from)
   : ::PROTOBUF_NAMESPACE_ID::Message(),
       _internal_metadata_(nullptr),
-      _has_bits_(from._has_bits_),
-      var_list_(from.var_list_) {
+      _has_bits_(from._has_bits_) {
   _internal_metadata_.MergeFrom(from._internal_metadata_);
-  id_ = from.id_;
+  var_message_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  if (from._internal_has_var_message()) {
+    var_message_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.var_message_);
+  }
+  var_time_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  if (from._internal_has_var_time()) {
+    var_time_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.var_time_);
+  }
+  ::memcpy(&var_code_, &from.var_code_,
+    static_cast<size_t>(reinterpret_cast<char*>(&id_) -
+    reinterpret_cast<char*>(&var_code_)) + sizeof(id_));
   // @@protoc_insertion_point(copy_constructor:PRAY_MESSAGE_REG_RES)
 }
 
 void PRAY_MESSAGE_REG_RES::SharedCtor() {
   ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&scc_info_PRAY_MESSAGE_REG_RES_GS_2eCLI_2eproto.base);
+  var_message_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  var_time_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  var_code_ = 0;
   id_ = 26;
 }
 
@@ -4299,6 +4421,8 @@ PRAY_MESSAGE_REG_RES::~PRAY_MESSAGE_REG_RES() {
 }
 
 void PRAY_MESSAGE_REG_RES::SharedDtor() {
+  var_message_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  var_time_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
 }
 
 void PRAY_MESSAGE_REG_RES::SetCachedSize(int size) const {
@@ -4316,8 +4440,19 @@ void PRAY_MESSAGE_REG_RES::Clear() {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  var_list_.Clear();
-  id_ = 26;
+  cached_has_bits = _has_bits_[0];
+  if (cached_has_bits & 0x00000003u) {
+    if (cached_has_bits & 0x00000001u) {
+      var_message_.ClearNonDefaultToEmptyNoArena();
+    }
+    if (cached_has_bits & 0x00000002u) {
+      var_time_.ClearNonDefaultToEmptyNoArena();
+    }
+  }
+  if (cached_has_bits & 0x0000000cu) {
+    var_code_ = 0;
+    id_ = 26;
+  }
   _has_bits_.Clear();
   _internal_metadata_.Clear();
 }
@@ -4342,16 +4477,38 @@ const char* PRAY_MESSAGE_REG_RES::_InternalParse(const char* ptr, ::PROTOBUF_NAM
           }
         } else goto handle_unusual;
         continue;
-      // repeated .PrayInfo var_list = 2;
+      // optional .ErrorCode var_code = 2;
       case 2:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 18)) {
-          ptr -= 1;
-          do {
-            ptr += 1;
-            ptr = ctx->ParseMessage(_internal_add_var_list(), ptr);
-            CHK_(ptr);
-            if (!ctx->DataAvailable(ptr)) break;
-          } while (::PROTOBUF_NAMESPACE_ID::internal::ExpectTag<18>(ptr));
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 16)) {
+          ::PROTOBUF_NAMESPACE_ID::uint64 val = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
+          CHK_(ptr);
+          if (PROTOBUF_PREDICT_TRUE(::ErrorCode_IsValid(val))) {
+            _internal_set_var_code(static_cast<::ErrorCode>(val));
+          } else {
+            ::PROTOBUF_NAMESPACE_ID::internal::WriteVarint(2, val, mutable_unknown_fields());
+          }
+        } else goto handle_unusual;
+        continue;
+      // optional string var_message = 3;
+      case 3:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 26)) {
+          auto str = _internal_mutable_var_message();
+          ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
+          #ifndef NDEBUG
+          ::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "PRAY_MESSAGE_REG_RES.var_message");
+          #endif  // !NDEBUG
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // optional string var_time = 4;
+      case 4:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 34)) {
+          auto str = _internal_mutable_var_time();
+          ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
+          #ifndef NDEBUG
+          ::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "PRAY_MESSAGE_REG_RES.var_time");
+          #endif  // !NDEBUG
+          CHK_(ptr);
         } else goto handle_unusual;
         continue;
       default: {
@@ -4383,18 +4540,37 @@ failure:
 
   cached_has_bits = _has_bits_[0];
   // optional .PROTOCOL id = 1 [default = ID_PKT_PRAY_MESSAGE_REG_RES];
-  if (cached_has_bits & 0x00000001u) {
+  if (cached_has_bits & 0x00000008u) {
     target = stream->EnsureSpace(target);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteEnumToArray(
       1, this->_internal_id(), target);
   }
 
-  // repeated .PrayInfo var_list = 2;
-  for (unsigned int i = 0,
-      n = static_cast<unsigned int>(this->_internal_var_list_size()); i < n; i++) {
+  // optional .ErrorCode var_code = 2;
+  if (cached_has_bits & 0x00000004u) {
     target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
-      InternalWriteMessage(2, this->_internal_var_list(i), target, stream);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteEnumToArray(
+      2, this->_internal_var_code(), target);
+  }
+
+  // optional string var_message = 3;
+  if (cached_has_bits & 0x00000001u) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->_internal_var_message().data(), static_cast<int>(this->_internal_var_message().length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SERIALIZE,
+      "PRAY_MESSAGE_REG_RES.var_message");
+    target = stream->WriteStringMaybeAliased(
+        3, this->_internal_var_message(), target);
+  }
+
+  // optional string var_time = 4;
+  if (cached_has_bits & 0x00000002u) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->_internal_var_time().data(), static_cast<int>(this->_internal_var_time().length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SERIALIZE,
+      "PRAY_MESSAGE_REG_RES.var_time");
+    target = stream->WriteStringMaybeAliased(
+        4, this->_internal_var_time(), target);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
@@ -4413,20 +4589,35 @@ size_t PRAY_MESSAGE_REG_RES::ByteSizeLong() const {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  // repeated .PrayInfo var_list = 2;
-  total_size += 1UL * this->_internal_var_list_size();
-  for (const auto& msg : this->var_list_) {
-    total_size +=
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(msg);
-  }
-
-  // optional .PROTOCOL id = 1 [default = ID_PKT_PRAY_MESSAGE_REG_RES];
   cached_has_bits = _has_bits_[0];
-  if (cached_has_bits & 0x00000001u) {
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::EnumSize(this->_internal_id());
-  }
+  if (cached_has_bits & 0x0000000fu) {
+    // optional string var_message = 3;
+    if (cached_has_bits & 0x00000001u) {
+      total_size += 1 +
+        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+          this->_internal_var_message());
+    }
 
+    // optional string var_time = 4;
+    if (cached_has_bits & 0x00000002u) {
+      total_size += 1 +
+        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+          this->_internal_var_time());
+    }
+
+    // optional .ErrorCode var_code = 2;
+    if (cached_has_bits & 0x00000004u) {
+      total_size += 1 +
+        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::EnumSize(this->_internal_var_code());
+    }
+
+    // optional .PROTOCOL id = 1 [default = ID_PKT_PRAY_MESSAGE_REG_RES];
+    if (cached_has_bits & 0x00000008u) {
+      total_size += 1 +
+        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::EnumSize(this->_internal_id());
+    }
+
+  }
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
     return ::PROTOBUF_NAMESPACE_ID::internal::ComputeUnknownFieldsSize(
         _internal_metadata_, total_size, &_cached_size_);
@@ -4458,9 +4649,23 @@ void PRAY_MESSAGE_REG_RES::MergeFrom(const PRAY_MESSAGE_REG_RES& from) {
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
-  var_list_.MergeFrom(from.var_list_);
-  if (from._internal_has_id()) {
-    _internal_set_id(from._internal_id());
+  cached_has_bits = from._has_bits_[0];
+  if (cached_has_bits & 0x0000000fu) {
+    if (cached_has_bits & 0x00000001u) {
+      _has_bits_[0] |= 0x00000001u;
+      var_message_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.var_message_);
+    }
+    if (cached_has_bits & 0x00000002u) {
+      _has_bits_[0] |= 0x00000002u;
+      var_time_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.var_time_);
+    }
+    if (cached_has_bits & 0x00000004u) {
+      var_code_ = from.var_code_;
+    }
+    if (cached_has_bits & 0x00000008u) {
+      id_ = from.id_;
+    }
+    _has_bits_[0] |= cached_has_bits;
   }
 }
 
@@ -4486,11 +4691,262 @@ void PRAY_MESSAGE_REG_RES::InternalSwap(PRAY_MESSAGE_REG_RES* other) {
   using std::swap;
   _internal_metadata_.Swap(&other->_internal_metadata_);
   swap(_has_bits_[0], other->_has_bits_[0]);
-  var_list_.InternalSwap(&other->var_list_);
+  var_message_.Swap(&other->var_message_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+    GetArenaNoVirtual());
+  var_time_.Swap(&other->var_time_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+    GetArenaNoVirtual());
+  swap(var_code_, other->var_code_);
   swap(id_, other->id_);
 }
 
 ::PROTOBUF_NAMESPACE_ID::Metadata PRAY_MESSAGE_REG_RES::GetMetadata() const {
+  return GetMetadataStatic();
+}
+
+
+// ===================================================================
+
+void QNA_RES::InitAsDefaultInstance() {
+}
+class QNA_RES::_Internal {
+ public:
+  using HasBits = decltype(std::declval<QNA_RES>()._has_bits_);
+  static void set_has_id(HasBits* has_bits) {
+    (*has_bits)[0] |= 2u;
+  }
+  static void set_has_var_code(HasBits* has_bits) {
+    (*has_bits)[0] |= 1u;
+  }
+};
+
+QNA_RES::QNA_RES()
+  : ::PROTOBUF_NAMESPACE_ID::Message(), _internal_metadata_(nullptr) {
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:QNA_RES)
+}
+QNA_RES::QNA_RES(const QNA_RES& from)
+  : ::PROTOBUF_NAMESPACE_ID::Message(),
+      _internal_metadata_(nullptr),
+      _has_bits_(from._has_bits_) {
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  ::memcpy(&var_code_, &from.var_code_,
+    static_cast<size_t>(reinterpret_cast<char*>(&id_) -
+    reinterpret_cast<char*>(&var_code_)) + sizeof(id_));
+  // @@protoc_insertion_point(copy_constructor:QNA_RES)
+}
+
+void QNA_RES::SharedCtor() {
+  var_code_ = 0;
+  id_ = 28;
+}
+
+QNA_RES::~QNA_RES() {
+  // @@protoc_insertion_point(destructor:QNA_RES)
+  SharedDtor();
+}
+
+void QNA_RES::SharedDtor() {
+}
+
+void QNA_RES::SetCachedSize(int size) const {
+  _cached_size_.Set(size);
+}
+const QNA_RES& QNA_RES::default_instance() {
+  ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&::scc_info_QNA_RES_GS_2eCLI_2eproto.base);
+  return *internal_default_instance();
+}
+
+
+void QNA_RES::Clear() {
+// @@protoc_insertion_point(message_clear_start:QNA_RES)
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  cached_has_bits = _has_bits_[0];
+  if (cached_has_bits & 0x00000003u) {
+    var_code_ = 0;
+    id_ = 28;
+  }
+  _has_bits_.Clear();
+  _internal_metadata_.Clear();
+}
+
+const char* QNA_RES::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
+#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  _Internal::HasBits has_bits{};
+  while (!ctx->Done(&ptr)) {
+    ::PROTOBUF_NAMESPACE_ID::uint32 tag;
+    ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
+    CHK_(ptr);
+    switch (tag >> 3) {
+      // optional .PROTOCOL id = 1 [default = ID_PKT_QNA_RES];
+      case 1:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 8)) {
+          ::PROTOBUF_NAMESPACE_ID::uint64 val = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
+          CHK_(ptr);
+          if (PROTOBUF_PREDICT_TRUE(::PROTOCOL_IsValid(val))) {
+            _internal_set_id(static_cast<::PROTOCOL>(val));
+          } else {
+            ::PROTOBUF_NAMESPACE_ID::internal::WriteVarint(1, val, mutable_unknown_fields());
+          }
+        } else goto handle_unusual;
+        continue;
+      // optional .ErrorCode var_code = 2;
+      case 2:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 16)) {
+          ::PROTOBUF_NAMESPACE_ID::uint64 val = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
+          CHK_(ptr);
+          if (PROTOBUF_PREDICT_TRUE(::ErrorCode_IsValid(val))) {
+            _internal_set_var_code(static_cast<::ErrorCode>(val));
+          } else {
+            ::PROTOBUF_NAMESPACE_ID::internal::WriteVarint(2, val, mutable_unknown_fields());
+          }
+        } else goto handle_unusual;
+        continue;
+      default: {
+      handle_unusual:
+        if ((tag & 7) == 4 || tag == 0) {
+          ctx->SetLastTag(tag);
+          goto success;
+        }
+        ptr = UnknownFieldParse(tag, &_internal_metadata_, ptr, ctx);
+        CHK_(ptr != nullptr);
+        continue;
+      }
+    }  // switch
+  }  // while
+success:
+  _has_bits_.Or(has_bits);
+  return ptr;
+failure:
+  ptr = nullptr;
+  goto success;
+#undef CHK_
+}
+
+::PROTOBUF_NAMESPACE_ID::uint8* QNA_RES::_InternalSerialize(
+    ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:QNA_RES)
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  cached_has_bits = _has_bits_[0];
+  // optional .PROTOCOL id = 1 [default = ID_PKT_QNA_RES];
+  if (cached_has_bits & 0x00000002u) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteEnumToArray(
+      1, this->_internal_id(), target);
+  }
+
+  // optional .ErrorCode var_code = 2;
+  if (cached_has_bits & 0x00000001u) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteEnumToArray(
+      2, this->_internal_var_code(), target);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields(), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:QNA_RES)
+  return target;
+}
+
+size_t QNA_RES::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:QNA_RES)
+  size_t total_size = 0;
+
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  cached_has_bits = _has_bits_[0];
+  if (cached_has_bits & 0x00000003u) {
+    // optional .ErrorCode var_code = 2;
+    if (cached_has_bits & 0x00000001u) {
+      total_size += 1 +
+        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::EnumSize(this->_internal_var_code());
+    }
+
+    // optional .PROTOCOL id = 1 [default = ID_PKT_QNA_RES];
+    if (cached_has_bits & 0x00000002u) {
+      total_size += 1 +
+        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::EnumSize(this->_internal_id());
+    }
+
+  }
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    return ::PROTOBUF_NAMESPACE_ID::internal::ComputeUnknownFieldsSize(
+        _internal_metadata_, total_size, &_cached_size_);
+  }
+  int cached_size = ::PROTOBUF_NAMESPACE_ID::internal::ToCachedSize(total_size);
+  SetCachedSize(cached_size);
+  return total_size;
+}
+
+void QNA_RES::MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:QNA_RES)
+  GOOGLE_DCHECK_NE(&from, this);
+  const QNA_RES* source =
+      ::PROTOBUF_NAMESPACE_ID::DynamicCastToGenerated<QNA_RES>(
+          &from);
+  if (source == nullptr) {
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:QNA_RES)
+    ::PROTOBUF_NAMESPACE_ID::internal::ReflectionOps::Merge(from, this);
+  } else {
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:QNA_RES)
+    MergeFrom(*source);
+  }
+}
+
+void QNA_RES::MergeFrom(const QNA_RES& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:QNA_RES)
+  GOOGLE_DCHECK_NE(&from, this);
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  cached_has_bits = from._has_bits_[0];
+  if (cached_has_bits & 0x00000003u) {
+    if (cached_has_bits & 0x00000001u) {
+      var_code_ = from.var_code_;
+    }
+    if (cached_has_bits & 0x00000002u) {
+      id_ = from.id_;
+    }
+    _has_bits_[0] |= cached_has_bits;
+  }
+}
+
+void QNA_RES::CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:QNA_RES)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void QNA_RES::CopyFrom(const QNA_RES& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:QNA_RES)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool QNA_RES::IsInitialized() const {
+  return true;
+}
+
+void QNA_RES::InternalSwap(QNA_RES* other) {
+  using std::swap;
+  _internal_metadata_.Swap(&other->_internal_metadata_);
+  swap(_has_bits_[0], other->_has_bits_[0]);
+  swap(var_code_, other->var_code_);
+  swap(id_, other->id_);
+}
+
+::PROTOBUF_NAMESPACE_ID::Metadata QNA_RES::GetMetadata() const {
   return GetMetadataStatic();
 }
 
@@ -4535,6 +4991,9 @@ template<> PROTOBUF_NOINLINE ::PRAY_MESSAGE_RES* Arena::CreateMaybeMessage< ::PR
 }
 template<> PROTOBUF_NOINLINE ::PRAY_MESSAGE_REG_RES* Arena::CreateMaybeMessage< ::PRAY_MESSAGE_REG_RES >(Arena* arena) {
   return Arena::CreateInternal< ::PRAY_MESSAGE_REG_RES >(arena);
+}
+template<> PROTOBUF_NOINLINE ::QNA_RES* Arena::CreateMaybeMessage< ::QNA_RES >(Arena* arena) {
+  return Arena::CreateInternal< ::QNA_RES >(arena);
 }
 PROTOBUF_NAMESPACE_CLOSE
 

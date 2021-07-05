@@ -22,7 +22,7 @@ message LOGIN_REQ
 message CREATE_ROOM_REQ
 {
     optional PROTOCOL   id                  = 1 [default = ID_PKT_CREATE_ROOM_REQ ];
-    required bytes var_name                  = 2;
+    required string var_name                  = 2;
    
 }
 
@@ -47,7 +47,7 @@ message ROOM_LIST_REQ
 message ROOM_PASS_THROUGH_REQ
 {
     optional PROTOCOL   id                        = 1 [default = ID_PKT_ROOM_PASS_THROUGH_REQ    ];
-    required bytes     var_message    	     = 2;
+    required string     var_message    	     = 2;
     required int32       var_message_int         = 3;
 }
 
@@ -77,5 +77,11 @@ message PRAY_MESSAGE_REQ
 message PRAY_MESSAGE_REG_REQ
 {
     optional PROTOCOL   id                  = 1 [default = ID_PKT_PRAY_MESSAGE_REG_REQ ];
-    optional bytes     var_message         = 2;
+    optional string     var_message         = 2;
+}
+
+message QNA_REQ
+{
+    optional PROTOCOL   id                  = 1 [default = ID_PKT_QNA_REQ ];
+    optional string     var_message         = 2;
 }

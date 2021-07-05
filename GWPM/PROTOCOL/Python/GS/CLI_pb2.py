@@ -20,7 +20,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   package='',
   syntax='proto2',
   serialized_options=b'H\001',
-  serialized_pb=b'\n\x0cGS.CLI.proto\x1a\nEnum.proto\x1a\x0fStructure.proto\"k\n\x0bVERSION_RES\x12)\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x12ID_PKT_VERSION_RES\x12\x13\n\x0bvar_version\x18\x02 \x01(\x02\x12\x1c\n\x08var_code\x18\x03 \x01(\x0e\x32\n.ErrorCode\"\x8b\x01\n\tLOGIN_RES\x12\'\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x10ID_PKT_LOGIN_RES\x12\x1c\n\x08var_code\x18\x02 \x01(\x0e\x32\n.ErrorCode\x12\x11\n\tvar_index\x18\x03 \x01(\x03\x12\x12\n\nvar_locale\x18\x04 \x01(\x0c\x12\x10\n\x08var_name\x18\x05 \x01(\x0c\"\x85\x01\n\x0f\x43REATE_ROOM_RES\x12-\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x16ID_PKT_CREATE_ROOM_RES\x12\x10\n\x08var_name\x18\x02 \x01(\x0c\x12\x13\n\x0bvar_room_id\x18\x03 \x01(\x05\x12\x1c\n\x08var_code\x18\x04 \x01(\x0e\x32\n.ErrorCode\"\x83\x01\n\x0e\x45NTER_ROOM_RES\x12,\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x15ID_PKT_ENTER_ROOM_RES\x12\x10\n\x08var_name\x18\x02 \x01(\x0c\x12\x13\n\x0bvar_room_id\x18\x03 \x01(\x05\x12\x1c\n\x08var_code\x18\x04 \x01(\x0e\x32\n.ErrorCode\"\x8e\x01\n\x14NEW_USER_IN_ROOM_NTY\x12\x32\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x1bID_PKT_NEW_USER_IN_ROOM_NTY\x12$\n\rvar_room_user\x18\x02 \x01(\x0b\x32\r.RoomUserInfo\x12\x1c\n\x08var_code\x18\x03 \x01(\x0e\x32\n.ErrorCode\"\x81\x01\n\x0eLEAVE_ROOM_RES\x12,\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x15ID_PKT_LEAVE_ROOM_RES\x12\x10\n\x08var_name\x18\x02 \x01(\x0c\x12\x1c\n\x08var_code\x18\x03 \x01(\x0e\x32\n.ErrorCode\x12\x11\n\tvar_index\x18\x04 \x01(\x03\"}\n\rROOM_LIST_RES\x12+\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x14ID_PKT_ROOM_LIST_RES\x12\x1c\n\x08var_code\x18\x02 \x01(\x0e\x32\n.ErrorCode\x12!\n\rvar_room_list\x18\x03 \x03(\x0b\x32\n.RoomInfo2\"\xaa\x01\n\x15ROOM_PASS_THROUGH_RES\x12\x33\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x1cID_PKT_ROOM_PASS_THROUGH_RES\x12\x1c\n\x08var_code\x18\x02 \x01(\x0e\x32\n.ErrorCode\x12\x10\n\x08var_name\x18\x03 \x02(\x0c\x12\x13\n\x0bvar_message\x18\x04 \x02(\x0c\x12\x17\n\x0fvar_message_int\x18\x05 \x02(\x05\"K\n\nNOTICE_RES\x12(\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x11ID_PKT_NOTICE_RES\x12\x13\n\x0bvar_message\x18\x02 \x02(\x0c\"\x8b\x01\n\x12\x42ITMAP_MESSAGE_RES\x12\x30\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x19ID_PKT_BITMAP_MESSAGE_RES\x12\x1c\n\x08var_code\x18\x02 \x01(\x0e\x32\n.ErrorCode\x12\x13\n\x0bvar_message\x18\x03 \x03(\x0c\x12\x10\n\x08var_name\x18\x04 \x01(\x0c\"\x89\x01\n\x11\x41UDIO_MESSAGE_RES\x12/\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x18ID_PKT_AUDIO_MESSAGE_RES\x12\x1c\n\x08var_code\x18\x02 \x01(\x0e\x32\n.ErrorCode\x12\x13\n\x0bvar_message\x18\x03 \x03(\x0c\x12\x10\n\x08var_name\x18\x04 \x01(\x0c\"u\n\x10PRAY_MESSAGE_RES\x12.\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x17ID_PKT_PRAY_MESSAGE_RES\x12\x1c\n\x08var_code\x18\x02 \x01(\x0e\x32\n.ErrorCode\x12\x13\n\x0bvar_message\x18\x03 \x01(\x0c\"g\n\x14PRAY_MESSAGE_REG_RES\x12\x32\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x1bID_PKT_PRAY_MESSAGE_REG_RES\x12\x1b\n\x08var_list\x18\x02 \x03(\x0b\x32\t.PrayInfoB\x02H\x01'
+  serialized_pb=b'\n\x0cGS.CLI.proto\x1a\nEnum.proto\x1a\x0fStructure.proto\"k\n\x0bVERSION_RES\x12)\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x12ID_PKT_VERSION_RES\x12\x13\n\x0bvar_version\x18\x02 \x01(\x02\x12\x1c\n\x08var_code\x18\x03 \x01(\x0e\x32\n.ErrorCode\"\x8b\x01\n\tLOGIN_RES\x12\'\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x10ID_PKT_LOGIN_RES\x12\x1c\n\x08var_code\x18\x02 \x01(\x0e\x32\n.ErrorCode\x12\x11\n\tvar_index\x18\x03 \x01(\x03\x12\x12\n\nvar_locale\x18\x04 \x01(\t\x12\x10\n\x08var_name\x18\x05 \x01(\t\"\x85\x01\n\x0f\x43REATE_ROOM_RES\x12-\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x16ID_PKT_CREATE_ROOM_RES\x12\x10\n\x08var_name\x18\x02 \x01(\t\x12\x13\n\x0bvar_room_id\x18\x03 \x01(\x05\x12\x1c\n\x08var_code\x18\x04 \x01(\x0e\x32\n.ErrorCode\"\x83\x01\n\x0e\x45NTER_ROOM_RES\x12,\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x15ID_PKT_ENTER_ROOM_RES\x12\x10\n\x08var_name\x18\x02 \x01(\t\x12\x13\n\x0bvar_room_id\x18\x03 \x01(\x05\x12\x1c\n\x08var_code\x18\x04 \x01(\x0e\x32\n.ErrorCode\"\xa0\x01\n\x14NEW_USER_IN_ROOM_NTY\x12\x32\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x1bID_PKT_NEW_USER_IN_ROOM_NTY\x12$\n\rvar_room_user\x18\x02 \x01(\x0b\x32\r.RoomUserInfo\x12\x1c\n\x08var_code\x18\x03 \x01(\x0e\x32\n.ErrorCode\x12\x10\n\x08var_type\x18\x04 \x01(\x05\"\x81\x01\n\x0eLEAVE_ROOM_RES\x12,\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x15ID_PKT_LEAVE_ROOM_RES\x12\x10\n\x08var_name\x18\x02 \x01(\t\x12\x1c\n\x08var_code\x18\x03 \x01(\x0e\x32\n.ErrorCode\x12\x11\n\tvar_index\x18\x04 \x01(\x03\"}\n\rROOM_LIST_RES\x12+\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x14ID_PKT_ROOM_LIST_RES\x12\x1c\n\x08var_code\x18\x02 \x01(\x0e\x32\n.ErrorCode\x12!\n\rvar_room_list\x18\x03 \x03(\x0b\x32\n.RoomInfo2\"\xaa\x01\n\x15ROOM_PASS_THROUGH_RES\x12\x33\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x1cID_PKT_ROOM_PASS_THROUGH_RES\x12\x1c\n\x08var_code\x18\x02 \x01(\x0e\x32\n.ErrorCode\x12\x10\n\x08var_name\x18\x03 \x02(\t\x12\x13\n\x0bvar_message\x18\x04 \x02(\t\x12\x17\n\x0fvar_message_int\x18\x05 \x02(\x05\"U\n\nNOTICE_RES\x12(\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x11ID_PKT_NOTICE_RES\x12\x1d\n\x08var_list\x18\x02 \x03(\x0b\x32\x0b.NotifyInfo\"\x8b\x01\n\x12\x42ITMAP_MESSAGE_RES\x12\x30\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x19ID_PKT_BITMAP_MESSAGE_RES\x12\x1c\n\x08var_code\x18\x02 \x01(\x0e\x32\n.ErrorCode\x12\x13\n\x0bvar_message\x18\x03 \x03(\x0c\x12\x10\n\x08var_name\x18\x04 \x01(\x0c\"\x89\x01\n\x11\x41UDIO_MESSAGE_RES\x12/\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x18ID_PKT_AUDIO_MESSAGE_RES\x12\x1c\n\x08var_code\x18\x02 \x01(\x0e\x32\n.ErrorCode\x12\x13\n\x0bvar_message\x18\x03 \x03(\x0c\x12\x10\n\x08var_name\x18\x04 \x01(\x0c\"}\n\x10PRAY_MESSAGE_RES\x12.\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x17ID_PKT_PRAY_MESSAGE_RES\x12\x1c\n\x08var_code\x18\x02 \x01(\x0e\x32\n.ErrorCode\x12\x1b\n\x08var_list\x18\x03 \x03(\x0b\x32\t.PrayInfo\"\x8f\x01\n\x14PRAY_MESSAGE_REG_RES\x12\x32\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x1bID_PKT_PRAY_MESSAGE_REG_RES\x12\x1c\n\x08var_code\x18\x02 \x01(\x0e\x32\n.ErrorCode\x12\x13\n\x0bvar_message\x18\x03 \x01(\t\x12\x10\n\x08var_time\x18\x04 \x01(\t\"N\n\x07QNA_RES\x12%\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x0eID_PKT_QNA_RES\x12\x1c\n\x08var_code\x18\x02 \x01(\x0e\x32\n.ErrorCodeB\x02H\x01'
   ,
   dependencies=[Enum__pb2.DESCRIPTOR,Structure__pb2.DESCRIPTOR,])
 
@@ -102,15 +102,15 @@ _LOGIN_RES = _descriptor.Descriptor(
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='var_locale', full_name='LOGIN_RES.var_locale', index=3,
-      number=4, type=12, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"",
+      number=4, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='var_name', full_name='LOGIN_RES.var_name', index=4,
-      number=5, type=12, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"",
+      number=5, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
@@ -147,8 +147,8 @@ _CREATE_ROOM_RES = _descriptor.Descriptor(
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='var_name', full_name='CREATE_ROOM_RES.var_name', index=1,
-      number=2, type=12, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"",
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
@@ -199,8 +199,8 @@ _ENTER_ROOM_RES = _descriptor.Descriptor(
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='var_name', full_name='ENTER_ROOM_RES.var_name', index=1,
-      number=2, type=12, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"",
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
@@ -263,6 +263,13 @@ _NEW_USER_IN_ROOM_NTY = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='var_type', full_name='NEW_USER_IN_ROOM_NTY.var_type', index=3,
+      number=4, type=5, cpp_type=1, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
   ],
   extensions=[
   ],
@@ -276,7 +283,7 @@ _NEW_USER_IN_ROOM_NTY = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=567,
-  serialized_end=709,
+  serialized_end=727,
 )
 
 
@@ -296,8 +303,8 @@ _LEAVE_ROOM_RES = _descriptor.Descriptor(
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='var_name', full_name='LEAVE_ROOM_RES.var_name', index=1,
-      number=2, type=12, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"",
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
@@ -327,8 +334,8 @@ _LEAVE_ROOM_RES = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=712,
-  serialized_end=841,
+  serialized_start=730,
+  serialized_end=859,
 )
 
 
@@ -372,8 +379,8 @@ _ROOM_LIST_RES = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=843,
-  serialized_end=968,
+  serialized_start=861,
+  serialized_end=986,
 )
 
 
@@ -400,15 +407,15 @@ _ROOM_PASS_THROUGH_RES = _descriptor.Descriptor(
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='var_name', full_name='ROOM_PASS_THROUGH_RES.var_name', index=2,
-      number=3, type=12, cpp_type=9, label=2,
-      has_default_value=False, default_value=b"",
+      number=3, type=9, cpp_type=9, label=2,
+      has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='var_message', full_name='ROOM_PASS_THROUGH_RES.var_message', index=3,
-      number=4, type=12, cpp_type=9, label=2,
-      has_default_value=False, default_value=b"",
+      number=4, type=9, cpp_type=9, label=2,
+      has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
@@ -431,8 +438,8 @@ _ROOM_PASS_THROUGH_RES = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=971,
-  serialized_end=1141,
+  serialized_start=989,
+  serialized_end=1159,
 )
 
 
@@ -451,9 +458,9 @@ _NOTICE_RES = _descriptor.Descriptor(
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='var_message', full_name='NOTICE_RES.var_message', index=1,
-      number=2, type=12, cpp_type=9, label=2,
-      has_default_value=False, default_value=b"",
+      name='var_list', full_name='NOTICE_RES.var_list', index=1,
+      number=2, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
@@ -469,8 +476,8 @@ _NOTICE_RES = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1143,
-  serialized_end=1218,
+  serialized_start=1161,
+  serialized_end=1246,
 )
 
 
@@ -521,8 +528,8 @@ _BITMAP_MESSAGE_RES = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1221,
-  serialized_end=1360,
+  serialized_start=1249,
+  serialized_end=1388,
 )
 
 
@@ -573,8 +580,8 @@ _AUDIO_MESSAGE_RES = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1363,
-  serialized_end=1500,
+  serialized_start=1391,
+  serialized_end=1528,
 )
 
 
@@ -600,9 +607,9 @@ _PRAY_MESSAGE_RES = _descriptor.Descriptor(
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='var_message', full_name='PRAY_MESSAGE_RES.var_message', index=2,
-      number=3, type=12, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"",
+      name='var_list', full_name='PRAY_MESSAGE_RES.var_list', index=2,
+      number=3, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
@@ -618,8 +625,8 @@ _PRAY_MESSAGE_RES = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1502,
-  serialized_end=1619,
+  serialized_start=1530,
+  serialized_end=1655,
 )
 
 
@@ -638,9 +645,23 @@ _PRAY_MESSAGE_REG_RES = _descriptor.Descriptor(
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='var_list', full_name='PRAY_MESSAGE_REG_RES.var_list', index=1,
-      number=2, type=11, cpp_type=10, label=3,
-      has_default_value=False, default_value=[],
+      name='var_code', full_name='PRAY_MESSAGE_REG_RES.var_code', index=1,
+      number=2, type=14, cpp_type=8, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='var_message', full_name='PRAY_MESSAGE_REG_RES.var_message', index=2,
+      number=3, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='var_time', full_name='PRAY_MESSAGE_REG_RES.var_time', index=3,
+      number=4, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
@@ -656,8 +677,46 @@ _PRAY_MESSAGE_REG_RES = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1621,
-  serialized_end=1724,
+  serialized_start=1658,
+  serialized_end=1801,
+)
+
+
+_QNA_RES = _descriptor.Descriptor(
+  name='QNA_RES',
+  full_name='QNA_RES',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='id', full_name='QNA_RES.id', index=0,
+      number=1, type=14, cpp_type=8, label=1,
+      has_default_value=True, default_value=28,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='var_code', full_name='QNA_RES.var_code', index=1,
+      number=2, type=14, cpp_type=8, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto2',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=1803,
+  serialized_end=1881,
 )
 
 _VERSION_RES.fields_by_name['id'].enum_type = Enum__pb2._PROTOCOL
@@ -679,14 +738,18 @@ _ROOM_LIST_RES.fields_by_name['var_room_list'].message_type = Structure__pb2._RO
 _ROOM_PASS_THROUGH_RES.fields_by_name['id'].enum_type = Enum__pb2._PROTOCOL
 _ROOM_PASS_THROUGH_RES.fields_by_name['var_code'].enum_type = Enum__pb2._ERRORCODE
 _NOTICE_RES.fields_by_name['id'].enum_type = Enum__pb2._PROTOCOL
+_NOTICE_RES.fields_by_name['var_list'].message_type = Structure__pb2._NOTIFYINFO
 _BITMAP_MESSAGE_RES.fields_by_name['id'].enum_type = Enum__pb2._PROTOCOL
 _BITMAP_MESSAGE_RES.fields_by_name['var_code'].enum_type = Enum__pb2._ERRORCODE
 _AUDIO_MESSAGE_RES.fields_by_name['id'].enum_type = Enum__pb2._PROTOCOL
 _AUDIO_MESSAGE_RES.fields_by_name['var_code'].enum_type = Enum__pb2._ERRORCODE
 _PRAY_MESSAGE_RES.fields_by_name['id'].enum_type = Enum__pb2._PROTOCOL
 _PRAY_MESSAGE_RES.fields_by_name['var_code'].enum_type = Enum__pb2._ERRORCODE
+_PRAY_MESSAGE_RES.fields_by_name['var_list'].message_type = Structure__pb2._PRAYINFO
 _PRAY_MESSAGE_REG_RES.fields_by_name['id'].enum_type = Enum__pb2._PROTOCOL
-_PRAY_MESSAGE_REG_RES.fields_by_name['var_list'].message_type = Structure__pb2._PRAYINFO
+_PRAY_MESSAGE_REG_RES.fields_by_name['var_code'].enum_type = Enum__pb2._ERRORCODE
+_QNA_RES.fields_by_name['id'].enum_type = Enum__pb2._PROTOCOL
+_QNA_RES.fields_by_name['var_code'].enum_type = Enum__pb2._ERRORCODE
 DESCRIPTOR.message_types_by_name['VERSION_RES'] = _VERSION_RES
 DESCRIPTOR.message_types_by_name['LOGIN_RES'] = _LOGIN_RES
 DESCRIPTOR.message_types_by_name['CREATE_ROOM_RES'] = _CREATE_ROOM_RES
@@ -700,6 +763,7 @@ DESCRIPTOR.message_types_by_name['BITMAP_MESSAGE_RES'] = _BITMAP_MESSAGE_RES
 DESCRIPTOR.message_types_by_name['AUDIO_MESSAGE_RES'] = _AUDIO_MESSAGE_RES
 DESCRIPTOR.message_types_by_name['PRAY_MESSAGE_RES'] = _PRAY_MESSAGE_RES
 DESCRIPTOR.message_types_by_name['PRAY_MESSAGE_REG_RES'] = _PRAY_MESSAGE_REG_RES
+DESCRIPTOR.message_types_by_name['QNA_RES'] = _QNA_RES
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 VERSION_RES = _reflection.GeneratedProtocolMessageType('VERSION_RES', (_message.Message,), {
@@ -792,6 +856,13 @@ PRAY_MESSAGE_REG_RES = _reflection.GeneratedProtocolMessageType('PRAY_MESSAGE_RE
   # @@protoc_insertion_point(class_scope:PRAY_MESSAGE_REG_RES)
   })
 _sym_db.RegisterMessage(PRAY_MESSAGE_REG_RES)
+
+QNA_RES = _reflection.GeneratedProtocolMessageType('QNA_RES', (_message.Message,), {
+  'DESCRIPTOR' : _QNA_RES,
+  '__module__' : 'GS.CLI_pb2'
+  # @@protoc_insertion_point(class_scope:QNA_RES)
+  })
+_sym_db.RegisterMessage(QNA_RES)
 
 
 DESCRIPTOR._options = None

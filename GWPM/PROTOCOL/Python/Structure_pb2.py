@@ -11,7 +11,6 @@ from google.protobuf import symbol_database as _symbol_database
 _sym_db = _symbol_database.Default()
 
 
-import Enum_pb2 as Enum__pb2
 
 
 DESCRIPTOR = _descriptor.FileDescriptor(
@@ -19,9 +18,8 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   package='',
   syntax='proto2',
   serialized_options=b'H\001',
-  serialized_pb=b'\n\x0fStructure.proto\x1a\nEnum.proto\"H\n\x0cRoomUserInfo\x12\x10\n\x08var_name\x18\x01 \x01(\x0c\x12\x11\n\tvar_index\x18\x02 \x01(\x03\x12\x13\n\x0bpicture_uri\x18\x03 \x01(\x0c\"_\n\tRoomInfo2\x12\x0e\n\x06var_id\x18\x01 \x01(\x05\x12\x10\n\x08var_name\x18\x02 \x01(\x0c\x12\x19\n\x11var_current_count\x18\x03 \x01(\x05\x12\x15\n\rvar_max_count\x18\x04 \x01(\x05\"\xae\x01\n\x04Rank\x12\x10\n\x08var_rank\x18\x01 \x01(\x05\x12\x10\n\x08var_name\x18\x02 \x01(\x0c\x12\x11\n\tvar_level\x18\x03 \x01(\x05\x12\x13\n\x0bvar_pic_uri\x18\x04 \x01(\x0c\x12\x11\n\tvar_index\x18\x05 \x01(\x03\x12\x0f\n\x07var_win\x18\x06 \x01(\x05\x12\x10\n\x08var_lose\x18\x07 \x01(\x05\x12\x10\n\x08var_draw\x18\x08 \x01(\x05\x12\x12\n\nvar_contry\x18\t \x01(\x0c\"1\n\x08PrayInfo\x12\x10\n\x08var_name\x18\x01 \x01(\x0c\x12\x13\n\x0bvar_message\x18\x02 \x01(\x0c\x42\x02H\x01'
-  ,
-  dependencies=[Enum__pb2.DESCRIPTOR,])
+  serialized_pb=b'\n\x0fStructure.proto\"H\n\x0cRoomUserInfo\x12\x10\n\x08var_name\x18\x01 \x01(\t\x12\x11\n\tvar_index\x18\x02 \x01(\x03\x12\x13\n\x0bpicture_uri\x18\x03 \x01(\t\"_\n\tRoomInfo2\x12\x0e\n\x06var_id\x18\x01 \x01(\x05\x12\x10\n\x08var_name\x18\x02 \x01(\t\x12\x19\n\x11var_current_count\x18\x03 \x01(\x05\x12\x15\n\rvar_max_count\x18\x04 \x01(\x05\"C\n\x08PrayInfo\x12\x10\n\x08var_name\x18\x01 \x01(\t\x12\x13\n\x0bvar_message\x18\x02 \x01(\t\x12\x10\n\x08var_time\x18\x03 \x01(\t\"C\n\nNotifyInfo\x12\x0e\n\x06var_id\x18\x01 \x01(\x03\x12\x13\n\x0bvar_content\x18\x02 \x01(\t\x12\x10\n\x08var_date\x18\x03 \x01(\tB\x02H\x01'
+)
 
 
 
@@ -35,8 +33,8 @@ _ROOMUSERINFO = _descriptor.Descriptor(
   fields=[
     _descriptor.FieldDescriptor(
       name='var_name', full_name='RoomUserInfo.var_name', index=0,
-      number=1, type=12, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"",
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
@@ -49,8 +47,8 @@ _ROOMUSERINFO = _descriptor.Descriptor(
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='picture_uri', full_name='RoomUserInfo.picture_uri', index=2,
-      number=3, type=12, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"",
+      number=3, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
@@ -66,8 +64,8 @@ _ROOMUSERINFO = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=31,
-  serialized_end=103,
+  serialized_start=19,
+  serialized_end=91,
 )
 
 
@@ -87,8 +85,8 @@ _ROOMINFO2 = _descriptor.Descriptor(
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='var_name', full_name='RoomInfo2.var_name', index=1,
-      number=2, type=12, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"",
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
@@ -118,95 +116,8 @@ _ROOMINFO2 = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=105,
-  serialized_end=200,
-)
-
-
-_RANK = _descriptor.Descriptor(
-  name='Rank',
-  full_name='Rank',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='var_rank', full_name='Rank.var_rank', index=0,
-      number=1, type=5, cpp_type=1, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='var_name', full_name='Rank.var_name', index=1,
-      number=2, type=12, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"",
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='var_level', full_name='Rank.var_level', index=2,
-      number=3, type=5, cpp_type=1, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='var_pic_uri', full_name='Rank.var_pic_uri', index=3,
-      number=4, type=12, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"",
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='var_index', full_name='Rank.var_index', index=4,
-      number=5, type=3, cpp_type=2, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='var_win', full_name='Rank.var_win', index=5,
-      number=6, type=5, cpp_type=1, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='var_lose', full_name='Rank.var_lose', index=6,
-      number=7, type=5, cpp_type=1, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='var_draw', full_name='Rank.var_draw', index=7,
-      number=8, type=5, cpp_type=1, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='var_contry', full_name='Rank.var_contry', index=8,
-      number=9, type=12, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"",
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto2',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=203,
-  serialized_end=377,
+  serialized_start=93,
+  serialized_end=188,
 )
 
 
@@ -219,15 +130,22 @@ _PRAYINFO = _descriptor.Descriptor(
   fields=[
     _descriptor.FieldDescriptor(
       name='var_name', full_name='PrayInfo.var_name', index=0,
-      number=1, type=12, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"",
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='var_message', full_name='PrayInfo.var_message', index=1,
-      number=2, type=12, cpp_type=9, label=1,
-      has_default_value=False, default_value=b"",
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='var_time', full_name='PrayInfo.var_time', index=2,
+      number=3, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
@@ -243,14 +161,59 @@ _PRAYINFO = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=379,
-  serialized_end=428,
+  serialized_start=190,
+  serialized_end=257,
+)
+
+
+_NOTIFYINFO = _descriptor.Descriptor(
+  name='NotifyInfo',
+  full_name='NotifyInfo',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='var_id', full_name='NotifyInfo.var_id', index=0,
+      number=1, type=3, cpp_type=2, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='var_content', full_name='NotifyInfo.var_content', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='var_date', full_name='NotifyInfo.var_date', index=2,
+      number=3, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto2',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=259,
+  serialized_end=326,
 )
 
 DESCRIPTOR.message_types_by_name['RoomUserInfo'] = _ROOMUSERINFO
 DESCRIPTOR.message_types_by_name['RoomInfo2'] = _ROOMINFO2
-DESCRIPTOR.message_types_by_name['Rank'] = _RANK
 DESCRIPTOR.message_types_by_name['PrayInfo'] = _PRAYINFO
+DESCRIPTOR.message_types_by_name['NotifyInfo'] = _NOTIFYINFO
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 RoomUserInfo = _reflection.GeneratedProtocolMessageType('RoomUserInfo', (_message.Message,), {
@@ -267,19 +230,19 @@ RoomInfo2 = _reflection.GeneratedProtocolMessageType('RoomInfo2', (_message.Mess
   })
 _sym_db.RegisterMessage(RoomInfo2)
 
-Rank = _reflection.GeneratedProtocolMessageType('Rank', (_message.Message,), {
-  'DESCRIPTOR' : _RANK,
-  '__module__' : 'Structure_pb2'
-  # @@protoc_insertion_point(class_scope:Rank)
-  })
-_sym_db.RegisterMessage(Rank)
-
 PrayInfo = _reflection.GeneratedProtocolMessageType('PrayInfo', (_message.Message,), {
   'DESCRIPTOR' : _PRAYINFO,
   '__module__' : 'Structure_pb2'
   # @@protoc_insertion_point(class_scope:PrayInfo)
   })
 _sym_db.RegisterMessage(PrayInfo)
+
+NotifyInfo = _reflection.GeneratedProtocolMessageType('NotifyInfo', (_message.Message,), {
+  'DESCRIPTOR' : _NOTIFYINFO,
+  '__module__' : 'Structure_pb2'
+  # @@protoc_insertion_point(class_scope:NotifyInfo)
+  })
+_sym_db.RegisterMessage(NotifyInfo)
 
 
 DESCRIPTOR._options = None
