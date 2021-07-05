@@ -648,6 +648,7 @@
     <None Remove="Resource\Image\IcoLogin.png" />
     <None Remove="Resource\Image\IcoNotify.png" />
     <None Remove="Resource\Image\IcoSetting.png" />
+    <None Remove="Resource\Image\Mail.png" />
     <None Remove="Resource\Image\Notice.jpg" />
     <None Remove="Resource\Image\symbol.png" />
     <None Remove="Resource\KJV.txt" />
@@ -1362,6 +1363,7 @@
     <EmbeddedResource Include="Resource\Image\IcoLogin.png" />
     <EmbeddedResource Include="Resource\Image\IcoNotify.png" />
     <EmbeddedResource Include="Resource\Image\IcoSetting.png" />
+    <EmbeddedResource Include="Resource\Image\Mail.png" />
     <EmbeddedResource Include="Resource\Image\Notice.jpg" />
     <EmbeddedResource Include="Resource\Image\symbol.png" />
     <EmbeddedResource Include="Resource\KJV.txt" />
@@ -1455,6 +1457,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Update="View\AlarmView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
     <EmbeddedResource Update="View\BibleReadPlan.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
@@ -1468,6 +1473,9 @@
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="View\Lecture2.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="View\MailView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="View\NoticeView.xaml">

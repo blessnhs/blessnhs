@@ -48,6 +48,11 @@ namespace Antioch
             };
         }
 
+        protected override void OnDisappearing()
+        {
+            NetProcess.SendLeaveRoom(0);
+        }
+
         public void ReceiveMessage(string text, string name)
         {
             if (name != User.CacheData.UserName)

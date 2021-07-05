@@ -176,6 +176,7 @@ namespace Hub	{
 				auto info = res.add_var_list();
 				info->mutable_var_name()->assign(std::get<0>(pray));
 				info->mutable_var_message()->assign(std::get<1>(pray));
+				info->mutable_var_time()->assign(std::get<2>(pray));
 			}
 			SEND_PROTO_BUFFER(res, pSession)
 		}

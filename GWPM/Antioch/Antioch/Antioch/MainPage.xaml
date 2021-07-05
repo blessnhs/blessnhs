@@ -23,6 +23,18 @@
 
             <Grid Grid.Column="2" BackgroundColor="White" Grid.ColumnSpan="1">
                 <StackLayout Orientation="Horizontal" HorizontalOptions="End" Padding="0,0,0,0">
+
+                    <ImageButton x:Name="ico_mail" 
+                    BackgroundColor="Transparent"
+                    WidthRequest="40"
+                    HeightRequest="40"
+                    FlexLayout.AlignSelf="Center"
+                    FlexLayout.Grow="1"
+                    Clicked="ico_mail_clicked"
+                    Aspect="AspectFit">
+                    </ImageButton>
+
+
                     <ImageButton x:Name="ico_notify" 
                     BackgroundColor="Transparent"
                     WidthRequest="40"

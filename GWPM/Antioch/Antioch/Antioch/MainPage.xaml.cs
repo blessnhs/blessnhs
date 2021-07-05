@@ -77,12 +77,14 @@ namespace Antioch
             LoadResourceData();
             if (Device.RuntimePlatform == Device.UWP)
             {
+                ico_mail.Source = ImageSource.FromResource("Antioch.Resource.Image.Mail.png", Assembly.GetExecutingAssembly());
                 symbol_image.Source = ImageSource.FromResource("Antioch.Resource.Image.symbol.png", Assembly.GetExecutingAssembly());
                 ico_notify.Source = ImageSource.FromResource("Antioch.Resource.Image.IcoNotify.png", Assembly.GetExecutingAssembly());
                 ico_setting.Source = ImageSource.FromResource("Antioch.Resource.Image.IcoSetting.png", Assembly.GetExecutingAssembly());
             }
             else
             {
+                ico_mail.Source = ImageSource.FromResource("Antioch.Resource.Image.Mail.png", Assembly.GetExecutingAssembly());
                 symbol_image.Source = ImageSource.FromResource("Antioch.Resource.Image.symbol.png", Assembly.GetExecutingAssembly());
                 ico_notify.Source = ImageSource.FromResource("Antioch.Resource.Image.IcoNotify.png", Assembly.GetExecutingAssembly());
                 ico_setting.Source = ImageSource.FromResource("Antioch.Resource.Image.IcoSetting.png", Assembly.GetExecutingAssembly());
@@ -145,6 +147,11 @@ namespace Antioch
         {
             LoadView(lobby);
             return true;
+        }
+               
+
+        void ico_mail_clicked(object sender, EventArgs e)
+        {
         }
 
         void ico_notify_clicked(object sender, EventArgs e)
