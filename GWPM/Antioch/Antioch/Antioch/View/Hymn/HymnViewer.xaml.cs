@@ -32,19 +32,28 @@ namespace Antioch.View
 
             if (stream != null)
             {
-                Image1.Source = ImageSource.FromResource(path);
+                if (Device.RuntimePlatform == Device.UWP)
+                {
+                    Image1.Source = ImageSource.FromResource(path, Assembly.GetExecutingAssembly());
 
-                Image2.Source = "";
+                    Image2.Source = "";
+                }
+                else 
+                {
+                    Image1.Source = ImageSource.FromResource(path, Assembly.GetExecutingAssembly());
+
+                    Image2.Source = "";
+                }
             }
             else
             {
                 string path1 = "Antioch.Resource.Hymn." + page + "-1" + ".gif";
 
-                Image1.Source = ImageSource.FromResource(path1);
+                Image1.Source = ImageSource.FromResource(path1, Assembly.GetExecutingAssembly());
 
                 string path2 = "Antioch.Resource.Hymn." + page + "-2" + ".gif";
 
-                Image2.Source = ImageSource.FromResource(path2);
+                Image2.Source = ImageSource.FromResource(path2, Assembly.GetExecutingAssembly());
 
             }
 

@@ -21,6 +21,7 @@
 #include <boost/algorithm/string/replace.hpp>
 #include <boost/tuple/tuple.hpp>
 #include "Base64.h"
+#include "../../Log/Log.h"
 
 using namespace ::pplx;
 using namespace utility;
@@ -217,6 +218,40 @@ namespace Hub	{
 		void Undo() {}
 	};
 
+	template<>
+	class MSG_PLAYER_QUERY<RequestQNS> : public IMESSAGE
+	{
+	public:
+		MSG_PLAYER_QUERY() { }
+		~MSG_PLAYER_QUERY() {}
+
+		GSCLIENT_PTR pSession;
+
+		RequestQNS pRequst;
+
+		void Execute(LPVOID Param)
+		{
+			DBPROCESS_CER_PTR pProcess = DBPROCESSCONTAINER_CER.Search(Type);
+			if (pProcess == NULL || pProcess->m_IsOpen == false)
+			{
+				return;
+			}
+
+			boost::replace_all(pRequst.contents, "'", "''");
+
+			int ret = pProcess->UpdaetQNS(pRequst.Index, pRequst.contents);
+
+			ErrorCode code = ret == 0 ? ErrorCode::Success : ErrorCode::DataBaseError;
+
+			QNA_RES res;
+			res.set_var_code(code);
+
+			SEND_PROTO_BUFFER(res, pSession)
+		}
+
+		void Undo() {}
+	};
+
 
 	template<>
 	class MSG_PLAYER_QUERY<RequestNotice> : public IMESSAGE
@@ -240,13 +275,19 @@ namespace Hub	{
 				return;
 			}
 
-			string notice;
-
-			pProcess->NoticeInfoInfo(notice);
+			auto notice_list  = pProcess->NoticeInfoInfo();
 
 			NOTICE_RES res;
-			res.set_var_message(notice.c_str());
 
+			for each (auto notice in notice_list)
+			{
+				auto data = res.add_var_list();
+
+				data->set_var_id(std::get<0>(notice));
+				data->set_var_content(std::get<1>(notice));
+				data->set_var_date(std::get<2>(notice));
+			}
+		
 			SEND_PROTO_BUFFER(res, pSession)
 		}
 
@@ -351,17 +392,17 @@ namespace Hub	{
 				DBPROCESS_CER_PTR pProcess = DBPROCESSCONTAINER_CER.Search(Type);
 				if (pProcess == NULL || pProcess->m_IsOpen == false)
 				{
-					printf("DBPROCESSCONTAINER_CER.Search wong %d \n", pSession->GetMyDBTP());
+					BLOG("DBPROCESSCONTAINER_CER.Search wong %d \n", pSession->GetMyDBTP());
 
 					res.set_var_code(DataBaseError);
 
 					SEND_PROTO_BUFFER(res, pSession)
-						return;
+					return;
 				}
 
 				if (pRequst.id.size() == 0 || pRequst.id.size() > 256 || pRequst.pwd.size() == 0 || pRequst.pwd.size() > 256)
 				{
-					printf("DBPROCESSCONTAINER_CER.Search token size error %d \n", pRequst.id.size());
+					BLOG("DBPROCESSCONTAINER_CER.Search token size error %d \n", pRequst.id.size());
 
 					res.set_var_code(DataBaseError);
 
@@ -376,51 +417,64 @@ namespace Hub	{
 				std::string authentickey;
 				INT64 Index = 0;
 				int score = 0,level = 0;
-				WORD nRet = pProcess->ProcedureUserLogin(pRequst.id, pRequst.pwd, authentickey,score, Index, level);
+
+
+				//-1 비밀번호 다름
+				//-2 이미 접속
+				//-3 접속 로그남기기 실패
+				int nRet = pProcess->ProcedureUserLogin(pRequst.id, pRequst.pwd, authentickey,score, Index, level);
 
 				//이미 접속해 있는 세션이 있고(디비에 접속기록이 남아 있다.)
 				if (nRet != _ERR_NONE)
 				{
-				//	printf("Login Fail Concurrent Table Exist data Ret %d \n", nRet);
-					res.set_var_code(LoginFailed);
-					SEND_PROTO_BUFFER(res, pSession)
-
-					pSession->Close();
-
-					//기존 세션과 신규 세션 양쪽 다 팅기는 것으로 변경
-					//이미 접속중이면 이전 접속을 끊는다. 
-					auto existClient = PLAYERMGR.Search(Index);
-					if (existClient != NULL)
+					//-1 비밀번호 다름
+					//접속 종료만 처리
+					if (nRet == -1)
 					{
-						GSCLIENT_PTR pPair = SERVER.GetClient(existClient->GetPair());
-						if (pPair != NULL)
-						{
-					//		printf("Exist player client %lld and session close\n", Index);
-
-							pPair->Close();
-						}
+						BLOG("1.Login Fail Invalid Password %d  INDEX  %lld\n", nRet, Index);
+						pSession->Close();
 						return;
 					}
+					//- 2 이미 접속
+					// 양쪽 다 종료 처리
+					else if (nRet == -2)
+					{
+						//디비에 접속 기록을 그냥 날린다. 어차피 양쪽 다 팅긴다. 
+						pProcess->ProcedureUserLogout(Index);
 
-					return;
+						BLOG("2.Login Fail Concurrent Table Exist data Ret %d  INDEX  %lld\n", nRet, Index);
+						res.set_var_code(LoginFailed);
+						SEND_PROTO_BUFFER(res, pSession)
+
+						pSession->Close();
+
+						//기존 세션과 신규 세션 양쪽 다 팅기는 것으로 변경
+						//이미 접속중이면 이전 접속을 끊는다. 
+						auto existClient = PLAYERMGR.Search(Index);
+						if (existClient != NULL)
+						{
+							GSCLIENT_PTR pPair = SERVER.GetClient(existClient->GetPair());
+							if (pPair != NULL)
+							{
+								BLOG("2.Login Fail Exist player %lld and session close\n", Index);
+
+								pPair->Close();
+							}
+							return;
+						}
+
+						return;
+					}
 				}
 
-				//이미 접속중이면 이전 접속을 끊는다. 
-				auto existClient = PLAYERMGR.Search(Index);
+				//해당 세센으로 이미 로그인을 했다.
+				auto existClient = PLAYERMGR.Search(pSession->GetPair());
 				if (existClient != NULL)
 				{
-					GSCLIENT_PTR pPair = SERVER.GetClient(existClient->GetPair());
-					if (pPair != NULL)
-					{
-				//		printf("1.Exist player client %lld \n", Index);
+					BLOG("Duplicate Login Fail Exist player %lld close\n", Index);
+					pSession->Close();
 
-						pPair->Close();
-					}
-
-			//		printf("2.Exist player client %d \n", Index);
-			//		res.set_var_code(LoginFailed);
-			//		SEND_PROTO_BUFFER(res, pSession)
-			//			return;
+					return;
 				}
 
 				PlayerPtr pNewPlayer = PLAYERMGR.Create();

@@ -27,17 +27,15 @@ BOOL GSHub::Disconnect(GSCLIENT_PTR pSession)
 		
 		pPlayer->SetPair(ULONG_MAX);
 		PLAYERMGR.Del(pPlayer);
-	
-
-		//로그아웃 쿼리를 날린다.
-	
-		boost::shared_ptr<Hub::MSG_PLAYER_QUERY<RequestLogout>>		PLAYER_MSG = ALLOCATOR.Create<Hub::MSG_PLAYER_QUERY<RequestLogout>>();
-		PLAYER_MSG->pSession = pSession;
-		PLAYER_MSG->pRequst.Index = pSession->GetPair();
-		PLAYER_MSG->Type = pSession->GetMyDBTP();
-		PLAYER_MSG->SubType = ONQUERY;
-		MAINPROC.RegisterCommand(PLAYER_MSG);
 	}
+
+	//로그아웃 쿼리를 날린다.
+	boost::shared_ptr<Hub::MSG_PLAYER_QUERY<RequestLogout>>		PLAYER_MSG = ALLOCATOR.Create<Hub::MSG_PLAYER_QUERY<RequestLogout>>();
+	PLAYER_MSG->pSession = pSession;
+	PLAYER_MSG->pRequst.Index = pSession->GetPair();
+	PLAYER_MSG->Type = pSession->GetMyDBTP();
+	PLAYER_MSG->SubType = ONQUERY;
+	MAINPROC.RegisterCommand(PLAYER_MSG);
 
 
 

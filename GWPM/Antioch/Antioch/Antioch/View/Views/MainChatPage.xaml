@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ContentPage 
+		xmlns="http://xamarin.com/schemas/2014/forms" 
+		xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+		x:Class="Antioch.MainChatPage" 
+		xmlns:local="clr-namespace:Antioch;assembly=Antioch" 
+		BindingContext="{x:Static local:ViewModelLocator.MainChatViewModel}">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Location" Command="{Binding LocationCommand}"/>
+    </ContentPage.ToolbarItems>
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <local:MyDataTemplateSelector x:Key="MessageTemplateSelector"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <Grid RowSpacing="0" ColumnSpacing="0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="8*" />
+            <RowDefinition Height="1*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="8*" />
+            <ColumnDefinition Width="2*" />
+        </Grid.ColumnDefinitions>
+
+        <!-- Entry and Send button in Row 1 -->
+        <StackLayout Padding="0,0,0,0"  Orientation="Horizontal" Grid.Column="0" Grid.Row="0" HorizontalOptions="End" Grid.ColumnSpan="2" BackgroundColor="White">
+            <Label  x:Name="title_label"/>
+            <Button Text="List" Clicked="List_Clicked" Style="{StaticResource buttonStyle}"/>
+            <Button Text="Exit" Command="{Binding ExitCommand}" Style="{StaticResource buttonStyle}"/>
+        </StackLayout>
+        <!--Messages in Row 1 -->
+
+
+        <!--Messages in Row 1 -->
+        <ListView  Grid.Row="1"  Grid.Column="0" Grid.ColumnSpan="2"
+			x:Name="MessagesListView" 
+			ItemTemplate="{StaticResource MessageTemplateSelector}" 
+			ItemsSource="{Binding Messages}" 
+			HasUnevenRows="True" 
+			ItemSelected="MyListView_OnItemSelected" 
+			ItemTapped="MyListView_OnItemTapped" 
+			SeparatorVisibility="None" />
+
+
+        <ListView x:Name="UserList" ItemsSource="{Binding RoomUser}" Grid.Row="1"  Grid.Column="1">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <StackLayout Margin="8">
+                            <Label Text="{Binding User}" />
+                        </StackLayout>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+
+        <!-- Entry and Send button in Row 1 -->
+        <StackLayout Orientation="Horizontal" Grid.Column="0" Grid.Row="2"  Grid.ColumnSpan="2" BackgroundColor="#EFEFEF" Padding="0,0,0,0">
+            <Editor x:Name="entry_message"
+			    HorizontalOptions="FillAndExpand" 
+				HeightRequest="25" 
+				Placeholder="Message" 
+				Text="{Binding OutGoingText}"/>
+            <Button 
+				Text="Send" 
+				Command="{Binding SendCommand}" Style="{StaticResource buttonStyle}"/>
+
+        </StackLayout>
+    </Grid>
+</ContentPage>

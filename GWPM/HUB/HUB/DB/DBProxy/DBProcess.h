@@ -25,11 +25,11 @@ public:
 	bool NickNameCheck(string Name, INT64 Index);
 
 	int UpdaetQNS(INT64 Index, string contents);
-	int NoticeInfoInfo(string& notice);
+	std::list<tuple<__int64, string, string>> NoticeInfoInfo();
 	float ProcedureVersion();
 
 
-	list<tuple<string, string>> PrayList();
+	list<tuple<string, string,string>> PrayList();
 	int RegPray(string name, string contents);
 
 	bool				m_IsOpen;

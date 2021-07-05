@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -74,8 +75,19 @@ namespace Antioch
             InitializeComponent();
 
             LoadResourceData();
+            if (Device.RuntimePlatform == Device.UWP)
+            {
+                symbol_image.Source = ImageSource.FromResource("Antioch.Resource.Image.symbol.png", Assembly.GetExecutingAssembly());
+                ico_notify.Source = ImageSource.FromResource("Antioch.Resource.Image.IcoNotify.png", Assembly.GetExecutingAssembly());
+                ico_setting.Source = ImageSource.FromResource("Antioch.Resource.Image.IcoSetting.png", Assembly.GetExecutingAssembly());
+            }
+            else
+            {
+                symbol_image.Source = ImageSource.FromResource("Antioch.Resource.Image.symbol.png", Assembly.GetExecutingAssembly());
+                ico_notify.Source = ImageSource.FromResource("Antioch.Resource.Image.IcoNotify.png", Assembly.GetExecutingAssembly());
+                ico_setting.Source = ImageSource.FromResource("Antioch.Resource.Image.IcoSetting.png", Assembly.GetExecutingAssembly());
+            }
 
-            symbol_image.Source = ImageSource.FromResource("Antioch.Resource.Image.symbol.png");
             symbol_image.GestureRecognizers.Add(new TapGestureRecognizer
             {
                 TappedCallback = (v, o) => {
@@ -85,9 +97,7 @@ namespace Antioch
             });
 
 
-            ico_notify.Source = ImageSource.FromResource("Antioch.Resource.Image.IcoNotify.png");
-            ico_setting.Source = ImageSource.FromResource("Antioch.Resource.Image.IcoSetting.png");
-
+ 
 
             ContentViews.Children.Add(lobby);
 

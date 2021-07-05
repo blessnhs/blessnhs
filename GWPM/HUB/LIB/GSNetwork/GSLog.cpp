@@ -77,7 +77,7 @@ bool			GSLog::Write(const char* fmt, ...)
 	::WriteFile(handle_, time_log, (DWORD)(strlen(time_log) * sizeof(CHAR)), &write_len, NULL);
 
 	if (_display == true)
-		printf(("%s%s\n"), time_log, arg_buffer);
+		printf(("%s\n"), time_log);
 
 	Close();
 

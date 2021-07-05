@@ -73,66 +73,66 @@ namespace Antioch
                 var englishlabeltab = new TapGestureRecognizer();
                 englishlabeltab.Tapped += async (s, e) =>
                 {
-                    try
-                    {
-                        var labelText = s as Label;
+                    //try
+                    //{
+                    //    var labelText = s as Label;
 
-                        string Context = labelText.Text;
+                    //    string Context = labelText.Text;
 
-                        string[] words = Context.Split(' ');
+                    //    string[] words = Context.Split(' ');
 
-                        Dictionary<string, string> help = new Dictionary<string, string>();
-                        if (words != null || words.Length > 0)
-                        {
-                            for (int k = 0; k < words.Length; k++)
-                            {
-                                words[k] = words[k].ToLower();
-                                string outstr;
-                                if (Dic._dictionary.TryGetValue(words[k], out outstr) == true)
-                                {
-                                    help[words[k]] = outstr;
-                                }
-                                else
-                                {
-                                    if (words[k].Length > 3)
-                                    {
-                                        //끝에 하나버림
-                                        string sub1 = words[k].Substring(0, words[k].Length - 1);
-                                        if (Dic._dictionary.TryGetValue(sub1, out outstr) == true)
-                                        {
-                                            help[sub1] = outstr;
+                    //    Dictionary<string, string> help = new Dictionary<string, string>();
+                    //    if (words != null || words.Length > 0)
+                    //    {
+                    //        for (int k = 0; k < words.Length; k++)
+                    //        {
+                    //            words[k] = words[k].ToLower();
+                    //            string outstr;
+                    //            if (Dic._dictionary.TryGetValue(words[k], out outstr) == true)
+                    //            {
+                    //                help[words[k]] = outstr;
+                    //            }
+                    //            else
+                    //            {
+                    //                if (words[k].Length > 3)
+                    //                {
+                    //                    //끝에 하나버림
+                    //                    string sub1 = words[k].Substring(0, words[k].Length - 1);
+                    //                    if (Dic._dictionary.TryGetValue(sub1, out outstr) == true)
+                    //                    {
+                    //                        help[sub1] = outstr;
                                         
-                                        }
-                                        else
-                                        {
-                                            //끝에 두개버림
-                                            sub1 = words[k].Substring(0, words[k].Length - 2);
-                                            if (Dic._dictionary.TryGetValue(sub1, out outstr) == true)
-                                            {
-                                                help[sub1] = outstr;
-                                            }
-                                        }
+                    //                    }
+                    //                    else
+                    //                    {
+                    //                        //끝에 두개버림
+                    //                        sub1 = words[k].Substring(0, words[k].Length - 2);
+                    //                        if (Dic._dictionary.TryGetValue(sub1, out outstr) == true)
+                    //                        {
+                    //                            help[sub1] = outstr;
+                    //                        }
+                    //                    }
 
-                                    }
-                                }
-                            }
-                        }
+                    //                }
+                    //            }
+                    //        }
+                    //    }
 
-                        string context = "";
-                        foreach( var str in help)
-                        {
-                            context += str.Key;
-                            context += " : ";
-                            context += str.Value;
-                            context += "\n\n";
-                        }
+                    //    string context = "";
+                    //    foreach( var str in help)
+                    //    {
+                    //        context += str.Key;
+                    //        context += " : ";
+                    //        context += str.Value;
+                    //        context += "\n\n";
+                    //    }
 
-                        await App.Current.MainPage.DisplayAlert("Help", context, "OK");
-                    }
-                    catch (Exception)
-                    {
+                    //    await App.Current.MainPage.DisplayAlert("Help", context, "OK");
+                    //}
+                    //catch (Exception)
+                    //{
 
-                    }
+                    //}
 
                 };
 

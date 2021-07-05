@@ -46,12 +46,12 @@ bool CDBProcessCer::NickNameCheck(string Name, INT64 Index)
 }
 
 
-int CDBProcessCer::NoticeInfoInfo(string& notice)
+std::list<tuple<__int64, string, string>> CDBProcessCer::NoticeInfoInfo()
 {
-	return m_DB->NoticeInfoInfo(notice);
+	return m_DB->NoticeInfoInfo();
 }
 
-list<tuple<string, string>> CDBProcessCer::PrayList()
+list<tuple<string, string,string>> CDBProcessCer::PrayList()
 {
 	return m_DB->PrayList();
 }

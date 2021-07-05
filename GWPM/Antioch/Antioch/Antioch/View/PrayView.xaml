@@ -37,6 +37,6 @@
         <Entry x:Name="PrayEntry" Grid.Row="1" Grid.Column="0" Placeholder="기도 제목을 입력하세요"  />
 
 
-        <Button Grid.Row="1" Grid.Column="1" Text="입력" Clicked="Entry_TextChanged"/>
+        <Button Grid.Row="1" Grid.Column="1" Text="입력" Clicked="Entry_TextChanged"  Style="{StaticResource buttonStyle2}"/>
     </Grid>
 </ContentView>

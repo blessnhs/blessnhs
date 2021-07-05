@@ -49,8 +49,8 @@ namespace Antioch.View
             foreach (var pray in res.VarList)
             {
                 var info2 = new PrayModelInfo();
-                info2.Name = Helper.ToStr(pray.VarName.ToByteArray());
-                info2.Content = Helper.ToStr(pray.VarMessage.ToByteArray());
+                info2.Name = pray.VarName;
+                info2.Content = pray.VarMessage;
                 prayList.Add(info2);
             }
 
@@ -63,6 +63,9 @@ namespace Antioch.View
             NetProcess.SendMakePray(PrayEntry.Text);
 
             PrayEntry.Text = "";
+
+            NetProcess.SendPrayList();
+
         }
     }
 }

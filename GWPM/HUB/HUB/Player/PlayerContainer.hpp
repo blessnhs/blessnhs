@@ -199,7 +199,7 @@ template<template<class T> class CreationPolicy> void PlayerContainer<CreationPo
 			PlayerPtr pPlayer = iter->second;
 			if (pPlayer != NULL)
 			{
-				printf("Player Client is null mia\n");			
+				printf("Player Client %lld Session mia\n",pPlayer->GetId());			
 
 				ROOMMGR.LeaveRoomPlayer(pPlayer);
 

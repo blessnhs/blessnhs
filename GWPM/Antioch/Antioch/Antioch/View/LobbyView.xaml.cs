@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Essentials;
@@ -19,70 +20,82 @@ namespace Antioch.View
         public LobbyView()
         {
             InitializeComponent();
-
-            banner_image.Source = ImageSource.FromResource("Antioch.Resource.Image.banner.png");
+            if (Device.RuntimePlatform == Device.UWP)
+            {
+                banner_image.Source = ImageSource.FromResource("Antioch.Resource.Image.banner.png", Assembly.GetExecutingAssembly());
+            }
+            else
+            {
+                banner_image.Source = ImageSource.FromResource("Antioch.Resource.Image.banner.png", Assembly.GetExecutingAssembly());
+            }
         }
 
 
         void OnTapped(object sender, EventArgs e)
         {
-            var sndObject = sender as StackLayout;
-            var grid = this.Parent as Grid;
-
-            switch (sndObject.StyleId)
+            try
             {
-                case "Notice":
-                    LoadView(new NoticeView());
-                    break;
-                case "Bulletin":
-                    Device.OpenUri(new Uri("http://www.antiochi.net/jubo.pdf"));
-                    break;
-                case "Sermon":
-                    Device.OpenUri(new Uri("http://www.antiochi.net"));
-                    break;
-                case "Community":
-                    break;
+                var sndObject = sender as StackLayout;
+                var grid = this.Parent as Grid;
 
-                case "Lecture":
-                    LoadView(new Lecture()); 
-                    break;
+                switch (sndObject.StyleId)
+                {
+                    case "Notice":
+                        LoadView(new NoticeView());
+                        break;
+                    case "Bulletin":
+                        Device.OpenUri(new Uri("http://www.antiochi.net/jubo.pdf"));
+                        break;
+                    case "Sermon":
+                        Device.OpenUri(new Uri("http://www.antiochi.net"));
+                        break;
+                    case "Community":
+                        break;
 
-                case "Lecture2":
-                    LoadView(new Lecture2());
-                    break;
+                    case "Lecture":
+                        LoadView(new Lecture());
+                        break;
 
-                case "Chat":
-                    Navigation.PushModalAsync(roompage);
-                    break;
+                    case "Lecture2":
+                        LoadView(new Lecture2());
+                        break;
 
-                case "Plan":
-                    LoadView(new BibleReadPlan()); 
-                    break;
-                case "Worship":
-                    LoadView(new Hymn());
-                    break;
-                case "Pray":
-                    LoadView(praypage);
-                    break;
-                case "Bible":
-                    LoadView(new BibleView());
-                    break;
-                case "HomePage":
-                    Device.OpenUri(new Uri("http://www.antiochi.net"));
-                    break;
+                    case "Chat":
+                        Navigation.PushModalAsync(roompage);
+                        break;
 
-                case "Evangelize":
-                    Share.RequestAsync(new ShareTextRequest
-                    {
-                        Text = "https://youtu.be/Dm89UpFcHVQ",
-                        Title = "#전도 컨텐츠"
-                    });
-                    break;
+                    case "Plan":
+                        LoadView(new BibleReadPlan());
+                        break;
+                    case "Worship":
+                      //  LoadView(new Hymn());
+                        break;
+                    case "QnA":
+                          LoadView(new QnAView());
+                        break;
+                    case "Pray":
+                        LoadView(praypage);
+                        break;
+                    case "Bible":
+                        LoadView(new BibleView());
+                        break;
+                    case "HomePage":
+                        Device.OpenUri(new Uri("http://www.antiochi.net"));
+                        break;
+
+                    case "Evangelize":
+                        Share.RequestAsync(new ShareTextRequest
+                        {
+                            Text = "https://youtu.be/Dm89UpFcHVQ",
+                            Title = "#전도 컨텐츠"
+                        });
+                        break;
+                }
             }
-           
+            catch(Exception)
+            {
 
-           
-
+            }
         }
 
         public void LoadView(ContentView view)

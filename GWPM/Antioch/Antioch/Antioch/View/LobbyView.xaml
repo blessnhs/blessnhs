@@ -103,9 +103,9 @@
             </Frame>
 
             <Frame BorderColor="Gray"  CornerRadius="5"  Grid.Row="2" Grid.Column="2"  BackgroundColor="#D75725">
-                <StackLayout  x:Name="Worship">
-                    <Label Text="찬송"  TextColor="White" FontSize="Large" FontAttributes="Bold" />
-                    <Label Text="Worship"  TextColor="White" FontSize="Body" FontAttributes="Bold" />
+                <StackLayout  x:Name="Plan">
+                    <Label Text="계획" TextColor="White" FontSize="Large" FontAttributes="Bold" />
+                    <Label Text="Plan" TextColor="White" FontSize="Body" FontAttributes="Bold" />
                     <StackLayout.GestureRecognizers>
                         <TapGestureRecognizer Tapped="OnTapped"/>
                     </StackLayout.GestureRecognizers>
@@ -135,9 +135,9 @@
             </Frame>
 
             <Frame BorderColor="Gray"  CornerRadius="5"  Grid.Row="3" Grid.Column="2"  BackgroundColor="#171635">
-                <StackLayout  x:Name="Plan">
-                    <Label Text="계획" TextColor="White" FontSize="Large" FontAttributes="Bold" />
-                    <Label Text="Plan" TextColor="White" FontSize="Body" FontAttributes="Bold" />
+                <StackLayout  x:Name="QnA">
+                    <Label Text="질문" TextColor="White" FontSize="Large" FontAttributes="Bold" />
+                    <Label Text="QnA" TextColor="White" FontSize="Body" FontAttributes="Bold" />
                     <StackLayout.GestureRecognizers>
                         <TapGestureRecognizer Tapped="OnTapped"/>
                     </StackLayout.GestureRecognizers>
@@ -145,7 +145,7 @@
             </Frame>
 
             <Frame BorderColor="Gray"  CornerRadius="5"  Grid.Row="4" Grid.ColumnSpan="3"  BackgroundColor="White" Padding="0,0,0,0">
-                <Image x:Name="banner_image" Aspect="Fill" />
+                <Image x:Name="banner_image" Aspect="Fill" Source="Antioch.Resource.Image.banner.png"/>
             </Frame>
 
         </Grid>

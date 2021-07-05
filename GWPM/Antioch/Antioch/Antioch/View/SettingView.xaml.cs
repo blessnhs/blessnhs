@@ -19,6 +19,8 @@ namespace Antioch.View
         {
             InitializeComponent();
 
+            vm.BtnMessage = "로그인";
+
             TextSizeSlider.Value = User.CacheData.FontSize;
 
             TextSizeSlider.ValueChanged += (sender, args) =>
@@ -49,6 +51,8 @@ namespace Antioch.View
                     usernameEntry.Text = User.CacheData.UserName;
                     passwordEntry.Text = "****";
                     loginbutton.IsVisible = false;
+
+                    vm.BtnMessage = "접속중";
                 });
                
             }
@@ -60,6 +64,7 @@ namespace Antioch.View
         {
             vm.Message = message;
             vm.Id = id;
+            vm.BtnMessage = message;
         }
 
         void OnToggledKJV(object sender, ToggledEventArgs e)

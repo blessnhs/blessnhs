@@ -3,7 +3,6 @@
 #include "HubProcess.h"
 #include "Base64.h"
 
-
 using namespace google;
 
 HubProcess::HubProcess(void)
@@ -21,6 +20,8 @@ HubProcess::HubProcess(void)
 
 	ADD_NET_FUNC(HubProcess, ID_PKT_PRAY_MESSAGE_REQ, PRAY_LIST);
 	ADD_NET_FUNC(HubProcess, ID_PKT_PRAY_MESSAGE_REG_REQ, REG_PRAY);
+
+	ADD_NET_FUNC(HubProcess, ID_PKT_QNA_REQ, QNS);
 }
 
 
@@ -43,12 +44,14 @@ VOID HubProcess::Process(LPVOID Data, DWORD Length, WORD MainProtocol, WORD SubP
 #else
 				return;
 #endif
-
-
 			}
 		}
 
-		SYSLOG().Write("%s MainProtocol %d Length %d\n", __FUNCTION__, MainProtocol, Length);
+		const google::protobuf::EnumDescriptor* descriptor = PROTOCOL_descriptor();
+		std::string name = descriptor->FindValueByNumber(MainProtocol)->name();
+
+		if(MainProtocol != ID_PKT_ROOM_LIST_REQ && MainProtocol != ID_PKT_PRAY_MESSAGE_REQ)
+			BLOG("%s MainProtocol %s Length %d", __FUNCTION__, name.c_str(), Length);
 
 		NET_FUNC_EXE(MainProtocol, Data, Length, Client);
 	}
@@ -64,8 +67,8 @@ VOID HubProcess::CHECK_NICKNAME(LPVOID Data, DWORD Length, boost::shared_ptr<GSC
 
 VOID HubProcess::NOTICE(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client)
 {
-	DECLARE_RECV_TYPE(NOTICE_REQ, version)
-
+	DECLARE_RECV_TYPE(NOTICE_REQ, version)	
+	
 	boost::shared_ptr<Hub::MSG_PLAYER_QUERY<RequestNotice>>		PLAYER_MSG = ALLOCATOR.Create<Hub::MSG_PLAYER_QUERY<RequestNotice>>();
 	PLAYER_MSG->pSession = Client;
 	PLAYER_MSG->Type = Client->GetMyDBTP();
@@ -200,7 +203,28 @@ VOID HubProcess::REG_PRAY(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient>
 
 VOID HubProcess::QNS(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client)
 {
+	DECLARE_RECV_TYPE(QNA_REQ, message)
 
+	if (message.var_message().length() > 2048 || message.var_message().length() <= 0)
+	{
+		return;
+	}
+
+	PlayerPtr pPlayer = PLAYERMGR.Search(Client->GetPair());
+	if (pPlayer == NULL)
+	{
+		return;
+	}
+
+	boost::shared_ptr<Hub::MSG_PLAYER_QUERY<RequestQNS>>		PLAYER_MSG = ALLOCATOR.Create<Hub::MSG_PLAYER_QUERY<RequestQNS>>();
+	{
+		PLAYER_MSG->pRequst.Index = pPlayer->GetId();
+		PLAYER_MSG->pRequst.contents = message.var_message();
+	}
+	PLAYER_MSG->Type = Client->GetMyDBTP();
+	PLAYER_MSG->SubType = ONQUERY;
+	PLAYER_MSG->pSession = Client;
+	MAINPROC.RegisterCommand(PLAYER_MSG);
 }
 
 VOID HubProcess::ROOM_PASSTHROUGH(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client)
@@ -274,21 +298,21 @@ VOID HubProcess::ROOM_ENTER(LPVOID Data, DWORD Length, boost::shared_ptr<GSClien
 	res.set_var_name(RoomPtr->m_Stock.Name.c_str());
 	SEND_PROTO_BUFFER(res, Client)
 
-		//새로 입장한 유저에게 방안의 유저 정보전송
-		for each (auto iter in RoomPtr->m_PlayerMap)
-		{
-			if (iter.second == NULL)
-				continue;
+	//새로 입장한 유저에게 방안의 유저 정보전송
+	for each (auto iter in RoomPtr->m_PlayerMap)
+	{
+		if (iter.second == NULL)
+			continue;
 
-			NEW_USER_IN_ROOM_NTY nty;
-			nty.set_var_type(0);
-			RoomUserInfo* userinfo = nty.mutable_var_room_user();
+		NEW_USER_IN_ROOM_NTY nty;
+		nty.set_var_type(0);
+		RoomUserInfo* userinfo = nty.mutable_var_room_user();
 
-			userinfo->set_var_index(iter.second->GetId());
-			userinfo->set_var_name(iter.second->m_Account.GetName());
+		userinfo->set_var_index(iter.second->GetId());
+		userinfo->set_var_name(iter.second->m_Account.GetName());
 
-			SEND_PROTO_BUFFER(nty, Client)
-		}
+		SEND_PROTO_BUFFER(nty, Client)
+	}
 
 
 	//방안의 유저들 에게 새로운 유저 정보를 전송
@@ -305,8 +329,8 @@ VOID HubProcess::ROOM_ENTER(LPVOID Data, DWORD Length, boost::shared_ptr<GSClien
 		nty.set_var_type(1);
 		RoomUserInfo* userinfo = nty.mutable_var_room_user();
 
-		userinfo->set_var_index(iter.second->GetId());
-		userinfo->set_var_name(iter.second->m_Account.GetName());
+		userinfo->set_var_index(pPlayer->GetId());
+		userinfo->set_var_name(pPlayer->m_Char[0].GetName());
 
 		SEND_PROTO_BUFFER(nty, pPair)
 	}

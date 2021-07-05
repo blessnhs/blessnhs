@@ -6,7 +6,7 @@
 class HubLog : public GSLog , public Singleton<HubLog>
 {
 public:
-	HubLog(char *filename);
+	HubLog(char *filename = "HubLog.txt");
 	~HubLog(void);
 };
 
