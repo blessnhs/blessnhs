@@ -20,6 +20,11 @@ namespace Antioch.View
 
 		private async void OnSendButtonClicked(object sender, EventArgs e)
 		{
+			if(contents.Text == "")
+            {
+				await App.Current.MainPage.DisplayAlert("", "내용을 입력해 주세요.", "OK");
+				return;
+            }
 
 			NetProcess.SendQNS(contents.Text);
 			contents.Text = "";

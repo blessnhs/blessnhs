@@ -15,11 +15,11 @@
                         <ColumnDefinition Width="10*" />
                     </Grid.ColumnDefinitions>
 
-                    <Label  x:Name="QNSLabel" Text="버그 와 기타 여러 사소한 무엇이든 질문해 주세요"  TextColor="Black" Grid.Row="0" Grid.Column="0"/>
+                    <Label  x:Name="QNSLabel" Text="버그 와 기타 여러 사소한 무엇이든지 질문해 주세요"  TextColor="Black" Grid.Row="0" Grid.Column="0"/>
 
-                    <Editor x:Name="contents" Text=""  BackgroundColor="Gray" Grid.Row="1" Grid.Column="0"/>
+                    <Editor x:Name="contents" Text=""  BackgroundColor="Gray" Grid.Row="1" Grid.Column="0" />
 
-                    <StackLayout Orientation="Horizontal" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3">
+                    <StackLayout Orientation="Horizontal" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" HorizontalOptions="Center">
                         <Button  x:Name="sendbutton" Text="전송" Clicked="OnSendButtonClicked"/>
                         <Button  x:Name="closebutton" Text="닫기" Clicked="OnCloseButtonClicked" />
                     </StackLayout>

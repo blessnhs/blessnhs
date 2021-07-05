@@ -51,6 +51,7 @@ namespace Antioch.View
                 var info2 = new PrayModelInfo();
                 info2.Name = pray.VarName;
                 info2.Content = pray.VarMessage;
+                info2.Timestring = pray.VarTime;
                 prayList.Add(info2);
             }
 
