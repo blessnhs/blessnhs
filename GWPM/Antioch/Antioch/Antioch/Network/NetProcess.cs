@@ -100,11 +100,6 @@ namespace Antioch
                                 if (res.VarCode == ErrorCode.Success)
                                 {
 
-                                    Device.BeginInvokeOnMainThread(() =>
-                                    {
-                                        mainpage.setting.UpdateLoginState(User.Username, "(접속 성공)접속중 입니다.");
-                                    });
-
                                     User.LoginSuccess = true;
                                     SQLLiteDB.Upsert(User.CacheData.FontSize, User.CacheData.BibleName, User.CacheData.Chapter, User.CacheData.Verse,
                                         User.Username == null ? User.CacheData.UserName : User.Username, User.Password == null ? User.CacheData.Passwd : User.Password);
@@ -112,6 +107,19 @@ namespace Antioch
 
                                     User.CacheData.UserName = User.Username;
                                     User.CacheData.Passwd = User.Password;
+
+
+                                    Device.BeginInvokeOnMainThread(() =>
+                                    {
+                                        mainpage.setting.UpdateLoginState(User.Username, "(접속중)");
+
+                                        var page = mainpage.CurrentView();
+                                        var settingview = page as SettingView;
+
+                                        if(settingview == null)
+                                            mainpage.LoadLobby();
+                                    });
+
                                 }
                                 else
                                 {

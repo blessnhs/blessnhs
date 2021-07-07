@@ -59,10 +59,14 @@ namespace Antioch
                          SocketType.Stream, ProtocolType.Tcp);
                 }
 
+                User.LoginSuccess = false;
+
                 socket.Connect(remoteEP);
 
                 if (socket.Connected == true)
+                {
                     NetProcess.SendVersion();
+                }
 
             }
             catch (Exception e)

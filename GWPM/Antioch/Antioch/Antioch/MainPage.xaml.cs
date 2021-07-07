@@ -142,6 +142,16 @@ namespace Antioch
             return true;
         }
 
+        public Xamarin.Forms.View CurrentView()
+        {
+            foreach(var content in ContentViews.Children)
+            {
+                return content;
+            }
+
+            return null;
+        }
+
         public bool LoadLobby()
         {
             LoadView(lobby);
