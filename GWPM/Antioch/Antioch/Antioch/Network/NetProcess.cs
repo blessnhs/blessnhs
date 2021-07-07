@@ -40,10 +40,10 @@ namespace Antioch
         {
             if (check_time < DateTime.Now)
             {
-                string ip = "211.212.37.238";//"192.168.0.9"
-                //string ip = "192.168.0.9";
+               // string ip = "211.212.37.238";//"192.168.0.9"
+                string ip = "192.168.0.9";
 
-                client.StartClient(ip, 23000);
+                client.StartClient(ip, 20000);
 
                 check_time = DateTime.Now.AddSeconds(5);
             }
@@ -116,8 +116,10 @@ namespace Antioch
                                         var page = mainpage.CurrentView();
                                         var settingview = page as SettingView;
 
-                                        if(settingview == null)
+                                        if (settingview == null)
+                                        {
                                             mainpage.LoadLobby();
+                                        }
                                     });
 
                                 }
@@ -212,12 +214,17 @@ namespace Antioch
 
 
                                 });
+
+                                SendEnterRoom(res.VarRoomId);
+
                             }
                             break;
                         case (int)PROTOCOL.IdPktEnterRoomRes:
                             {
                                 ENTER_ROOM_RES res = new ENTER_ROOM_RES();
                                 res = ENTER_ROOM_RES.Parser.ParseFrom(data.Data);
+                                if (res.VarCode == ErrorCode.DuplicateEnterRoom)
+                                    break;
 
                                 Device.BeginInvokeOnMainThread(() =>
                                 {

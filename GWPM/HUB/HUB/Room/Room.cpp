@@ -2,7 +2,7 @@
 #include "./Room.h"
 #include "../Server/GSHub.h"
 
-DWORD Room::FindPlayer(PLAYER_PTR Player)
+bool Room::FindPlayer(PLAYER_PTR Player)
 {
 	for each(auto iter in m_PlayerMap)
 	{
@@ -10,13 +10,13 @@ DWORD Room::FindPlayer(PLAYER_PTR Player)
 		if (pPlayer == NULL)
 			continue;
 
-		if (iter.second == Player)
+		if (iter.second->GetId() == Player->GetId())
 		{
-			return iter.first;
+			return true;
 		}
 	}
 
-	return USHRT_MAX;
+	return false;
 }
 
 Room::Room(void) 

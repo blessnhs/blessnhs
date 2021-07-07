@@ -285,7 +285,7 @@ VOID HubProcess::ROOM_ENTER(LPVOID Data, DWORD Length, boost::shared_ptr<GSClien
 	//이미 입장 해 있다면 
 	if (RoomPtr->FindPlayer(pPlayer) == TRUE)
 	{
-		res.set_var_code(SystemError);
+		res.set_var_code(Duplicate_Enter_Room);
 		SEND_PROTO_BUFFER(res, Client)
 		return;
 	}

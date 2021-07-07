@@ -41,7 +41,7 @@ public:
 
 	void SendNewUserInfo(PLAYER_PTR Player);
 
-	DWORD FindPlayer(PLAYER_PTR Player);
+	bool FindPlayer(PLAYER_PTR Player);
 
 	bool RemovePlayer(PLAYER_PTR Player);
 
