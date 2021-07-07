@@ -20,7 +20,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   package='',
   syntax='proto2',
   serialized_options=b'H\001',
-  serialized_pb=b'\n\x0c\x43LI.GS.proto\x1a\nEnum.proto\x1a\x0fStructure.proto\"8\n\x0bVERSION_REQ\x12)\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x12ID_PKT_VERSION_REQ\"U\n\tLOGIN_REQ\x12\'\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x10ID_PKT_LOGIN_REQ\x12\x0e\n\x06var_id\x18\x02 \x02(\t\x12\x0f\n\x07var_pwd\x18\x03 \x02(\t\"R\n\x0f\x43REATE_ROOM_REQ\x12-\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x16ID_PKT_CREATE_ROOM_REQ\x12\x10\n\x08var_name\x18\x02 \x02(\t\"N\n\x0e\x45NTER_ROOM_REQ\x12,\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x15ID_PKT_ENTER_ROOM_REQ\x12\x0e\n\x06var_id\x18\x02 \x02(\x05\"N\n\x0eLEAVE_ROOM_REQ\x12,\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x15ID_PKT_LEAVE_ROOM_REQ\x12\x0e\n\x06var_id\x18\x02 \x02(\x05\"<\n\rROOM_LIST_REQ\x12+\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x14ID_PKT_ROOM_LIST_REQ\"z\n\x15ROOM_PASS_THROUGH_REQ\x12\x33\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x1cID_PKT_ROOM_PASS_THROUGH_REQ\x12\x13\n\x0bvar_message\x18\x02 \x02(\t\x12\x17\n\x0fvar_message_int\x18\x03 \x02(\x05\"6\n\nNOTICE_REQ\x12(\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x11ID_PKT_NOTICE_REQ\"[\n\x12\x42ITMAP_MESSAGE_REQ\x12\x30\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x19ID_PKT_BITMAP_MESSAGE_REQ\x12\x13\n\x0bvar_message\x18\x02 \x03(\x0c\"Y\n\x11\x41UDIO_MESSAGE_REQ\x12/\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x18ID_PKT_AUDIO_MESSAGE_REQ\x12\x13\n\x0bvar_message\x18\x02 \x03(\x0c\"B\n\x10PRAY_MESSAGE_REQ\x12.\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x17ID_PKT_PRAY_MESSAGE_REQ\"_\n\x14PRAY_MESSAGE_REG_REQ\x12\x32\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x1bID_PKT_PRAY_MESSAGE_REG_REQ\x12\x13\n\x0bvar_message\x18\x02 \x01(\t\"E\n\x07QNA_REQ\x12%\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x0eID_PKT_QNA_REQ\x12\x13\n\x0bvar_message\x18\x02 \x01(\tB\x02H\x01'
+  serialized_pb=b'\n\x0c\x43LI.GS.proto\x1a\nEnum.proto\x1a\x0fStructure.proto\"8\n\x0bVERSION_REQ\x12)\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x12ID_PKT_VERSION_REQ\"U\n\tLOGIN_REQ\x12\'\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x10ID_PKT_LOGIN_REQ\x12\x0e\n\x06var_id\x18\x02 \x02(\t\x12\x0f\n\x07var_pwd\x18\x03 \x02(\t\"R\n\x0f\x43REATE_ROOM_REQ\x12-\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x16ID_PKT_CREATE_ROOM_REQ\x12\x10\n\x08var_name\x18\x02 \x02(\t\"N\n\x0e\x45NTER_ROOM_REQ\x12,\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x15ID_PKT_ENTER_ROOM_REQ\x12\x0e\n\x06var_id\x18\x02 \x02(\x05\"N\n\x0eLEAVE_ROOM_REQ\x12,\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x15ID_PKT_LEAVE_ROOM_REQ\x12\x0e\n\x06var_id\x18\x02 \x02(\x05\"<\n\rROOM_LIST_REQ\x12+\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x14ID_PKT_ROOM_LIST_REQ\"z\n\x15ROOM_PASS_THROUGH_REQ\x12\x33\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x1cID_PKT_ROOM_PASS_THROUGH_REQ\x12\x13\n\x0bvar_message\x18\x02 \x02(\t\x12\x17\n\x0fvar_message_int\x18\x03 \x02(\x05\"6\n\nNOTICE_REQ\x12(\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x11ID_PKT_NOTICE_REQ\"[\n\x12\x42ITMAP_MESSAGE_REQ\x12\x30\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x19ID_PKT_BITMAP_MESSAGE_REQ\x12\x13\n\x0bvar_message\x18\x02 \x03(\x0c\"Y\n\x11\x41UDIO_MESSAGE_REQ\x12/\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x18ID_PKT_AUDIO_MESSAGE_REQ\x12\x13\n\x0bvar_message\x18\x02 \x03(\x0c\"B\n\x10PRAY_MESSAGE_REQ\x12.\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x17ID_PKT_PRAY_MESSAGE_REQ\"_\n\x14PRAY_MESSAGE_REG_REQ\x12\x32\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x1bID_PKT_PRAY_MESSAGE_REG_REQ\x12\x13\n\x0bvar_message\x18\x02 \x01(\t\"E\n\x07QNA_REQ\x12%\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x0eID_PKT_QNA_REQ\x12\x13\n\x0bvar_message\x18\x02 \x01(\t\"<\n\rMAIL_LIST_REQ\x12+\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x14ID_PKT_MAIL_LIST_REQB\x02H\x01'
   ,
   dependencies=[Enum__pb2.DESCRIPTOR,Structure__pb2.DESCRIPTOR,])
 
@@ -506,6 +506,37 @@ _QNA_REQ = _descriptor.Descriptor(
   serialized_end=1094,
 )
 
+
+_MAIL_LIST_REQ = _descriptor.Descriptor(
+  name='MAIL_LIST_REQ',
+  full_name='MAIL_LIST_REQ',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='id', full_name='MAIL_LIST_REQ.id', index=0,
+      number=1, type=14, cpp_type=8, label=1,
+      has_default_value=True, default_value=29,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto2',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=1096,
+  serialized_end=1156,
+)
+
 _VERSION_REQ.fields_by_name['id'].enum_type = Enum__pb2._PROTOCOL
 _LOGIN_REQ.fields_by_name['id'].enum_type = Enum__pb2._PROTOCOL
 _CREATE_ROOM_REQ.fields_by_name['id'].enum_type = Enum__pb2._PROTOCOL
@@ -519,6 +550,7 @@ _AUDIO_MESSAGE_REQ.fields_by_name['id'].enum_type = Enum__pb2._PROTOCOL
 _PRAY_MESSAGE_REQ.fields_by_name['id'].enum_type = Enum__pb2._PROTOCOL
 _PRAY_MESSAGE_REG_REQ.fields_by_name['id'].enum_type = Enum__pb2._PROTOCOL
 _QNA_REQ.fields_by_name['id'].enum_type = Enum__pb2._PROTOCOL
+_MAIL_LIST_REQ.fields_by_name['id'].enum_type = Enum__pb2._PROTOCOL
 DESCRIPTOR.message_types_by_name['VERSION_REQ'] = _VERSION_REQ
 DESCRIPTOR.message_types_by_name['LOGIN_REQ'] = _LOGIN_REQ
 DESCRIPTOR.message_types_by_name['CREATE_ROOM_REQ'] = _CREATE_ROOM_REQ
@@ -532,6 +564,7 @@ DESCRIPTOR.message_types_by_name['AUDIO_MESSAGE_REQ'] = _AUDIO_MESSAGE_REQ
 DESCRIPTOR.message_types_by_name['PRAY_MESSAGE_REQ'] = _PRAY_MESSAGE_REQ
 DESCRIPTOR.message_types_by_name['PRAY_MESSAGE_REG_REQ'] = _PRAY_MESSAGE_REG_REQ
 DESCRIPTOR.message_types_by_name['QNA_REQ'] = _QNA_REQ
+DESCRIPTOR.message_types_by_name['MAIL_LIST_REQ'] = _MAIL_LIST_REQ
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 VERSION_REQ = _reflection.GeneratedProtocolMessageType('VERSION_REQ', (_message.Message,), {
@@ -624,6 +657,13 @@ QNA_REQ = _reflection.GeneratedProtocolMessageType('QNA_REQ', (_message.Message,
   # @@protoc_insertion_point(class_scope:QNA_REQ)
   })
 _sym_db.RegisterMessage(QNA_REQ)
+
+MAIL_LIST_REQ = _reflection.GeneratedProtocolMessageType('MAIL_LIST_REQ', (_message.Message,), {
+  'DESCRIPTOR' : _MAIL_LIST_REQ,
+  '__module__' : 'CLI.GS_pb2'
+  # @@protoc_insertion_point(class_scope:MAIL_LIST_REQ)
+  })
+_sym_db.RegisterMessage(MAIL_LIST_REQ)
 
 
 DESCRIPTOR._options = None

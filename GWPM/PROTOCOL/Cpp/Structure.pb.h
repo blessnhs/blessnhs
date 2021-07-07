@@ -47,13 +47,16 @@ struct TableStruct_Structure_2eproto {
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::PROTOBUF_NAMESPACE_ID::internal::AuxillaryParseTableField aux[]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
-  static const ::PROTOBUF_NAMESPACE_ID::internal::ParseTable schema[4]
+  static const ::PROTOBUF_NAMESPACE_ID::internal::ParseTable schema[5]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::PROTOBUF_NAMESPACE_ID::internal::FieldMetadata field_metadata[];
   static const ::PROTOBUF_NAMESPACE_ID::internal::SerializationTable serialization_table[];
   static const ::PROTOBUF_NAMESPACE_ID::uint32 offsets[];
 };
 extern const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_Structure_2eproto;
+class MailInfo;
+class MailInfoDefaultTypeInternal;
+extern MailInfoDefaultTypeInternal _MailInfo_default_instance_;
 class NotifyInfo;
 class NotifyInfoDefaultTypeInternal;
 extern NotifyInfoDefaultTypeInternal _NotifyInfo_default_instance_;
@@ -67,6 +70,7 @@ class RoomUserInfo;
 class RoomUserInfoDefaultTypeInternal;
 extern RoomUserInfoDefaultTypeInternal _RoomUserInfo_default_instance_;
 PROTOBUF_NAMESPACE_OPEN
+template<> ::MailInfo* Arena::CreateMaybeMessage<::MailInfo>(Arena*);
 template<> ::NotifyInfo* Arena::CreateMaybeMessage<::NotifyInfo>(Arena*);
 template<> ::PrayInfo* Arena::CreateMaybeMessage<::PrayInfo>(Arena*);
 template<> ::RoomInfo2* Arena::CreateMaybeMessage<::RoomInfo2>(Arena*);
@@ -824,6 +828,234 @@ class NotifyInfo :
   ::PROTOBUF_NAMESPACE_ID::int64 var_id_;
   friend struct ::TableStruct_Structure_2eproto;
 };
+// -------------------------------------------------------------------
+
+class MailInfo :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:MailInfo) */ {
+ public:
+  MailInfo();
+  virtual ~MailInfo();
+
+  MailInfo(const MailInfo& from);
+  MailInfo(MailInfo&& from) noexcept
+    : MailInfo() {
+    *this = ::std::move(from);
+  }
+
+  inline MailInfo& operator=(const MailInfo& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline MailInfo& operator=(MailInfo&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  inline const ::PROTOBUF_NAMESPACE_ID::UnknownFieldSet& unknown_fields() const {
+    return _internal_metadata_.unknown_fields();
+  }
+  inline ::PROTOBUF_NAMESPACE_ID::UnknownFieldSet* mutable_unknown_fields() {
+    return _internal_metadata_.mutable_unknown_fields();
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return GetMetadataStatic().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return GetMetadataStatic().reflection;
+  }
+  static const MailInfo& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const MailInfo* internal_default_instance() {
+    return reinterpret_cast<const MailInfo*>(
+               &_MailInfo_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    4;
+
+  friend void swap(MailInfo& a, MailInfo& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(MailInfo* other) {
+    if (other == this) return;
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline MailInfo* New() const final {
+    return CreateMaybeMessage<MailInfo>(nullptr);
+  }
+
+  MailInfo* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
+    return CreateMaybeMessage<MailInfo>(arena);
+  }
+  void CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void CopyFrom(const MailInfo& from);
+  void MergeFrom(const MailInfo& from);
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  ::PROTOBUF_NAMESPACE_ID::uint8* _InternalSerialize(
+      ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  inline void SharedCtor();
+  inline void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(MailInfo* other);
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "MailInfo";
+  }
+  private:
+  inline ::PROTOBUF_NAMESPACE_ID::Arena* GetArenaNoVirtual() const {
+    return nullptr;
+  }
+  inline void* MaybeArenaPtr() const {
+    return nullptr;
+  }
+  public:
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+  private:
+  static ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadataStatic() {
+    ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&::descriptor_table_Structure_2eproto);
+    return ::descriptor_table_Structure_2eproto.file_level_metadata[kIndexInFileMessages];
+  }
+
+  public:
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kVarTitleFieldNumber = 2,
+    kVarContentFieldNumber = 3,
+    kVarDateFieldNumber = 4,
+    kVarNameFieldNumber = 5,
+    kVarIdFieldNumber = 1,
+  };
+  // optional string var_title = 2;
+  bool has_var_title() const;
+  private:
+  bool _internal_has_var_title() const;
+  public:
+  void clear_var_title();
+  const std::string& var_title() const;
+  void set_var_title(const std::string& value);
+  void set_var_title(std::string&& value);
+  void set_var_title(const char* value);
+  void set_var_title(const char* value, size_t size);
+  std::string* mutable_var_title();
+  std::string* release_var_title();
+  void set_allocated_var_title(std::string* var_title);
+  private:
+  const std::string& _internal_var_title() const;
+  void _internal_set_var_title(const std::string& value);
+  std::string* _internal_mutable_var_title();
+  public:
+
+  // optional string var_content = 3;
+  bool has_var_content() const;
+  private:
+  bool _internal_has_var_content() const;
+  public:
+  void clear_var_content();
+  const std::string& var_content() const;
+  void set_var_content(const std::string& value);
+  void set_var_content(std::string&& value);
+  void set_var_content(const char* value);
+  void set_var_content(const char* value, size_t size);
+  std::string* mutable_var_content();
+  std::string* release_var_content();
+  void set_allocated_var_content(std::string* var_content);
+  private:
+  const std::string& _internal_var_content() const;
+  void _internal_set_var_content(const std::string& value);
+  std::string* _internal_mutable_var_content();
+  public:
+
+  // optional string var_date = 4;
+  bool has_var_date() const;
+  private:
+  bool _internal_has_var_date() const;
+  public:
+  void clear_var_date();
+  const std::string& var_date() const;
+  void set_var_date(const std::string& value);
+  void set_var_date(std::string&& value);
+  void set_var_date(const char* value);
+  void set_var_date(const char* value, size_t size);
+  std::string* mutable_var_date();
+  std::string* release_var_date();
+  void set_allocated_var_date(std::string* var_date);
+  private:
+  const std::string& _internal_var_date() const;
+  void _internal_set_var_date(const std::string& value);
+  std::string* _internal_mutable_var_date();
+  public:
+
+  // optional string var_name = 5;
+  bool has_var_name() const;
+  private:
+  bool _internal_has_var_name() const;
+  public:
+  void clear_var_name();
+  const std::string& var_name() const;
+  void set_var_name(const std::string& value);
+  void set_var_name(std::string&& value);
+  void set_var_name(const char* value);
+  void set_var_name(const char* value, size_t size);
+  std::string* mutable_var_name();
+  std::string* release_var_name();
+  void set_allocated_var_name(std::string* var_name);
+  private:
+  const std::string& _internal_var_name() const;
+  void _internal_set_var_name(const std::string& value);
+  std::string* _internal_mutable_var_name();
+  public:
+
+  // optional int64 var_id = 1;
+  bool has_var_id() const;
+  private:
+  bool _internal_has_var_id() const;
+  public:
+  void clear_var_id();
+  ::PROTOBUF_NAMESPACE_ID::int64 var_id() const;
+  void set_var_id(::PROTOBUF_NAMESPACE_ID::int64 value);
+  private:
+  ::PROTOBUF_NAMESPACE_ID::int64 _internal_var_id() const;
+  void _internal_set_var_id(::PROTOBUF_NAMESPACE_ID::int64 value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:MailInfo)
+ private:
+  class _Internal;
+
+  ::PROTOBUF_NAMESPACE_ID::internal::InternalMetadataWithArena _internal_metadata_;
+  ::PROTOBUF_NAMESPACE_ID::internal::HasBits<1> _has_bits_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr var_title_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr var_content_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr var_date_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr var_name_;
+  ::PROTOBUF_NAMESPACE_ID::int64 var_id_;
+  friend struct ::TableStruct_Structure_2eproto;
+};
 // ===================================================================
 
 
@@ -1555,9 +1787,327 @@ inline void NotifyInfo::set_allocated_var_date(std::string* var_date) {
   // @@protoc_insertion_point(field_set_allocated:NotifyInfo.var_date)
 }
 
+// -------------------------------------------------------------------
+
+// MailInfo
+
+// optional int64 var_id = 1;
+inline bool MailInfo::_internal_has_var_id() const {
+  bool value = (_has_bits_[0] & 0x00000010u) != 0;
+  return value;
+}
+inline bool MailInfo::has_var_id() const {
+  return _internal_has_var_id();
+}
+inline void MailInfo::clear_var_id() {
+  var_id_ = PROTOBUF_LONGLONG(0);
+  _has_bits_[0] &= ~0x00000010u;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int64 MailInfo::_internal_var_id() const {
+  return var_id_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int64 MailInfo::var_id() const {
+  // @@protoc_insertion_point(field_get:MailInfo.var_id)
+  return _internal_var_id();
+}
+inline void MailInfo::_internal_set_var_id(::PROTOBUF_NAMESPACE_ID::int64 value) {
+  _has_bits_[0] |= 0x00000010u;
+  var_id_ = value;
+}
+inline void MailInfo::set_var_id(::PROTOBUF_NAMESPACE_ID::int64 value) {
+  _internal_set_var_id(value);
+  // @@protoc_insertion_point(field_set:MailInfo.var_id)
+}
+
+// optional string var_title = 2;
+inline bool MailInfo::_internal_has_var_title() const {
+  bool value = (_has_bits_[0] & 0x00000001u) != 0;
+  return value;
+}
+inline bool MailInfo::has_var_title() const {
+  return _internal_has_var_title();
+}
+inline void MailInfo::clear_var_title() {
+  var_title_.ClearToEmptyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline const std::string& MailInfo::var_title() const {
+  // @@protoc_insertion_point(field_get:MailInfo.var_title)
+  return _internal_var_title();
+}
+inline void MailInfo::set_var_title(const std::string& value) {
+  _internal_set_var_title(value);
+  // @@protoc_insertion_point(field_set:MailInfo.var_title)
+}
+inline std::string* MailInfo::mutable_var_title() {
+  // @@protoc_insertion_point(field_mutable:MailInfo.var_title)
+  return _internal_mutable_var_title();
+}
+inline const std::string& MailInfo::_internal_var_title() const {
+  return var_title_.GetNoArena();
+}
+inline void MailInfo::_internal_set_var_title(const std::string& value) {
+  _has_bits_[0] |= 0x00000001u;
+  var_title_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), value);
+}
+inline void MailInfo::set_var_title(std::string&& value) {
+  _has_bits_[0] |= 0x00000001u;
+  var_title_.SetNoArena(
+    &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:MailInfo.var_title)
+}
+inline void MailInfo::set_var_title(const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  _has_bits_[0] |= 0x00000001u;
+  var_title_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:MailInfo.var_title)
+}
+inline void MailInfo::set_var_title(const char* value, size_t size) {
+  _has_bits_[0] |= 0x00000001u;
+  var_title_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:MailInfo.var_title)
+}
+inline std::string* MailInfo::_internal_mutable_var_title() {
+  _has_bits_[0] |= 0x00000001u;
+  return var_title_.MutableNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline std::string* MailInfo::release_var_title() {
+  // @@protoc_insertion_point(field_release:MailInfo.var_title)
+  if (!_internal_has_var_title()) {
+    return nullptr;
+  }
+  _has_bits_[0] &= ~0x00000001u;
+  return var_title_.ReleaseNonDefaultNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline void MailInfo::set_allocated_var_title(std::string* var_title) {
+  if (var_title != nullptr) {
+    _has_bits_[0] |= 0x00000001u;
+  } else {
+    _has_bits_[0] &= ~0x00000001u;
+  }
+  var_title_.SetAllocatedNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), var_title);
+  // @@protoc_insertion_point(field_set_allocated:MailInfo.var_title)
+}
+
+// optional string var_content = 3;
+inline bool MailInfo::_internal_has_var_content() const {
+  bool value = (_has_bits_[0] & 0x00000002u) != 0;
+  return value;
+}
+inline bool MailInfo::has_var_content() const {
+  return _internal_has_var_content();
+}
+inline void MailInfo::clear_var_content() {
+  var_content_.ClearToEmptyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline const std::string& MailInfo::var_content() const {
+  // @@protoc_insertion_point(field_get:MailInfo.var_content)
+  return _internal_var_content();
+}
+inline void MailInfo::set_var_content(const std::string& value) {
+  _internal_set_var_content(value);
+  // @@protoc_insertion_point(field_set:MailInfo.var_content)
+}
+inline std::string* MailInfo::mutable_var_content() {
+  // @@protoc_insertion_point(field_mutable:MailInfo.var_content)
+  return _internal_mutable_var_content();
+}
+inline const std::string& MailInfo::_internal_var_content() const {
+  return var_content_.GetNoArena();
+}
+inline void MailInfo::_internal_set_var_content(const std::string& value) {
+  _has_bits_[0] |= 0x00000002u;
+  var_content_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), value);
+}
+inline void MailInfo::set_var_content(std::string&& value) {
+  _has_bits_[0] |= 0x00000002u;
+  var_content_.SetNoArena(
+    &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:MailInfo.var_content)
+}
+inline void MailInfo::set_var_content(const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  _has_bits_[0] |= 0x00000002u;
+  var_content_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:MailInfo.var_content)
+}
+inline void MailInfo::set_var_content(const char* value, size_t size) {
+  _has_bits_[0] |= 0x00000002u;
+  var_content_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:MailInfo.var_content)
+}
+inline std::string* MailInfo::_internal_mutable_var_content() {
+  _has_bits_[0] |= 0x00000002u;
+  return var_content_.MutableNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline std::string* MailInfo::release_var_content() {
+  // @@protoc_insertion_point(field_release:MailInfo.var_content)
+  if (!_internal_has_var_content()) {
+    return nullptr;
+  }
+  _has_bits_[0] &= ~0x00000002u;
+  return var_content_.ReleaseNonDefaultNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline void MailInfo::set_allocated_var_content(std::string* var_content) {
+  if (var_content != nullptr) {
+    _has_bits_[0] |= 0x00000002u;
+  } else {
+    _has_bits_[0] &= ~0x00000002u;
+  }
+  var_content_.SetAllocatedNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), var_content);
+  // @@protoc_insertion_point(field_set_allocated:MailInfo.var_content)
+}
+
+// optional string var_date = 4;
+inline bool MailInfo::_internal_has_var_date() const {
+  bool value = (_has_bits_[0] & 0x00000004u) != 0;
+  return value;
+}
+inline bool MailInfo::has_var_date() const {
+  return _internal_has_var_date();
+}
+inline void MailInfo::clear_var_date() {
+  var_date_.ClearToEmptyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline const std::string& MailInfo::var_date() const {
+  // @@protoc_insertion_point(field_get:MailInfo.var_date)
+  return _internal_var_date();
+}
+inline void MailInfo::set_var_date(const std::string& value) {
+  _internal_set_var_date(value);
+  // @@protoc_insertion_point(field_set:MailInfo.var_date)
+}
+inline std::string* MailInfo::mutable_var_date() {
+  // @@protoc_insertion_point(field_mutable:MailInfo.var_date)
+  return _internal_mutable_var_date();
+}
+inline const std::string& MailInfo::_internal_var_date() const {
+  return var_date_.GetNoArena();
+}
+inline void MailInfo::_internal_set_var_date(const std::string& value) {
+  _has_bits_[0] |= 0x00000004u;
+  var_date_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), value);
+}
+inline void MailInfo::set_var_date(std::string&& value) {
+  _has_bits_[0] |= 0x00000004u;
+  var_date_.SetNoArena(
+    &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:MailInfo.var_date)
+}
+inline void MailInfo::set_var_date(const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  _has_bits_[0] |= 0x00000004u;
+  var_date_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:MailInfo.var_date)
+}
+inline void MailInfo::set_var_date(const char* value, size_t size) {
+  _has_bits_[0] |= 0x00000004u;
+  var_date_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:MailInfo.var_date)
+}
+inline std::string* MailInfo::_internal_mutable_var_date() {
+  _has_bits_[0] |= 0x00000004u;
+  return var_date_.MutableNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline std::string* MailInfo::release_var_date() {
+  // @@protoc_insertion_point(field_release:MailInfo.var_date)
+  if (!_internal_has_var_date()) {
+    return nullptr;
+  }
+  _has_bits_[0] &= ~0x00000004u;
+  return var_date_.ReleaseNonDefaultNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline void MailInfo::set_allocated_var_date(std::string* var_date) {
+  if (var_date != nullptr) {
+    _has_bits_[0] |= 0x00000004u;
+  } else {
+    _has_bits_[0] &= ~0x00000004u;
+  }
+  var_date_.SetAllocatedNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), var_date);
+  // @@protoc_insertion_point(field_set_allocated:MailInfo.var_date)
+}
+
+// optional string var_name = 5;
+inline bool MailInfo::_internal_has_var_name() const {
+  bool value = (_has_bits_[0] & 0x00000008u) != 0;
+  return value;
+}
+inline bool MailInfo::has_var_name() const {
+  return _internal_has_var_name();
+}
+inline void MailInfo::clear_var_name() {
+  var_name_.ClearToEmptyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  _has_bits_[0] &= ~0x00000008u;
+}
+inline const std::string& MailInfo::var_name() const {
+  // @@protoc_insertion_point(field_get:MailInfo.var_name)
+  return _internal_var_name();
+}
+inline void MailInfo::set_var_name(const std::string& value) {
+  _internal_set_var_name(value);
+  // @@protoc_insertion_point(field_set:MailInfo.var_name)
+}
+inline std::string* MailInfo::mutable_var_name() {
+  // @@protoc_insertion_point(field_mutable:MailInfo.var_name)
+  return _internal_mutable_var_name();
+}
+inline const std::string& MailInfo::_internal_var_name() const {
+  return var_name_.GetNoArena();
+}
+inline void MailInfo::_internal_set_var_name(const std::string& value) {
+  _has_bits_[0] |= 0x00000008u;
+  var_name_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), value);
+}
+inline void MailInfo::set_var_name(std::string&& value) {
+  _has_bits_[0] |= 0x00000008u;
+  var_name_.SetNoArena(
+    &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:MailInfo.var_name)
+}
+inline void MailInfo::set_var_name(const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  _has_bits_[0] |= 0x00000008u;
+  var_name_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:MailInfo.var_name)
+}
+inline void MailInfo::set_var_name(const char* value, size_t size) {
+  _has_bits_[0] |= 0x00000008u;
+  var_name_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:MailInfo.var_name)
+}
+inline std::string* MailInfo::_internal_mutable_var_name() {
+  _has_bits_[0] |= 0x00000008u;
+  return var_name_.MutableNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline std::string* MailInfo::release_var_name() {
+  // @@protoc_insertion_point(field_release:MailInfo.var_name)
+  if (!_internal_has_var_name()) {
+    return nullptr;
+  }
+  _has_bits_[0] &= ~0x00000008u;
+  return var_name_.ReleaseNonDefaultNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline void MailInfo::set_allocated_var_name(std::string* var_name) {
+  if (var_name != nullptr) {
+    _has_bits_[0] |= 0x00000008u;
+  } else {
+    _has_bits_[0] &= ~0x00000008u;
+  }
+  var_name_.SetAllocatedNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), var_name);
+  // @@protoc_insertion_point(field_set_allocated:MailInfo.var_name)
+}
+
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

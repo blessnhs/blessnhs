@@ -30,3 +30,12 @@ message NotifyInfo
 	optional string var_content = 2  ;
 	optional string var_date = 3  ;
 }
+
+message MailInfo
+{
+	optional int64 var_id = 1 ;
+	optional string var_title = 2  ;
+	optional string var_content = 3  ;
+	optional string var_date = 4  ;
+	optional string var_name = 5 ;
+}

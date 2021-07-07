@@ -39,6 +39,18 @@ enum PROTOCOL
 
 	ID_PKT_QNA_REQ = 27;
 	ID_PKT_QNA_RES = 28;
+
+	ID_PKT_MAIL_LIST_REQ = 29;
+	ID_PKT_MAIL_LIST_RES = 30;
+
+	ID_PKT_MAIL_SEND_REQ = 31;
+	ID_PKT_MAIL_SEND_RES = 32;
+
+	ID_PKT_MAIL_DEL_REQ = 33;
+	ID_PKT_MAIL_DEL_RES = 34;
+
+	ID_PKT_MAIL_READ_REQ = 35;
+	ID_PKT_MAIL_READ_RES = 36;
 };
 
 enum ErrorCode
@@ -49,5 +61,6 @@ enum ErrorCode
 	LoginDuplicate = 2;
 	SystemError = 3;
 	LoginFailed = 4;
+	Duplicate_Enter_Room = 5;
 };
 

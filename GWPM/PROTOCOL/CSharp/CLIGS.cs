@@ -46,7 +46,8 @@ public static partial class CLIGSReflection {
           "R19SRVESMgoCaWQYASABKA4yCS5QUk9UT0NPTDobSURfUEtUX1BSQVlfTUVT",
           "U0FHRV9SRUdfUkVREhMKC3Zhcl9tZXNzYWdlGAIgASgJIkUKB1FOQV9SRVES",
           "JQoCaWQYASABKA4yCS5QUk9UT0NPTDoOSURfUEtUX1FOQV9SRVESEwoLdmFy",
-          "X21lc3NhZ2UYAiABKAlCAkgB"));
+          "X21lc3NhZ2UYAiABKAkiPAoNTUFJTF9MSVNUX1JFURIrCgJpZBgBIAEoDjIJ",
+          "LlBST1RPQ09MOhRJRF9QS1RfTUFJTF9MSVNUX1JFUUICSAE="));
     descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
         new pbr::FileDescriptor[] { global::EnumReflection.Descriptor, global::StructureReflection.Descriptor, },
         new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
@@ -62,7 +63,8 @@ public static partial class CLIGSReflection {
           new pbr::GeneratedClrTypeInfo(typeof(global::AUDIO_MESSAGE_REQ), global::AUDIO_MESSAGE_REQ.Parser, new[]{ "Id", "VarMessage" }, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::PRAY_MESSAGE_REQ), global::PRAY_MESSAGE_REQ.Parser, new[]{ "Id" }, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::PRAY_MESSAGE_REG_REQ), global::PRAY_MESSAGE_REG_REQ.Parser, new[]{ "Id", "VarMessage" }, null, null, null, null),
-          new pbr::GeneratedClrTypeInfo(typeof(global::QNA_REQ), global::QNA_REQ.Parser, new[]{ "Id", "VarMessage" }, null, null, null, null)
+          new pbr::GeneratedClrTypeInfo(typeof(global::QNA_REQ), global::QNA_REQ.Parser, new[]{ "Id", "VarMessage" }, null, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::MAIL_LIST_REQ), global::MAIL_LIST_REQ.Parser, new[]{ "Id" }, null, null, null, null)
         }));
   }
   #endregion
@@ -2336,6 +2338,150 @@ public sealed partial class QNA_REQ : pb::IMessage<QNA_REQ> {
         }
         case 18: {
           VarMessage = input.ReadString();
+          break;
+        }
+      }
+    }
+  }
+
+}
+
+public sealed partial class MAIL_LIST_REQ : pb::IMessage<MAIL_LIST_REQ> {
+  private static readonly pb::MessageParser<MAIL_LIST_REQ> _parser = new pb::MessageParser<MAIL_LIST_REQ>(() => new MAIL_LIST_REQ());
+  private pb::UnknownFieldSet _unknownFields;
+  private int _hasBits0;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public static pb::MessageParser<MAIL_LIST_REQ> Parser { get { return _parser; } }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public static pbr::MessageDescriptor Descriptor {
+    get { return global::CLIGSReflection.Descriptor.MessageTypes[13]; }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  pbr::MessageDescriptor pb::IMessage.Descriptor {
+    get { return Descriptor; }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public MAIL_LIST_REQ() {
+    OnConstruction();
+  }
+
+  partial void OnConstruction();
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public MAIL_LIST_REQ(MAIL_LIST_REQ other) : this() {
+    _hasBits0 = other._hasBits0;
+    id_ = other.id_;
+    _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public MAIL_LIST_REQ Clone() {
+    return new MAIL_LIST_REQ(this);
+  }
+
+  /// <summary>Field number for the "id" field.</summary>
+  public const int IdFieldNumber = 1;
+  private readonly static global::PROTOCOL IdDefaultValue = global::PROTOCOL.IdPktMailListReq;
+
+  private global::PROTOCOL id_;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public global::PROTOCOL Id {
+    get { if ((_hasBits0 & 1) != 0) { return id_; } else { return IdDefaultValue; } }
+    set {
+      _hasBits0 |= 1;
+      id_ = value;
+    }
+  }
+  /// <summary>Gets whether the "id" field is set</summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public bool HasId {
+    get { return (_hasBits0 & 1) != 0; }
+  }
+  /// <summary>Clears the value of the "id" field</summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void ClearId() {
+    _hasBits0 &= ~1;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public override bool Equals(object other) {
+    return Equals(other as MAIL_LIST_REQ);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public bool Equals(MAIL_LIST_REQ other) {
+    if (ReferenceEquals(other, null)) {
+      return false;
+    }
+    if (ReferenceEquals(other, this)) {
+      return true;
+    }
+    if (Id != other.Id) return false;
+    return Equals(_unknownFields, other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public override int GetHashCode() {
+    int hash = 1;
+    if (HasId) hash ^= Id.GetHashCode();
+    if (_unknownFields != null) {
+      hash ^= _unknownFields.GetHashCode();
+    }
+    return hash;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public override string ToString() {
+    return pb::JsonFormatter.ToDiagnosticString(this);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void WriteTo(pb::CodedOutputStream output) {
+    if (HasId) {
+      output.WriteRawTag(8);
+      output.WriteEnum((int) Id);
+    }
+    if (_unknownFields != null) {
+      _unknownFields.WriteTo(output);
+    }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public int CalculateSize() {
+    int size = 0;
+    if (HasId) {
+      size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Id);
+    }
+    if (_unknownFields != null) {
+      size += _unknownFields.CalculateSize();
+    }
+    return size;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void MergeFrom(MAIL_LIST_REQ other) {
+    if (other == null) {
+      return;
+    }
+    if (other.HasId) {
+      Id = other.Id;
+    }
+    _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void MergeFrom(pb::CodedInputStream input) {
+    uint tag;
+    while ((tag = input.ReadTag()) != 0) {
+      switch(tag) {
+        default:
+          _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+          break;
+        case 8: {
+          Id = (global::PROTOCOL) input.ReadEnum();
           break;
         }
       }

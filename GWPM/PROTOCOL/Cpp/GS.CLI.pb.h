@@ -49,7 +49,7 @@ struct TableStruct_GS_2eCLI_2eproto {
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::PROTOBUF_NAMESPACE_ID::internal::AuxillaryParseTableField aux[]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
-  static const ::PROTOBUF_NAMESPACE_ID::internal::ParseTable schema[14]
+  static const ::PROTOBUF_NAMESPACE_ID::internal::ParseTable schema[15]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::PROTOBUF_NAMESPACE_ID::internal::FieldMetadata field_metadata[];
   static const ::PROTOBUF_NAMESPACE_ID::internal::SerializationTable serialization_table[];
@@ -74,6 +74,9 @@ extern LEAVE_ROOM_RESDefaultTypeInternal _LEAVE_ROOM_RES_default_instance_;
 class LOGIN_RES;
 class LOGIN_RESDefaultTypeInternal;
 extern LOGIN_RESDefaultTypeInternal _LOGIN_RES_default_instance_;
+class MAIL_LIST_RES;
+class MAIL_LIST_RESDefaultTypeInternal;
+extern MAIL_LIST_RESDefaultTypeInternal _MAIL_LIST_RES_default_instance_;
 class NEW_USER_IN_ROOM_NTY;
 class NEW_USER_IN_ROOM_NTYDefaultTypeInternal;
 extern NEW_USER_IN_ROOM_NTYDefaultTypeInternal _NEW_USER_IN_ROOM_NTY_default_instance_;
@@ -105,6 +108,7 @@ template<> ::CREATE_ROOM_RES* Arena::CreateMaybeMessage<::CREATE_ROOM_RES>(Arena
 template<> ::ENTER_ROOM_RES* Arena::CreateMaybeMessage<::ENTER_ROOM_RES>(Arena*);
 template<> ::LEAVE_ROOM_RES* Arena::CreateMaybeMessage<::LEAVE_ROOM_RES>(Arena*);
 template<> ::LOGIN_RES* Arena::CreateMaybeMessage<::LOGIN_RES>(Arena*);
+template<> ::MAIL_LIST_RES* Arena::CreateMaybeMessage<::MAIL_LIST_RES>(Arena*);
 template<> ::NEW_USER_IN_ROOM_NTY* Arena::CreateMaybeMessage<::NEW_USER_IN_ROOM_NTY>(Arena*);
 template<> ::NOTICE_RES* Arena::CreateMaybeMessage<::NOTICE_RES>(Arena*);
 template<> ::PRAY_MESSAGE_REG_RES* Arena::CreateMaybeMessage<::PRAY_MESSAGE_REG_RES>(Arena*);
@@ -2749,6 +2753,181 @@ class QNA_RES :
   int id_;
   friend struct ::TableStruct_GS_2eCLI_2eproto;
 };
+// -------------------------------------------------------------------
+
+class MAIL_LIST_RES :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:MAIL_LIST_RES) */ {
+ public:
+  MAIL_LIST_RES();
+  virtual ~MAIL_LIST_RES();
+
+  MAIL_LIST_RES(const MAIL_LIST_RES& from);
+  MAIL_LIST_RES(MAIL_LIST_RES&& from) noexcept
+    : MAIL_LIST_RES() {
+    *this = ::std::move(from);
+  }
+
+  inline MAIL_LIST_RES& operator=(const MAIL_LIST_RES& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline MAIL_LIST_RES& operator=(MAIL_LIST_RES&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  inline const ::PROTOBUF_NAMESPACE_ID::UnknownFieldSet& unknown_fields() const {
+    return _internal_metadata_.unknown_fields();
+  }
+  inline ::PROTOBUF_NAMESPACE_ID::UnknownFieldSet* mutable_unknown_fields() {
+    return _internal_metadata_.mutable_unknown_fields();
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return GetMetadataStatic().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return GetMetadataStatic().reflection;
+  }
+  static const MAIL_LIST_RES& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const MAIL_LIST_RES* internal_default_instance() {
+    return reinterpret_cast<const MAIL_LIST_RES*>(
+               &_MAIL_LIST_RES_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    14;
+
+  friend void swap(MAIL_LIST_RES& a, MAIL_LIST_RES& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(MAIL_LIST_RES* other) {
+    if (other == this) return;
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline MAIL_LIST_RES* New() const final {
+    return CreateMaybeMessage<MAIL_LIST_RES>(nullptr);
+  }
+
+  MAIL_LIST_RES* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
+    return CreateMaybeMessage<MAIL_LIST_RES>(arena);
+  }
+  void CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void CopyFrom(const MAIL_LIST_RES& from);
+  void MergeFrom(const MAIL_LIST_RES& from);
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  ::PROTOBUF_NAMESPACE_ID::uint8* _InternalSerialize(
+      ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  inline void SharedCtor();
+  inline void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(MAIL_LIST_RES* other);
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "MAIL_LIST_RES";
+  }
+  private:
+  inline ::PROTOBUF_NAMESPACE_ID::Arena* GetArenaNoVirtual() const {
+    return nullptr;
+  }
+  inline void* MaybeArenaPtr() const {
+    return nullptr;
+  }
+  public:
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+  private:
+  static ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadataStatic() {
+    ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&::descriptor_table_GS_2eCLI_2eproto);
+    return ::descriptor_table_GS_2eCLI_2eproto.file_level_metadata[kIndexInFileMessages];
+  }
+
+  public:
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kVarListFieldNumber = 3,
+    kVarCodeFieldNumber = 2,
+    kIdFieldNumber = 1,
+  };
+  // repeated .MailInfo var_list = 3;
+  int var_list_size() const;
+  private:
+  int _internal_var_list_size() const;
+  public:
+  void clear_var_list();
+  ::MailInfo* mutable_var_list(int index);
+  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::MailInfo >*
+      mutable_var_list();
+  private:
+  const ::MailInfo& _internal_var_list(int index) const;
+  ::MailInfo* _internal_add_var_list();
+  public:
+  const ::MailInfo& var_list(int index) const;
+  ::MailInfo* add_var_list();
+  const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::MailInfo >&
+      var_list() const;
+
+  // optional .ErrorCode var_code = 2;
+  bool has_var_code() const;
+  private:
+  bool _internal_has_var_code() const;
+  public:
+  void clear_var_code();
+  ::ErrorCode var_code() const;
+  void set_var_code(::ErrorCode value);
+  private:
+  ::ErrorCode _internal_var_code() const;
+  void _internal_set_var_code(::ErrorCode value);
+  public:
+
+  // optional .PROTOCOL id = 1 [default = ID_PKT_MAIL_LIST_RES];
+  bool has_id() const;
+  private:
+  bool _internal_has_id() const;
+  public:
+  void clear_id();
+  ::PROTOCOL id() const;
+  void set_id(::PROTOCOL value);
+  private:
+  ::PROTOCOL _internal_id() const;
+  void _internal_set_id(::PROTOCOL value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:MAIL_LIST_RES)
+ private:
+  class _Internal;
+
+  ::PROTOBUF_NAMESPACE_ID::internal::InternalMetadataWithArena _internal_metadata_;
+  ::PROTOBUF_NAMESPACE_ID::internal::HasBits<1> _has_bits_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::MailInfo > var_list_;
+  int var_code_;
+  int id_;
+  friend struct ::TableStruct_GS_2eCLI_2eproto;
+};
 // ===================================================================
 
 
@@ -4884,9 +5063,109 @@ inline void QNA_RES::set_var_code(::ErrorCode value) {
   // @@protoc_insertion_point(field_set:QNA_RES.var_code)
 }
 
+// -------------------------------------------------------------------
+
+// MAIL_LIST_RES
+
+// optional .PROTOCOL id = 1 [default = ID_PKT_MAIL_LIST_RES];
+inline bool MAIL_LIST_RES::_internal_has_id() const {
+  bool value = (_has_bits_[0] & 0x00000002u) != 0;
+  return value;
+}
+inline bool MAIL_LIST_RES::has_id() const {
+  return _internal_has_id();
+}
+inline void MAIL_LIST_RES::clear_id() {
+  id_ = 30;
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline ::PROTOCOL MAIL_LIST_RES::_internal_id() const {
+  return static_cast< ::PROTOCOL >(id_);
+}
+inline ::PROTOCOL MAIL_LIST_RES::id() const {
+  // @@protoc_insertion_point(field_get:MAIL_LIST_RES.id)
+  return _internal_id();
+}
+inline void MAIL_LIST_RES::_internal_set_id(::PROTOCOL value) {
+  assert(::PROTOCOL_IsValid(value));
+  _has_bits_[0] |= 0x00000002u;
+  id_ = value;
+}
+inline void MAIL_LIST_RES::set_id(::PROTOCOL value) {
+  _internal_set_id(value);
+  // @@protoc_insertion_point(field_set:MAIL_LIST_RES.id)
+}
+
+// optional .ErrorCode var_code = 2;
+inline bool MAIL_LIST_RES::_internal_has_var_code() const {
+  bool value = (_has_bits_[0] & 0x00000001u) != 0;
+  return value;
+}
+inline bool MAIL_LIST_RES::has_var_code() const {
+  return _internal_has_var_code();
+}
+inline void MAIL_LIST_RES::clear_var_code() {
+  var_code_ = 0;
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline ::ErrorCode MAIL_LIST_RES::_internal_var_code() const {
+  return static_cast< ::ErrorCode >(var_code_);
+}
+inline ::ErrorCode MAIL_LIST_RES::var_code() const {
+  // @@protoc_insertion_point(field_get:MAIL_LIST_RES.var_code)
+  return _internal_var_code();
+}
+inline void MAIL_LIST_RES::_internal_set_var_code(::ErrorCode value) {
+  assert(::ErrorCode_IsValid(value));
+  _has_bits_[0] |= 0x00000001u;
+  var_code_ = value;
+}
+inline void MAIL_LIST_RES::set_var_code(::ErrorCode value) {
+  _internal_set_var_code(value);
+  // @@protoc_insertion_point(field_set:MAIL_LIST_RES.var_code)
+}
+
+// repeated .MailInfo var_list = 3;
+inline int MAIL_LIST_RES::_internal_var_list_size() const {
+  return var_list_.size();
+}
+inline int MAIL_LIST_RES::var_list_size() const {
+  return _internal_var_list_size();
+}
+inline ::MailInfo* MAIL_LIST_RES::mutable_var_list(int index) {
+  // @@protoc_insertion_point(field_mutable:MAIL_LIST_RES.var_list)
+  return var_list_.Mutable(index);
+}
+inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::MailInfo >*
+MAIL_LIST_RES::mutable_var_list() {
+  // @@protoc_insertion_point(field_mutable_list:MAIL_LIST_RES.var_list)
+  return &var_list_;
+}
+inline const ::MailInfo& MAIL_LIST_RES::_internal_var_list(int index) const {
+  return var_list_.Get(index);
+}
+inline const ::MailInfo& MAIL_LIST_RES::var_list(int index) const {
+  // @@protoc_insertion_point(field_get:MAIL_LIST_RES.var_list)
+  return _internal_var_list(index);
+}
+inline ::MailInfo* MAIL_LIST_RES::_internal_add_var_list() {
+  return var_list_.Add();
+}
+inline ::MailInfo* MAIL_LIST_RES::add_var_list() {
+  // @@protoc_insertion_point(field_add:MAIL_LIST_RES.var_list)
+  return _internal_add_var_list();
+}
+inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::MailInfo >&
+MAIL_LIST_RES::var_list() const {
+  // @@protoc_insertion_point(field_list:MAIL_LIST_RES.var_list)
+  return var_list_;
+}
+
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

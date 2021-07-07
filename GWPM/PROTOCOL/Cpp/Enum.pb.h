@@ -86,12 +86,20 @@ enum PROTOCOL : int {
   ID_PKT_PRAY_MESSAGE_REG_RES = 26,
   ID_PKT_QNA_REQ = 27,
   ID_PKT_QNA_RES = 28,
+  ID_PKT_MAIL_LIST_REQ = 29,
+  ID_PKT_MAIL_LIST_RES = 30,
+  ID_PKT_MAIL_SEND_REQ = 31,
+  ID_PKT_MAIL_SEND_RES = 32,
+  ID_PKT_MAIL_DEL_REQ = 33,
+  ID_PKT_MAIL_DEL_RES = 34,
+  ID_PKT_MAIL_READ_REQ = 35,
+  ID_PKT_MAIL_READ_RES = 36,
   PROTOCOL_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<::PROTOBUF_NAMESPACE_ID::int32>::min(),
   PROTOCOL_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<::PROTOBUF_NAMESPACE_ID::int32>::max()
 };
 bool PROTOCOL_IsValid(int value);
 constexpr PROTOCOL PROTOCOL_MIN = ID_PKT_VERSION_REQ;
-constexpr PROTOCOL PROTOCOL_MAX = ID_PKT_QNA_RES;
+constexpr PROTOCOL PROTOCOL_MAX = ID_PKT_MAIL_READ_RES;
 constexpr int PROTOCOL_ARRAYSIZE = PROTOCOL_MAX + 1;
 
 const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* PROTOCOL_descriptor();
@@ -114,12 +122,13 @@ enum ErrorCode : int {
   LoginDuplicate = 2,
   SystemError = 3,
   LoginFailed = 4,
+  Duplicate_Enter_Room = 5,
   ErrorCode_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<::PROTOBUF_NAMESPACE_ID::int32>::min(),
   ErrorCode_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<::PROTOBUF_NAMESPACE_ID::int32>::max()
 };
 bool ErrorCode_IsValid(int value);
 constexpr ErrorCode ErrorCode_MIN = Success;
-constexpr ErrorCode ErrorCode_MAX = LoginFailed;
+constexpr ErrorCode ErrorCode_MAX = Duplicate_Enter_Room;
 constexpr int ErrorCode_ARRAYSIZE = ErrorCode_MAX + 1;
 
 const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* ErrorCode_descriptor();

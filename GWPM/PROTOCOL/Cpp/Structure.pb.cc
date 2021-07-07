@@ -30,6 +30,24 @@ class NotifyInfoDefaultTypeInternal {
  public:
   ::PROTOBUF_NAMESPACE_ID::internal::ExplicitlyConstructed<NotifyInfo> _instance;
 } _NotifyInfo_default_instance_;
+class MailInfoDefaultTypeInternal {
+ public:
+  ::PROTOBUF_NAMESPACE_ID::internal::ExplicitlyConstructed<MailInfo> _instance;
+} _MailInfo_default_instance_;
+static void InitDefaultsscc_info_MailInfo_Structure_2eproto() {
+  GOOGLE_PROTOBUF_VERIFY_VERSION;
+
+  {
+    void* ptr = &::_MailInfo_default_instance_;
+    new (ptr) ::MailInfo();
+    ::PROTOBUF_NAMESPACE_ID::internal::OnShutdownDestroyMessage(ptr);
+  }
+  ::MailInfo::InitAsDefaultInstance();
+}
+
+::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_MailInfo_Structure_2eproto =
+    {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 0, 0, InitDefaultsscc_info_MailInfo_Structure_2eproto}, {}};
+
 static void InitDefaultsscc_info_NotifyInfo_Structure_2eproto() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
@@ -86,7 +104,7 @@ static void InitDefaultsscc_info_RoomUserInfo_Structure_2eproto() {
 ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_RoomUserInfo_Structure_2eproto =
     {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 0, 0, InitDefaultsscc_info_RoomUserInfo_Structure_2eproto}, {}};
 
-static ::PROTOBUF_NAMESPACE_ID::Metadata file_level_metadata_Structure_2eproto[4];
+static ::PROTOBUF_NAMESPACE_ID::Metadata file_level_metadata_Structure_2eproto[5];
 static constexpr ::PROTOBUF_NAMESPACE_ID::EnumDescriptor const** file_level_enum_descriptors_Structure_2eproto = nullptr;
 static constexpr ::PROTOBUF_NAMESPACE_ID::ServiceDescriptor const** file_level_service_descriptors_Structure_2eproto = nullptr;
 
@@ -137,12 +155,28 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_Structure_2eproto::offsets[] P
   2,
   0,
   1,
+  PROTOBUF_FIELD_OFFSET(::MailInfo, _has_bits_),
+  PROTOBUF_FIELD_OFFSET(::MailInfo, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  PROTOBUF_FIELD_OFFSET(::MailInfo, var_id_),
+  PROTOBUF_FIELD_OFFSET(::MailInfo, var_title_),
+  PROTOBUF_FIELD_OFFSET(::MailInfo, var_content_),
+  PROTOBUF_FIELD_OFFSET(::MailInfo, var_date_),
+  PROTOBUF_FIELD_OFFSET(::MailInfo, var_name_),
+  4,
+  0,
+  1,
+  2,
+  3,
 };
 static const ::PROTOBUF_NAMESPACE_ID::internal::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
   { 0, 8, sizeof(::RoomUserInfo)},
   { 11, 20, sizeof(::RoomInfo2)},
   { 24, 32, sizeof(::PrayInfo)},
   { 35, 43, sizeof(::NotifyInfo)},
+  { 46, 56, sizeof(::MailInfo)},
 };
 
 static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] = {
@@ -150,6 +184,7 @@ static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] =
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::_RoomInfo2_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::_PrayInfo_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::_NotifyInfo_default_instance_),
+  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::_MailInfo_default_instance_),
 };
 
 const char descriptor_table_protodef_Structure_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
@@ -161,11 +196,14 @@ const char descriptor_table_protodef_Structure_2eproto[] PROTOBUF_SECTION_VARIAB
   "\022\020\n\010var_name\030\001 \001(\t\022\023\n\013var_message\030\002 \001(\t\022"
   "\020\n\010var_time\030\003 \001(\t\"C\n\nNotifyInfo\022\016\n\006var_i"
   "d\030\001 \001(\003\022\023\n\013var_content\030\002 \001(\t\022\020\n\010var_date"
-  "\030\003 \001(\tB\002H\001"
+  "\030\003 \001(\t\"f\n\010MailInfo\022\016\n\006var_id\030\001 \001(\003\022\021\n\tva"
+  "r_title\030\002 \001(\t\022\023\n\013var_content\030\003 \001(\t\022\020\n\010va"
+  "r_date\030\004 \001(\t\022\020\n\010var_name\030\005 \001(\tB\002H\001"
   ;
 static const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable*const descriptor_table_Structure_2eproto_deps[1] = {
 };
-static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_Structure_2eproto_sccs[4] = {
+static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_Structure_2eproto_sccs[5] = {
+  &scc_info_MailInfo_Structure_2eproto.base,
   &scc_info_NotifyInfo_Structure_2eproto.base,
   &scc_info_PrayInfo_Structure_2eproto.base,
   &scc_info_RoomInfo2_Structure_2eproto.base,
@@ -174,10 +212,10 @@ static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_Str
 static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_Structure_2eproto_once;
 static bool descriptor_table_Structure_2eproto_initialized = false;
 const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_Structure_2eproto = {
-  &descriptor_table_Structure_2eproto_initialized, descriptor_table_protodef_Structure_2eproto, "Structure.proto", 330,
-  &descriptor_table_Structure_2eproto_once, descriptor_table_Structure_2eproto_sccs, descriptor_table_Structure_2eproto_deps, 4, 0,
+  &descriptor_table_Structure_2eproto_initialized, descriptor_table_protodef_Structure_2eproto, "Structure.proto", 434,
+  &descriptor_table_Structure_2eproto_once, descriptor_table_Structure_2eproto_sccs, descriptor_table_Structure_2eproto_deps, 5, 0,
   schemas, file_default_instances, TableStruct_Structure_2eproto::offsets,
-  file_level_metadata_Structure_2eproto, 4, file_level_enum_descriptors_Structure_2eproto, file_level_service_descriptors_Structure_2eproto,
+  file_level_metadata_Structure_2eproto, 5, file_level_enum_descriptors_Structure_2eproto, file_level_service_descriptors_Structure_2eproto,
 };
 
 // Force running AddDescriptors() at dynamic initialization time.
@@ -1413,6 +1451,398 @@ void NotifyInfo::InternalSwap(NotifyInfo* other) {
 }
 
 
+// ===================================================================
+
+void MailInfo::InitAsDefaultInstance() {
+}
+class MailInfo::_Internal {
+ public:
+  using HasBits = decltype(std::declval<MailInfo>()._has_bits_);
+  static void set_has_var_id(HasBits* has_bits) {
+    (*has_bits)[0] |= 16u;
+  }
+  static void set_has_var_title(HasBits* has_bits) {
+    (*has_bits)[0] |= 1u;
+  }
+  static void set_has_var_content(HasBits* has_bits) {
+    (*has_bits)[0] |= 2u;
+  }
+  static void set_has_var_date(HasBits* has_bits) {
+    (*has_bits)[0] |= 4u;
+  }
+  static void set_has_var_name(HasBits* has_bits) {
+    (*has_bits)[0] |= 8u;
+  }
+};
+
+MailInfo::MailInfo()
+  : ::PROTOBUF_NAMESPACE_ID::Message(), _internal_metadata_(nullptr) {
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:MailInfo)
+}
+MailInfo::MailInfo(const MailInfo& from)
+  : ::PROTOBUF_NAMESPACE_ID::Message(),
+      _internal_metadata_(nullptr),
+      _has_bits_(from._has_bits_) {
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  var_title_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  if (from._internal_has_var_title()) {
+    var_title_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.var_title_);
+  }
+  var_content_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  if (from._internal_has_var_content()) {
+    var_content_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.var_content_);
+  }
+  var_date_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  if (from._internal_has_var_date()) {
+    var_date_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.var_date_);
+  }
+  var_name_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  if (from._internal_has_var_name()) {
+    var_name_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.var_name_);
+  }
+  var_id_ = from.var_id_;
+  // @@protoc_insertion_point(copy_constructor:MailInfo)
+}
+
+void MailInfo::SharedCtor() {
+  ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&scc_info_MailInfo_Structure_2eproto.base);
+  var_title_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  var_content_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  var_date_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  var_name_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  var_id_ = PROTOBUF_LONGLONG(0);
+}
+
+MailInfo::~MailInfo() {
+  // @@protoc_insertion_point(destructor:MailInfo)
+  SharedDtor();
+}
+
+void MailInfo::SharedDtor() {
+  var_title_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  var_content_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  var_date_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  var_name_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+
+void MailInfo::SetCachedSize(int size) const {
+  _cached_size_.Set(size);
+}
+const MailInfo& MailInfo::default_instance() {
+  ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&::scc_info_MailInfo_Structure_2eproto.base);
+  return *internal_default_instance();
+}
+
+
+void MailInfo::Clear() {
+// @@protoc_insertion_point(message_clear_start:MailInfo)
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  cached_has_bits = _has_bits_[0];
+  if (cached_has_bits & 0x0000000fu) {
+    if (cached_has_bits & 0x00000001u) {
+      var_title_.ClearNonDefaultToEmptyNoArena();
+    }
+    if (cached_has_bits & 0x00000002u) {
+      var_content_.ClearNonDefaultToEmptyNoArena();
+    }
+    if (cached_has_bits & 0x00000004u) {
+      var_date_.ClearNonDefaultToEmptyNoArena();
+    }
+    if (cached_has_bits & 0x00000008u) {
+      var_name_.ClearNonDefaultToEmptyNoArena();
+    }
+  }
+  var_id_ = PROTOBUF_LONGLONG(0);
+  _has_bits_.Clear();
+  _internal_metadata_.Clear();
+}
+
+const char* MailInfo::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
+#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  _Internal::HasBits has_bits{};
+  while (!ctx->Done(&ptr)) {
+    ::PROTOBUF_NAMESPACE_ID::uint32 tag;
+    ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
+    CHK_(ptr);
+    switch (tag >> 3) {
+      // optional int64 var_id = 1;
+      case 1:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 8)) {
+          _Internal::set_has_var_id(&has_bits);
+          var_id_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // optional string var_title = 2;
+      case 2:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 18)) {
+          auto str = _internal_mutable_var_title();
+          ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
+          #ifndef NDEBUG
+          ::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "MailInfo.var_title");
+          #endif  // !NDEBUG
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // optional string var_content = 3;
+      case 3:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 26)) {
+          auto str = _internal_mutable_var_content();
+          ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
+          #ifndef NDEBUG
+          ::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "MailInfo.var_content");
+          #endif  // !NDEBUG
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // optional string var_date = 4;
+      case 4:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 34)) {
+          auto str = _internal_mutable_var_date();
+          ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
+          #ifndef NDEBUG
+          ::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "MailInfo.var_date");
+          #endif  // !NDEBUG
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // optional string var_name = 5;
+      case 5:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 42)) {
+          auto str = _internal_mutable_var_name();
+          ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
+          #ifndef NDEBUG
+          ::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "MailInfo.var_name");
+          #endif  // !NDEBUG
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      default: {
+      handle_unusual:
+        if ((tag & 7) == 4 || tag == 0) {
+          ctx->SetLastTag(tag);
+          goto success;
+        }
+        ptr = UnknownFieldParse(tag, &_internal_metadata_, ptr, ctx);
+        CHK_(ptr != nullptr);
+        continue;
+      }
+    }  // switch
+  }  // while
+success:
+  _has_bits_.Or(has_bits);
+  return ptr;
+failure:
+  ptr = nullptr;
+  goto success;
+#undef CHK_
+}
+
+::PROTOBUF_NAMESPACE_ID::uint8* MailInfo::_InternalSerialize(
+    ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:MailInfo)
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  cached_has_bits = _has_bits_[0];
+  // optional int64 var_id = 1;
+  if (cached_has_bits & 0x00000010u) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt64ToArray(1, this->_internal_var_id(), target);
+  }
+
+  // optional string var_title = 2;
+  if (cached_has_bits & 0x00000001u) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->_internal_var_title().data(), static_cast<int>(this->_internal_var_title().length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SERIALIZE,
+      "MailInfo.var_title");
+    target = stream->WriteStringMaybeAliased(
+        2, this->_internal_var_title(), target);
+  }
+
+  // optional string var_content = 3;
+  if (cached_has_bits & 0x00000002u) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->_internal_var_content().data(), static_cast<int>(this->_internal_var_content().length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SERIALIZE,
+      "MailInfo.var_content");
+    target = stream->WriteStringMaybeAliased(
+        3, this->_internal_var_content(), target);
+  }
+
+  // optional string var_date = 4;
+  if (cached_has_bits & 0x00000004u) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->_internal_var_date().data(), static_cast<int>(this->_internal_var_date().length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SERIALIZE,
+      "MailInfo.var_date");
+    target = stream->WriteStringMaybeAliased(
+        4, this->_internal_var_date(), target);
+  }
+
+  // optional string var_name = 5;
+  if (cached_has_bits & 0x00000008u) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->_internal_var_name().data(), static_cast<int>(this->_internal_var_name().length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SERIALIZE,
+      "MailInfo.var_name");
+    target = stream->WriteStringMaybeAliased(
+        5, this->_internal_var_name(), target);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields(), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:MailInfo)
+  return target;
+}
+
+size_t MailInfo::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:MailInfo)
+  size_t total_size = 0;
+
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  cached_has_bits = _has_bits_[0];
+  if (cached_has_bits & 0x0000001fu) {
+    // optional string var_title = 2;
+    if (cached_has_bits & 0x00000001u) {
+      total_size += 1 +
+        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+          this->_internal_var_title());
+    }
+
+    // optional string var_content = 3;
+    if (cached_has_bits & 0x00000002u) {
+      total_size += 1 +
+        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+          this->_internal_var_content());
+    }
+
+    // optional string var_date = 4;
+    if (cached_has_bits & 0x00000004u) {
+      total_size += 1 +
+        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+          this->_internal_var_date());
+    }
+
+    // optional string var_name = 5;
+    if (cached_has_bits & 0x00000008u) {
+      total_size += 1 +
+        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+          this->_internal_var_name());
+    }
+
+    // optional int64 var_id = 1;
+    if (cached_has_bits & 0x00000010u) {
+      total_size += 1 +
+        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int64Size(
+          this->_internal_var_id());
+    }
+
+  }
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    return ::PROTOBUF_NAMESPACE_ID::internal::ComputeUnknownFieldsSize(
+        _internal_metadata_, total_size, &_cached_size_);
+  }
+  int cached_size = ::PROTOBUF_NAMESPACE_ID::internal::ToCachedSize(total_size);
+  SetCachedSize(cached_size);
+  return total_size;
+}
+
+void MailInfo::MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:MailInfo)
+  GOOGLE_DCHECK_NE(&from, this);
+  const MailInfo* source =
+      ::PROTOBUF_NAMESPACE_ID::DynamicCastToGenerated<MailInfo>(
+          &from);
+  if (source == nullptr) {
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:MailInfo)
+    ::PROTOBUF_NAMESPACE_ID::internal::ReflectionOps::Merge(from, this);
+  } else {
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:MailInfo)
+    MergeFrom(*source);
+  }
+}
+
+void MailInfo::MergeFrom(const MailInfo& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:MailInfo)
+  GOOGLE_DCHECK_NE(&from, this);
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  cached_has_bits = from._has_bits_[0];
+  if (cached_has_bits & 0x0000001fu) {
+    if (cached_has_bits & 0x00000001u) {
+      _has_bits_[0] |= 0x00000001u;
+      var_title_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.var_title_);
+    }
+    if (cached_has_bits & 0x00000002u) {
+      _has_bits_[0] |= 0x00000002u;
+      var_content_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.var_content_);
+    }
+    if (cached_has_bits & 0x00000004u) {
+      _has_bits_[0] |= 0x00000004u;
+      var_date_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.var_date_);
+    }
+    if (cached_has_bits & 0x00000008u) {
+      _has_bits_[0] |= 0x00000008u;
+      var_name_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.var_name_);
+    }
+    if (cached_has_bits & 0x00000010u) {
+      var_id_ = from.var_id_;
+    }
+    _has_bits_[0] |= cached_has_bits;
+  }
+}
+
+void MailInfo::CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:MailInfo)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void MailInfo::CopyFrom(const MailInfo& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:MailInfo)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool MailInfo::IsInitialized() const {
+  return true;
+}
+
+void MailInfo::InternalSwap(MailInfo* other) {
+  using std::swap;
+  _internal_metadata_.Swap(&other->_internal_metadata_);
+  swap(_has_bits_[0], other->_has_bits_[0]);
+  var_title_.Swap(&other->var_title_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+    GetArenaNoVirtual());
+  var_content_.Swap(&other->var_content_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+    GetArenaNoVirtual());
+  var_date_.Swap(&other->var_date_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+    GetArenaNoVirtual());
+  var_name_.Swap(&other->var_name_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+    GetArenaNoVirtual());
+  swap(var_id_, other->var_id_);
+}
+
+::PROTOBUF_NAMESPACE_ID::Metadata MailInfo::GetMetadata() const {
+  return GetMetadataStatic();
+}
+
+
 // @@protoc_insertion_point(namespace_scope)
 PROTOBUF_NAMESPACE_OPEN
 template<> PROTOBUF_NOINLINE ::RoomUserInfo* Arena::CreateMaybeMessage< ::RoomUserInfo >(Arena* arena) {
@@ -1426,6 +1856,9 @@ template<> PROTOBUF_NOINLINE ::PrayInfo* Arena::CreateMaybeMessage< ::PrayInfo >
 }
 template<> PROTOBUF_NOINLINE ::NotifyInfo* Arena::CreateMaybeMessage< ::NotifyInfo >(Arena* arena) {
   return Arena::CreateInternal< ::NotifyInfo >(arena);
+}
+template<> PROTOBUF_NOINLINE ::MailInfo* Arena::CreateMaybeMessage< ::MailInfo >(Arena* arena) {
+  return Arena::CreateInternal< ::MailInfo >(arena);
 }
 PROTOBUF_NAMESPACE_CLOSE
 

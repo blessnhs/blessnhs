@@ -14,6 +14,7 @@
 #include <google/protobuf/wire_format.h>
 // @@protoc_insertion_point(includes)
 #include <google/protobuf/port_def.inc>
+extern PROTOBUF_INTERNAL_EXPORT_Structure_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_MailInfo_Structure_2eproto;
 extern PROTOBUF_INTERNAL_EXPORT_Structure_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_NotifyInfo_Structure_2eproto;
 extern PROTOBUF_INTERNAL_EXPORT_Structure_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_PrayInfo_Structure_2eproto;
 extern PROTOBUF_INTERNAL_EXPORT_Structure_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_RoomInfo2_Structure_2eproto;
@@ -74,6 +75,10 @@ class QNA_RESDefaultTypeInternal {
  public:
   ::PROTOBUF_NAMESPACE_ID::internal::ExplicitlyConstructed<QNA_RES> _instance;
 } _QNA_RES_default_instance_;
+class MAIL_LIST_RESDefaultTypeInternal {
+ public:
+  ::PROTOBUF_NAMESPACE_ID::internal::ExplicitlyConstructed<MAIL_LIST_RES> _instance;
+} _MAIL_LIST_RES_default_instance_;
 static void InitDefaultsscc_info_AUDIO_MESSAGE_RES_GS_2eCLI_2eproto() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
@@ -157,6 +162,21 @@ static void InitDefaultsscc_info_LOGIN_RES_GS_2eCLI_2eproto() {
 
 ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_LOGIN_RES_GS_2eCLI_2eproto =
     {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 0, 0, InitDefaultsscc_info_LOGIN_RES_GS_2eCLI_2eproto}, {}};
+
+static void InitDefaultsscc_info_MAIL_LIST_RES_GS_2eCLI_2eproto() {
+  GOOGLE_PROTOBUF_VERIFY_VERSION;
+
+  {
+    void* ptr = &::_MAIL_LIST_RES_default_instance_;
+    new (ptr) ::MAIL_LIST_RES();
+    ::PROTOBUF_NAMESPACE_ID::internal::OnShutdownDestroyMessage(ptr);
+  }
+  ::MAIL_LIST_RES::InitAsDefaultInstance();
+}
+
+::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<1> scc_info_MAIL_LIST_RES_GS_2eCLI_2eproto =
+    {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 1, 0, InitDefaultsscc_info_MAIL_LIST_RES_GS_2eCLI_2eproto}, {
+      &scc_info_MailInfo_Structure_2eproto.base,}};
 
 static void InitDefaultsscc_info_NEW_USER_IN_ROOM_NTY_GS_2eCLI_2eproto() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
@@ -274,7 +294,7 @@ static void InitDefaultsscc_info_VERSION_RES_GS_2eCLI_2eproto() {
 ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_VERSION_RES_GS_2eCLI_2eproto =
     {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 0, 0, InitDefaultsscc_info_VERSION_RES_GS_2eCLI_2eproto}, {}};
 
-static ::PROTOBUF_NAMESPACE_ID::Metadata file_level_metadata_GS_2eCLI_2eproto[14];
+static ::PROTOBUF_NAMESPACE_ID::Metadata file_level_metadata_GS_2eCLI_2eproto[15];
 static constexpr ::PROTOBUF_NAMESPACE_ID::EnumDescriptor const** file_level_enum_descriptors_GS_2eCLI_2eproto = nullptr;
 static constexpr ::PROTOBUF_NAMESPACE_ID::ServiceDescriptor const** file_level_service_descriptors_GS_2eCLI_2eproto = nullptr;
 
@@ -451,6 +471,17 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_GS_2eCLI_2eproto::offsets[] PR
   PROTOBUF_FIELD_OFFSET(::QNA_RES, var_code_),
   1,
   0,
+  PROTOBUF_FIELD_OFFSET(::MAIL_LIST_RES, _has_bits_),
+  PROTOBUF_FIELD_OFFSET(::MAIL_LIST_RES, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  PROTOBUF_FIELD_OFFSET(::MAIL_LIST_RES, id_),
+  PROTOBUF_FIELD_OFFSET(::MAIL_LIST_RES, var_code_),
+  PROTOBUF_FIELD_OFFSET(::MAIL_LIST_RES, var_list_),
+  1,
+  0,
+  ~0u,
 };
 static const ::PROTOBUF_NAMESPACE_ID::internal::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
   { 0, 8, sizeof(::VERSION_RES)},
@@ -467,6 +498,7 @@ static const ::PROTOBUF_NAMESPACE_ID::internal::MigrationSchema schemas[] PROTOB
   { 139, 147, sizeof(::PRAY_MESSAGE_RES)},
   { 150, 159, sizeof(::PRAY_MESSAGE_REG_RES)},
   { 163, 170, sizeof(::QNA_RES)},
+  { 172, 180, sizeof(::MAIL_LIST_RES)},
 };
 
 static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] = {
@@ -484,6 +516,7 @@ static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] =
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::_PRAY_MESSAGE_RES_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::_PRAY_MESSAGE_REG_RES_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::_QNA_RES_default_instance_),
+  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::_MAIL_LIST_RES_default_instance_),
 };
 
 const char descriptor_table_protodef_GS_2eCLI_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
@@ -534,19 +567,23 @@ const char descriptor_table_protodef_GS_2eCLI_2eproto[] PROTOBUF_SECTION_VARIABL
   "de\022\023\n\013var_message\030\003 \001(\t\022\020\n\010var_time\030\004 \001("
   "\t\"N\n\007QNA_RES\022%\n\002id\030\001 \001(\0162\t.PROTOCOL:\016ID_"
   "PKT_QNA_RES\022\034\n\010var_code\030\002 \001(\0162\n.ErrorCod"
-  "eB\002H\001"
+  "e\"w\n\rMAIL_LIST_RES\022+\n\002id\030\001 \001(\0162\t.PROTOCO"
+  "L:\024ID_PKT_MAIL_LIST_RES\022\034\n\010var_code\030\002 \001("
+  "\0162\n.ErrorCode\022\033\n\010var_list\030\003 \003(\0132\t.MailIn"
+  "foB\002H\001"
   ;
 static const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable*const descriptor_table_GS_2eCLI_2eproto_deps[2] = {
   &::descriptor_table_Enum_2eproto,
   &::descriptor_table_Structure_2eproto,
 };
-static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_GS_2eCLI_2eproto_sccs[14] = {
+static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_GS_2eCLI_2eproto_sccs[15] = {
   &scc_info_AUDIO_MESSAGE_RES_GS_2eCLI_2eproto.base,
   &scc_info_BITMAP_MESSAGE_RES_GS_2eCLI_2eproto.base,
   &scc_info_CREATE_ROOM_RES_GS_2eCLI_2eproto.base,
   &scc_info_ENTER_ROOM_RES_GS_2eCLI_2eproto.base,
   &scc_info_LEAVE_ROOM_RES_GS_2eCLI_2eproto.base,
   &scc_info_LOGIN_RES_GS_2eCLI_2eproto.base,
+  &scc_info_MAIL_LIST_RES_GS_2eCLI_2eproto.base,
   &scc_info_NEW_USER_IN_ROOM_NTY_GS_2eCLI_2eproto.base,
   &scc_info_NOTICE_RES_GS_2eCLI_2eproto.base,
   &scc_info_PRAY_MESSAGE_REG_RES_GS_2eCLI_2eproto.base,
@@ -559,10 +596,10 @@ static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_GS_
 static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_GS_2eCLI_2eproto_once;
 static bool descriptor_table_GS_2eCLI_2eproto_initialized = false;
 const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_GS_2eCLI_2eproto = {
-  &descriptor_table_GS_2eCLI_2eproto_initialized, descriptor_table_protodef_GS_2eCLI_2eproto, "GS.CLI.proto", 1885,
-  &descriptor_table_GS_2eCLI_2eproto_once, descriptor_table_GS_2eCLI_2eproto_sccs, descriptor_table_GS_2eCLI_2eproto_deps, 14, 2,
+  &descriptor_table_GS_2eCLI_2eproto_initialized, descriptor_table_protodef_GS_2eCLI_2eproto, "GS.CLI.proto", 2006,
+  &descriptor_table_GS_2eCLI_2eproto_once, descriptor_table_GS_2eCLI_2eproto_sccs, descriptor_table_GS_2eCLI_2eproto_deps, 15, 2,
   schemas, file_default_instances, TableStruct_GS_2eCLI_2eproto::offsets,
-  file_level_metadata_GS_2eCLI_2eproto, 14, file_level_enum_descriptors_GS_2eCLI_2eproto, file_level_service_descriptors_GS_2eCLI_2eproto,
+  file_level_metadata_GS_2eCLI_2eproto, 15, file_level_enum_descriptors_GS_2eCLI_2eproto, file_level_service_descriptors_GS_2eCLI_2eproto,
 };
 
 // Force running AddDescriptors() at dynamic initialization time.
@@ -4951,6 +4988,288 @@ void QNA_RES::InternalSwap(QNA_RES* other) {
 }
 
 
+// ===================================================================
+
+void MAIL_LIST_RES::InitAsDefaultInstance() {
+}
+class MAIL_LIST_RES::_Internal {
+ public:
+  using HasBits = decltype(std::declval<MAIL_LIST_RES>()._has_bits_);
+  static void set_has_id(HasBits* has_bits) {
+    (*has_bits)[0] |= 2u;
+  }
+  static void set_has_var_code(HasBits* has_bits) {
+    (*has_bits)[0] |= 1u;
+  }
+};
+
+void MAIL_LIST_RES::clear_var_list() {
+  var_list_.Clear();
+}
+MAIL_LIST_RES::MAIL_LIST_RES()
+  : ::PROTOBUF_NAMESPACE_ID::Message(), _internal_metadata_(nullptr) {
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:MAIL_LIST_RES)
+}
+MAIL_LIST_RES::MAIL_LIST_RES(const MAIL_LIST_RES& from)
+  : ::PROTOBUF_NAMESPACE_ID::Message(),
+      _internal_metadata_(nullptr),
+      _has_bits_(from._has_bits_),
+      var_list_(from.var_list_) {
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  ::memcpy(&var_code_, &from.var_code_,
+    static_cast<size_t>(reinterpret_cast<char*>(&id_) -
+    reinterpret_cast<char*>(&var_code_)) + sizeof(id_));
+  // @@protoc_insertion_point(copy_constructor:MAIL_LIST_RES)
+}
+
+void MAIL_LIST_RES::SharedCtor() {
+  ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&scc_info_MAIL_LIST_RES_GS_2eCLI_2eproto.base);
+  var_code_ = 0;
+  id_ = 30;
+}
+
+MAIL_LIST_RES::~MAIL_LIST_RES() {
+  // @@protoc_insertion_point(destructor:MAIL_LIST_RES)
+  SharedDtor();
+}
+
+void MAIL_LIST_RES::SharedDtor() {
+}
+
+void MAIL_LIST_RES::SetCachedSize(int size) const {
+  _cached_size_.Set(size);
+}
+const MAIL_LIST_RES& MAIL_LIST_RES::default_instance() {
+  ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&::scc_info_MAIL_LIST_RES_GS_2eCLI_2eproto.base);
+  return *internal_default_instance();
+}
+
+
+void MAIL_LIST_RES::Clear() {
+// @@protoc_insertion_point(message_clear_start:MAIL_LIST_RES)
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  var_list_.Clear();
+  cached_has_bits = _has_bits_[0];
+  if (cached_has_bits & 0x00000003u) {
+    var_code_ = 0;
+    id_ = 30;
+  }
+  _has_bits_.Clear();
+  _internal_metadata_.Clear();
+}
+
+const char* MAIL_LIST_RES::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
+#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  _Internal::HasBits has_bits{};
+  while (!ctx->Done(&ptr)) {
+    ::PROTOBUF_NAMESPACE_ID::uint32 tag;
+    ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
+    CHK_(ptr);
+    switch (tag >> 3) {
+      // optional .PROTOCOL id = 1 [default = ID_PKT_MAIL_LIST_RES];
+      case 1:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 8)) {
+          ::PROTOBUF_NAMESPACE_ID::uint64 val = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
+          CHK_(ptr);
+          if (PROTOBUF_PREDICT_TRUE(::PROTOCOL_IsValid(val))) {
+            _internal_set_id(static_cast<::PROTOCOL>(val));
+          } else {
+            ::PROTOBUF_NAMESPACE_ID::internal::WriteVarint(1, val, mutable_unknown_fields());
+          }
+        } else goto handle_unusual;
+        continue;
+      // optional .ErrorCode var_code = 2;
+      case 2:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 16)) {
+          ::PROTOBUF_NAMESPACE_ID::uint64 val = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
+          CHK_(ptr);
+          if (PROTOBUF_PREDICT_TRUE(::ErrorCode_IsValid(val))) {
+            _internal_set_var_code(static_cast<::ErrorCode>(val));
+          } else {
+            ::PROTOBUF_NAMESPACE_ID::internal::WriteVarint(2, val, mutable_unknown_fields());
+          }
+        } else goto handle_unusual;
+        continue;
+      // repeated .MailInfo var_list = 3;
+      case 3:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 26)) {
+          ptr -= 1;
+          do {
+            ptr += 1;
+            ptr = ctx->ParseMessage(_internal_add_var_list(), ptr);
+            CHK_(ptr);
+            if (!ctx->DataAvailable(ptr)) break;
+          } while (::PROTOBUF_NAMESPACE_ID::internal::ExpectTag<26>(ptr));
+        } else goto handle_unusual;
+        continue;
+      default: {
+      handle_unusual:
+        if ((tag & 7) == 4 || tag == 0) {
+          ctx->SetLastTag(tag);
+          goto success;
+        }
+        ptr = UnknownFieldParse(tag, &_internal_metadata_, ptr, ctx);
+        CHK_(ptr != nullptr);
+        continue;
+      }
+    }  // switch
+  }  // while
+success:
+  _has_bits_.Or(has_bits);
+  return ptr;
+failure:
+  ptr = nullptr;
+  goto success;
+#undef CHK_
+}
+
+::PROTOBUF_NAMESPACE_ID::uint8* MAIL_LIST_RES::_InternalSerialize(
+    ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:MAIL_LIST_RES)
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  cached_has_bits = _has_bits_[0];
+  // optional .PROTOCOL id = 1 [default = ID_PKT_MAIL_LIST_RES];
+  if (cached_has_bits & 0x00000002u) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteEnumToArray(
+      1, this->_internal_id(), target);
+  }
+
+  // optional .ErrorCode var_code = 2;
+  if (cached_has_bits & 0x00000001u) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteEnumToArray(
+      2, this->_internal_var_code(), target);
+  }
+
+  // repeated .MailInfo var_list = 3;
+  for (unsigned int i = 0,
+      n = static_cast<unsigned int>(this->_internal_var_list_size()); i < n; i++) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+      InternalWriteMessage(3, this->_internal_var_list(i), target, stream);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields(), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:MAIL_LIST_RES)
+  return target;
+}
+
+size_t MAIL_LIST_RES::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:MAIL_LIST_RES)
+  size_t total_size = 0;
+
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // repeated .MailInfo var_list = 3;
+  total_size += 1UL * this->_internal_var_list_size();
+  for (const auto& msg : this->var_list_) {
+    total_size +=
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(msg);
+  }
+
+  cached_has_bits = _has_bits_[0];
+  if (cached_has_bits & 0x00000003u) {
+    // optional .ErrorCode var_code = 2;
+    if (cached_has_bits & 0x00000001u) {
+      total_size += 1 +
+        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::EnumSize(this->_internal_var_code());
+    }
+
+    // optional .PROTOCOL id = 1 [default = ID_PKT_MAIL_LIST_RES];
+    if (cached_has_bits & 0x00000002u) {
+      total_size += 1 +
+        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::EnumSize(this->_internal_id());
+    }
+
+  }
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    return ::PROTOBUF_NAMESPACE_ID::internal::ComputeUnknownFieldsSize(
+        _internal_metadata_, total_size, &_cached_size_);
+  }
+  int cached_size = ::PROTOBUF_NAMESPACE_ID::internal::ToCachedSize(total_size);
+  SetCachedSize(cached_size);
+  return total_size;
+}
+
+void MAIL_LIST_RES::MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:MAIL_LIST_RES)
+  GOOGLE_DCHECK_NE(&from, this);
+  const MAIL_LIST_RES* source =
+      ::PROTOBUF_NAMESPACE_ID::DynamicCastToGenerated<MAIL_LIST_RES>(
+          &from);
+  if (source == nullptr) {
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:MAIL_LIST_RES)
+    ::PROTOBUF_NAMESPACE_ID::internal::ReflectionOps::Merge(from, this);
+  } else {
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:MAIL_LIST_RES)
+    MergeFrom(*source);
+  }
+}
+
+void MAIL_LIST_RES::MergeFrom(const MAIL_LIST_RES& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:MAIL_LIST_RES)
+  GOOGLE_DCHECK_NE(&from, this);
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  var_list_.MergeFrom(from.var_list_);
+  cached_has_bits = from._has_bits_[0];
+  if (cached_has_bits & 0x00000003u) {
+    if (cached_has_bits & 0x00000001u) {
+      var_code_ = from.var_code_;
+    }
+    if (cached_has_bits & 0x00000002u) {
+      id_ = from.id_;
+    }
+    _has_bits_[0] |= cached_has_bits;
+  }
+}
+
+void MAIL_LIST_RES::CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:MAIL_LIST_RES)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void MAIL_LIST_RES::CopyFrom(const MAIL_LIST_RES& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:MAIL_LIST_RES)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool MAIL_LIST_RES::IsInitialized() const {
+  return true;
+}
+
+void MAIL_LIST_RES::InternalSwap(MAIL_LIST_RES* other) {
+  using std::swap;
+  _internal_metadata_.Swap(&other->_internal_metadata_);
+  swap(_has_bits_[0], other->_has_bits_[0]);
+  var_list_.InternalSwap(&other->var_list_);
+  swap(var_code_, other->var_code_);
+  swap(id_, other->id_);
+}
+
+::PROTOBUF_NAMESPACE_ID::Metadata MAIL_LIST_RES::GetMetadata() const {
+  return GetMetadataStatic();
+}
+
+
 // @@protoc_insertion_point(namespace_scope)
 PROTOBUF_NAMESPACE_OPEN
 template<> PROTOBUF_NOINLINE ::VERSION_RES* Arena::CreateMaybeMessage< ::VERSION_RES >(Arena* arena) {
@@ -4994,6 +5313,9 @@ template<> PROTOBUF_NOINLINE ::PRAY_MESSAGE_REG_RES* Arena::CreateMaybeMessage< 
 }
 template<> PROTOBUF_NOINLINE ::QNA_RES* Arena::CreateMaybeMessage< ::QNA_RES >(Arena* arena) {
   return Arena::CreateInternal< ::QNA_RES >(arena);
+}
+template<> PROTOBUF_NOINLINE ::MAIL_LIST_RES* Arena::CreateMaybeMessage< ::MAIL_LIST_RES >(Arena* arena) {
+  return Arena::CreateInternal< ::MAIL_LIST_RES >(arena);
 }
 PROTOBUF_NAMESPACE_CLOSE
 

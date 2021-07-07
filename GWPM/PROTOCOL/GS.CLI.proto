@@ -118,3 +118,10 @@ message QNA_RES
     optional PROTOCOL   id                  = 1 [default = ID_PKT_QNA_RES ];
     optional  ErrorCode    var_code         = 2;
 }
+
+message MAIL_LIST_RES
+{
+    optional PROTOCOL   id                  = 1 [default = ID_PKT_MAIL_LIST_RES ];
+    optional  ErrorCode    var_code         = 2;
+    repeated MailInfo     var_list         = 3;
+}

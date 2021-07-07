@@ -29,14 +29,17 @@ public static partial class StructureReflection {
           "bnQYBCABKAUiQwoIUHJheUluZm8SEAoIdmFyX25hbWUYASABKAkSEwoLdmFy",
           "X21lc3NhZ2UYAiABKAkSEAoIdmFyX3RpbWUYAyABKAkiQwoKTm90aWZ5SW5m",
           "bxIOCgZ2YXJfaWQYASABKAMSEwoLdmFyX2NvbnRlbnQYAiABKAkSEAoIdmFy",
-          "X2RhdGUYAyABKAlCAkgB"));
+          "X2RhdGUYAyABKAkiZgoITWFpbEluZm8SDgoGdmFyX2lkGAEgASgDEhEKCXZh",
+          "cl90aXRsZRgCIAEoCRITCgt2YXJfY29udGVudBgDIAEoCRIQCgh2YXJfZGF0",
+          "ZRgEIAEoCRIQCgh2YXJfbmFtZRgFIAEoCUICSAE="));
     descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
         new pbr::FileDescriptor[] { },
         new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
           new pbr::GeneratedClrTypeInfo(typeof(global::RoomUserInfo), global::RoomUserInfo.Parser, new[]{ "VarName", "VarIndex", "PictureUri" }, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::RoomInfo2), global::RoomInfo2.Parser, new[]{ "VarId", "VarName", "VarCurrentCount", "VarMaxCount" }, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::PrayInfo), global::PrayInfo.Parser, new[]{ "VarName", "VarMessage", "VarTime" }, null, null, null, null),
-          new pbr::GeneratedClrTypeInfo(typeof(global::NotifyInfo), global::NotifyInfo.Parser, new[]{ "VarId", "VarContent", "VarDate" }, null, null, null, null)
+          new pbr::GeneratedClrTypeInfo(typeof(global::NotifyInfo), global::NotifyInfo.Parser, new[]{ "VarId", "VarContent", "VarDate" }, null, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::MailInfo), global::MailInfo.Parser, new[]{ "VarId", "VarTitle", "VarContent", "VarDate", "VarName" }, null, null, null, null)
         }));
   }
   #endregion
@@ -970,6 +973,310 @@ public sealed partial class NotifyInfo : pb::IMessage<NotifyInfo> {
         }
         case 26: {
           VarDate = input.ReadString();
+          break;
+        }
+      }
+    }
+  }
+
+}
+
+public sealed partial class MailInfo : pb::IMessage<MailInfo> {
+  private static readonly pb::MessageParser<MailInfo> _parser = new pb::MessageParser<MailInfo>(() => new MailInfo());
+  private pb::UnknownFieldSet _unknownFields;
+  private int _hasBits0;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public static pb::MessageParser<MailInfo> Parser { get { return _parser; } }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public static pbr::MessageDescriptor Descriptor {
+    get { return global::StructureReflection.Descriptor.MessageTypes[4]; }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  pbr::MessageDescriptor pb::IMessage.Descriptor {
+    get { return Descriptor; }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public MailInfo() {
+    OnConstruction();
+  }
+
+  partial void OnConstruction();
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public MailInfo(MailInfo other) : this() {
+    _hasBits0 = other._hasBits0;
+    varId_ = other.varId_;
+    varTitle_ = other.varTitle_;
+    varContent_ = other.varContent_;
+    varDate_ = other.varDate_;
+    varName_ = other.varName_;
+    _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public MailInfo Clone() {
+    return new MailInfo(this);
+  }
+
+  /// <summary>Field number for the "var_id" field.</summary>
+  public const int VarIdFieldNumber = 1;
+  private readonly static long VarIdDefaultValue = 0L;
+
+  private long varId_;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public long VarId {
+    get { if ((_hasBits0 & 1) != 0) { return varId_; } else { return VarIdDefaultValue; } }
+    set {
+      _hasBits0 |= 1;
+      varId_ = value;
+    }
+  }
+  /// <summary>Gets whether the "var_id" field is set</summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public bool HasVarId {
+    get { return (_hasBits0 & 1) != 0; }
+  }
+  /// <summary>Clears the value of the "var_id" field</summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void ClearVarId() {
+    _hasBits0 &= ~1;
+  }
+
+  /// <summary>Field number for the "var_title" field.</summary>
+  public const int VarTitleFieldNumber = 2;
+  private readonly static string VarTitleDefaultValue = "";
+
+  private string varTitle_;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public string VarTitle {
+    get { return varTitle_ ?? VarTitleDefaultValue; }
+    set {
+      varTitle_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+    }
+  }
+  /// <summary>Gets whether the "var_title" field is set</summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public bool HasVarTitle {
+    get { return varTitle_ != null; }
+  }
+  /// <summary>Clears the value of the "var_title" field</summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void ClearVarTitle() {
+    varTitle_ = null;
+  }
+
+  /// <summary>Field number for the "var_content" field.</summary>
+  public const int VarContentFieldNumber = 3;
+  private readonly static string VarContentDefaultValue = "";
+
+  private string varContent_;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public string VarContent {
+    get { return varContent_ ?? VarContentDefaultValue; }
+    set {
+      varContent_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+    }
+  }
+  /// <summary>Gets whether the "var_content" field is set</summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public bool HasVarContent {
+    get { return varContent_ != null; }
+  }
+  /// <summary>Clears the value of the "var_content" field</summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void ClearVarContent() {
+    varContent_ = null;
+  }
+
+  /// <summary>Field number for the "var_date" field.</summary>
+  public const int VarDateFieldNumber = 4;
+  private readonly static string VarDateDefaultValue = "";
+
+  private string varDate_;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public string VarDate {
+    get { return varDate_ ?? VarDateDefaultValue; }
+    set {
+      varDate_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+    }
+  }
+  /// <summary>Gets whether the "var_date" field is set</summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public bool HasVarDate {
+    get { return varDate_ != null; }
+  }
+  /// <summary>Clears the value of the "var_date" field</summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void ClearVarDate() {
+    varDate_ = null;
+  }
+
+  /// <summary>Field number for the "var_name" field.</summary>
+  public const int VarNameFieldNumber = 5;
+  private readonly static string VarNameDefaultValue = "";
+
+  private string varName_;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public string VarName {
+    get { return varName_ ?? VarNameDefaultValue; }
+    set {
+      varName_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+    }
+  }
+  /// <summary>Gets whether the "var_name" field is set</summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public bool HasVarName {
+    get { return varName_ != null; }
+  }
+  /// <summary>Clears the value of the "var_name" field</summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void ClearVarName() {
+    varName_ = null;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public override bool Equals(object other) {
+    return Equals(other as MailInfo);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public bool Equals(MailInfo other) {
+    if (ReferenceEquals(other, null)) {
+      return false;
+    }
+    if (ReferenceEquals(other, this)) {
+      return true;
+    }
+    if (VarId != other.VarId) return false;
+    if (VarTitle != other.VarTitle) return false;
+    if (VarContent != other.VarContent) return false;
+    if (VarDate != other.VarDate) return false;
+    if (VarName != other.VarName) return false;
+    return Equals(_unknownFields, other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public override int GetHashCode() {
+    int hash = 1;
+    if (HasVarId) hash ^= VarId.GetHashCode();
+    if (HasVarTitle) hash ^= VarTitle.GetHashCode();
+    if (HasVarContent) hash ^= VarContent.GetHashCode();
+    if (HasVarDate) hash ^= VarDate.GetHashCode();
+    if (HasVarName) hash ^= VarName.GetHashCode();
+    if (_unknownFields != null) {
+      hash ^= _unknownFields.GetHashCode();
+    }
+    return hash;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public override string ToString() {
+    return pb::JsonFormatter.ToDiagnosticString(this);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void WriteTo(pb::CodedOutputStream output) {
+    if (HasVarId) {
+      output.WriteRawTag(8);
+      output.WriteInt64(VarId);
+    }
+    if (HasVarTitle) {
+      output.WriteRawTag(18);
+      output.WriteString(VarTitle);
+    }
+    if (HasVarContent) {
+      output.WriteRawTag(26);
+      output.WriteString(VarContent);
+    }
+    if (HasVarDate) {
+      output.WriteRawTag(34);
+      output.WriteString(VarDate);
+    }
+    if (HasVarName) {
+      output.WriteRawTag(42);
+      output.WriteString(VarName);
+    }
+    if (_unknownFields != null) {
+      _unknownFields.WriteTo(output);
+    }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public int CalculateSize() {
+    int size = 0;
+    if (HasVarId) {
+      size += 1 + pb::CodedOutputStream.ComputeInt64Size(VarId);
+    }
+    if (HasVarTitle) {
+      size += 1 + pb::CodedOutputStream.ComputeStringSize(VarTitle);
+    }
+    if (HasVarContent) {
+      size += 1 + pb::CodedOutputStream.ComputeStringSize(VarContent);
+    }
+    if (HasVarDate) {
+      size += 1 + pb::CodedOutputStream.ComputeStringSize(VarDate);
+    }
+    if (HasVarName) {
+      size += 1 + pb::CodedOutputStream.ComputeStringSize(VarName);
+    }
+    if (_unknownFields != null) {
+      size += _unknownFields.CalculateSize();
+    }
+    return size;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void MergeFrom(MailInfo other) {
+    if (other == null) {
+      return;
+    }
+    if (other.HasVarId) {
+      VarId = other.VarId;
+    }
+    if (other.HasVarTitle) {
+      VarTitle = other.VarTitle;
+    }
+    if (other.HasVarContent) {
+      VarContent = other.VarContent;
+    }
+    if (other.HasVarDate) {
+      VarDate = other.VarDate;
+    }
+    if (other.HasVarName) {
+      VarName = other.VarName;
+    }
+    _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void MergeFrom(pb::CodedInputStream input) {
+    uint tag;
+    while ((tag = input.ReadTag()) != 0) {
+      switch(tag) {
+        default:
+          _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+          break;
+        case 8: {
+          VarId = input.ReadInt64();
+          break;
+        }
+        case 18: {
+          VarTitle = input.ReadString();
+          break;
+        }
+        case 26: {
+          VarContent = input.ReadString();
+          break;
+        }
+        case 34: {
+          VarDate = input.ReadString();
+          break;
+        }
+        case 42: {
+          VarName = input.ReadString();
           break;
         }
       }

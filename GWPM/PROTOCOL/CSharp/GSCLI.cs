@@ -63,7 +63,10 @@ public static partial class GSCLIReflection {
           "VF9QUkFZX01FU1NBR0VfUkVHX1JFUxIcCgh2YXJfY29kZRgCIAEoDjIKLkVy",
           "cm9yQ29kZRITCgt2YXJfbWVzc2FnZRgDIAEoCRIQCgh2YXJfdGltZRgEIAEo",
           "CSJOCgdRTkFfUkVTEiUKAmlkGAEgASgOMgkuUFJPVE9DT0w6DklEX1BLVF9R",
-          "TkFfUkVTEhwKCHZhcl9jb2RlGAIgASgOMgouRXJyb3JDb2RlQgJIAQ=="));
+          "TkFfUkVTEhwKCHZhcl9jb2RlGAIgASgOMgouRXJyb3JDb2RlIncKDU1BSUxf",
+          "TElTVF9SRVMSKwoCaWQYASABKA4yCS5QUk9UT0NPTDoUSURfUEtUX01BSUxf",
+          "TElTVF9SRVMSHAoIdmFyX2NvZGUYAiABKA4yCi5FcnJvckNvZGUSGwoIdmFy",
+          "X2xpc3QYAyADKAsyCS5NYWlsSW5mb0ICSAE="));
     descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
         new pbr::FileDescriptor[] { global::EnumReflection.Descriptor, global::StructureReflection.Descriptor, },
         new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
@@ -80,7 +83,8 @@ public static partial class GSCLIReflection {
           new pbr::GeneratedClrTypeInfo(typeof(global::AUDIO_MESSAGE_RES), global::AUDIO_MESSAGE_RES.Parser, new[]{ "Id", "VarCode", "VarMessage", "VarName" }, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::PRAY_MESSAGE_RES), global::PRAY_MESSAGE_RES.Parser, new[]{ "Id", "VarCode", "VarList" }, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::PRAY_MESSAGE_REG_RES), global::PRAY_MESSAGE_REG_RES.Parser, new[]{ "Id", "VarCode", "VarMessage", "VarTime" }, null, null, null, null),
-          new pbr::GeneratedClrTypeInfo(typeof(global::QNA_RES), global::QNA_RES.Parser, new[]{ "Id", "VarCode" }, null, null, null, null)
+          new pbr::GeneratedClrTypeInfo(typeof(global::QNA_RES), global::QNA_RES.Parser, new[]{ "Id", "VarCode" }, null, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::MAIL_LIST_RES), global::MAIL_LIST_RES.Parser, new[]{ "Id", "VarCode", "VarList" }, null, null, null, null)
         }));
   }
   #endregion
@@ -3499,6 +3503,211 @@ public sealed partial class QNA_RES : pb::IMessage<QNA_RES> {
         }
         case 16: {
           VarCode = (global::ErrorCode) input.ReadEnum();
+          break;
+        }
+      }
+    }
+  }
+
+}
+
+public sealed partial class MAIL_LIST_RES : pb::IMessage<MAIL_LIST_RES> {
+  private static readonly pb::MessageParser<MAIL_LIST_RES> _parser = new pb::MessageParser<MAIL_LIST_RES>(() => new MAIL_LIST_RES());
+  private pb::UnknownFieldSet _unknownFields;
+  private int _hasBits0;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public static pb::MessageParser<MAIL_LIST_RES> Parser { get { return _parser; } }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public static pbr::MessageDescriptor Descriptor {
+    get { return global::GSCLIReflection.Descriptor.MessageTypes[14]; }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  pbr::MessageDescriptor pb::IMessage.Descriptor {
+    get { return Descriptor; }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public MAIL_LIST_RES() {
+    OnConstruction();
+  }
+
+  partial void OnConstruction();
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public MAIL_LIST_RES(MAIL_LIST_RES other) : this() {
+    _hasBits0 = other._hasBits0;
+    id_ = other.id_;
+    varCode_ = other.varCode_;
+    varList_ = other.varList_.Clone();
+    _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public MAIL_LIST_RES Clone() {
+    return new MAIL_LIST_RES(this);
+  }
+
+  /// <summary>Field number for the "id" field.</summary>
+  public const int IdFieldNumber = 1;
+  private readonly static global::PROTOCOL IdDefaultValue = global::PROTOCOL.IdPktMailListRes;
+
+  private global::PROTOCOL id_;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public global::PROTOCOL Id {
+    get { if ((_hasBits0 & 1) != 0) { return id_; } else { return IdDefaultValue; } }
+    set {
+      _hasBits0 |= 1;
+      id_ = value;
+    }
+  }
+  /// <summary>Gets whether the "id" field is set</summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public bool HasId {
+    get { return (_hasBits0 & 1) != 0; }
+  }
+  /// <summary>Clears the value of the "id" field</summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void ClearId() {
+    _hasBits0 &= ~1;
+  }
+
+  /// <summary>Field number for the "var_code" field.</summary>
+  public const int VarCodeFieldNumber = 2;
+  private readonly static global::ErrorCode VarCodeDefaultValue = global::ErrorCode.Success;
+
+  private global::ErrorCode varCode_;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public global::ErrorCode VarCode {
+    get { if ((_hasBits0 & 2) != 0) { return varCode_; } else { return VarCodeDefaultValue; } }
+    set {
+      _hasBits0 |= 2;
+      varCode_ = value;
+    }
+  }
+  /// <summary>Gets whether the "var_code" field is set</summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public bool HasVarCode {
+    get { return (_hasBits0 & 2) != 0; }
+  }
+  /// <summary>Clears the value of the "var_code" field</summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void ClearVarCode() {
+    _hasBits0 &= ~2;
+  }
+
+  /// <summary>Field number for the "var_list" field.</summary>
+  public const int VarListFieldNumber = 3;
+  private static readonly pb::FieldCodec<global::MailInfo> _repeated_varList_codec
+      = pb::FieldCodec.ForMessage(26, global::MailInfo.Parser);
+  private readonly pbc::RepeatedField<global::MailInfo> varList_ = new pbc::RepeatedField<global::MailInfo>();
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public pbc::RepeatedField<global::MailInfo> VarList {
+    get { return varList_; }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public override bool Equals(object other) {
+    return Equals(other as MAIL_LIST_RES);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public bool Equals(MAIL_LIST_RES other) {
+    if (ReferenceEquals(other, null)) {
+      return false;
+    }
+    if (ReferenceEquals(other, this)) {
+      return true;
+    }
+    if (Id != other.Id) return false;
+    if (VarCode != other.VarCode) return false;
+    if(!varList_.Equals(other.varList_)) return false;
+    return Equals(_unknownFields, other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public override int GetHashCode() {
+    int hash = 1;
+    if (HasId) hash ^= Id.GetHashCode();
+    if (HasVarCode) hash ^= VarCode.GetHashCode();
+    hash ^= varList_.GetHashCode();
+    if (_unknownFields != null) {
+      hash ^= _unknownFields.GetHashCode();
+    }
+    return hash;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public override string ToString() {
+    return pb::JsonFormatter.ToDiagnosticString(this);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void WriteTo(pb::CodedOutputStream output) {
+    if (HasId) {
+      output.WriteRawTag(8);
+      output.WriteEnum((int) Id);
+    }
+    if (HasVarCode) {
+      output.WriteRawTag(16);
+      output.WriteEnum((int) VarCode);
+    }
+    varList_.WriteTo(output, _repeated_varList_codec);
+    if (_unknownFields != null) {
+      _unknownFields.WriteTo(output);
+    }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public int CalculateSize() {
+    int size = 0;
+    if (HasId) {
+      size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Id);
+    }
+    if (HasVarCode) {
+      size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) VarCode);
+    }
+    size += varList_.CalculateSize(_repeated_varList_codec);
+    if (_unknownFields != null) {
+      size += _unknownFields.CalculateSize();
+    }
+    return size;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void MergeFrom(MAIL_LIST_RES other) {
+    if (other == null) {
+      return;
+    }
+    if (other.HasId) {
+      Id = other.Id;
+    }
+    if (other.HasVarCode) {
+      VarCode = other.VarCode;
+    }
+    varList_.Add(other.varList_);
+    _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void MergeFrom(pb::CodedInputStream input) {
+    uint tag;
+    while ((tag = input.ReadTag()) != 0) {
+      switch(tag) {
+        default:
+          _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+          break;
+        case 8: {
+          Id = (global::PROTOCOL) input.ReadEnum();
+          break;
+        }
+        case 16: {
+          VarCode = (global::ErrorCode) input.ReadEnum();
+          break;
+        }
+        case 26: {
+          varList_.AddEntriesFrom(input, _repeated_varList_codec);
           break;
         }
       }

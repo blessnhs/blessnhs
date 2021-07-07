@@ -22,7 +22,7 @@ static constexpr ::PROTOBUF_NAMESPACE_ID::internal::MigrationSchema* schemas = n
 static constexpr ::PROTOBUF_NAMESPACE_ID::Message* const* file_default_instances = nullptr;
 
 const char descriptor_table_protodef_Enum_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
-  "\n\nEnum.proto*\246\006\n\010PROTOCOL\022\026\n\022ID_PKT_VERS"
+  "\n\nEnum.proto*\364\007\n\010PROTOCOL\022\026\n\022ID_PKT_VERS"
   "ION_REQ\020\000\022\026\n\022ID_PKT_VERSION_RES\020\001\022\024\n\020ID_"
   "PKT_LOGIN_REQ\020\002\022\024\n\020ID_PKT_LOGIN_RES\020\003\022\032\n"
   "\026ID_PKT_CREATE_ROOM_REQ\020\004\022\032\n\026ID_PKT_CREA"
@@ -42,10 +42,16 @@ const char descriptor_table_protodef_Enum_2eproto[] PROTOBUF_SECTION_VARIABLE(pr
   "_REQ\020\027\022\033\n\027ID_PKT_PRAY_MESSAGE_RES\020\030\022\037\n\033I"
   "D_PKT_PRAY_MESSAGE_REG_REQ\020\031\022\037\n\033ID_PKT_P"
   "RAY_MESSAGE_REG_RES\020\032\022\022\n\016ID_PKT_QNA_REQ\020"
-  "\033\022\022\n\016ID_PKT_QNA_RES\020\034*a\n\tErrorCode\022\013\n\007Su"
-  "ccess\020\000\022\021\n\rDataBaseError\020\001\022\022\n\016LoginDupli"
-  "cate\020\002\022\017\n\013SystemError\020\003\022\017\n\013LoginFailed\020\004"
-  "B\002H\001b\006proto3"
+  "\033\022\022\n\016ID_PKT_QNA_RES\020\034\022\030\n\024ID_PKT_MAIL_LIS"
+  "T_REQ\020\035\022\030\n\024ID_PKT_MAIL_LIST_RES\020\036\022\030\n\024ID_"
+  "PKT_MAIL_SEND_REQ\020\037\022\030\n\024ID_PKT_MAIL_SEND_"
+  "RES\020 \022\027\n\023ID_PKT_MAIL_DEL_REQ\020!\022\027\n\023ID_PKT"
+  "_MAIL_DEL_RES\020\"\022\030\n\024ID_PKT_MAIL_READ_REQ\020"
+  "#\022\030\n\024ID_PKT_MAIL_READ_RES\020$*{\n\tErrorCode"
+  "\022\013\n\007Success\020\000\022\021\n\rDataBaseError\020\001\022\022\n\016Logi"
+  "nDuplicate\020\002\022\017\n\013SystemError\020\003\022\017\n\013LoginFa"
+  "iled\020\004\022\030\n\024Duplicate_Enter_Room\020\005B\002H\001b\006pr"
+  "oto3"
   ;
 static const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable*const descriptor_table_Enum_2eproto_deps[1] = {
 };
@@ -54,7 +60,7 @@ static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_Enu
 static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_Enum_2eproto_once;
 static bool descriptor_table_Enum_2eproto_initialized = false;
 const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_Enum_2eproto = {
-  &descriptor_table_Enum_2eproto_initialized, descriptor_table_protodef_Enum_2eproto, "Enum.proto", 932,
+  &descriptor_table_Enum_2eproto_initialized, descriptor_table_protodef_Enum_2eproto, "Enum.proto", 1164,
   &descriptor_table_Enum_2eproto_once, descriptor_table_Enum_2eproto_sccs, descriptor_table_Enum_2eproto_deps, 0, 0,
   schemas, file_default_instances, TableStruct_Enum_2eproto::offsets,
   file_level_metadata_Enum_2eproto, 0, file_level_enum_descriptors_Enum_2eproto, file_level_service_descriptors_Enum_2eproto,
@@ -97,6 +103,14 @@ bool PROTOCOL_IsValid(int value) {
     case 26:
     case 27:
     case 28:
+    case 29:
+    case 30:
+    case 31:
+    case 32:
+    case 33:
+    case 34:
+    case 35:
+    case 36:
       return true;
     default:
       return false;
@@ -114,6 +128,7 @@ bool ErrorCode_IsValid(int value) {
     case 2:
     case 3:
     case 4:
+    case 5:
       return true;
     default:
       return false;

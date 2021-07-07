@@ -18,7 +18,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   package='',
   syntax='proto2',
   serialized_options=b'H\001',
-  serialized_pb=b'\n\x0fStructure.proto\"H\n\x0cRoomUserInfo\x12\x10\n\x08var_name\x18\x01 \x01(\t\x12\x11\n\tvar_index\x18\x02 \x01(\x03\x12\x13\n\x0bpicture_uri\x18\x03 \x01(\t\"_\n\tRoomInfo2\x12\x0e\n\x06var_id\x18\x01 \x01(\x05\x12\x10\n\x08var_name\x18\x02 \x01(\t\x12\x19\n\x11var_current_count\x18\x03 \x01(\x05\x12\x15\n\rvar_max_count\x18\x04 \x01(\x05\"C\n\x08PrayInfo\x12\x10\n\x08var_name\x18\x01 \x01(\t\x12\x13\n\x0bvar_message\x18\x02 \x01(\t\x12\x10\n\x08var_time\x18\x03 \x01(\t\"C\n\nNotifyInfo\x12\x0e\n\x06var_id\x18\x01 \x01(\x03\x12\x13\n\x0bvar_content\x18\x02 \x01(\t\x12\x10\n\x08var_date\x18\x03 \x01(\tB\x02H\x01'
+  serialized_pb=b'\n\x0fStructure.proto\"H\n\x0cRoomUserInfo\x12\x10\n\x08var_name\x18\x01 \x01(\t\x12\x11\n\tvar_index\x18\x02 \x01(\x03\x12\x13\n\x0bpicture_uri\x18\x03 \x01(\t\"_\n\tRoomInfo2\x12\x0e\n\x06var_id\x18\x01 \x01(\x05\x12\x10\n\x08var_name\x18\x02 \x01(\t\x12\x19\n\x11var_current_count\x18\x03 \x01(\x05\x12\x15\n\rvar_max_count\x18\x04 \x01(\x05\"C\n\x08PrayInfo\x12\x10\n\x08var_name\x18\x01 \x01(\t\x12\x13\n\x0bvar_message\x18\x02 \x01(\t\x12\x10\n\x08var_time\x18\x03 \x01(\t\"C\n\nNotifyInfo\x12\x0e\n\x06var_id\x18\x01 \x01(\x03\x12\x13\n\x0bvar_content\x18\x02 \x01(\t\x12\x10\n\x08var_date\x18\x03 \x01(\t\"f\n\x08MailInfo\x12\x0e\n\x06var_id\x18\x01 \x01(\x03\x12\x11\n\tvar_title\x18\x02 \x01(\t\x12\x13\n\x0bvar_content\x18\x03 \x01(\t\x12\x10\n\x08var_date\x18\x04 \x01(\t\x12\x10\n\x08var_name\x18\x05 \x01(\tB\x02H\x01'
 )
 
 
@@ -210,10 +210,70 @@ _NOTIFYINFO = _descriptor.Descriptor(
   serialized_end=326,
 )
 
+
+_MAILINFO = _descriptor.Descriptor(
+  name='MailInfo',
+  full_name='MailInfo',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='var_id', full_name='MailInfo.var_id', index=0,
+      number=1, type=3, cpp_type=2, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='var_title', full_name='MailInfo.var_title', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='var_content', full_name='MailInfo.var_content', index=2,
+      number=3, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='var_date', full_name='MailInfo.var_date', index=3,
+      number=4, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='var_name', full_name='MailInfo.var_name', index=4,
+      number=5, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto2',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=328,
+  serialized_end=430,
+)
+
 DESCRIPTOR.message_types_by_name['RoomUserInfo'] = _ROOMUSERINFO
 DESCRIPTOR.message_types_by_name['RoomInfo2'] = _ROOMINFO2
 DESCRIPTOR.message_types_by_name['PrayInfo'] = _PRAYINFO
 DESCRIPTOR.message_types_by_name['NotifyInfo'] = _NOTIFYINFO
+DESCRIPTOR.message_types_by_name['MailInfo'] = _MAILINFO
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 RoomUserInfo = _reflection.GeneratedProtocolMessageType('RoomUserInfo', (_message.Message,), {
@@ -243,6 +303,13 @@ NotifyInfo = _reflection.GeneratedProtocolMessageType('NotifyInfo', (_message.Me
   # @@protoc_insertion_point(class_scope:NotifyInfo)
   })
 _sym_db.RegisterMessage(NotifyInfo)
+
+MailInfo = _reflection.GeneratedProtocolMessageType('MailInfo', (_message.Message,), {
+  'DESCRIPTOR' : _MAILINFO,
+  '__module__' : 'Structure_pb2'
+  # @@protoc_insertion_point(class_scope:MailInfo)
+  })
+_sym_db.RegisterMessage(MailInfo)
 
 
 DESCRIPTOR._options = None
