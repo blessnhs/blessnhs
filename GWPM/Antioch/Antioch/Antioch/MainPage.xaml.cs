@@ -70,6 +70,8 @@ namespace Antioch
     {
         public LobbyView lobby = new LobbyView();
         public SettingView setting = new SettingView();
+        public AlarmView alarm = new AlarmView();
+        public MailView mail = new MailView();
         public MainPage()
         {
             InitializeComponent();
@@ -96,10 +98,7 @@ namespace Antioch
                     LoadView(lobby);
                 },
                 NumberOfTapsRequired = 1
-            });
-
-
- 
+            }); 
 
             ContentViews.Children.Add(lobby);
 
@@ -152,10 +151,14 @@ namespace Antioch
 
         void ico_mail_clicked(object sender, EventArgs e)
         {
+            ContentViews.Children.Clear();
+            ContentViews.Children.Add(mail);
         }
 
-        void ico_notify_clicked(object sender, EventArgs e)
+        void ico_alarm_clicked(object sender, EventArgs e)
         {
+            ContentViews.Children.Clear();
+            ContentViews.Children.Add(alarm);
         }
 
         void ico_login_clicked(object sender, EventArgs e)

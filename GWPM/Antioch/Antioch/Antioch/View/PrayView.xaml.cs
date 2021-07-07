@@ -36,8 +36,14 @@ namespace Antioch.View
 
         void Handle_ItemSelected(object sender, Xamarin.Forms.SelectedItemChangedEventArgs e)
         {
-         
+            var mainpage = (MainPage)Application.Current.MainPage;
+
+            var item = e.SelectedItem as PrayModelInfo;
+
+            if (item != null)
+                mainpage.LoadView(new PopupView(this, item.Content));
         }
+
         void Entry_TextChanged(object sender, TextChangedEventArgs e)
         {
            

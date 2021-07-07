@@ -3,6 +3,8 @@ using Android.OS;
 using Android.App;
 using Android.Content;
 using Android.Graphics;
+using System.Threading.Tasks;
+using System.Threading;
 
 namespace Antioch.Droid
 {
@@ -18,47 +20,77 @@ namespace Antioch.Droid
         static readonly string TAG = typeof(BackEndService).FullName;
 
         bool isStarted;
-   
+
         public override void OnCreate()
         {
             base.OnCreate();
+        }
+
+        private void NetworkProcess()
+        {
+            //network
+            {
+
+                //network thread
+                Task.Run(() =>
+                {
+                    while (true)
+                    {
+                        NetProcess.start();
+                        NetProcess.client.PacketRecvSync();
+                        Thread.Sleep(1);
+                    }
+                });
+
+                //network thread
+                Task.Run(() =>
+                {
+                    DateTime checktime = DateTime.Now;
+
+                    while (true)
+                    {
+                        NetProcess.Loop();
+                        Thread.Sleep(1);
+                    }
+                });
+
+            }
         }
 
         public override StartCommandResult OnStartCommand(Intent intent, StartCommandFlags flags, int startId)
         {
             if (isStarted)
             {
+                NetworkProcess();
+                {
+                    var manager = (NotificationManager)GetSystemService(NotificationService);
+
+                    if (Build.VERSION.SdkInt >= Android.OS.BuildVersionCodes.O)
                     {
-                        var manager = (NotificationManager)GetSystemService(NotificationService);
 
-                        if (Build.VERSION.SdkInt >= Android.OS.BuildVersionCodes.O)
-                        {
+                        var notification = new Notification.Builder(this, "DE")
+                            .SetContentTitle(DateTime.Now.ToString() + "알림!")
+                            .SetContentText("새로운 공지가 등록되었습니다.")
+                            .SetSmallIcon(Resource.Drawable.xamagonBlue)
+                            .SetLargeIcon(BitmapFactory.DecodeResource(Resources, Resource.Drawable.xamagonBlue))
+                            .SetSmallIcon(Resource.Drawable.xamagonBlue)
+                            .Build();
 
-                            var notification = new Notification.Builder(this, "DE")
-                                .SetContentTitle(DateTime.Now.ToString() + "알림!")
-                                .SetContentText("새로운 공지가 등록되었습니다.")
-                                .SetSmallIcon(Resource.Drawable.xamagonBlue)
-                                .SetLargeIcon(BitmapFactory.DecodeResource(Resources, Resource.Drawable.xamagonBlue))
-                                .SetSmallIcon(Resource.Drawable.xamagonBlue)
-                                .Build();
-
-                            manager.Notify(1, notification);
-                        }
-                        else
-                        {
-                            var notification = new Notification.Builder(this)
-                                                         .SetContentTitle(DateTime.Now.ToString() + "알림!")
-                                                         .SetContentText("새로운 공지가 등록되었습니다.")
-                                                         .SetSmallIcon(Resource.Drawable.xamagonBlue)
-                                                         .SetLargeIcon(BitmapFactory.DecodeResource(Resources, Resource.Drawable.xamagonBlue))
-                                                         .SetSmallIcon(Resource.Drawable.xamagonBlue)
-                                                         .Build();
-
-                            manager.Notify(1, notification);
-                        }
+                        manager.Notify(1, notification);
                     }
-                
+                    else
+                    {
+                        var notification = new Notification.Builder(this)
+                                                     .SetContentTitle(DateTime.Now.ToString() + "알림!")
+                                                     .SetContentText("새로운 공지가 등록되었습니다.")
+                                                     .SetSmallIcon(Resource.Drawable.xamagonBlue)
+                                                     .SetLargeIcon(BitmapFactory.DecodeResource(Resources, Resource.Drawable.xamagonBlue))
+                                                     .SetSmallIcon(Resource.Drawable.xamagonBlue)
+                                                     .Build();
 
+                        manager.Notify(1, notification);
+                    }
+                }
             }
             else
             {
@@ -66,8 +98,8 @@ namespace Antioch.Droid
                 isStarted = true;
             }
 
-            AlarmReceiver.AddAlarmEvent(10);
-            
+            AlarmReceiver.AddAlarmEvent(5);
+
             return StartCommandResult.Sticky;
         }
 
@@ -80,7 +112,7 @@ namespace Antioch.Droid
         }
         public override void OnTaskRemoved(Intent rootIntent)
         {
-          //  AlarmReceiver.AddAlarmEvent(10);
+            //  AlarmReceiver.AddAlarmEvent(10);
 
             base.OnTaskRemoved(rootIntent);
         }
@@ -93,7 +125,7 @@ namespace Antioch.Droid
 
             isStarted = false;
 
-          //  AlarmReceiver.AddAlarmEvent(10);
+            //  AlarmReceiver.AddAlarmEvent(10);
 
             base.OnDestroy();
         }

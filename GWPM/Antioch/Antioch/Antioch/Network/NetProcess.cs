@@ -40,10 +40,10 @@ namespace Antioch
         {
             if (check_time < DateTime.Now)
             {
-                // string ip = "211.212.37.238";//"192.168.0.9"
-                string ip = "192.168.0.9";
+                string ip = "211.212.37.238";//"192.168.0.9"
+                //string ip = "192.168.0.9";
 
-                client.StartClient(ip, 20000);
+                client.StartClient(ip, 23000);
 
                 check_time = DateTime.Now.AddSeconds(5);
             }
@@ -137,6 +137,34 @@ namespace Antioch
                                     RoomsPage roompage = mainpage.lobby.roompage as RoomsPage;
 
                                     roompage?.LoadRoomList(res);
+                                });
+                            }
+                            break;
+                        case (int)PROTOCOL.IdPktNoticeRes:
+                            {
+
+                                NOTICE_RES res = new NOTICE_RES();
+                                res = NOTICE_RES.Parser.ParseFrom(data.Data);
+
+                                Device.BeginInvokeOnMainThread(() =>
+                                {
+                                    var mainpage = (MainPage)Application.Current.MainPage;
+
+                                    mainpage.alarm.LoadList(res);
+                                });
+                            }
+                            break;
+                        case (int)PROTOCOL.IdPktMailListRes:
+                            {
+
+                                MAIL_LIST_RES res = new MAIL_LIST_RES();
+                                res = MAIL_LIST_RES.Parser.ParseFrom(data.Data);
+
+                                Device.BeginInvokeOnMainThread(() =>
+                                {
+                                    var mainpage = (MainPage)Application.Current.MainPage;
+
+                                    mainpage.mail.LoadList(res);
                                 });
                             }
                             break;
@@ -407,6 +435,37 @@ namespace Antioch
                 person.WriteTo(stream);
 
                 client.WritePacket((int)PROTOCOL.IdPktEnterRoomReq, stream.ToArray(), stream.ToArray().Length);
+            }
+        }
+
+        static public void SendAlaram()
+        {
+            if (client == null || client.socket == null || client.socket.Connected == false)
+                return;
+
+            NOTICE_REQ person = new NOTICE_REQ
+            {
+            };
+            using (MemoryStream stream = new MemoryStream())
+            {
+                person.WriteTo(stream);
+
+                client.WritePacket((int)PROTOCOL.IdPktNoticeReq, stream.ToArray(), stream.ToArray().Length);
+            }
+        }
+        static public void SendMailList()
+        {
+            if (client == null || client.socket == null || client.socket.Connected == false)
+                return;
+
+            MAIL_LIST_REQ person = new MAIL_LIST_REQ
+            {
+            };
+            using (MemoryStream stream = new MemoryStream())
+            {
+                person.WriteTo(stream);
+
+                client.WritePacket((int)PROTOCOL.IdPktMailListReq, stream.ToArray(), stream.ToArray().Length);
             }
         }
 

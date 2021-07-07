@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Antioch.View.Model;
+using Antioch.View.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,6 +17,41 @@ namespace Antioch.View
 		public MailView ()
 		{
 			InitializeComponent ();
+
+			BindingContext = new MailViewModel();
+
+			Device.StartTimer(new TimeSpan(0, 0, 10), () =>
+			{
+				// do something every 60 seconds
+				Device.BeginInvokeOnMainThread(() =>
+				{
+					NetProcess.SendMailList();
+
+				});
+				return true; // runs again, or false to stop
+			});
+		}
+
+		void Handle_ItemSelected(object sender, Xamarin.Forms.SelectedItemChangedEventArgs e)
+		{
+
+		}
+
+		public void LoadList(MAIL_LIST_RES res)
+		{
+			List<Mail> List = new List<Mail>();
+			foreach (var mail in res.VarList)
+			{
+				var info2 = new Mail();
+				info2.Name = mail.VarName;
+				info2.Content = mail.VarContent;
+				info2.Timestring = mail.VarDate;
+				info2.Title = mail.VarTitle;
+				List.Add(info2);
+			}
+
+			listView.ItemsSource = List;
+
 		}
 	}
 }

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Antioch.View.Model;
+using Antioch.View.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,6 +17,45 @@ namespace Antioch.View
 		public AlarmView ()
 		{
 			InitializeComponent ();
+
+			BindingContext = new AlarmViewModel();
+
+			
+
+			Device.StartTimer(new TimeSpan(0, 0, 10), () =>
+			{
+				// do something every 60 seconds
+				Device.BeginInvokeOnMainThread(() =>
+				{
+					NetProcess.SendAlaram();
+				});
+				return true; // runs again, or false to stop
+			});
+		}
+
+		void Handle_ItemSelected(object sender, Xamarin.Forms.SelectedItemChangedEventArgs e)
+		{
+			var mainpage = (MainPage)Application.Current.MainPage;
+
+			var item = e.SelectedItem as Alarm;
+			
+			if(item != null)
+				mainpage.LoadView(new PopupView(this, item.Content));
+		}
+
+		public void LoadList(NOTICE_RES res)
+		{
+			List<Alarm> prayList = new List<Alarm>();
+			foreach (var pray in res.VarList)
+			{
+				var info2 = new Alarm();
+				info2.Content = pray.VarContent;
+				info2.Timestring = pray.VarDate;
+				prayList.Add(info2);
+			}
+
+			listView.ItemsSource = prayList;
+
 		}
 	}
 }

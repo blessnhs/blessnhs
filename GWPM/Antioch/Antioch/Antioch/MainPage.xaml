@@ -41,7 +41,7 @@
                     HeightRequest="40"
                     FlexLayout.AlignSelf="Center"
                     FlexLayout.Grow="1"
-                    Clicked="ico_notify_clicked"
+                    Clicked="ico_alarm_clicked"
                     Aspect="AspectFit"> 
                     </ImageButton>
 

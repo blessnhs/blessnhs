@@ -69,7 +69,7 @@ namespace Antioch
 
             SendCommand = new Command(() =>
             {
-                NetProcess.SendRoomMessage(OutGoingText);
+                
             });
 
             ExitCommand = new Command(() =>

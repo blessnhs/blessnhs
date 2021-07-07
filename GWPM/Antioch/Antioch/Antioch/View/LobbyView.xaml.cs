@@ -100,9 +100,17 @@ namespace Antioch.View
 
         public void LoadView(ContentView view)
         {
-            var grid = this.Parent as Grid;
-            grid.Children.Clear();
-            grid.Children.Add(view);
+            if (this.Parent == null)
+            {
+                var mainpage = (MainPage)Application.Current.MainPage;
+                mainpage.LoadView(view);
+            }
+            else
+            {
+                var grid = this.Parent as Grid;
+                grid.Children.Clear();
+                grid.Children.Add(view);
+            }
         }
     }
 }
