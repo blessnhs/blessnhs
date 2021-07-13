@@ -39,6 +39,7 @@ message ENTER_ROOM_RES
     optional string var_name                   = 2;
     optional int32  var_room_id               = 3; 
     optional  ErrorCode    var_code         = 4;
+    repeated RoomMessage var_messages   = 5;	
 }
  
  message NEW_USER_IN_ROOM_NTY
@@ -55,6 +56,7 @@ message LEAVE_ROOM_RES
     optional string var_name                  = 2;
     optional  ErrorCode    var_code         = 3;
     optional  int64    var_index	             = 4;
+    optional int32 var_room_number	 = 5;
 }
 
 message ROOM_LIST_RES
@@ -70,9 +72,8 @@ message ROOM_PASS_THROUGH_RES
     optional PROTOCOL   id                        = 1 [default = ID_PKT_ROOM_PASS_THROUGH_RES    ];
     optional  ErrorCode    var_code         = 2;
 
-    required string     var_name    	     = 3;
-    required string     var_message    	     = 4;
-    required int32     var_message_int         = 5;
+    repeated RoomMessage var_messages   = 3;		
+    optional int32 var_room_number	       = 4;
 }
 
 message NOTICE_RES

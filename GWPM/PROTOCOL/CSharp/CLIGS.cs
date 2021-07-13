@@ -28,39 +28,42 @@ public static partial class CLIGSReflection {
           "T0w6EElEX1BLVF9MT0dJTl9SRVESDgoGdmFyX2lkGAIgAigJEg8KB3Zhcl9w",
           "d2QYAyACKAkiUgoPQ1JFQVRFX1JPT01fUkVREi0KAmlkGAEgASgOMgkuUFJP",
           "VE9DT0w6FklEX1BLVF9DUkVBVEVfUk9PTV9SRVESEAoIdmFyX25hbWUYAiAC",
-          "KAkiTgoORU5URVJfUk9PTV9SRVESLAoCaWQYASABKA4yCS5QUk9UT0NPTDoV",
-          "SURfUEtUX0VOVEVSX1JPT01fUkVREg4KBnZhcl9pZBgCIAIoBSJOCg5MRUFW",
-          "RV9ST09NX1JFURIsCgJpZBgBIAEoDjIJLlBST1RPQ09MOhVJRF9QS1RfTEVB",
-          "VkVfUk9PTV9SRVESDgoGdmFyX2lkGAIgAigFIjwKDVJPT01fTElTVF9SRVES",
-          "KwoCaWQYASABKA4yCS5QUk9UT0NPTDoUSURfUEtUX1JPT01fTElTVF9SRVEi",
-          "egoVUk9PTV9QQVNTX1RIUk9VR0hfUkVREjMKAmlkGAEgASgOMgkuUFJPVE9D",
-          "T0w6HElEX1BLVF9ST09NX1BBU1NfVEhST1VHSF9SRVESEwoLdmFyX21lc3Nh",
-          "Z2UYAiACKAkSFwoPdmFyX21lc3NhZ2VfaW50GAMgAigFIjYKCk5PVElDRV9S",
-          "RVESKAoCaWQYASABKA4yCS5QUk9UT0NPTDoRSURfUEtUX05PVElDRV9SRVEi",
-          "WwoSQklUTUFQX01FU1NBR0VfUkVREjAKAmlkGAEgASgOMgkuUFJPVE9DT0w6",
-          "GUlEX1BLVF9CSVRNQVBfTUVTU0FHRV9SRVESEwoLdmFyX21lc3NhZ2UYAiAD",
-          "KAwiWQoRQVVESU9fTUVTU0FHRV9SRVESLwoCaWQYASABKA4yCS5QUk9UT0NP",
-          "TDoYSURfUEtUX0FVRElPX01FU1NBR0VfUkVREhMKC3Zhcl9tZXNzYWdlGAIg",
-          "AygMIkIKEFBSQVlfTUVTU0FHRV9SRVESLgoCaWQYASABKA4yCS5QUk9UT0NP",
-          "TDoXSURfUEtUX1BSQVlfTUVTU0FHRV9SRVEiXwoUUFJBWV9NRVNTQUdFX1JF",
-          "R19SRVESMgoCaWQYASABKA4yCS5QUk9UT0NPTDobSURfUEtUX1BSQVlfTUVT",
-          "U0FHRV9SRUdfUkVREhMKC3Zhcl9tZXNzYWdlGAIgASgJIkUKB1FOQV9SRVES",
-          "JQoCaWQYASABKA4yCS5QUk9UT0NPTDoOSURfUEtUX1FOQV9SRVESEwoLdmFy",
-          "X21lc3NhZ2UYAiABKAkiPAoNTUFJTF9MSVNUX1JFURIrCgJpZBgBIAEoDjIJ",
-          "LlBST1RPQ09MOhRJRF9QS1RfTUFJTF9MSVNUX1JFUUICSAE="));
+          "KAkiVwoORU5URVJfUk9PTV9SRVESLAoCaWQYASABKA4yCS5QUk9UT0NPTDoV",
+          "SURfUEtUX0VOVEVSX1JPT01fUkVREhcKD3Zhcl9yb29tX251bWJlchgCIAIo",
+          "BSJnCg5MRUFWRV9ST09NX1JFURIsCgJpZBgBIAEoDjIJLlBST1RPQ09MOhVJ",
+          "RF9QS1RfTEVBVkVfUk9PTV9SRVESDgoGdmFyX2lkGAIgAigFEhcKD3Zhcl9y",
+          "b29tX251bWJlchgDIAIoBSI8Cg1ST09NX0xJU1RfUkVREisKAmlkGAEgASgO",
+          "MgkuUFJPVE9DT0w6FElEX1BLVF9ST09NX0xJU1RfUkVRIqUBChVST09NX1BB",
+          "U1NfVEhST1VHSF9SRVESMwoCaWQYASABKA4yCS5QUk9UT0NPTDocSURfUEtU",
+          "X1JPT01fUEFTU19USFJPVUdIX1JFURITCgt2YXJfbWVzc2FnZRgCIAIoCRIX",
+          "Cg92YXJfbWVzc2FnZV9pbnQYAyACKAUSFwoPdmFyX3Jvb21fbnVtYmVyGAQg",
+          "AigFEhAKCHZhcl90aW1lGAUgAigJIjYKCk5PVElDRV9SRVESKAoCaWQYASAB",
+          "KA4yCS5QUk9UT0NPTDoRSURfUEtUX05PVElDRV9SRVEidAoSQklUTUFQX01F",
+          "U1NBR0VfUkVREjAKAmlkGAEgASgOMgkuUFJPVE9DT0w6GUlEX1BLVF9CSVRN",
+          "QVBfTUVTU0FHRV9SRVESEwoLdmFyX21lc3NhZ2UYAiADKAwSFwoPdmFyX3Jv",
+          "b21fbnVtYmVyGAMgAigFInIKEUFVRElPX01FU1NBR0VfUkVREi8KAmlkGAEg",
+          "ASgOMgkuUFJPVE9DT0w6GElEX1BLVF9BVURJT19NRVNTQUdFX1JFURITCgt2",
+          "YXJfbWVzc2FnZRgCIAMoDBIXCg92YXJfcm9vbV9udW1iZXIYAyACKAUiQgoQ",
+          "UFJBWV9NRVNTQUdFX1JFURIuCgJpZBgBIAEoDjIJLlBST1RPQ09MOhdJRF9Q",
+          "S1RfUFJBWV9NRVNTQUdFX1JFUSJfChRQUkFZX01FU1NBR0VfUkVHX1JFURIy",
+          "CgJpZBgBIAEoDjIJLlBST1RPQ09MOhtJRF9QS1RfUFJBWV9NRVNTQUdFX1JF",
+          "R19SRVESEwoLdmFyX21lc3NhZ2UYAiABKAkiRQoHUU5BX1JFURIlCgJpZBgB",
+          "IAEoDjIJLlBST1RPQ09MOg5JRF9QS1RfUU5BX1JFURITCgt2YXJfbWVzc2Fn",
+          "ZRgCIAEoCSI8Cg1NQUlMX0xJU1RfUkVREisKAmlkGAEgASgOMgkuUFJPVE9D",
+          "T0w6FElEX1BLVF9NQUlMX0xJU1RfUkVRQgJIAQ=="));
     descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
         new pbr::FileDescriptor[] { global::EnumReflection.Descriptor, global::StructureReflection.Descriptor, },
         new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
           new pbr::GeneratedClrTypeInfo(typeof(global::VERSION_REQ), global::VERSION_REQ.Parser, new[]{ "Id" }, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::LOGIN_REQ), global::LOGIN_REQ.Parser, new[]{ "Id", "VarId", "VarPwd" }, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::CREATE_ROOM_REQ), global::CREATE_ROOM_REQ.Parser, new[]{ "Id", "VarName" }, null, null, null, null),
-          new pbr::GeneratedClrTypeInfo(typeof(global::ENTER_ROOM_REQ), global::ENTER_ROOM_REQ.Parser, new[]{ "Id", "VarId" }, null, null, null, null),
-          new pbr::GeneratedClrTypeInfo(typeof(global::LEAVE_ROOM_REQ), global::LEAVE_ROOM_REQ.Parser, new[]{ "Id", "VarId" }, null, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::ENTER_ROOM_REQ), global::ENTER_ROOM_REQ.Parser, new[]{ "Id", "VarRoomNumber" }, null, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::LEAVE_ROOM_REQ), global::LEAVE_ROOM_REQ.Parser, new[]{ "Id", "VarId", "VarRoomNumber" }, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::ROOM_LIST_REQ), global::ROOM_LIST_REQ.Parser, new[]{ "Id" }, null, null, null, null),
-          new pbr::GeneratedClrTypeInfo(typeof(global::ROOM_PASS_THROUGH_REQ), global::ROOM_PASS_THROUGH_REQ.Parser, new[]{ "Id", "VarMessage", "VarMessageInt" }, null, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::ROOM_PASS_THROUGH_REQ), global::ROOM_PASS_THROUGH_REQ.Parser, new[]{ "Id", "VarMessage", "VarMessageInt", "VarRoomNumber", "VarTime" }, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::NOTICE_REQ), global::NOTICE_REQ.Parser, new[]{ "Id" }, null, null, null, null),
-          new pbr::GeneratedClrTypeInfo(typeof(global::BITMAP_MESSAGE_REQ), global::BITMAP_MESSAGE_REQ.Parser, new[]{ "Id", "VarMessage" }, null, null, null, null),
-          new pbr::GeneratedClrTypeInfo(typeof(global::AUDIO_MESSAGE_REQ), global::AUDIO_MESSAGE_REQ.Parser, new[]{ "Id", "VarMessage" }, null, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::BITMAP_MESSAGE_REQ), global::BITMAP_MESSAGE_REQ.Parser, new[]{ "Id", "VarMessage", "VarRoomNumber" }, null, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::AUDIO_MESSAGE_REQ), global::AUDIO_MESSAGE_REQ.Parser, new[]{ "Id", "VarMessage", "VarRoomNumber" }, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::PRAY_MESSAGE_REQ), global::PRAY_MESSAGE_REQ.Parser, new[]{ "Id" }, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::PRAY_MESSAGE_REG_REQ), global::PRAY_MESSAGE_REG_REQ.Parser, new[]{ "Id", "VarMessage" }, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::QNA_REQ), global::QNA_REQ.Parser, new[]{ "Id", "VarMessage" }, null, null, null, null),
@@ -651,7 +654,7 @@ public sealed partial class ENTER_ROOM_REQ : pb::IMessage<ENTER_ROOM_REQ> {
   public ENTER_ROOM_REQ(ENTER_ROOM_REQ other) : this() {
     _hasBits0 = other._hasBits0;
     id_ = other.id_;
-    varId_ = other.varId_;
+    varRoomNumber_ = other.varRoomNumber_;
     _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
   }
 
@@ -684,27 +687,27 @@ public sealed partial class ENTER_ROOM_REQ : pb::IMessage<ENTER_ROOM_REQ> {
     _hasBits0 &= ~1;
   }
 
-  /// <summary>Field number for the "var_id" field.</summary>
-  public const int VarIdFieldNumber = 2;
-  private readonly static int VarIdDefaultValue = 0;
+  /// <summary>Field number for the "var_room_number" field.</summary>
+  public const int VarRoomNumberFieldNumber = 2;
+  private readonly static int VarRoomNumberDefaultValue = 0;
 
-  private int varId_;
+  private int varRoomNumber_;
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  public int VarId {
-    get { if ((_hasBits0 & 2) != 0) { return varId_; } else { return VarIdDefaultValue; } }
+  public int VarRoomNumber {
+    get { if ((_hasBits0 & 2) != 0) { return varRoomNumber_; } else { return VarRoomNumberDefaultValue; } }
     set {
       _hasBits0 |= 2;
-      varId_ = value;
+      varRoomNumber_ = value;
     }
   }
-  /// <summary>Gets whether the "var_id" field is set</summary>
+  /// <summary>Gets whether the "var_room_number" field is set</summary>
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  public bool HasVarId {
+  public bool HasVarRoomNumber {
     get { return (_hasBits0 & 2) != 0; }
   }
-  /// <summary>Clears the value of the "var_id" field</summary>
+  /// <summary>Clears the value of the "var_room_number" field</summary>
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  public void ClearVarId() {
+  public void ClearVarRoomNumber() {
     _hasBits0 &= ~2;
   }
 
@@ -722,7 +725,7 @@ public sealed partial class ENTER_ROOM_REQ : pb::IMessage<ENTER_ROOM_REQ> {
       return true;
     }
     if (Id != other.Id) return false;
-    if (VarId != other.VarId) return false;
+    if (VarRoomNumber != other.VarRoomNumber) return false;
     return Equals(_unknownFields, other._unknownFields);
   }
 
@@ -730,7 +733,7 @@ public sealed partial class ENTER_ROOM_REQ : pb::IMessage<ENTER_ROOM_REQ> {
   public override int GetHashCode() {
     int hash = 1;
     if (HasId) hash ^= Id.GetHashCode();
-    if (HasVarId) hash ^= VarId.GetHashCode();
+    if (HasVarRoomNumber) hash ^= VarRoomNumber.GetHashCode();
     if (_unknownFields != null) {
       hash ^= _unknownFields.GetHashCode();
     }
@@ -748,9 +751,9 @@ public sealed partial class ENTER_ROOM_REQ : pb::IMessage<ENTER_ROOM_REQ> {
       output.WriteRawTag(8);
       output.WriteEnum((int) Id);
     }
-    if (HasVarId) {
+    if (HasVarRoomNumber) {
       output.WriteRawTag(16);
-      output.WriteInt32(VarId);
+      output.WriteInt32(VarRoomNumber);
     }
     if (_unknownFields != null) {
       _unknownFields.WriteTo(output);
@@ -763,8 +766,8 @@ public sealed partial class ENTER_ROOM_REQ : pb::IMessage<ENTER_ROOM_REQ> {
     if (HasId) {
       size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Id);
     }
-    if (HasVarId) {
-      size += 1 + pb::CodedOutputStream.ComputeInt32Size(VarId);
+    if (HasVarRoomNumber) {
+      size += 1 + pb::CodedOutputStream.ComputeInt32Size(VarRoomNumber);
     }
     if (_unknownFields != null) {
       size += _unknownFields.CalculateSize();
@@ -780,8 +783,8 @@ public sealed partial class ENTER_ROOM_REQ : pb::IMessage<ENTER_ROOM_REQ> {
     if (other.HasId) {
       Id = other.Id;
     }
-    if (other.HasVarId) {
-      VarId = other.VarId;
+    if (other.HasVarRoomNumber) {
+      VarRoomNumber = other.VarRoomNumber;
     }
     _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
   }
@@ -799,7 +802,7 @@ public sealed partial class ENTER_ROOM_REQ : pb::IMessage<ENTER_ROOM_REQ> {
           break;
         }
         case 16: {
-          VarId = input.ReadInt32();
+          VarRoomNumber = input.ReadInt32();
           break;
         }
       }
@@ -837,6 +840,7 @@ public sealed partial class LEAVE_ROOM_REQ : pb::IMessage<LEAVE_ROOM_REQ> {
     _hasBits0 = other._hasBits0;
     id_ = other.id_;
     varId_ = other.varId_;
+    varRoomNumber_ = other.varRoomNumber_;
     _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
   }
 
@@ -893,6 +897,30 @@ public sealed partial class LEAVE_ROOM_REQ : pb::IMessage<LEAVE_ROOM_REQ> {
     _hasBits0 &= ~2;
   }
 
+  /// <summary>Field number for the "var_room_number" field.</summary>
+  public const int VarRoomNumberFieldNumber = 3;
+  private readonly static int VarRoomNumberDefaultValue = 0;
+
+  private int varRoomNumber_;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public int VarRoomNumber {
+    get { if ((_hasBits0 & 4) != 0) { return varRoomNumber_; } else { return VarRoomNumberDefaultValue; } }
+    set {
+      _hasBits0 |= 4;
+      varRoomNumber_ = value;
+    }
+  }
+  /// <summary>Gets whether the "var_room_number" field is set</summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public bool HasVarRoomNumber {
+    get { return (_hasBits0 & 4) != 0; }
+  }
+  /// <summary>Clears the value of the "var_room_number" field</summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void ClearVarRoomNumber() {
+    _hasBits0 &= ~4;
+  }
+
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public override bool Equals(object other) {
     return Equals(other as LEAVE_ROOM_REQ);
@@ -908,6 +936,7 @@ public sealed partial class LEAVE_ROOM_REQ : pb::IMessage<LEAVE_ROOM_REQ> {
     }
     if (Id != other.Id) return false;
     if (VarId != other.VarId) return false;
+    if (VarRoomNumber != other.VarRoomNumber) return false;
     return Equals(_unknownFields, other._unknownFields);
   }
 
@@ -916,6 +945,7 @@ public sealed partial class LEAVE_ROOM_REQ : pb::IMessage<LEAVE_ROOM_REQ> {
     int hash = 1;
     if (HasId) hash ^= Id.GetHashCode();
     if (HasVarId) hash ^= VarId.GetHashCode();
+    if (HasVarRoomNumber) hash ^= VarRoomNumber.GetHashCode();
     if (_unknownFields != null) {
       hash ^= _unknownFields.GetHashCode();
     }
@@ -937,6 +967,10 @@ public sealed partial class LEAVE_ROOM_REQ : pb::IMessage<LEAVE_ROOM_REQ> {
       output.WriteRawTag(16);
       output.WriteInt32(VarId);
     }
+    if (HasVarRoomNumber) {
+      output.WriteRawTag(24);
+      output.WriteInt32(VarRoomNumber);
+    }
     if (_unknownFields != null) {
       _unknownFields.WriteTo(output);
     }
@@ -950,6 +984,9 @@ public sealed partial class LEAVE_ROOM_REQ : pb::IMessage<LEAVE_ROOM_REQ> {
     }
     if (HasVarId) {
       size += 1 + pb::CodedOutputStream.ComputeInt32Size(VarId);
+    }
+    if (HasVarRoomNumber) {
+      size += 1 + pb::CodedOutputStream.ComputeInt32Size(VarRoomNumber);
     }
     if (_unknownFields != null) {
       size += _unknownFields.CalculateSize();
@@ -968,6 +1005,9 @@ public sealed partial class LEAVE_ROOM_REQ : pb::IMessage<LEAVE_ROOM_REQ> {
     if (other.HasVarId) {
       VarId = other.VarId;
     }
+    if (other.HasVarRoomNumber) {
+      VarRoomNumber = other.VarRoomNumber;
+    }
     _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
   }
 
@@ -985,6 +1025,10 @@ public sealed partial class LEAVE_ROOM_REQ : pb::IMessage<LEAVE_ROOM_REQ> {
         }
         case 16: {
           VarId = input.ReadInt32();
+          break;
+        }
+        case 24: {
+          VarRoomNumber = input.ReadInt32();
           break;
         }
       }
@@ -1167,6 +1211,8 @@ public sealed partial class ROOM_PASS_THROUGH_REQ : pb::IMessage<ROOM_PASS_THROU
     id_ = other.id_;
     varMessage_ = other.varMessage_;
     varMessageInt_ = other.varMessageInt_;
+    varRoomNumber_ = other.varRoomNumber_;
+    varTime_ = other.varTime_;
     _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
   }
 
@@ -1246,6 +1292,53 @@ public sealed partial class ROOM_PASS_THROUGH_REQ : pb::IMessage<ROOM_PASS_THROU
     _hasBits0 &= ~2;
   }
 
+  /// <summary>Field number for the "var_room_number" field.</summary>
+  public const int VarRoomNumberFieldNumber = 4;
+  private readonly static int VarRoomNumberDefaultValue = 0;
+
+  private int varRoomNumber_;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public int VarRoomNumber {
+    get { if ((_hasBits0 & 4) != 0) { return varRoomNumber_; } else { return VarRoomNumberDefaultValue; } }
+    set {
+      _hasBits0 |= 4;
+      varRoomNumber_ = value;
+    }
+  }
+  /// <summary>Gets whether the "var_room_number" field is set</summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public bool HasVarRoomNumber {
+    get { return (_hasBits0 & 4) != 0; }
+  }
+  /// <summary>Clears the value of the "var_room_number" field</summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void ClearVarRoomNumber() {
+    _hasBits0 &= ~4;
+  }
+
+  /// <summary>Field number for the "var_time" field.</summary>
+  public const int VarTimeFieldNumber = 5;
+  private readonly static string VarTimeDefaultValue = "";
+
+  private string varTime_;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public string VarTime {
+    get { return varTime_ ?? VarTimeDefaultValue; }
+    set {
+      varTime_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+    }
+  }
+  /// <summary>Gets whether the "var_time" field is set</summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public bool HasVarTime {
+    get { return varTime_ != null; }
+  }
+  /// <summary>Clears the value of the "var_time" field</summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void ClearVarTime() {
+    varTime_ = null;
+  }
+
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public override bool Equals(object other) {
     return Equals(other as ROOM_PASS_THROUGH_REQ);
@@ -1262,6 +1355,8 @@ public sealed partial class ROOM_PASS_THROUGH_REQ : pb::IMessage<ROOM_PASS_THROU
     if (Id != other.Id) return false;
     if (VarMessage != other.VarMessage) return false;
     if (VarMessageInt != other.VarMessageInt) return false;
+    if (VarRoomNumber != other.VarRoomNumber) return false;
+    if (VarTime != other.VarTime) return false;
     return Equals(_unknownFields, other._unknownFields);
   }
 
@@ -1271,6 +1366,8 @@ public sealed partial class ROOM_PASS_THROUGH_REQ : pb::IMessage<ROOM_PASS_THROU
     if (HasId) hash ^= Id.GetHashCode();
     if (HasVarMessage) hash ^= VarMessage.GetHashCode();
     if (HasVarMessageInt) hash ^= VarMessageInt.GetHashCode();
+    if (HasVarRoomNumber) hash ^= VarRoomNumber.GetHashCode();
+    if (HasVarTime) hash ^= VarTime.GetHashCode();
     if (_unknownFields != null) {
       hash ^= _unknownFields.GetHashCode();
     }
@@ -1296,6 +1393,14 @@ public sealed partial class ROOM_PASS_THROUGH_REQ : pb::IMessage<ROOM_PASS_THROU
       output.WriteRawTag(24);
       output.WriteInt32(VarMessageInt);
     }
+    if (HasVarRoomNumber) {
+      output.WriteRawTag(32);
+      output.WriteInt32(VarRoomNumber);
+    }
+    if (HasVarTime) {
+      output.WriteRawTag(42);
+      output.WriteString(VarTime);
+    }
     if (_unknownFields != null) {
       _unknownFields.WriteTo(output);
     }
@@ -1312,6 +1417,12 @@ public sealed partial class ROOM_PASS_THROUGH_REQ : pb::IMessage<ROOM_PASS_THROU
     }
     if (HasVarMessageInt) {
       size += 1 + pb::CodedOutputStream.ComputeInt32Size(VarMessageInt);
+    }
+    if (HasVarRoomNumber) {
+      size += 1 + pb::CodedOutputStream.ComputeInt32Size(VarRoomNumber);
+    }
+    if (HasVarTime) {
+      size += 1 + pb::CodedOutputStream.ComputeStringSize(VarTime);
     }
     if (_unknownFields != null) {
       size += _unknownFields.CalculateSize();
@@ -1332,6 +1443,12 @@ public sealed partial class ROOM_PASS_THROUGH_REQ : pb::IMessage<ROOM_PASS_THROU
     }
     if (other.HasVarMessageInt) {
       VarMessageInt = other.VarMessageInt;
+    }
+    if (other.HasVarRoomNumber) {
+      VarRoomNumber = other.VarRoomNumber;
+    }
+    if (other.HasVarTime) {
+      VarTime = other.VarTime;
     }
     _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
   }
@@ -1354,6 +1471,14 @@ public sealed partial class ROOM_PASS_THROUGH_REQ : pb::IMessage<ROOM_PASS_THROU
         }
         case 24: {
           VarMessageInt = input.ReadInt32();
+          break;
+        }
+        case 32: {
+          VarRoomNumber = input.ReadInt32();
+          break;
+        }
+        case 42: {
+          VarTime = input.ReadString();
           break;
         }
       }
@@ -1535,6 +1660,7 @@ public sealed partial class BITMAP_MESSAGE_REQ : pb::IMessage<BITMAP_MESSAGE_REQ
     _hasBits0 = other._hasBits0;
     id_ = other.id_;
     varMessage_ = other.varMessage_.Clone();
+    varRoomNumber_ = other.varRoomNumber_;
     _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
   }
 
@@ -1577,6 +1703,30 @@ public sealed partial class BITMAP_MESSAGE_REQ : pb::IMessage<BITMAP_MESSAGE_REQ
     get { return varMessage_; }
   }
 
+  /// <summary>Field number for the "var_room_number" field.</summary>
+  public const int VarRoomNumberFieldNumber = 3;
+  private readonly static int VarRoomNumberDefaultValue = 0;
+
+  private int varRoomNumber_;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public int VarRoomNumber {
+    get { if ((_hasBits0 & 2) != 0) { return varRoomNumber_; } else { return VarRoomNumberDefaultValue; } }
+    set {
+      _hasBits0 |= 2;
+      varRoomNumber_ = value;
+    }
+  }
+  /// <summary>Gets whether the "var_room_number" field is set</summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public bool HasVarRoomNumber {
+    get { return (_hasBits0 & 2) != 0; }
+  }
+  /// <summary>Clears the value of the "var_room_number" field</summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void ClearVarRoomNumber() {
+    _hasBits0 &= ~2;
+  }
+
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public override bool Equals(object other) {
     return Equals(other as BITMAP_MESSAGE_REQ);
@@ -1592,6 +1742,7 @@ public sealed partial class BITMAP_MESSAGE_REQ : pb::IMessage<BITMAP_MESSAGE_REQ
     }
     if (Id != other.Id) return false;
     if(!varMessage_.Equals(other.varMessage_)) return false;
+    if (VarRoomNumber != other.VarRoomNumber) return false;
     return Equals(_unknownFields, other._unknownFields);
   }
 
@@ -1600,6 +1751,7 @@ public sealed partial class BITMAP_MESSAGE_REQ : pb::IMessage<BITMAP_MESSAGE_REQ
     int hash = 1;
     if (HasId) hash ^= Id.GetHashCode();
     hash ^= varMessage_.GetHashCode();
+    if (HasVarRoomNumber) hash ^= VarRoomNumber.GetHashCode();
     if (_unknownFields != null) {
       hash ^= _unknownFields.GetHashCode();
     }
@@ -1618,6 +1770,10 @@ public sealed partial class BITMAP_MESSAGE_REQ : pb::IMessage<BITMAP_MESSAGE_REQ
       output.WriteEnum((int) Id);
     }
     varMessage_.WriteTo(output, _repeated_varMessage_codec);
+    if (HasVarRoomNumber) {
+      output.WriteRawTag(24);
+      output.WriteInt32(VarRoomNumber);
+    }
     if (_unknownFields != null) {
       _unknownFields.WriteTo(output);
     }
@@ -1630,6 +1786,9 @@ public sealed partial class BITMAP_MESSAGE_REQ : pb::IMessage<BITMAP_MESSAGE_REQ
       size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Id);
     }
     size += varMessage_.CalculateSize(_repeated_varMessage_codec);
+    if (HasVarRoomNumber) {
+      size += 1 + pb::CodedOutputStream.ComputeInt32Size(VarRoomNumber);
+    }
     if (_unknownFields != null) {
       size += _unknownFields.CalculateSize();
     }
@@ -1645,6 +1804,9 @@ public sealed partial class BITMAP_MESSAGE_REQ : pb::IMessage<BITMAP_MESSAGE_REQ
       Id = other.Id;
     }
     varMessage_.Add(other.varMessage_);
+    if (other.HasVarRoomNumber) {
+      VarRoomNumber = other.VarRoomNumber;
+    }
     _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
   }
 
@@ -1662,6 +1824,10 @@ public sealed partial class BITMAP_MESSAGE_REQ : pb::IMessage<BITMAP_MESSAGE_REQ
         }
         case 18: {
           varMessage_.AddEntriesFrom(input, _repeated_varMessage_codec);
+          break;
+        }
+        case 24: {
+          VarRoomNumber = input.ReadInt32();
           break;
         }
       }
@@ -1699,6 +1865,7 @@ public sealed partial class AUDIO_MESSAGE_REQ : pb::IMessage<AUDIO_MESSAGE_REQ> 
     _hasBits0 = other._hasBits0;
     id_ = other.id_;
     varMessage_ = other.varMessage_.Clone();
+    varRoomNumber_ = other.varRoomNumber_;
     _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
   }
 
@@ -1741,6 +1908,30 @@ public sealed partial class AUDIO_MESSAGE_REQ : pb::IMessage<AUDIO_MESSAGE_REQ> 
     get { return varMessage_; }
   }
 
+  /// <summary>Field number for the "var_room_number" field.</summary>
+  public const int VarRoomNumberFieldNumber = 3;
+  private readonly static int VarRoomNumberDefaultValue = 0;
+
+  private int varRoomNumber_;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public int VarRoomNumber {
+    get { if ((_hasBits0 & 2) != 0) { return varRoomNumber_; } else { return VarRoomNumberDefaultValue; } }
+    set {
+      _hasBits0 |= 2;
+      varRoomNumber_ = value;
+    }
+  }
+  /// <summary>Gets whether the "var_room_number" field is set</summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public bool HasVarRoomNumber {
+    get { return (_hasBits0 & 2) != 0; }
+  }
+  /// <summary>Clears the value of the "var_room_number" field</summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void ClearVarRoomNumber() {
+    _hasBits0 &= ~2;
+  }
+
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public override bool Equals(object other) {
     return Equals(other as AUDIO_MESSAGE_REQ);
@@ -1756,6 +1947,7 @@ public sealed partial class AUDIO_MESSAGE_REQ : pb::IMessage<AUDIO_MESSAGE_REQ> 
     }
     if (Id != other.Id) return false;
     if(!varMessage_.Equals(other.varMessage_)) return false;
+    if (VarRoomNumber != other.VarRoomNumber) return false;
     return Equals(_unknownFields, other._unknownFields);
   }
 
@@ -1764,6 +1956,7 @@ public sealed partial class AUDIO_MESSAGE_REQ : pb::IMessage<AUDIO_MESSAGE_REQ> 
     int hash = 1;
     if (HasId) hash ^= Id.GetHashCode();
     hash ^= varMessage_.GetHashCode();
+    if (HasVarRoomNumber) hash ^= VarRoomNumber.GetHashCode();
     if (_unknownFields != null) {
       hash ^= _unknownFields.GetHashCode();
     }
@@ -1782,6 +1975,10 @@ public sealed partial class AUDIO_MESSAGE_REQ : pb::IMessage<AUDIO_MESSAGE_REQ> 
       output.WriteEnum((int) Id);
     }
     varMessage_.WriteTo(output, _repeated_varMessage_codec);
+    if (HasVarRoomNumber) {
+      output.WriteRawTag(24);
+      output.WriteInt32(VarRoomNumber);
+    }
     if (_unknownFields != null) {
       _unknownFields.WriteTo(output);
     }
@@ -1794,6 +1991,9 @@ public sealed partial class AUDIO_MESSAGE_REQ : pb::IMessage<AUDIO_MESSAGE_REQ> 
       size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Id);
     }
     size += varMessage_.CalculateSize(_repeated_varMessage_codec);
+    if (HasVarRoomNumber) {
+      size += 1 + pb::CodedOutputStream.ComputeInt32Size(VarRoomNumber);
+    }
     if (_unknownFields != null) {
       size += _unknownFields.CalculateSize();
     }
@@ -1809,6 +2009,9 @@ public sealed partial class AUDIO_MESSAGE_REQ : pb::IMessage<AUDIO_MESSAGE_REQ> 
       Id = other.Id;
     }
     varMessage_.Add(other.varMessage_);
+    if (other.HasVarRoomNumber) {
+      VarRoomNumber = other.VarRoomNumber;
+    }
     _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
   }
 
@@ -1826,6 +2029,10 @@ public sealed partial class AUDIO_MESSAGE_REQ : pb::IMessage<AUDIO_MESSAGE_REQ> 
         }
         case 18: {
           varMessage_.AddEntriesFrom(input, _repeated_varMessage_codec);
+          break;
+        }
+        case 24: {
+          VarRoomNumber = input.ReadInt32();
           break;
         }
       }

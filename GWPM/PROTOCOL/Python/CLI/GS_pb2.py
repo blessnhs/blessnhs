@@ -20,7 +20,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   package='',
   syntax='proto2',
   serialized_options=b'H\001',
-  serialized_pb=b'\n\x0c\x43LI.GS.proto\x1a\nEnum.proto\x1a\x0fStructure.proto\"8\n\x0bVERSION_REQ\x12)\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x12ID_PKT_VERSION_REQ\"U\n\tLOGIN_REQ\x12\'\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x10ID_PKT_LOGIN_REQ\x12\x0e\n\x06var_id\x18\x02 \x02(\t\x12\x0f\n\x07var_pwd\x18\x03 \x02(\t\"R\n\x0f\x43REATE_ROOM_REQ\x12-\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x16ID_PKT_CREATE_ROOM_REQ\x12\x10\n\x08var_name\x18\x02 \x02(\t\"N\n\x0e\x45NTER_ROOM_REQ\x12,\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x15ID_PKT_ENTER_ROOM_REQ\x12\x0e\n\x06var_id\x18\x02 \x02(\x05\"N\n\x0eLEAVE_ROOM_REQ\x12,\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x15ID_PKT_LEAVE_ROOM_REQ\x12\x0e\n\x06var_id\x18\x02 \x02(\x05\"<\n\rROOM_LIST_REQ\x12+\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x14ID_PKT_ROOM_LIST_REQ\"z\n\x15ROOM_PASS_THROUGH_REQ\x12\x33\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x1cID_PKT_ROOM_PASS_THROUGH_REQ\x12\x13\n\x0bvar_message\x18\x02 \x02(\t\x12\x17\n\x0fvar_message_int\x18\x03 \x02(\x05\"6\n\nNOTICE_REQ\x12(\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x11ID_PKT_NOTICE_REQ\"[\n\x12\x42ITMAP_MESSAGE_REQ\x12\x30\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x19ID_PKT_BITMAP_MESSAGE_REQ\x12\x13\n\x0bvar_message\x18\x02 \x03(\x0c\"Y\n\x11\x41UDIO_MESSAGE_REQ\x12/\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x18ID_PKT_AUDIO_MESSAGE_REQ\x12\x13\n\x0bvar_message\x18\x02 \x03(\x0c\"B\n\x10PRAY_MESSAGE_REQ\x12.\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x17ID_PKT_PRAY_MESSAGE_REQ\"_\n\x14PRAY_MESSAGE_REG_REQ\x12\x32\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x1bID_PKT_PRAY_MESSAGE_REG_REQ\x12\x13\n\x0bvar_message\x18\x02 \x01(\t\"E\n\x07QNA_REQ\x12%\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x0eID_PKT_QNA_REQ\x12\x13\n\x0bvar_message\x18\x02 \x01(\t\"<\n\rMAIL_LIST_REQ\x12+\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x14ID_PKT_MAIL_LIST_REQB\x02H\x01'
+  serialized_pb=b'\n\x0c\x43LI.GS.proto\x1a\nEnum.proto\x1a\x0fStructure.proto\"8\n\x0bVERSION_REQ\x12)\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x12ID_PKT_VERSION_REQ\"U\n\tLOGIN_REQ\x12\'\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x10ID_PKT_LOGIN_REQ\x12\x0e\n\x06var_id\x18\x02 \x02(\t\x12\x0f\n\x07var_pwd\x18\x03 \x02(\t\"R\n\x0f\x43REATE_ROOM_REQ\x12-\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x16ID_PKT_CREATE_ROOM_REQ\x12\x10\n\x08var_name\x18\x02 \x02(\t\"W\n\x0e\x45NTER_ROOM_REQ\x12,\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x15ID_PKT_ENTER_ROOM_REQ\x12\x17\n\x0fvar_room_number\x18\x02 \x02(\x05\"g\n\x0eLEAVE_ROOM_REQ\x12,\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x15ID_PKT_LEAVE_ROOM_REQ\x12\x0e\n\x06var_id\x18\x02 \x02(\x05\x12\x17\n\x0fvar_room_number\x18\x03 \x02(\x05\"<\n\rROOM_LIST_REQ\x12+\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x14ID_PKT_ROOM_LIST_REQ\"\xa5\x01\n\x15ROOM_PASS_THROUGH_REQ\x12\x33\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x1cID_PKT_ROOM_PASS_THROUGH_REQ\x12\x13\n\x0bvar_message\x18\x02 \x02(\t\x12\x17\n\x0fvar_message_int\x18\x03 \x02(\x05\x12\x17\n\x0fvar_room_number\x18\x04 \x02(\x05\x12\x10\n\x08var_time\x18\x05 \x02(\t\"6\n\nNOTICE_REQ\x12(\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x11ID_PKT_NOTICE_REQ\"t\n\x12\x42ITMAP_MESSAGE_REQ\x12\x30\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x19ID_PKT_BITMAP_MESSAGE_REQ\x12\x13\n\x0bvar_message\x18\x02 \x03(\x0c\x12\x17\n\x0fvar_room_number\x18\x03 \x02(\x05\"r\n\x11\x41UDIO_MESSAGE_REQ\x12/\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x18ID_PKT_AUDIO_MESSAGE_REQ\x12\x13\n\x0bvar_message\x18\x02 \x03(\x0c\x12\x17\n\x0fvar_room_number\x18\x03 \x02(\x05\"B\n\x10PRAY_MESSAGE_REQ\x12.\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x17ID_PKT_PRAY_MESSAGE_REQ\"_\n\x14PRAY_MESSAGE_REG_REQ\x12\x32\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x1bID_PKT_PRAY_MESSAGE_REG_REQ\x12\x13\n\x0bvar_message\x18\x02 \x01(\t\"E\n\x07QNA_REQ\x12%\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x0eID_PKT_QNA_REQ\x12\x13\n\x0bvar_message\x18\x02 \x01(\t\"<\n\rMAIL_LIST_REQ\x12+\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x14ID_PKT_MAIL_LIST_REQB\x02H\x01'
   ,
   dependencies=[Enum__pb2.DESCRIPTOR,Structure__pb2.DESCRIPTOR,])
 
@@ -156,7 +156,7 @@ _ENTER_ROOM_REQ = _descriptor.Descriptor(
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='var_id', full_name='ENTER_ROOM_REQ.var_id', index=1,
+      name='var_room_number', full_name='ENTER_ROOM_REQ.var_room_number', index=1,
       number=2, type=5, cpp_type=1, label=2,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
@@ -175,7 +175,7 @@ _ENTER_ROOM_REQ = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=274,
-  serialized_end=352,
+  serialized_end=361,
 )
 
 
@@ -200,6 +200,13 @@ _LEAVE_ROOM_REQ = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='var_room_number', full_name='LEAVE_ROOM_REQ.var_room_number', index=2,
+      number=3, type=5, cpp_type=1, label=2,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
   ],
   extensions=[
   ],
@@ -212,8 +219,8 @@ _LEAVE_ROOM_REQ = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=354,
-  serialized_end=432,
+  serialized_start=363,
+  serialized_end=466,
 )
 
 
@@ -243,8 +250,8 @@ _ROOM_LIST_REQ = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=434,
-  serialized_end=494,
+  serialized_start=468,
+  serialized_end=528,
 )
 
 
@@ -276,6 +283,20 @@ _ROOM_PASS_THROUGH_REQ = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='var_room_number', full_name='ROOM_PASS_THROUGH_REQ.var_room_number', index=3,
+      number=4, type=5, cpp_type=1, label=2,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='var_time', full_name='ROOM_PASS_THROUGH_REQ.var_time', index=4,
+      number=5, type=9, cpp_type=9, label=2,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
   ],
   extensions=[
   ],
@@ -288,8 +309,8 @@ _ROOM_PASS_THROUGH_REQ = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=496,
-  serialized_end=618,
+  serialized_start=531,
+  serialized_end=696,
 )
 
 
@@ -319,8 +340,8 @@ _NOTICE_REQ = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=620,
-  serialized_end=674,
+  serialized_start=698,
+  serialized_end=752,
 )
 
 
@@ -345,6 +366,13 @@ _BITMAP_MESSAGE_REQ = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='var_room_number', full_name='BITMAP_MESSAGE_REQ.var_room_number', index=2,
+      number=3, type=5, cpp_type=1, label=2,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
   ],
   extensions=[
   ],
@@ -357,8 +385,8 @@ _BITMAP_MESSAGE_REQ = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=676,
-  serialized_end=767,
+  serialized_start=754,
+  serialized_end=870,
 )
 
 
@@ -383,6 +411,13 @@ _AUDIO_MESSAGE_REQ = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='var_room_number', full_name='AUDIO_MESSAGE_REQ.var_room_number', index=2,
+      number=3, type=5, cpp_type=1, label=2,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
   ],
   extensions=[
   ],
@@ -395,8 +430,8 @@ _AUDIO_MESSAGE_REQ = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=769,
-  serialized_end=858,
+  serialized_start=872,
+  serialized_end=986,
 )
 
 
@@ -426,8 +461,8 @@ _PRAY_MESSAGE_REQ = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=860,
-  serialized_end=926,
+  serialized_start=988,
+  serialized_end=1054,
 )
 
 
@@ -464,8 +499,8 @@ _PRAY_MESSAGE_REG_REQ = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=928,
-  serialized_end=1023,
+  serialized_start=1056,
+  serialized_end=1151,
 )
 
 
@@ -502,8 +537,8 @@ _QNA_REQ = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1025,
-  serialized_end=1094,
+  serialized_start=1153,
+  serialized_end=1222,
 )
 
 
@@ -533,8 +568,8 @@ _MAIL_LIST_REQ = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1096,
-  serialized_end=1156,
+  serialized_start=1224,
+  serialized_end=1284,
 )
 
 _VERSION_REQ.fields_by_name['id'].enum_type = Enum__pb2._PROTOCOL

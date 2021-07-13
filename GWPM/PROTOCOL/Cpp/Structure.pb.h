@@ -47,7 +47,7 @@ struct TableStruct_Structure_2eproto {
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::PROTOBUF_NAMESPACE_ID::internal::AuxillaryParseTableField aux[]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
-  static const ::PROTOBUF_NAMESPACE_ID::internal::ParseTable schema[5]
+  static const ::PROTOBUF_NAMESPACE_ID::internal::ParseTable schema[6]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::PROTOBUF_NAMESPACE_ID::internal::FieldMetadata field_metadata[];
   static const ::PROTOBUF_NAMESPACE_ID::internal::SerializationTable serialization_table[];
@@ -66,6 +66,9 @@ extern PrayInfoDefaultTypeInternal _PrayInfo_default_instance_;
 class RoomInfo2;
 class RoomInfo2DefaultTypeInternal;
 extern RoomInfo2DefaultTypeInternal _RoomInfo2_default_instance_;
+class RoomMessage;
+class RoomMessageDefaultTypeInternal;
+extern RoomMessageDefaultTypeInternal _RoomMessage_default_instance_;
 class RoomUserInfo;
 class RoomUserInfoDefaultTypeInternal;
 extern RoomUserInfoDefaultTypeInternal _RoomUserInfo_default_instance_;
@@ -74,6 +77,7 @@ template<> ::MailInfo* Arena::CreateMaybeMessage<::MailInfo>(Arena*);
 template<> ::NotifyInfo* Arena::CreateMaybeMessage<::NotifyInfo>(Arena*);
 template<> ::PrayInfo* Arena::CreateMaybeMessage<::PrayInfo>(Arena*);
 template<> ::RoomInfo2* Arena::CreateMaybeMessage<::RoomInfo2>(Arena*);
+template<> ::RoomMessage* Arena::CreateMaybeMessage<::RoomMessage>(Arena*);
 template<> ::RoomUserInfo* Arena::CreateMaybeMessage<::RoomUserInfo>(Arena*);
 PROTOBUF_NAMESPACE_CLOSE
 
@@ -195,6 +199,7 @@ class RoomUserInfo :
     kVarNameFieldNumber = 1,
     kPictureUriFieldNumber = 3,
     kVarIndexFieldNumber = 2,
+    kVarRoomNumberFieldNumber = 4,
   };
   // optional string var_name = 1;
   bool has_var_name() const;
@@ -249,6 +254,19 @@ class RoomUserInfo :
   void _internal_set_var_index(::PROTOBUF_NAMESPACE_ID::int64 value);
   public:
 
+  // optional int32 var_room_number = 4;
+  bool has_var_room_number() const;
+  private:
+  bool _internal_has_var_room_number() const;
+  public:
+  void clear_var_room_number();
+  ::PROTOBUF_NAMESPACE_ID::int32 var_room_number() const;
+  void set_var_room_number(::PROTOBUF_NAMESPACE_ID::int32 value);
+  private:
+  ::PROTOBUF_NAMESPACE_ID::int32 _internal_var_room_number() const;
+  void _internal_set_var_room_number(::PROTOBUF_NAMESPACE_ID::int32 value);
+  public:
+
   // @@protoc_insertion_point(class_scope:RoomUserInfo)
  private:
   class _Internal;
@@ -259,6 +277,7 @@ class RoomUserInfo :
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr var_name_;
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr picture_uri_;
   ::PROTOBUF_NAMESPACE_ID::int64 var_index_;
+  ::PROTOBUF_NAMESPACE_ID::int32 var_room_number_;
   friend struct ::TableStruct_Structure_2eproto;
 };
 // -------------------------------------------------------------------
@@ -1056,6 +1075,212 @@ class MailInfo :
   ::PROTOBUF_NAMESPACE_ID::int64 var_id_;
   friend struct ::TableStruct_Structure_2eproto;
 };
+// -------------------------------------------------------------------
+
+class RoomMessage :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:RoomMessage) */ {
+ public:
+  RoomMessage();
+  virtual ~RoomMessage();
+
+  RoomMessage(const RoomMessage& from);
+  RoomMessage(RoomMessage&& from) noexcept
+    : RoomMessage() {
+    *this = ::std::move(from);
+  }
+
+  inline RoomMessage& operator=(const RoomMessage& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline RoomMessage& operator=(RoomMessage&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  inline const ::PROTOBUF_NAMESPACE_ID::UnknownFieldSet& unknown_fields() const {
+    return _internal_metadata_.unknown_fields();
+  }
+  inline ::PROTOBUF_NAMESPACE_ID::UnknownFieldSet* mutable_unknown_fields() {
+    return _internal_metadata_.mutable_unknown_fields();
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return GetMetadataStatic().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return GetMetadataStatic().reflection;
+  }
+  static const RoomMessage& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const RoomMessage* internal_default_instance() {
+    return reinterpret_cast<const RoomMessage*>(
+               &_RoomMessage_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    5;
+
+  friend void swap(RoomMessage& a, RoomMessage& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(RoomMessage* other) {
+    if (other == this) return;
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline RoomMessage* New() const final {
+    return CreateMaybeMessage<RoomMessage>(nullptr);
+  }
+
+  RoomMessage* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
+    return CreateMaybeMessage<RoomMessage>(arena);
+  }
+  void CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void CopyFrom(const RoomMessage& from);
+  void MergeFrom(const RoomMessage& from);
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  ::PROTOBUF_NAMESPACE_ID::uint8* _InternalSerialize(
+      ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  inline void SharedCtor();
+  inline void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(RoomMessage* other);
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "RoomMessage";
+  }
+  private:
+  inline ::PROTOBUF_NAMESPACE_ID::Arena* GetArenaNoVirtual() const {
+    return nullptr;
+  }
+  inline void* MaybeArenaPtr() const {
+    return nullptr;
+  }
+  public:
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+  private:
+  static ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadataStatic() {
+    ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&::descriptor_table_Structure_2eproto);
+    return ::descriptor_table_Structure_2eproto.file_level_metadata[kIndexInFileMessages];
+  }
+
+  public:
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kVarNameFieldNumber = 1,
+    kVarMessageFieldNumber = 2,
+    kVarTimeFieldNumber = 4,
+    kVarMessageIntFieldNumber = 3,
+  };
+  // optional string var_name = 1;
+  bool has_var_name() const;
+  private:
+  bool _internal_has_var_name() const;
+  public:
+  void clear_var_name();
+  const std::string& var_name() const;
+  void set_var_name(const std::string& value);
+  void set_var_name(std::string&& value);
+  void set_var_name(const char* value);
+  void set_var_name(const char* value, size_t size);
+  std::string* mutable_var_name();
+  std::string* release_var_name();
+  void set_allocated_var_name(std::string* var_name);
+  private:
+  const std::string& _internal_var_name() const;
+  void _internal_set_var_name(const std::string& value);
+  std::string* _internal_mutable_var_name();
+  public:
+
+  // optional string var_message = 2;
+  bool has_var_message() const;
+  private:
+  bool _internal_has_var_message() const;
+  public:
+  void clear_var_message();
+  const std::string& var_message() const;
+  void set_var_message(const std::string& value);
+  void set_var_message(std::string&& value);
+  void set_var_message(const char* value);
+  void set_var_message(const char* value, size_t size);
+  std::string* mutable_var_message();
+  std::string* release_var_message();
+  void set_allocated_var_message(std::string* var_message);
+  private:
+  const std::string& _internal_var_message() const;
+  void _internal_set_var_message(const std::string& value);
+  std::string* _internal_mutable_var_message();
+  public:
+
+  // optional string var_time = 4;
+  bool has_var_time() const;
+  private:
+  bool _internal_has_var_time() const;
+  public:
+  void clear_var_time();
+  const std::string& var_time() const;
+  void set_var_time(const std::string& value);
+  void set_var_time(std::string&& value);
+  void set_var_time(const char* value);
+  void set_var_time(const char* value, size_t size);
+  std::string* mutable_var_time();
+  std::string* release_var_time();
+  void set_allocated_var_time(std::string* var_time);
+  private:
+  const std::string& _internal_var_time() const;
+  void _internal_set_var_time(const std::string& value);
+  std::string* _internal_mutable_var_time();
+  public:
+
+  // optional int32 var_message_int = 3;
+  bool has_var_message_int() const;
+  private:
+  bool _internal_has_var_message_int() const;
+  public:
+  void clear_var_message_int();
+  ::PROTOBUF_NAMESPACE_ID::int32 var_message_int() const;
+  void set_var_message_int(::PROTOBUF_NAMESPACE_ID::int32 value);
+  private:
+  ::PROTOBUF_NAMESPACE_ID::int32 _internal_var_message_int() const;
+  void _internal_set_var_message_int(::PROTOBUF_NAMESPACE_ID::int32 value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:RoomMessage)
+ private:
+  class _Internal;
+
+  ::PROTOBUF_NAMESPACE_ID::internal::InternalMetadataWithArena _internal_metadata_;
+  ::PROTOBUF_NAMESPACE_ID::internal::HasBits<1> _has_bits_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr var_name_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr var_message_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr var_time_;
+  ::PROTOBUF_NAMESPACE_ID::int32 var_message_int_;
+  friend struct ::TableStruct_Structure_2eproto;
+};
 // ===================================================================
 
 
@@ -1235,6 +1460,34 @@ inline void RoomUserInfo::set_allocated_picture_uri(std::string* picture_uri) {
   }
   picture_uri_.SetAllocatedNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), picture_uri);
   // @@protoc_insertion_point(field_set_allocated:RoomUserInfo.picture_uri)
+}
+
+// optional int32 var_room_number = 4;
+inline bool RoomUserInfo::_internal_has_var_room_number() const {
+  bool value = (_has_bits_[0] & 0x00000008u) != 0;
+  return value;
+}
+inline bool RoomUserInfo::has_var_room_number() const {
+  return _internal_has_var_room_number();
+}
+inline void RoomUserInfo::clear_var_room_number() {
+  var_room_number_ = 0;
+  _has_bits_[0] &= ~0x00000008u;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 RoomUserInfo::_internal_var_room_number() const {
+  return var_room_number_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 RoomUserInfo::var_room_number() const {
+  // @@protoc_insertion_point(field_get:RoomUserInfo.var_room_number)
+  return _internal_var_room_number();
+}
+inline void RoomUserInfo::_internal_set_var_room_number(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  _has_bits_[0] |= 0x00000008u;
+  var_room_number_ = value;
+}
+inline void RoomUserInfo::set_var_room_number(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  _internal_set_var_room_number(value);
+  // @@protoc_insertion_point(field_set:RoomUserInfo.var_room_number)
 }
 
 // -------------------------------------------------------------------
@@ -2103,9 +2356,256 @@ inline void MailInfo::set_allocated_var_name(std::string* var_name) {
   // @@protoc_insertion_point(field_set_allocated:MailInfo.var_name)
 }
 
+// -------------------------------------------------------------------
+
+// RoomMessage
+
+// optional string var_name = 1;
+inline bool RoomMessage::_internal_has_var_name() const {
+  bool value = (_has_bits_[0] & 0x00000001u) != 0;
+  return value;
+}
+inline bool RoomMessage::has_var_name() const {
+  return _internal_has_var_name();
+}
+inline void RoomMessage::clear_var_name() {
+  var_name_.ClearToEmptyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline const std::string& RoomMessage::var_name() const {
+  // @@protoc_insertion_point(field_get:RoomMessage.var_name)
+  return _internal_var_name();
+}
+inline void RoomMessage::set_var_name(const std::string& value) {
+  _internal_set_var_name(value);
+  // @@protoc_insertion_point(field_set:RoomMessage.var_name)
+}
+inline std::string* RoomMessage::mutable_var_name() {
+  // @@protoc_insertion_point(field_mutable:RoomMessage.var_name)
+  return _internal_mutable_var_name();
+}
+inline const std::string& RoomMessage::_internal_var_name() const {
+  return var_name_.GetNoArena();
+}
+inline void RoomMessage::_internal_set_var_name(const std::string& value) {
+  _has_bits_[0] |= 0x00000001u;
+  var_name_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), value);
+}
+inline void RoomMessage::set_var_name(std::string&& value) {
+  _has_bits_[0] |= 0x00000001u;
+  var_name_.SetNoArena(
+    &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:RoomMessage.var_name)
+}
+inline void RoomMessage::set_var_name(const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  _has_bits_[0] |= 0x00000001u;
+  var_name_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:RoomMessage.var_name)
+}
+inline void RoomMessage::set_var_name(const char* value, size_t size) {
+  _has_bits_[0] |= 0x00000001u;
+  var_name_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:RoomMessage.var_name)
+}
+inline std::string* RoomMessage::_internal_mutable_var_name() {
+  _has_bits_[0] |= 0x00000001u;
+  return var_name_.MutableNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline std::string* RoomMessage::release_var_name() {
+  // @@protoc_insertion_point(field_release:RoomMessage.var_name)
+  if (!_internal_has_var_name()) {
+    return nullptr;
+  }
+  _has_bits_[0] &= ~0x00000001u;
+  return var_name_.ReleaseNonDefaultNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline void RoomMessage::set_allocated_var_name(std::string* var_name) {
+  if (var_name != nullptr) {
+    _has_bits_[0] |= 0x00000001u;
+  } else {
+    _has_bits_[0] &= ~0x00000001u;
+  }
+  var_name_.SetAllocatedNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), var_name);
+  // @@protoc_insertion_point(field_set_allocated:RoomMessage.var_name)
+}
+
+// optional string var_message = 2;
+inline bool RoomMessage::_internal_has_var_message() const {
+  bool value = (_has_bits_[0] & 0x00000002u) != 0;
+  return value;
+}
+inline bool RoomMessage::has_var_message() const {
+  return _internal_has_var_message();
+}
+inline void RoomMessage::clear_var_message() {
+  var_message_.ClearToEmptyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline const std::string& RoomMessage::var_message() const {
+  // @@protoc_insertion_point(field_get:RoomMessage.var_message)
+  return _internal_var_message();
+}
+inline void RoomMessage::set_var_message(const std::string& value) {
+  _internal_set_var_message(value);
+  // @@protoc_insertion_point(field_set:RoomMessage.var_message)
+}
+inline std::string* RoomMessage::mutable_var_message() {
+  // @@protoc_insertion_point(field_mutable:RoomMessage.var_message)
+  return _internal_mutable_var_message();
+}
+inline const std::string& RoomMessage::_internal_var_message() const {
+  return var_message_.GetNoArena();
+}
+inline void RoomMessage::_internal_set_var_message(const std::string& value) {
+  _has_bits_[0] |= 0x00000002u;
+  var_message_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), value);
+}
+inline void RoomMessage::set_var_message(std::string&& value) {
+  _has_bits_[0] |= 0x00000002u;
+  var_message_.SetNoArena(
+    &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:RoomMessage.var_message)
+}
+inline void RoomMessage::set_var_message(const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  _has_bits_[0] |= 0x00000002u;
+  var_message_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:RoomMessage.var_message)
+}
+inline void RoomMessage::set_var_message(const char* value, size_t size) {
+  _has_bits_[0] |= 0x00000002u;
+  var_message_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:RoomMessage.var_message)
+}
+inline std::string* RoomMessage::_internal_mutable_var_message() {
+  _has_bits_[0] |= 0x00000002u;
+  return var_message_.MutableNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline std::string* RoomMessage::release_var_message() {
+  // @@protoc_insertion_point(field_release:RoomMessage.var_message)
+  if (!_internal_has_var_message()) {
+    return nullptr;
+  }
+  _has_bits_[0] &= ~0x00000002u;
+  return var_message_.ReleaseNonDefaultNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline void RoomMessage::set_allocated_var_message(std::string* var_message) {
+  if (var_message != nullptr) {
+    _has_bits_[0] |= 0x00000002u;
+  } else {
+    _has_bits_[0] &= ~0x00000002u;
+  }
+  var_message_.SetAllocatedNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), var_message);
+  // @@protoc_insertion_point(field_set_allocated:RoomMessage.var_message)
+}
+
+// optional int32 var_message_int = 3;
+inline bool RoomMessage::_internal_has_var_message_int() const {
+  bool value = (_has_bits_[0] & 0x00000008u) != 0;
+  return value;
+}
+inline bool RoomMessage::has_var_message_int() const {
+  return _internal_has_var_message_int();
+}
+inline void RoomMessage::clear_var_message_int() {
+  var_message_int_ = 0;
+  _has_bits_[0] &= ~0x00000008u;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 RoomMessage::_internal_var_message_int() const {
+  return var_message_int_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 RoomMessage::var_message_int() const {
+  // @@protoc_insertion_point(field_get:RoomMessage.var_message_int)
+  return _internal_var_message_int();
+}
+inline void RoomMessage::_internal_set_var_message_int(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  _has_bits_[0] |= 0x00000008u;
+  var_message_int_ = value;
+}
+inline void RoomMessage::set_var_message_int(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  _internal_set_var_message_int(value);
+  // @@protoc_insertion_point(field_set:RoomMessage.var_message_int)
+}
+
+// optional string var_time = 4;
+inline bool RoomMessage::_internal_has_var_time() const {
+  bool value = (_has_bits_[0] & 0x00000004u) != 0;
+  return value;
+}
+inline bool RoomMessage::has_var_time() const {
+  return _internal_has_var_time();
+}
+inline void RoomMessage::clear_var_time() {
+  var_time_.ClearToEmptyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline const std::string& RoomMessage::var_time() const {
+  // @@protoc_insertion_point(field_get:RoomMessage.var_time)
+  return _internal_var_time();
+}
+inline void RoomMessage::set_var_time(const std::string& value) {
+  _internal_set_var_time(value);
+  // @@protoc_insertion_point(field_set:RoomMessage.var_time)
+}
+inline std::string* RoomMessage::mutable_var_time() {
+  // @@protoc_insertion_point(field_mutable:RoomMessage.var_time)
+  return _internal_mutable_var_time();
+}
+inline const std::string& RoomMessage::_internal_var_time() const {
+  return var_time_.GetNoArena();
+}
+inline void RoomMessage::_internal_set_var_time(const std::string& value) {
+  _has_bits_[0] |= 0x00000004u;
+  var_time_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), value);
+}
+inline void RoomMessage::set_var_time(std::string&& value) {
+  _has_bits_[0] |= 0x00000004u;
+  var_time_.SetNoArena(
+    &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:RoomMessage.var_time)
+}
+inline void RoomMessage::set_var_time(const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  _has_bits_[0] |= 0x00000004u;
+  var_time_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:RoomMessage.var_time)
+}
+inline void RoomMessage::set_var_time(const char* value, size_t size) {
+  _has_bits_[0] |= 0x00000004u;
+  var_time_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:RoomMessage.var_time)
+}
+inline std::string* RoomMessage::_internal_mutable_var_time() {
+  _has_bits_[0] |= 0x00000004u;
+  return var_time_.MutableNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline std::string* RoomMessage::release_var_time() {
+  // @@protoc_insertion_point(field_release:RoomMessage.var_time)
+  if (!_internal_has_var_time()) {
+    return nullptr;
+  }
+  _has_bits_[0] &= ~0x00000004u;
+  return var_time_.ReleaseNonDefaultNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline void RoomMessage::set_allocated_var_time(std::string* var_time) {
+  if (var_time != nullptr) {
+    _has_bits_[0] |= 0x00000004u;
+  } else {
+    _has_bits_[0] &= ~0x00000004u;
+  }
+  var_time_.SetAllocatedNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), var_time);
+  // @@protoc_insertion_point(field_set_allocated:RoomMessage.var_time)
+}
+
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

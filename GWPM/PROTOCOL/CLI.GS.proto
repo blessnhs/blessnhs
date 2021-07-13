@@ -29,14 +29,14 @@ message CREATE_ROOM_REQ
 message ENTER_ROOM_REQ
 {
     optional PROTOCOL   id                  = 1 [default = ID_PKT_ENTER_ROOM_REQ ];
-    required int32      var_id                  = 2;
-   
+    required int32       var_room_number        = 2;
 }
 
 message LEAVE_ROOM_REQ
 {
     optional PROTOCOL   id                  = 1 [default = ID_PKT_LEAVE_ROOM_REQ ];
     required int32      var_id                  = 2;
+    required int32       var_room_number        = 3;
 }
 
 message ROOM_LIST_REQ
@@ -49,6 +49,8 @@ message ROOM_PASS_THROUGH_REQ
     optional PROTOCOL   id                        = 1 [default = ID_PKT_ROOM_PASS_THROUGH_REQ    ];
     required string     var_message    	     = 2;
     required int32       var_message_int         = 3;
+    required int32       var_room_number        = 4;
+    required string       var_time        = 5;
 }
 
 
@@ -61,12 +63,14 @@ message BITMAP_MESSAGE_REQ
 {
     optional PROTOCOL   id                  = 1 [default = ID_PKT_BITMAP_MESSAGE_REQ ];
     repeated bytes     var_message         = 2;
+    required int32       var_room_number        = 3;	
 }
 
 message AUDIO_MESSAGE_REQ
 {
     optional PROTOCOL   id                  = 1 [default = ID_PKT_AUDIO_MESSAGE_REQ ];
     repeated bytes     var_message         = 2;
+    required int32       var_room_number        = 3;
 }
 
 message PRAY_MESSAGE_REQ
