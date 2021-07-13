@@ -84,12 +84,19 @@ public:
 		}
 	}
 
+	VOID GetMessageList(google::protobuf::RepeatedPtrField<RoomMessage>* List);
+
+
 	void SendToAll(WORD MainId, BYTE* Data, WORD Length);
 	
 	concurrency::concurrent_unordered_map<DWORD, PLAYER_PTR>		m_PlayerMap;
 
+	void AddRoomMessage(RoomMessage msg);
+
 private:
 
+
+	list<RoomMessage> m_MessageList;
 
 	CRITICAL_SECTION												m_PublicLock;
 

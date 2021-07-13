@@ -18,6 +18,7 @@
 #include <list>
 #include <map>
 #include <queue>
+#include <set>
 
 #include <bsoncxx/builder/stream/document.hpp>
 #include <bsoncxx/json.hpp>

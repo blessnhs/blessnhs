@@ -72,6 +72,9 @@ namespace Antioch
         public SettingView setting = new SettingView();
         public AlarmView alarm = new AlarmView();
         public MailView mail = new MailView();
+
+
+
         public MainPage()
         {
             InitializeComponent();

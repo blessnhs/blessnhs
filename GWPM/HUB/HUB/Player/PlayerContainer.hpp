@@ -201,7 +201,10 @@ template<template<class T> class CreationPolicy> void PlayerContainer<CreationPo
 			{
 				printf("Player Client %lld Session mia\n",pPlayer->GetId());			
 
-				ROOMMGR.LeaveRoomPlayer(pPlayer);
+				for each (auto room in pPlayer->m_Char[0].GetRoom())
+				{
+					ROOMMGR.LeaveRoomPlayer(pPlayer,room);
+				}
 
 				pPlayer->SetPair(ULONG_MAX);
 				PLAYERMGR.Del(pPlayer);

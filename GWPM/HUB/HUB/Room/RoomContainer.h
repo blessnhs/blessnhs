@@ -39,7 +39,7 @@ public:
 
 	const concurrency::concurrent_unordered_map<DWORD, ROOM_PTR>& GetRoomMap();
 
-	void LeaveRoomPlayer(PLAYER_PTR player);
+	void LeaveRoomPlayer(PLAYER_PTR player,int room_number);
 
 
 protected:

@@ -1,6 +1,7 @@
 #pragma once
 
 #include <common.h>
+#include <set>
 
 #define MAX_LEVEL 18
 #define POINT 25
@@ -74,8 +75,9 @@ public:
 	void SetTeam(bool _team);
 	byte GetTeam();
 
+	VOID DelRoom(DWORD _id);
 	VOID SetRoom(DWORD _id);
-	DWORD GetRoom();
+	std::set<DWORD> GetRoom();
 
 	Score& GetScore();
 
@@ -93,7 +95,7 @@ private:
 
 	BYTE				m_Team;
 
-	DWORD				m_RoomNumber;
+	std::set<DWORD>		m_RoomNumbers;
 	
 	Score				m_Score;
 

@@ -13,9 +13,22 @@ namespace Antioch.View
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class LobbyView : ContentView
     {
-        public RoomsPage roompage = new RoomsPage();
-        public MainChatPage chatpage = new MainChatPage();
+        public RoomsPageView roompage = new RoomsPageView();
+        public Dictionary<int,MainChatView> chatpage = new Dictionary<int, MainChatView>();
         public PrayView praypage = new PrayView();
+
+        public MainChatView GetCurrentChatView()
+        {
+            if (chatpage.Count() == 0)
+                return null;
+
+            return chatpage[User.CurrentChatViewNumber];
+        }
+
+        public void LoadRoomPageView()
+        {
+            LoadView(roompage);
+        }
 
         public LobbyView()
         {
@@ -61,7 +74,13 @@ namespace Antioch.View
                         break;
 
                     case "Chat":
-                        Navigation.PushModalAsync(roompage);
+                        {
+                            LoadView(roompage);
+                            //if(GetCurrentChatView() == null)
+                            //    LoadView(roompage);
+                            //else
+                            //    LoadView(GetCurrentChatView());
+                        }
                         break;
 
                     case "Plan":

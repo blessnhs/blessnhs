@@ -26,13 +26,15 @@ Room::Room(void)
 
 Room::~Room(void)
 {
+	m_MessageList.clear();
+
 	DeleteCriticalSection(&m_PublicLock);
 }
 
 bool Room::RemovePlayer(PLAYER_PTR Player)
 {
 	m_PlayerMap[Player->GetId()] = NULL;
-
+	Player->m_Char[0].DelRoom(GetId());
 	return FALSE;
 }
 
@@ -116,4 +118,26 @@ void Room::SendToAll(WORD MainId, BYTE * Data, WORD Length)
 		if (pSession)
 			pSession->GetTCPSocket()->WritePacket(MainId, 0, Data, Length);
 	}
+}
+
+
+VOID Room::GetMessageList(google::protobuf::RepeatedPtrField<RoomMessage>* List)
+{
+	const int max_count = 10;
+	int currcount = 0;
+
+	for each (auto msg in m_MessageList)
+	{
+		RoomMessage* info = List->Add();
+		info->mutable_var_name()->assign(msg.var_name());
+
+		info->set_var_message(msg.var_message());
+		info->set_var_message_int(msg.var_message_int());
+		info->set_var_time(msg.var_time());
+	}
+}
+
+void  Room::AddRoomMessage(RoomMessage msg)
+{
+	m_MessageList.push_back(msg);
 }

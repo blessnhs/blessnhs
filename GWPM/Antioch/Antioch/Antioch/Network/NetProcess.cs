@@ -128,6 +128,10 @@ namespace Antioch
                                     Device.BeginInvokeOnMainThread(() =>
                                     {
                                         mainpage.setting.UpdateLoginState(User.Username, "(인증 실패)");
+
+                                        SQLLiteDB.Upsert(User.CacheData.FontSize, User.CacheData.BibleName, User.CacheData.Chapter, User.CacheData.Verse,
+                                             null, null);
+
                                     });
 
                                     User.LoginSuccess = false;
@@ -144,7 +148,7 @@ namespace Antioch
                                 {
                                     var mainpage = (MainPage)Application.Current.MainPage;
 
-                                    RoomsPage roompage = mainpage.lobby.roompage as RoomsPage;
+                                    RoomsPageView roompage = mainpage.lobby.roompage as RoomsPageView;
 
                                     roompage?.LoadRoomList(res);
                                 });
@@ -199,23 +203,31 @@ namespace Antioch
                                 CREATE_ROOM_RES res = new CREATE_ROOM_RES();
                                 res = CREATE_ROOM_RES.Parser.ParseFrom(data.Data);
 
+                                if (res.VarCode != ErrorCode.Success)
+                                    break;
+
                                 Device.BeginInvokeOnMainThread(() =>
                                 {
+
                                     var mainpage = (MainPage)Application.Current.MainPage;
 
-                                    RoomsPage roompage = mainpage.lobby.roompage as RoomsPage;
+                                    RoomsPageView roompage = mainpage.lobby.roompage as RoomsPageView;
+
+                                    User.RoomIdList.Add(res.VarRoomId);
 
                                     {
-                                        mainpage.lobby.chatpage = null;
-                                        mainpage.lobby.chatpage = new MainChatPage();
-                                        MainChatPage chatpage = mainpage.lobby.chatpage as MainChatPage;
-                                        roompage.Navigation.PushModalAsync(chatpage);
+                                        User.CurrentChatViewNumber = res.VarRoomId;
+                                        var chatview = new MainChatView();
+                                        mainpage.lobby.chatpage.Add(res.VarRoomId,chatview);
+                                        MainChatView chatpage = chatview;
+
+                                        mainpage.LoadView(chatpage);
+
+                                       
                                     }
 
 
                                 });
-
-                                SendEnterRoom(res.VarRoomId);
 
                             }
                             break;
@@ -223,21 +235,38 @@ namespace Antioch
                             {
                                 ENTER_ROOM_RES res = new ENTER_ROOM_RES();
                                 res = ENTER_ROOM_RES.Parser.ParseFrom(data.Data);
-                                if (res.VarCode == ErrorCode.DuplicateEnterRoom)
+                                if (res.VarCode != ErrorCode.DuplicateEnterRoom && res.VarCode != ErrorCode.Success)
                                     break;
 
                                 Device.BeginInvokeOnMainThread(() =>
                                 {
                                     var mainpage = (MainPage)Application.Current.MainPage;
 
-                                    RoomsPage roompage = mainpage.lobby.roompage as RoomsPage;
+                                    RoomsPageView roompage = mainpage.lobby.roompage as RoomsPageView;
 
-
+                                    User.RoomIdList.Add(res.VarRoomId);
                                     {
-                                        mainpage.lobby.chatpage = null;
-                                        mainpage.lobby.chatpage = new MainChatPage();
-                                        MainChatPage chatpage = mainpage.lobby.chatpage as MainChatPage;
-                                        roompage.Navigation.PushModalAsync(chatpage);
+                                        User.CurrentChatViewNumber = res.VarRoomId;
+
+
+                                        MainChatView outivew;
+
+                                        mainpage.lobby.chatpage.TryGetValue(res.VarRoomId, out outivew);
+                                        if (outivew == null) //없으면 새로 만들어서 넣는다.
+                                        {
+                                            var chatview = new MainChatView();
+                                            mainpage.lobby.chatpage.Add(res.VarRoomId, chatview);
+                                            mainpage.LoadView(chatview);
+
+                                            foreach(var msg in res.VarMessages)
+                                            {
+                                                chatview.ReceiveMessage(msg.VarMessage, msg.VarName,msg.VarTime);
+                                            }
+                                        }
+                                        else  //이미 존재하는 방이면 해당 방에 넣는다. 
+                                        {
+                                            mainpage.LoadView(outivew);
+                                        }
                                     }
                                 });
                             }
@@ -250,9 +279,17 @@ namespace Antioch
                                 {
                                     var mainpage = (MainPage)Application.Current.MainPage;
 
-                                    MainChatPage chatpage = mainpage.lobby.chatpage as MainChatPage;
 
-                                    chatpage.ReceiveMessage(res.VarMessage, res.VarName);
+                                    MainChatView outivew;
+
+                                    mainpage.lobby.chatpage.TryGetValue(res.VarRoomNumber, out outivew);
+                                    if (outivew == null)
+                                        return;
+
+                                    foreach (var msg in res.VarMessages)
+                                    {
+                                        outivew.ReceiveMessage(msg.VarMessage, msg.VarName,msg.VarTime);
+                                    }
                                 });
                             }
                             break;
@@ -265,14 +302,24 @@ namespace Antioch
 
                                 Device.BeginInvokeOnMainThread(() =>
                                 {
+
+                                    MainChatView outivew;
+
+                                    mainpage.lobby.chatpage.TryGetValue(res.VarRoomNumber, out outivew);
+                                    if (outivew == null)
+                                        return;
+
                                     if (res.VarName == User.CacheData.UserName)
                                     {
-                                        MainChatPage chatpage = mainpage.lobby.chatpage as MainChatPage;
-                                        chatpage.Navigation.PopModalAsync();
+                                        User.RoomIdList.Remove(res.VarRoomNumber);                                       
+
+                                        mainpage.lobby.chatpage.Remove(res.VarRoomNumber);
+
+                                        mainpage.lobby.LoadRoomPageView();
                                     }
                                     else
                                     {
-                                        MainChatPage chatpage = mainpage.lobby.chatpage as MainChatPage;
+                                        MainChatView chatpage = outivew as MainChatView;
                                         chatpage.ReceiveMessage(res.VarName + " leaved.",
                                                res.VarName, Message.type.Info);
 
@@ -285,15 +332,21 @@ namespace Antioch
                                 NEW_USER_IN_ROOM_NTY res = new NEW_USER_IN_ROOM_NTY();
                                 res = NEW_USER_IN_ROOM_NTY.Parser.ParseFrom(data.Data);
 
+                                var mainpage = (MainPage)Application.Current.MainPage;
+
+
                                 Device.BeginInvokeOnMainThread(() =>
                                 {
-                                    var mainpage = (MainPage)Application.Current.MainPage;
+                                    MainChatView outivew;
 
-                                    MainChatPage chatpage = mainpage.lobby.chatpage as MainChatPage;
+                                    mainpage.lobby.chatpage.TryGetValue(res.VarRoomUser.VarRoomNumber, out outivew);
+                                    if (outivew == null)
+                                        return;
+                                
                                     if (res.VarType == 1)
                                     {
                                         if (res.VarRoomUser.VarName != User.CacheData.UserName)
-                                            chatpage.ReceiveMessage(res.VarRoomUser.VarName + " entered.",
+                                            outivew.ReceiveMessage(res.VarRoomUser.VarName + " entered.",
                                             res.VarRoomUser.VarName, Message.type.Info);
                                     }
 
@@ -443,7 +496,7 @@ namespace Antioch
 
             ENTER_ROOM_REQ person = new ENTER_ROOM_REQ
             {
-                VarId = id,
+                VarRoomNumber = id,
             };
             using (MemoryStream stream = new MemoryStream())
             {
@@ -491,7 +544,8 @@ namespace Antioch
 
             LEAVE_ROOM_REQ person = new LEAVE_ROOM_REQ
             {
-                VarId = id,
+                VarId = User.CacheData.Id,
+                VarRoomNumber = id
             };
             using (MemoryStream stream = new MemoryStream())
             {
@@ -513,7 +567,9 @@ namespace Antioch
             ROOM_PASS_THROUGH_REQ message = new ROOM_PASS_THROUGH_REQ
             {
                 VarMessage = msg,
-                VarMessageInt = 0
+                VarMessageInt = 0,
+                VarRoomNumber = User.CurrentChatViewNumber,
+                VarTime = DateTime.Now.ToString()
             };
 
             using (MemoryStream stream = new MemoryStream())

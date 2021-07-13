@@ -4,7 +4,6 @@
 Character::Character()
 {
 	m_AllComplete = false;
-	m_RoomNumber = 0;
 
 	m_Level = 0;
 
@@ -54,15 +53,19 @@ bool Character::GetReady()
 	return m_Ready;
 }
 
+VOID Character::DelRoom(DWORD _id)
+{
+	m_RoomNumbers.erase(_id);
+}
 
 VOID Character::SetRoom(DWORD _id)
 {
-	m_RoomNumber = _id;
+	m_RoomNumbers.insert(_id);
 }
 
-DWORD Character::GetRoom()
+std::set<DWORD> Character::GetRoom()
 {
-	return m_RoomNumber;
+	return m_RoomNumbers;
 }
 
 Score& Character::GetScore()

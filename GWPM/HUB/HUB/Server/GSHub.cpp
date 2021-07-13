@@ -23,7 +23,11 @@ BOOL GSHub::Disconnect(GSCLIENT_PTR pSession)
 	if (pPlayer != NULL)
 	{
 		
-		ROOMMGR.LeaveRoomPlayer(pPlayer);
+		for each (auto room in pPlayer->m_Char[0].GetRoom())
+		{
+			ROOMMGR.LeaveRoomPlayer(pPlayer, room);
+		}
+
 		
 		pPlayer->SetPair(ULONG_MAX);
 		PLAYERMGR.Del(pPlayer);

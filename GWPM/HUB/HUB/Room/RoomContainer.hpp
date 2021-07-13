@@ -208,24 +208,24 @@ template<template<class T> class CreationPolicy>  const concurrency::concurrent_
 {
 	return m_RoomMap;
 }
-template<template<class T> class CreationPolicy> void RoomContainer<CreationPolicy>::LeaveRoomPlayer(PLAYER_PTR pPlayer)
+template<template<class T> class CreationPolicy> void RoomContainer<CreationPolicy>::LeaveRoomPlayer(PLAYER_PTR pPlayer,int room_number)
 {
 	LEAVE_ROOM_RES res;
 
-	ROOM_PTR RoomPtr = Search(pPlayer->m_Char[0].GetRoom());
+	ROOM_PTR RoomPtr = Search(room_number);
 	if (RoomPtr != NULL)
 	{
-		if (RoomPtr->FindPlayer(pPlayer) != USHRT_MAX)
+		if (RoomPtr->FindPlayer(pPlayer) == TRUE)
 		{
 
 			res.set_var_index(pPlayer->GetId());
 			res.set_var_code(Success);
+			res.set_var_room_number(RoomPtr->GetId());
 			res.mutable_var_name()->assign(pPlayer->m_Account.GetName());
 
 			RoomPtr->SendToAll(res);
 
 			RoomPtr->RemovePlayer(pPlayer);
-			pPlayer->m_Char[0].SetRoom(0);
 
 			if (RoomPtr->GetCurrPlayer() == 0)
 				Del(RoomPtr, pPlayer);

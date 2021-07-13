@@ -148,13 +148,7 @@ VOID HubProcess::ROOM_CREATE(LPVOID Data, DWORD Length, boost::shared_ptr<GSClie
 	RoomPtr->m_Stock.Name = createroom.var_name();
 
 	ROOMMGR.Add(RoomPtr, pPlayer);
-	RoomPtr->m_Stock.MAX_PLAYER = USHRT_MAX;
-
-	if (pPlayer != NULL)
-	{
-		pPlayer->m_Char[0].SetRoom(RoomPtr->GetId());
-	}
-
+	
 	RoomPtr->InsertPlayer(pPlayer);
 
 	res.set_var_room_id(RoomPtr->GetId());
@@ -242,17 +236,30 @@ VOID HubProcess::ROOM_PASSTHROUGH(LPVOID Data, DWORD Length, boost::shared_ptr<G
 		return;
 	}
 
-	ROOM_PTR RoomPtr = ROOMMGR.Search(pPlayer->m_Char[0].GetRoom());
+	ROOM_PTR RoomPtr = ROOMMGR.Search(message.var_room_number());
 	if (RoomPtr == NULL)
 	{
 		return;
 	}
 
+	if (RoomPtr->FindPlayer(pPlayer) == FALSE)
+	{
+		return;
+	}
+
+	/*m_MessageList.push_back()*/
+
 	ROOM_PASS_THROUGH_RES res;
-	res.set_var_message_int(message.var_message_int());
-	res.set_var_message(message.var_message());
-	res.set_var_name(pPlayer->m_Char[0].GetName());
+	auto pass_msg = res.add_var_messages();
+	pass_msg->set_var_message(message.var_message());
+	pass_msg->set_var_message_int(message.var_message_int());
+	pass_msg->set_var_name(pPlayer->m_Char[0].GetName());
+	pass_msg->set_var_time(message.var_time());
+
+	res.set_var_room_number(RoomPtr->GetId());
 	RoomPtr->SendToAll(res);
+
+	RoomPtr->AddRoomMessage(*pass_msg);
 	
 }
 
@@ -273,7 +280,7 @@ VOID HubProcess::ROOM_ENTER(LPVOID Data, DWORD Length, boost::shared_ptr<GSClien
 	ENTER_ROOM_RES res;
 
 
-	ROOM_PTR RoomPtr = ROOMMGR.Search(enterroom.var_id());
+	ROOM_PTR RoomPtr = ROOMMGR.Search(enterroom.var_room_number());
 	if (RoomPtr == NULL)
 	{
 		res.set_var_code(SystemError);
@@ -285,10 +292,14 @@ VOID HubProcess::ROOM_ENTER(LPVOID Data, DWORD Length, boost::shared_ptr<GSClien
 	//이미 입장 해 있다면 
 	if (RoomPtr->FindPlayer(pPlayer) == TRUE)
 	{
+		res.set_var_room_id(RoomPtr->GetId());
+		res.set_var_name(RoomPtr->m_Stock.Name.c_str());
 		res.set_var_code(Duplicate_Enter_Room);
 		SEND_PROTO_BUFFER(res, Client)
 		return;
 	}
+
+	RoomPtr->GetMessageList(res.mutable_var_messages());
 
 	RoomPtr->InsertPlayer(pPlayer);
 
@@ -346,7 +357,7 @@ VOID HubProcess::ROOM_LEAVE(LPVOID Data, DWORD Length, boost::shared_ptr<GSClien
 		return;
 	}
 
-	ROOMMGR.LeaveRoomPlayer(pPlayer);
+	ROOMMGR.LeaveRoomPlayer(pPlayer,leaveroom.var_room_number());
 
 }
 
@@ -427,7 +438,7 @@ VOID HubProcess::ROOM_AUDIO_CHAT(LPVOID Data, DWORD Length, boost::shared_ptr<GS
 
 	res.set_var_name(pPlayer->m_Account.GetName());
 
-	ROOM_PTR pPtr = ROOMMGR.Search(pPlayer->m_Char[0].GetRoom());
+	ROOM_PTR pPtr = ROOMMGR.Search(message.var_room_number());
 	if (pPtr != NULL)
 	{
 		pPtr->SendToAll(res, pPlayer->GetId());
@@ -457,7 +468,7 @@ VOID HubProcess::ROOM_BITMAP_CHAT(LPVOID Data, DWORD Length, boost::shared_ptr<G
 
 	res.set_var_name(pPlayer->m_Account.GetName());
 
-	ROOM_PTR pPtr = ROOMMGR.Search(pPlayer->m_Char[0].GetRoom());
+	ROOM_PTR pPtr = ROOMMGR.Search(message.var_room_number());
 	if (pPtr != NULL)
 	{
 		pPtr->SendToAll(res, pPlayer->GetId());

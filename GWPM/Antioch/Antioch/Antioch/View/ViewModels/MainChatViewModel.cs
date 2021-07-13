@@ -51,6 +51,22 @@ namespace Antioch
             OutGoingText = string.Empty;
         }
 
+        public void AddMessage(string text, string name, string timestring,Message.type type)
+        {
+            var message = new Message
+            {
+                Text = text,
+                MessageType = type,
+                AttachementUrl = "",
+                MessageDateTime = DateTime.Parse(timestring),
+                ProfileUrl = name// "https://lh4.googleusercontent.com/-MEdrkpWi6Yg/AAAAAAAAAAI/AAAAAAAAAAA/AMZuuckIeT9M_SOv920jGkFwWiOCWkZRJA/s96-c/photo.jpg"
+            };
+
+            Messages.Add(message);
+
+            OutGoingText = string.Empty;
+        }
+
         public void AddChatUserMessage(string name)
         {
             ChatRoomUser usr = new ChatRoomUser();
@@ -74,7 +90,9 @@ namespace Antioch
 
             ExitCommand = new Command(() =>
             {
-                NetProcess.SendLeaveRoom(0);
+                var mainpage = (MainPage)Application.Current.MainPage;
+                
+                NetProcess.SendLeaveRoom(User.CurrentChatViewNumber);
             });
 
             LocationCommand = new Command(async () =>

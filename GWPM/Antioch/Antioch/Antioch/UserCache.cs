@@ -13,5 +13,10 @@ namespace Antioch
 
         static public bool LoginSuccess = false;
 
+        static public HashSet<int> RoomIdList = new HashSet<int>();
+
+        static public int CurrentChatViewNumber;
+
+
     }
 }
