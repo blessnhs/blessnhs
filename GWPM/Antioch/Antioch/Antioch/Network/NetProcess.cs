@@ -40,10 +40,10 @@ namespace Antioch
         {
             if (check_time < DateTime.Now)
             {
-               // string ip = "211.212.37.238";//"192.168.0.9"
-                string ip = "192.168.0.9";
+                string ip = "211.212.37.238";//"192.168.0.9"
+                //string ip = "192.168.0.9";
 
-                client.StartClient(ip, 20000);
+                client.StartClient(ip, 23000);
 
                 check_time = DateTime.Now.AddSeconds(5);
             }
