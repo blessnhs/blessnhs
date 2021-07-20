@@ -139,5 +139,8 @@ VOID Room::GetMessageList(google::protobuf::RepeatedPtrField<RoomMessage>* List)
 
 void  Room::AddRoomMessage(RoomMessage msg)
 {
+	if (m_MessageList.size() > 100)
+		m_MessageList.pop_front();
+
 	m_MessageList.push_back(msg);
 }

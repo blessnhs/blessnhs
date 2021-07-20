@@ -50,7 +50,7 @@ public:
 	WORD GetCurrPlayer();
 
 	template<class T>
-	void SendToAll(T &snd)
+	void SendToAll(T& snd)
 	{
 		for each(auto iter in m_PlayerMap)
 		{
