@@ -105,7 +105,7 @@ namespace Antioch.View
 
             DateTime endTime = StartTime.AddDays(enddays);
 
-            Info.Text = "읽어야할 총 장수 " + totalchapter.ToString() + "\n 종료 날짜 " + endTime.ToLocalTime();
+            Info.Text = "Read Chapter Count " + totalchapter.ToString() + "\n End Date " + endTime.ToLocalTime();
         }
 
         private string SelBibleName = "";
@@ -114,7 +114,7 @@ namespace Antioch.View
         {
             if (SelBibleName == "")
             {
-                await App.Current.MainPage.DisplayAlert("", "시작할 권을 먼저 선택해야 합니다.", "OK");
+                await App.Current.MainPage.DisplayAlert("", "You must choose a testament.", "OK");
             }
             else
             {
@@ -125,7 +125,7 @@ namespace Antioch.View
 
                 if (Helper.IsNumber(CountText) == false)
                 {
-                    await App.Current.MainPage.DisplayAlert("", "장수는 숫자로만 입력하세요 ", "OK");
+                    await App.Current.MainPage.DisplayAlert("", "Please write number ", "OK");
                     return;
                 }
 
@@ -133,11 +133,11 @@ namespace Antioch.View
 
                 if (Count > 100 || 0 >= Count)
                 {
-                    await App.Current.MainPage.DisplayAlert("", "권장 장수가 아닙니다.", "OK");
+                    await App.Current.MainPage.DisplayAlert("", "Please write number.", "OK");
                     return;
                 }
 
-                bool answer = await App.Current.MainPage.DisplayAlert("안내", SelBibleName + "부터 " + "하루 " + CountText + "장씩 시작 하시겠 습니까?", "예", "아니요");
+                bool answer = await App.Current.MainPage.DisplayAlert("info", SelBibleName + " from " + "each day " + CountText  , "yes", "no");
                 if (answer == true)
                 {
                     SQLLiteDB.InsertBibleReadPlan(StartTime.Date, SelBibleName, Count);

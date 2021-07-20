@@ -40,10 +40,10 @@ namespace Antioch
         {
             if (check_time < DateTime.Now)
             {
-               // string ip = "211.212.37.238";//"192.168.0.9"
-                string ip = "192.168.0.9";
+                string ip = "211.212.37.238";//"192.168.0.9"
+               // string ip = "192.168.0.9";
 
-                client.StartClient(ip, 20000);
+                client.StartClient(ip, 23000);
 
                 check_time = DateTime.Now.AddSeconds(5);
             }
@@ -73,16 +73,16 @@ namespace Antioch
 
                                 var currentVersion = VersionTracking.CurrentVersion;
 
-                                //var myversion = double.Parse(currentVersion);
-                                //const Double Eps = 0.000000000000001;
+                                var myversion = double.Parse(currentVersion);
+                                const Double Eps = 0.000000000000001;
 
-                                //if (Math.Abs(res.VarVersion - myversion) > Eps)
-                                //{
-                                //    //첫 검수라 임시 주석 2번째 패치 부터는 활성화
-                                //    //   Xamarin.Essentials.Browser.OpenAsync("https://play.google.com/store/apps/details?id=com.companyname.OMOK");
+                                if (Math.Abs(res.VarVersion - myversion) > Eps)
+                                {
+                                    //첫 검수라 임시 주석 2번째 패치 부터는 활성화
+                                    //   Xamarin.Essentials.Browser.OpenAsync("https://play.google.com/store/apps/details?id=antioch.kor.pkg");
 
-                                //    //    return;
-                                //}
+                                    //    return;
+                                }
 
 
                                 SQLLiteDB.LoadCacheData();
@@ -111,7 +111,7 @@ namespace Antioch
 
                                     Device.BeginInvokeOnMainThread(() =>
                                     {
-                                        mainpage.setting.UpdateLoginState(User.Username, "(접속중)");
+                                        mainpage.setting.UpdateLoginState(User.Username, "(Success)");
 
                                         var page = mainpage.CurrentView();
                                         var settingview = page as SettingView;
@@ -127,7 +127,7 @@ namespace Antioch
                                 {
                                     Device.BeginInvokeOnMainThread(() =>
                                     {
-                                        mainpage.setting.UpdateLoginState(User.Username, "(인증 실패)");
+                                        mainpage.setting.UpdateLoginState(User.Username, "(Failed)");
 
                                         SQLLiteDB.Upsert(User.CacheData.FontSize, User.CacheData.BibleName, User.CacheData.Chapter, User.CacheData.Verse,
                                              null, null);
@@ -327,6 +327,30 @@ namespace Antioch
                                 });
                             }
                             break;
+
+                        case (int)PROTOCOL.IdPktAudioMessageRes:
+                            {
+                                AUDIO_MESSAGE_RES res = new AUDIO_MESSAGE_RES();
+                                res = AUDIO_MESSAGE_RES.Parser.ParseFrom(data.Data);
+
+                                foreach (var msg in res.VarMessage)
+                                {
+                                    AudioStream.Enqueue(new MemoryStream(msg.ToByteArray()));
+                                }
+                            }
+                            break;
+                        case (int)PROTOCOL.IdPktBitmapMessageRes:
+                            {
+                                BITMAP_MESSAGE_RES res = new BITMAP_MESSAGE_RES();
+                                res = BITMAP_MESSAGE_RES.Parser.ParseFrom(data.Data);
+
+                                foreach (var msg in res.VarMessage)
+                                {
+                                    JpegStream.Enqueue(new MemoryStream(msg.ToByteArray()));
+                                }
+
+                            }
+                            break;
                         case (int)PROTOCOL.IdPktNewUserInRoomNty:
                             {
                                 NEW_USER_IN_ROOM_NTY res = new NEW_USER_IN_ROOM_NTY();
@@ -377,6 +401,45 @@ namespace Antioch
 
                 client.WritePacket((int)PROTOCOL.IdPktVersionReq, stream.ToArray(), stream.ToArray().Length);
             }
+        }
+
+        static public void SendRoomBITMAPMessage(ConcurrentQueue<System.IO.MemoryStream> list)
+        {
+
+            if (client == null || client.socket == null || client.socket.Connected == false)
+                return;
+            {
+                BITMAP_MESSAGE_REQ message = new BITMAP_MESSAGE_REQ();
+
+                foreach (var msg in list)
+                {
+                    message.VarMessage.Add(ByteString.CopyFrom(msg.ToArray()));
+                };
+
+
+                client.WritePacket((int)PROTOCOL.IdPktBitmapMessageReq, message.ToByteArray(), message.ToByteArray().Length);
+
+            }
+
+        }
+
+        static public void SendAudioMessage(ConcurrentQueue<System.IO.MemoryStream> list)
+        {
+
+            if (client == null || client.socket == null || client.socket.Connected == false)
+                return;
+            {
+                AUDIO_MESSAGE_REQ message = new AUDIO_MESSAGE_REQ();
+
+                foreach (var msg in list)
+                {
+                    message.VarMessage.Add(ByteString.CopyFrom(msg.ToArray()));
+                };
+
+                client.WritePacket((int)PROTOCOL.IdPktAudioMessageReq, message.ToByteArray(), message.ToByteArray().Length);
+
+            }
+
         }
 
         static public void SendLogin(string id, string pwd)

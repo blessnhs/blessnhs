@@ -18,7 +18,7 @@ namespace Antioch
         public UserCacheData()
         {
             Id = 1;
-            BibleName = "창세기";
+            BibleName = "Genesis";
             Chapter = 1;
             Verse = 1;
 
@@ -31,7 +31,7 @@ namespace Antioch
         [System.ComponentModel.DefaultValue(20)]
         public int FontSize { get; set; }
 
-        [System.ComponentModel.DefaultValue("창세기")]
+        [System.ComponentModel.DefaultValue("Genesis")]
         public string BibleName { get; set; } //디폴트는 창세기
         [System.ComponentModel.DefaultValue(1)]
         public int Chapter { get; set; }    //디폴트 1장

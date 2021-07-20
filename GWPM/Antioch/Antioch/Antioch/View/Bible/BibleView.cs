@@ -41,7 +41,7 @@ namespace Antioch
         //자동이동을 위해 Label을 dictionary에 저장
         private Dictionary<int, Label> MainTextLabel = new Dictionary<int, Label>();
 
-        public void DrawMainText(StackLayout MainLayout, BibleType type = BibleType.KRV)
+        public void DrawMainText(StackLayout MainLayout, BibleType type = BibleType.KJV)
         {
             //db에 밑줄 저장 데이터가 있는지 로딩한다. 
             var list = SQLLiteDB.ReadUnderlining();
@@ -143,7 +143,7 @@ namespace Antioch
 
                     try
                     {
-                        string action = await App.Current.MainPage.DisplayActionSheet("줄긋기", "안하기", null, "빨강", "노랑", "파랑");
+                        string action = await App.Current.MainPage.DisplayActionSheet("Line", "cancel", null, "red", "yellow", "blue");
 
                         //선택한 라벨의 절수를 가져온다.
                         int iverse = 1;
@@ -159,19 +159,19 @@ namespace Antioch
 
                         switch (action)
                         {
-                            case "빨강":
+                            case "red":
                                 labelText.BackgroundColor = Color.Red;
                                 SQLLiteDB.InsertUnderlining(User.CacheData.BibleName, User.CacheData.Chapter, iverse, "빨강");
                                 break;
-                            case "노랑":
+                            case "yellow":
                                 labelText.BackgroundColor = Color.Yellow;
                                 SQLLiteDB.InsertUnderlining(User.CacheData.BibleName, User.CacheData.Chapter, iverse, "노랑");
                                 break;
-                            case "파랑":
+                            case "blue":
                                 labelText.BackgroundColor = Color.Green;
                                 SQLLiteDB.InsertUnderlining(User.CacheData.BibleName, User.CacheData.Chapter, iverse, "파랑");
                                 break;
-                            case "안하기":
+                            case "cancel":
                                 labelText.BackgroundColor = Color.White;
                                 SQLLiteDB.DeleteUnderlining(User.CacheData.BibleName, User.CacheData.Chapter, iverse, "");
                                 break;
@@ -224,7 +224,7 @@ namespace Antioch
         //ui 갱신
         public void RefreshData()
         {
-            Title.Text = User.CacheData.BibleName + " " + User.CacheData.Chapter.ToString() + "장";
+            Title.Text = User.CacheData.BibleName + " " + User.CacheData.Chapter.ToString() + "Chapter";
             MainLayout.Children.Clear();
             DrawMainText(MainLayout);
      
@@ -263,7 +263,7 @@ namespace Antioch
         //공유 버튼 클릭
         async void Handle_Clicked_Shared(object sender, System.EventArgs e)
         {
-            await ShareText(User.CacheData.BibleName +" " + User.CacheData.Chapter + "장 까지 읽었습니다.");
+            await ShareText(User.CacheData.BibleName +" " + User.CacheData.Chapter + "Chapter Read.");
         }
 
         //다음 성경 가져오기
@@ -353,7 +353,7 @@ namespace Antioch
             await Share.RequestAsync(new ShareTextRequest
             {
                 Text = text,
-                Title = "성경읽기 공유"
+                Title = "Bible Read Share"
             });
         }
 

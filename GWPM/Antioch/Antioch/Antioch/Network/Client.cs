@@ -2,6 +2,7 @@
 using System.Collections.Concurrent;
 using System.Net;
 using System.Net.Sockets;
+using Xamarin.Forms;
 
 
 namespace Antioch
@@ -60,6 +61,10 @@ namespace Antioch
                 }
 
                 User.LoginSuccess = false;
+
+                var mainpage = (MainPage)Application.Current.MainPage;
+                mainpage.setting.UpdateLoginState(User.Username, "(접속 안됨)");
+
 
                 socket.Connect(remoteEP);
 

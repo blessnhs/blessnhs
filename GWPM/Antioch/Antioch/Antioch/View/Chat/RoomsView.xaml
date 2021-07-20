@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentView 
+		xmlns="http://xamarin.com/schemas/2014/forms" 
+		xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+		x:Class="Antioch.RoomsPageView"
+		>
+    <ContentView.Content>
+        <Grid Padding="10" BackgroundColor="White">    
+			<Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="8*"/>
+                <RowDefinition Height="1*"/>
+			</Grid.RowDefinitions>
+
+            <Label Grid.Row="0" Text="#General"/>
+
+            <ListView Grid.Row="1" x:Name="listView" ItemSelected="Handle_ItemSelected"   ItemsSource="{Binding Rooms}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <ViewCell.View>
+                                <Grid BackgroundColor="White">
+                                    <Grid.RowDefinitions>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="6*" />
+                                        <ColumnDefinition Width="1*" />
+                                        <ColumnDefinition Width="3*" />
+                                    </Grid.ColumnDefinitions>
+                                         <Label Text="{Binding Name}"  FontSize="Body" FontAttributes="Bold" TextColor="Black"  Grid.Column="0" VerticalOptions="Center" HorizontalOptions="Start"/>
+                                         <Label Text="{Binding Count}" FontSize="Body" FontAttributes="Bold" TextColor="Black" Grid.Column="1" VerticalOptions="Center" HorizontalOptions="End"/>
+                                         <Button Text="Enter" Grid.Column="2"  FontSize="Small"  TextColor="Black" Clicked="OnRoomEnterClicked" CommandParameter="{Binding Id}" HorizontalOptions="End" Style="{StaticResource buttonStyle2}"/>
+                                   </Grid>
+                            </ViewCell.View>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+            <StackLayout Grid.Row="2"  Orientation="Horizontal">
+                <Button Text="Create" Clicked="Clicked_Create" Style="{StaticResource buttonStyle}"/>
+                <Button Text="Exit" Clicked="Clicked_Exit" Style="{StaticResource buttonStyle}"/>
+            </StackLayout>
+        </Grid>
+    </ContentView.Content>
+</ContentView>

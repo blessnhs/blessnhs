@@ -19,7 +19,7 @@ namespace Antioch.View
         {
             InitializeComponent();
 
-            vm.BtnMessage = "로그인";
+            vm.BtnMessage = "Login";
 
             TextSizeSlider.Value = User.CacheData.FontSize;
 
@@ -47,12 +47,12 @@ namespace Antioch.View
             {
                 Device.BeginInvokeOnMainThread(() =>
                 {
-                    messageLabel.Text = "접속중";
+                    messageLabel.Text = "Conncted";
                     usernameEntry.Text = User.CacheData.UserName;
                     passwordEntry.Text = "****";
                     loginbutton.IsVisible = false;
 
-                    vm.BtnMessage = "접속중";
+                    vm.BtnMessage = "Conncted";
                 });
                
             }
@@ -69,7 +69,7 @@ namespace Antioch.View
 
         void OnToggledKJV(object sender, ToggledEventArgs e)
         {
-            User.CacheData.EnalbeKJV = e.Value;
+        //    User.CacheData.EnalbeKJV = e.Value;
         //    SQLLiteDB.Upsert(User.CacheData);
         }
 

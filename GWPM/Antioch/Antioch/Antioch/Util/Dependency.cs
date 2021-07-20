@@ -10,4 +10,12 @@ namespace DependencyHelper
         string GetPath();
 
     }
+
+    public interface Toast
+    {
+        void Show(string message);
+
+        void StartRecord(object view);
+
+    }
 }

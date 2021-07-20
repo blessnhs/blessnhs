@@ -18,14 +18,14 @@
 
                     <Frame BorderColor="Gray" Grid.Row="0" Grid.Column="0">
                         <StackLayout  BackgroundColor="White">
-                            <Label x:Name="TextSizeLabel" Text="  글자 크기 보기 " HorizontalTextAlignment="Center" VerticalTextAlignment="Center"  TextColor="Black" />
+                            <Label x:Name="TextSizeLabel" Text="  Font Size " HorizontalTextAlignment="Center" VerticalTextAlignment="Center"  TextColor="Black" />
                             <Slider x:Name="TextSizeSlider" Maximum="50" Minimum="0" BackgroundColor="Gray"/>
                         </StackLayout>
                     </Frame>
 
                     <Frame BorderColor="Gray" Grid.Row="1" Grid.Column="0">
                         <StackLayout VerticalOptions="StartAndExpand">
-                            <Label Text="KJV  성경" />
+                            <Label Text="KJV  Bible" />
                             <Switch x:Name="KJVOption"  IsToggled="true" Toggled="OnToggledKJV"/>
                         </StackLayout>
                     </Frame>
@@ -33,10 +33,10 @@
 
                     <Frame BorderColor="Gray" Grid.Row="2" Grid.Column="0">
                         <StackLayout VerticalOptions="StartAndExpand">
-                            <Label Text="최초 등록 아이디와 비밀번호로 계정 활성화 됩니다." TextColor="Red" />
-                            <Label Text="아이디(ex 나현수)" />
+                            <Label Text="It is registered as the first entered information." TextColor="Red" />
+                            <Label Text="id(ex hyunsoo)" />
                             <Entry x:Name="usernameEntry" Placeholder="username" Text="{Binding Id}"/>
-                            <Label Text="비밀번호 숫자 4자리(ex 1155)" />
+                            <Label Text="password 4 numbers (ex 1155)" />
                             <Entry x:Name="passwordEntry" IsPassword="true" />
                             <Button  x:Name="loginbutton" Text="{Binding BtnMessage}" Clicked="login_btn"/>
                             <Label x:Name="messageLabel"  Text="{Binding Message}"/>

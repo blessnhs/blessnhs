@@ -5,7 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -231,21 +231,28 @@ namespace Antioch.View
         private void Set2020Message()
         {
             //  Your label tap event
-            var forgetPassword_tap = new TapGestureRecognizer();
-            forgetPassword_tap.Tapped += async (s, e) =>
+            var tap = new TapGestureRecognizer();
+            tap.Tapped += async (s, e) =>
             {
                 var labelText = s as Label;
-
-                //    Navigation.PushModalAsync(new TextView("WBA.Resource.Message2020.txt"));
+                await Share.RequestAsync(new ShareTextRequest
+                {
+                    Text = ShareTimeTable,
+                    Title = "Bible Read Share"
+                });
             };
 
-            label_2020msg.GestureRecognizers.Add(forgetPassword_tap);
+            share_labal.GestureRecognizers.Add(tap);
         }
+
+        string ShareTimeTable;
 
         private void SetWeeklyReadTable()
         {
             try
             {
+                ShareTimeTable = "";
+
                 Label[] weekLabel = new Label[7];
 
                 weekLabel[0] = label_mon;
@@ -256,22 +263,22 @@ namespace Antioch.View
                 weekLabel[5] = label_sat;
                 weekLabel[6] = label_sun;
 
-                string[] week = { "월", "화", "수", "목", "금", "토", "일" };
+                string[] week = { "Mon", "Thu", "Wed", "Thur", "Fri", "Sat", "Sun" };
                 for (int i = 0; i < 7; i++)
                 {
                     var info = CalculateTodayBibleChapter(i);
                     if (info == null)
                     {
-                        weekLabel[i].Text = week[i] + " ";
+                        weekLabel[i].Text = week[i] + "| ";
                         continue;
                     }
 
-                    string Text = week[i] + " " + info.begin_bibleName + " " + info.begin_chapter.ToString() + " 장" + "~ " + info.end_bibleName + " " + info.end_chapter.ToString() + " 장";
+                    string Text = week[i] + " " + info.begin_bibleName + " " + info.begin_chapter.ToString() + " chapter" + "~ " + info.end_bibleName + " " + info.end_chapter.ToString() + " verse";
 
                     //한장씩 읽을때는 end_bibleName 없으므로 시작 만 출력해준다. 
                     if (info.end_bibleName == "")
                     {
-                        Text = week[i] + " " + info.begin_bibleName + " " + info.begin_chapter.ToString() + " 장";
+                        Text = week[i] + " | " + info.begin_bibleName + " " + info.begin_chapter.ToString() + " chapter";
                     }
 
                     weekLabel[i].Text = Text;
@@ -285,6 +292,8 @@ namespace Antioch.View
 
                     if (dayofPos == i)
                         weekLabel[i].TextColor = Color.Red;
+
+                    ShareTimeTable += Text += "\n";
 
 
                     // Your label tap event
@@ -336,13 +345,13 @@ namespace Antioch.View
                     int startpos = UnderliningPos;
                     foreach (var data in list)
                     {
-                        var contexttext = BibleInfo.GetContextText(BibleType.KRV, data.BibleName, data.Chapter, data.Verse);
+                        var contexttext = BibleInfo.GetContextText(BibleType.KJV, data.BibleName, data.Chapter, data.Verse);
 
                         int __verse;
                         string line;
                         Helper.SpliteVerseText(contexttext, out __verse, out line);
 
-                        var text = data.BibleName + " " + data.Chapter + " 장" + " " + data.Verse + "절 \n" + line;
+                        var text = data.BibleName + " " + data.Chapter + " Chapter" + " " + data.Verse + "Verse \n" + line;
 
                         var labelText = new Label { Text = text, LineBreakMode = LineBreakMode.WordWrap, TextColor = Xamarin.Forms.Color.FromRgb(0, 0, 0) };
 

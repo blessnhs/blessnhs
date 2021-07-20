@@ -36,8 +36,8 @@
             </ListView.ItemTemplate>
         </ListView>
 
-        <Editor x:Name="PrayEntry" Grid.Row="1" Grid.Column="0" Placeholder="기도 제목을 입력하세요"  />
+        <Editor x:Name="PrayEntry" Grid.Row="1" Grid.Column="0" Placeholder="Please enter prayer subject"  />
 
-        <Button Grid.Row="1" Grid.Column="1" Text="입력" Clicked="Entry_TextChanged"  Style="{StaticResource buttonStyle2}"/>
+        <Button Grid.Row="1" Grid.Column="1" Text="Enter" Clicked="Entry_TextChanged"  Style="{StaticResource buttonStyle2}"/>
     </Grid>
 </ContentView>

@@ -21,7 +21,7 @@
             
             <Frame BorderColor="Gray" Grid.Row="0" Grid.Column="0" BackgroundColor="#D77186">
                 <StackLayout x:Name="Notice">
-                    <Label Text=" 공 지 "   TextColor="White" FontSize="Large" FontAttributes="Bold" />
+                    <Label Text=" Noti"   TextColor="White" FontSize="Large" FontAttributes="Bold" />
                     <Label Text=" Notice "   TextColor="White" FontSize="Body" FontAttributes="Bold"/>
                     <StackLayout.GestureRecognizers>
                         <TapGestureRecognizer Tapped="OnTapped"/>
@@ -33,7 +33,7 @@
 
             <Frame BorderColor="Gray" Grid.Row="0" Grid.Column="1" BackgroundColor="#61A2DA">
                 <StackLayout x:Name="Bulletin">
-                    <Label  Text="주보" TextColor="White" FontSize="Large" FontAttributes="Bold" />
+                    <Label  Text="Bull" TextColor="White" FontSize="Large" FontAttributes="Bold" />
                     <Label  Text="Bulletin" TextColor="White" FontSize="Body" FontAttributes="Bold" />
                     <StackLayout.GestureRecognizers>
                         <TapGestureRecognizer Tapped="OnTapped"/>
@@ -42,7 +42,7 @@
             </Frame>
             <Frame BorderColor="Gray" Grid.Row="0" Grid.Column="2" BackgroundColor="#6CB7DA" >
                 <StackLayout x:Name="Sermon">
-                    <Label  Text="말씀" TextColor="White" FontSize="Large" FontAttributes="Bold" />
+                    <Label  Text="Serm" TextColor="White" FontSize="Large" FontAttributes="Bold" />
                     <Label  Text="Sermon" TextColor="White" FontSize="Body" FontAttributes="Bold" />
                     <StackLayout.GestureRecognizers>
                         <TapGestureRecognizer Tapped="OnTapped"/>
@@ -53,7 +53,7 @@
 
             <Frame BorderColor="Gray"  CornerRadius="5"  Grid.Row="1" Grid.Column="0"  BackgroundColor="#65B9DC">
                 <StackLayout x:Name="Lecture">
-                    <Label  Text="강의1"  TextColor="White" FontSize="Large" FontAttributes="Bold" />
+                    <Label  Text="Lec1"  TextColor="White" FontSize="Large" FontAttributes="Bold" />
                     <Label  Text="Lecture"  TextColor="White" FontSize="Body" FontAttributes="Bold" />
                     <StackLayout.GestureRecognizers>
                         <TapGestureRecognizer Tapped="OnTapped"/>
@@ -63,7 +63,7 @@
 
             <Frame BorderColor="Gray"  CornerRadius="5"  Grid.Row="1" Grid.Column="1" BackgroundColor="#B13691">
                 <StackLayout x:Name="Chat">
-                    <Label  Text="채팅"  TextColor="White" FontSize="Large" FontAttributes="Bold" />
+                    <Label  Text="Chat"  TextColor="White" FontSize="Large" FontAttributes="Bold" />
                     <Label  Text="Chat"  TextColor="White" FontSize="Body" FontAttributes="Bold" />
                     <StackLayout.GestureRecognizers>
                         <TapGestureRecognizer Tapped="OnTapped"/>
@@ -73,7 +73,7 @@
 
             <Frame BorderColor="Gray"  CornerRadius="5"  Grid.Row="1" Grid.Column="2"  BackgroundColor="#E9A621">
                 <StackLayout x:Name="Bible">
-                    <Label Text="성경"  TextColor="White" FontSize="Large" FontAttributes="Bold" />
+                    <Label Text="Bible"  TextColor="White" FontSize="Large" FontAttributes="Bold" />
                     <Label Text="Bible"  TextColor="White" FontSize="Body" FontAttributes="Bold" />
                     <StackLayout.GestureRecognizers>
                         <TapGestureRecognizer Tapped="OnTapped"/>
@@ -83,7 +83,7 @@
 
             <Frame BorderColor="Gray"  CornerRadius="5"  Grid.Row="2" Grid.Column="0"  BackgroundColor="#94B19F">
                 <StackLayout x:Name="Lecture2">
-                    <Label  Text="강의2"  TextColor="White" FontSize="Large" FontAttributes="Bold" />
+                    <Label  Text="Lec2"  TextColor="White" FontSize="Large" FontAttributes="Bold" />
                     <Label  Text="Lecture2"  TextColor="White" FontSize="Body" FontAttributes="Bold" />
                     <StackLayout.GestureRecognizers>
                         <TapGestureRecognizer Tapped="OnTapped"/>
@@ -94,7 +94,7 @@
 
             <Frame BorderColor="Gray"  CornerRadius="5"  Grid.Row="2" Grid.Column="1"  BackgroundColor="#00225D">
                 <StackLayout x:Name="Pray">
-                    <Label  Text="기도"  TextColor="White" FontSize="Large" FontAttributes="Bold" />
+                    <Label  Text="Pray"  TextColor="White" FontSize="Large" FontAttributes="Bold" />
                     <Label  Text="Pray"  TextColor="White" FontSize="Body" FontAttributes="Bold" />
                     <StackLayout.GestureRecognizers>
                         <TapGestureRecognizer Tapped="OnTapped"/>
@@ -104,7 +104,7 @@
 
             <Frame BorderColor="Gray"  CornerRadius="5"  Grid.Row="2" Grid.Column="2"  BackgroundColor="#D75725">
                 <StackLayout  x:Name="Plan">
-                    <Label Text="계획" TextColor="White" FontSize="Large" FontAttributes="Bold" />
+                    <Label Text="Plan" TextColor="White" FontSize="Large" FontAttributes="Bold" />
                     <Label Text="Plan" TextColor="White" FontSize="Body" FontAttributes="Bold" />
                     <StackLayout.GestureRecognizers>
                         <TapGestureRecognizer Tapped="OnTapped"/>
@@ -115,8 +115,8 @@
 
             <Frame BorderColor="Gray"  CornerRadius="5"  Grid.Row="3" Grid.Column="0" BackgroundColor="#763262">
                 <StackLayout x:Name="Evangelize">
-                    <Label  Text="전도" TextColor="White" FontSize="Large" FontAttributes="Bold" />
-                    <Label  Text="Evangelize" TextColor="White" FontSize="Body" FontAttributes="Bold" />
+                    <Label  Text="Evan" TextColor="White" FontSize="Large" FontAttributes="Bold" />
+                    <Label  Text="Evangelize" TextColor="White" FontAttributes="Bold" />
                     <StackLayout.GestureRecognizers>
                         <TapGestureRecognizer Tapped="OnTapped"/>
                     </StackLayout.GestureRecognizers>
@@ -126,8 +126,8 @@
 
             <Frame BorderColor="Gray"  CornerRadius="5"  Grid.Row="3" Grid.Column="1" BackgroundColor="#763262">
                 <StackLayout x:Name="HomePage">
-                    <Label  Text="홈페이지" TextColor="White" FontSize="Large" FontAttributes="Bold" />
-                    <Label  Text="HomePage" TextColor="White" FontSize="Body" FontAttributes="Bold" />
+                    <Label  Text="Home" TextColor="White" FontSize="Large" FontAttributes="Bold" />
+                    <Label  Text="Home" TextColor="White" FontSize="Body" FontAttributes="Bold" />
                     <StackLayout.GestureRecognizers>
                         <TapGestureRecognizer Tapped="OnTapped"/>
                     </StackLayout.GestureRecognizers>
@@ -136,7 +136,7 @@
 
             <Frame BorderColor="Gray"  CornerRadius="5"  Grid.Row="3" Grid.Column="2"  BackgroundColor="#171635">
                 <StackLayout  x:Name="QnA">
-                    <Label Text="질문" TextColor="White" FontSize="Large" FontAttributes="Bold" />
+                    <Label Text="QnA" TextColor="White" FontSize="Large" FontAttributes="Bold" />
                     <Label Text="QnA" TextColor="White" FontSize="Body" FontAttributes="Bold" />
                     <StackLayout.GestureRecognizers>
                         <TapGestureRecognizer Tapped="OnTapped"/>
