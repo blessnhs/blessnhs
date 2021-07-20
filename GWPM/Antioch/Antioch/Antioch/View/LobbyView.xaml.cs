@@ -75,11 +75,16 @@ namespace Antioch.View
 
                     case "Chat":
                         {
-                            LoadView(roompage);
-                            //if(GetCurrentChatView() == null)
-                            //    LoadView(roompage);
-                            //else
-                            //    LoadView(GetCurrentChatView());
+                            if (User.LoginSuccess == false)
+                            {
+                                var mainpage = (MainPage)Application.Current.MainPage;
+
+                                mainpage.LoadSetting();
+                            }
+                            else
+                            {
+                                LoadView(roompage);
+                            }
                         }
                         break;
 

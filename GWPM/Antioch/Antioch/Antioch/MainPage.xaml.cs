@@ -160,7 +160,12 @@ namespace Antioch
             LoadView(lobby);
             return true;
         }
-               
+
+        public bool LoadSetting()
+        {
+            LoadView(setting);
+            return true;
+        }
 
         void ico_mail_clicked(object sender, EventArgs e)
         {
