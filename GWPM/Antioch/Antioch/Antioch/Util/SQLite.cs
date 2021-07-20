@@ -275,7 +275,7 @@ namespace Antioch
             }
             else
             {
-                User.CacheData.BibleName = "창세기";
+                User.CacheData.BibleName = "Genesis";
                 User.CacheData.Chapter = 1;
                 User.CacheData.Verse = 1;
                 User.CacheData.FontSize = 20;

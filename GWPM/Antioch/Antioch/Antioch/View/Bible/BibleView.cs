@@ -188,8 +188,8 @@ namespace Antioch
 
                 TextLayout.Children.Add(Label);
 
-                if(User.CacheData.EnalbeKJV == true)
-                    TextLayout.Children.Add(LabelEnglish);
+            //    if(User.CacheData.EnalbeKJV == true)
+            //        TextLayout.Children.Add(LabelEnglish);
                 
             }
 
