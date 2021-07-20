@@ -18,7 +18,7 @@
 
                 <Frame BorderColor="Gray" Grid.Row="0" Grid.Column="0">
                     <StackLayout  BackgroundColor="White" Padding="3,3,3,3">
-                        <Label x:Name="label_2020msg" Text=" 원단 메세지 보기 " HorizontalTextAlignment="Center" VerticalTextAlignment="Center"  TextColor="Black" />
+                        <Label x:Name="share_labal" Text=" Share " HorizontalTextAlignment="Center" VerticalTextAlignment="Center"  TextColor="Black" />
                     </StackLayout>
                 </Frame>
 
