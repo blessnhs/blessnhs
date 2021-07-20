@@ -103,11 +103,11 @@ namespace Antioch.View
                     case "Bible":
                         LoadView(new BibleView());
                         break;
-                    case "HomePage":
+                    case "Home":
                         Device.OpenUri(new Uri("http://www.antiochi.net"));
                         break;
 
-                    case "Evangelize":
+                    case "Evan":
                         Share.RequestAsync(new ShareTextRequest
                         {
                             Text = "https://youtu.be/Dm89UpFcHVQ",

@@ -114,9 +114,9 @@
 
 
             <Frame BorderColor="Gray"  CornerRadius="5"  Grid.Row="3" Grid.Column="0" BackgroundColor="#763262">
-                <StackLayout x:Name="Evangelize">
+                <StackLayout x:Name="Evan">
                     <Label  Text="전도" TextColor="White" FontSize="Large" FontAttributes="Bold" />
-                    <Label  Text="Evangelize" TextColor="White" FontSize="Body" FontAttributes="Bold" />
+                    <Label  Text="Evan" TextColor="White" FontSize="Body" FontAttributes="Bold" />
                     <StackLayout.GestureRecognizers>
                         <TapGestureRecognizer Tapped="OnTapped"/>
                     </StackLayout.GestureRecognizers>
@@ -125,9 +125,9 @@
 
 
             <Frame BorderColor="Gray"  CornerRadius="5"  Grid.Row="3" Grid.Column="1" BackgroundColor="#763262">
-                <StackLayout x:Name="HomePage">
-                    <Label  Text="홈페이지" TextColor="White" FontSize="Large" FontAttributes="Bold" />
-                    <Label  Text="HomePage" TextColor="White" FontSize="Body" FontAttributes="Bold" />
+                <StackLayout x:Name="Home">
+                    <Label  Text="홈" TextColor="White" FontSize="Large" FontAttributes="Bold" />
+                    <Label  Text="Home" TextColor="White" FontSize="Body" FontAttributes="Bold" />
                     <StackLayout.GestureRecognizers>
                         <TapGestureRecognizer Tapped="OnTapped"/>
                     </StackLayout.GestureRecognizers>
