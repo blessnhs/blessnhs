@@ -18,6 +18,7 @@ extern PROTOBUF_INTERNAL_EXPORT_Structure_2eproto ::PROTOBUF_NAMESPACE_ID::inter
 extern PROTOBUF_INTERNAL_EXPORT_Structure_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_NotifyInfo_Structure_2eproto;
 extern PROTOBUF_INTERNAL_EXPORT_Structure_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_PrayInfo_Structure_2eproto;
 extern PROTOBUF_INTERNAL_EXPORT_Structure_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_RoomInfo2_Structure_2eproto;
+extern PROTOBUF_INTERNAL_EXPORT_Structure_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_RoomMessage_Structure_2eproto;
 extern PROTOBUF_INTERNAL_EXPORT_Structure_2eproto ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_RoomUserInfo_Structure_2eproto;
 class VERSION_RESDefaultTypeInternal {
  public:
@@ -132,8 +133,9 @@ static void InitDefaultsscc_info_ENTER_ROOM_RES_GS_2eCLI_2eproto() {
   ::ENTER_ROOM_RES::InitAsDefaultInstance();
 }
 
-::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_ENTER_ROOM_RES_GS_2eCLI_2eproto =
-    {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 0, 0, InitDefaultsscc_info_ENTER_ROOM_RES_GS_2eCLI_2eproto}, {}};
+::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<1> scc_info_ENTER_ROOM_RES_GS_2eCLI_2eproto =
+    {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 1, 0, InitDefaultsscc_info_ENTER_ROOM_RES_GS_2eCLI_2eproto}, {
+      &scc_info_RoomMessage_Structure_2eproto.base,}};
 
 static void InitDefaultsscc_info_LEAVE_ROOM_RES_GS_2eCLI_2eproto() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
@@ -277,8 +279,9 @@ static void InitDefaultsscc_info_ROOM_PASS_THROUGH_RES_GS_2eCLI_2eproto() {
   ::ROOM_PASS_THROUGH_RES::InitAsDefaultInstance();
 }
 
-::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_ROOM_PASS_THROUGH_RES_GS_2eCLI_2eproto =
-    {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 0, 0, InitDefaultsscc_info_ROOM_PASS_THROUGH_RES_GS_2eCLI_2eproto}, {}};
+::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<1> scc_info_ROOM_PASS_THROUGH_RES_GS_2eCLI_2eproto =
+    {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 1, 0, InitDefaultsscc_info_ROOM_PASS_THROUGH_RES_GS_2eCLI_2eproto}, {
+      &scc_info_RoomMessage_Structure_2eproto.base,}};
 
 static void InitDefaultsscc_info_VERSION_RES_GS_2eCLI_2eproto() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
@@ -347,10 +350,12 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_GS_2eCLI_2eproto::offsets[] PR
   PROTOBUF_FIELD_OFFSET(::ENTER_ROOM_RES, var_name_),
   PROTOBUF_FIELD_OFFSET(::ENTER_ROOM_RES, var_room_id_),
   PROTOBUF_FIELD_OFFSET(::ENTER_ROOM_RES, var_code_),
+  PROTOBUF_FIELD_OFFSET(::ENTER_ROOM_RES, var_messages_),
   3,
   0,
   1,
   2,
+  ~0u,
   PROTOBUF_FIELD_OFFSET(::NEW_USER_IN_ROOM_NTY, _has_bits_),
   PROTOBUF_FIELD_OFFSET(::NEW_USER_IN_ROOM_NTY, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -373,10 +378,12 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_GS_2eCLI_2eproto::offsets[] PR
   PROTOBUF_FIELD_OFFSET(::LEAVE_ROOM_RES, var_name_),
   PROTOBUF_FIELD_OFFSET(::LEAVE_ROOM_RES, var_code_),
   PROTOBUF_FIELD_OFFSET(::LEAVE_ROOM_RES, var_index_),
-  3,
+  PROTOBUF_FIELD_OFFSET(::LEAVE_ROOM_RES, var_room_number_),
+  4,
   0,
   2,
   1,
+  3,
   PROTOBUF_FIELD_OFFSET(::ROOM_LIST_RES, _has_bits_),
   PROTOBUF_FIELD_OFFSET(::ROOM_LIST_RES, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -395,14 +402,12 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_GS_2eCLI_2eproto::offsets[] PR
   ~0u,  // no _weak_field_map_
   PROTOBUF_FIELD_OFFSET(::ROOM_PASS_THROUGH_RES, id_),
   PROTOBUF_FIELD_OFFSET(::ROOM_PASS_THROUGH_RES, var_code_),
-  PROTOBUF_FIELD_OFFSET(::ROOM_PASS_THROUGH_RES, var_name_),
-  PROTOBUF_FIELD_OFFSET(::ROOM_PASS_THROUGH_RES, var_message_),
-  PROTOBUF_FIELD_OFFSET(::ROOM_PASS_THROUGH_RES, var_message_int_),
-  4,
+  PROTOBUF_FIELD_OFFSET(::ROOM_PASS_THROUGH_RES, var_messages_),
+  PROTOBUF_FIELD_OFFSET(::ROOM_PASS_THROUGH_RES, var_room_number_),
   2,
   0,
+  ~0u,
   1,
-  3,
   PROTOBUF_FIELD_OFFSET(::NOTICE_RES, _has_bits_),
   PROTOBUF_FIELD_OFFSET(::NOTICE_RES, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -487,18 +492,18 @@ static const ::PROTOBUF_NAMESPACE_ID::internal::MigrationSchema schemas[] PROTOB
   { 0, 8, sizeof(::VERSION_RES)},
   { 11, 21, sizeof(::LOGIN_RES)},
   { 26, 35, sizeof(::CREATE_ROOM_RES)},
-  { 39, 48, sizeof(::ENTER_ROOM_RES)},
-  { 52, 61, sizeof(::NEW_USER_IN_ROOM_NTY)},
-  { 65, 74, sizeof(::LEAVE_ROOM_RES)},
-  { 78, 86, sizeof(::ROOM_LIST_RES)},
-  { 89, 99, sizeof(::ROOM_PASS_THROUGH_RES)},
-  { 104, 111, sizeof(::NOTICE_RES)},
-  { 113, 122, sizeof(::BITMAP_MESSAGE_RES)},
-  { 126, 135, sizeof(::AUDIO_MESSAGE_RES)},
-  { 139, 147, sizeof(::PRAY_MESSAGE_RES)},
-  { 150, 159, sizeof(::PRAY_MESSAGE_REG_RES)},
-  { 163, 170, sizeof(::QNA_RES)},
-  { 172, 180, sizeof(::MAIL_LIST_RES)},
+  { 39, 49, sizeof(::ENTER_ROOM_RES)},
+  { 54, 63, sizeof(::NEW_USER_IN_ROOM_NTY)},
+  { 67, 77, sizeof(::LEAVE_ROOM_RES)},
+  { 82, 90, sizeof(::ROOM_LIST_RES)},
+  { 93, 102, sizeof(::ROOM_PASS_THROUGH_RES)},
+  { 106, 113, sizeof(::NOTICE_RES)},
+  { 115, 124, sizeof(::BITMAP_MESSAGE_RES)},
+  { 128, 137, sizeof(::AUDIO_MESSAGE_RES)},
+  { 141, 149, sizeof(::PRAY_MESSAGE_RES)},
+  { 152, 161, sizeof(::PRAY_MESSAGE_REG_RES)},
+  { 165, 172, sizeof(::QNA_RES)},
+  { 174, 182, sizeof(::MAIL_LIST_RES)},
 };
 
 static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] = {
@@ -530,47 +535,48 @@ const char descriptor_table_protodef_GS_2eCLI_2eproto[] PROTOBUF_SECTION_VARIABL
   "var_name\030\005 \001(\t\"\205\001\n\017CREATE_ROOM_RES\022-\n\002id"
   "\030\001 \001(\0162\t.PROTOCOL:\026ID_PKT_CREATE_ROOM_RE"
   "S\022\020\n\010var_name\030\002 \001(\t\022\023\n\013var_room_id\030\003 \001(\005"
-  "\022\034\n\010var_code\030\004 \001(\0162\n.ErrorCode\"\203\001\n\016ENTER"
+  "\022\034\n\010var_code\030\004 \001(\0162\n.ErrorCode\"\247\001\n\016ENTER"
   "_ROOM_RES\022,\n\002id\030\001 \001(\0162\t.PROTOCOL:\025ID_PKT"
   "_ENTER_ROOM_RES\022\020\n\010var_name\030\002 \001(\t\022\023\n\013var"
   "_room_id\030\003 \001(\005\022\034\n\010var_code\030\004 \001(\0162\n.Error"
-  "Code\"\240\001\n\024NEW_USER_IN_ROOM_NTY\0222\n\002id\030\001 \001("
-  "\0162\t.PROTOCOL:\033ID_PKT_NEW_USER_IN_ROOM_NT"
-  "Y\022$\n\rvar_room_user\030\002 \001(\0132\r.RoomUserInfo\022"
-  "\034\n\010var_code\030\003 \001(\0162\n.ErrorCode\022\020\n\010var_typ"
-  "e\030\004 \001(\005\"\201\001\n\016LEAVE_ROOM_RES\022,\n\002id\030\001 \001(\0162\t"
-  ".PROTOCOL:\025ID_PKT_LEAVE_ROOM_RES\022\020\n\010var_"
-  "name\030\002 \001(\t\022\034\n\010var_code\030\003 \001(\0162\n.ErrorCode"
-  "\022\021\n\tvar_index\030\004 \001(\003\"}\n\rROOM_LIST_RES\022+\n\002"
-  "id\030\001 \001(\0162\t.PROTOCOL:\024ID_PKT_ROOM_LIST_RE"
-  "S\022\034\n\010var_code\030\002 \001(\0162\n.ErrorCode\022!\n\rvar_r"
-  "oom_list\030\003 \003(\0132\n.RoomInfo2\"\252\001\n\025ROOM_PASS"
-  "_THROUGH_RES\0223\n\002id\030\001 \001(\0162\t.PROTOCOL:\034ID_"
-  "PKT_ROOM_PASS_THROUGH_RES\022\034\n\010var_code\030\002 "
-  "\001(\0162\n.ErrorCode\022\020\n\010var_name\030\003 \002(\t\022\023\n\013var"
-  "_message\030\004 \002(\t\022\027\n\017var_message_int\030\005 \002(\005\""
-  "U\n\nNOTICE_RES\022(\n\002id\030\001 \001(\0162\t.PROTOCOL:\021ID"
-  "_PKT_NOTICE_RES\022\035\n\010var_list\030\002 \003(\0132\013.Noti"
-  "fyInfo\"\213\001\n\022BITMAP_MESSAGE_RES\0220\n\002id\030\001 \001("
-  "\0162\t.PROTOCOL:\031ID_PKT_BITMAP_MESSAGE_RES\022"
-  "\034\n\010var_code\030\002 \001(\0162\n.ErrorCode\022\023\n\013var_mes"
-  "sage\030\003 \003(\014\022\020\n\010var_name\030\004 \001(\014\"\211\001\n\021AUDIO_M"
-  "ESSAGE_RES\022/\n\002id\030\001 \001(\0162\t.PROTOCOL:\030ID_PK"
-  "T_AUDIO_MESSAGE_RES\022\034\n\010var_code\030\002 \001(\0162\n."
-  "ErrorCode\022\023\n\013var_message\030\003 \003(\014\022\020\n\010var_na"
-  "me\030\004 \001(\014\"}\n\020PRAY_MESSAGE_RES\022.\n\002id\030\001 \001(\016"
-  "2\t.PROTOCOL:\027ID_PKT_PRAY_MESSAGE_RES\022\034\n\010"
-  "var_code\030\002 \001(\0162\n.ErrorCode\022\033\n\010var_list\030\003"
-  " \003(\0132\t.PrayInfo\"\217\001\n\024PRAY_MESSAGE_REG_RES"
-  "\0222\n\002id\030\001 \001(\0162\t.PROTOCOL:\033ID_PKT_PRAY_MES"
-  "SAGE_REG_RES\022\034\n\010var_code\030\002 \001(\0162\n.ErrorCo"
-  "de\022\023\n\013var_message\030\003 \001(\t\022\020\n\010var_time\030\004 \001("
-  "\t\"N\n\007QNA_RES\022%\n\002id\030\001 \001(\0162\t.PROTOCOL:\016ID_"
-  "PKT_QNA_RES\022\034\n\010var_code\030\002 \001(\0162\n.ErrorCod"
-  "e\"w\n\rMAIL_LIST_RES\022+\n\002id\030\001 \001(\0162\t.PROTOCO"
-  "L:\024ID_PKT_MAIL_LIST_RES\022\034\n\010var_code\030\002 \001("
-  "\0162\n.ErrorCode\022\033\n\010var_list\030\003 \003(\0132\t.MailIn"
-  "foB\002H\001"
+  "Code\022\"\n\014var_messages\030\005 \003(\0132\014.RoomMessage"
+  "\"\240\001\n\024NEW_USER_IN_ROOM_NTY\0222\n\002id\030\001 \001(\0162\t."
+  "PROTOCOL:\033ID_PKT_NEW_USER_IN_ROOM_NTY\022$\n"
+  "\rvar_room_user\030\002 \001(\0132\r.RoomUserInfo\022\034\n\010v"
+  "ar_code\030\003 \001(\0162\n.ErrorCode\022\020\n\010var_type\030\004 "
+  "\001(\005\"\232\001\n\016LEAVE_ROOM_RES\022,\n\002id\030\001 \001(\0162\t.PRO"
+  "TOCOL:\025ID_PKT_LEAVE_ROOM_RES\022\020\n\010var_name"
+  "\030\002 \001(\t\022\034\n\010var_code\030\003 \001(\0162\n.ErrorCode\022\021\n\t"
+  "var_index\030\004 \001(\003\022\027\n\017var_room_number\030\005 \001(\005"
+  "\"}\n\rROOM_LIST_RES\022+\n\002id\030\001 \001(\0162\t.PROTOCOL"
+  ":\024ID_PKT_ROOM_LIST_RES\022\034\n\010var_code\030\002 \001(\016"
+  "2\n.ErrorCode\022!\n\rvar_room_list\030\003 \003(\0132\n.Ro"
+  "omInfo2\"\247\001\n\025ROOM_PASS_THROUGH_RES\0223\n\002id\030"
+  "\001 \001(\0162\t.PROTOCOL:\034ID_PKT_ROOM_PASS_THROU"
+  "GH_RES\022\034\n\010var_code\030\002 \001(\0162\n.ErrorCode\022\"\n\014"
+  "var_messages\030\003 \003(\0132\014.RoomMessage\022\027\n\017var_"
+  "room_number\030\004 \001(\005\"U\n\nNOTICE_RES\022(\n\002id\030\001 "
+  "\001(\0162\t.PROTOCOL:\021ID_PKT_NOTICE_RES\022\035\n\010var"
+  "_list\030\002 \003(\0132\013.NotifyInfo\"\213\001\n\022BITMAP_MESS"
+  "AGE_RES\0220\n\002id\030\001 \001(\0162\t.PROTOCOL:\031ID_PKT_B"
+  "ITMAP_MESSAGE_RES\022\034\n\010var_code\030\002 \001(\0162\n.Er"
+  "rorCode\022\023\n\013var_message\030\003 \003(\014\022\020\n\010var_name"
+  "\030\004 \001(\014\"\211\001\n\021AUDIO_MESSAGE_RES\022/\n\002id\030\001 \001(\016"
+  "2\t.PROTOCOL:\030ID_PKT_AUDIO_MESSAGE_RES\022\034\n"
+  "\010var_code\030\002 \001(\0162\n.ErrorCode\022\023\n\013var_messa"
+  "ge\030\003 \003(\014\022\020\n\010var_name\030\004 \001(\014\"}\n\020PRAY_MESSA"
+  "GE_RES\022.\n\002id\030\001 \001(\0162\t.PROTOCOL:\027ID_PKT_PR"
+  "AY_MESSAGE_RES\022\034\n\010var_code\030\002 \001(\0162\n.Error"
+  "Code\022\033\n\010var_list\030\003 \003(\0132\t.PrayInfo\"\217\001\n\024PR"
+  "AY_MESSAGE_REG_RES\0222\n\002id\030\001 \001(\0162\t.PROTOCO"
+  "L:\033ID_PKT_PRAY_MESSAGE_REG_RES\022\034\n\010var_co"
+  "de\030\002 \001(\0162\n.ErrorCode\022\023\n\013var_message\030\003 \001("
+  "\t\022\020\n\010var_time\030\004 \001(\t\"N\n\007QNA_RES\022%\n\002id\030\001 \001"
+  "(\0162\t.PROTOCOL:\016ID_PKT_QNA_RES\022\034\n\010var_cod"
+  "e\030\002 \001(\0162\n.ErrorCode\"w\n\rMAIL_LIST_RES\022+\n\002"
+  "id\030\001 \001(\0162\t.PROTOCOL:\024ID_PKT_MAIL_LIST_RE"
+  "S\022\034\n\010var_code\030\002 \001(\0162\n.ErrorCode\022\033\n\010var_l"
+  "ist\030\003 \003(\0132\t.MailInfoB\002H\001"
   ;
 static const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable*const descriptor_table_GS_2eCLI_2eproto_deps[2] = {
   &::descriptor_table_Enum_2eproto,
@@ -596,7 +602,7 @@ static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_GS_
 static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_GS_2eCLI_2eproto_once;
 static bool descriptor_table_GS_2eCLI_2eproto_initialized = false;
 const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_GS_2eCLI_2eproto = {
-  &descriptor_table_GS_2eCLI_2eproto_initialized, descriptor_table_protodef_GS_2eCLI_2eproto, "GS.CLI.proto", 2006,
+  &descriptor_table_GS_2eCLI_2eproto_initialized, descriptor_table_protodef_GS_2eCLI_2eproto, "GS.CLI.proto", 2064,
   &descriptor_table_GS_2eCLI_2eproto_once, descriptor_table_GS_2eCLI_2eproto_sccs, descriptor_table_GS_2eCLI_2eproto_deps, 15, 2,
   schemas, file_default_instances, TableStruct_GS_2eCLI_2eproto::offsets,
   file_level_metadata_GS_2eCLI_2eproto, 15, file_level_enum_descriptors_GS_2eCLI_2eproto, file_level_service_descriptors_GS_2eCLI_2eproto,
@@ -1603,6 +1609,9 @@ class ENTER_ROOM_RES::_Internal {
   }
 };
 
+void ENTER_ROOM_RES::clear_var_messages() {
+  var_messages_.Clear();
+}
 ENTER_ROOM_RES::ENTER_ROOM_RES()
   : ::PROTOBUF_NAMESPACE_ID::Message(), _internal_metadata_(nullptr) {
   SharedCtor();
@@ -1611,7 +1620,8 @@ ENTER_ROOM_RES::ENTER_ROOM_RES()
 ENTER_ROOM_RES::ENTER_ROOM_RES(const ENTER_ROOM_RES& from)
   : ::PROTOBUF_NAMESPACE_ID::Message(),
       _internal_metadata_(nullptr),
-      _has_bits_(from._has_bits_) {
+      _has_bits_(from._has_bits_),
+      var_messages_(from.var_messages_) {
   _internal_metadata_.MergeFrom(from._internal_metadata_);
   var_name_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
   if (from._internal_has_var_name()) {
@@ -1656,6 +1666,7 @@ void ENTER_ROOM_RES::Clear() {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
+  var_messages_.Clear();
   cached_has_bits = _has_bits_[0];
   if (cached_has_bits & 0x00000001u) {
     var_name_.ClearNonDefaultToEmptyNoArena();
@@ -1721,6 +1732,18 @@ const char* ENTER_ROOM_RES::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE
           }
         } else goto handle_unusual;
         continue;
+      // repeated .RoomMessage var_messages = 5;
+      case 5:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 42)) {
+          ptr -= 1;
+          do {
+            ptr += 1;
+            ptr = ctx->ParseMessage(_internal_add_var_messages(), ptr);
+            CHK_(ptr);
+            if (!ctx->DataAvailable(ptr)) break;
+          } while (::PROTOBUF_NAMESPACE_ID::internal::ExpectTag<42>(ptr));
+        } else goto handle_unusual;
+        continue;
       default: {
       handle_unusual:
         if ((tag & 7) == 4 || tag == 0) {
@@ -1779,6 +1802,14 @@ failure:
       4, this->_internal_var_code(), target);
   }
 
+  // repeated .RoomMessage var_messages = 5;
+  for (unsigned int i = 0,
+      n = static_cast<unsigned int>(this->_internal_var_messages_size()); i < n; i++) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+      InternalWriteMessage(5, this->_internal_var_messages(i), target, stream);
+  }
+
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields(), target, stream);
@@ -1794,6 +1825,13 @@ size_t ENTER_ROOM_RES::ByteSizeLong() const {
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
+
+  // repeated .RoomMessage var_messages = 5;
+  total_size += 1UL * this->_internal_var_messages_size();
+  for (const auto& msg : this->var_messages_) {
+    total_size +=
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(msg);
+  }
 
   cached_has_bits = _has_bits_[0];
   if (cached_has_bits & 0x0000000fu) {
@@ -1855,6 +1893,7 @@ void ENTER_ROOM_RES::MergeFrom(const ENTER_ROOM_RES& from) {
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
+  var_messages_.MergeFrom(from.var_messages_);
   cached_has_bits = from._has_bits_[0];
   if (cached_has_bits & 0x0000000fu) {
     if (cached_has_bits & 0x00000001u) {
@@ -1896,6 +1935,7 @@ void ENTER_ROOM_RES::InternalSwap(ENTER_ROOM_RES* other) {
   using std::swap;
   _internal_metadata_.Swap(&other->_internal_metadata_);
   swap(_has_bits_[0], other->_has_bits_[0]);
+  var_messages_.InternalSwap(&other->var_messages_);
   var_name_.Swap(&other->var_name_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
     GetArenaNoVirtual());
   swap(var_room_id_, other->var_room_id_);
@@ -2246,7 +2286,7 @@ class LEAVE_ROOM_RES::_Internal {
  public:
   using HasBits = decltype(std::declval<LEAVE_ROOM_RES>()._has_bits_);
   static void set_has_id(HasBits* has_bits) {
-    (*has_bits)[0] |= 8u;
+    (*has_bits)[0] |= 16u;
   }
   static void set_has_var_name(HasBits* has_bits) {
     (*has_bits)[0] |= 1u;
@@ -2256,6 +2296,9 @@ class LEAVE_ROOM_RES::_Internal {
   }
   static void set_has_var_index(HasBits* has_bits) {
     (*has_bits)[0] |= 2u;
+  }
+  static void set_has_var_room_number(HasBits* has_bits) {
+    (*has_bits)[0] |= 8u;
   }
 };
 
@@ -2283,8 +2326,8 @@ void LEAVE_ROOM_RES::SharedCtor() {
   ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&scc_info_LEAVE_ROOM_RES_GS_2eCLI_2eproto.base);
   var_name_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
   ::memset(&var_index_, 0, static_cast<size_t>(
-      reinterpret_cast<char*>(&var_code_) -
-      reinterpret_cast<char*>(&var_index_)) + sizeof(var_code_));
+      reinterpret_cast<char*>(&var_room_number_) -
+      reinterpret_cast<char*>(&var_index_)) + sizeof(var_room_number_));
   id_ = 9;
 }
 
@@ -2316,10 +2359,10 @@ void LEAVE_ROOM_RES::Clear() {
   if (cached_has_bits & 0x00000001u) {
     var_name_.ClearNonDefaultToEmptyNoArena();
   }
-  if (cached_has_bits & 0x0000000eu) {
+  if (cached_has_bits & 0x0000001eu) {
     ::memset(&var_index_, 0, static_cast<size_t>(
-        reinterpret_cast<char*>(&var_code_) -
-        reinterpret_cast<char*>(&var_index_)) + sizeof(var_code_));
+        reinterpret_cast<char*>(&var_room_number_) -
+        reinterpret_cast<char*>(&var_index_)) + sizeof(var_room_number_));
     id_ = 9;
   }
   _has_bits_.Clear();
@@ -2377,6 +2420,14 @@ const char* LEAVE_ROOM_RES::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
+      // optional int32 var_room_number = 5;
+      case 5:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 40)) {
+          _Internal::set_has_var_room_number(&has_bits);
+          var_room_number_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
       default: {
       handle_unusual:
         if ((tag & 7) == 4 || tag == 0) {
@@ -2406,7 +2457,7 @@ failure:
 
   cached_has_bits = _has_bits_[0];
   // optional .PROTOCOL id = 1 [default = ID_PKT_LEAVE_ROOM_RES];
-  if (cached_has_bits & 0x00000008u) {
+  if (cached_has_bits & 0x00000010u) {
     target = stream->EnsureSpace(target);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteEnumToArray(
       1, this->_internal_id(), target);
@@ -2435,6 +2486,12 @@ failure:
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt64ToArray(4, this->_internal_var_index(), target);
   }
 
+  // optional int32 var_room_number = 5;
+  if (cached_has_bits & 0x00000008u) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32ToArray(5, this->_internal_var_room_number(), target);
+  }
+
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields(), target, stream);
@@ -2452,7 +2509,7 @@ size_t LEAVE_ROOM_RES::ByteSizeLong() const {
   (void) cached_has_bits;
 
   cached_has_bits = _has_bits_[0];
-  if (cached_has_bits & 0x0000000fu) {
+  if (cached_has_bits & 0x0000001fu) {
     // optional string var_name = 2;
     if (cached_has_bits & 0x00000001u) {
       total_size += 1 +
@@ -2473,8 +2530,15 @@ size_t LEAVE_ROOM_RES::ByteSizeLong() const {
         ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::EnumSize(this->_internal_var_code());
     }
 
-    // optional .PROTOCOL id = 1 [default = ID_PKT_LEAVE_ROOM_RES];
+    // optional int32 var_room_number = 5;
     if (cached_has_bits & 0x00000008u) {
+      total_size += 1 +
+        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32Size(
+          this->_internal_var_room_number());
+    }
+
+    // optional .PROTOCOL id = 1 [default = ID_PKT_LEAVE_ROOM_RES];
+    if (cached_has_bits & 0x00000010u) {
       total_size += 1 +
         ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::EnumSize(this->_internal_id());
     }
@@ -2512,7 +2576,7 @@ void LEAVE_ROOM_RES::MergeFrom(const LEAVE_ROOM_RES& from) {
   (void) cached_has_bits;
 
   cached_has_bits = from._has_bits_[0];
-  if (cached_has_bits & 0x0000000fu) {
+  if (cached_has_bits & 0x0000001fu) {
     if (cached_has_bits & 0x00000001u) {
       _has_bits_[0] |= 0x00000001u;
       var_name_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.var_name_);
@@ -2524,6 +2588,9 @@ void LEAVE_ROOM_RES::MergeFrom(const LEAVE_ROOM_RES& from) {
       var_code_ = from.var_code_;
     }
     if (cached_has_bits & 0x00000008u) {
+      var_room_number_ = from.var_room_number_;
+    }
+    if (cached_has_bits & 0x00000010u) {
       id_ = from.id_;
     }
     _has_bits_[0] |= cached_has_bits;
@@ -2556,6 +2623,7 @@ void LEAVE_ROOM_RES::InternalSwap(LEAVE_ROOM_RES* other) {
     GetArenaNoVirtual());
   swap(var_index_, other->var_index_);
   swap(var_code_, other->var_code_);
+  swap(var_room_number_, other->var_room_number_);
   swap(id_, other->id_);
 }
 
@@ -2854,22 +2922,19 @@ class ROOM_PASS_THROUGH_RES::_Internal {
  public:
   using HasBits = decltype(std::declval<ROOM_PASS_THROUGH_RES>()._has_bits_);
   static void set_has_id(HasBits* has_bits) {
-    (*has_bits)[0] |= 16u;
-  }
-  static void set_has_var_code(HasBits* has_bits) {
     (*has_bits)[0] |= 4u;
   }
-  static void set_has_var_name(HasBits* has_bits) {
+  static void set_has_var_code(HasBits* has_bits) {
     (*has_bits)[0] |= 1u;
   }
-  static void set_has_var_message(HasBits* has_bits) {
+  static void set_has_var_room_number(HasBits* has_bits) {
     (*has_bits)[0] |= 2u;
-  }
-  static void set_has_var_message_int(HasBits* has_bits) {
-    (*has_bits)[0] |= 8u;
   }
 };
 
+void ROOM_PASS_THROUGH_RES::clear_var_messages() {
+  var_messages_.Clear();
+}
 ROOM_PASS_THROUGH_RES::ROOM_PASS_THROUGH_RES()
   : ::PROTOBUF_NAMESPACE_ID::Message(), _internal_metadata_(nullptr) {
   SharedCtor();
@@ -2878,16 +2943,9 @@ ROOM_PASS_THROUGH_RES::ROOM_PASS_THROUGH_RES()
 ROOM_PASS_THROUGH_RES::ROOM_PASS_THROUGH_RES(const ROOM_PASS_THROUGH_RES& from)
   : ::PROTOBUF_NAMESPACE_ID::Message(),
       _internal_metadata_(nullptr),
-      _has_bits_(from._has_bits_) {
+      _has_bits_(from._has_bits_),
+      var_messages_(from.var_messages_) {
   _internal_metadata_.MergeFrom(from._internal_metadata_);
-  var_name_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
-  if (from._internal_has_var_name()) {
-    var_name_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.var_name_);
-  }
-  var_message_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
-  if (from._internal_has_var_message()) {
-    var_message_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.var_message_);
-  }
   ::memcpy(&var_code_, &from.var_code_,
     static_cast<size_t>(reinterpret_cast<char*>(&id_) -
     reinterpret_cast<char*>(&var_code_)) + sizeof(id_));
@@ -2896,11 +2954,9 @@ ROOM_PASS_THROUGH_RES::ROOM_PASS_THROUGH_RES(const ROOM_PASS_THROUGH_RES& from)
 
 void ROOM_PASS_THROUGH_RES::SharedCtor() {
   ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&scc_info_ROOM_PASS_THROUGH_RES_GS_2eCLI_2eproto.base);
-  var_name_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
-  var_message_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
   ::memset(&var_code_, 0, static_cast<size_t>(
-      reinterpret_cast<char*>(&var_message_int_) -
-      reinterpret_cast<char*>(&var_code_)) + sizeof(var_message_int_));
+      reinterpret_cast<char*>(&var_room_number_) -
+      reinterpret_cast<char*>(&var_code_)) + sizeof(var_room_number_));
   id_ = 18;
 }
 
@@ -2910,8 +2966,6 @@ ROOM_PASS_THROUGH_RES::~ROOM_PASS_THROUGH_RES() {
 }
 
 void ROOM_PASS_THROUGH_RES::SharedDtor() {
-  var_name_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
-  var_message_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
 }
 
 void ROOM_PASS_THROUGH_RES::SetCachedSize(int size) const {
@@ -2929,19 +2983,12 @@ void ROOM_PASS_THROUGH_RES::Clear() {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
+  var_messages_.Clear();
   cached_has_bits = _has_bits_[0];
-  if (cached_has_bits & 0x00000003u) {
-    if (cached_has_bits & 0x00000001u) {
-      var_name_.ClearNonDefaultToEmptyNoArena();
-    }
-    if (cached_has_bits & 0x00000002u) {
-      var_message_.ClearNonDefaultToEmptyNoArena();
-    }
-  }
-  if (cached_has_bits & 0x0000001cu) {
+  if (cached_has_bits & 0x00000007u) {
     ::memset(&var_code_, 0, static_cast<size_t>(
-        reinterpret_cast<char*>(&var_message_int_) -
-        reinterpret_cast<char*>(&var_code_)) + sizeof(var_message_int_));
+        reinterpret_cast<char*>(&var_room_number_) -
+        reinterpret_cast<char*>(&var_code_)) + sizeof(var_room_number_));
     id_ = 18;
   }
   _has_bits_.Clear();
@@ -2980,33 +3027,23 @@ const char* ROOM_PASS_THROUGH_RES::_InternalParse(const char* ptr, ::PROTOBUF_NA
           }
         } else goto handle_unusual;
         continue;
-      // required string var_name = 3;
+      // repeated .RoomMessage var_messages = 3;
       case 3:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 26)) {
-          auto str = _internal_mutable_var_name();
-          ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
-          #ifndef NDEBUG
-          ::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "ROOM_PASS_THROUGH_RES.var_name");
-          #endif  // !NDEBUG
-          CHK_(ptr);
+          ptr -= 1;
+          do {
+            ptr += 1;
+            ptr = ctx->ParseMessage(_internal_add_var_messages(), ptr);
+            CHK_(ptr);
+            if (!ctx->DataAvailable(ptr)) break;
+          } while (::PROTOBUF_NAMESPACE_ID::internal::ExpectTag<26>(ptr));
         } else goto handle_unusual;
         continue;
-      // required string var_message = 4;
+      // optional int32 var_room_number = 4;
       case 4:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 34)) {
-          auto str = _internal_mutable_var_message();
-          ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
-          #ifndef NDEBUG
-          ::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "ROOM_PASS_THROUGH_RES.var_message");
-          #endif  // !NDEBUG
-          CHK_(ptr);
-        } else goto handle_unusual;
-        continue;
-      // required int32 var_message_int = 5;
-      case 5:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 40)) {
-          _Internal::set_has_var_message_int(&has_bits);
-          var_message_int_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 32)) {
+          _Internal::set_has_var_room_number(&has_bits);
+          var_room_number_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
@@ -3039,43 +3076,31 @@ failure:
 
   cached_has_bits = _has_bits_[0];
   // optional .PROTOCOL id = 1 [default = ID_PKT_ROOM_PASS_THROUGH_RES];
-  if (cached_has_bits & 0x00000010u) {
+  if (cached_has_bits & 0x00000004u) {
     target = stream->EnsureSpace(target);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteEnumToArray(
       1, this->_internal_id(), target);
   }
 
   // optional .ErrorCode var_code = 2;
-  if (cached_has_bits & 0x00000004u) {
+  if (cached_has_bits & 0x00000001u) {
     target = stream->EnsureSpace(target);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteEnumToArray(
       2, this->_internal_var_code(), target);
   }
 
-  // required string var_name = 3;
-  if (cached_has_bits & 0x00000001u) {
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::VerifyUTF8StringNamedField(
-      this->_internal_var_name().data(), static_cast<int>(this->_internal_var_name().length()),
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SERIALIZE,
-      "ROOM_PASS_THROUGH_RES.var_name");
-    target = stream->WriteStringMaybeAliased(
-        3, this->_internal_var_name(), target);
-  }
-
-  // required string var_message = 4;
-  if (cached_has_bits & 0x00000002u) {
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::VerifyUTF8StringNamedField(
-      this->_internal_var_message().data(), static_cast<int>(this->_internal_var_message().length()),
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SERIALIZE,
-      "ROOM_PASS_THROUGH_RES.var_message");
-    target = stream->WriteStringMaybeAliased(
-        4, this->_internal_var_message(), target);
-  }
-
-  // required int32 var_message_int = 5;
-  if (cached_has_bits & 0x00000008u) {
+  // repeated .RoomMessage var_messages = 3;
+  for (unsigned int i = 0,
+      n = static_cast<unsigned int>(this->_internal_var_messages_size()); i < n; i++) {
     target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32ToArray(5, this->_internal_var_message_int(), target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+      InternalWriteMessage(3, this->_internal_var_messages(i), target, stream);
+  }
+
+  // optional int32 var_room_number = 4;
+  if (cached_has_bits & 0x00000002u) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32ToArray(4, this->_internal_var_room_number(), target);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
@@ -3086,73 +3111,43 @@ failure:
   return target;
 }
 
-size_t ROOM_PASS_THROUGH_RES::RequiredFieldsByteSizeFallback() const {
-// @@protoc_insertion_point(required_fields_byte_size_fallback_start:ROOM_PASS_THROUGH_RES)
-  size_t total_size = 0;
-
-  if (_internal_has_var_name()) {
-    // required string var_name = 3;
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
-        this->_internal_var_name());
-  }
-
-  if (_internal_has_var_message()) {
-    // required string var_message = 4;
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
-        this->_internal_var_message());
-  }
-
-  if (_internal_has_var_message_int()) {
-    // required int32 var_message_int = 5;
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32Size(
-        this->_internal_var_message_int());
-  }
-
-  return total_size;
-}
 size_t ROOM_PASS_THROUGH_RES::ByteSizeLong() const {
 // @@protoc_insertion_point(message_byte_size_start:ROOM_PASS_THROUGH_RES)
   size_t total_size = 0;
 
-  if (((_has_bits_[0] & 0x0000000b) ^ 0x0000000b) == 0) {  // All required fields are present.
-    // required string var_name = 3;
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
-        this->_internal_var_name());
-
-    // required string var_message = 4;
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
-        this->_internal_var_message());
-
-    // required int32 var_message_int = 5;
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32Size(
-        this->_internal_var_message_int());
-
-  } else {
-    total_size += RequiredFieldsByteSizeFallback();
-  }
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  // optional .ErrorCode var_code = 2;
+  // repeated .RoomMessage var_messages = 3;
+  total_size += 1UL * this->_internal_var_messages_size();
+  for (const auto& msg : this->var_messages_) {
+    total_size +=
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(msg);
+  }
+
   cached_has_bits = _has_bits_[0];
-  if (cached_has_bits & 0x00000004u) {
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::EnumSize(this->_internal_var_code());
-  }
+  if (cached_has_bits & 0x00000007u) {
+    // optional .ErrorCode var_code = 2;
+    if (cached_has_bits & 0x00000001u) {
+      total_size += 1 +
+        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::EnumSize(this->_internal_var_code());
+    }
 
-  // optional .PROTOCOL id = 1 [default = ID_PKT_ROOM_PASS_THROUGH_RES];
-  if (cached_has_bits & 0x00000010u) {
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::EnumSize(this->_internal_id());
-  }
+    // optional int32 var_room_number = 4;
+    if (cached_has_bits & 0x00000002u) {
+      total_size += 1 +
+        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32Size(
+          this->_internal_var_room_number());
+    }
 
+    // optional .PROTOCOL id = 1 [default = ID_PKT_ROOM_PASS_THROUGH_RES];
+    if (cached_has_bits & 0x00000004u) {
+      total_size += 1 +
+        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::EnumSize(this->_internal_id());
+    }
+
+  }
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
     return ::PROTOBUF_NAMESPACE_ID::internal::ComputeUnknownFieldsSize(
         _internal_metadata_, total_size, &_cached_size_);
@@ -3184,23 +3179,16 @@ void ROOM_PASS_THROUGH_RES::MergeFrom(const ROOM_PASS_THROUGH_RES& from) {
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
+  var_messages_.MergeFrom(from.var_messages_);
   cached_has_bits = from._has_bits_[0];
-  if (cached_has_bits & 0x0000001fu) {
+  if (cached_has_bits & 0x00000007u) {
     if (cached_has_bits & 0x00000001u) {
-      _has_bits_[0] |= 0x00000001u;
-      var_name_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.var_name_);
-    }
-    if (cached_has_bits & 0x00000002u) {
-      _has_bits_[0] |= 0x00000002u;
-      var_message_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.var_message_);
-    }
-    if (cached_has_bits & 0x00000004u) {
       var_code_ = from.var_code_;
     }
-    if (cached_has_bits & 0x00000008u) {
-      var_message_int_ = from.var_message_int_;
+    if (cached_has_bits & 0x00000002u) {
+      var_room_number_ = from.var_room_number_;
     }
-    if (cached_has_bits & 0x00000010u) {
+    if (cached_has_bits & 0x00000004u) {
       id_ = from.id_;
     }
     _has_bits_[0] |= cached_has_bits;
@@ -3222,7 +3210,6 @@ void ROOM_PASS_THROUGH_RES::CopyFrom(const ROOM_PASS_THROUGH_RES& from) {
 }
 
 bool ROOM_PASS_THROUGH_RES::IsInitialized() const {
-  if ((_has_bits_[0] & 0x0000000b) != 0x0000000b) return false;
   return true;
 }
 
@@ -3230,12 +3217,9 @@ void ROOM_PASS_THROUGH_RES::InternalSwap(ROOM_PASS_THROUGH_RES* other) {
   using std::swap;
   _internal_metadata_.Swap(&other->_internal_metadata_);
   swap(_has_bits_[0], other->_has_bits_[0]);
-  var_name_.Swap(&other->var_name_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
-    GetArenaNoVirtual());
-  var_message_.Swap(&other->var_message_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
-    GetArenaNoVirtual());
+  var_messages_.InternalSwap(&other->var_messages_);
   swap(var_code_, other->var_code_);
-  swap(var_message_int_, other->var_message_int_);
+  swap(var_room_number_, other->var_room_number_);
   swap(id_, other->id_);
 }
 

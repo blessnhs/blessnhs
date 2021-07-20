@@ -18,7 +18,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   package='',
   syntax='proto2',
   serialized_options=b'H\001',
-  serialized_pb=b'\n\x0fStructure.proto\"H\n\x0cRoomUserInfo\x12\x10\n\x08var_name\x18\x01 \x01(\t\x12\x11\n\tvar_index\x18\x02 \x01(\x03\x12\x13\n\x0bpicture_uri\x18\x03 \x01(\t\"_\n\tRoomInfo2\x12\x0e\n\x06var_id\x18\x01 \x01(\x05\x12\x10\n\x08var_name\x18\x02 \x01(\t\x12\x19\n\x11var_current_count\x18\x03 \x01(\x05\x12\x15\n\rvar_max_count\x18\x04 \x01(\x05\"C\n\x08PrayInfo\x12\x10\n\x08var_name\x18\x01 \x01(\t\x12\x13\n\x0bvar_message\x18\x02 \x01(\t\x12\x10\n\x08var_time\x18\x03 \x01(\t\"C\n\nNotifyInfo\x12\x0e\n\x06var_id\x18\x01 \x01(\x03\x12\x13\n\x0bvar_content\x18\x02 \x01(\t\x12\x10\n\x08var_date\x18\x03 \x01(\t\"f\n\x08MailInfo\x12\x0e\n\x06var_id\x18\x01 \x01(\x03\x12\x11\n\tvar_title\x18\x02 \x01(\t\x12\x13\n\x0bvar_content\x18\x03 \x01(\t\x12\x10\n\x08var_date\x18\x04 \x01(\t\x12\x10\n\x08var_name\x18\x05 \x01(\tB\x02H\x01'
+  serialized_pb=b'\n\x0fStructure.proto\"a\n\x0cRoomUserInfo\x12\x10\n\x08var_name\x18\x01 \x01(\t\x12\x11\n\tvar_index\x18\x02 \x01(\x03\x12\x13\n\x0bpicture_uri\x18\x03 \x01(\t\x12\x17\n\x0fvar_room_number\x18\x04 \x01(\x05\"_\n\tRoomInfo2\x12\x0e\n\x06var_id\x18\x01 \x01(\x05\x12\x10\n\x08var_name\x18\x02 \x01(\t\x12\x19\n\x11var_current_count\x18\x03 \x01(\x05\x12\x15\n\rvar_max_count\x18\x04 \x01(\x05\"C\n\x08PrayInfo\x12\x10\n\x08var_name\x18\x01 \x01(\t\x12\x13\n\x0bvar_message\x18\x02 \x01(\t\x12\x10\n\x08var_time\x18\x03 \x01(\t\"C\n\nNotifyInfo\x12\x0e\n\x06var_id\x18\x01 \x01(\x03\x12\x13\n\x0bvar_content\x18\x02 \x01(\t\x12\x10\n\x08var_date\x18\x03 \x01(\t\"f\n\x08MailInfo\x12\x0e\n\x06var_id\x18\x01 \x01(\x03\x12\x11\n\tvar_title\x18\x02 \x01(\t\x12\x13\n\x0bvar_content\x18\x03 \x01(\t\x12\x10\n\x08var_date\x18\x04 \x01(\t\x12\x10\n\x08var_name\x18\x05 \x01(\t\"_\n\x0bRoomMessage\x12\x10\n\x08var_name\x18\x01 \x01(\t\x12\x13\n\x0bvar_message\x18\x02 \x01(\t\x12\x17\n\x0fvar_message_int\x18\x03 \x01(\x05\x12\x10\n\x08var_time\x18\x04 \x01(\tB\x02H\x01'
 )
 
 
@@ -52,6 +52,13 @@ _ROOMUSERINFO = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='var_room_number', full_name='RoomUserInfo.var_room_number', index=3,
+      number=4, type=5, cpp_type=1, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
   ],
   extensions=[
   ],
@@ -65,7 +72,7 @@ _ROOMUSERINFO = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=19,
-  serialized_end=91,
+  serialized_end=116,
 )
 
 
@@ -116,8 +123,8 @@ _ROOMINFO2 = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=93,
-  serialized_end=188,
+  serialized_start=118,
+  serialized_end=213,
 )
 
 
@@ -161,8 +168,8 @@ _PRAYINFO = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=190,
-  serialized_end=257,
+  serialized_start=215,
+  serialized_end=282,
 )
 
 
@@ -206,8 +213,8 @@ _NOTIFYINFO = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=259,
-  serialized_end=326,
+  serialized_start=284,
+  serialized_end=351,
 )
 
 
@@ -265,8 +272,60 @@ _MAILINFO = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=328,
-  serialized_end=430,
+  serialized_start=353,
+  serialized_end=455,
+)
+
+
+_ROOMMESSAGE = _descriptor.Descriptor(
+  name='RoomMessage',
+  full_name='RoomMessage',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='var_name', full_name='RoomMessage.var_name', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='var_message', full_name='RoomMessage.var_message', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='var_message_int', full_name='RoomMessage.var_message_int', index=2,
+      number=3, type=5, cpp_type=1, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='var_time', full_name='RoomMessage.var_time', index=3,
+      number=4, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto2',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=457,
+  serialized_end=552,
 )
 
 DESCRIPTOR.message_types_by_name['RoomUserInfo'] = _ROOMUSERINFO
@@ -274,6 +333,7 @@ DESCRIPTOR.message_types_by_name['RoomInfo2'] = _ROOMINFO2
 DESCRIPTOR.message_types_by_name['PrayInfo'] = _PRAYINFO
 DESCRIPTOR.message_types_by_name['NotifyInfo'] = _NOTIFYINFO
 DESCRIPTOR.message_types_by_name['MailInfo'] = _MAILINFO
+DESCRIPTOR.message_types_by_name['RoomMessage'] = _ROOMMESSAGE
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 RoomUserInfo = _reflection.GeneratedProtocolMessageType('RoomUserInfo', (_message.Message,), {
@@ -310,6 +370,13 @@ MailInfo = _reflection.GeneratedProtocolMessageType('MailInfo', (_message.Messag
   # @@protoc_insertion_point(class_scope:MailInfo)
   })
 _sym_db.RegisterMessage(MailInfo)
+
+RoomMessage = _reflection.GeneratedProtocolMessageType('RoomMessage', (_message.Message,), {
+  'DESCRIPTOR' : _ROOMMESSAGE,
+  '__module__' : 'Structure_pb2'
+  # @@protoc_insertion_point(class_scope:RoomMessage)
+  })
+_sym_db.RegisterMessage(RoomMessage)
 
 
 DESCRIPTOR._options = None

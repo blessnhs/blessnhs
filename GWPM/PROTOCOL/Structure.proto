@@ -7,6 +7,7 @@ message RoomUserInfo
 	optional string var_name = 1 ;
 	optional int64 var_index = 2  ;
 	optional string picture_uri = 3  ;
+	optional int32 var_room_number = 4 ;
 }
 
 message RoomInfo2
@@ -38,4 +39,12 @@ message MailInfo
 	optional string var_content = 3  ;
 	optional string var_date = 4  ;
 	optional string var_name = 5 ;
+}
+
+message RoomMessage
+{
+	optional string     var_name    	     = 1;
+    	optional string     var_message    	     = 2;
+    	optional int32     var_message_int       = 3;
+	optional string     var_time    	     = 4;
 }
