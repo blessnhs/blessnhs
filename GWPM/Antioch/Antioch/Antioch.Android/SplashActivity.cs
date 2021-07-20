@@ -8,7 +8,7 @@ using Android.Support.V7.App;
 using Android.Util;
 using Antioch.Droid;
 
-namespace WBA.Droid
+namespace Antioch.Droid
 {
     [Activity(Theme = "@style/MyTheme.Splash", MainLauncher = true, NoHistory = true)]
     public class SplashActivity : AppCompatActivity
