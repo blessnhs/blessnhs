@@ -273,7 +273,7 @@ namespace Antioch.View
                         continue;
                     }
 
-                    string Text = week[i] + " " + info.begin_bibleName + " " + info.begin_chapter.ToString() + " chapter" + "~ " + info.end_bibleName + " " + info.end_chapter.ToString() + " verse";
+                    string Text = week[i] + " " + info.begin_bibleName + " " + info.begin_chapter.ToString() + " chapter" + "~ " + info.end_bibleName + " " + info.end_chapter.ToString() + " chapter";
 
                     //한장씩 읽을때는 end_bibleName 없으므로 시작 만 출력해준다. 
                     if (info.end_bibleName == "")
