@@ -40,8 +40,11 @@ namespace Antioch
 
         //자동이동을 위해 Label을 dictionary에 저장
         private Dictionary<int, Label> MainTextLabel = new Dictionary<int, Label>();
-
-        public void DrawMainText(StackLayout MainLayout, BibleType type = BibleType.KJV)
+#if GLOBAL
+        public void DrawMainText(StackLayout MainLayout, BibleType type = BibleType.KRV)
+#else
+        public void DrawMainText(StackLayout MainLayout, BibleType type = BibleType.KRV)
+#endif
         {
             //db에 밑줄 저장 데이터가 있는지 로딩한다. 
             var list = SQLLiteDB.ReadUnderlining();
@@ -188,8 +191,8 @@ namespace Antioch
 
                 TextLayout.Children.Add(Label);
 
-            //    if(User.CacheData.EnalbeKJV == true)
-            //        TextLayout.Children.Add(LabelEnglish);
+                if(User.CacheData.EnalbeKJV == true)
+                    TextLayout.Children.Add(LabelEnglish);
                 
             }
 
@@ -224,7 +227,16 @@ namespace Antioch
         //ui 갱신
         public void RefreshData()
         {
+#if GLOBAL
+            OldT.Text = "OldT";
+            NewT.Text = "NewT";
+
             Title.Text = User.CacheData.BibleName + " " + User.CacheData.Chapter.ToString() + "Chapter";
+#else
+            OldT.Text = "구약";
+            NewT.Text = "신약";
+            Title.Text = User.CacheData.BibleName + " " + User.CacheData.Chapter.ToString() + "장";
+#endif
             MainLayout.Children.Clear();
             DrawMainText(MainLayout);
      
@@ -263,7 +275,11 @@ namespace Antioch
         //공유 버튼 클릭
         async void Handle_Clicked_Shared(object sender, System.EventArgs e)
         {
+#if GLOBAL
             await ShareText(User.CacheData.BibleName +" " + User.CacheData.Chapter + "Chapter Read.");
+#else
+            await ShareText(User.CacheData.BibleName + " " + User.CacheData.Chapter + "장 까지 읽었습니다.");
+#endif
         }
 
         //다음 성경 가져오기

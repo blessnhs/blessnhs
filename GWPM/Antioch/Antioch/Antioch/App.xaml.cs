@@ -1,7 +1,11 @@
-﻿using System;
+﻿#define GLOBAL
+
+
+using System;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+
 
 namespace Antioch
 {

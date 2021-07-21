@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Text;
 
+
+
 namespace Antioch
 {
     internal static class User
@@ -13,7 +15,5 @@ namespace Antioch
         static public HashSet<int> RoomIdList = new HashSet<int>();
 
         static public int CurrentChatViewNumber;
-
-
     }
 }

@@ -47,11 +47,11 @@ namespace Antioch
 
                 check_time = DateTime.Now.AddSeconds(5);
 
-                SendRoomList();
+                //SendRoomList();
 
-                SendMailList();
+                //SendMailList();
 
-                SendAlaram();
+                //SendAlaram();
 
             }
         }
@@ -114,6 +114,7 @@ namespace Antioch
                                     Device.BeginInvokeOnMainThread(() =>
                                     {
                                         mainpage.setting.UpdateLoginState("(Success)");
+                                        mainpage.setting.UpdateNameEntry(User.CacheData.UserName);
 
                                         var page = mainpage.CurrentView();
                                         var settingview = page as SettingView;

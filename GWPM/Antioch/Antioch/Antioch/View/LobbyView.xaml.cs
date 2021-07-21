@@ -41,6 +41,27 @@ namespace Antioch.View
             {
                 banner_image.Source = ImageSource.FromResource("Antioch.Resource.Image.banner.png", Assembly.GetExecutingAssembly());
             }
+
+#if GLOBAL
+ 
+#else
+            Noti.Text = "공지";
+            Bull.Text = "주보";
+            Serm.Text = "말씀";
+            Lec1.Text = "강의1";
+            LChat.Text = "채팅";
+            LBible.Text = "성경";
+            Lec2.Text = "강의2";
+            LPray.Text = "기도";
+
+            LPlan.Text = "계획";
+            Evan.Text = "전도";
+
+            Home.Text = "홈";
+            LQnA.Text = "질문";
+
+#endif
+
         }
 
 

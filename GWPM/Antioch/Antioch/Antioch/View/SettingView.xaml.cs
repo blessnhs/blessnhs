@@ -66,9 +66,14 @@ namespace Antioch.View
             vm.BtnMessage = message;
         }
 
+        public void UpdateNameEntry(string message)
+        {
+            usernameEntry.Text = message;
+        }
+
         void OnToggledKJV(object sender, ToggledEventArgs e)
         {
-        //    User.CacheData.EnalbeKJV = e.Value;
+            User.CacheData.EnalbeKJV = e.Value;
         //    SQLLiteDB.Upsert(User.CacheData);
         }
 

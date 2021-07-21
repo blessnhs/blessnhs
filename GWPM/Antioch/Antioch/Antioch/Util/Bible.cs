@@ -145,11 +145,20 @@ namespace Antioch.Util
 
                     var info = new BibleTableInfo();
                     info.Id = idInc++;
-                    info.Name = words[1];
+#if GLOBAL
+                        info.Name = words[1];
+#else
+                    info.Name = words[0];
+#endif
                     info.EngName = words[1];
                     info.MaxChapterSize = Convert.ToInt32(words[2]);
                     bibleList.Add(info);
+
+#if GLOBAL 
                     ListOldTestament.Add(words[1]);
+#else
+                    ListOldTestament.Add(words[0]);
+#endif
                 }
             }
 
@@ -164,11 +173,21 @@ namespace Antioch.Util
 
                     var info = new BibleTableInfo();
                     info.Id = idInc++;
-                    info.Name = words[1];
+
+#if GLOBAL
+                     info.Name = words[1];
+#else
+                    info.Name = words[0];
+#endif
                     info.EngName = words[1];
                     info.MaxChapterSize = Convert.ToInt32(words[2]);
                     bibleList.Add(info);
+
+#if GLOBAL
                     ListNewTestament.Add(words[1]);
+#else
+                    ListNewTestament.Add(words[0]);
+#endif
                 }
             }
         }

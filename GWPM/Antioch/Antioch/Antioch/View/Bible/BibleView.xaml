@@ -29,19 +29,13 @@
             </Button.GestureRecognizers>
         </Button>
 
-        <Button Grid.Row="0" Grid.Column="1" Text = "OldT" Grid.ColumnSpan="2" Clicked="Handle_Clicked_OldTestament" Style="{StaticResource buttonStyle2}">
+        <Button x:Name="OldT" Grid.Row="0" Grid.Column="1" Text = "OldT" Grid.ColumnSpan="2" Clicked="Handle_Clicked_OldTestament" Style="{StaticResource buttonStyle2}">
             <Button.GestureRecognizers>
                 <TapGestureRecognizer Tapped="Handle_Clicked_OldTestament"/>
             </Button.GestureRecognizers>
         </Button>
 
-        <Button Grid.Row="0" Grid.Column="3" Text = "NewT" Grid.ColumnSpan="2"  Clicked="Handle_Clicked_NewTestament" Style="{StaticResource buttonStyle2}">
-            <Button.GestureRecognizers>
-                <TapGestureRecognizer Tapped="Handle_Clicked_NewTestament"/>
-            </Button.GestureRecognizers>
-        </Button>
-
-        <Button Grid.Row="0" Grid.Column="3" Text = "NewT" Grid.ColumnSpan="2"  Clicked="Handle_Clicked_NewTestament" Style="{StaticResource buttonStyle2}">
+        <Button x:Name="NewT" Grid.Row="0" Grid.Column="3" Text = "NewT" Grid.ColumnSpan="2"  Clicked="Handle_Clicked_NewTestament" Style="{StaticResource buttonStyle2}">
             <Button.GestureRecognizers>
                 <TapGestureRecognizer Tapped="Handle_Clicked_NewTestament"/>
             </Button.GestureRecognizers>

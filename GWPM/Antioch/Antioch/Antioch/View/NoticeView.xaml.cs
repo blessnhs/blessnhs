@@ -263,7 +263,11 @@ namespace Antioch.View
                 weekLabel[5] = label_sat;
                 weekLabel[6] = label_sun;
 
+#if GLOBAL
                 string[] week = { "Mon", "Thu", "Wed", "Thur", "Fri", "Sat", "Sun" };
+#else
+                string[] week = { "월", "화", "수", "목", "금", "토", "일" };
+#endif
                 for (int i = 0; i < 7; i++)
                 {
                     var info = CalculateTodayBibleChapter(i);
@@ -272,13 +276,20 @@ namespace Antioch.View
                         weekLabel[i].Text = week[i] + "| ";
                         continue;
                     }
-
+#if GLOBAL
                     string Text = week[i] + " " + info.begin_bibleName + " " + info.begin_chapter.ToString() + " chapter" + "~ " + info.end_bibleName + " " + info.end_chapter.ToString() + " chapter";
+#else
+                    string Text = week[i] + " " + info.begin_bibleName + " " + info.begin_chapter.ToString() + " 장" + "~ " + info.end_bibleName + " " + info.end_chapter.ToString() + " 장";
 
+#endif
                     //한장씩 읽을때는 end_bibleName 없으므로 시작 만 출력해준다. 
                     if (info.end_bibleName == "")
                     {
+#if GLOBAL
                         Text = week[i] + " | " + info.begin_bibleName + " " + info.begin_chapter.ToString() + " chapter";
+#else
+                        Text = week[i] + " " + info.begin_bibleName + " " + info.begin_chapter.ToString() + " 장";
+#endif
                     }
 
                     weekLabel[i].Text = Text;
@@ -345,14 +356,22 @@ namespace Antioch.View
                     int startpos = UnderliningPos;
                     foreach (var data in list)
                     {
-                        var contexttext = BibleInfo.GetContextText(BibleType.KJV, data.BibleName, data.Chapter, data.Verse);
+#if GLOBAL
+                          var contexttext = BibleInfo.GetContextText(BibleType.KJV, data.BibleName, data.Chapter, data.Verse);
+#else
+                        var contexttext = BibleInfo.GetContextText(BibleType.KRV, data.BibleName, data.Chapter, data.Verse);
+#endif
+
 
                         int __verse;
                         string line;
                         Helper.SpliteVerseText(contexttext, out __verse, out line);
 
+#if GLOBAL
                         var text = data.BibleName + " " + data.Chapter + " Chapter" + " " + data.Verse + "Verse \n" + line;
-
+#else
+                        var text = data.BibleName + " " + data.Chapter + " 장" + " " + data.Verse + "절 \n" + line;
+#endif
                         var labelText = new Label { Text = text, LineBreakMode = LineBreakMode.WordWrap, TextColor = Xamarin.Forms.Color.FromRgb(0, 0, 0) };
 
                         var stackLayout = new StackLayout();
