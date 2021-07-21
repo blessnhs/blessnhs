@@ -42,16 +42,18 @@ namespace Antioch
                 MessagesListView.ScrollTo(target, ScrollToPosition.End, true);
             };
 
-            entry_message.Completed += (sender, e) =>
-            {
-                NetProcess.SendRoomMessage(entry_message.Text);
-            };
+         
         }
 
-        //protected override void OnDisappearing()
-        //{
-        //    NetProcess.SendLeaveRoom(0);
-        //}
+        async void OnClicked(object sender, EventArgs args)
+        {
+            NetProcess.SendRoomMessage(entry_message.Text);
+        }
+
+    //protected override void OnDisappearing()
+    //{
+    //    NetProcess.SendLeaveRoom(0);
+    //}
 
         public void ReceiveMessage(string text, string name,string time)
         {
@@ -59,6 +61,9 @@ namespace Antioch
                 vm.AddMessage(text, name,time, Message.type.Incoming);
             else
                 vm.AddMessage(text, name,time, Message.type.Outgoing);
+
+            var target = vm.Messages[vm.Messages.Count - 1];
+            MessagesListView.ScrollTo(target, ScrollToPosition.End, true);
         }
 
         public void ReceiveMessage(string text, string name, Message.type type)

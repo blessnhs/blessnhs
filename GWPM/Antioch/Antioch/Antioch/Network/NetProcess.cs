@@ -630,7 +630,7 @@ namespace Antioch
                 VarMessage = msg,
                 VarMessageInt = 0,
                 VarRoomNumber = User.CurrentChatViewNumber,
-                VarTime = DateTime.Now.ToString()
+                VarTime = DateTime.Now.ToString("MM/dd/yyyy H:mm")
             };
 
             using (MemoryStream stream = new MemoryStream())
