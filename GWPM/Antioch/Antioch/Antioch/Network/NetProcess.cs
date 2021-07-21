@@ -41,11 +41,18 @@ namespace Antioch
             if (check_time < DateTime.Now)
             {
                 string ip = "211.212.37.238";//"192.168.0.9"
-                //string ip = "192.168.0.9";
+                                             // string ip = "192.168.0.9";
 
                 client.StartClient(ip, 23000);
 
                 check_time = DateTime.Now.AddSeconds(5);
+
+                SendRoomList();
+
+                SendMailList();
+
+                SendAlaram();
+
             }
         }
 
@@ -73,16 +80,16 @@ namespace Antioch
 
                                 var currentVersion = VersionTracking.CurrentVersion;
 
-                                //var myversion = double.Parse(currentVersion);
-                                //const Double Eps = 0.000000000000001;
+                                var myversion = double.Parse(currentVersion);
+                                const Double Eps = 0.000000000000001;
 
-                                //if (Math.Abs(res.VarVersion - myversion) > Eps)
-                                //{
-                                //    //첫 검수라 임시 주석 2번째 패치 부터는 활성화
-                                //    //   Xamarin.Essentials.Browser.OpenAsync("https://play.google.com/store/apps/details?id=com.companyname.OMOK");
+                                if (Math.Abs(res.VarVersion - myversion) > Eps)
+                                {
+                                    //첫 검수라 임시 주석 2번째 패치 부터는 활성화
+                                    //   Xamarin.Essentials.Browser.OpenAsync("https://play.google.com/store/apps/details?id=antioch.kor.pkg");
 
-                                //    //    return;
-                                //}
+                                    //    return;
+                                }
 
 
                                 SQLLiteDB.LoadCacheData();
@@ -102,16 +109,11 @@ namespace Antioch
 
                                     User.LoginSuccess = true;
                                     SQLLiteDB.Upsert(User.CacheData.FontSize, User.CacheData.BibleName, User.CacheData.Chapter, User.CacheData.Verse,
-                                        User.Username == null ? User.CacheData.UserName : User.Username, User.Password == null ? User.CacheData.Passwd : User.Password);
-
-
-                                    User.CacheData.UserName = User.Username;
-                                    User.CacheData.Passwd = User.Password;
-
+                                        User.CacheData.UserName, User.CacheData.Passwd);
 
                                     Device.BeginInvokeOnMainThread(() =>
                                     {
-                                        mainpage.setting.UpdateLoginState(User.Username, "(접속중)");
+                                        mainpage.setting.UpdateLoginState("(접속 성공)");
 
                                         var page = mainpage.CurrentView();
                                         var settingview = page as SettingView;
@@ -127,11 +129,7 @@ namespace Antioch
                                 {
                                     Device.BeginInvokeOnMainThread(() =>
                                     {
-                                        mainpage.setting.UpdateLoginState(User.Username, "(인증 실패)");
-
-                                        SQLLiteDB.Upsert(User.CacheData.FontSize, User.CacheData.BibleName, User.CacheData.Chapter, User.CacheData.Verse,
-                                             null, null);
-
+                                        mainpage.setting.UpdateLoginState("(실패)");
                                     });
 
                                     User.LoginSuccess = false;
@@ -218,12 +216,12 @@ namespace Antioch
                                     {
                                         User.CurrentChatViewNumber = res.VarRoomId;
                                         var chatview = new MainChatView();
-                                        mainpage.lobby.chatpage.Add(res.VarRoomId,chatview);
+                                        mainpage.lobby.chatpage.Add(res.VarRoomId, chatview);
                                         MainChatView chatpage = chatview;
 
                                         mainpage.LoadView(chatpage);
 
-                                       
+
                                     }
 
 
@@ -258,9 +256,9 @@ namespace Antioch
                                             mainpage.lobby.chatpage.Add(res.VarRoomId, chatview);
                                             mainpage.LoadView(chatview);
 
-                                            foreach(var msg in res.VarMessages)
+                                            foreach (var msg in res.VarMessages)
                                             {
-                                                chatview.ReceiveMessage(msg.VarMessage, msg.VarName,msg.VarTime);
+                                                chatview.ReceiveMessage(msg.VarMessage, msg.VarName, msg.VarTime);
                                             }
                                         }
                                         else  //이미 존재하는 방이면 해당 방에 넣는다. 
@@ -288,7 +286,7 @@ namespace Antioch
 
                                     foreach (var msg in res.VarMessages)
                                     {
-                                        outivew.ReceiveMessage(msg.VarMessage, msg.VarName,msg.VarTime);
+                                        outivew.ReceiveMessage(msg.VarMessage, msg.VarName, msg.VarTime);
                                     }
                                 });
                             }
@@ -311,7 +309,7 @@ namespace Antioch
 
                                     if (res.VarName == User.CacheData.UserName)
                                     {
-                                        User.RoomIdList.Remove(res.VarRoomNumber);                                       
+                                        User.RoomIdList.Remove(res.VarRoomNumber);
 
                                         mainpage.lobby.chatpage.Remove(res.VarRoomNumber);
 
@@ -325,6 +323,30 @@ namespace Antioch
 
                                     }
                                 });
+                            }
+                            break;
+
+                        case (int)PROTOCOL.IdPktAudioMessageRes:
+                            {
+                                AUDIO_MESSAGE_RES res = new AUDIO_MESSAGE_RES();
+                                res = AUDIO_MESSAGE_RES.Parser.ParseFrom(data.Data);
+
+                                foreach (var msg in res.VarMessage)
+                                {
+                                    AudioStream.Enqueue(new MemoryStream(msg.ToByteArray()));
+                                }
+                            }
+                            break;
+                        case (int)PROTOCOL.IdPktBitmapMessageRes:
+                            {
+                                BITMAP_MESSAGE_RES res = new BITMAP_MESSAGE_RES();
+                                res = BITMAP_MESSAGE_RES.Parser.ParseFrom(data.Data);
+
+                                foreach (var msg in res.VarMessage)
+                                {
+                                    JpegStream.Enqueue(new MemoryStream(msg.ToByteArray()));
+                                }
+
                             }
                             break;
                         case (int)PROTOCOL.IdPktNewUserInRoomNty:
@@ -342,7 +364,7 @@ namespace Antioch
                                     mainpage.lobby.chatpage.TryGetValue(res.VarRoomUser.VarRoomNumber, out outivew);
                                     if (outivew == null)
                                         return;
-                                
+
                                     if (res.VarType == 1)
                                     {
                                         if (res.VarRoomUser.VarName != User.CacheData.UserName)
@@ -379,6 +401,45 @@ namespace Antioch
             }
         }
 
+        static public void SendRoomBITMAPMessage(ConcurrentQueue<System.IO.MemoryStream> list)
+        {
+
+            if (client == null || client.socket == null || client.socket.Connected == false)
+                return;
+            {
+                BITMAP_MESSAGE_REQ message = new BITMAP_MESSAGE_REQ();
+
+                foreach (var msg in list)
+                {
+                    message.VarMessage.Add(ByteString.CopyFrom(msg.ToArray()));
+                };
+
+
+                client.WritePacket((int)PROTOCOL.IdPktBitmapMessageReq, message.ToByteArray(), message.ToByteArray().Length);
+
+            }
+
+        }
+
+        static public void SendAudioMessage(ConcurrentQueue<System.IO.MemoryStream> list)
+        {
+
+            if (client == null || client.socket == null || client.socket.Connected == false)
+                return;
+            {
+                AUDIO_MESSAGE_REQ message = new AUDIO_MESSAGE_REQ();
+
+                foreach (var msg in list)
+                {
+                    message.VarMessage.Add(ByteString.CopyFrom(msg.ToArray()));
+                };
+
+                client.WritePacket((int)PROTOCOL.IdPktAudioMessageReq, message.ToByteArray(), message.ToByteArray().Length);
+
+            }
+
+        }
+
         static public void SendLogin(string id, string pwd)
         {
             if (client == null || client.socket == null || client.socket.Connected == false)
@@ -408,7 +469,7 @@ namespace Antioch
 
             var data = new ROOM_LIST_REQ
             {
-               
+
             };
             using (MemoryStream stream = new MemoryStream())
             {
@@ -422,7 +483,7 @@ namespace Antioch
         {
             if (client == null || client.socket == null || client.socket.Connected == false)
                 return;
-      
+
             PRAY_MESSAGE_REG_REQ person = new PRAY_MESSAGE_REG_REQ
             {
                 VarMessage = Content,
@@ -560,9 +621,9 @@ namespace Antioch
             if (client == null || client.socket == null || client.socket.Connected == false)
                 return;
 
-           // var bytearray = System.Text.Encoding.GetEncoding(949).GetBytes(msg);
+            // var bytearray = System.Text.Encoding.GetEncoding(949).GetBytes(msg);
 
-           // var bytearray = System.Text.Encoding.UTF8.GetBytes(msg);
+            // var bytearray = System.Text.Encoding.UTF8.GetBytes(msg);
 
             ROOM_PASS_THROUGH_REQ message = new ROOM_PASS_THROUGH_REQ
             {

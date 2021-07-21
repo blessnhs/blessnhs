@@ -2,7 +2,7 @@
 using System.Collections.Concurrent;
 using System.Net;
 using System.Net.Sockets;
-
+using Xamarin.Forms;
 
 namespace Antioch
 {
@@ -40,12 +40,11 @@ namespace Antioch
                 {
                     if (socket.Connected == true)
                     {
-                        ////이미 접속은 했는데 로그인 실패면 다시 한다.
-                        //if(User.LoginSuccess == false)
-                        //{
-                        //    NetProcess.SendVersion();
-                        //}
-                        return;
+                        //이미 접속은 했는데 로그인 실패면 다시 한다.
+                        if (User.LoginSuccess == true)
+                        {
+                            return;
+                        }
                     }
 
                     socket.Dispose();
@@ -60,6 +59,10 @@ namespace Antioch
                 }
 
                 User.LoginSuccess = false;
+
+                var mainpage = (MainPage)Application.Current.MainPage;
+                mainpage.setting.UpdateLoginState("접속 안됨");
+
 
                 socket.Connect(remoteEP);
 

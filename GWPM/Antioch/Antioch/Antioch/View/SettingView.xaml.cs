@@ -60,10 +60,9 @@ namespace Antioch.View
             BindingContext = vm;
         }
 
-        public void UpdateLoginState(string id,string message)
+        public void UpdateLoginState(string message)
         {
             vm.Message = message;
-            vm.Id = id;
             vm.BtnMessage = message;
         }
 
@@ -76,8 +75,6 @@ namespace Antioch.View
 
         async void login_btn(object sender, System.EventArgs e)
         {
-            User.Username = usernameEntry.Text;
-            User.Password = passwordEntry.Text;
             NetProcess.SendLogin(usernameEntry.Text, passwordEntry.Text);
         }
     }

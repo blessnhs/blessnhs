@@ -12,18 +12,6 @@ namespace Antioch
         {
             InitializeComponent();
             BindingContext = new RoomsViewModel();
-
-            Device.StartTimer(new TimeSpan(0, 0, 2), () =>
-            {
-                // do something every 60 seconds
-                Device.BeginInvokeOnMainThread(() =>
-                {
-                    NetProcess.SendRoomList();
-                });
-                return true; // runs again, or false to stop
-            });
-
-          
         }
 
         async void OnRoomEnterClicked(object sender, EventArgs args)
