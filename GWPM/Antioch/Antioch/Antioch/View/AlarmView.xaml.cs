@@ -19,18 +19,6 @@ namespace Antioch.View
 			InitializeComponent ();
 
 			BindingContext = new AlarmViewModel();
-
-			
-
-			Device.StartTimer(new TimeSpan(0, 0, 10), () =>
-			{
-				// do something every 60 seconds
-				Device.BeginInvokeOnMainThread(() =>
-				{
-					NetProcess.SendAlaram();
-				});
-				return true; // runs again, or false to stop
-			});
 		}
 
 		void Handle_ItemSelected(object sender, Xamarin.Forms.SelectedItemChangedEventArgs e)

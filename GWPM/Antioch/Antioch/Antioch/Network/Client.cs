@@ -41,12 +41,11 @@ namespace Antioch
                 {
                     if (socket.Connected == true)
                     {
-                        ////이미 접속은 했는데 로그인 실패면 다시 한다.
-                        //if(User.LoginSuccess == false)
-                        //{
-                        //    NetProcess.SendVersion();
-                        //}
-                        return;
+                        //이미 접속은 했는데 로그인 실패면 다시 한다.
+                        if(User.LoginSuccess == true)
+                        {
+                            return;
+                        }
                     }
 
                     socket.Dispose();
@@ -63,15 +62,36 @@ namespace Antioch
                 User.LoginSuccess = false;
 
                 var mainpage = (MainPage)Application.Current.MainPage;
-                mainpage.setting.UpdateLoginState(User.Username, "(접속 안됨)");
+                mainpage.setting.UpdateLoginState("(dis connect)");
 
 
-                socket.Connect(remoteEP);
+                  socket.Connect(remoteEP);
 
                 if (socket.Connected == true)
                 {
                     NetProcess.SendVersion();
                 }
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+            }
+        }
+
+        private void ConnectCallback(IAsyncResult ar)
+        {
+            try
+            {
+
+                // Retrieve the socket from the state object.
+                Socket client = (Socket)ar.AsyncState;
+
+                // Complete the connection.
+                client.EndConnect(ar);
+
+                // Signal that the connection has been made.
+                   NetProcess.SendVersion();
 
             }
             catch (Exception e)

@@ -119,7 +119,6 @@ namespace Antioch
                     while (true)
                     {
                         NetProcess.start();
-                        NetProcess.client.PacketRecvSync();
                         Thread.Sleep(1);
                     }
                 });
@@ -131,6 +130,7 @@ namespace Antioch
 
                     while (true)
                     {
+                        NetProcess.client.PacketRecvSync();
                         NetProcess.Loop();
                         Thread.Sleep(1);
                     }

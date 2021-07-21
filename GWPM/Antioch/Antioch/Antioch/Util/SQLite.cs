@@ -269,9 +269,6 @@ namespace Antioch
                 User.CacheData.Verse = UserCacheData.Verse;
                 User.CacheData.UserName = UserCacheData.UserName;
                 User.CacheData.Passwd = UserCacheData.Passwd;
-
-                User.Username = UserCacheData.UserName;
-                User.Password = UserCacheData.Passwd;
             }
             else
             {

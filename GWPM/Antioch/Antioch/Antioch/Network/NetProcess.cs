@@ -46,6 +46,13 @@ namespace Antioch
                 client.StartClient(ip, 23000);
 
                 check_time = DateTime.Now.AddSeconds(5);
+
+                SendRoomList();
+
+                SendMailList();
+
+                SendAlaram();
+
             }
         }
 
@@ -102,16 +109,11 @@ namespace Antioch
 
                                     User.LoginSuccess = true;
                                     SQLLiteDB.Upsert(User.CacheData.FontSize, User.CacheData.BibleName, User.CacheData.Chapter, User.CacheData.Verse,
-                                        User.Username == null ? User.CacheData.UserName : User.Username, User.Password == null ? User.CacheData.Passwd : User.Password);
-
-
-                                    User.CacheData.UserName = User.Username;
-                                    User.CacheData.Passwd = User.Password;
-
+                                        User.CacheData.UserName ,User.CacheData.Passwd);
 
                                     Device.BeginInvokeOnMainThread(() =>
                                     {
-                                        mainpage.setting.UpdateLoginState(User.Username, "(Success)");
+                                        mainpage.setting.UpdateLoginState("(Success)");
 
                                         var page = mainpage.CurrentView();
                                         var settingview = page as SettingView;
@@ -127,11 +129,7 @@ namespace Antioch
                                 {
                                     Device.BeginInvokeOnMainThread(() =>
                                     {
-                                        mainpage.setting.UpdateLoginState(User.Username, "(Failed)");
-
-                                        SQLLiteDB.Upsert(User.CacheData.FontSize, User.CacheData.BibleName, User.CacheData.Chapter, User.CacheData.Verse,
-                                             null, null);
-
+                                        mainpage.setting.UpdateLoginState("(Failed)");
                                     });
 
                                     User.LoginSuccess = false;
