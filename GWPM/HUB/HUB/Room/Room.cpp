@@ -45,7 +45,7 @@ bool Room::InsertPlayer(PLAYER_PTR Player)
 	return true;
 }
 
-void Room::SendNewUserInfo(PLAYER_PTR Player)
+void Room::SendNewUserInfo(PLAYER_PTR Player,int RoomNumber)
 {
 	if(Player == NULL)	return ;
 
@@ -67,6 +67,7 @@ void Room::SendNewUserInfo(PLAYER_PTR Player)
 				userinfo->set_var_index(Player->GetId());
 				userinfo->set_var_name(Player->m_Account.GetName());
 				userinfo->set_picture_uri(Player->m_Account.GetPicture_url());
+				userinfo->set_var_room_number(RoomNumber);
 				SEND_PROTO_BUFFER(nty, pPair)
 			}
 		}

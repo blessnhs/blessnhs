@@ -9,6 +9,7 @@ using System.Collections.Concurrent;
 using Xamarin.Forms;
 using System.Linq;
 using Antioch.View;
+using static Antioch.MainChatView;
 
 namespace Antioch
 {
@@ -314,6 +315,8 @@ namespace Antioch
                                     if (outivew == null)
                                         return;
 
+                                    outivew.UserList.Remove(res.VarName);
+
                                     if (res.VarName == User.CacheData.UserName)
                                     {
                                         User.RoomIdList.Remove(res.VarRoomNumber);                                       
@@ -371,7 +374,9 @@ namespace Antioch
                                     mainpage.lobby.chatpage.TryGetValue(res.VarRoomUser.VarRoomNumber, out outivew);
                                     if (outivew == null)
                                         return;
-                                
+
+                                    outivew.UserList.Add(res.VarRoomUser.VarName);
+
                                     if (res.VarType == 1)
                                     {
                                         if (res.VarRoomUser.VarName != User.CacheData.UserName)

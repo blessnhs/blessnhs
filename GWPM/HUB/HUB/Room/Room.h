@@ -39,7 +39,7 @@ public:
 
 	bool InsertPlayer(PLAYER_PTR Player);
 
-	void SendNewUserInfo(PLAYER_PTR Player);
+	void SendNewUserInfo(PLAYER_PTR Player, int RoomNumber);
 
 	bool FindPlayer(PLAYER_PTR Player);
 

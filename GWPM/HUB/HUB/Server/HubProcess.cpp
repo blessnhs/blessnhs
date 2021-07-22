@@ -51,7 +51,7 @@ VOID HubProcess::Process(LPVOID Data, DWORD Length, WORD MainProtocol, WORD SubP
 		std::string name = descriptor->FindValueByNumber(MainProtocol)->name();
 
 		if(MainProtocol != ID_PKT_ROOM_LIST_REQ && MainProtocol != ID_PKT_PRAY_MESSAGE_REQ)
-			BLOG("%s MainProtocol %s Length %d", __FUNCTION__, name.c_str(), Length);
+			BLOG("%s MainProtocol %s Length %d\n", __FUNCTION__, name.c_str(), Length);
 
 		NET_FUNC_EXE(MainProtocol, Data, Length, Client);
 	}
@@ -155,7 +155,7 @@ VOID HubProcess::ROOM_CREATE(LPVOID Data, DWORD Length, boost::shared_ptr<GSClie
 	res.mutable_var_name()->assign(RoomPtr->m_Stock.Name);
 	SEND_PROTO_BUFFER(res, Client)
 
-	RoomPtr->SendNewUserInfo(pPlayer);	//방에 있는 유저들에게 새로운 유저 정보전송
+	RoomPtr->SendNewUserInfo(pPlayer,RoomPtr->GetId());	//방에 있는 유저들에게 새로운 유저 정보전송
 }
 
 VOID HubProcess::PRAY_LIST(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client)
@@ -321,6 +321,7 @@ VOID HubProcess::ROOM_ENTER(LPVOID Data, DWORD Length, boost::shared_ptr<GSClien
 
 		userinfo->set_var_index(iter.second->GetId());
 		userinfo->set_var_name(iter.second->m_Account.GetName());
+		userinfo->set_var_room_number(RoomPtr->GetId());
 
 		SEND_PROTO_BUFFER(nty, Client)
 	}
@@ -342,6 +343,7 @@ VOID HubProcess::ROOM_ENTER(LPVOID Data, DWORD Length, boost::shared_ptr<GSClien
 
 		userinfo->set_var_index(pPlayer->GetId());
 		userinfo->set_var_name(pPlayer->m_Char[0].GetName());
+		userinfo->set_var_room_number(RoomPtr->GetId());
 
 		SEND_PROTO_BUFFER(nty, pPair)
 	}

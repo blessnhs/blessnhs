@@ -87,11 +87,74 @@ namespace Antioch
 
         }
 
+        public HashSet<string> UserList = new HashSet<string>();
+
         private async void List_Clicked(object sender, EventArgs e)
         {
-       //     var cameraPage = new CameraPage();
-        //    Application.Current.MainPage.Navigation.PushModalAsync(cameraPage);
-        
+            var layout = new StackLayout
+            {
+                WidthRequest = App.Current.MainPage.Width / 3,
+                HeightRequest = App.Current.MainPage.Height,
+                BackgroundColor = Color.White,
+                HorizontalOptions = LayoutOptions.End,
+                VerticalOptions = LayoutOptions.CenterAndExpand
+
+            };
+
+            {
+                var DataTemplate = new DataTemplate(() =>
+                {
+                    var grid = new Grid();
+                    var nameLabel = new Label { FontAttributes = FontAttributes.Bold ,TextColor = Color.Black};
+                    var ageLabel = new Label();
+                    var locationLabel = new Label { HorizontalTextAlignment = TextAlignment.End };
+
+                  // nameLabel.SetBinding(Label.TextProperty, "Name");
+                   // ageLabel.SetBinding(Label.TextProperty, "Age");
+                   // locationLabel.SetBinding(Label.TextProperty, "Location");
+
+                    grid.Children.Add(nameLabel);
+                   // grid.Children.Add(ageLabel, 1, 0);
+                  //  grid.Children.Add(locationLabel, 2, 0);
+
+                    return new ViewCell { View = grid };
+                });
+
+                var listview = new ListView();
+                listview.ItemsSource = UserList;
+              //  listview.ItemTemplate = DataTemplate;
+                listview.Margin = new Thickness(20, 50, 20, 20);
+
+                layout.Children.Add(listview);
+
+            }
+
+
+            //close button
+            {
+                var closebutton = new Button();
+                closebutton.BackgroundColor = Color.White;
+                closebutton.TextColor = Color.Black;
+                closebutton.Text = "Close";
+                closebutton.Clicked += async (s, args) => await App.Current.MainPage.Navigation.PopModalAsync();
+                layout.Children.Add(closebutton);
+            }
+
+
+
+
+            
+            await App.Current.MainPage.Navigation.PushModalAsync(
+                new ContentPage
+                {
+                    BackgroundColor = Color.Transparent,
+                    Content = layout,
+                });
+            
+
+            //     var cameraPage = new CameraPage();
+            //    Application.Current.MainPage.Navigation.PushModalAsync(cameraPage);
+
         }
     }
 }

@@ -57,6 +57,10 @@ namespace Antioch.View
 
         private void Entry_TextChanged(object sender, EventArgs e)
         {
+
+            if (PrayEntry.Text == null || PrayEntry.Text == "")
+                return;
+
             NetProcess.SendMakePray(PrayEntry.Text);
 
             PrayEntry.Text = "";

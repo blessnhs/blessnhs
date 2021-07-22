@@ -1,5 +1,7 @@
 #pragma once
 
+#define _CRT_SECURE_NO_WARNINGS
+
 #pragma comment(lib, "Rpcrt4.lib")
 
 using bsoncxx::builder::stream::close_array;
@@ -13,6 +15,12 @@ using bsoncxx::builder::basic::make_document;
 
 mongocxx::instance instance{};// don't put inside main 
 using namespace std;
+
+#include <chrono>  // chrono::system_clock
+#include <ctime>   // localtime
+#include <sstream> // stringstream
+#include <iomanip> // put_time
+#include <string>  // string
 
 class MongoDB
 {
@@ -34,7 +42,7 @@ public:
 
 private:
 
-	std::string default_db_name = "Board";
+	std::string default_db_name = "Antioch";
 
 	mongocxx::client _client;
 	mongocxx::database db;
@@ -43,17 +51,8 @@ public:
 
 	void CreateIndex()
 	{
-		{
-			mongocxx::collection collection = db["ACCOUNT"];
-
-			auto index_specification1 = document{} << "Win" << 1 << finalize;
-			collection.create_index(std::move(index_specification1));
-
-			auto index = collection.indexes();
-
-		}
-
-		{
+		//디비에서하기로함
+		/*{
 			mongocxx::collection collection = db["ACCOUNT"];
 
 			auto index_specification1 = document{} << "Name" << 1 << finalize;
@@ -61,33 +60,11 @@ public:
 		}
 
 		{
-			mongocxx::collection collection = db["ACCOUNT"];
-
-			auto index_specification1 = document{} << "Rank" << 1 << finalize;
-			collection.create_index(std::move(index_specification1));
-		}
-
-		{
-			mongocxx::collection collection = db["ACCOUNT"];
-
-			auto index_specification1 = document{} << "Rank" << 1 << finalize;
-			collection.create_index(std::move(index_specification1));
-		}
-
-		{
-			mongocxx::collection collection = db["ACCOUNT"];
-
-			auto index_specification1 = document{} << "FlatformId" << 1 << finalize;
-			collection.create_index(std::move(index_specification1));
-		}
-
-
-		{
 			mongocxx::collection collection = db["CONCURRENTUSER"];
 
 			auto index_specification1 = document{} << "INDEX" << 1 << finalize;
 			collection.create_index(std::move(index_specification1));
-		}
+		}*/
 	}
 
 	//버전 정보를 가져온다.
@@ -117,64 +94,7 @@ public:
 
 		return 0;
 	}
-
-	//승수로 정렬해서 상위1 10개만 가져오고 각 해당 유저에게 rank를 업데이트 한다.
-	int CalcRank(int count = 100)
-	{
-		try
-		{
-			auto collection_acconut = db["ACCOUNT"];
-			auto collection_rank = db["RANK"];
-
-			collection_rank.drop();
-
-			auto order = bsoncxx::builder::stream::document{} << "Win" << -1 << bsoncxx::builder::stream::finalize;
-
-			auto opts = mongocxx::options::find{};
-			opts.sort(order.view());
-			opts.limit(count);
-
-			auto cursor = collection_acconut.find({}, opts);
-
-			int irank = 1;
-
-			for (auto doc : cursor)
-			{
-
-				bsoncxx::stdx::optional<mongocxx::result::insert_one> result =
-					collection_rank.insert_one(doc);
-
-				//각각 유저 업데이트
-				{
-					auto viewIndex = doc["INDEX"];
-					int64_t Index = viewIndex.get_int64().value;
-
-					bsoncxx::builder::stream::document query{};
-
-					query << "INDEX" << Index;
-
-					bsoncxx::builder::stream::document update{};
-					update << "$set" << bsoncxx::builder::stream::open_document <<
-						"Rank" << irank++ <<
-						bsoncxx::builder::stream::close_document;
-
-					auto serverQuery = collection_acconut.find_one_and_update(query.view(), update.view());
-					if (!serverQuery)
-					{
-						printf("%I64d user rank %d query failed \n", Index, irank - 1);
-					}
-				}
-
-
-			}
-		
-			return 0;
-		}
-		catch (...)
-		{
-			printf("exception CalcRank \n");
-		}
-	}
+	
 
 	bool IsExistNickName(string name, int64_t Index)
 	{
@@ -210,88 +130,6 @@ public:
 		}
 	}
 
-	void  RequestRank(std::list<Rank>& list, int count = 100)
-	{
-		try
-		{
-			mongocxx::collection collection = db["RANK"];
-
-			auto order = bsoncxx::builder::stream::document{} << "Rank" << 1 << bsoncxx::builder::stream::finalize;
-
-			auto opts = mongocxx::options::find{};
-			opts.sort(order.view());
-			opts.limit(count);
-
-			//find all
-			mongocxx::cursor cursor = collection.find(
-				{}, opts);
-
-			for (bsoncxx::document::view doc : cursor)
-			{
-				Rank r;
-
-				auto viewRank = doc["Rank"];
-				r.set_var_rank(viewRank.get_int32().value);
-
-				auto viewLevel = doc["Level"];
-				r.set_var_level(viewLevel.get_int32().value);
-
-				auto viewLose = doc["Lose"];
-				r.set_var_lose(viewLose.get_int32().value);
-
-				auto viewWin = doc["Win"];
-				r.set_var_win(viewWin.get_int32().value);
-
-				auto viewDraw = doc["Draw"];
-				r.set_var_draw(viewDraw.get_int32().value);
-
-				auto viewName = doc["Name"];
-				r.set_var_name( viewName.get_utf8().value.data());
-
-				auto picUrl = doc["PictureUrl"];
-				r.set_var_pic_uri( picUrl.get_utf8().value.data());
-
-				auto picLocale = doc["Locale"];
-				r.set_var_contry(picLocale.get_utf8().value.data());
-
-				list.push_back(r);
-			}
-		}
-		catch (...)
-		{
-			printf("exception RequestRank \n");
-		}
-	}
-
-
-	int UpdaetPlayerScore(int64_t Index, int Win, int Lose, int Draw, int Level, int Score)
-	{
-		try
-		{
-			auto collection = db["ACCOUNT"];
-		
-			auto serverQuery = db["ACCOUNT"].update_one(
-				make_document(kvp("INDEX", Index)),
-				make_document(
-					kvp("$inc", make_document(kvp("Win", Win))),
-					kvp("$inc", make_document(kvp("Lose", Lose))),
-					kvp("$inc", make_document(kvp("Draw", Draw))),
-					kvp("$set", make_document(kvp("Level", Level))),
-					kvp("$set", make_document(kvp("Score", Score)))));
-
-			if (!serverQuery)
-			{
-				printf("UpdaetPlayerScore  Index %I64d query failed \n", Index);
-				return -1;
-			}
-
-			return 0;
-		}
-		catch (...)
-		{
-			printf("exception UpdaetPlayerScore \n");
-		}
-	}
 
 	std::string ToAnsi(const char* pszIn)
 	{
@@ -338,28 +176,39 @@ public:
 		}
 	}
 
-	int NoticeInfoInfo(string& notice)
+	std::list<tuple<__int64, string, string>> NoticeInfoInfo()
 	{
 		try
 		{
-			mongocxx::collection collection = db["NOTICE"];
-			bsoncxx::stdx::optional<bsoncxx::document::value> maybe_result =
-				collection.find_one(document{} << finalize);
-			if (maybe_result)
+			std::list<tuple<__int64, string,string>> list;
+			auto collection = db["NOTICE"];
+
+			auto order = bsoncxx::builder::stream::document{} << "reg-time" << -1 << bsoncxx::builder::stream::finalize;
+
+			auto opts = mongocxx::options::find{};
+			opts.sort(order.view());
+			opts.limit(100);
+
+			auto cursor = collection.find({}, opts);
+
+			int irank = 1;
+
+			for (auto doc : cursor)
 			{
-				auto view = maybe_result->view()["text"];
+				auto index = doc["index"].get_int64();
+				auto content = doc["content"].get_utf8().value;
+				auto time = doc["reg-time"].get_utf8().value;
 
-				auto strview = view.get_utf8().value;
-				notice = strview.to_string();
-
-				notice = ToAnsi(notice.c_str());
+				list.push_back(tuple<__int64,string, string>(index, content, time));
 			}
 
-			return 0;
+			return list;
 		}
 		catch (...)
 		{
+
 			printf("exception NoticeInfoInfo \n");
+			return std::list<tuple<__int64, string, string>>();
 		}
 	}
 
@@ -396,6 +245,107 @@ public:
 			printf("exception UpdaetQNS \n");
 		}
 	}
+
+	std::list<tuple<string, string, string>> PrayList(int count = 100)
+	{
+		try
+		{
+			std::list<tuple<string, string, string>> prayList;
+			auto collection = db["PRAY"];
+		
+			auto order = bsoncxx::builder::stream::document{} << "reg-time" << -1 << bsoncxx::builder::stream::finalize;
+
+			auto opts = mongocxx::options::find{};
+			opts.sort(order.view());
+			opts.limit(count);
+
+			auto cursor = collection.find({}, opts);
+
+			int irank = 1;
+
+			for (auto doc : cursor)
+			{
+				auto name = doc["name"].get_utf8().value;
+				auto content = doc["contents"].get_utf8().value;
+
+				auto time_reg = doc["reg-time"].get_date().value;
+
+				auto time = doc["time"].get_utf8().value;
+
+				//tm local_tm;
+				//localtime_s(&local_tm ,&timestamp);
+
+				//char buff[256];
+				//sprintf_s(buff,256, "%d-%d-%d %02d:%02d:%02d", local_tm.tm_year + 1900, local_tm.tm_mon + 1, local_tm.tm_mday, local_tm.tm_hour, local_tm.tm_min, local_tm.tm_sec);
+			
+				prayList.push_back(tuple<string, string, string>(name, content, time));
+			}
+
+			return prayList;
+		}
+		catch (...)
+		{
+
+			return std::list<tuple<string, string,string>>();
+			printf("exception PrayList \n");
+		}
+		
+	}
+
+
+	int UpdaetPray(string name, string contents)
+	{
+		try
+		{
+			std::time_t t = std::time(0);   // get time now
+			std::tm now;
+
+			localtime_s(&now,&t);
+
+			string time;
+
+			time.append(to_string((now.tm_year + 1900)));
+			time.append("-");
+			time.append(to_string((now.tm_mon + 1)));
+			time.append("-"); 
+			time.append(to_string((now.tm_mday)));
+			time.append("-"); 
+			time.append(to_string((now.tm_hour)));
+			time.append("-"); 
+			time.append(to_string((now.tm_min)));
+
+
+			mongocxx::collection collection = db["PRAY"];
+			///////////////////////////////////////////////////////////
+			/////insert 
+			auto builder = bsoncxx::builder::stream::document{};
+			bsoncxx::document::value doc_value = builder
+				<< "name" << name
+				<< "contents" << contents
+				<< "reg-time" << bsoncxx::types::b_date(std::chrono::system_clock::now())
+				<< "time" << time
+				<< bsoncxx::builder::stream::finalize;
+
+			bsoncxx::document::view view = doc_value.view();
+
+			bsoncxx::stdx::optional<mongocxx::result::insert_one> result =
+				collection.insert_one(view);
+
+			if (!result)
+			{
+				printf("UpdaetQNS  Index %s query failed \n", name);
+
+				return -1;
+			}
+
+			return 0;
+		}
+		catch (...)
+		{
+			printf("exception UpdaetQNS \n");
+		}
+	}
+
 
 	int	 ProcedureUserLogout(const int64_t id)
 	{
@@ -477,39 +427,31 @@ public:
 		}
 	}
 
-	int		ProcedureUserLogin(const char* flatformid, const int flatformtype, const char* picture_url, const char* email, const char* locale, std::string& szKey, int& Rank, int& Score, int& Win, int& Lose, int& Draw, INT64& Index, int& Level, string& name)
+	int		ProcedureUserLogin(std::string id, std::string pwd,std::string& szKey, int& Score, INT64& Index, int& Level)
 	{
 		try
 		{
 			mongocxx::collection collection = db["ACCOUNT"];
 			bsoncxx::stdx::optional<bsoncxx::document::value> maybe_result =
-				collection.find_one(document{} << "FlatformId" << flatformid << "FlatformType" << flatformtype << finalize);
+				collection.find_one(document{} << "Id" << id << finalize);
 			if (maybe_result) //캐릭터가 이미 존재한다.
 			{
+				auto passwd = maybe_result->view()["Pwd"];
+				if (passwd.get_utf8().value.data() != pwd)
+				{
+					printf("invalid passwd %s\n", id.c_str());
+					return -1;
+				}
+
 				auto viewScore = maybe_result->view()["Score"];
 				Score = viewScore.get_int32().value;
-
-				auto viewRank = maybe_result->view()["Rank"];
-				Rank = viewRank.get_int32().value;
-
-				auto viewWin = maybe_result->view()["Win"];
-				Win = viewWin.get_int32().value;
-
-				auto viewLose = maybe_result->view()["Lose"];
-				Lose = viewLose.get_int32().value;
-
-				auto viewDraw = maybe_result->view()["Draw"];
-				Draw = viewDraw.get_int32().value;
-
+		
 				auto viewLevel = maybe_result->view()["Level"];
 				Level = viewLevel.get_int32().value;
 
 				auto viewIndex = maybe_result->view()["INDEX"];
 				Index = viewIndex.get_int64().value;
-
-				auto viewName = maybe_result->view()["Name"];
-				name = viewName.get_utf8().value.data();
-
+			
 				//concurrent
 				//접속 기록이 있다. 중복 접속
 				{
@@ -519,7 +461,7 @@ public:
 					if (maybe_result)
 					{
 						//printf("duplicate login ProcedureUserLogin CONCURRENTUSER  Index %I64d query failed \n", Index);
-						return -1;
+						return -2;
 					}
 
 					UUID id1;
@@ -546,7 +488,7 @@ public:
 					{
 						printf("fail insert CONCURRENTUSER  Index %I64d query failed \n", Index);
 
-						return -1;
+						return -3;
 					}
 				}
 
@@ -560,20 +502,12 @@ public:
 
 					auto builder = bsoncxx::builder::stream::document{};
 					bsoncxx::document::value doc_value = builder
-						<< "FlatformId" << flatformid
-						<< "FlatformType" << flatformtype
-						<< "Name" << "" //default
-						<< "PictureUrl" << picture_url
-						<< "Email" << email
+						<< "Id" << id
+						<< "Pwd" << pwd
 						<< "LastLoginTime" << bsoncxx::types::b_date(std::chrono::system_clock::now())
 						<< "Score" << 0
-						<< "Rank" << 0
 						<< "Score" << 0
-						<< "Win" << 0
-						<< "Lose" << 0
-						<< "Draw" << 0
 						<< "Level" << 0
-						<< "Locale" << locale
 						<< "INDEX" << index
 						<< bsoncxx::builder::stream::finalize;
 
@@ -624,7 +558,6 @@ public:
 					//auto index_specification = document{} << "INDEX" << 1 << finalize;
 					//collection.create_index(std::move(index_specification));
 					Index = index;
-					Score = Rank = Win = Lose = Draw = Level = 0;
 				}
 			}
 			return 0;

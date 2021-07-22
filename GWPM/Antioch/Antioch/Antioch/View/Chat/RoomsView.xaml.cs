@@ -62,10 +62,6 @@ namespace Antioch
                     {
                         if (action != "Cancel")
                             NetProcess.SendMakeRoom(User.CacheData.UserName + "_" + "general");
-
-                        await App.Current.MainPage.Navigation.PushModalAsync(new ChatUserList());
-
-
                     }
                     break;
             }
