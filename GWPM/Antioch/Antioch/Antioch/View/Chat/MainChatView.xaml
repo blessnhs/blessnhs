@@ -51,7 +51,7 @@
 				Text="{Binding OutGoingText}"/>
             <Button 
 				Text="Send" 
-				Clicked="OnClicked" Style="{StaticResource buttonStyle}"/>
+				Clicked="OnSendClicked" Style="{StaticResource buttonStyle}"/>
 
         </StackLayout>
     </Grid>

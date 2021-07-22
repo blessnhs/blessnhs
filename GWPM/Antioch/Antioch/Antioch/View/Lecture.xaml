@@ -4,7 +4,7 @@
              x:Class="Antioch.View.Lecture">
   <ContentView.Content>
         <StackLayout>
-            <WebView Source="https://www.youtube.com/channel/UCleQoiUFmXaqlPu_GSzRNww" 
+            <WebView x:Name="webview" Source="https://www.youtube.com/channel/UCleQoiUFmXaqlPu_GSzRNww" 
             VerticalOptions="FillAndExpand" 
             HorizontalOptions="FillAndExpand"
             />

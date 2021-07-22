@@ -21,16 +21,6 @@ namespace Antioch.View
         {
             InitializeComponent();
 
-            Device.StartTimer(new TimeSpan(0, 0, 10), () =>
-            {
-                // do something every 60 seconds
-                Device.BeginInvokeOnMainThread(() =>
-                {
-                    NetProcess.SendPrayList();
-                });
-                return true; // runs again, or false to stop
-            });
-
             BindingContext = new PrayViewModel();
         }
 

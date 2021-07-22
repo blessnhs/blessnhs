@@ -59,6 +59,10 @@ namespace Antioch
                          SocketType.Stream, ProtocolType.Tcp);
                 }
 
+
+                socket.ReceiveTimeout = 500;
+                socket.SendTimeout = 2000;
+
                 User.LoginSuccess = false;
 
                 var mainpage = (MainPage)Application.Current.MainPage;

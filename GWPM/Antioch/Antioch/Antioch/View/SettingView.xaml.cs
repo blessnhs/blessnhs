@@ -50,7 +50,6 @@ namespace Antioch.View
                     messageLabel.Text = "Conncted";
                     usernameEntry.Text = User.CacheData.UserName;
                     passwordEntry.Text = "****";
-                    loginbutton.IsVisible = false;
 
                     vm.BtnMessage = "Conncted";
                 });
@@ -73,8 +72,15 @@ namespace Antioch.View
 
         void OnToggledKJV(object sender, ToggledEventArgs e)
         {
-            User.CacheData.EnalbeKJV = e.Value;
-        //    SQLLiteDB.Upsert(User.CacheData);
+
+#if GLOBAL
+            User.CacheData.EnalbeKJV = true;
+#else
+    User.CacheData.EnalbeKJV = e.Value;
+#endif
+
+
+            //    SQLLiteDB.Upsert(User.CacheData);
         }
 
 

@@ -1,4 +1,5 @@
-﻿using MvvmHelpers;
+﻿using Antioch.View.Chat;
+using MvvmHelpers;
 using System;
 using System.Collections.Generic;
 
@@ -58,8 +59,14 @@ namespace Antioch
                     NetProcess.SendMakeRoom(User.CacheData.UserName + "_#" + action);
                     break;
                 default:
-                    if(action != "Cancel")
-                        NetProcess.SendMakeRoom(User.CacheData.UserName + "_" + "general");
+                    {
+                        if (action != "Cancel")
+                            NetProcess.SendMakeRoom(User.CacheData.UserName + "_" + "general");
+
+                        await App.Current.MainPage.Navigation.PushModalAsync(new ChatUserList());
+
+
+                    }
                     break;
             }
         }

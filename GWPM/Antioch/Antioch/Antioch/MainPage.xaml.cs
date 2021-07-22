@@ -119,23 +119,12 @@ namespace Antioch
                     while (true)
                     {
                         NetProcess.start();
-                        Thread.Sleep(1);
-                    }
-                });
-
-                //network thread
-                Task.Run(() =>
-                {
-                    DateTime checktime = DateTime.Now;
-
-                    while (true)
-                    {
                         NetProcess.client.PacketRecvSync();
                         NetProcess.Loop();
-                        Thread.Sleep(1);
+
+                        Thread.Sleep(10);
                     }
                 });
-
             }
         }
 

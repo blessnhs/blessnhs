@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DependencyHelper;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -16,6 +17,10 @@ namespace Antioch.View
         public RoomsPageView roompage = new RoomsPageView();
         public Dictionary<int,MainChatView> chatpage = new Dictionary<int, MainChatView>();
         public PrayView praypage = new PrayView();
+
+
+        public Lecture lec1 = new Lecture();
+        public Lecture2 lec2 = new Lecture2();
 
         public MainChatView GetCurrentChatView()
         {
@@ -87,23 +92,39 @@ namespace Antioch.View
                         break;
 
                     case "Lecture":
-                        LoadView(new Lecture());
+
+                        lec1.Content = null;
+                        lec1 = null;
+                        lec1  = new Lecture();
+
+                        LoadView(lec1);
                         break;
 
                     case "Lecture2":
-                        LoadView(new Lecture2());
+
+                        lec2.Content = null;
+                        lec2 = null;
+                        lec2 = new Lecture2();
+
+                        LoadView(lec2);
                         break;
 
                     case "Chat":
                         {
                             if (User.LoginSuccess == false)
                             {
+#if GLOBAL
+                                DependencyService.Get<Toast>().Show("need to log in");
+#else
+                                DependencyService.Get<Toast>().Show("로그인해야 합니다");
+#endif
                                 var mainpage = (MainPage)Application.Current.MainPage;
 
                                 mainpage.LoadSetting();
                             }
                             else
                             {
+                                NetProcess.SendRoomList();
                                 LoadView(roompage);
                             }
                             //if(GetCurrentChatView() == null)
