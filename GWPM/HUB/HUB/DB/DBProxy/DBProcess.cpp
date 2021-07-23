@@ -101,3 +101,13 @@ int CDBProcessCer::AddRoomMessage(int room_id, INT64 user_id, string user_name, 
 {
 	return m_DB->AddRoomMessage(room_id, user_id, user_name, msg, time);
 }
+
+std::list<tuple<__int64, string, int, string, string>> CDBProcessCer::LoadRoomMessage(int room_id, int count)
+{
+	return m_DB->LoadRoomMessage(room_id, count);
+}
+
+std::set<int> CDBProcessCer::LoadRooms(INT64 user_id, int count)
+{
+	return m_DB->LoadRooms(user_id, count);
+}
