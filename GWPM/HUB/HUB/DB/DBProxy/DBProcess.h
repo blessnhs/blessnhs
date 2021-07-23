@@ -32,6 +32,13 @@ public:
 	list<tuple<string, string,string>> PrayList();
 	int RegPray(string name, string contents);
 
+
+
+	int CreateRoom(string room_name, INT64 user_id, string user_name);
+	int EnterRoom(int room_id, INT64 user_id, string user_name);
+	int LeaveRoom(int room_id, INT64 user_id, string user_name);
+	int AddRoomMessage(int room_id, INT64 user_id, string user_name, string msg,string time);
+	
 	bool				m_IsOpen;
 
 	CRITICAL_SECTION	m_CS;

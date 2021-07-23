@@ -569,7 +569,246 @@ public:
 	}
 
 
+	int CreateRoom(string room_name,INT64& user_id,string user_name)
+	{
+		try
+		{
+			mongocxx::collection room_collection = db["ROOMS"];
+
+			mongocxx::collection user_collection = db["ROOM_USERS"];
+
+			int64_t rooom_index = GetNextIndex();
+
+					auto builder = bsoncxx::builder::stream::document{};
+					bsoncxx::document::value doc_value = builder
+						<< "RoomId" << rooom_index
+						<< "Pwd" << ""
+						<< "LastLoginTime" << bsoncxx::types::b_date(std::chrono::system_clock::now())
+						<< "Name" << room_name
+						<< bsoncxx::builder::stream::finalize;
+
+					bsoncxx::document::view view = doc_value.view();
+
+					bsoncxx::stdx::optional<mongocxx::result::insert_one> result =
+						room_collection.insert_one(view);
+
+					//방 생성 실패
+					if (!result)
+					{
+						printf("fail insert ACCOUNT  Index %I64d query failed \n", user_id);
+
+						return -1;
+					}
+
+					///////////////////////////////////////////////////////////
+					///////user insert 
+					builder = bsoncxx::builder::stream::document{};
+					doc_value = builder
+						<< "UserId" << user_id
+						<< "Name" << user_name
+						<< "RoomId" << rooom_index
+						<< bsoncxx::builder::stream::finalize;
+
+					view = doc_value.view();
+
+					result = user_collection.insert_one(view);
+
+					//유저 생성 실패
+					if (!result)
+					{
+						printf("fail insert ACCOUNT  Index %I64d query failed \n", user_id);
+
+						return -1;
+					}
+				
+			
+			return 0;
+		}
+		catch (...)
+		{
+			printf("exception ProcedureUserLogin \n");
+		}
+	}
+
+	int EnterRoom(int room_id, INT64& user_id, string user_name)
+	{
+		try
+		{
+			mongocxx::collection room_collection = db["ROOMS"];
+			bsoncxx::stdx::optional<bsoncxx::document::value> maybe_result =
+				room_collection.find_one(document{} << "RoomId" << room_id << finalize);
+			if (!maybe_result) //방이 없다.
+			{
+				return -1;
+			}
+			else
+			{
+				mongocxx::collection user_collection = db["ROOM_USERS"];
+				bsoncxx::stdx::optional<bsoncxx::document::value> maybe_result =
+					user_collection.find_one(document{} << "UserId" << user_id << finalize);
+				if (maybe_result) //이미 유저가 있다.
+				{
+					return 0;
+				}
+
+				///////////////////////////////////////////////////////////
+				///////insert 
+				{
+
+					auto builder = bsoncxx::builder::stream::document{};
+					bsoncxx::document::value doc_value = builder
+						<< "UserId" << user_id
+						<< "Name" << user_name
+						<< "RoomId" << room_id
+						<< bsoncxx::builder::stream::finalize;
+
+					bsoncxx::document::view view = doc_value.view();
+
+					bsoncxx::stdx::optional<mongocxx::result::insert_one> result =
+						user_collection.insert_one(view);
+
+					//유저 생성 실패
+					if (!result)
+					{
+						printf("fail insert ACCOUNT  Index %I64d query failed \n", user_id);
+
+						return -1;
+					}
+				}
+			}
+			return 0;
+		}
+		catch (...)
+		{
+			printf("exception ProcedureUserLogin \n");
+		}
+	}
+
+	int LeaveRoom(int room_id, INT64& user_id, string user_name)
+	{
+		try
+		{
+			mongocxx::collection room_collection = db["ROOMS"];
+			bsoncxx::stdx::optional<bsoncxx::document::value> maybe_result =
+				room_collection.find_one(document{} << "RoomId" << room_id << finalize);
+			if (!maybe_result) //방이 없다.
+			{
+				return -1;
+			}
+			else
+			{
+				{
+					mongocxx::collection user_collection = db["ROOM_USERS"];
+					user_collection.delete_many(document{} << "RoomId" << room_id << "UserId" << user_id << finalize);
+				}
+
+				{
+					mongocxx::collection user_collection = db["ROOM_USERS"];
+					bsoncxx::stdx::optional<bsoncxx::document::value> maybe_result =
+						user_collection.find_one(document{} << "RoomId" << room_id << finalize);
+					if (!maybe_result) //방에 더이상 유저가 없다.
+					{
+						mongocxx::collection user_collection = db["ROOMS"];
+						user_collection.delete_many(document{} << "RoomId" << room_id << finalize);
+						return 1;
+					}
+				}
+			}
+			return 0;
+		}
+		catch (...)
+		{
+			printf("exception ProcedureUserLogin \n");
+		}
+	}
+
+	int AddRoomMessage(int room_id, INT64 user_id, string user_name, string msg,string time)
+	{
+		///////////////////////////////////////////////////////////
+		///////user insert 
+
+		mongocxx::collection room_collection = db["ROOM_MSG"];
+
+		auto builder = bsoncxx::builder::stream::document{};
+		bsoncxx::document::value doc_value = builder
+			<< "UserId" << user_id
+			<< "Name" << user_name
+			<< "RoomId" << room_id
+			<<"Time" << time
+			<<"Msg" << msg
+			<< bsoncxx::builder::stream::finalize;
+
+		bsoncxx::document::view view = doc_value.view();
+
+		bsoncxx::stdx::optional<mongocxx::result::insert_one> result =
+			room_collection.insert_one(view);
+
+		
+		if (!result)
+		{
+	
+			return -1;
+		}
+	}
+
+
+	std::list<tuple<__int64, string, int,string,string>> LoadRoomMessage(int room_id,int count = 100)
+	{
+		std::list<tuple<__int64, string, int, string, string>> list;
+
+		auto collection = db["ROOM_MSG"];
+
+		auto order = bsoncxx::builder::stream::document{} << "Time" << -1 << bsoncxx::builder::stream::finalize;
+
+		auto opts = mongocxx::options::find{};
+		opts.sort(order.view());
+		opts.limit(count);
+
+		auto cursor = collection.find({}, opts);
+
+		int irank = 1;
+
+		for (auto doc : cursor)
+		{
+			auto userid = doc["UserId"].get_int64().value;
+			auto name = doc["Name"].get_utf8().value;
+
+			auto room_id = doc["RoomId"].get_int32().value;
+
+			auto time = doc["Time"].get_utf8().value;
+			auto msg = doc["Msg"].get_utf8().value;
+
+			list.push_back(tuple<__int64, string, int, string, string>(userid,name, room_id, time, msg));
+		}
+
+		return list;
+	}
+
+	std::set<int> LoadRooms(INT64 user_id,int count = 100)
+	{
+		std::set<int> list;
+
+		auto collection = db["ROOM_USERS"];
+
+
+		auto cursor = collection.find(document{} << "UserId" << user_id << finalize);
+
+		int irank = 1;
+
+		for (auto doc : cursor)
+		{
+			auto userid = doc["UserId"].get_int64().value;
+			auto room_id = doc["RoomId"].get_int32().value;
+
+
+			list.insert(room_id);
+		}
+
+		return list;
+	}
+
 };
+
 
 
 #pragma comment(lib, "Dbghelp.lib")

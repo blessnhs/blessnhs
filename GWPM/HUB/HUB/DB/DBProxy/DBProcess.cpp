@@ -80,3 +80,24 @@ int		CDBProcessCer::ProcedureUserLogin(const std::string id, const std::string p
 {
 	return m_DB->ProcedureUserLogin(id, pwd, szKey, Score, Index, Level);
 }
+
+
+int CDBProcessCer::CreateRoom(string room_name, INT64 user_id, string user_name)
+{
+	return m_DB->CreateRoom(room_name,user_id, user_name);
+}
+
+int CDBProcessCer::EnterRoom(int room_id, INT64 user_id, string user_name)
+{
+	return m_DB->EnterRoom(room_id,user_id,user_name);
+}
+
+int CDBProcessCer::LeaveRoom(int room_id, INT64 user_id, string user_name)
+{
+	return m_DB->LeaveRoom(room_id,user_id,user_name);
+}
+
+int CDBProcessCer::AddRoomMessage(int room_id, INT64 user_id, string user_name, string msg,string time)
+{
+	return m_DB->AddRoomMessage(room_id, user_id, user_name, msg, time);
+}
