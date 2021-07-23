@@ -1,4 +1,5 @@
 ﻿using Antioch.View;
+using Antioch.View.Chat;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -91,6 +92,11 @@ namespace Antioch
 
         private async void List_Clicked(object sender, EventArgs e)
         {
+            var cameraPage = new ChatUserList();
+            await Application.Current.MainPage.Navigation.PushModalAsync(cameraPage);
+
+            return;
+
             var layout = new StackLayout
             {
                 WidthRequest = App.Current.MainPage.Width / 3,

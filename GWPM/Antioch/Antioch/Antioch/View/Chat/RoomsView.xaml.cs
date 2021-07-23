@@ -49,22 +49,26 @@ namespace Antioch
 
         async void Clicked_Create(object sender, System.EventArgs e)
         {
-            string action = await App.Current.MainPage.DisplayActionSheet("Room Create #General LEGION KOR ", "Cancel", null, "Individual", "Local", "Global");
+            //string action = await App.Current.MainPage.DisplayActionSheet("Room Create #General LEGION KOR ", "Cancel", null, "Individual", "Local", "Global");
 
-            switch (action)
-            {
-                case "Individual":
-                case "Local":
-                case "Global":
-                    NetProcess.SendMakeRoom(User.CacheData.UserName + "_#" + action);
-                    break;
-                default:
-                    {
-                        if (action != "Cancel")
-                            NetProcess.SendMakeRoom(User.CacheData.UserName + "_" + "general");
-                    }
-                    break;
-            }
+            string action = await App.Current.MainPage.DisplayPromptAsync("name", "room name?");
+
+            NetProcess.SendMakeRoom(User.CacheData.UserName + "_" + action);
+
+            //switch (action)
+            //{
+            //    case "Individual":
+            //    case "Local":
+            //    case "Global":
+            //        NetProcess.SendMakeRoom(User.CacheData.UserName + "_#" + action);
+            //        break;
+            //    default:
+            //        {
+            //            if (action != "Cancel")
+            //                NetProcess.SendMakeRoom(User.CacheData.UserName + "_" + "general");
+            //        }
+            //        break;
+            //}
         }
 
         async void Clicked_Exit(object sender, System.EventArgs e)

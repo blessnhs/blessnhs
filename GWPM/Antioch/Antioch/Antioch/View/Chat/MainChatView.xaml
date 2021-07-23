@@ -11,6 +11,7 @@
         </ResourceDictionary>
     </ContentView.Resources>
 
+
     <Grid RowSpacing="0" ColumnSpacing="0" x:Name="grid">
         <Grid.RowDefinitions>
             <RowDefinition Height="1*" />
@@ -21,7 +22,7 @@
             <ColumnDefinition Width="8*" />
             <ColumnDefinition Width="2*" />
         </Grid.ColumnDefinitions>
-
+        
         <!-- Entry and Send button in Row 1 -->
         <StackLayout Padding="0,0,0,0"  Orientation="Horizontal" Grid.Column="0" Grid.Row="0" HorizontalOptions="End" Grid.ColumnSpan="2" BackgroundColor="White">
             <Label  x:Name="title_label"/>
@@ -53,6 +54,11 @@
 				Text="Send" 
 				Clicked="OnSendClicked" Style="{StaticResource buttonStyle}"/>
 
-        </StackLayout>
+        </StackLayout>        
     </Grid>
+
+
+
+    
+
 </ContentView>

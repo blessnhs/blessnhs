@@ -15,6 +15,8 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
+using Popup = Rg.Plugins.Popup;
+
 namespace Antioch.UWP
 {
     /// <summary>
@@ -48,6 +50,7 @@ namespace Antioch.UWP
 
             Frame rootFrame = Window.Current.Content as Frame;
 
+     
             // Do not repeat app initialization when the Window already has content,
             // just ensure that the window is active
             if (rootFrame == null)
@@ -57,7 +60,8 @@ namespace Antioch.UWP
 
                 rootFrame.NavigationFailed += OnNavigationFailed;
 
-                Xamarin.Forms.Forms.Init(e);
+                Rg.Plugins.Popup.Popup.Init();
+                 Xamarin.Forms.Forms.Init(e);
 
                 if (e.PreviousExecutionState == ApplicationExecutionState.Terminated)
                 {
