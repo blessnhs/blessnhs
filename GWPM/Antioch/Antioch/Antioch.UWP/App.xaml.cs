@@ -15,7 +15,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
-using Popup = Rg.Plugins.Popup;
+//using Popup = Rg.Plugins.Popup;
 
 namespace Antioch.UWP
 {
@@ -60,7 +60,7 @@ namespace Antioch.UWP
 
                 rootFrame.NavigationFailed += OnNavigationFailed;
 
-                Rg.Plugins.Popup.Popup.Init();
+                 Rg.Plugins.Popup.Popup.Init();
                  Xamarin.Forms.Forms.Init(e);
 
                 if (e.PreviousExecutionState == ApplicationExecutionState.Terminated)

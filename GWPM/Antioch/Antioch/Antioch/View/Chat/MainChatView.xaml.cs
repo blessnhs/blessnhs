@@ -1,5 +1,6 @@
 ﻿using Antioch.View;
 using Antioch.View.Chat;
+using Rg.Plugins.Popup.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -92,70 +93,72 @@ namespace Antioch
 
         private async void List_Clicked(object sender, EventArgs e)
         {
-            var cameraPage = new ChatUserList();
-            await Application.Current.MainPage.Navigation.PushModalAsync(cameraPage);
+            var page = new ChatUserList(UserList);
+
+            await PopupNavigation.Instance.PushAsync(page);
 
             return;
 
-            var layout = new StackLayout
-            {
-                WidthRequest = App.Current.MainPage.Width / 3,
-                HeightRequest = App.Current.MainPage.Height,
-                BackgroundColor = Color.White,
-                HorizontalOptions = LayoutOptions.End,
-                VerticalOptions = LayoutOptions.CenterAndExpand
 
-            };
+            //var layout = new StackLayout
+            //{
+            //    WidthRequest = App.Current.MainPage.Width / 3,
+            //    HeightRequest = App.Current.MainPage.Height,
+            //    BackgroundColor = Color.White,
+            //    HorizontalOptions = LayoutOptions.End,
+            //    VerticalOptions = LayoutOptions.CenterAndExpand
 
-            {
-                var DataTemplate = new DataTemplate(() =>
-                {
-                    var grid = new Grid();
-                    var nameLabel = new Label { FontAttributes = FontAttributes.Bold ,TextColor = Color.Black};
-                    var ageLabel = new Label();
-                    var locationLabel = new Label { HorizontalTextAlignment = TextAlignment.End };
+            //};
 
-                  // nameLabel.SetBinding(Label.TextProperty, "Name");
-                   // ageLabel.SetBinding(Label.TextProperty, "Age");
-                   // locationLabel.SetBinding(Label.TextProperty, "Location");
+            //{
+            //    var DataTemplate = new DataTemplate(() =>
+            //    {
+            //        var grid = new Grid();
+            //        var nameLabel = new Label { FontAttributes = FontAttributes.Bold ,TextColor = Color.Black};
+            //        var ageLabel = new Label();
+            //        var locationLabel = new Label { HorizontalTextAlignment = TextAlignment.End };
 
-                    grid.Children.Add(nameLabel);
-                   // grid.Children.Add(ageLabel, 1, 0);
-                  //  grid.Children.Add(locationLabel, 2, 0);
+            //      // nameLabel.SetBinding(Label.TextProperty, "Name");
+            //       // ageLabel.SetBinding(Label.TextProperty, "Age");
+            //       // locationLabel.SetBinding(Label.TextProperty, "Location");
 
-                    return new ViewCell { View = grid };
-                });
+            //        grid.Children.Add(nameLabel);
+            //       // grid.Children.Add(ageLabel, 1, 0);
+            //      //  grid.Children.Add(locationLabel, 2, 0);
 
-                var listview = new ListView();
-                listview.ItemsSource = UserList;
-              //  listview.ItemTemplate = DataTemplate;
-                listview.Margin = new Thickness(20, 50, 20, 20);
+            //        return new ViewCell { View = grid };
+            //    });
 
-                layout.Children.Add(listview);
+            //    var listview = new ListView();
+            //    listview.ItemsSource = UserList;
+            //  //  listview.ItemTemplate = DataTemplate;
+            //    listview.Margin = new Thickness(20, 50, 20, 20);
 
-            }
+            //    layout.Children.Add(listview);
+
+          //  }
 
 
-            //close button
-            {
-                var closebutton = new Button();
-                closebutton.BackgroundColor = Color.White;
-                closebutton.TextColor = Color.Black;
-                closebutton.Text = "Close";
-                closebutton.Clicked += async (s, args) => await App.Current.MainPage.Navigation.PopModalAsync();
-                layout.Children.Add(closebutton);
-            }
+            ////close button
+            //{
+            //    var closebutton = new Button();
+            //    closebutton.BackgroundColor = Color.White;
+            //    closebutton.TextColor = Color.Black;
+            //    closebutton.Text = "Close";
+            //    closebutton.Clicked += async (s, args) => await App.Current.MainPage.Navigation.PopModalAsync();
+            //    layout.Children.Add(closebutton);
+            //}
 
 
 
 
             
-            await App.Current.MainPage.Navigation.PushModalAsync(
-                new ContentPage
-                {
-                    BackgroundColor = Color.Transparent,
-                    Content = layout,
-                });
+            //await App.Current.MainPage.Navigation.PushModalAsync(
+            //    new ContentPage
+            //    {
+            //        BackgroundColor = Color.Transparent,
+            //        Content = layout,
+            //    });
             
 
             //     var cameraPage = new CameraPage();
