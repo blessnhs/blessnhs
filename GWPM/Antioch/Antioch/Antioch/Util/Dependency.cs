@@ -17,5 +17,7 @@ namespace DependencyHelper
 
         void StartRecord(object view);
 
+        void Notification(string message);
+
     }
 }

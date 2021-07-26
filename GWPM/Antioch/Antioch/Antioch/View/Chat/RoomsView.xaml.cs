@@ -53,7 +53,13 @@ namespace Antioch
 
             string action = await App.Current.MainPage.DisplayPromptAsync("name", "room name?");
 
-            NetProcess.SendMakeRoom(User.CacheData.UserName + "_" + action);
+            if (action.Length > 1024)
+            {
+                await App.Current.MainPage.DisplayAlert("name checker", "size is long", "ok");
+                return;
+            }
+
+           NetProcess.SendMakeRoom(User.CacheData.UserName + "_" + action);
 
             //switch (action)
             //{

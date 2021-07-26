@@ -114,7 +114,8 @@ namespace Antioch.View
                             if (User.LoginSuccess == false)
                             {
 #if GLOBAL
-                                DependencyService.Get<Toast>().Show("need to log in");
+                                if (Device.RuntimePlatform == Device.Android)
+                                    DependencyService.Get<Toast>().Show("need to log in");
 #else
                                 DependencyService.Get<Toast>().Show("로그인해야 합니다");
 #endif
@@ -144,7 +145,10 @@ namespace Antioch.View
                           LoadView(new QnAView());
                         break;
                     case "Pray":
-                        LoadView(praypage);
+                        {
+                            NetProcess.SendPrayList();
+                            LoadView(praypage);
+                        }
                         break;
                     case "Bible":
                         LoadView(new BibleView());

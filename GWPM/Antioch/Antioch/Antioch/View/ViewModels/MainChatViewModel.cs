@@ -11,6 +11,8 @@ using MvvmHelpers;
 using Plugin.Geolocator;
 using Xamarin.Forms;
 using System.Globalization;
+using Antioch.View;
+using Rg.Plugins.Popup.Services;
 
 namespace Antioch
 {
@@ -53,12 +55,16 @@ namespace Antioch
 
         public void AddMessage(string text, string name, string timestring,Message.type type)
         {
+            DateTime time;
+            if (DateTime.TryParse(timestring, out time) == false)
+                time = DateTime.Now;
+
             var message = new Message
             {
                 Text = text,
                 MessageType = type,
                 AttachementUrl = "",
-                MessageDateTime = DateTime.Parse(timestring),
+                MessageDateTime = time,
                 ProfileUrl = name// "https://lh4.googleusercontent.com/-MEdrkpWi6Yg/AAAAAAAAAAI/AAAAAAAAAAA/AMZuuckIeT9M_SOv920jGkFwWiOCWkZRJA/s96-c/photo.jpg"
             };
 
@@ -90,6 +96,10 @@ namespace Antioch
 
             ExitCommand = new Command(() =>
             {
+                var page = new Confirm();
+                var ret = PopupNavigation.Instance.PushAsync(page);
+
+
                 var mainpage = (MainPage)Application.Current.MainPage;
                 
                 NetProcess.SendLeaveRoom(User.CurrentChatViewNumber);

@@ -20,6 +20,18 @@ namespace Antioch.View.Chat.ViewModels
             }
         }
 
+        private string _Version { get; set; }
+
+        public string Version
+        {
+            get { return _Version; }
+            set
+            {
+                _Version = value;
+                OnPropertyChanged(nameof(Version));
+            }
+        }
+
         private string _BtnMessage { get; set; }
         public string BtnMessage
         {

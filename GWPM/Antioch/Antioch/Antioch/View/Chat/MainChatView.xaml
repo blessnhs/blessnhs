@@ -26,7 +26,7 @@
         <!-- Entry and Send button in Row 1 -->
         <StackLayout Padding="0,0,0,0"  Orientation="Horizontal" Grid.Column="0" Grid.Row="0" HorizontalOptions="End" Grid.ColumnSpan="2" BackgroundColor="White">
             <Label  x:Name="title_label"/>
-            <Button Text="List" Clicked="List_Clicked" Style="{StaticResource buttonStyle}"/>
+            <Button Text="Member" Clicked="List_Clicked" Style="{StaticResource buttonStyle}"/>
             <Button Text="Exit" Command="{Binding ExitCommand}" Style="{StaticResource buttonStyle}"/>
         </StackLayout>
         <!--Messages in Row 1 -->

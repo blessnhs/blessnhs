@@ -15,5 +15,9 @@ namespace Antioch
         static public HashSet<int> RoomIdList = new HashSet<int>();
 
         static public int CurrentChatViewNumber;
+
+        static public float Version = 0;
+
+        static public bool OnceVersionNotify = false;
     }
 }

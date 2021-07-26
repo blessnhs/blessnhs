@@ -10,6 +10,7 @@ using Xamarin.Forms;
 using System.Linq;
 using Antioch.View;
 using static Antioch.MainChatView;
+using DependencyHelper;
 
 namespace Antioch
 {
@@ -41,10 +42,10 @@ namespace Antioch
         {
             if (check_time < DateTime.Now)
             {
-                string ip = "211.212.37.238";//"192.168.0.9"
-                                             // string ip = "192.168.0.9";
+                //string ip = "211.212.37.238";//"192.168.0.9"
+               string ip = "192.168.0.9";
 
-                client.StartClient(ip, 23000);
+                client.StartClient(ip, 20000);
 
                 check_time = DateTime.Now.AddSeconds(5);
 
@@ -58,6 +59,8 @@ namespace Antioch
                 SendMailList();
 
                 SendAlaram();
+
+                SendPrayList();
 
                 notice_time = DateTime.Now.AddSeconds(30);
             }
@@ -90,12 +93,19 @@ namespace Antioch
                                 var myversion = double.Parse(currentVersion);
                                 const Double Eps = 0.000000000000001;
 
+                                User.Version = res.VarVersion;
+
                                 if (Math.Abs(res.VarVersion - myversion) > Eps)
                                 {
                                     //첫 검수라 임시 주석 2번째 패치 부터는 활성화
-                                    //   Xamarin.Essentials.Browser.OpenAsync("https://play.google.com/store/apps/details?id=antioch.kor.pkg");
-
-                                    //    return;
+                                    if (Device.RuntimePlatform == Device.Android && User.OnceVersionNotify == false)
+                                    {
+                                        Device.BeginInvokeOnMainThread(() =>
+                                        {
+                                            User.OnceVersionNotify = true;
+                                            DependencyService.Get<Toast>().Notification("New Version Updated");
+                                        });
+                                    }
                                 }
 
 

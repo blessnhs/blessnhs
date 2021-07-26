@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -20,6 +20,20 @@ namespace Antioch.View
             InitializeComponent();
 
             vm.BtnMessage = "Login";
+            vm.Version = "Newest version";
+
+            {
+                var currentVersion = VersionTracking.CurrentVersion;
+
+                double myversion = 0;
+                double.TryParse(currentVersion,out myversion);
+                const Double Eps = 0.000000000000001;
+
+                if (Math.Abs(User.Version - myversion) > Eps)
+                {
+                    vm.Version = "Updatable";
+                }
+            }
 
             TextSizeSlider.Value = User.CacheData.FontSize;
 
@@ -70,6 +84,21 @@ namespace Antioch.View
             usernameEntry.Text = message;
         }
 
+        async void OnCheckVersion(object sender, System.EventArgs e)
+        {
+            var currentVersion = VersionTracking.CurrentVersion;
+
+            double myversion;
+            double.TryParse(currentVersion,out myversion);
+            const Double Eps = 0.000000000000001;
+
+            if (Math.Abs(User.Version - myversion) > Eps)
+            {
+                Xamarin.Essentials.Browser.OpenAsync("https://play.google.com/store/apps/details?id=antioch.kor.pkg");
+                return;
+            }
+        }
+        
         void OnToggledKJV(object sender, ToggledEventArgs e)
         {
 

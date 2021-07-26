@@ -27,7 +27,12 @@
                         <StackLayout VerticalOptions="StartAndExpand">
                             <Label Text="KJV  Bible" />
                             <Switch x:Name="KJVOption"  IsToggled="true" Toggled="OnToggledKJV"/>
+
+                            <Button  x:Name="VersionBtn" Text="{Binding Version}" Clicked="OnCheckVersion"></Button>
+
                         </StackLayout>
+
+                      
                     </Frame>
 
 
