@@ -1,9 +1,6 @@
 #pragma once
 
-#include "GSObject.h"
-#include "common.h"
-#include <boost/shared_ptr.hpp>
-#include "IMessage.h"
+class Player;
 
 typedef GSNetwork::GSObject::GSObject GSObject;
 
@@ -112,6 +109,60 @@ class RequestDeleteAllConcurrentUser : public GSObject
 public:
 	RequestDeleteAllConcurrentUser(void) {}
 	~RequestDeleteAllConcurrentUser(void) {}
+};
+
+class LoadDBRoomList : public GSObject
+{
+public:
+	LoadDBRoomList(void) {}
+	~LoadDBRoomList(void) {}
+};
+
+class CreateRooom : public GSObject
+{
+public:
+	CreateRooom(void) {}
+	~CreateRooom(void) {}
+
+	string room_name;
+	INT64 user_id;
+	string user_name;
+	boost::shared_ptr<Player> pPlayer;
+};
+
+class EnterRooomDB : public GSObject
+{
+public:
+	EnterRooomDB(void) {}
+	~EnterRooomDB(void) {}
+
+	int room_id;
+	INT64 user_id;
+	string user_name;
+};
+
+class LeaveRoomDB : public GSObject
+{
+public:
+	LeaveRoomDB(void) {}
+	~LeaveRoomDB(void) {}
+
+	int room_id;
+	INT64 user_id;
+	string user_name;
+};
+
+class RoomPassThrou : public GSObject
+{
+public:
+	RoomPassThrou(void) {}
+	~RoomPassThrou(void) {}
+
+	int room_id;
+	INT64 user_id;
+	string user_name;
+	string msg;
+	string time;
 };
 
 class RequestPrayList : public GSObject

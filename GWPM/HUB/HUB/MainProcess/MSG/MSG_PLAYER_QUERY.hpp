@@ -3,6 +3,7 @@
 #include "../../DB/DBJob/DBContext.h"
 #include "../../DB/DBProxy/DBProcessContainer.h"
 #include "GSClient.h"
+#include "../../PLAYER/Player.h"
 
 #include "../../PLAYER/PlayerContainer.h"
 #include "../../SERVER/GSHUB.h"
@@ -118,6 +119,289 @@ namespace Hub	{
 			}
 
 			pProcess->DeleteAllConcurrentUser();
+		}
+
+		void Undo() {}
+	};
+
+
+	template<>
+	class MSG_PLAYER_QUERY<CreateRooom> : public IMESSAGE
+	{
+	public:
+		MSG_PLAYER_QUERY() { }
+		~MSG_PLAYER_QUERY() {}
+
+		GSCLIENT_PTR pSession;
+
+		CreateRooom Request;
+
+		void Execute(LPVOID Param)
+		{
+			DBPROCESS_CER_PTR pProcess = DBPROCESSCONTAINER_CER.Search(Type);
+			if (pProcess == NULL || pProcess->m_IsOpen == false)
+			{
+				return;
+			}
+
+			CREATE_ROOM_RES res;
+
+			auto ret = pProcess->CreateRoom(Request.room_name, Request.user_id, Request.user_name);
+			if (ret == -1)
+			{
+				res.set_var_code(SystemError);
+				SEND_PROTO_BUFFER(res, pSession)
+				return;
+			}
+
+
+			ROOM_PTR RoomPtr = ROOMMGR.Create(ret, Request.room_name);
+			RoomPtr->m_Stock.Name = Request.room_name;
+
+			ROOMMGR.Add(RoomPtr, Request.pPlayer);
+
+			RoomPtr->InsertPlayer(Request.pPlayer);
+
+			res.set_var_room_id(RoomPtr->GetId());
+			res.mutable_var_name()->assign(RoomPtr->m_Stock.Name);
+			SEND_PROTO_BUFFER(res, pSession)
+
+			RoomPtr->SendNewUserInfo(Request.pPlayer, RoomPtr->GetId());	//방에 있는 유저들에게 새로운 유저 정보전송f
+		}
+
+		void Undo() {}
+	};
+
+	template<>
+	class MSG_PLAYER_QUERY<EnterRooomDB> : public IMESSAGE
+	{
+	public:
+		MSG_PLAYER_QUERY() { }
+		~MSG_PLAYER_QUERY() {}
+
+		GSCLIENT_PTR pSession;
+
+		EnterRooomDB Request;
+
+		void Execute(LPVOID Param)
+		{
+			DBPROCESS_CER_PTR pProcess = DBPROCESSCONTAINER_CER.Search(Type);
+			if (pProcess == NULL || pProcess->m_IsOpen == false)
+			{
+				return;
+			}
+
+			PlayerPtr pPlayer = PLAYERMGR.Search(pSession->GetPair());
+			if (pPlayer == NULL)
+			{
+				return;
+			}
+
+			ENTER_ROOM_RES res;
+
+
+			ROOM_PTR RoomPtr = ROOMMGR.Search(Request.room_id);
+			if (RoomPtr == NULL)
+			{
+				res.set_var_code(SystemError);
+				SEND_PROTO_BUFFER(res, pSession)
+					return;
+			}
+
+			auto ret = pProcess->EnterRoom(Request.room_id, Request.user_id, Request.user_name);
+			if (ret != 0)
+			{
+				res.set_var_code(SystemError);
+				SEND_PROTO_BUFFER(res, pSession)
+				return;
+			}
+
+			RoomPtr->GetMessageList(res.mutable_var_messages());
+
+			RoomPtr->InsertPlayer(pPlayer);
+
+			pPlayer->m_Char[0].SetRoom(Request.room_id);
+
+			res.set_var_room_id(Request.room_id);
+			res.set_var_name(RoomPtr->m_Stock.Name.c_str());
+			SEND_PROTO_BUFFER(res, pSession)
+
+			//새로 입장한 유저에게 방안의 유저 정보전송
+			for each (auto iter in RoomPtr->m_PlayerMap)
+			{
+				if (iter.second == NULL)
+					continue;
+
+				NEW_USER_IN_ROOM_NTY nty;
+				nty.set_var_type(0);
+				RoomUserInfo* userinfo = nty.mutable_var_room_user();
+
+				userinfo->set_var_index(iter.second->GetId());
+				userinfo->set_var_name(iter.second->m_Account.GetName());
+				userinfo->set_var_room_number(RoomPtr->GetId());
+
+				SEND_PROTO_BUFFER(nty, pSession)
+			}
+
+
+			//방안의 유저들 에게 새로운 유저 정보를 전송
+			for each (auto iter in RoomPtr->m_PlayerMap)
+			{
+				if (iter.second == NULL)
+					continue;
+
+				GSCLIENT_PTR pPair = SERVER.GetClient(iter.second->GetPair());
+				if (pPair == NULL)
+					continue;
+
+				NEW_USER_IN_ROOM_NTY nty;
+				nty.set_var_type(1);
+				RoomUserInfo* userinfo = nty.mutable_var_room_user();
+
+				userinfo->set_var_index(pPlayer->GetId());
+				userinfo->set_var_name(pPlayer->m_Char[0].GetName());
+				userinfo->set_var_room_number(RoomPtr->GetId());
+
+				SEND_PROTO_BUFFER(nty, pSession)
+			}
+		}
+
+		void Undo() {}
+	};
+
+
+	template<>
+	class MSG_PLAYER_QUERY<LeaveRoomDB> : public IMESSAGE
+	{
+	public:
+		MSG_PLAYER_QUERY() { }
+		~MSG_PLAYER_QUERY() {}
+
+		GSCLIENT_PTR pSession;
+		LeaveRoomDB Request;
+
+		void Execute(LPVOID Param)
+		{
+			DBPROCESS_CER_PTR pProcess = DBPROCESSCONTAINER_CER.Search(Type);
+			if (pProcess == NULL || pProcess->m_IsOpen == false)
+			{
+				return;
+			}
+
+
+			auto ret = pProcess->LeaveRoom(Request.room_id, Request.user_id, Request.user_name);
+			if (ret ==  -1)
+			{
+				return;
+			}
+
+
+			PlayerPtr pPlayer = PLAYERMGR.Search(pSession->GetPair());
+			if (pPlayer == NULL)
+			{
+				return;
+			}
+
+			ROOMMGR.LeaveRoomPlayer(pPlayer, Request.room_id, ret == 1);
+		}
+
+		void Undo() {}
+	};
+
+	template<>
+	class MSG_PLAYER_QUERY<RoomPassThrou> : public IMESSAGE
+	{
+	public:
+		MSG_PLAYER_QUERY() { }
+		~MSG_PLAYER_QUERY() {}
+
+		GSCLIENT_PTR pSession;
+
+		RoomPassThrou Request;
+
+		void Execute(LPVOID Param)
+		{
+			DBPROCESS_CER_PTR pProcess = DBPROCESSCONTAINER_CER.Search(Type);
+			if (pProcess == NULL || pProcess->m_IsOpen == false)
+			{
+				return;
+			}
+
+
+			std::time_t t = std::time(0);   // get time now
+			std::tm now;
+
+			localtime_s(&now, &t);
+
+			string time;
+			//("MM/dd/yyyy HH:mm:ss")
+			time.append(to_string((now.tm_mon)));
+			time.append("/");
+			time.append(to_string((now.tm_mday)));
+			time.append("/");
+			time.append(to_string((now.tm_year + 1900)));
+			time.append("/");
+			time.append(" ");
+			time.append(to_string((now.tm_hour)));
+			time.append(":");
+			time.append(to_string((now.tm_min)));
+			time.append(":");
+			time.append(to_string((now.tm_sec)));
+
+			pProcess->AddRoomMessage(Request.room_id, Request.user_id, Request.user_name, Request.msg, time);
+
+		}
+
+		void Undo() {}
+	};
+	
+	template<>
+	class MSG_PLAYER_QUERY<LoadDBRoomList> : public IMESSAGE
+	{
+	public:
+		MSG_PLAYER_QUERY() { }
+		~MSG_PLAYER_QUERY() {}
+
+		GSCLIENT_PTR pSession;
+
+		RequestLogout pRequst;
+
+		void Execute(LPVOID Param)
+		{
+			DBPROCESS_CER_PTR pProcess = DBPROCESSCONTAINER_CER.Search(Type);
+			if (pProcess == NULL || pProcess->m_IsOpen == false)
+			{
+				return;
+			}
+
+			auto ret = pProcess->LoadRooms(1000);
+			for each (auto room  in ret)
+			{
+				auto room_id = std::get<0>(room);
+				auto name = std::get<1>(room);
+				auto pwd = std::get<2>(room);
+
+				auto ROOMPTR = ROOMMGR.Create(room_id, name);
+				ROOMMGR.Add2(ROOMPTR);
+
+				/*
+			(userid,name, room_id, time, msg)
+				*/
+				auto chatlist = pProcess->LoadRoomMessage(room_id, 100);
+				for each (auto chat  in chatlist)
+				{
+					RoomMessage msg;
+				
+					msg.set_var_message(std::get<4>(chat));
+					msg.set_var_name(std::get<1>(chat));
+					msg.set_var_time(std::get<3>(chat));
+
+					ROOMPTR->AddRoomMessage(msg);
+				}
+
+
+
+			}
 		}
 
 		void Undo() {}

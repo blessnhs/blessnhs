@@ -37,7 +37,7 @@ public:
 	int LeaveRoom(int room_id, INT64 user_id, string user_name);
 	int AddRoomMessage(int room_id, INT64 user_id, string user_name, string msg,string time);
 	std::list<tuple<__int64, string, int, string, string>> LoadRoomMessage(int room_id, int count = 100);
-	std::set<int> LoadRooms(INT64 user_id, int count = 100);
+	std::list<tuple<int, string, string>> LoadRooms(int count = 100);
 
 	bool				m_IsOpen;
 

@@ -107,7 +107,7 @@ std::list<tuple<__int64, string, int, string, string>> CDBProcessCer::LoadRoomMe
 	return m_DB->LoadRoomMessage(room_id, count);
 }
 
-std::set<int> CDBProcessCer::LoadRooms(INT64 user_id, int count)
+std::list<tuple<int, string, string>> CDBProcessCer::LoadRooms(int count)
 {
-	return m_DB->LoadRooms(user_id, count);
+	return m_DB->LoadRooms(count);
 }

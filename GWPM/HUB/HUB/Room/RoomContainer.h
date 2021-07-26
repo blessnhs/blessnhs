@@ -5,6 +5,7 @@
 
 #include <boost/pool/object_pool.hpp>
 #include <boost/shared_ptr.hpp>
+#include <boost/tuple/tuple.hpp>
 
 #include "TemplateStrategyPattern.h"
 #include "GSFactory.h"
@@ -21,6 +22,7 @@ public:
 	~RoomContainer(void) {	DeleteCriticalSection(&m_PublicLock);	}
 
 	ROOM_PTR Create();
+	ROOM_PTR Create(int room_id, string name);
 
 	bool Add(ROOM_PTR &pObj, PLAYER_PTR player);
 	bool Del(ROOM_PTR &pObj, PLAYER_PTR player);
@@ -39,7 +41,16 @@ public:
 
 	const concurrency::concurrent_unordered_map<DWORD, ROOM_PTR>& GetRoomMap();
 
-	void LeaveRoomPlayer(PLAYER_PTR player,int room_number);
+	void LeaveRoomPlayer(PLAYER_PTR player,int room_number,bool isdelete = false);
+
+	void CreateDBRoomList()
+	{
+
+		boost::shared_ptr<Hub::MSG_PLAYER_QUERY<LoadDBRoomList>>		PLAYER_MSG = ALLOCATOR.Create<Hub::MSG_PLAYER_QUERY<LoadDBRoomList>>();
+		PLAYER_MSG->Type = MSG_TYPE_DB_1;
+		PLAYER_MSG->SubType = ONQUERY;
+		MAINPROC.RegisterCommand(PLAYER_MSG);
+	}
 
 
 protected:

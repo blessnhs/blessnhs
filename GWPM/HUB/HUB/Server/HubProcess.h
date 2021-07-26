@@ -6,8 +6,6 @@
 #include "GS.CLI.pb.h"
 #include "Structure.pb.h"
 
-#include <boost/shared_ptr.hpp>
-
 class HubProcess : public GSNetwork::IPlayerProcess::IPlayerProcess
 {
 public:

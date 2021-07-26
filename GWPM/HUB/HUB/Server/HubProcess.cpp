@@ -143,19 +143,22 @@ VOID HubProcess::ROOM_CREATE(LPVOID Data, DWORD Length, boost::shared_ptr<GSClie
 		return;
 	}
 
+	//디비에 먼저 기록을 남긴다.
 
-	ROOM_PTR RoomPtr = ROOMMGR.Create();
-	RoomPtr->m_Stock.Name = createroom.var_name();
+	boost::shared_ptr<Hub::MSG_PLAYER_QUERY<CreateRooom>>		PLAYER_MSG = ALLOCATOR.Create<Hub::MSG_PLAYER_QUERY<CreateRooom>>();
+	PLAYER_MSG->pSession = Client;
 
-	ROOMMGR.Add(RoomPtr, pPlayer);
-	
-	RoomPtr->InsertPlayer(pPlayer);
+	{
+		PLAYER_MSG->Request.room_name = createroom.var_name();
+		PLAYER_MSG->Request.user_id = pPlayer->GetId();
+		PLAYER_MSG->Request.user_name = pPlayer->m_Char[0].GetName();
+		PLAYER_MSG->Request.pPlayer = pPlayer;
+	}
 
-	res.set_var_room_id(RoomPtr->GetId());
-	res.mutable_var_name()->assign(RoomPtr->m_Stock.Name);
-	SEND_PROTO_BUFFER(res, Client)
+	PLAYER_MSG->Type = Client->GetMyDBTP();
+	PLAYER_MSG->SubType = ONQUERY;
+	MAINPROC.RegisterCommand(PLAYER_MSG);
 
-	RoomPtr->SendNewUserInfo(pPlayer,RoomPtr->GetId());	//방에 있는 유저들에게 새로운 유저 정보전송
 }
 
 VOID HubProcess::PRAY_LIST(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client)
@@ -260,6 +263,23 @@ VOID HubProcess::ROOM_PASSTHROUGH(LPVOID Data, DWORD Length, boost::shared_ptr<G
 	RoomPtr->SendToAll(res);
 
 	RoomPtr->AddRoomMessage(*pass_msg);
+
+	//디비에 먼저 기록을 남긴다.
+
+	boost::shared_ptr<Hub::MSG_PLAYER_QUERY<RoomPassThrou>>		PLAYER_MSG = ALLOCATOR.Create<Hub::MSG_PLAYER_QUERY<RoomPassThrou>>();
+	PLAYER_MSG->pSession = Client;
+
+	{
+		PLAYER_MSG->Request.room_id = RoomPtr->GetId();
+		PLAYER_MSG->Request.user_id = pPlayer->GetId();
+		PLAYER_MSG->Request.user_name = pPlayer->m_Char[0].GetName();
+		PLAYER_MSG->Request.msg = message.var_message();
+	}
+
+	PLAYER_MSG->Type = Client->GetMyDBTP();
+	PLAYER_MSG->SubType = ONQUERY;
+	MAINPROC.RegisterCommand(PLAYER_MSG);
+
 	
 }
 
@@ -288,7 +308,6 @@ VOID HubProcess::ROOM_ENTER(LPVOID Data, DWORD Length, boost::shared_ptr<GSClien
 		return;
 	}
 
-
 	//이미 입장 해 있다면 
 	if (RoomPtr->FindPlayer(pPlayer) == TRUE)
 	{
@@ -296,57 +315,23 @@ VOID HubProcess::ROOM_ENTER(LPVOID Data, DWORD Length, boost::shared_ptr<GSClien
 		res.set_var_name(RoomPtr->m_Stock.Name.c_str());
 		res.set_var_code(Duplicate_Enter_Room);
 		SEND_PROTO_BUFFER(res, Client)
-		return;
+			return;
 	}
 
-	RoomPtr->GetMessageList(res.mutable_var_messages());
+	boost::shared_ptr<Hub::MSG_PLAYER_QUERY<EnterRooomDB>>		PLAYER_MSG = ALLOCATOR.Create<Hub::MSG_PLAYER_QUERY<EnterRooomDB>>();
+	PLAYER_MSG->pSession = Client;
 
-	RoomPtr->InsertPlayer(pPlayer);
-
-	pPlayer->m_Char[0].SetRoom(RoomPtr->GetId());
-
-	res.set_var_room_id(RoomPtr->GetId());
-	res.set_var_name(RoomPtr->m_Stock.Name.c_str());
-	SEND_PROTO_BUFFER(res, Client)
-
-	//새로 입장한 유저에게 방안의 유저 정보전송
-	for each (auto iter in RoomPtr->m_PlayerMap)
 	{
-		if (iter.second == NULL)
-			continue;
-
-		NEW_USER_IN_ROOM_NTY nty;
-		nty.set_var_type(0);
-		RoomUserInfo* userinfo = nty.mutable_var_room_user();
-
-		userinfo->set_var_index(iter.second->GetId());
-		userinfo->set_var_name(iter.second->m_Account.GetName());
-		userinfo->set_var_room_number(RoomPtr->GetId());
-
-		SEND_PROTO_BUFFER(nty, Client)
+		PLAYER_MSG->Request.room_id = RoomPtr->GetId();
+		PLAYER_MSG->Request.user_id = pPlayer->GetId();
+		PLAYER_MSG->Request.user_name = pPlayer->m_Char[0].GetName();
 	}
 
+	PLAYER_MSG->Type = Client->GetMyDBTP();
+	PLAYER_MSG->SubType = ONQUERY;
+	MAINPROC.RegisterCommand(PLAYER_MSG);
 
-	//방안의 유저들 에게 새로운 유저 정보를 전송
-	for each (auto iter in RoomPtr->m_PlayerMap)
-	{
-		if (iter.second == NULL)
-			continue;
-
-		GSCLIENT_PTR pPair = SERVER.GetClient(iter.second->GetPair());
-		if (pPair == NULL)
-			continue;
-
-		NEW_USER_IN_ROOM_NTY nty;
-		nty.set_var_type(1);
-		RoomUserInfo* userinfo = nty.mutable_var_room_user();
-
-		userinfo->set_var_index(pPlayer->GetId());
-		userinfo->set_var_name(pPlayer->m_Char[0].GetName());
-		userinfo->set_var_room_number(RoomPtr->GetId());
-
-		SEND_PROTO_BUFFER(nty, pPair)
-	}
+	
 }
 
 VOID HubProcess::ROOM_LEAVE(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client)
@@ -359,7 +344,24 @@ VOID HubProcess::ROOM_LEAVE(LPVOID Data, DWORD Length, boost::shared_ptr<GSClien
 		return;
 	}
 
-	ROOMMGR.LeaveRoomPlayer(pPlayer,leaveroom.var_room_number());
+	ROOM_PTR RoomPtr = ROOMMGR.Search(leaveroom.var_room_number());
+	if (RoomPtr == NULL)
+	{
+		return;
+	}
+
+	boost::shared_ptr<Hub::MSG_PLAYER_QUERY<LeaveRoomDB>>		PLAYER_MSG = ALLOCATOR.Create<Hub::MSG_PLAYER_QUERY<LeaveRoomDB>>();
+	PLAYER_MSG->pSession = Client;
+
+	{
+		PLAYER_MSG->Request.room_id = RoomPtr->GetId();
+		PLAYER_MSG->Request.user_id = pPlayer->GetId();
+		PLAYER_MSG->Request.user_name = pPlayer->m_Char[0].GetName();
+	}
+
+	PLAYER_MSG->Type = Client->GetMyDBTP();
+	PLAYER_MSG->SubType = ONQUERY;
+	MAINPROC.RegisterCommand(PLAYER_MSG);
 
 }
 

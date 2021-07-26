@@ -169,6 +169,20 @@ template<template<class T> class CreationPolicy> ROOM_PTR RoomContainer<Creation
 	return PTR;
 }
 
+template<template<class T> class CreationPolicy> ROOM_PTR RoomContainer<CreationPolicy>::Create(int room_id,string name)
+{
+	EnterCriticalSection(&m_PublicLock);
+
+	ROOM_PTR PTR = CreationPolicy<ROOM>().Create();
+
+	PTR->SetId(room_id);
+	PTR->m_Stock.Name = name;
+
+	LeaveCriticalSection(&m_PublicLock);
+
+	return PTR;
+}
+
 template<template<class T> class CreationPolicy> VOID RoomContainer<CreationPolicy>::GetRoomList(google::protobuf::RepeatedPtrField<RoomInfo2>*List)
 {
 	const int max_count = 10;
@@ -208,7 +222,7 @@ template<template<class T> class CreationPolicy>  const concurrency::concurrent_
 {
 	return m_RoomMap;
 }
-template<template<class T> class CreationPolicy> void RoomContainer<CreationPolicy>::LeaveRoomPlayer(PLAYER_PTR pPlayer,int room_number)
+template<template<class T> class CreationPolicy> void RoomContainer<CreationPolicy>::LeaveRoomPlayer(PLAYER_PTR pPlayer,int room_number, bool isdelete = false)
 {
 	LEAVE_ROOM_RES res;
 
@@ -227,7 +241,7 @@ template<template<class T> class CreationPolicy> void RoomContainer<CreationPoli
 
 			RoomPtr->RemovePlayer(pPlayer);
 
-			if (RoomPtr->GetCurrPlayer() == 0)
+			if (RoomPtr->GetCurrPlayer() == 0 && isdelete == true)
 				Del(RoomPtr, pPlayer);
 		}
 

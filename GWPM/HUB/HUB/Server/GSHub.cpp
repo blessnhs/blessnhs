@@ -92,6 +92,9 @@ BOOL GSHub::Initialize()
 
 	DeleteAllConcurrentUser();
 
+	ROOMMGR.CreateDBRoomList();
+
+
 	
 	return TRUE;
 }
