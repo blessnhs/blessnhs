@@ -14,6 +14,7 @@ public:
 	int  ReadForIocp(BYTE * PacketBuffer, DWORD DataLength,DWORD RemainLength, DWORD MaxPacketBufferSize);
 	BOOL ReadForEventSelect(BYTE *Data, DWORD &DataLength);
 	BOOL Write(BYTE *Data, DWORD DataLength);
+	BOOL Write(boost::shared_ptr<WRITE_PACKET_INFO> Packet);
 
 
 	BOOL CreateTcpSocket(VOID);

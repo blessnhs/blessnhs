@@ -181,6 +181,11 @@ BOOL GSSocketTCP::GetConnected(VOID)
 	return m_bConnected; 
 }
 
+BOOL GSSocketTCP::Write(boost::shared_ptr<WRITE_PACKET_INFO> Packet)
+{
+	return Write(Packet->Data, Packet->DataLength);
+}
+
 BOOL GSSocketTCP::Write(BYTE * Data, DWORD DataLength)
 {
 	CThreadSync Sync;

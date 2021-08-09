@@ -176,7 +176,8 @@ BOOL	GSPacketTCP::WritePacketNoneCompress(WORD MainProtocol, WORD SubProtocol, c
 	m_WrietQueue.push(pWriteData);
 #endif	
 
-	return GSSocketTCP::Write((BYTE*)pWriteData->Data, pWriteData->DataLength);
+	//return GSSocketTCP::Write((BYTE*)pWriteData->Data, pWriteData->DataLength);
+	return GSSocketTCP::Write(pWriteData);
 }
 
 BOOL	GSPacketTCP::WritePacketCompress(WORD MainProtocol, WORD SubProtocol, const BYTE* Packet, DWORD PayloadSize)
