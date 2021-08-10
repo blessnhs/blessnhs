@@ -734,7 +734,8 @@ namespace Hub	{
 						pSession->Close();
 
 						//기존 세션과 신규 세션 양쪽 다 팅기는 것으로 변경
-						//이미 접속중이면 이전 접속을 끊는다. 
+						//이미 접속중이면 이전 접속을 끊는다.
+						//다른쓰레드에서 아직 캐릭터를 생성하기 전이면 못찾을수도 있다.
 						auto existClient = PLAYERMGR.Search(Index);
 						if (existClient != NULL)
 						{
@@ -759,6 +760,22 @@ namespace Hub	{
 					BLOG("Duplicate Login Fail Exist player %lld close\n", Index);
 					pSession->Close();
 
+					return;
+				}
+
+				//해당 디비 index 유저가이미 존재
+				auto existClient = PLAYERMGR.Search(Index);
+				if (existClient != NULL)
+				{
+					GSCLIENT_PTR pPair = SERVER.GetClient(existClient->GetPair());
+					if (pPair != NULL)
+					{
+						BLOG("3.Login Fail Exist player %lld and session close\n", Index);
+
+						pPair->Close();
+
+						pSession->Close();
+					}
 					return;
 				}
 
