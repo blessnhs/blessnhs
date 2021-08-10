@@ -1,5 +1,6 @@
 ﻿using Antioch.Util;
 using Antioch.View;
+using DependencyHelper;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -73,8 +74,6 @@ namespace Antioch
         public AlarmView alarm = new AlarmView();
         public MailView mail = new MailView();
 
-
-
         public MainPage()
         {
             InitializeComponent();
@@ -106,6 +105,25 @@ namespace Antioch
             ContentViews.Children.Add(lobby);
 
             NetworkProcess();
+
+
+            Device.StartTimer(new TimeSpan(0, 0, 5), () =>
+            {
+                // do something every 60 seconds
+                Device.BeginInvokeOnMainThread(() =>
+                {
+                    if (User.OnceVersionNotify == true)
+                    {
+                        if (User.OnceUpdate == false)
+                        {
+                        //    User.OnceUpdate = true;
+                        //    Xamarin.Essentials.Browser.OpenAsync("https://play.google.com/store/apps/details?id=antioch.kor.pkg");
+                        }
+                    }
+                   
+                });
+                return false; // runs again, or false to stop
+            });
         }
 
         private void NetworkProcess()
@@ -146,6 +164,8 @@ namespace Antioch
 
         public bool LoadLobby()
         {
+           
+
             LoadView(lobby);
             return true;
         }

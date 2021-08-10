@@ -52,6 +52,8 @@ public:
 		MAINPROC.RegisterCommand(PLAYER_MSG);
 	}
 
+	void Print();
+
 
 protected:
 

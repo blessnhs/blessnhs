@@ -1,15 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
+using Android.App;
 using Android.Media;
+using Android.OS;
 using Android.Views;
 using Android.Widget;
 using DependencyHelper.Droid;
-using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
+using Android.Graphics;
+using Android.Content;
+using Antioch.Droid;
+using Android.Support.V4.App;
+using AndroidApp = Android.App.Application;
 
 [assembly: Xamarin.Forms.Dependency(typeof(Toast_Android))]
 
@@ -22,10 +24,50 @@ namespace DependencyHelper.Droid
             var toast = Android.Widget.Toast.MakeText(Android.App.Application.Context, message, ToastLength.Short);
             toast.SetGravity(GravityFlags.Center | GravityFlags.Center, 0, 5);
             toast.Show();
-
         }
 
-        static MediaRecorder recorder;
+        public void Notification(string message)
+        {
+            try
+            {
+                var manager = (NotificationManager)AndroidApp.Context.GetSystemService(AndroidApp.NotificationService);
+
+                if (Build.VERSION.SdkInt >= Android.OS.BuildVersionCodes.O)
+                {
+
+                    var notification = new Notification.Builder(AndroidApp.Context, "DE")
+                        .SetContentTitle(DateTime.Now.ToString() + " Notify!")
+                        .SetContentText(message)
+                        .SetSmallIcon(Antioch.Droid.Resource.Drawable.xamagonBlue)
+                        .SetLargeIcon(BitmapFactory.DecodeResource(AndroidApp.Context.Resources, Antioch.Droid.Resource.Drawable.xamagonBlue))
+                        .SetSmallIcon(Antioch.Droid.Resource.Drawable.xamagonBlue)
+                        .Build();
+
+                    manager.Notify(1, notification);
+                }
+                else
+                {
+                    var notification = new Notification.Builder(Android.App.Application.Context)
+                                                 .SetContentTitle(DateTime.Now.ToString() + " Notify!")
+                                                 .SetContentText(message)
+                                                 .SetSmallIcon(Antioch.Droid.Resource.Drawable.xamagonBlue)
+                                                 .SetLargeIcon(BitmapFactory.DecodeResource(AndroidApp.Context.Resources, Antioch.Droid.Resource.Drawable.xamagonBlue))
+                                                 .SetSmallIcon(Antioch.Droid.Resource.Drawable.xamagonBlue)
+                                                 .Build();
+
+                    manager.Notify(1, notification);
+                }
+            }
+            catch (Exception e)
+            {
+
+            }
+        }
+
+
+
+
+            static MediaRecorder recorder;
 
         public void StopRecord()
         {

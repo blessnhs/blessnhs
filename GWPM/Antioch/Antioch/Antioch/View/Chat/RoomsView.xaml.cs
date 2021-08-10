@@ -51,7 +51,10 @@ namespace Antioch
         {
             //string action = await App.Current.MainPage.DisplayActionSheet("Room Create #General LEGION KOR ", "Cancel", null, "Individual", "Local", "Global");
 
-            string action = await App.Current.MainPage.DisplayPromptAsync("name", "room name?");
+            string action = await App.Current.MainPage.DisplayPromptAsync("room create", "enter room name");
+
+            if (action == null)
+                return;
 
             if (action.Length > 1024)
             {
@@ -59,7 +62,7 @@ namespace Antioch
                 return;
             }
 
-           NetProcess.SendMakeRoom(User.CacheData.UserName + "_" + action);
+            NetProcess.SendMakeRoom(User.CacheData.UserName + "_" + action);
 
             //switch (action)
             //{

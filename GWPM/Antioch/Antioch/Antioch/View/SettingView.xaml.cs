@@ -1,4 +1,5 @@
 ﻿using Antioch.View.Chat.ViewModels;
+using DependencyHelper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -50,6 +51,12 @@ namespace Antioch.View
                 TextSizeLabel.FontSize = (int)args.NewValue;
 
                 SQLLiteDB.Upsert(User.CacheData);
+
+                Device.BeginInvokeOnMainThread(() =>
+                {
+                    User.OnceVersionNotify = true;
+                    DependencyService.Get<Toast>().Notification("New Version Updated");
+                });
             };
 
             KJVOption.IsToggled = User.CacheData.EnalbeKJV;

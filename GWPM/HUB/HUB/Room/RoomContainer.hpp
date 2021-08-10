@@ -185,7 +185,7 @@ template<template<class T> class CreationPolicy> ROOM_PTR RoomContainer<Creation
 
 template<template<class T> class CreationPolicy> VOID RoomContainer<CreationPolicy>::GetRoomList(google::protobuf::RepeatedPtrField<RoomInfo2>*List)
 {
-	const int max_count = 10;
+	const int max_count = 100;
 	int currcount = 0;
 
 	for each (auto room in m_RoomMapForLoop)
@@ -203,6 +203,14 @@ template<template<class T> class CreationPolicy> VOID RoomContainer<CreationPoli
 
 			currcount++;
 		}
+	}
+}
+
+template<template<class T> class CreationPolicy> void RoomContainer<CreationPolicy>::Print()
+{
+	for each (auto room in m_RoomMapForLoop)
+	{
+		printf("id :%d  name : %s count : %d\n", room.second->GetId(), room.second->m_Stock.Name.c_str(), room.second->m_PlayerMap.size());
 	}
 }
 

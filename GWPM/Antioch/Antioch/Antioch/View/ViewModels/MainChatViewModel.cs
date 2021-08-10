@@ -96,10 +96,7 @@ namespace Antioch
 
             ExitCommand = new Command(() =>
             {
-                var page = new Confirm();
-                var ret = PopupNavigation.Instance.PushAsync(page);
-
-
+            
                 var mainpage = (MainPage)Application.Current.MainPage;
                 
                 NetProcess.SendLeaveRoom(User.CurrentChatViewNumber);

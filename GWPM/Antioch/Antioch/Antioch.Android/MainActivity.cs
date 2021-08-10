@@ -24,6 +24,8 @@ namespace Antioch.Droid
             LoadApplication(new App());
 
             Rg.Plugins.Popup.Popup.Init(this, savedInstanceState);
+
+            RegisterForegroundService();
         }
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
         {
@@ -41,7 +43,43 @@ namespace Antioch.Droid
             {
             }
         }
+    
 
+        void RegisterForegroundService()
+        {
+            NotificationManager Manager = (NotificationManager)GetSystemService(NotificationService);
+
+            if (Build.VERSION.SdkInt >= Android.OS.BuildVersionCodes.O)
+            {
+
+                var chan1 = new NotificationChannel("DE",
+                    "DE", NotificationImportance.Default);
+                chan1.LockscreenVisibility = NotificationVisibility.Private;
+                Manager.CreateNotificationChannel(chan1);
+
+                var notification = new Notification.Builder(this, "DE")
+                .SetContentTitle("Antioch Bible Reader")
+                .SetContentText("Antioch")
+                .SetSmallIcon(Resource.Drawable.xamagonBlue)
+                .Build();
+
+
+                //StartForeground(Constants.SERVICE_RUNNING_NOTIFICATION_ID, notification);
+            }
+            else
+            {
+                var notification = new Notification.Builder(this)
+                           .SetContentTitle("Antioch Bible Reader")
+                           .SetContentText("Antioch")
+                           .SetSmallIcon(Resource.Drawable.xamagonBlue)
+                           .Build();
+
+
+                //StartForeground(Constants.SERVICE_RUNNING_NOTIFICATION_ID, notification);
+            }
+        }
+
+        //백그라운드 서비스 등록
         private void CreateService()
         {
             Intent startService = new Intent(this, typeof(BackEndService));

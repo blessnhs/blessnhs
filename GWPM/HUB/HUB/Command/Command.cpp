@@ -38,7 +38,7 @@ extern atomic<int>		DebugCount;
 
 	VOID HubCommand::RoomList(std::string)
 	{
-	
+		ROOMMGR.Print();
 	}
 
 	VOID HubCommand::CheckUserList(std::string)

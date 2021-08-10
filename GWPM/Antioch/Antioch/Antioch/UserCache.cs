@@ -19,5 +19,6 @@ namespace Antioch
         static public float Version = 0;
 
         static public bool OnceVersionNotify = false;
+        static public bool OnceUpdate = false;
     }
 }

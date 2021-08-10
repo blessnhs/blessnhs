@@ -9,7 +9,7 @@ namespace Antioch.View
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class Confirm : PopupPage
     {
-         public Confirm(string message)
+    private    Confirm(string message)
         {
             InitializeComponent();
 

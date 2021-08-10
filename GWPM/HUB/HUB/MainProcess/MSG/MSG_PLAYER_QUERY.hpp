@@ -764,7 +764,7 @@ namespace Hub	{
 				}
 
 				//해당 디비 index 유저가이미 존재
-				auto existClient = PLAYERMGR.Search(Index);
+				existClient = PLAYERMGR.Search(Index);
 				if (existClient != NULL)
 				{
 					GSCLIENT_PTR pPair = SERVER.GetClient(existClient->GetPair());
