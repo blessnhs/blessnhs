@@ -119,7 +119,7 @@ VOID HubProcess::LOGIN_PLAYER(LPVOID Data, DWORD Length, boost::shared_ptr<GSCli
 
 	//로그인아웃 처리는 고정해야할 필요가 있다.
 	//id에 의해 분할되면 멀티 쓰레드 동기화 문제가 발생할 가능성이 존재한다.
-	PLAYER_MSG->Type = DBPROCESSCONTAINER_CER.GetFirstHandle()->GetId();
+	PLAYER_MSG->Type = MSG_TYPE_DB_1;
 	PLAYER_MSG->SubType = ONQUERY;
 	MAINPROC.RegisterCommand(PLAYER_MSG);
 }

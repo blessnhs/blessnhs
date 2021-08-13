@@ -447,7 +447,7 @@ public:
 #pragma region RequestRegPray
 	DECLARE_DB_CLASS_BEGIN_2(RequestRegPray,string,string)
 	{
-		pProcess->RegPray(std::get<0>(Request.m_args), std::get<1>(Request.m_args));
+		pProcess->RegPray(std::get<1>(Request.m_args), std::get<0>(Request.m_args));
 
 		PRAY_MESSAGE_RES res;
 		res.set_var_code(Success);
