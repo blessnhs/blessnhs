@@ -1,11 +1,5 @@
 #pragma once
 
-#include "GSObject.h"
-#include "../DBJob/DBContext.h"
-
-#include "GS.CLI.pb.h"
-#include "Enum.pb.h"
-
 using namespace std;
 
 class CDBProcessCer : public GSNetwork::GSObject::GSObject

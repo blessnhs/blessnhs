@@ -6,7 +6,8 @@
 #include "../PLAYER/PlayerContainer.h"
 #include "../Room/RoomContainer.h"
 #include "../DB/DBProxy/DBProcessContainer.h"
-#include "../DB/DBJob/DBContext.h"
+
+class RequestDeleteAllConcurrentUser;
 
 GSHub::GSHub(void)
 {
@@ -34,9 +35,11 @@ BOOL GSHub::Disconnect(GSCLIENT_PTR pSession)
 	}
 
 	//·Î±×¾Æ¿ô Äõ¸®¸¦ ³¯¸°´Ù.
-	boost::shared_ptr<Hub::MSG_PLAYER_QUERY<RequestLogout>>		PLAYER_MSG = ALLOCATOR.Create<Hub::MSG_PLAYER_QUERY<RequestLogout>>();
+	boost::shared_ptr<Hub::MSG_PLAYER_QUERY<Hub::RequestLogout>>		PLAYER_MSG = ALLOCATOR.Create<Hub::MSG_PLAYER_QUERY<Hub::RequestLogout>>();
 	PLAYER_MSG->pSession = pSession;
-	PLAYER_MSG->pRequst.Index = pSession->GetPair();
+
+	PLAYER_MSG->Request.m_args = std::tuple<INT64>(pSession->GetPair());
+
 	PLAYER_MSG->Type = pSession->GetMyDBTP();
 	PLAYER_MSG->SubType = ONQUERY;
 	MAINPROC.RegisterCommand(PLAYER_MSG);
@@ -55,7 +58,7 @@ BOOL GSHub::DeleteAllConcurrentUser()
 {
 	//·Î±×¾Æ¿ô Äõ¸®¸¦ ³¯¸°´Ù.
 
-	boost::shared_ptr<Hub::MSG_PLAYER_QUERY<RequestDeleteAllConcurrentUser>>		PLAYER_MSG = ALLOCATOR.Create<Hub::MSG_PLAYER_QUERY<RequestDeleteAllConcurrentUser>>();
+	boost::shared_ptr<Hub::MSG_PLAYER_QUERY<Hub::RequestDeleteAllConcurrentUser>>		PLAYER_MSG = ALLOCATOR.Create<Hub::MSG_PLAYER_QUERY<Hub::RequestDeleteAllConcurrentUser>>();
 	PLAYER_MSG->Type = MSG_TYPE_DB_1;
 	PLAYER_MSG->SubType = ONQUERY;
 	MAINPROC.RegisterCommand(PLAYER_MSG);

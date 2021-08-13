@@ -211,8 +211,8 @@ template<template<class T> class CreationPolicy> void PlayerContainer<CreationPo
 
 				//로그아웃 쿼리를 날린다.
 
-				boost::shared_ptr<Hub::MSG_PLAYER_QUERY<RequestLogout>>		PLAYER_MSG = ALLOCATOR.Create<Hub::MSG_PLAYER_QUERY<RequestLogout>>();
-				PLAYER_MSG->pRequst.Index = pPlayer->GetId();
+				boost::shared_ptr<Hub::MSG_PLAYER_QUERY<Hub::RequestLogout>>		PLAYER_MSG = ALLOCATOR.Create<Hub::MSG_PLAYER_QUERY<Hub::RequestLogout>>();
+				PLAYER_MSG->Request.m_args = std::tuple<INT64>(pPlayer->GetId());
 				PLAYER_MSG->Type = MSG_TYPE_DB_1;				//그냥 디폴트
 				PLAYER_MSG->SubType = ONQUERY;
 				MAINPROC.RegisterCommand(PLAYER_MSG);

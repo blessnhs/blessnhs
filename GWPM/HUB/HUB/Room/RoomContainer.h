@@ -1,16 +1,6 @@
 #pragma once
 
-#include "IGSContainer.h"
 #include "./Room.h"
-
-#include <boost/pool/object_pool.hpp>
-#include <boost/shared_ptr.hpp>
-#include <boost/tuple/tuple.hpp>
-
-#include "TemplateStrategyPattern.h"
-#include "GSFactory.h"
-
-#include "CLI.GS.pb.h"
 #include "GS.CLI.pb.h"
 #include "Structure.pb.h"
 
@@ -46,7 +36,7 @@ public:
 	void CreateDBRoomList()
 	{
 
-		boost::shared_ptr<Hub::MSG_PLAYER_QUERY<LoadDBRoomList>>		PLAYER_MSG = ALLOCATOR.Create<Hub::MSG_PLAYER_QUERY<LoadDBRoomList>>();
+		boost::shared_ptr<Hub::MSG_PLAYER_QUERY<Hub::LoadDBRoomList>>		PLAYER_MSG = ALLOCATOR.Create<Hub::MSG_PLAYER_QUERY<Hub::LoadDBRoomList>>();
 		PLAYER_MSG->Type = MSG_TYPE_DB_1;
 		PLAYER_MSG->SubType = ONQUERY;
 		MAINPROC.RegisterCommand(PLAYER_MSG);

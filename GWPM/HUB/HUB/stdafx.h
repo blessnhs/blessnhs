@@ -29,11 +29,23 @@
 #include <windows.h>
 #include <iostream>
 
+#include <list>
 #include <time.h>
 #include <boost/make_shared.hpp>
+#include <google/protobuf/io/zero_copy_stream_impl_lite.h>
+#include <cpprest/containerstream.h>
+#include <cpprest/filestream.h>
+#include <cpprest/http_client.h>
+#include <cpprest/json.h>
+#include <cpprest/producerconsumerstream.h>
+#include <iostream>
+#include <sstream>
 
 
-#include "CLI.GS.pb.h"
+#include <boost/algorithm/string/replace.hpp>
+#include <boost/tuple/tuple.hpp>
+
+
 //위 순서를 바꾸면 대란이 일어남
 //property = > c++ = > language = > conformance->no
 //singleton 에러 해결 방법
@@ -57,9 +69,10 @@
 #include "SingleTonHolder.h"
 #include "GSAllocator.h"
 #include "GSMainProcess.h"
+#include "IPlayerProcess.h"
+#include "IGSContainer.h"
 
 #include "DB/DBProxy/DBProcess.h"
-
 #include "./DB/DBProxy/DBProcessContainer.h"
 #include "./DB/DBJob/DBContext.h"
 
@@ -76,6 +89,12 @@
 #include <boost/make_shared.hpp>
 
 #include "./PLAYER/Player.h"
+#include "GSClient.h"
+#include "Base64.h"
+#include "./Log/Log.h"
 
 #include "CLI.GS.pb.h"
+#include "GS.CLI.pb.h"
+#include "Enum.pb.h"
+#include "Structure.pb.h"
 // TODO: 프로그램에 필요한 추가 헤더는 여기에서 참조합니다.

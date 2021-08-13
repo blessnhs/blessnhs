@@ -69,7 +69,7 @@ VOID HubProcess::NOTICE(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> C
 {
 	DECLARE_RECV_TYPE(NOTICE_REQ, version)	
 	
-	boost::shared_ptr<Hub::MSG_PLAYER_QUERY<RequestNotice>>		PLAYER_MSG = ALLOCATOR.Create<Hub::MSG_PLAYER_QUERY<RequestNotice>>();
+	boost::shared_ptr<Hub::MSG_PLAYER_QUERY<Hub::RequestNotice>>		PLAYER_MSG = ALLOCATOR.Create<Hub::MSG_PLAYER_QUERY<Hub::RequestNotice>>();
 	PLAYER_MSG->pSession = Client;
 	PLAYER_MSG->Type = Client->GetMyDBTP();
 	PLAYER_MSG->SubType = ONQUERY;
@@ -147,14 +147,11 @@ VOID HubProcess::ROOM_CREATE(LPVOID Data, DWORD Length, boost::shared_ptr<GSClie
 
 	//디비에 먼저 기록을 남긴다.
 
-	boost::shared_ptr<Hub::MSG_PLAYER_QUERY<CreateRooom>>		PLAYER_MSG = ALLOCATOR.Create<Hub::MSG_PLAYER_QUERY<CreateRooom>>();
+	boost::shared_ptr<Hub::MSG_PLAYER_QUERY<Hub::CreateRooom>>		PLAYER_MSG = ALLOCATOR.Create<Hub::MSG_PLAYER_QUERY<Hub::CreateRooom>>();
 	PLAYER_MSG->pSession = Client;
 
 	{
-		PLAYER_MSG->Request.room_name = createroom.var_name();
-		PLAYER_MSG->Request.user_id = pPlayer->GetId();
-		PLAYER_MSG->Request.user_name = pPlayer->m_Char[0].GetName();
-		PLAYER_MSG->Request.pPlayer = pPlayer;
+		PLAYER_MSG->Request.m_args = std::tuple<string, INT64, string, PlayerPtr>(createroom.var_name(), pPlayer->GetId(), pPlayer->m_Char[0].GetName(), pPlayer);;
 	}
 
 	PLAYER_MSG->Type = Client->GetMyDBTP();
@@ -167,7 +164,7 @@ VOID HubProcess::PRAY_LIST(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient
 {
 	DECLARE_RECV_TYPE(PRAY_MESSAGE_REQ, message)
 
-	boost::shared_ptr<Hub::MSG_PLAYER_QUERY<RequestPrayList>>		PLAYER_MSG = ALLOCATOR.Create<Hub::MSG_PLAYER_QUERY<RequestPrayList>>();
+	boost::shared_ptr<Hub::MSG_PLAYER_QUERY<Hub::RequestPrayList>>		PLAYER_MSG = ALLOCATOR.Create<Hub::MSG_PLAYER_QUERY<Hub::RequestPrayList>>();
 	PLAYER_MSG->pSession = Client;
 
 	PLAYER_MSG->Type = Client->GetMyDBTP();
@@ -185,13 +182,11 @@ VOID HubProcess::REG_PRAY(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient>
 		return;
 	}
 	
-	boost::shared_ptr<Hub::MSG_PLAYER_QUERY<RequestRegPray>>		PLAYER_MSG = ALLOCATOR.Create<Hub::MSG_PLAYER_QUERY<RequestRegPray>>();
+	boost::shared_ptr<Hub::MSG_PLAYER_QUERY<Hub::RequestRegPray>>		PLAYER_MSG = ALLOCATOR.Create<Hub::MSG_PLAYER_QUERY<Hub::RequestRegPray>>();
 	PLAYER_MSG->pSession = Client;
 
 	{
-		PLAYER_MSG->pRequst.contents.assign(message.var_message().begin(), message.var_message().end());
-
-		PLAYER_MSG->pRequst.name.assign(pPlayer->m_Char[0].GetName().begin(), pPlayer->m_Char[0].GetName().end());
+		PLAYER_MSG->Request.m_args = std::tuple<string,string>(message.var_message(), pPlayer->m_Char[0].GetName());
 	}
 
 	PLAYER_MSG->Type = Client->GetMyDBTP();
@@ -215,10 +210,9 @@ VOID HubProcess::QNS(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Clie
 		return;
 	}
 
-	boost::shared_ptr<Hub::MSG_PLAYER_QUERY<RequestQNS>>		PLAYER_MSG = ALLOCATOR.Create<Hub::MSG_PLAYER_QUERY<RequestQNS>>();
+	boost::shared_ptr<Hub::MSG_PLAYER_QUERY<Hub::RequestQNS>>		PLAYER_MSG = ALLOCATOR.Create<Hub::MSG_PLAYER_QUERY<Hub::RequestQNS>>();
 	{
-		PLAYER_MSG->pRequst.Index = pPlayer->GetId();
-		PLAYER_MSG->pRequst.contents = message.var_message();
+		PLAYER_MSG->Request.m_args = std::tuple<string, INT64>(message.var_message(), pPlayer->GetId());
 	}
 	PLAYER_MSG->Type = Client->GetMyDBTP();
 	PLAYER_MSG->SubType = ONQUERY;
@@ -268,14 +262,11 @@ VOID HubProcess::ROOM_PASSTHROUGH(LPVOID Data, DWORD Length, boost::shared_ptr<G
 
 	//디비에 먼저 기록을 남긴다.
 
-	boost::shared_ptr<Hub::MSG_PLAYER_QUERY<RoomPassThrou>>		PLAYER_MSG = ALLOCATOR.Create<Hub::MSG_PLAYER_QUERY<RoomPassThrou>>();
+	boost::shared_ptr<Hub::MSG_PLAYER_QUERY<Hub::RoomPassThrou>>		PLAYER_MSG = ALLOCATOR.Create<Hub::MSG_PLAYER_QUERY<Hub::RoomPassThrou>>();
 	PLAYER_MSG->pSession = Client;
 
 	{
-		PLAYER_MSG->Request.room_id = RoomPtr->GetId();
-		PLAYER_MSG->Request.user_id = pPlayer->GetId();
-		PLAYER_MSG->Request.user_name = pPlayer->m_Char[0].GetName();
-		PLAYER_MSG->Request.msg = message.var_message();
+		PLAYER_MSG->Request.m_args = std::tuple<int, INT64, string, string>(RoomPtr->GetId(), pPlayer->GetId(), pPlayer->m_Char[0].GetName(), message.var_message());
 	}
 
 	PLAYER_MSG->Type = Client->GetMyDBTP();
@@ -320,13 +311,11 @@ VOID HubProcess::ROOM_ENTER(LPVOID Data, DWORD Length, boost::shared_ptr<GSClien
 			return;
 	}
 
-	boost::shared_ptr<Hub::MSG_PLAYER_QUERY<EnterRooomDB>>		PLAYER_MSG = ALLOCATOR.Create<Hub::MSG_PLAYER_QUERY<EnterRooomDB>>();
+	boost::shared_ptr<Hub::MSG_PLAYER_QUERY<Hub::EnterRooom>>		PLAYER_MSG = ALLOCATOR.Create<Hub::MSG_PLAYER_QUERY<Hub::EnterRooom>>();
 	PLAYER_MSG->pSession = Client;
 
 	{
-		PLAYER_MSG->Request.room_id = RoomPtr->GetId();
-		PLAYER_MSG->Request.user_id = pPlayer->GetId();
-		PLAYER_MSG->Request.user_name = pPlayer->m_Char[0].GetName();
+		PLAYER_MSG->Request.m_args = std::tuple<int, INT64, string>(RoomPtr->GetId(), pPlayer->GetId(), pPlayer->m_Char[0].GetName());
 	}
 
 	PLAYER_MSG->Type = Client->GetMyDBTP();
@@ -352,13 +341,11 @@ VOID HubProcess::ROOM_LEAVE(LPVOID Data, DWORD Length, boost::shared_ptr<GSClien
 		return;
 	}
 
-	boost::shared_ptr<Hub::MSG_PLAYER_QUERY<LeaveRoomDB>>		PLAYER_MSG = ALLOCATOR.Create<Hub::MSG_PLAYER_QUERY<LeaveRoomDB>>();
+	boost::shared_ptr<Hub::MSG_PLAYER_QUERY<Hub::LeaveRoom>>		PLAYER_MSG = ALLOCATOR.Create<Hub::MSG_PLAYER_QUERY<Hub::LeaveRoom>>();
 	PLAYER_MSG->pSession = Client;
 
 	{
-		PLAYER_MSG->Request.room_id = RoomPtr->GetId();
-		PLAYER_MSG->Request.user_id = pPlayer->GetId();
-		PLAYER_MSG->Request.user_name = pPlayer->m_Char[0].GetName();
+		PLAYER_MSG->Request.m_args = std::tuple<int, INT64, string>(RoomPtr->GetId(), pPlayer->GetId(), pPlayer->m_Char[0].GetName());
 	}
 
 	PLAYER_MSG->Type = Client->GetMyDBTP();

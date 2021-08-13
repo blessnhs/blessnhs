@@ -1,5 +1,4 @@
 #pragma once
-#include "SingleTonHolder.h"
 
 class HubINI : public Singleton<HubINI>
 {

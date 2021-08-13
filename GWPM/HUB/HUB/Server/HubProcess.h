@@ -1,11 +1,5 @@
 #pragma once
 
-#include "IPlayerProcess.h"
-
-#include "CLI.GS.pb.h"
-#include "GS.CLI.pb.h"
-#include "Structure.pb.h"
-
 class HubProcess : public GSNetwork::IPlayerProcess::IPlayerProcess
 {
 public:

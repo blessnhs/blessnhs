@@ -1,17 +1,5 @@
 #pragma once
 
-#include "GSObject.h"
-
-#include <boost/pool/object_pool.hpp>
-#include <boost/shared_ptr.hpp>
-#include "GSClient.h"
-
-#include "../Player/Player.h"
-#include "../Server/GSHub.h"
-#include "MessageMapDef.h"
-
-#include "CLI.GS.pb.h"
-#include "GS.CLI.pb.h"
 #include "Structure.pb.h"
 
 using namespace std;

@@ -1,10 +1,6 @@
 #pragma once
 
-#include "IGSContainer.h"
-#include "DBProcess.h"
-#include "SingleTonHolder.h"
 
-#include <list>
 
 class DBProcessContainer : public IContainer<DBPROCESS_CER_PTR>, public Singleton<DBProcessContainer>
 {
