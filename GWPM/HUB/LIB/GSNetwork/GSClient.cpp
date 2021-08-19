@@ -467,7 +467,11 @@ void GSClient::OnConnect(boost::shared_ptr<GSClient> pClient)
 
 
 	string ip;
-	pClient->GetTCPSocket()->GetLocalIP(ip);
+	int port = 0;
+	pClient->GetTCPSocket()->GetLocalIP(ip, port);
+
+
+	printf("connected ip %s port %d\n",ip.c_str(),port);
 
 	/*
 	GSServer::GSServer *pServer = (GSServer::GSServer *)m_GSServer;

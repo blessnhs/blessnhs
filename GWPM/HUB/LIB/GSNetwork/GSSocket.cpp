@@ -242,28 +242,37 @@ BOOL GSSocket::Connect(LPSTR address, USHORT port)
 	return TRUE;
 }
 
-BOOL GSSocket::GetLocalIP(std::string& ipaddress)
+BOOL GSSocket::GetLocalIP(std::string& ipaddress, int& port)
 {
 	CThreadSync Sync;
 
 	if(!m_Socket)
 		return FALSE;
 
-	SOCKADDR_IN addr;
-	ZeroMemory(&addr, sizeof(addr));
 
-	CHAR	Name[256]	= {0,};
-	int client_len = sizeof(addr);
+	sockaddr_in* Local = NULL;
+	INT				LocalLength = 0;
 
-	getsockname(m_Socket, (struct sockaddr*)&addr,&client_len);
+	sockaddr_in* Remote = NULL;
+	INT				RemoteLength = 0;
 
-	//char ip[128];
-	//inet_ntop(AF_INET, &(addr.sin_addr), (PSTR)ip, 128);
+	GetAcceptExSockaddrs(m_Buffer,
+		0,
+		sizeof(sockaddr_in) + 16,
+		sizeof(sockaddr_in) + 16,
+		(sockaddr**)&Local,
+		&LocalLength,
+		(sockaddr**)&Remote,
+		&RemoteLength);
 
-	//InetNtop(AF_INET, &(addr), (PSTR)ip, 128);
-	//ipaddress = ip;
+//	char remoteAddress[64];
 
-	inet_ntoa(addr.sin_addr);
+//	_tcscpy(remoteAddress, (LPTSTR)(inet_ntoa(Remote->sin_addr)));
+
+	ipaddress = (LPTSTR)(inet_ntoa(Remote->sin_addr));
+
+	port = ntohs(Remote->sin_port);
+
 
 	return FALSE;
 }

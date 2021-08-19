@@ -96,10 +96,11 @@ BOOL GSClientModule::End(VOID)
 
 BOOL GSClientModule::GetLocalIP(string pIP)
 {
+	int port = 0;
 	if(IsUdp == TRUE)
-		return mUDPSession.GetLocalIP(pIP);
+		return mUDPSession.GetLocalIP(pIP, port);
 	else
-	    return mTCPSession.GetLocalIP(pIP);
+	    return mTCPSession.GetLocalIP(pIP, port);
 }
 
 USHORT GSClientModule::GetLocalPort(VOID)
