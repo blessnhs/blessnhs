@@ -10,42 +10,42 @@ public:
 	virtual VOID Process(LPVOID Data, DWORD Length, WORD MainProtocol, WORD SubProtocol, boost::shared_ptr<GSClient> Client);
 	virtual VOID Process2(LPVOID Data, DWORD Length, WORD MainProtocol, WORD SubProtocol, boost::shared_ptr<GSClient> pClient, string remoteaddress, int remoteport) {}
 
-	VOID VERSION(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client);
+	VOID VERSION(WORD SubProtocol,LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client);
 
-	VOID LOGIN_PLAYER(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client);
+	VOID LOGIN_PLAYER(WORD SubProtocol,LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client);
 
-	VOID ROOM_CREATE(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client);
-	VOID ROOM_ENTER(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client);
-	VOID ROOM_LEAVE(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client);
-	VOID ROOM_START(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client);
-	VOID ROOM_READY(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client);
-	VOID ROOM_BITMAP_CHAT(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client);
-	VOID ROOM_AUDIO_CHAT(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client);
+	VOID ROOM_CREATE(WORD SubProtocol,LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client);
+	VOID ROOM_ENTER(WORD SubProtocol,LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client);
+	VOID ROOM_LEAVE(WORD SubProtocol,LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client);
+	VOID ROOM_START(WORD SubProtocol,LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client);
+	VOID ROOM_READY(WORD SubProtocol,LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client);
+	VOID ROOM_BITMAP_CHAT(WORD SubProtocol,LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client);
+	VOID ROOM_AUDIO_CHAT(WORD SubProtocol,LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client);
 
-	VOID ALL_COMPLETE(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client);
+	VOID ALL_COMPLETE(WORD SubProtocol,LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client);
 
-	VOID AUTO_START(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client);
+	VOID AUTO_START(WORD SubProtocol,LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client);
 
-	VOID ROOM_LIST(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client);
+	VOID ROOM_LIST(WORD SubProtocol,LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client);
 
-	VOID MATCH(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client);
+	VOID MATCH(WORD SubProtocol,LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client);
 
-	VOID RANK(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client);
+	VOID RANK(WORD SubProtocol,LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client);
 
-	VOID ROOM_PASSTHROUGH(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client);
+	VOID ROOM_PASSTHROUGH(WORD SubProtocol,LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client);
 
-	VOID QNS(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client);
+	VOID QNS(WORD SubProtocol,LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client);
 
-	VOID PRAY_LIST(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client);
-	VOID REG_PRAY(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client);
+	VOID PRAY_LIST(WORD SubProtocol,LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client);
+	VOID REG_PRAY(WORD SubProtocol,LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client);
 
-	VOID NOTICE(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client);
+	VOID NOTICE(WORD SubProtocol,LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client);
 
-	VOID CHECK_NICKNAME(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client);
+	VOID CHECK_NICKNAME(WORD SubProtocol,LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client);
 
 protected:
 
-	DECLARE_MSG_MAP(HubProcess)
+	DECLARE_MSG_MAP2(HubProcess)
 
 };
 

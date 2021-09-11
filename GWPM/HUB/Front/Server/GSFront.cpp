@@ -18,6 +18,12 @@ GSFront::~GSFront(void)
 
 BOOL GSFront::Disconnect(GSCLIENT_PTR pSession)
 {
+	if (pSession->GetClientType() == SERVER_CLIENT)
+	{
+		PROXYHUB.Del(pSession);
+		PROXYHUB.Create(1);
+	}
+
 	return TRUE;
 }
 

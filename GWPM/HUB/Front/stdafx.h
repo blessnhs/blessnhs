@@ -75,7 +75,7 @@
 #include "DB/DBProxy/DBProcess.h"
 #include "./DB/DBProxy/DBProcessContainer.h"
 #include "./DB/DBJob/DBContext.h"
-
+#include "./ProxyHub/ProxyContainer.h"
 #include "MessageMapDef.h"
 
 #include "./Server/GSFront.h"
@@ -93,4 +93,6 @@
 #include "GS.CLI.pb.h"
 #include "Enum.pb.h"
 #include "Structure.pb.h"
+
+
 // TODO: 프로그램에 필요한 추가 헤더는 여기에서 참조합니다.

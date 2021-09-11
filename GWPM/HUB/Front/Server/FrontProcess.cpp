@@ -29,7 +29,16 @@ VOID FrontProcess::Process(LPVOID Data, DWORD Length, WORD MainProtocol, WORD Su
 		if(MainProtocol != ID_PKT_ROOM_LIST_REQ && MainProtocol != ID_PKT_PRAY_MESSAGE_REQ)
 			BLOG("%s MainProtocol %s Length %d\n", __FUNCTION__, name.c_str(), Length);
 
-		NET_FUNC_EXE(MainProtocol, Data, Length, Client);
+		
+		//hub·Î Àü¼Û
+
+		auto hub = PROXYHUB.GetHub();
+		if (hub != NULL)
+		{
+			hub->GetTCPSocket()->WritePacket(MainProtocol, Client->GetId(), (BYTE*)Data, Length);
+		}
+
+
 	}
 	catch (int exception)
 	{

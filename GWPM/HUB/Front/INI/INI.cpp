@@ -23,5 +23,12 @@ VOID FrontINI::Load()
 	GetPrivateProfileString(("SERVER"), ("ODBC_ID"), ("."), ODBC_ID, sizeof(ODBC_ID), (Name.c_str()));
 	GetPrivateProfileString(("SERVER"), ("ODBC_PASSWD"), ("."), ODBC_PWD, sizeof(ODBC_PWD), (Name.c_str()));
 
-	printf("[ Front ] Port [ %d ] MaxUser [ %d ] Alive Seconds[ %d ] Version [%f]\n", Port, MaxUser, AliveSeconds, Version);
+
+	GetPrivateProfileString(("SERVER"), ("HUB_IP"), ("127.0.0.1"), HubIp, sizeof(HubIp), (Name.c_str()));
+	HubPort = GetPrivateProfileInt(("SERVER"), ("HUB_PORT"), 100, (Name.c_str()));
+
+	HubSessionCount = GetPrivateProfileInt(("SERVER"), ("HUB_SESSION_COUNT"), 10, (Name.c_str()));
+
+
+	printf("[ Front ] Port [ %d ] MaxUser [ %d ] Alive Seconds[ %d ] Version [%f] [Hub Ip] [ %s ] [ Hub Port ][ %d]\n", Port, MaxUser, AliveSeconds, Version, HubIp, HubPort);
 }

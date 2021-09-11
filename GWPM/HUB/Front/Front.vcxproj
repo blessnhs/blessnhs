@@ -182,8 +182,10 @@
     <ClCompile Include="Log\Log.cpp" />
     <ClCompile Include="MainProcess\MSG\MSG_PLAYER_QUERY.cpp" />
     <ClCompile Include="MainProcess\MSG\MSG_PLAYER_QUERY_RES.cpp" />
+    <ClCompile Include="ProxyHub\ProxyContainer.cpp" />
     <ClCompile Include="Server\FrontProcess.cpp" />
     <ClCompile Include="Server\GSFront.cpp" />
+    <ClCompile Include="Server\HubProcess.cpp" />
     <ClCompile Include="Server\IUdpProcess.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -209,8 +211,10 @@
     <ClInclude Include="MainProcess\MSG\MSG_PLAYER_QUERY.h" />
     <ClInclude Include="MainProcess\MSG\MSG_PLAYER_QUERY.hpp" />
     <ClInclude Include="MainProcess\MSG\MSG_PLAYER_QUERY_RES.h" />
+    <ClInclude Include="ProxyHub\ProxyContainer.h" />
     <ClInclude Include="Server\FrontProcess.h" />
     <ClInclude Include="Server\GSFront.h" />
+    <ClInclude Include="Server\HubProcess.h" />
     <ClInclude Include="Server\IUdpProcess.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="Timer\ContentsTimer.h" />

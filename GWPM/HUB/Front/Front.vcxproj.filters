@@ -49,6 +49,12 @@
     <Filter Include="Protocol">
       <UniqueIdentifier>{f53fe161-3c1c-4e7a-ae1a-2acc4394e8f7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ProxyHub">
+      <UniqueIdentifier>{51e12459-f08d-4569-a653-cf6e2f1052dc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Server\Process">
+      <UniqueIdentifier>{56cfe65e-d5a0-470a-bed7-297103403df6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Front.cpp">
@@ -81,13 +87,7 @@
     <ClCompile Include="MainProcess\MSG\MSG_PLAYER_QUERY_RES.cpp">
       <Filter>MainProcess\MSG</Filter>
     </ClCompile>
-    <ClCompile Include="Server\FrontProcess.cpp">
-      <Filter>Server</Filter>
-    </ClCompile>
     <ClCompile Include="Server\GSFront.cpp">
-      <Filter>Server</Filter>
-    </ClCompile>
-    <ClCompile Include="Server\IUdpProcess.cpp">
       <Filter>Server</Filter>
     </ClCompile>
     <ClCompile Include="Timer\ContentsTimer.cpp">
@@ -114,6 +114,18 @@
     </ClCompile>
     <ClCompile Include="..\..\PROTOCOL\Cpp\Structure.pb.cc">
       <Filter>Protocol</Filter>
+    </ClCompile>
+    <ClCompile Include="ProxyHub\ProxyContainer.cpp">
+      <Filter>ProxyHub</Filter>
+    </ClCompile>
+    <ClCompile Include="Server\FrontProcess.cpp">
+      <Filter>Server\Process</Filter>
+    </ClCompile>
+    <ClCompile Include="Server\HubProcess.cpp">
+      <Filter>Server\Process</Filter>
+    </ClCompile>
+    <ClCompile Include="Server\IUdpProcess.cpp">
+      <Filter>Server\Process</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -147,13 +159,7 @@
     <ClInclude Include="MainProcess\MSG\MSG_PLAYER_QUERY_RES.h">
       <Filter>MainProcess\MSG</Filter>
     </ClInclude>
-    <ClInclude Include="Server\FrontProcess.h">
-      <Filter>Server</Filter>
-    </ClInclude>
     <ClInclude Include="Server\GSFront.h">
-      <Filter>Server</Filter>
-    </ClInclude>
-    <ClInclude Include="Server\IUdpProcess.h">
       <Filter>Server</Filter>
     </ClInclude>
     <ClInclude Include="Timer\ContentsTimer.h">
@@ -180,6 +186,18 @@
     </ClInclude>
     <ClInclude Include="..\..\PROTOCOL\Cpp\Structure.pb.h">
       <Filter>Protocol</Filter>
+    </ClInclude>
+    <ClInclude Include="ProxyHub\ProxyContainer.h">
+      <Filter>ProxyHub</Filter>
+    </ClInclude>
+    <ClInclude Include="Server\FrontProcess.h">
+      <Filter>Server\Process</Filter>
+    </ClInclude>
+    <ClInclude Include="Server\HubProcess.h">
+      <Filter>Server\Process</Filter>
+    </ClInclude>
+    <ClInclude Include="Server\IUdpProcess.h">
+      <Filter>Server\Process</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

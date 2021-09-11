@@ -4,6 +4,10 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 16.0.31402.337
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Front", "Front\Front.vcxproj", "{1A9862E9-8D82-4B69-9E83-202F710B92E0}"
+	ProjectSection(ProjectDependencies) = postProject
+		{5CC150A9-431C-400E-ADCA-287D34A466EC} = {5CC150A9-431C-400E-ADCA-287D34A466EC}
+		{D83663D1-4312-4F66-9CC3-895CEA218CE9} = {D83663D1-4312-4F66-9CC3-895CEA218CE9}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GSNetwork", "LIB\GSNetwork\GSNetwork.vcxproj", "{5CC150A9-431C-400E-ADCA-287D34A466EC}"
 EndProject

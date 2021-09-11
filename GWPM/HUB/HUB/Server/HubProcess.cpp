@@ -53,7 +53,7 @@ VOID HubProcess::Process(LPVOID Data, DWORD Length, WORD MainProtocol, WORD SubP
 		if(MainProtocol != ID_PKT_ROOM_LIST_REQ && MainProtocol != ID_PKT_PRAY_MESSAGE_REQ)
 			BLOG("%s MainProtocol %s Length %d\n", __FUNCTION__, name.c_str(), Length);
 
-		NET_FUNC_EXE(MainProtocol, Data, Length, Client);
+		NET_FUNC_EXE2(MainProtocol, SubProtocol,Data, Length, Client);
 	}
 	catch (int exception)
 	{
@@ -61,11 +61,11 @@ VOID HubProcess::Process(LPVOID Data, DWORD Length, WORD MainProtocol, WORD SubP
 	}
 }
 
-VOID HubProcess::CHECK_NICKNAME(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client)
+VOID HubProcess::CHECK_NICKNAME(WORD SubProtocol,LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client)
 {
 }
 
-VOID HubProcess::NOTICE(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client)
+VOID HubProcess::NOTICE(WORD SubProtocol,LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client)
 {
 	DECLARE_RECV_TYPE(NOTICE_REQ, version)	
 	
@@ -76,7 +76,7 @@ VOID HubProcess::NOTICE(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> C
 	MAINPROC.RegisterCommand(PLAYER_MSG);
 }
 
-VOID HubProcess::VERSION(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client)
+VOID HubProcess::VERSION(WORD SubProtocol,LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client)
 {
 	DECLARE_RECV_TYPE(VERSION_REQ, version)
 
@@ -85,7 +85,7 @@ VOID HubProcess::VERSION(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> 
 	res.set_var_code(Success);
 	res.set_var_version(INI.Version);
 
-	SEND_PROTO_BUFFER(res, Client)
+	SEND_PROTO_BUFFER2(SubProtocol,res, Client)
 
 		////버전 쿼리를 날린다.
 		//boost::shared_ptr<RequestVersion> pRequest = ALLOCATOR.Create<RequestVersion>();
@@ -98,7 +98,7 @@ VOID HubProcess::VERSION(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> 
 		//MAINPROC.RegisterCommand(PLAYER_MSG);
 }
 
-VOID HubProcess::LOGIN_PLAYER(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client)
+VOID HubProcess::LOGIN_PLAYER(WORD SubProtocol,LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client)
 {
 	DECLARE_RECV_TYPE(LOGIN_REQ, login)
 
@@ -124,7 +124,7 @@ VOID HubProcess::LOGIN_PLAYER(LPVOID Data, DWORD Length, boost::shared_ptr<GSCli
 	MAINPROC.RegisterCommand(PLAYER_MSG);
 }
 
-VOID HubProcess::ROOM_CREATE(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client)
+VOID HubProcess::ROOM_CREATE(WORD SubProtocol,LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client)
 {
 	DECLARE_RECV_TYPE(CREATE_ROOM_REQ, createroom)
 
@@ -160,7 +160,7 @@ VOID HubProcess::ROOM_CREATE(LPVOID Data, DWORD Length, boost::shared_ptr<GSClie
 
 }
 
-VOID HubProcess::PRAY_LIST(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client)
+VOID HubProcess::PRAY_LIST(WORD SubProtocol,LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client)
 {
 	DECLARE_RECV_TYPE(PRAY_MESSAGE_REQ, message)
 
@@ -172,7 +172,7 @@ VOID HubProcess::PRAY_LIST(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient
 	MAINPROC.RegisterCommand(PLAYER_MSG);
 }
 
-VOID HubProcess::REG_PRAY(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client)
+VOID HubProcess::REG_PRAY(WORD SubProtocol,LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client)
 {
 	DECLARE_RECV_TYPE(PRAY_MESSAGE_REG_REQ, message)
 
@@ -195,7 +195,7 @@ VOID HubProcess::REG_PRAY(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient>
 
 }
 
-VOID HubProcess::QNS(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client)
+VOID HubProcess::QNS(WORD SubProtocol,LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client)
 {
 	DECLARE_RECV_TYPE(QNA_REQ, message)
 
@@ -220,7 +220,7 @@ VOID HubProcess::QNS(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Clie
 	MAINPROC.RegisterCommand(PLAYER_MSG);
 }
 
-VOID HubProcess::ROOM_PASSTHROUGH(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client)
+VOID HubProcess::ROOM_PASSTHROUGH(WORD SubProtocol,LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client)
 {
 	DECLARE_RECV_TYPE(ROOM_PASS_THROUGH_REQ, message)
 
@@ -276,11 +276,11 @@ VOID HubProcess::ROOM_PASSTHROUGH(LPVOID Data, DWORD Length, boost::shared_ptr<G
 	
 }
 
-VOID HubProcess::RANK(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client)
+VOID HubProcess::RANK(WORD SubProtocol,LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client)
 {
 }
 
-VOID HubProcess::ROOM_ENTER(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client)
+VOID HubProcess::ROOM_ENTER(WORD SubProtocol,LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client)
 {
 	DECLARE_RECV_TYPE(ENTER_ROOM_REQ, enterroom)
 
@@ -325,7 +325,7 @@ VOID HubProcess::ROOM_ENTER(LPVOID Data, DWORD Length, boost::shared_ptr<GSClien
 	
 }
 
-VOID HubProcess::ROOM_LEAVE(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client)
+VOID HubProcess::ROOM_LEAVE(WORD SubProtocol,LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client)
 {
 	DECLARE_RECV_TYPE(LEAVE_ROOM_REQ, leaveroom)
 
@@ -354,7 +354,7 @@ VOID HubProcess::ROOM_LEAVE(LPVOID Data, DWORD Length, boost::shared_ptr<GSClien
 
 }
 
-VOID HubProcess::ROOM_START(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client)
+VOID HubProcess::ROOM_START(WORD SubProtocol,LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client)
 {
 	//PlayerPtr pPlayer = PLAYERMGR.Search(Client->GetPair());
 	//if (pPlayer == NULL)
@@ -376,7 +376,7 @@ VOID HubProcess::ROOM_START(LPVOID Data, DWORD Length, boost::shared_ptr<GSClien
 	//}
 }
 
-VOID HubProcess::ROOM_READY(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client)
+VOID HubProcess::ROOM_READY(WORD SubProtocol,LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client)
 {
 	//PlayerPtr pPlayer = PLAYERMGR.Search(Client->GetPair());
 	//if (pPlayer == NULL)
@@ -411,7 +411,7 @@ VOID HubProcess::ROOM_READY(LPVOID Data, DWORD Length, boost::shared_ptr<GSClien
 
 }
 
-VOID HubProcess::ROOM_AUDIO_CHAT(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client)
+VOID HubProcess::ROOM_AUDIO_CHAT(WORD SubProtocol,LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client)
 {
 	DECLARE_RECV_TYPE(AUDIO_MESSAGE_REQ, message)
 
@@ -442,7 +442,7 @@ VOID HubProcess::ROOM_AUDIO_CHAT(LPVOID Data, DWORD Length, boost::shared_ptr<GS
 	}
 }
 
-VOID HubProcess::ROOM_BITMAP_CHAT(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client)
+VOID HubProcess::ROOM_BITMAP_CHAT(WORD SubProtocol,LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client)
 {
 	DECLARE_RECV_TYPE(BITMAP_MESSAGE_REQ, message)
 
@@ -472,7 +472,7 @@ VOID HubProcess::ROOM_BITMAP_CHAT(LPVOID Data, DWORD Length, boost::shared_ptr<G
 	}
 }
 
-VOID HubProcess::ROOM_LIST(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client)
+VOID HubProcess::ROOM_LIST(WORD SubProtocol,LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client)
 {
 	DECLARE_RECV_TYPE(ROOM_LIST_REQ, roomlistreq)
 
@@ -489,12 +489,12 @@ VOID HubProcess::ROOM_LIST(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient
 	SEND_PROTO_BUFFER(res, Client)
 }
 
-VOID HubProcess::MATCH(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client)
+VOID HubProcess::MATCH(WORD SubProtocol,LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client)
 {
 }
 
 
-VOID HubProcess::AUTO_START(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client)
+VOID HubProcess::AUTO_START(WORD SubProtocol,LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client)
 {
 	//PlayerPtr pPlayer = PLAYERMGR.Search(Client->GetPair());
 	//if (pPlayer == NULL)
@@ -531,7 +531,7 @@ VOID HubProcess::AUTO_START(LPVOID Data, DWORD Length, boost::shared_ptr<GSClien
 
 }
 
-VOID HubProcess::ALL_COMPLETE(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client)
+VOID HubProcess::ALL_COMPLETE(WORD SubProtocol,LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client)
 {
 	//PlayerPtr pPlayer = PLAYERMGR.Search(Client->GetPair());
 	//if (pPlayer == NULL)

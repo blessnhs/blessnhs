@@ -22,6 +22,10 @@ public:
 
 	float Version;
 
+	CHAR HubIp[MAX_IP_ADDRESS];
+	WORD  HubPort;
+	WORD  HubSessionCount;
+
 };
 
 #define  INI Singleton<FrontINI>::Instance()

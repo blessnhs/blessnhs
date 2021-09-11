@@ -45,7 +45,7 @@ void ContentsTimer::Start()
 
 void ContentsTimer::OnEvt(LPVOID Arg)
 {
-	ContentsTimerJob *pJob = (ContentsTimerJob *)Arg;
+	GSFrames::GSTimerJob::GSTimerJob*pJob = (GSFrames::GSTimerJob::GSTimerJob*)Arg;
 
 	switch(pJob->GetId())
 	{
@@ -70,7 +70,7 @@ void ContentsTimer::OnEvt(LPVOID Arg)
 				MAINPROC.RegisterCommand(PLAYER_MSG);
 			}
 
-			ContentsTimerJob* pNewJob = new ContentsTimerJob();
+			RankTimerJob* pNewJob = new RankTimerJob();
 			pNewJob->Func = ContentsTimer::OnEvt;
 			pNewJob->SetExpineTime(GetTickCount() + (1000 * 60 * 5));
 			pNewJob->SetId(ContentsTimer::RANK_TIMER);
