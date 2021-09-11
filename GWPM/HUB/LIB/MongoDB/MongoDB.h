@@ -602,27 +602,28 @@ public:
 
 					///////////////////////////////////////////////////////////
 					///////user insert 
-					builder = bsoncxx::builder::stream::document{};
-					doc_value = builder
-						<< "UserId" << user_id
-						<< "Name" << user_name
-						<< "RoomId" << rooom_index
-						<< bsoncxx::builder::stream::finalize;
-
-					view = doc_value.view();
-
-					result = user_collection.insert_one(view);
-
-					//蜡历 积己 角菩
-					if (!result)
 					{
-						printf("fail insert ACCOUNT  Index %I64d query failed \n", user_id);
+						auto builder = bsoncxx::builder::stream::document{};
+						bsoncxx::document::value doc_value = builder
+							<< "UserId" << user_id
+							<< "Name" << user_name
+							<< "RoomId" << rooom_index
+							<< bsoncxx::builder::stream::finalize;
 
-						return -1;
+						bsoncxx::document::view view = doc_value.view();
+
+						bsoncxx::stdx::optional<mongocxx::result::insert_one> result = user_collection.insert_one(view);
+
+						//蜡历 积己 角菩
+						if (!result)
+						{
+							printf("fail insert ACCOUNT  Index %I64d query failed \n", user_id);
+
+							return -1;
+						}
 					}
-				
 			
-			return 0;
+			return rooom_index;
 		}
 		catch (...)
 		{
@@ -684,7 +685,7 @@ public:
 		}
 	}
 
-	int LeaveRoom(int room_id, INT64& user_id, string user_name)
+	int LeaveRoom(int room_id, INT64 user_id, string user_name)
 	{
 		try
 		{
@@ -784,12 +785,15 @@ public:
 		return list;
 	}
 
-	std::set<int> LoadRooms(INT64 user_id,int count = 100)
+	/*std::set<int> LoadRooms(INT64 user_id,int count = 100)
 	{
 		std::set<int> list;
 
-		auto collection = db["ROOM_USERS"];
+		auto collection = db["ROOM"];
 
+
+		auto opts = mongocxx::options::find{};
+		opts.limit(count);
 
 		auto cursor = collection.find(document{} << "UserId" << user_id << finalize);
 
@@ -802,6 +806,28 @@ public:
 
 
 			list.insert(room_id);
+		}
+
+		return list;
+	}*/
+
+	std::list<tuple<int,string,string>> LoadRooms(int count = 100)
+	{
+		std::list<tuple<int, string, string>> list;
+
+		auto collection = db["ROOMS"];
+
+		auto cursor = collection.find({});
+
+		int irank = 1;
+
+		for (auto doc : cursor)
+		{
+			auto name = doc["Name"].get_utf8().value;
+			auto room_id = doc["RoomId"].get_int64().value;
+			auto pwd = doc["Pwd"].get_utf8().value;
+
+			list.push_back(tuple<int, string, string>(room_id, name, pwd));
 		}
 
 		return list;

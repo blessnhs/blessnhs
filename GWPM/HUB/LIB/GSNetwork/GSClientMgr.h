@@ -25,6 +25,9 @@ public:
 	BOOL Begin(SOCKET ListenSocket,WORD MaxClients,LPVOID PServer);
 	BOOL NewClient();
 
+	//서버와의 연결을 위한 클라이언트 세션 생성
+	GSCLIENT_PTR NewClient2();
+
 	VOID End();
 
 	GSCLIENT_PTR GetClient(int id);

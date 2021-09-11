@@ -14,7 +14,7 @@ public:
 	VOID Process2(LPVOID Data, DWORD Length, WORD MainProtocol, WORD SubProtocol, boost::shared_ptr<GSClient> pClient, string remoteaddress, int remoteport);
 
 	
-	VOID ENTER_ROOM(LPVOID Data,DWORD Length, boost::shared_ptr<GSClient> pClient);
+	VOID ENTER_ROOM(WORD SubProtocol,LPVOID Data,DWORD Length, boost::shared_ptr<GSClient> pClient);
 	//VOID CLOSE_RELAYSVR(LPVOID Data,DWORD Length);
 
 	//VOID BROADCAST_NTY(LPVOID Data,DWORD Length);

@@ -119,7 +119,7 @@ int GSTimerQ::Initialize(int frequence)
     }
 
     if (!CreateTimerQueueTimer( &hTimer, hTimerQueue, 
-            (WAITORTIMERCALLBACK)Expine, this , frequence, frequence, 0))
+            (WAITORTIMERCALLBACK)Expine, this , frequence, frequence, frequence))
     {
         SYSLOG().Write("CreateTimerQueueTimer failed (%d)\n", GetLastError());
         return 3;

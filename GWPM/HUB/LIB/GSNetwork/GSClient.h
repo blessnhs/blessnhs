@@ -30,6 +30,12 @@ struct _LogContext
 	DWORD Time;
 };
 
+enum ClientType
+{
+	CLIENT,				//일반유저	
+	SERVER_CLIENT		// 서버간에 연결
+};
+
 class GSClient : public GSGuard<GSClient>,public IClientSession::IClientSession ,public IResponse , public IHandler<IMessagePtr>, public boost::enable_shared_from_this<GSClient>
 {
 public:
@@ -37,7 +43,7 @@ public:
 	GSClient(void);
 	~GSClient(void);
 
-	BOOL											Create(BYTE Type);
+	BOOL											Create(BYTE Type,ClientType type = CLIENT);
 
 	VOID											Clear();
 
@@ -101,6 +107,8 @@ public:
 
 	BYTE											GetCreateType();
 
+	ClientType										GetClientType();
+
 private:
 
 
@@ -132,6 +140,10 @@ public:
 
 	//내가 삭제될 타임 종료후 iocp 메세지가 올수 있으므로 대기 했다가 제거
 	DWORD											m_DeleteTime;
+
+
+
+	ClientType										m_ClientType;
 
 };
 

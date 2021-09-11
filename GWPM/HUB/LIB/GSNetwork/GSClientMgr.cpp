@@ -234,13 +234,13 @@ BOOL GSClientMgr::NewClient()
 
 	int NewClient = 1;
 	//임시 주석
-	/*if (ConnectableSocketCount() < 20)
+	if (GetActiveSocketCount() < 20)
 	{
 		NewClient = 100;
 		SYSLOG().Write("Resize Client  %d \n", NewClient);
 
 		m_MaxClients += NewClient;
-	}*/
+	}
 	
 	for (int i = 0; i < NewClient; i++)
 	{
@@ -280,6 +280,44 @@ BOOL GSClientMgr::NewClient()
 
 	return TRUE;
 }
+
+
+GSCLIENT_PTR GSClientMgr::NewClient2()
+{
+	GSServer::GSServer* pServer = (GSServer::GSServer*)m_GSServer;
+	SOCKET ListenSocket = pServer->GetTcpListen()->GetSocket();
+
+	if (!ListenSocket)
+	{
+		SYSLOG().Write("NewClient !ListenSocket \n");
+		return FALSE;
+	}
+
+	CThreadSync Sync;
+
+	for (int i = 0; i < 1; i++)
+	{
+		GSCLIENT_PTR pClient = ALLOCATOR.Create<GSClient>();
+
+		int newid = PopRecycleId();
+		if (newid == -1)
+			newid = IncClientId();
+
+		pClient->SetId(newid);
+		pClient->Create(TCP,ClientType::SERVER_CLIENT);
+		pClient->m_GSServer = pServer;
+
+		if (AddClient(pClient) == FALSE)
+		{
+			SYSLOG().Write("NewClient failed...1 \n");
+		}
+
+		return pClient;
+	}
+
+	return NULL;
+}
+
 
 BOOL GSClientMgr::Begin(SOCKET ListenSocket,WORD MaxClients,LPVOID pServer)
 {

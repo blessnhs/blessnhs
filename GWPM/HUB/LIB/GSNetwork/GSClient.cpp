@@ -59,25 +59,24 @@ GSClient::~GSClient(void)
 	pServer->GetClientMgr().InsertRecycleId(GetId());
 }
 
-BOOL  GSClient::Create(BYTE Type)
+BOOL  GSClient::Create(BYTE Type,ClientType type)
 {
 	CThreadSync Sync;
 	
+	m_ClientType = type;
+	m_CreateType = Type;
+
 	if(Type == TCP)
 	{
 		boost::shared_ptr<GSPacketTCP> TCP(new GSPacketTCP);
 		m_TCPSocket = TCP;
 		m_TCPSocket->m_ClientId = GetId();
-
-		m_CreateType = Type;
 	}
 	else if(Type == UDP)
 	{
 		boost::shared_ptr<GSPacketUDP> UDP(new GSPacketUDP);
 		m_UDPSocket = UDP;
 		m_UDPSocket->m_ClientId = GetId();
-
-		m_CreateType = Type;
 	}
 	else
 		return FALSE;
@@ -254,6 +253,11 @@ void GSClient::OnEvt(IMessagePtr Arg)
 VOID GSClient::Close()
 {
 	closesocket(GetSocket());
+}
+
+ClientType	GSClient::GetClientType()
+{
+	return m_ClientType;
 }
 
 BYTE GSClient::GetCreateType()
