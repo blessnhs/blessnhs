@@ -256,33 +256,40 @@ namespace Antioch
 
                                 Device.BeginInvokeOnMainThread(() =>
                                 {
-                                    var mainpage = (MainPage)Application.Current.MainPage;
-
-                                    RoomsPageView roompage = mainpage.lobby.roompage as RoomsPageView;
-
-                                    User.RoomIdList.Add(res.VarRoomId);
+                                    try
                                     {
-                                        User.CurrentChatViewNumber = res.VarRoomId;
+                                        var mainpage = (MainPage)Application.Current.MainPage;
 
+                                        RoomsPageView roompage = mainpage.lobby.roompage as RoomsPageView;
 
-                                        MainChatView outivew;
-
-                                        mainpage.lobby.chatpage.TryGetValue(res.VarRoomId, out outivew);
-                                        if (outivew == null) //없으면 새로 만들어서 넣는다.
+                                        User.RoomIdList.Add(res.VarRoomId);
                                         {
-                                            var chatview = new MainChatView();
-                                            mainpage.lobby.chatpage.Add(res.VarRoomId, chatview);
-                                            mainpage.LoadView(chatview);
+                                            User.CurrentChatViewNumber = res.VarRoomId;
 
-                                            foreach(var msg in res.VarMessages)
+
+                                            MainChatView outivew;
+
+                                            mainpage.lobby.chatpage.TryGetValue(res.VarRoomId, out outivew);
+                                            if (outivew == null) //없으면 새로 만들어서 넣는다.
                                             {
-                                                chatview.ReceiveMessage(msg.VarMessage, msg.VarName,msg.VarTime);
+                                                var chatview = new MainChatView();
+                                                mainpage.lobby.chatpage.Add(res.VarRoomId, chatview);
+                                                mainpage.LoadView(chatview);
+
+                                                foreach (var msg in res.VarMessages)
+                                                {
+                                                    chatview.ReceiveMessage(msg.VarMessage, msg.VarName, msg.VarTime);
+                                                }
+                                            }
+                                            else  //이미 존재하는 방이면 해당 방에 넣는다. 
+                                            {
+                                                mainpage.LoadView(outivew);
                                             }
                                         }
-                                        else  //이미 존재하는 방이면 해당 방에 넣는다. 
-                                        {
-                                            mainpage.LoadView(outivew);
-                                        }
+                                    }
+                                    catch (Exception e)
+                                    {
+                                       
                                     }
                                 });
                             }

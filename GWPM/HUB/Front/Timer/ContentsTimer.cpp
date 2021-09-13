@@ -51,6 +51,8 @@ void ContentsTimer::OnEvt(LPVOID Arg)
 	{
 		case ContentsTimer::SYS_TIMER:
 		{
+			PROXYHUB.TryConnect();
+
 			ContentsTimerJob* pNewJob = new ContentsTimerJob();
 			pNewJob->Func = ContentsTimer::OnEvt;
 			pNewJob->SetExpineTime(GetTickCount() + 1000);

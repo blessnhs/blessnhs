@@ -19,4 +19,7 @@ public:
 	INT64 Index;
 	int Result;
 	int channel;
+
+	DWORD ForntId;
+	DWORD FrontSid;
 };
