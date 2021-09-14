@@ -50,7 +50,10 @@ public static partial class CLIGSReflection {
           "R19SRVESEwoLdmFyX21lc3NhZ2UYAiABKAkiRQoHUU5BX1JFURIlCgJpZBgB",
           "IAEoDjIJLlBST1RPQ09MOg5JRF9QS1RfUU5BX1JFURITCgt2YXJfbWVzc2Fn",
           "ZRgCIAEoCSI8Cg1NQUlMX0xJU1RfUkVREisKAmlkGAEgASgOMgkuUFJPVE9D",
-          "T0w6FElEX1BLVF9NQUlMX0xJU1RfUkVRQgJIAQ=="));
+          "T0w6FElEX1BLVF9NQUlMX0xJU1RfUkVRIkAKB1JFR19SRVESJQoCaWQYASAB",
+          "KA4yCS5QUk9UT0NPTDoOSURfUEtUX1JFR19SRVESDgoGdmFyX2lkGAIgAigF",
+          "IkQKEUNMSUVOVF9MT0dPVVRfUkVREi8KAmlkGAEgASgOMgkuUFJPVE9DT0w6",
+          "GElEX1BLVF9DTElFTlRfTE9HT1VUX1JFUUICSAE="));
     descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
         new pbr::FileDescriptor[] { global::EnumReflection.Descriptor, global::StructureReflection.Descriptor, },
         new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
@@ -67,7 +70,9 @@ public static partial class CLIGSReflection {
           new pbr::GeneratedClrTypeInfo(typeof(global::PRAY_MESSAGE_REQ), global::PRAY_MESSAGE_REQ.Parser, new[]{ "Id" }, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::PRAY_MESSAGE_REG_REQ), global::PRAY_MESSAGE_REG_REQ.Parser, new[]{ "Id", "VarMessage" }, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::QNA_REQ), global::QNA_REQ.Parser, new[]{ "Id", "VarMessage" }, null, null, null, null),
-          new pbr::GeneratedClrTypeInfo(typeof(global::MAIL_LIST_REQ), global::MAIL_LIST_REQ.Parser, new[]{ "Id" }, null, null, null, null)
+          new pbr::GeneratedClrTypeInfo(typeof(global::MAIL_LIST_REQ), global::MAIL_LIST_REQ.Parser, new[]{ "Id" }, null, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::REG_REQ), global::REG_REQ.Parser, new[]{ "Id", "VarId" }, null, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::CLIENT_LOGOUT_REQ), global::CLIENT_LOGOUT_REQ.Parser, new[]{ "Id" }, null, null, null, null)
         }));
   }
   #endregion
@@ -2670,6 +2675,335 @@ public sealed partial class MAIL_LIST_REQ : pb::IMessage<MAIL_LIST_REQ> {
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public void MergeFrom(MAIL_LIST_REQ other) {
+    if (other == null) {
+      return;
+    }
+    if (other.HasId) {
+      Id = other.Id;
+    }
+    _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void MergeFrom(pb::CodedInputStream input) {
+    uint tag;
+    while ((tag = input.ReadTag()) != 0) {
+      switch(tag) {
+        default:
+          _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+          break;
+        case 8: {
+          Id = (global::PROTOCOL) input.ReadEnum();
+          break;
+        }
+      }
+    }
+  }
+
+}
+
+public sealed partial class REG_REQ : pb::IMessage<REG_REQ> {
+  private static readonly pb::MessageParser<REG_REQ> _parser = new pb::MessageParser<REG_REQ>(() => new REG_REQ());
+  private pb::UnknownFieldSet _unknownFields;
+  private int _hasBits0;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public static pb::MessageParser<REG_REQ> Parser { get { return _parser; } }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public static pbr::MessageDescriptor Descriptor {
+    get { return global::CLIGSReflection.Descriptor.MessageTypes[14]; }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  pbr::MessageDescriptor pb::IMessage.Descriptor {
+    get { return Descriptor; }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public REG_REQ() {
+    OnConstruction();
+  }
+
+  partial void OnConstruction();
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public REG_REQ(REG_REQ other) : this() {
+    _hasBits0 = other._hasBits0;
+    id_ = other.id_;
+    varId_ = other.varId_;
+    _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public REG_REQ Clone() {
+    return new REG_REQ(this);
+  }
+
+  /// <summary>Field number for the "id" field.</summary>
+  public const int IdFieldNumber = 1;
+  private readonly static global::PROTOCOL IdDefaultValue = global::PROTOCOL.IdPktRegReq;
+
+  private global::PROTOCOL id_;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public global::PROTOCOL Id {
+    get { if ((_hasBits0 & 1) != 0) { return id_; } else { return IdDefaultValue; } }
+    set {
+      _hasBits0 |= 1;
+      id_ = value;
+    }
+  }
+  /// <summary>Gets whether the "id" field is set</summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public bool HasId {
+    get { return (_hasBits0 & 1) != 0; }
+  }
+  /// <summary>Clears the value of the "id" field</summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void ClearId() {
+    _hasBits0 &= ~1;
+  }
+
+  /// <summary>Field number for the "var_id" field.</summary>
+  public const int VarIdFieldNumber = 2;
+  private readonly static int VarIdDefaultValue = 0;
+
+  private int varId_;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public int VarId {
+    get { if ((_hasBits0 & 2) != 0) { return varId_; } else { return VarIdDefaultValue; } }
+    set {
+      _hasBits0 |= 2;
+      varId_ = value;
+    }
+  }
+  /// <summary>Gets whether the "var_id" field is set</summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public bool HasVarId {
+    get { return (_hasBits0 & 2) != 0; }
+  }
+  /// <summary>Clears the value of the "var_id" field</summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void ClearVarId() {
+    _hasBits0 &= ~2;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public override bool Equals(object other) {
+    return Equals(other as REG_REQ);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public bool Equals(REG_REQ other) {
+    if (ReferenceEquals(other, null)) {
+      return false;
+    }
+    if (ReferenceEquals(other, this)) {
+      return true;
+    }
+    if (Id != other.Id) return false;
+    if (VarId != other.VarId) return false;
+    return Equals(_unknownFields, other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public override int GetHashCode() {
+    int hash = 1;
+    if (HasId) hash ^= Id.GetHashCode();
+    if (HasVarId) hash ^= VarId.GetHashCode();
+    if (_unknownFields != null) {
+      hash ^= _unknownFields.GetHashCode();
+    }
+    return hash;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public override string ToString() {
+    return pb::JsonFormatter.ToDiagnosticString(this);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void WriteTo(pb::CodedOutputStream output) {
+    if (HasId) {
+      output.WriteRawTag(8);
+      output.WriteEnum((int) Id);
+    }
+    if (HasVarId) {
+      output.WriteRawTag(16);
+      output.WriteInt32(VarId);
+    }
+    if (_unknownFields != null) {
+      _unknownFields.WriteTo(output);
+    }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public int CalculateSize() {
+    int size = 0;
+    if (HasId) {
+      size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Id);
+    }
+    if (HasVarId) {
+      size += 1 + pb::CodedOutputStream.ComputeInt32Size(VarId);
+    }
+    if (_unknownFields != null) {
+      size += _unknownFields.CalculateSize();
+    }
+    return size;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void MergeFrom(REG_REQ other) {
+    if (other == null) {
+      return;
+    }
+    if (other.HasId) {
+      Id = other.Id;
+    }
+    if (other.HasVarId) {
+      VarId = other.VarId;
+    }
+    _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void MergeFrom(pb::CodedInputStream input) {
+    uint tag;
+    while ((tag = input.ReadTag()) != 0) {
+      switch(tag) {
+        default:
+          _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+          break;
+        case 8: {
+          Id = (global::PROTOCOL) input.ReadEnum();
+          break;
+        }
+        case 16: {
+          VarId = input.ReadInt32();
+          break;
+        }
+      }
+    }
+  }
+
+}
+
+public sealed partial class CLIENT_LOGOUT_REQ : pb::IMessage<CLIENT_LOGOUT_REQ> {
+  private static readonly pb::MessageParser<CLIENT_LOGOUT_REQ> _parser = new pb::MessageParser<CLIENT_LOGOUT_REQ>(() => new CLIENT_LOGOUT_REQ());
+  private pb::UnknownFieldSet _unknownFields;
+  private int _hasBits0;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public static pb::MessageParser<CLIENT_LOGOUT_REQ> Parser { get { return _parser; } }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public static pbr::MessageDescriptor Descriptor {
+    get { return global::CLIGSReflection.Descriptor.MessageTypes[15]; }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  pbr::MessageDescriptor pb::IMessage.Descriptor {
+    get { return Descriptor; }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public CLIENT_LOGOUT_REQ() {
+    OnConstruction();
+  }
+
+  partial void OnConstruction();
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public CLIENT_LOGOUT_REQ(CLIENT_LOGOUT_REQ other) : this() {
+    _hasBits0 = other._hasBits0;
+    id_ = other.id_;
+    _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public CLIENT_LOGOUT_REQ Clone() {
+    return new CLIENT_LOGOUT_REQ(this);
+  }
+
+  /// <summary>Field number for the "id" field.</summary>
+  public const int IdFieldNumber = 1;
+  private readonly static global::PROTOCOL IdDefaultValue = global::PROTOCOL.IdPktClientLogoutReq;
+
+  private global::PROTOCOL id_;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public global::PROTOCOL Id {
+    get { if ((_hasBits0 & 1) != 0) { return id_; } else { return IdDefaultValue; } }
+    set {
+      _hasBits0 |= 1;
+      id_ = value;
+    }
+  }
+  /// <summary>Gets whether the "id" field is set</summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public bool HasId {
+    get { return (_hasBits0 & 1) != 0; }
+  }
+  /// <summary>Clears the value of the "id" field</summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void ClearId() {
+    _hasBits0 &= ~1;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public override bool Equals(object other) {
+    return Equals(other as CLIENT_LOGOUT_REQ);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public bool Equals(CLIENT_LOGOUT_REQ other) {
+    if (ReferenceEquals(other, null)) {
+      return false;
+    }
+    if (ReferenceEquals(other, this)) {
+      return true;
+    }
+    if (Id != other.Id) return false;
+    return Equals(_unknownFields, other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public override int GetHashCode() {
+    int hash = 1;
+    if (HasId) hash ^= Id.GetHashCode();
+    if (_unknownFields != null) {
+      hash ^= _unknownFields.GetHashCode();
+    }
+    return hash;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public override string ToString() {
+    return pb::JsonFormatter.ToDiagnosticString(this);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void WriteTo(pb::CodedOutputStream output) {
+    if (HasId) {
+      output.WriteRawTag(8);
+      output.WriteEnum((int) Id);
+    }
+    if (_unknownFields != null) {
+      _unknownFields.WriteTo(output);
+    }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public int CalculateSize() {
+    int size = 0;
+    if (HasId) {
+      size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Id);
+    }
+    if (_unknownFields != null) {
+      size += _unknownFields.CalculateSize();
+    }
+    return size;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void MergeFrom(CLIENT_LOGOUT_REQ other) {
     if (other == null) {
       return;
     }

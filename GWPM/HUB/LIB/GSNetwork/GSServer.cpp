@@ -49,6 +49,8 @@ bool GSServer::Create(GSArgument arg)
 	BeginTCP();
 	BeginUDP();
 
+	
+
 	GetSysTimer().Start((LPVOID)this);
 
 	return true;
@@ -277,9 +279,9 @@ BOOL GSServer::BeginUDP()
 {
 //	if (!GSIocp::Initialize()) return FALSE;
 	//test
-	m_Arguments.m_UdpPorts.push_back(30000);
-	m_Arguments.m_UdpPorts.push_back(30001);
-	m_Arguments.m_UdpPorts.push_back(30002);
+	m_Arguments.m_UdpPorts.push_back(m_Arguments.m_BindPort + 1);
+	m_Arguments.m_UdpPorts.push_back(m_Arguments.m_BindPort + 2);
+	m_Arguments.m_UdpPorts.push_back(m_Arguments.m_BindPort + 3);
 
 	int MaxPort = (int)m_Arguments.m_UdpPorts.size();
 

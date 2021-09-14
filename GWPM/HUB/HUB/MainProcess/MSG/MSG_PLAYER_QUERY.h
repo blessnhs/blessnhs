@@ -189,50 +189,23 @@ public:
 #pragma endregion
 
 
-#pragma region RequestVersion
-	DECLARE_DB_CLASS_BEGIN(RequestVersion)
-	{
-		VERSION_RES res;
-
-		if (pSession == NULL || pSession->GetConnected() == false)
-		{
-			res.set_var_code(DataBaseError);
-
-			SEND_PROTO_BUFFER(res, pSession)
-				return;
-		}
-
-		DBPROCESS_CER_PTR pProcess = DBPROCESSCONTAINER_CER.Search(Type);
-		if (pProcess == NULL || pProcess->m_IsOpen == false)
-		{
-			res.set_var_code(DataBaseError);
-
-			SEND_PROTO_BUFFER(res, pSession)
-				return;
-		}
-
-		// 로그인 절차 : 아이디의 접속확인 및 인증키값을 가져온다.
-		float nRet = pProcess->ProcedureVersion();
-
-		res.set_var_version(nRet);
-		res.set_var_code(Success);
-
-		SEND_PROTO_BUFFER(res, pSession)
-	}
-	DECLARE_DB_CLASS_END
-#pragma endregion
-
 #pragma region CreateRooom
 	DECLARE_DB_CLASS_BEGIN_4(CreateRooom,string,INT64,string,PlayerPtr)
 	{
 		CREATE_ROOM_RES res;
 
+		PlayerPtr pPlayerPtr = std::get<3>(Request.m_args);
+		if (pPlayerPtr == NULL)
+		{
+			return;
+		}
+
 		auto ret = pProcess->CreateRoom(std::get<0>(Request.m_args), std::get<1>(Request.m_args), std::get<2>(Request.m_args));
 		if (ret == -1)
 		{
 			res.set_var_code(SystemError);
-			SEND_PROTO_BUFFER(res, pSession)
-				return;
+			SEND_PROTO_BUFFER2(pPlayerPtr->GetFrontSid(),res, pSession)
+			return;
 		}
 
 
@@ -245,7 +218,7 @@ public:
 
 		res.set_var_room_id(RoomPtr->GetId());
 		res.mutable_var_name()->assign(RoomPtr->m_Stock.Name);
-		SEND_PROTO_BUFFER(res, pSession)
+		SEND_PROTO_BUFFER2(pPlayerPtr->GetFrontSid(),res, pSession)
 
 		RoomPtr->SendNewUserInfo(std::get<3>(Request.m_args), RoomPtr->GetId());	//방에 있는 유저들에게 새로운 유저 정보전송f
 	}
@@ -253,10 +226,11 @@ public:
 #pragma endregion
 
 #pragma region EnterRooomDB
-	DECLARE_DB_CLASS_BEGIN_3(EnterRooom, int, INT64, string)
+	DECLARE_DB_CLASS_BEGIN_4(EnterRooom, int, INT64, string, PlayerPtr)
 	{
-		PlayerPtr pPlayer = PLAYERMGR.Search(pSession->GetPair());
-		if (pPlayer == NULL)
+
+		PlayerPtr pPlayerPtr = std::get<3>(Request.m_args);
+		if (pPlayerPtr == NULL)
 		{
 			return;
 		}
@@ -268,27 +242,27 @@ public:
 		if (RoomPtr == NULL)
 		{
 			res.set_var_code(SystemError);
-			SEND_PROTO_BUFFER(res, pSession)
-				return;
+			SEND_PROTO_BUFFER2(pPlayerPtr->GetFrontSid(), res, pSession)
+			return;
 		}
 
 		auto ret = pProcess->EnterRoom(std::get<0>(Request.m_args), std::get<1>(Request.m_args), std::get<2>(Request.m_args));
 		if (ret != 0)
 		{
 			res.set_var_code(SystemError);
-			SEND_PROTO_BUFFER(res, pSession)
-				return;
+			SEND_PROTO_BUFFER2(pPlayerPtr->GetFrontSid(), res, pSession)
+			return;
 		}
 
 		RoomPtr->GetMessageList(res.mutable_var_messages());
 
-		RoomPtr->InsertPlayer(pPlayer);
+		RoomPtr->InsertPlayer(pPlayerPtr);
 
-		pPlayer->m_Char[0].SetRoom(std::get<0>(Request.m_args));
+		pPlayerPtr->m_Char[0].SetRoom(std::get<0>(Request.m_args));
 
 		res.set_var_room_id(std::get<0>(Request.m_args));
 		res.set_var_name(RoomPtr->m_Stock.Name.c_str());
-		SEND_PROTO_BUFFER(res, pSession)
+		SEND_PROTO_BUFFER2(pPlayerPtr->GetFrontSid(), res, pSession)
 
 			//새로 입장한 유저에게 방안의 유저 정보전송
 			for each (auto iter in RoomPtr->m_PlayerMap)
@@ -304,7 +278,11 @@ public:
 				userinfo->set_var_name(iter.second->m_Account.GetName());
 				userinfo->set_var_room_number(RoomPtr->GetId());
 
-				SEND_PROTO_BUFFER(nty, pSession)
+				GSCLIENT_PTR pPair = SERVER.GetClient(iter.second->GetFront());
+				if (pPair == NULL)
+					continue;
+
+				SEND_PROTO_BUFFER2(iter.second->GetFrontSid(), nty, pPair)
 			}
 
 
@@ -314,7 +292,7 @@ public:
 			if (iter.second == NULL)
 				continue;
 
-			GSCLIENT_PTR pPair = SERVER.GetClient(iter.second->GetPair());
+			GSCLIENT_PTR pPair = SERVER.GetClient(iter.second->GetFront());
 			if (pPair == NULL)
 				continue;
 
@@ -322,18 +300,19 @@ public:
 			nty.set_var_type(1);
 			RoomUserInfo* userinfo = nty.mutable_var_room_user();
 
-			userinfo->set_var_index(pPlayer->GetId());
-			userinfo->set_var_name(pPlayer->m_Char[0].GetName());
+			userinfo->set_var_index(pPlayerPtr->GetId());
+			userinfo->set_var_name(pPlayerPtr->m_Char[0].GetName());
 			userinfo->set_var_room_number(RoomPtr->GetId());
 
-			SEND_PROTO_BUFFER(nty, pSession)
+			SEND_PROTO_BUFFER2(iter.second->GetFrontSid(),nty, pPair)
 		}
 	}
 	DECLARE_DB_CLASS_END
 #pragma endregion
 #pragma region LeaveRoomDB
-	DECLARE_DB_CLASS_BEGIN_3(LeaveRoom, int, INT64, string)
+	DECLARE_DB_CLASS_BEGIN_4(LeaveRoom, int, INT64, string, PlayerPtr)
 	{
+
 		auto ret = pProcess->LeaveRoom(std::get<0>(Request.m_args), std::get<1>(Request.m_args), std::get<2>(Request.m_args));
 		if (ret == -1)
 		{
@@ -341,13 +320,13 @@ public:
 		}
 
 
-		PlayerPtr pPlayer = PLAYERMGR.Search(pSession->GetPair());
-		if (pPlayer == NULL)
+		PlayerPtr pPlayerPtr = std::get<3>(Request.m_args);
+		if (pPlayerPtr == NULL)
 		{
 			return;
 		}
 
-		ROOMMGR.LeaveRoomPlayer(pPlayer, std::get<0>(Request.m_args), ret == 1);
+		ROOMMGR.LeaveRoomPlayer(pPlayerPtr, std::get<0>(Request.m_args), ret == 1);
 	}
 	DECLARE_DB_CLASS_END
 #pragma endregion
@@ -423,11 +402,13 @@ public:
 
 
 #pragma region RequestPrayList
-	DECLARE_DB_CLASS_BEGIN(RequestPrayList)
+	DECLARE_DB_CLASS_BEGIN_1(RequestPrayList, PlayerPtr)
 	{
+		PlayerPtr pPlayerPtr = std::get<0>(Request.m_args);
+		if (pPlayerPtr == NULL)
+			return;
 
 		auto praylist = pProcess->PrayList();
-
 
 		PRAY_MESSAGE_RES res;
 		res.set_var_code(Success);
@@ -439,28 +420,36 @@ public:
 			info->mutable_var_message()->assign(std::get<1>(pray));
 			info->mutable_var_time()->assign(std::get<2>(pray));
 		}
-		SEND_PROTO_BUFFER(res, pSession)
+		SEND_PROTO_BUFFER2(pPlayerPtr->GetFrontSid(), res, pSession)
 	}
 	DECLARE_DB_CLASS_END
 #pragma endregion
 
 #pragma region RequestRegPray
-	DECLARE_DB_CLASS_BEGIN_2(RequestRegPray,string,string)
+	DECLARE_DB_CLASS_BEGIN_3(RequestRegPray,string,string, PlayerPtr)
 	{
+		PlayerPtr pPlayerPtr = std::get<2>(Request.m_args);
+		if (pPlayerPtr == NULL)
+			return;
+
 		pProcess->RegPray(std::get<1>(Request.m_args), std::get<0>(Request.m_args));
 
 		PRAY_MESSAGE_RES res;
 		res.set_var_code(Success);
 
 
-		SEND_PROTO_BUFFER(res, pSession)
+		SEND_PROTO_BUFFER2(pPlayerPtr->GetFrontSid(), res, pSession)
 	}
 	DECLARE_DB_CLASS_END
 #pragma endregion
 
 #pragma region RequestQNS
-	DECLARE_DB_CLASS_BEGIN_2(RequestQNS, string, INT64)
+	DECLARE_DB_CLASS_BEGIN_3(RequestQNS, string, INT64, PlayerPtr)
 	{
+		PlayerPtr pPlayerPtr = std::get<2>(Request.m_args);
+		if (pPlayerPtr == NULL)
+			return;
+
 		boost::replace_all(std::get<0>(Request.m_args), "'", "''");
 
 		int ret = pProcess->UpdaetQNS(std::get<1>(Request.m_args), std::get<0>(Request.m_args));
@@ -470,14 +459,18 @@ public:
 		QNA_RES res;
 		res.set_var_code(code);
 
-		SEND_PROTO_BUFFER(res, pSession)
+		SEND_PROTO_BUFFER2(pPlayerPtr->GetFrontSid(), res, pSession)
 	}
 	DECLARE_DB_CLASS_END
 #pragma endregion
 
 #pragma region RequestNotice
-	DECLARE_DB_CLASS_BEGIN(RequestNotice)
+	DECLARE_DB_CLASS_BEGIN_1(RequestNotice, PlayerPtr)
 	{
+		PlayerPtr pPlayerPtr = std::get<0>(Request.m_args);
+		if (pPlayerPtr == NULL)
+			return;
+
 		auto notice_list = pProcess->NoticeInfoInfo();
 
 		NOTICE_RES res;
@@ -491,7 +484,7 @@ public:
 			data->set_var_date(std::get<2>(notice));
 		}
 
-		SEND_PROTO_BUFFER(res, pSession)
+		SEND_PROTO_BUFFER2(pPlayerPtr->GetFrontSid(), res, pSession)
 	}
 	DECLARE_DB_CLASS_END
 #pragma endregion
@@ -595,8 +588,8 @@ public:
 				{
 					res.set_var_code(DataBaseError);
 
-					SEND_PROTO_BUFFER(res, pSession)
-						return;
+					SEND_PROTO_BUFFER2(pRequst.FrontSid,res, pSession)
+					return;
 				}
 
 				DBPROCESS_CER_PTR pProcess = DBPROCESSCONTAINER_CER.Search(Type);
@@ -606,8 +599,8 @@ public:
 
 					res.set_var_code(DataBaseError);
 
-					SEND_PROTO_BUFFER(res, pSession)
-						return;
+					SEND_PROTO_BUFFER2(pRequst.FrontSid, res, pSession)
+					return;
 				}
 
 				if (pRequst.id.size() == 0 || pRequst.id.size() > 256 || pRequst.pwd.size() == 0 || pRequst.pwd.size() > 256)
@@ -616,9 +609,12 @@ public:
 
 					res.set_var_code(DataBaseError);
 
-					SEND_PROTO_BUFFER(res, pSession)
+					SEND_PROTO_BUFFER2(pRequst.FrontSid, res, pSession)
 
-						pSession->Close();
+					//pSession->Close();
+
+					CLIENT_KICK kick;
+					SEND_PROTO_BUFFER2(pRequst.FrontSid, kick, pSession)
 					return;
 				}
 
@@ -642,7 +638,10 @@ public:
 					if (nRet == -1)
 					{
 						BLOG("1.Login Fail Invalid Password %d  INDEX  %lld\n", nRet, Index);
-						pSession->Close();
+						//pSession->Close();
+
+						CLIENT_KICK kick;
+						SEND_PROTO_BUFFER2(pRequst.FrontSid, kick, pSession)
 						return;
 					}
 					//- 2 이미 접속
@@ -654,9 +653,12 @@ public:
 
 						BLOG("2.Login Fail Concurrent Table Exist data Ret %d  INDEX  %lld\n", nRet, Index);
 						res.set_var_code(LoginFailed);
-						SEND_PROTO_BUFFER(res, pSession)
+						SEND_PROTO_BUFFER2(pRequst.FrontSid, res, pSession)
 
-							pSession->Close();
+
+						CLIENT_KICK kick;
+						SEND_PROTO_BUFFER2(pRequst.FrontSid, kick, pSession)
+						//pSession->Close();
 
 						//기존 세션과 신규 세션 양쪽 다 팅기는 것으로 변경
 						//이미 접속중이면 이전 접속을 끊는다.
@@ -664,12 +666,15 @@ public:
 						auto existClient = PLAYERMGR.Search(Index);
 						if (existClient != NULL)
 						{
-							GSCLIENT_PTR pPair = SERVER.GetClient(existClient->GetPair());
+							GSCLIENT_PTR pPair = SERVER.GetClient(existClient->GetFront());
 							if (pPair != NULL)
 							{
 								BLOG("2.Login Fail Exist player %lld and session close\n", Index);
 
-								pPair->Close();
+								//pPair->Close();
+
+								CLIENT_KICK kick;
+								SEND_PROTO_BUFFER2(existClient->GetFrontSid(), kick, pSession)
 							}
 							return;
 						}
@@ -679,11 +684,13 @@ public:
 				}
 
 				//해당 세센으로 이미 로그인을 했다.
-				auto existClient = PLAYERMGR.Search(pSession->GetPair());
+				auto existClient = PLAYERMGR.Search(pRequst.ForntId,pRequst.FrontSid);
 				if (existClient != NULL)
 				{
 					BLOG("Duplicate Login Fail Exist player %lld close\n", Index);
-					pSession->Close();
+					//pSession->Close();
+					CLIENT_KICK kick;
+					SEND_PROTO_BUFFER2(pRequst.FrontSid, kick, pSession)
 
 					return;
 				}
@@ -692,14 +699,21 @@ public:
 				existClient = PLAYERMGR.Search(Index);
 				if (existClient != NULL)
 				{
-					GSCLIENT_PTR pPair = SERVER.GetClient(existClient->GetPair());
+					GSCLIENT_PTR pPair = SERVER.GetClient(existClient->GetFront());
 					if (pPair != NULL)
 					{
 						BLOG("3.Login Fail Exist player %lld and session close\n", Index);
 
-						pPair->Close();
 
-						pSession->Close();
+						CLIENT_KICK kick1;
+						SEND_PROTO_BUFFER2(existClient->GetFrontSid(), kick1, pSession)
+
+					//	pPair->Close();
+
+					// pSession->Close();
+
+						CLIENT_KICK kick2;
+						SEND_PROTO_BUFFER2(pRequst.FrontSid, kick2, pSession)
 					}
 					return;
 				}
@@ -711,9 +725,16 @@ public:
 				pNewPlayer->m_Account.SetName(pRequst.id);
 
 
+				pNewPlayer->SetFront(pRequst.ForntId);
+				pNewPlayer->SetFrontSid(pRequst.FrontSid);
+
+
 				pNewPlayer->SetId(Index);
-				pNewPlayer->SetPair(pSession->GetId());
-				pSession->SetPair(Index);
+				
+				
+				pNewPlayer->SetPair(pRequst.ForntId);
+			//	pSession->SetPair(Index);
+
 				pNewPlayer->m_Char[0].SetLevel(level);
 				PLAYERMGR.Add(pNewPlayer);
 
@@ -722,9 +743,9 @@ public:
 
 				res.set_var_name(pRequst.id);
 
-				SEND_PROTO_BUFFER(res, pSession)
+				SEND_PROTO_BUFFER2(pRequst.FrontSid, res, pSession)
 
-					pNewPlayer->SetChannel(pRequst.channel);
+				pNewPlayer->SetChannel(pRequst.channel);
 			}
 			catch (...)
 			{

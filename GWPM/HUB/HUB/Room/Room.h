@@ -46,10 +46,10 @@ public:
 			if (pPlayer == NULL)
 				continue;
 
-			GSCLIENT_PTR pSession = SERVER.GetClient(pPlayer->GetPair());
+			GSCLIENT_PTR pSession = SERVER.GetClient(pPlayer->GetFront());
 
 			if (pSession)
-				SEND_PROTO_BUFFER(snd,pSession)
+				SEND_PROTO_BUFFER2(pPlayer->GetFrontSid(),snd,pSession)
 		}
 	}
 
@@ -65,10 +65,10 @@ public:
 			if (pPlayer->GetId() == PlayerId)
 				continue;
 
-			GSCLIENT_PTR pSession = SERVER.GetClient(pPlayer->GetPair());
+			GSCLIENT_PTR pSession = SERVER.GetClient(pPlayer->GetFront());
 
 			if (pSession)
-				SEND_PROTO_BUFFER(snd, pSession)
+				SEND_PROTO_BUFFER2(pPlayer->GetFrontSid(), snd, pSession)
 		}
 	}
 

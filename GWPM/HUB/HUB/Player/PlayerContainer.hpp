@@ -115,6 +115,38 @@ template<template<class T> class CreationPolicy> bool PlayerContainer<CreationPo
 	return false;
 }
 
+template<template<class T> class CreationPolicy> PlayerPtr PlayerContainer<CreationPolicy>::Search(DWORD FrontId, DWORD FrontSid)
+{
+	for each (auto player in m_PlayerMap)
+	{
+		if (player.second == NULL)
+			continue;
+
+		if (player.second->GetFront() == FrontId && player.second->GetFrontSid() == FrontSid)
+		{
+			return player.second;
+		}
+	}
+
+	return NULL;
+}
+
+template<template<class T> class CreationPolicy> PlayerPtr PlayerContainer<CreationPolicy>::SearchByFrontSid(DWORD FrontSid)
+{
+	for each (auto player in m_PlayerMap)
+	{
+		if (player.second == NULL)
+			continue;
+
+		if (player.second->GetFrontSid() == FrontSid)
+		{
+			return player.second;
+		}
+	}
+
+	return NULL;
+}
+
 
 template<template<class T> class CreationPolicy> PlayerPtr PlayerContainer<CreationPolicy>::Search(INT64 Id)
 {

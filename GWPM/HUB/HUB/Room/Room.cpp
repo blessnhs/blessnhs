@@ -68,7 +68,7 @@ void Room::SendNewUserInfo(PLAYER_PTR Player,int RoomNumber)
 				userinfo->set_var_name(Player->m_Account.GetName());
 				userinfo->set_picture_uri(Player->m_Account.GetPicture_url());
 				userinfo->set_var_room_number(RoomNumber);
-				SEND_PROTO_BUFFER(nty, pPair)
+				SEND_PROTO_BUFFER2(pPlayer->GetFront(),nty, pPair)
 			}
 		}
 	}

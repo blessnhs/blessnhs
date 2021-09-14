@@ -94,3 +94,14 @@ message MAIL_LIST_REQ
 {
     optional PROTOCOL   id                  = 1 [default = ID_PKT_MAIL_LIST_REQ ];
 }
+
+message REG_REQ
+{
+    optional PROTOCOL   id                  = 1 [default = ID_PKT_REG_REQ ];
+     required int32     var_id         = 2;
+}
+
+message CLIENT_LOGOUT_REQ
+{
+    optional PROTOCOL   id                  = 1 [default = ID_PKT_CLIENT_LOGOUT_REQ ];
+}

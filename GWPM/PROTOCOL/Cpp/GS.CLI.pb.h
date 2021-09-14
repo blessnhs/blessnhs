@@ -49,7 +49,7 @@ struct TableStruct_GS_2eCLI_2eproto {
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::PROTOBUF_NAMESPACE_ID::internal::AuxillaryParseTableField aux[]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
-  static const ::PROTOBUF_NAMESPACE_ID::internal::ParseTable schema[15]
+  static const ::PROTOBUF_NAMESPACE_ID::internal::ParseTable schema[18]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::PROTOBUF_NAMESPACE_ID::internal::FieldMetadata field_metadata[];
   static const ::PROTOBUF_NAMESPACE_ID::internal::SerializationTable serialization_table[];
@@ -62,6 +62,12 @@ extern AUDIO_MESSAGE_RESDefaultTypeInternal _AUDIO_MESSAGE_RES_default_instance_
 class BITMAP_MESSAGE_RES;
 class BITMAP_MESSAGE_RESDefaultTypeInternal;
 extern BITMAP_MESSAGE_RESDefaultTypeInternal _BITMAP_MESSAGE_RES_default_instance_;
+class CLIENT_KICK;
+class CLIENT_KICKDefaultTypeInternal;
+extern CLIENT_KICKDefaultTypeInternal _CLIENT_KICK_default_instance_;
+class CLIENT_LOGOUT_RES;
+class CLIENT_LOGOUT_RESDefaultTypeInternal;
+extern CLIENT_LOGOUT_RESDefaultTypeInternal _CLIENT_LOGOUT_RES_default_instance_;
 class CREATE_ROOM_RES;
 class CREATE_ROOM_RESDefaultTypeInternal;
 extern CREATE_ROOM_RESDefaultTypeInternal _CREATE_ROOM_RES_default_instance_;
@@ -92,6 +98,9 @@ extern PRAY_MESSAGE_RESDefaultTypeInternal _PRAY_MESSAGE_RES_default_instance_;
 class QNA_RES;
 class QNA_RESDefaultTypeInternal;
 extern QNA_RESDefaultTypeInternal _QNA_RES_default_instance_;
+class REG_RES;
+class REG_RESDefaultTypeInternal;
+extern REG_RESDefaultTypeInternal _REG_RES_default_instance_;
 class ROOM_LIST_RES;
 class ROOM_LIST_RESDefaultTypeInternal;
 extern ROOM_LIST_RESDefaultTypeInternal _ROOM_LIST_RES_default_instance_;
@@ -104,6 +113,8 @@ extern VERSION_RESDefaultTypeInternal _VERSION_RES_default_instance_;
 PROTOBUF_NAMESPACE_OPEN
 template<> ::AUDIO_MESSAGE_RES* Arena::CreateMaybeMessage<::AUDIO_MESSAGE_RES>(Arena*);
 template<> ::BITMAP_MESSAGE_RES* Arena::CreateMaybeMessage<::BITMAP_MESSAGE_RES>(Arena*);
+template<> ::CLIENT_KICK* Arena::CreateMaybeMessage<::CLIENT_KICK>(Arena*);
+template<> ::CLIENT_LOGOUT_RES* Arena::CreateMaybeMessage<::CLIENT_LOGOUT_RES>(Arena*);
 template<> ::CREATE_ROOM_RES* Arena::CreateMaybeMessage<::CREATE_ROOM_RES>(Arena*);
 template<> ::ENTER_ROOM_RES* Arena::CreateMaybeMessage<::ENTER_ROOM_RES>(Arena*);
 template<> ::LEAVE_ROOM_RES* Arena::CreateMaybeMessage<::LEAVE_ROOM_RES>(Arena*);
@@ -114,6 +125,7 @@ template<> ::NOTICE_RES* Arena::CreateMaybeMessage<::NOTICE_RES>(Arena*);
 template<> ::PRAY_MESSAGE_REG_RES* Arena::CreateMaybeMessage<::PRAY_MESSAGE_REG_RES>(Arena*);
 template<> ::PRAY_MESSAGE_RES* Arena::CreateMaybeMessage<::PRAY_MESSAGE_RES>(Arena*);
 template<> ::QNA_RES* Arena::CreateMaybeMessage<::QNA_RES>(Arena*);
+template<> ::REG_RES* Arena::CreateMaybeMessage<::REG_RES>(Arena*);
 template<> ::ROOM_LIST_RES* Arena::CreateMaybeMessage<::ROOM_LIST_RES>(Arena*);
 template<> ::ROOM_PASS_THROUGH_RES* Arena::CreateMaybeMessage<::ROOM_PASS_THROUGH_RES>(Arena*);
 template<> ::VERSION_RES* Arena::CreateMaybeMessage<::VERSION_RES>(Arena*);
@@ -2936,6 +2948,471 @@ class MAIL_LIST_RES :
   int id_;
   friend struct ::TableStruct_GS_2eCLI_2eproto;
 };
+// -------------------------------------------------------------------
+
+class REG_RES :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:REG_RES) */ {
+ public:
+  REG_RES();
+  virtual ~REG_RES();
+
+  REG_RES(const REG_RES& from);
+  REG_RES(REG_RES&& from) noexcept
+    : REG_RES() {
+    *this = ::std::move(from);
+  }
+
+  inline REG_RES& operator=(const REG_RES& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline REG_RES& operator=(REG_RES&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  inline const ::PROTOBUF_NAMESPACE_ID::UnknownFieldSet& unknown_fields() const {
+    return _internal_metadata_.unknown_fields();
+  }
+  inline ::PROTOBUF_NAMESPACE_ID::UnknownFieldSet* mutable_unknown_fields() {
+    return _internal_metadata_.mutable_unknown_fields();
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return GetMetadataStatic().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return GetMetadataStatic().reflection;
+  }
+  static const REG_RES& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const REG_RES* internal_default_instance() {
+    return reinterpret_cast<const REG_RES*>(
+               &_REG_RES_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    15;
+
+  friend void swap(REG_RES& a, REG_RES& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(REG_RES* other) {
+    if (other == this) return;
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline REG_RES* New() const final {
+    return CreateMaybeMessage<REG_RES>(nullptr);
+  }
+
+  REG_RES* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
+    return CreateMaybeMessage<REG_RES>(arena);
+  }
+  void CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void CopyFrom(const REG_RES& from);
+  void MergeFrom(const REG_RES& from);
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  ::PROTOBUF_NAMESPACE_ID::uint8* _InternalSerialize(
+      ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  inline void SharedCtor();
+  inline void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(REG_RES* other);
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "REG_RES";
+  }
+  private:
+  inline ::PROTOBUF_NAMESPACE_ID::Arena* GetArenaNoVirtual() const {
+    return nullptr;
+  }
+  inline void* MaybeArenaPtr() const {
+    return nullptr;
+  }
+  public:
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+  private:
+  static ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadataStatic() {
+    ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&::descriptor_table_GS_2eCLI_2eproto);
+    return ::descriptor_table_GS_2eCLI_2eproto.file_level_metadata[kIndexInFileMessages];
+  }
+
+  public:
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kVarCodeFieldNumber = 2,
+    kIdFieldNumber = 1,
+  };
+  // optional .ErrorCode var_code = 2;
+  bool has_var_code() const;
+  private:
+  bool _internal_has_var_code() const;
+  public:
+  void clear_var_code();
+  ::ErrorCode var_code() const;
+  void set_var_code(::ErrorCode value);
+  private:
+  ::ErrorCode _internal_var_code() const;
+  void _internal_set_var_code(::ErrorCode value);
+  public:
+
+  // optional .PROTOCOL id = 1 [default = ID_PKT_REG_RES];
+  bool has_id() const;
+  private:
+  bool _internal_has_id() const;
+  public:
+  void clear_id();
+  ::PROTOCOL id() const;
+  void set_id(::PROTOCOL value);
+  private:
+  ::PROTOCOL _internal_id() const;
+  void _internal_set_id(::PROTOCOL value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:REG_RES)
+ private:
+  class _Internal;
+
+  ::PROTOBUF_NAMESPACE_ID::internal::InternalMetadataWithArena _internal_metadata_;
+  ::PROTOBUF_NAMESPACE_ID::internal::HasBits<1> _has_bits_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  int var_code_;
+  int id_;
+  friend struct ::TableStruct_GS_2eCLI_2eproto;
+};
+// -------------------------------------------------------------------
+
+class CLIENT_LOGOUT_RES :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:CLIENT_LOGOUT_RES) */ {
+ public:
+  CLIENT_LOGOUT_RES();
+  virtual ~CLIENT_LOGOUT_RES();
+
+  CLIENT_LOGOUT_RES(const CLIENT_LOGOUT_RES& from);
+  CLIENT_LOGOUT_RES(CLIENT_LOGOUT_RES&& from) noexcept
+    : CLIENT_LOGOUT_RES() {
+    *this = ::std::move(from);
+  }
+
+  inline CLIENT_LOGOUT_RES& operator=(const CLIENT_LOGOUT_RES& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline CLIENT_LOGOUT_RES& operator=(CLIENT_LOGOUT_RES&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  inline const ::PROTOBUF_NAMESPACE_ID::UnknownFieldSet& unknown_fields() const {
+    return _internal_metadata_.unknown_fields();
+  }
+  inline ::PROTOBUF_NAMESPACE_ID::UnknownFieldSet* mutable_unknown_fields() {
+    return _internal_metadata_.mutable_unknown_fields();
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return GetMetadataStatic().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return GetMetadataStatic().reflection;
+  }
+  static const CLIENT_LOGOUT_RES& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const CLIENT_LOGOUT_RES* internal_default_instance() {
+    return reinterpret_cast<const CLIENT_LOGOUT_RES*>(
+               &_CLIENT_LOGOUT_RES_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    16;
+
+  friend void swap(CLIENT_LOGOUT_RES& a, CLIENT_LOGOUT_RES& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(CLIENT_LOGOUT_RES* other) {
+    if (other == this) return;
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline CLIENT_LOGOUT_RES* New() const final {
+    return CreateMaybeMessage<CLIENT_LOGOUT_RES>(nullptr);
+  }
+
+  CLIENT_LOGOUT_RES* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
+    return CreateMaybeMessage<CLIENT_LOGOUT_RES>(arena);
+  }
+  void CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void CopyFrom(const CLIENT_LOGOUT_RES& from);
+  void MergeFrom(const CLIENT_LOGOUT_RES& from);
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  ::PROTOBUF_NAMESPACE_ID::uint8* _InternalSerialize(
+      ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  inline void SharedCtor();
+  inline void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(CLIENT_LOGOUT_RES* other);
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "CLIENT_LOGOUT_RES";
+  }
+  private:
+  inline ::PROTOBUF_NAMESPACE_ID::Arena* GetArenaNoVirtual() const {
+    return nullptr;
+  }
+  inline void* MaybeArenaPtr() const {
+    return nullptr;
+  }
+  public:
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+  private:
+  static ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadataStatic() {
+    ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&::descriptor_table_GS_2eCLI_2eproto);
+    return ::descriptor_table_GS_2eCLI_2eproto.file_level_metadata[kIndexInFileMessages];
+  }
+
+  public:
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kVarCodeFieldNumber = 2,
+    kIdFieldNumber = 1,
+  };
+  // optional .ErrorCode var_code = 2;
+  bool has_var_code() const;
+  private:
+  bool _internal_has_var_code() const;
+  public:
+  void clear_var_code();
+  ::ErrorCode var_code() const;
+  void set_var_code(::ErrorCode value);
+  private:
+  ::ErrorCode _internal_var_code() const;
+  void _internal_set_var_code(::ErrorCode value);
+  public:
+
+  // optional .PROTOCOL id = 1 [default = ID_PKT_CLIENT_LOGOUT_RES];
+  bool has_id() const;
+  private:
+  bool _internal_has_id() const;
+  public:
+  void clear_id();
+  ::PROTOCOL id() const;
+  void set_id(::PROTOCOL value);
+  private:
+  ::PROTOCOL _internal_id() const;
+  void _internal_set_id(::PROTOCOL value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:CLIENT_LOGOUT_RES)
+ private:
+  class _Internal;
+
+  ::PROTOBUF_NAMESPACE_ID::internal::InternalMetadataWithArena _internal_metadata_;
+  ::PROTOBUF_NAMESPACE_ID::internal::HasBits<1> _has_bits_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  int var_code_;
+  int id_;
+  friend struct ::TableStruct_GS_2eCLI_2eproto;
+};
+// -------------------------------------------------------------------
+
+class CLIENT_KICK :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:CLIENT_KICK) */ {
+ public:
+  CLIENT_KICK();
+  virtual ~CLIENT_KICK();
+
+  CLIENT_KICK(const CLIENT_KICK& from);
+  CLIENT_KICK(CLIENT_KICK&& from) noexcept
+    : CLIENT_KICK() {
+    *this = ::std::move(from);
+  }
+
+  inline CLIENT_KICK& operator=(const CLIENT_KICK& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline CLIENT_KICK& operator=(CLIENT_KICK&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  inline const ::PROTOBUF_NAMESPACE_ID::UnknownFieldSet& unknown_fields() const {
+    return _internal_metadata_.unknown_fields();
+  }
+  inline ::PROTOBUF_NAMESPACE_ID::UnknownFieldSet* mutable_unknown_fields() {
+    return _internal_metadata_.mutable_unknown_fields();
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return GetMetadataStatic().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return GetMetadataStatic().reflection;
+  }
+  static const CLIENT_KICK& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const CLIENT_KICK* internal_default_instance() {
+    return reinterpret_cast<const CLIENT_KICK*>(
+               &_CLIENT_KICK_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    17;
+
+  friend void swap(CLIENT_KICK& a, CLIENT_KICK& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(CLIENT_KICK* other) {
+    if (other == this) return;
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline CLIENT_KICK* New() const final {
+    return CreateMaybeMessage<CLIENT_KICK>(nullptr);
+  }
+
+  CLIENT_KICK* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
+    return CreateMaybeMessage<CLIENT_KICK>(arena);
+  }
+  void CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void CopyFrom(const CLIENT_KICK& from);
+  void MergeFrom(const CLIENT_KICK& from);
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  ::PROTOBUF_NAMESPACE_ID::uint8* _InternalSerialize(
+      ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  inline void SharedCtor();
+  inline void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(CLIENT_KICK* other);
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "CLIENT_KICK";
+  }
+  private:
+  inline ::PROTOBUF_NAMESPACE_ID::Arena* GetArenaNoVirtual() const {
+    return nullptr;
+  }
+  inline void* MaybeArenaPtr() const {
+    return nullptr;
+  }
+  public:
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+  private:
+  static ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadataStatic() {
+    ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&::descriptor_table_GS_2eCLI_2eproto);
+    return ::descriptor_table_GS_2eCLI_2eproto.file_level_metadata[kIndexInFileMessages];
+  }
+
+  public:
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kSidFieldNumber = 2,
+    kIdFieldNumber = 1,
+  };
+  // optional int32 sid = 2;
+  bool has_sid() const;
+  private:
+  bool _internal_has_sid() const;
+  public:
+  void clear_sid();
+  ::PROTOBUF_NAMESPACE_ID::int32 sid() const;
+  void set_sid(::PROTOBUF_NAMESPACE_ID::int32 value);
+  private:
+  ::PROTOBUF_NAMESPACE_ID::int32 _internal_sid() const;
+  void _internal_set_sid(::PROTOBUF_NAMESPACE_ID::int32 value);
+  public:
+
+  // optional .PROTOCOL id = 1 [default = ID_PKT_CLIENT_KICK];
+  bool has_id() const;
+  private:
+  bool _internal_has_id() const;
+  public:
+  void clear_id();
+  ::PROTOCOL id() const;
+  void set_id(::PROTOCOL value);
+  private:
+  ::PROTOCOL _internal_id() const;
+  void _internal_set_id(::PROTOCOL value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:CLIENT_KICK)
+ private:
+  class _Internal;
+
+  ::PROTOBUF_NAMESPACE_ID::internal::InternalMetadataWithArena _internal_metadata_;
+  ::PROTOBUF_NAMESPACE_ID::internal::HasBits<1> _has_bits_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  ::PROTOBUF_NAMESPACE_ID::int32 sid_;
+  int id_;
+  friend struct ::TableStruct_GS_2eCLI_2eproto;
+};
 // ===================================================================
 
 
@@ -5127,9 +5604,200 @@ MAIL_LIST_RES::var_list() const {
   return var_list_;
 }
 
+// -------------------------------------------------------------------
+
+// REG_RES
+
+// optional .PROTOCOL id = 1 [default = ID_PKT_REG_RES];
+inline bool REG_RES::_internal_has_id() const {
+  bool value = (_has_bits_[0] & 0x00000002u) != 0;
+  return value;
+}
+inline bool REG_RES::has_id() const {
+  return _internal_has_id();
+}
+inline void REG_RES::clear_id() {
+  id_ = 38;
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline ::PROTOCOL REG_RES::_internal_id() const {
+  return static_cast< ::PROTOCOL >(id_);
+}
+inline ::PROTOCOL REG_RES::id() const {
+  // @@protoc_insertion_point(field_get:REG_RES.id)
+  return _internal_id();
+}
+inline void REG_RES::_internal_set_id(::PROTOCOL value) {
+  assert(::PROTOCOL_IsValid(value));
+  _has_bits_[0] |= 0x00000002u;
+  id_ = value;
+}
+inline void REG_RES::set_id(::PROTOCOL value) {
+  _internal_set_id(value);
+  // @@protoc_insertion_point(field_set:REG_RES.id)
+}
+
+// optional .ErrorCode var_code = 2;
+inline bool REG_RES::_internal_has_var_code() const {
+  bool value = (_has_bits_[0] & 0x00000001u) != 0;
+  return value;
+}
+inline bool REG_RES::has_var_code() const {
+  return _internal_has_var_code();
+}
+inline void REG_RES::clear_var_code() {
+  var_code_ = 0;
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline ::ErrorCode REG_RES::_internal_var_code() const {
+  return static_cast< ::ErrorCode >(var_code_);
+}
+inline ::ErrorCode REG_RES::var_code() const {
+  // @@protoc_insertion_point(field_get:REG_RES.var_code)
+  return _internal_var_code();
+}
+inline void REG_RES::_internal_set_var_code(::ErrorCode value) {
+  assert(::ErrorCode_IsValid(value));
+  _has_bits_[0] |= 0x00000001u;
+  var_code_ = value;
+}
+inline void REG_RES::set_var_code(::ErrorCode value) {
+  _internal_set_var_code(value);
+  // @@protoc_insertion_point(field_set:REG_RES.var_code)
+}
+
+// -------------------------------------------------------------------
+
+// CLIENT_LOGOUT_RES
+
+// optional .PROTOCOL id = 1 [default = ID_PKT_CLIENT_LOGOUT_RES];
+inline bool CLIENT_LOGOUT_RES::_internal_has_id() const {
+  bool value = (_has_bits_[0] & 0x00000002u) != 0;
+  return value;
+}
+inline bool CLIENT_LOGOUT_RES::has_id() const {
+  return _internal_has_id();
+}
+inline void CLIENT_LOGOUT_RES::clear_id() {
+  id_ = 40;
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline ::PROTOCOL CLIENT_LOGOUT_RES::_internal_id() const {
+  return static_cast< ::PROTOCOL >(id_);
+}
+inline ::PROTOCOL CLIENT_LOGOUT_RES::id() const {
+  // @@protoc_insertion_point(field_get:CLIENT_LOGOUT_RES.id)
+  return _internal_id();
+}
+inline void CLIENT_LOGOUT_RES::_internal_set_id(::PROTOCOL value) {
+  assert(::PROTOCOL_IsValid(value));
+  _has_bits_[0] |= 0x00000002u;
+  id_ = value;
+}
+inline void CLIENT_LOGOUT_RES::set_id(::PROTOCOL value) {
+  _internal_set_id(value);
+  // @@protoc_insertion_point(field_set:CLIENT_LOGOUT_RES.id)
+}
+
+// optional .ErrorCode var_code = 2;
+inline bool CLIENT_LOGOUT_RES::_internal_has_var_code() const {
+  bool value = (_has_bits_[0] & 0x00000001u) != 0;
+  return value;
+}
+inline bool CLIENT_LOGOUT_RES::has_var_code() const {
+  return _internal_has_var_code();
+}
+inline void CLIENT_LOGOUT_RES::clear_var_code() {
+  var_code_ = 0;
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline ::ErrorCode CLIENT_LOGOUT_RES::_internal_var_code() const {
+  return static_cast< ::ErrorCode >(var_code_);
+}
+inline ::ErrorCode CLIENT_LOGOUT_RES::var_code() const {
+  // @@protoc_insertion_point(field_get:CLIENT_LOGOUT_RES.var_code)
+  return _internal_var_code();
+}
+inline void CLIENT_LOGOUT_RES::_internal_set_var_code(::ErrorCode value) {
+  assert(::ErrorCode_IsValid(value));
+  _has_bits_[0] |= 0x00000001u;
+  var_code_ = value;
+}
+inline void CLIENT_LOGOUT_RES::set_var_code(::ErrorCode value) {
+  _internal_set_var_code(value);
+  // @@protoc_insertion_point(field_set:CLIENT_LOGOUT_RES.var_code)
+}
+
+// -------------------------------------------------------------------
+
+// CLIENT_KICK
+
+// optional .PROTOCOL id = 1 [default = ID_PKT_CLIENT_KICK];
+inline bool CLIENT_KICK::_internal_has_id() const {
+  bool value = (_has_bits_[0] & 0x00000002u) != 0;
+  return value;
+}
+inline bool CLIENT_KICK::has_id() const {
+  return _internal_has_id();
+}
+inline void CLIENT_KICK::clear_id() {
+  id_ = 41;
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline ::PROTOCOL CLIENT_KICK::_internal_id() const {
+  return static_cast< ::PROTOCOL >(id_);
+}
+inline ::PROTOCOL CLIENT_KICK::id() const {
+  // @@protoc_insertion_point(field_get:CLIENT_KICK.id)
+  return _internal_id();
+}
+inline void CLIENT_KICK::_internal_set_id(::PROTOCOL value) {
+  assert(::PROTOCOL_IsValid(value));
+  _has_bits_[0] |= 0x00000002u;
+  id_ = value;
+}
+inline void CLIENT_KICK::set_id(::PROTOCOL value) {
+  _internal_set_id(value);
+  // @@protoc_insertion_point(field_set:CLIENT_KICK.id)
+}
+
+// optional int32 sid = 2;
+inline bool CLIENT_KICK::_internal_has_sid() const {
+  bool value = (_has_bits_[0] & 0x00000001u) != 0;
+  return value;
+}
+inline bool CLIENT_KICK::has_sid() const {
+  return _internal_has_sid();
+}
+inline void CLIENT_KICK::clear_sid() {
+  sid_ = 0;
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 CLIENT_KICK::_internal_sid() const {
+  return sid_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 CLIENT_KICK::sid() const {
+  // @@protoc_insertion_point(field_get:CLIENT_KICK.sid)
+  return _internal_sid();
+}
+inline void CLIENT_KICK::_internal_set_sid(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  _has_bits_[0] |= 0x00000001u;
+  sid_ = value;
+}
+inline void CLIENT_KICK::set_sid(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  _internal_set_sid(value);
+  // @@protoc_insertion_point(field_set:CLIENT_KICK.sid)
+}
+
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

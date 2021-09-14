@@ -33,6 +33,10 @@ public:
 	PlayerPtr Search(string flatformid);
 	PlayerPtr SearchBySocketId(DWORD Id);
 
+
+	PlayerPtr Search(DWORD FrontId,DWORD FrontSid);
+	PlayerPtr SearchByFrontSid(DWORD FrontSid);
+
 	void Print();
 
 	VOID CheckUserList();

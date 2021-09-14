@@ -70,6 +70,14 @@ class MAIL_LIST_REQDefaultTypeInternal {
  public:
   ::PROTOBUF_NAMESPACE_ID::internal::ExplicitlyConstructed<MAIL_LIST_REQ> _instance;
 } _MAIL_LIST_REQ_default_instance_;
+class REG_REQDefaultTypeInternal {
+ public:
+  ::PROTOBUF_NAMESPACE_ID::internal::ExplicitlyConstructed<REG_REQ> _instance;
+} _REG_REQ_default_instance_;
+class CLIENT_LOGOUT_REQDefaultTypeInternal {
+ public:
+  ::PROTOBUF_NAMESPACE_ID::internal::ExplicitlyConstructed<CLIENT_LOGOUT_REQ> _instance;
+} _CLIENT_LOGOUT_REQ_default_instance_;
 static void InitDefaultsscc_info_AUDIO_MESSAGE_REQ_CLI_2eGS_2eproto() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
@@ -97,6 +105,20 @@ static void InitDefaultsscc_info_BITMAP_MESSAGE_REQ_CLI_2eGS_2eproto() {
 
 ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_BITMAP_MESSAGE_REQ_CLI_2eGS_2eproto =
     {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 0, 0, InitDefaultsscc_info_BITMAP_MESSAGE_REQ_CLI_2eGS_2eproto}, {}};
+
+static void InitDefaultsscc_info_CLIENT_LOGOUT_REQ_CLI_2eGS_2eproto() {
+  GOOGLE_PROTOBUF_VERIFY_VERSION;
+
+  {
+    void* ptr = &::_CLIENT_LOGOUT_REQ_default_instance_;
+    new (ptr) ::CLIENT_LOGOUT_REQ();
+    ::PROTOBUF_NAMESPACE_ID::internal::OnShutdownDestroyMessage(ptr);
+  }
+  ::CLIENT_LOGOUT_REQ::InitAsDefaultInstance();
+}
+
+::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_CLIENT_LOGOUT_REQ_CLI_2eGS_2eproto =
+    {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 0, 0, InitDefaultsscc_info_CLIENT_LOGOUT_REQ_CLI_2eGS_2eproto}, {}};
 
 static void InitDefaultsscc_info_CREATE_ROOM_REQ_CLI_2eGS_2eproto() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
@@ -224,6 +246,20 @@ static void InitDefaultsscc_info_QNA_REQ_CLI_2eGS_2eproto() {
 ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_QNA_REQ_CLI_2eGS_2eproto =
     {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 0, 0, InitDefaultsscc_info_QNA_REQ_CLI_2eGS_2eproto}, {}};
 
+static void InitDefaultsscc_info_REG_REQ_CLI_2eGS_2eproto() {
+  GOOGLE_PROTOBUF_VERIFY_VERSION;
+
+  {
+    void* ptr = &::_REG_REQ_default_instance_;
+    new (ptr) ::REG_REQ();
+    ::PROTOBUF_NAMESPACE_ID::internal::OnShutdownDestroyMessage(ptr);
+  }
+  ::REG_REQ::InitAsDefaultInstance();
+}
+
+::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_REG_REQ_CLI_2eGS_2eproto =
+    {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 0, 0, InitDefaultsscc_info_REG_REQ_CLI_2eGS_2eproto}, {}};
+
 static void InitDefaultsscc_info_ROOM_LIST_REQ_CLI_2eGS_2eproto() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
@@ -266,7 +302,7 @@ static void InitDefaultsscc_info_VERSION_REQ_CLI_2eGS_2eproto() {
 ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_VERSION_REQ_CLI_2eGS_2eproto =
     {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 0, 0, InitDefaultsscc_info_VERSION_REQ_CLI_2eGS_2eproto}, {}};
 
-static ::PROTOBUF_NAMESPACE_ID::Metadata file_level_metadata_CLI_2eGS_2eproto[14];
+static ::PROTOBUF_NAMESPACE_ID::Metadata file_level_metadata_CLI_2eGS_2eproto[16];
 static constexpr ::PROTOBUF_NAMESPACE_ID::EnumDescriptor const** file_level_enum_descriptors_CLI_2eGS_2eproto = nullptr;
 static constexpr ::PROTOBUF_NAMESPACE_ID::ServiceDescriptor const** file_level_service_descriptors_CLI_2eGS_2eproto = nullptr;
 
@@ -401,6 +437,22 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_CLI_2eGS_2eproto::offsets[] PR
   ~0u,  // no _weak_field_map_
   PROTOBUF_FIELD_OFFSET(::MAIL_LIST_REQ, id_),
   0,
+  PROTOBUF_FIELD_OFFSET(::REG_REQ, _has_bits_),
+  PROTOBUF_FIELD_OFFSET(::REG_REQ, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  PROTOBUF_FIELD_OFFSET(::REG_REQ, id_),
+  PROTOBUF_FIELD_OFFSET(::REG_REQ, var_id_),
+  1,
+  0,
+  PROTOBUF_FIELD_OFFSET(::CLIENT_LOGOUT_REQ, _has_bits_),
+  PROTOBUF_FIELD_OFFSET(::CLIENT_LOGOUT_REQ, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  PROTOBUF_FIELD_OFFSET(::CLIENT_LOGOUT_REQ, id_),
+  0,
 };
 static const ::PROTOBUF_NAMESPACE_ID::internal::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
   { 0, 6, sizeof(::VERSION_REQ)},
@@ -417,6 +469,8 @@ static const ::PROTOBUF_NAMESPACE_ID::internal::MigrationSchema schemas[] PROTOB
   { 105, 112, sizeof(::PRAY_MESSAGE_REG_REQ)},
   { 114, 121, sizeof(::QNA_REQ)},
   { 123, 129, sizeof(::MAIL_LIST_REQ)},
+  { 130, 137, sizeof(::REG_REQ)},
+  { 139, 145, sizeof(::CLIENT_LOGOUT_REQ)},
 };
 
 static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] = {
@@ -434,6 +488,8 @@ static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] =
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::_PRAY_MESSAGE_REG_REQ_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::_QNA_REQ_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::_MAIL_LIST_REQ_default_instance_),
+  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::_REG_REQ_default_instance_),
+  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::_CLIENT_LOGOUT_REQ_default_instance_),
 };
 
 const char descriptor_table_protodef_CLI_2eGS_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
@@ -469,15 +525,19 @@ const char descriptor_table_protodef_CLI_2eGS_2eproto[] PROTOBUF_SECTION_VARIABL
   "EQ\022%\n\002id\030\001 \001(\0162\t.PROTOCOL:\016ID_PKT_QNA_RE"
   "Q\022\023\n\013var_message\030\002 \001(\t\"<\n\rMAIL_LIST_REQ\022"
   "+\n\002id\030\001 \001(\0162\t.PROTOCOL:\024ID_PKT_MAIL_LIST"
-  "_REQB\002H\001"
+  "_REQ\"@\n\007REG_REQ\022%\n\002id\030\001 \001(\0162\t.PROTOCOL:\016"
+  "ID_PKT_REG_REQ\022\016\n\006var_id\030\002 \002(\005\"D\n\021CLIENT"
+  "_LOGOUT_REQ\022/\n\002id\030\001 \001(\0162\t.PROTOCOL:\030ID_P"
+  "KT_CLIENT_LOGOUT_REQB\002H\001"
   ;
 static const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable*const descriptor_table_CLI_2eGS_2eproto_deps[2] = {
   &::descriptor_table_Enum_2eproto,
   &::descriptor_table_Structure_2eproto,
 };
-static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_CLI_2eGS_2eproto_sccs[14] = {
+static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_CLI_2eGS_2eproto_sccs[16] = {
   &scc_info_AUDIO_MESSAGE_REQ_CLI_2eGS_2eproto.base,
   &scc_info_BITMAP_MESSAGE_REQ_CLI_2eGS_2eproto.base,
+  &scc_info_CLIENT_LOGOUT_REQ_CLI_2eGS_2eproto.base,
   &scc_info_CREATE_ROOM_REQ_CLI_2eGS_2eproto.base,
   &scc_info_ENTER_ROOM_REQ_CLI_2eGS_2eproto.base,
   &scc_info_LEAVE_ROOM_REQ_CLI_2eGS_2eproto.base,
@@ -487,6 +547,7 @@ static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_CLI
   &scc_info_PRAY_MESSAGE_REG_REQ_CLI_2eGS_2eproto.base,
   &scc_info_PRAY_MESSAGE_REQ_CLI_2eGS_2eproto.base,
   &scc_info_QNA_REQ_CLI_2eGS_2eproto.base,
+  &scc_info_REG_REQ_CLI_2eGS_2eproto.base,
   &scc_info_ROOM_LIST_REQ_CLI_2eGS_2eproto.base,
   &scc_info_ROOM_PASS_THROUGH_REQ_CLI_2eGS_2eproto.base,
   &scc_info_VERSION_REQ_CLI_2eGS_2eproto.base,
@@ -494,10 +555,10 @@ static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_CLI
 static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_CLI_2eGS_2eproto_once;
 static bool descriptor_table_CLI_2eGS_2eproto_initialized = false;
 const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_CLI_2eGS_2eproto = {
-  &descriptor_table_CLI_2eGS_2eproto_initialized, descriptor_table_protodef_CLI_2eGS_2eproto, "CLI.GS.proto", 1288,
-  &descriptor_table_CLI_2eGS_2eproto_once, descriptor_table_CLI_2eGS_2eproto_sccs, descriptor_table_CLI_2eGS_2eproto_deps, 14, 2,
+  &descriptor_table_CLI_2eGS_2eproto_initialized, descriptor_table_protodef_CLI_2eGS_2eproto, "CLI.GS.proto", 1424,
+  &descriptor_table_CLI_2eGS_2eproto_once, descriptor_table_CLI_2eGS_2eproto_sccs, descriptor_table_CLI_2eGS_2eproto_deps, 16, 2,
   schemas, file_default_instances, TableStruct_CLI_2eGS_2eproto::offsets,
-  file_level_metadata_CLI_2eGS_2eproto, 14, file_level_enum_descriptors_CLI_2eGS_2eproto, file_level_service_descriptors_CLI_2eGS_2eproto,
+  file_level_metadata_CLI_2eGS_2eproto, 16, file_level_enum_descriptors_CLI_2eGS_2eproto, file_level_service_descriptors_CLI_2eGS_2eproto,
 };
 
 // Force running AddDescriptors() at dynamic initialization time.
@@ -4088,6 +4149,449 @@ void MAIL_LIST_REQ::InternalSwap(MAIL_LIST_REQ* other) {
 }
 
 
+// ===================================================================
+
+void REG_REQ::InitAsDefaultInstance() {
+}
+class REG_REQ::_Internal {
+ public:
+  using HasBits = decltype(std::declval<REG_REQ>()._has_bits_);
+  static void set_has_id(HasBits* has_bits) {
+    (*has_bits)[0] |= 2u;
+  }
+  static void set_has_var_id(HasBits* has_bits) {
+    (*has_bits)[0] |= 1u;
+  }
+};
+
+REG_REQ::REG_REQ()
+  : ::PROTOBUF_NAMESPACE_ID::Message(), _internal_metadata_(nullptr) {
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:REG_REQ)
+}
+REG_REQ::REG_REQ(const REG_REQ& from)
+  : ::PROTOBUF_NAMESPACE_ID::Message(),
+      _internal_metadata_(nullptr),
+      _has_bits_(from._has_bits_) {
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  ::memcpy(&var_id_, &from.var_id_,
+    static_cast<size_t>(reinterpret_cast<char*>(&id_) -
+    reinterpret_cast<char*>(&var_id_)) + sizeof(id_));
+  // @@protoc_insertion_point(copy_constructor:REG_REQ)
+}
+
+void REG_REQ::SharedCtor() {
+  var_id_ = 0;
+  id_ = 37;
+}
+
+REG_REQ::~REG_REQ() {
+  // @@protoc_insertion_point(destructor:REG_REQ)
+  SharedDtor();
+}
+
+void REG_REQ::SharedDtor() {
+}
+
+void REG_REQ::SetCachedSize(int size) const {
+  _cached_size_.Set(size);
+}
+const REG_REQ& REG_REQ::default_instance() {
+  ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&::scc_info_REG_REQ_CLI_2eGS_2eproto.base);
+  return *internal_default_instance();
+}
+
+
+void REG_REQ::Clear() {
+// @@protoc_insertion_point(message_clear_start:REG_REQ)
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  cached_has_bits = _has_bits_[0];
+  if (cached_has_bits & 0x00000003u) {
+    var_id_ = 0;
+    id_ = 37;
+  }
+  _has_bits_.Clear();
+  _internal_metadata_.Clear();
+}
+
+const char* REG_REQ::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
+#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  _Internal::HasBits has_bits{};
+  while (!ctx->Done(&ptr)) {
+    ::PROTOBUF_NAMESPACE_ID::uint32 tag;
+    ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
+    CHK_(ptr);
+    switch (tag >> 3) {
+      // optional .PROTOCOL id = 1 [default = ID_PKT_REG_REQ];
+      case 1:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 8)) {
+          ::PROTOBUF_NAMESPACE_ID::uint64 val = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
+          CHK_(ptr);
+          if (PROTOBUF_PREDICT_TRUE(::PROTOCOL_IsValid(val))) {
+            _internal_set_id(static_cast<::PROTOCOL>(val));
+          } else {
+            ::PROTOBUF_NAMESPACE_ID::internal::WriteVarint(1, val, mutable_unknown_fields());
+          }
+        } else goto handle_unusual;
+        continue;
+      // required int32 var_id = 2;
+      case 2:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 16)) {
+          _Internal::set_has_var_id(&has_bits);
+          var_id_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      default: {
+      handle_unusual:
+        if ((tag & 7) == 4 || tag == 0) {
+          ctx->SetLastTag(tag);
+          goto success;
+        }
+        ptr = UnknownFieldParse(tag, &_internal_metadata_, ptr, ctx);
+        CHK_(ptr != nullptr);
+        continue;
+      }
+    }  // switch
+  }  // while
+success:
+  _has_bits_.Or(has_bits);
+  return ptr;
+failure:
+  ptr = nullptr;
+  goto success;
+#undef CHK_
+}
+
+::PROTOBUF_NAMESPACE_ID::uint8* REG_REQ::_InternalSerialize(
+    ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:REG_REQ)
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  cached_has_bits = _has_bits_[0];
+  // optional .PROTOCOL id = 1 [default = ID_PKT_REG_REQ];
+  if (cached_has_bits & 0x00000002u) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteEnumToArray(
+      1, this->_internal_id(), target);
+  }
+
+  // required int32 var_id = 2;
+  if (cached_has_bits & 0x00000001u) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32ToArray(2, this->_internal_var_id(), target);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields(), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:REG_REQ)
+  return target;
+}
+
+size_t REG_REQ::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:REG_REQ)
+  size_t total_size = 0;
+
+  // required int32 var_id = 2;
+  if (_internal_has_var_id()) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32Size(
+        this->_internal_var_id());
+  }
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // optional .PROTOCOL id = 1 [default = ID_PKT_REG_REQ];
+  cached_has_bits = _has_bits_[0];
+  if (cached_has_bits & 0x00000002u) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::EnumSize(this->_internal_id());
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    return ::PROTOBUF_NAMESPACE_ID::internal::ComputeUnknownFieldsSize(
+        _internal_metadata_, total_size, &_cached_size_);
+  }
+  int cached_size = ::PROTOBUF_NAMESPACE_ID::internal::ToCachedSize(total_size);
+  SetCachedSize(cached_size);
+  return total_size;
+}
+
+void REG_REQ::MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:REG_REQ)
+  GOOGLE_DCHECK_NE(&from, this);
+  const REG_REQ* source =
+      ::PROTOBUF_NAMESPACE_ID::DynamicCastToGenerated<REG_REQ>(
+          &from);
+  if (source == nullptr) {
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:REG_REQ)
+    ::PROTOBUF_NAMESPACE_ID::internal::ReflectionOps::Merge(from, this);
+  } else {
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:REG_REQ)
+    MergeFrom(*source);
+  }
+}
+
+void REG_REQ::MergeFrom(const REG_REQ& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:REG_REQ)
+  GOOGLE_DCHECK_NE(&from, this);
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  cached_has_bits = from._has_bits_[0];
+  if (cached_has_bits & 0x00000003u) {
+    if (cached_has_bits & 0x00000001u) {
+      var_id_ = from.var_id_;
+    }
+    if (cached_has_bits & 0x00000002u) {
+      id_ = from.id_;
+    }
+    _has_bits_[0] |= cached_has_bits;
+  }
+}
+
+void REG_REQ::CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:REG_REQ)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void REG_REQ::CopyFrom(const REG_REQ& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:REG_REQ)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool REG_REQ::IsInitialized() const {
+  if ((_has_bits_[0] & 0x00000001) != 0x00000001) return false;
+  return true;
+}
+
+void REG_REQ::InternalSwap(REG_REQ* other) {
+  using std::swap;
+  _internal_metadata_.Swap(&other->_internal_metadata_);
+  swap(_has_bits_[0], other->_has_bits_[0]);
+  swap(var_id_, other->var_id_);
+  swap(id_, other->id_);
+}
+
+::PROTOBUF_NAMESPACE_ID::Metadata REG_REQ::GetMetadata() const {
+  return GetMetadataStatic();
+}
+
+
+// ===================================================================
+
+void CLIENT_LOGOUT_REQ::InitAsDefaultInstance() {
+}
+class CLIENT_LOGOUT_REQ::_Internal {
+ public:
+  using HasBits = decltype(std::declval<CLIENT_LOGOUT_REQ>()._has_bits_);
+  static void set_has_id(HasBits* has_bits) {
+    (*has_bits)[0] |= 1u;
+  }
+};
+
+CLIENT_LOGOUT_REQ::CLIENT_LOGOUT_REQ()
+  : ::PROTOBUF_NAMESPACE_ID::Message(), _internal_metadata_(nullptr) {
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:CLIENT_LOGOUT_REQ)
+}
+CLIENT_LOGOUT_REQ::CLIENT_LOGOUT_REQ(const CLIENT_LOGOUT_REQ& from)
+  : ::PROTOBUF_NAMESPACE_ID::Message(),
+      _internal_metadata_(nullptr),
+      _has_bits_(from._has_bits_) {
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  id_ = from.id_;
+  // @@protoc_insertion_point(copy_constructor:CLIENT_LOGOUT_REQ)
+}
+
+void CLIENT_LOGOUT_REQ::SharedCtor() {
+  id_ = 39;
+}
+
+CLIENT_LOGOUT_REQ::~CLIENT_LOGOUT_REQ() {
+  // @@protoc_insertion_point(destructor:CLIENT_LOGOUT_REQ)
+  SharedDtor();
+}
+
+void CLIENT_LOGOUT_REQ::SharedDtor() {
+}
+
+void CLIENT_LOGOUT_REQ::SetCachedSize(int size) const {
+  _cached_size_.Set(size);
+}
+const CLIENT_LOGOUT_REQ& CLIENT_LOGOUT_REQ::default_instance() {
+  ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&::scc_info_CLIENT_LOGOUT_REQ_CLI_2eGS_2eproto.base);
+  return *internal_default_instance();
+}
+
+
+void CLIENT_LOGOUT_REQ::Clear() {
+// @@protoc_insertion_point(message_clear_start:CLIENT_LOGOUT_REQ)
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  id_ = 39;
+  _has_bits_.Clear();
+  _internal_metadata_.Clear();
+}
+
+const char* CLIENT_LOGOUT_REQ::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
+#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  _Internal::HasBits has_bits{};
+  while (!ctx->Done(&ptr)) {
+    ::PROTOBUF_NAMESPACE_ID::uint32 tag;
+    ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
+    CHK_(ptr);
+    switch (tag >> 3) {
+      // optional .PROTOCOL id = 1 [default = ID_PKT_CLIENT_LOGOUT_REQ];
+      case 1:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 8)) {
+          ::PROTOBUF_NAMESPACE_ID::uint64 val = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
+          CHK_(ptr);
+          if (PROTOBUF_PREDICT_TRUE(::PROTOCOL_IsValid(val))) {
+            _internal_set_id(static_cast<::PROTOCOL>(val));
+          } else {
+            ::PROTOBUF_NAMESPACE_ID::internal::WriteVarint(1, val, mutable_unknown_fields());
+          }
+        } else goto handle_unusual;
+        continue;
+      default: {
+      handle_unusual:
+        if ((tag & 7) == 4 || tag == 0) {
+          ctx->SetLastTag(tag);
+          goto success;
+        }
+        ptr = UnknownFieldParse(tag, &_internal_metadata_, ptr, ctx);
+        CHK_(ptr != nullptr);
+        continue;
+      }
+    }  // switch
+  }  // while
+success:
+  _has_bits_.Or(has_bits);
+  return ptr;
+failure:
+  ptr = nullptr;
+  goto success;
+#undef CHK_
+}
+
+::PROTOBUF_NAMESPACE_ID::uint8* CLIENT_LOGOUT_REQ::_InternalSerialize(
+    ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:CLIENT_LOGOUT_REQ)
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  cached_has_bits = _has_bits_[0];
+  // optional .PROTOCOL id = 1 [default = ID_PKT_CLIENT_LOGOUT_REQ];
+  if (cached_has_bits & 0x00000001u) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteEnumToArray(
+      1, this->_internal_id(), target);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields(), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:CLIENT_LOGOUT_REQ)
+  return target;
+}
+
+size_t CLIENT_LOGOUT_REQ::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:CLIENT_LOGOUT_REQ)
+  size_t total_size = 0;
+
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // optional .PROTOCOL id = 1 [default = ID_PKT_CLIENT_LOGOUT_REQ];
+  cached_has_bits = _has_bits_[0];
+  if (cached_has_bits & 0x00000001u) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::EnumSize(this->_internal_id());
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    return ::PROTOBUF_NAMESPACE_ID::internal::ComputeUnknownFieldsSize(
+        _internal_metadata_, total_size, &_cached_size_);
+  }
+  int cached_size = ::PROTOBUF_NAMESPACE_ID::internal::ToCachedSize(total_size);
+  SetCachedSize(cached_size);
+  return total_size;
+}
+
+void CLIENT_LOGOUT_REQ::MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:CLIENT_LOGOUT_REQ)
+  GOOGLE_DCHECK_NE(&from, this);
+  const CLIENT_LOGOUT_REQ* source =
+      ::PROTOBUF_NAMESPACE_ID::DynamicCastToGenerated<CLIENT_LOGOUT_REQ>(
+          &from);
+  if (source == nullptr) {
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:CLIENT_LOGOUT_REQ)
+    ::PROTOBUF_NAMESPACE_ID::internal::ReflectionOps::Merge(from, this);
+  } else {
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:CLIENT_LOGOUT_REQ)
+    MergeFrom(*source);
+  }
+}
+
+void CLIENT_LOGOUT_REQ::MergeFrom(const CLIENT_LOGOUT_REQ& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:CLIENT_LOGOUT_REQ)
+  GOOGLE_DCHECK_NE(&from, this);
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if (from._internal_has_id()) {
+    _internal_set_id(from._internal_id());
+  }
+}
+
+void CLIENT_LOGOUT_REQ::CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:CLIENT_LOGOUT_REQ)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void CLIENT_LOGOUT_REQ::CopyFrom(const CLIENT_LOGOUT_REQ& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:CLIENT_LOGOUT_REQ)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool CLIENT_LOGOUT_REQ::IsInitialized() const {
+  return true;
+}
+
+void CLIENT_LOGOUT_REQ::InternalSwap(CLIENT_LOGOUT_REQ* other) {
+  using std::swap;
+  _internal_metadata_.Swap(&other->_internal_metadata_);
+  swap(_has_bits_[0], other->_has_bits_[0]);
+  swap(id_, other->id_);
+}
+
+::PROTOBUF_NAMESPACE_ID::Metadata CLIENT_LOGOUT_REQ::GetMetadata() const {
+  return GetMetadataStatic();
+}
+
+
 // @@protoc_insertion_point(namespace_scope)
 PROTOBUF_NAMESPACE_OPEN
 template<> PROTOBUF_NOINLINE ::VERSION_REQ* Arena::CreateMaybeMessage< ::VERSION_REQ >(Arena* arena) {
@@ -4131,6 +4635,12 @@ template<> PROTOBUF_NOINLINE ::QNA_REQ* Arena::CreateMaybeMessage< ::QNA_REQ >(A
 }
 template<> PROTOBUF_NOINLINE ::MAIL_LIST_REQ* Arena::CreateMaybeMessage< ::MAIL_LIST_REQ >(Arena* arena) {
   return Arena::CreateInternal< ::MAIL_LIST_REQ >(arena);
+}
+template<> PROTOBUF_NOINLINE ::REG_REQ* Arena::CreateMaybeMessage< ::REG_REQ >(Arena* arena) {
+  return Arena::CreateInternal< ::REG_REQ >(arena);
+}
+template<> PROTOBUF_NOINLINE ::CLIENT_LOGOUT_REQ* Arena::CreateMaybeMessage< ::CLIENT_LOGOUT_REQ >(Arena* arena) {
+  return Arena::CreateInternal< ::CLIENT_LOGOUT_REQ >(arena);
 }
 PROTOBUF_NAMESPACE_CLOSE
 

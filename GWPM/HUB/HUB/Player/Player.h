@@ -12,7 +12,7 @@ class Player : public GSObject
 public:
 
 	Player(void);
-	~Player(void);
+	virtual ~Player(void);
 
 	class Account
 	{
@@ -49,6 +49,12 @@ public:
 	VOID SetChannel(DWORD _id);
 	DWORD GetChannel();
 
+	void SetFrontSid(DWORD _id);
+	DWORD GetFrontSid();
+
+	void SetFront(DWORD _id);
+	DWORD GetFront();
+
 
 	DWORD GetPair();
 	void SetPair(DWORD pPair);
@@ -63,6 +69,9 @@ private:
 
 	DWORD       m_PairSessionId;
 	DWORD		m_ChannelId;
+
+	DWORD		m_FrontId;
+	DWORD       m_FrontSid;
 };
 
 typedef boost::shared_ptr<Player> PlayerPtr;

@@ -126,3 +126,21 @@ message MAIL_LIST_RES
     optional  ErrorCode    var_code         = 2;
     repeated MailInfo     var_list         = 3;
 }
+
+message REG_RES
+{
+    optional PROTOCOL   id                  = 1 [default = ID_PKT_REG_RES ];
+      optional  ErrorCode    var_code         = 2;
+}
+
+message CLIENT_LOGOUT_RES
+{
+    optional PROTOCOL   id                  = 1 [default = ID_PKT_CLIENT_LOGOUT_RES ];
+    optional  ErrorCode    var_code         = 2;
+}
+message CLIENT_KICK
+{
+    optional PROTOCOL   id                  = 1 [default = ID_PKT_CLIENT_KICK ];
+    optional  int32 sid         = 2;
+}
+

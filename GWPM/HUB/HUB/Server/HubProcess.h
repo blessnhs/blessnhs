@@ -43,6 +43,8 @@ public:
 
 	VOID CHECK_NICKNAME(WORD SubProtocol,LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client);
 
+	VOID LOGOUT_CLIENT(WORD SubProtocol, LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client);
+
 protected:
 
 	DECLARE_MSG_MAP2(HubProcess)

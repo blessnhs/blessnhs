@@ -20,29 +20,31 @@ GSHub::~GSHub(void)
 
 BOOL GSHub::Disconnect(GSCLIENT_PTR pSession)
 {
-	PlayerPtr pPlayer = PLAYERMGR.Search(pSession->GetPair());
-	if (pPlayer != NULL)
-	{
-		
-		for each (auto room in pPlayer->m_Char[0].GetRoom())
-		{
-			ROOMMGR.LeaveRoomPlayer(pPlayer, room);
-		}
+	//PlayerPtr pPlayer = PLAYERMGR.Search(pSession->GetPair());
+	//if (pPlayer != NULL)
+	//{
+	//	
+	//	for each (auto room in pPlayer->m_Char[0].GetRoom())
+	//	{
+	//		ROOMMGR.LeaveRoomPlayer(pPlayer, room);
+	//	}
 
-		
-		pPlayer->SetPair(ULONG_MAX);
-		PLAYERMGR.Del(pPlayer);
-	}
+	//	
+	//	pPlayer->SetPair(ULONG_MAX);
+	//	PLAYERMGR.Del(pPlayer);
+	//}
 
-	//로그아웃 쿼리를 날린다.
-	boost::shared_ptr<Hub::MSG_PLAYER_QUERY<Hub::RequestLogout>>		PLAYER_MSG = ALLOCATOR.Create<Hub::MSG_PLAYER_QUERY<Hub::RequestLogout>>();
-	PLAYER_MSG->pSession = pSession;
+	////로그아웃 쿼리를 날린다.
+	//boost::shared_ptr<Hub::MSG_PLAYER_QUERY<Hub::RequestLogout>>		PLAYER_MSG = ALLOCATOR.Create<Hub::MSG_PLAYER_QUERY<Hub::RequestLogout>>();
+	//PLAYER_MSG->pSession = pSession;
 
-	PLAYER_MSG->Request.m_args = std::tuple<INT64>(pSession->GetPair());
+	//PLAYER_MSG->Request.m_args = std::tuple<INT64>(pSession->GetPair());
 
-	PLAYER_MSG->Type = pSession->GetMyDBTP();
-	PLAYER_MSG->SubType = ONQUERY;
-	MAINPROC.RegisterCommand(PLAYER_MSG);
+	//PLAYER_MSG->Type = pSession->GetMyDBTP();
+	//PLAYER_MSG->SubType = ONQUERY;
+	//MAINPROC.RegisterCommand(PLAYER_MSG);
+
+	printf("disconnect front session \n");
 
 
 

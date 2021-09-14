@@ -22,6 +22,10 @@ HubProcess::HubProcess(void)
 	ADD_NET_FUNC(HubProcess, ID_PKT_PRAY_MESSAGE_REG_REQ, REG_PRAY);
 
 	ADD_NET_FUNC(HubProcess, ID_PKT_QNA_REQ, QNS);
+
+	ADD_NET_FUNC(HubProcess, ID_PKT_CLIENT_LOGOUT_REQ, LOGOUT_CLIENT);
+
+	
 }
 
 
@@ -37,7 +41,7 @@ VOID HubProcess::Process(LPVOID Data, DWORD Length, WORD MainProtocol, WORD SubP
 		// 버전이나 로그인 패킷이 아닌 경우 처리하지 않는다.
 		if (MainProtocol != ID_PKT_VERSION_REQ && MainProtocol != ID_PKT_LOGIN_REQ)
 		{
-			PlayerPtr pPlayer = PLAYERMGR.Search(Client->GetPair());
+			PlayerPtr pPlayer = PLAYERMGR.SearchByFrontSid(SubProtocol);
 			if (pPlayer == NULL)
 			{
 #ifdef _DEBUG
@@ -115,6 +119,8 @@ VOID HubProcess::LOGIN_PLAYER(WORD SubProtocol,LPVOID Data, DWORD Length, boost:
 		PLAYER_MSG->pRequst.id.assign(login.var_id().begin(), login.var_id().end());
 		PLAYER_MSG->pRequst.pwd.assign(login.var_pwd().begin(), login.var_pwd().end());
 		PLAYER_MSG->pRequst.channel = 1;// login.var_channel();
+		PLAYER_MSG->pRequst.ForntId = Client->GetId();
+		PLAYER_MSG->pRequst.FrontSid = SubProtocol;
 	}
 
 	//로그인아웃 처리는 고정해야할 필요가 있다.
@@ -130,18 +136,18 @@ VOID HubProcess::ROOM_CREATE(WORD SubProtocol,LPVOID Data, DWORD Length, boost::
 
 	CREATE_ROOM_RES res;
 
-	PlayerPtr pPlayer = PLAYERMGR.Search(Client->GetPair());
+	PlayerPtr pPlayer = PLAYERMGR.SearchByFrontSid(SubProtocol);
 	if (pPlayer == NULL)
 	{
 		res.set_var_code(SystemError);
-		SEND_PROTO_BUFFER(res, Client)
+		SEND_PROTO_BUFFER2(SubProtocol, res, Client)
 			return;
 	}
 
 	if (createroom.var_name().size() == 0)
 	{
 		res.set_var_code(SystemError);
-		SEND_PROTO_BUFFER(res, Client)
+		SEND_PROTO_BUFFER2(SubProtocol, res, Client)
 		return;
 	}
 
@@ -162,10 +168,21 @@ VOID HubProcess::ROOM_CREATE(WORD SubProtocol,LPVOID Data, DWORD Length, boost::
 
 VOID HubProcess::PRAY_LIST(WORD SubProtocol,LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client)
 {
+
+	PlayerPtr pPlayer = PLAYERMGR.SearchByFrontSid(SubProtocol);
+	if (pPlayer == NULL)
+	{
+		return;
+	}
+
 	DECLARE_RECV_TYPE(PRAY_MESSAGE_REQ, message)
 
 	boost::shared_ptr<Hub::MSG_PLAYER_QUERY<Hub::RequestPrayList>>		PLAYER_MSG = ALLOCATOR.Create<Hub::MSG_PLAYER_QUERY<Hub::RequestPrayList>>();
 	PLAYER_MSG->pSession = Client;
+
+	{
+		PLAYER_MSG->Request.m_args = std::tuple<PlayerPtr>(pPlayer);;
+	}
 
 	PLAYER_MSG->Type = Client->GetMyDBTP();
 	PLAYER_MSG->SubType = ONQUERY;
@@ -176,7 +193,7 @@ VOID HubProcess::REG_PRAY(WORD SubProtocol,LPVOID Data, DWORD Length, boost::sha
 {
 	DECLARE_RECV_TYPE(PRAY_MESSAGE_REG_REQ, message)
 
-	PlayerPtr pPlayer = PLAYERMGR.Search(Client->GetPair());
+	PlayerPtr pPlayer = PLAYERMGR.SearchByFrontSid(SubProtocol);
 	if (pPlayer == NULL)
 	{
 		return;
@@ -186,7 +203,7 @@ VOID HubProcess::REG_PRAY(WORD SubProtocol,LPVOID Data, DWORD Length, boost::sha
 	PLAYER_MSG->pSession = Client;
 
 	{
-		PLAYER_MSG->Request.m_args = std::tuple<string,string>(message.var_message(), pPlayer->m_Char[0].GetName());
+		PLAYER_MSG->Request.m_args = std::tuple<string,string, PlayerPtr>(message.var_message(), pPlayer->m_Char[0].GetName(), pPlayer);
 	}
 
 	PLAYER_MSG->Type = Client->GetMyDBTP();
@@ -204,7 +221,7 @@ VOID HubProcess::QNS(WORD SubProtocol,LPVOID Data, DWORD Length, boost::shared_p
 		return;
 	}
 
-	PlayerPtr pPlayer = PLAYERMGR.Search(Client->GetPair());
+	PlayerPtr pPlayer = PLAYERMGR.SearchByFrontSid(SubProtocol);
 	if (pPlayer == NULL)
 	{
 		return;
@@ -212,7 +229,7 @@ VOID HubProcess::QNS(WORD SubProtocol,LPVOID Data, DWORD Length, boost::shared_p
 
 	boost::shared_ptr<Hub::MSG_PLAYER_QUERY<Hub::RequestQNS>>		PLAYER_MSG = ALLOCATOR.Create<Hub::MSG_PLAYER_QUERY<Hub::RequestQNS>>();
 	{
-		PLAYER_MSG->Request.m_args = std::tuple<string, INT64>(message.var_message(), pPlayer->GetId());
+		PLAYER_MSG->Request.m_args = std::tuple<string, INT64, PlayerPtr>(message.var_message(), pPlayer->GetId(), pPlayer);
 	}
 	PLAYER_MSG->Type = Client->GetMyDBTP();
 	PLAYER_MSG->SubType = ONQUERY;
@@ -224,7 +241,7 @@ VOID HubProcess::ROOM_PASSTHROUGH(WORD SubProtocol,LPVOID Data, DWORD Length, bo
 {
 	DECLARE_RECV_TYPE(ROOM_PASS_THROUGH_REQ, message)
 
-	PlayerPtr pPlayer = PLAYERMGR.Search(Client->GetPair());
+	PlayerPtr pPlayer = PLAYERMGR.SearchByFrontSid(SubProtocol);
 	if (pPlayer == NULL)
 	{
 		return;
@@ -284,7 +301,7 @@ VOID HubProcess::ROOM_ENTER(WORD SubProtocol,LPVOID Data, DWORD Length, boost::s
 {
 	DECLARE_RECV_TYPE(ENTER_ROOM_REQ, enterroom)
 
-	PlayerPtr pPlayer = PLAYERMGR.Search(Client->GetPair());
+	PlayerPtr pPlayer = PLAYERMGR.SearchByFrontSid(SubProtocol);
 	if (pPlayer == NULL)
 	{
 		return;
@@ -297,7 +314,7 @@ VOID HubProcess::ROOM_ENTER(WORD SubProtocol,LPVOID Data, DWORD Length, boost::s
 	if (RoomPtr == NULL)
 	{
 		res.set_var_code(SystemError);
-		SEND_PROTO_BUFFER(res, Client)
+		SEND_PROTO_BUFFER2(SubProtocol, res, Client)
 		return;
 	}
 
@@ -307,7 +324,7 @@ VOID HubProcess::ROOM_ENTER(WORD SubProtocol,LPVOID Data, DWORD Length, boost::s
 		res.set_var_room_id(RoomPtr->GetId());
 		res.set_var_name(RoomPtr->m_Stock.Name.c_str());
 		res.set_var_code(Duplicate_Enter_Room);
-		SEND_PROTO_BUFFER(res, Client)
+		SEND_PROTO_BUFFER2(SubProtocol, res, Client)
 			return;
 	}
 
@@ -315,7 +332,7 @@ VOID HubProcess::ROOM_ENTER(WORD SubProtocol,LPVOID Data, DWORD Length, boost::s
 	PLAYER_MSG->pSession = Client;
 
 	{
-		PLAYER_MSG->Request.m_args = std::tuple<int, INT64, string>(RoomPtr->GetId(), pPlayer->GetId(), pPlayer->m_Char[0].GetName());
+		PLAYER_MSG->Request.m_args = std::tuple<int, INT64, string, PlayerPtr>(RoomPtr->GetId(), pPlayer->GetId(), pPlayer->m_Char[0].GetName(), pPlayer);
 	}
 
 	PLAYER_MSG->Type = Client->GetMyDBTP();
@@ -329,7 +346,7 @@ VOID HubProcess::ROOM_LEAVE(WORD SubProtocol,LPVOID Data, DWORD Length, boost::s
 {
 	DECLARE_RECV_TYPE(LEAVE_ROOM_REQ, leaveroom)
 
-	PlayerPtr pPlayer = PLAYERMGR.Search(Client->GetPair());
+	PlayerPtr pPlayer = PLAYERMGR.SearchByFrontSid(SubProtocol);
 	if (pPlayer == NULL)
 	{
 		return;
@@ -345,7 +362,7 @@ VOID HubProcess::ROOM_LEAVE(WORD SubProtocol,LPVOID Data, DWORD Length, boost::s
 	PLAYER_MSG->pSession = Client;
 
 	{
-		PLAYER_MSG->Request.m_args = std::tuple<int, INT64, string>(RoomPtr->GetId(), pPlayer->GetId(), pPlayer->m_Char[0].GetName());
+		PLAYER_MSG->Request.m_args = std::tuple<int, INT64, string, PlayerPtr>(RoomPtr->GetId(), pPlayer->GetId(), pPlayer->m_Char[0].GetName(), pPlayer);
 	}
 
 	PLAYER_MSG->Type = Client->GetMyDBTP();
@@ -356,7 +373,7 @@ VOID HubProcess::ROOM_LEAVE(WORD SubProtocol,LPVOID Data, DWORD Length, boost::s
 
 VOID HubProcess::ROOM_START(WORD SubProtocol,LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client)
 {
-	//PlayerPtr pPlayer = PLAYERMGR.Search(Client->GetPair());
+	//PlayerPtr pPlayer = PLAYERMGR.SearchByFrontSid(SubProtocol);
 	//if (pPlayer == NULL)
 	//{
 	//	return;
@@ -378,7 +395,7 @@ VOID HubProcess::ROOM_START(WORD SubProtocol,LPVOID Data, DWORD Length, boost::s
 
 VOID HubProcess::ROOM_READY(WORD SubProtocol,LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client)
 {
-	//PlayerPtr pPlayer = PLAYERMGR.Search(Client->GetPair());
+	//PlayerPtr pPlayer = PLAYERMGR.SearchByFrontSid(SubProtocol);
 	//if (pPlayer == NULL)
 	//{
 	//	return;
@@ -417,7 +434,7 @@ VOID HubProcess::ROOM_AUDIO_CHAT(WORD SubProtocol,LPVOID Data, DWORD Length, boo
 
 	AUDIO_MESSAGE_RES res;
 
-	PlayerPtr pPlayer = PLAYERMGR.Search(Client->GetPair());
+	PlayerPtr pPlayer = PLAYERMGR.SearchByFrontSid(SubProtocol);
 	if (pPlayer == NULL)
 	{
 		return;
@@ -438,7 +455,7 @@ VOID HubProcess::ROOM_AUDIO_CHAT(WORD SubProtocol,LPVOID Data, DWORD Length, boo
 	}
 	else
 	{
-		SEND_PROTO_BUFFER(res, Client)
+		SEND_PROTO_BUFFER2(SubProtocol, res, Client)
 	}
 }
 
@@ -448,7 +465,7 @@ VOID HubProcess::ROOM_BITMAP_CHAT(WORD SubProtocol,LPVOID Data, DWORD Length, bo
 
 	BITMAP_MESSAGE_RES res;
 
-	PlayerPtr pPlayer = PLAYERMGR.Search(Client->GetPair());
+	PlayerPtr pPlayer = PLAYERMGR.SearchByFrontSid(SubProtocol);
 	if (pPlayer == NULL)
 	{
 		return;
@@ -468,7 +485,7 @@ VOID HubProcess::ROOM_BITMAP_CHAT(WORD SubProtocol,LPVOID Data, DWORD Length, bo
 	}
 	else
 	{
-		SEND_PROTO_BUFFER(res, Client)
+		SEND_PROTO_BUFFER2(SubProtocol, res, Client)
 	}
 }
 
@@ -478,7 +495,7 @@ VOID HubProcess::ROOM_LIST(WORD SubProtocol,LPVOID Data, DWORD Length, boost::sh
 
 	ROOM_LIST_RES res;
 
-	PlayerPtr pPlayer = PLAYERMGR.Search(Client->GetPair());
+	PlayerPtr pPlayer = PLAYERMGR.SearchByFrontSid(SubProtocol);
 	if (pPlayer == NULL)
 	{
 		return;
@@ -486,7 +503,7 @@ VOID HubProcess::ROOM_LIST(WORD SubProtocol,LPVOID Data, DWORD Length, boost::sh
 
 	ROOMMGR.GetRoomList(res.mutable_var_room_list());
 
-	SEND_PROTO_BUFFER(res, Client)
+	SEND_PROTO_BUFFER2(SubProtocol,res, Client)
 }
 
 VOID HubProcess::MATCH(WORD SubProtocol,LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client)
@@ -496,7 +513,7 @@ VOID HubProcess::MATCH(WORD SubProtocol,LPVOID Data, DWORD Length, boost::shared
 
 VOID HubProcess::AUTO_START(WORD SubProtocol,LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client)
 {
-	//PlayerPtr pPlayer = PLAYERMGR.Search(Client->GetPair());
+	//PlayerPtr pPlayer = PLAYERMGR.SearchByFrontSid(SubProtocol);
 	//if (pPlayer == NULL)
 	//{
 	//	return;
@@ -533,7 +550,7 @@ VOID HubProcess::AUTO_START(WORD SubProtocol,LPVOID Data, DWORD Length, boost::s
 
 VOID HubProcess::ALL_COMPLETE(WORD SubProtocol,LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client)
 {
-	//PlayerPtr pPlayer = PLAYERMGR.Search(Client->GetPair());
+	//PlayerPtr pPlayer = PLAYERMGR.SearchByFrontSid(SubProtocol);
 	//if (pPlayer == NULL)
 	//{
 	//	return;
@@ -554,4 +571,38 @@ VOID HubProcess::ALL_COMPLETE(WORD SubProtocol,LPVOID Data, DWORD Length, boost:
 	//		pPtr->SendToAll(ID_FC_PKT_ALL_COMPLETE, (BYTE *)outputConfig.c_str(), outputConfig.size());
 	//	}
 	//}
+}
+
+VOID HubProcess::LOGOUT_CLIENT(WORD SubProtocol, LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client)
+{
+	PlayerPtr pPlayer = PLAYERMGR.SearchByFrontSid(SubProtocol);
+	if (pPlayer != NULL)
+	{
+
+		//로그아웃 쿼리를 날린다.
+		////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		boost::shared_ptr<Hub::MSG_PLAYER_QUERY<Hub::RequestLogout>>		PLAYER_MSG = ALLOCATOR.Create<Hub::MSG_PLAYER_QUERY<Hub::RequestLogout>>();
+		PLAYER_MSG->pSession = Client;
+
+		PLAYER_MSG->Request.m_args = std::tuple<INT64>(pPlayer->GetId());
+
+		PLAYER_MSG->Type = Client->GetMyDBTP();
+		PLAYER_MSG->SubType = ONQUERY;
+		MAINPROC.RegisterCommand(PLAYER_MSG);
+		////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+		for each (auto room in pPlayer->m_Char[0].GetRoom())
+		{
+			ROOMMGR.LeaveRoomPlayer(pPlayer, room);
+		}
+
+
+//		pPlayer->SetPair(ULONG_MAX);
+		PLAYERMGR.Del(pPlayer);
+	}
+
+
+
+
 }

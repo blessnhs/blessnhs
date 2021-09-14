@@ -123,8 +123,8 @@ SOCKET GSSocket::Connect2(LPSTR address, USHORT port)
 {
 	CThreadSync Sync;
 
-	if (m_Socket)
-		return FALSE;
+	if (!m_Socket)
+		m_Socket = WSASocketW(AF_INET, SOCK_STREAM, IPPROTO_TCP, NULL, 0, WSA_FLAG_OVERLAPPED);;
 
 	SOCKADDR_IN RemoteAddressInfo;
 	ZeroMemory(&RemoteAddressInfo, sizeof(RemoteAddressInfo));
@@ -134,7 +134,7 @@ SOCKET GSSocket::Connect2(LPSTR address, USHORT port)
 	RemoteAddressInfo.sin_addr.S_un.S_addr = inet_addr(address);
 
 
-	m_Socket = WSASocketW(AF_INET, SOCK_STREAM, IPPROTO_TCP, NULL, 0, WSA_FLAG_OVERLAPPED);
+
 
 	if (m_Socket == INVALID_SOCKET)
 	{

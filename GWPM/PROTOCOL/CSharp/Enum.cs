@@ -22,7 +22,7 @@ public static partial class EnumReflection {
   static EnumReflection() {
     byte[] descriptorData = global::System.Convert.FromBase64String(
         string.Concat(
-          "CgpFbnVtLnByb3RvKvQHCghQUk9UT0NPTBIWChJJRF9QS1RfVkVSU0lPTl9S",
+          "CgpFbnVtLnByb3RvKvAICghQUk9UT0NPTBIWChJJRF9QS1RfVkVSU0lPTl9S",
           "RVEQABIWChJJRF9QS1RfVkVSU0lPTl9SRVMQARIUChBJRF9QS1RfTE9HSU5f",
           "UkVREAISFAoQSURfUEtUX0xPR0lOX1JFUxADEhoKFklEX1BLVF9DUkVBVEVf",
           "Uk9PTV9SRVEQBBIaChZJRF9QS1RfQ1JFQVRFX1JPT01fUkVTEAUSGQoVSURf",
@@ -44,10 +44,13 @@ public static partial class EnumReflection {
           "S1RfTUFJTF9MSVNUX1JFUxAeEhgKFElEX1BLVF9NQUlMX1NFTkRfUkVREB8S",
           "GAoUSURfUEtUX01BSUxfU0VORF9SRVMQIBIXChNJRF9QS1RfTUFJTF9ERUxf",
           "UkVRECESFwoTSURfUEtUX01BSUxfREVMX1JFUxAiEhgKFElEX1BLVF9NQUlM",
-          "X1JFQURfUkVRECMSGAoUSURfUEtUX01BSUxfUkVBRF9SRVMQJCp7CglFcnJv",
-          "ckNvZGUSCwoHU3VjY2VzcxAAEhEKDURhdGFCYXNlRXJyb3IQARISCg5Mb2dp",
-          "bkR1cGxpY2F0ZRACEg8KC1N5c3RlbUVycm9yEAMSDwoLTG9naW5GYWlsZWQQ",
-          "BBIYChREdXBsaWNhdGVfRW50ZXJfUm9vbRAFQgJIAWIGcHJvdG8z"));
+          "X1JFQURfUkVRECMSGAoUSURfUEtUX01BSUxfUkVBRF9SRVMQJBISCg5JRF9Q",
+          "S1RfUkVHX1JFURAlEhIKDklEX1BLVF9SRUdfUkVTECYSHAoYSURfUEtUX0NM",
+          "SUVOVF9MT0dPVVRfUkVRECcSHAoYSURfUEtUX0NMSUVOVF9MT0dPVVRfUkVT",
+          "ECgSFgoSSURfUEtUX0NMSUVOVF9LSUNLECkqewoJRXJyb3JDb2RlEgsKB1N1",
+          "Y2Nlc3MQABIRCg1EYXRhQmFzZUVycm9yEAESEgoOTG9naW5EdXBsaWNhdGUQ",
+          "AhIPCgtTeXN0ZW1FcnJvchADEg8KC0xvZ2luRmFpbGVkEAQSGAoURHVwbGlj",
+          "YXRlX0VudGVyX1Jvb20QBUICSAFiBnByb3RvMw=="));
     descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
         new pbr::FileDescriptor[] { },
         new pbr::GeneratedClrTypeInfo(new[] {typeof(global::PROTOCOL), typeof(global::ErrorCode), }, null, null));
@@ -94,6 +97,11 @@ public enum PROTOCOL {
   [pbr::OriginalName("ID_PKT_MAIL_DEL_RES")] IdPktMailDelRes = 34,
   [pbr::OriginalName("ID_PKT_MAIL_READ_REQ")] IdPktMailReadReq = 35,
   [pbr::OriginalName("ID_PKT_MAIL_READ_RES")] IdPktMailReadRes = 36,
+  [pbr::OriginalName("ID_PKT_REG_REQ")] IdPktRegReq = 37,
+  [pbr::OriginalName("ID_PKT_REG_RES")] IdPktRegRes = 38,
+  [pbr::OriginalName("ID_PKT_CLIENT_LOGOUT_REQ")] IdPktClientLogoutReq = 39,
+  [pbr::OriginalName("ID_PKT_CLIENT_LOGOUT_RES")] IdPktClientLogoutRes = 40,
+  [pbr::OriginalName("ID_PKT_CLIENT_KICK")] IdPktClientKick = 41,
 }
 
 public enum ErrorCode {
