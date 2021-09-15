@@ -42,6 +42,7 @@ GSCLIENT_PTR ProxyHubContainer::Search(INT64 Id)
 
 GSCLIENT_PTR ProxyHubContainer::GetHub()
 {
+	std::vector< GSCLIENT_PTR> vt;
 
 	for each (auto proxy in m_Proxy_Map)
 	{
@@ -51,10 +52,15 @@ GSCLIENT_PTR ProxyHubContainer::GetHub()
 		if (proxy.second->GetConnected() == false)
 			continue;
 
-		return proxy.second;
+		vt.push_back(proxy.second);
 	}
 
-	return GSCLIENT_PTR();
+	if(vt.size() == 0)
+		return GSCLIENT_PTR();
+	else
+	{
+		return vt[GetTickCount() % vt.size()];
+	}
 }
 
 

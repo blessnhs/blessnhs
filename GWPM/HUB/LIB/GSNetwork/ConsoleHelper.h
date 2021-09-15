@@ -22,6 +22,8 @@ public:
 		pos.X = (SHORT)(columns - strlen(message));
 		pos.Y = (csbi.dwCursorPosition.Y - rows > 0 ? csbi.dwCursorPosition.Y - rows : 0) + 1;
 
+		pos.Y = 0;
+
 		SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), pos);
 
 		printf(message);

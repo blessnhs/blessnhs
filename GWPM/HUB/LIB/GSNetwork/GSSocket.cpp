@@ -166,7 +166,8 @@ SOCKET GSSocket::Connect2(LPSTR address, USHORT port)
 		if (lpHosten == NULL) return false;
 		addr.sin_addr.s_addr = ((LPIN_ADDR)lpHosten->h_addr)->s_addr;
 	}
-	if (connect(m_Socket, (struct sockaddr*)&addr, sizeof(addr)) == SOCKET_ERROR)
+	if (WSAConnect(m_Socket, (LPSOCKADDR)&RemoteAddressInfo, sizeof(SOCKADDR_IN), NULL, NULL, NULL, NULL) == SOCKET_ERROR)
+	//if (connect(m_Socket, (struct sockaddr*)&addr, sizeof(addr)) == SOCKET_ERROR)
 		return false;
 
 	return m_Socket;

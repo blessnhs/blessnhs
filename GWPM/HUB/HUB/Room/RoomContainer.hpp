@@ -185,7 +185,7 @@ template<template<class T> class CreationPolicy> ROOM_PTR RoomContainer<Creation
 
 template<template<class T> class CreationPolicy> VOID RoomContainer<CreationPolicy>::GetRoomList(google::protobuf::RepeatedPtrField<RoomInfo2>*List)
 {
-	const int max_count = 100;
+	const int max_count = 10;
 	int currcount = 0;
 
 	for each (auto room in m_RoomMapForLoop)

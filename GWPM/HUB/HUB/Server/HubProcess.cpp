@@ -51,11 +51,14 @@ VOID HubProcess::Process(LPVOID Data, DWORD Length, WORD MainProtocol, WORD SubP
 			}
 		}
 
+#ifdef _DEBUG
 		const google::protobuf::EnumDescriptor* descriptor = PROTOCOL_descriptor();
 		std::string name = descriptor->FindValueByNumber(MainProtocol)->name();
 
 		if(MainProtocol != ID_PKT_ROOM_LIST_REQ && MainProtocol != ID_PKT_PRAY_MESSAGE_REQ)
 			BLOG("%s MainProtocol %s Length %d\n", __FUNCTION__, name.c_str(), Length);
+#endif
+
 
 		NET_FUNC_EXE2(MainProtocol, SubProtocol,Data, Length, Client);
 	}

@@ -147,6 +147,7 @@ VOID GSServer::OnConnected(int client_id)
 	}
 
 
+
 	pClient->OnConnect(pClient);
 }
 

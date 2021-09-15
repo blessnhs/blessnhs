@@ -23,5 +23,5 @@ VOID HubINI::Load()
 	GetPrivateProfileString(("SERVER"), ("ODBC_ID"), ("."), ODBC_ID, sizeof(ODBC_ID), (Name.c_str()));
 	GetPrivateProfileString(("SERVER"), ("ODBC_PASSWD"), ("."), ODBC_PWD, sizeof(ODBC_PWD), (Name.c_str()));
 
-	printf("[ Hub ] Port [ %d ] MaxUser [ %d ] Alive Seconds[ %d ] Version [%f]\n", Port, MaxUser, AliveSeconds, Version);
+	printf("\n[ Hub ] Port [ %d ] MaxUser [ %d ] Alive Seconds[ %d ] Version [%f]\n", Port, MaxUser, AliveSeconds, Version);
 }

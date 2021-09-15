@@ -147,8 +147,6 @@ BOOL GSClient::InitializeReadForIocp(VOID)
 
 BOOL GSClient::WriteComplete(VOID)
 {
-	CThreadSync Sync;
-
 	if(m_CreateType == TCP)
 	{
 		return m_TCPSocket->WriteComplete();
@@ -474,9 +472,9 @@ void GSClient::OnConnect(boost::shared_ptr<GSClient> pClient)
 	int port = 0;
 	pClient->GetTCPSocket()->GetLocalIP(ip, port);
 
-
+#ifdef _DEBUG
 	printf("connected ip %s port %d\n",ip.c_str(),port);
-
+#endif
 	/*
 	GSServer::GSServer *pServer = (GSServer::GSServer *)m_GSServer;
 

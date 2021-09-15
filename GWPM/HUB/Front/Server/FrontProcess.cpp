@@ -22,13 +22,13 @@ VOID FrontProcess::Process(LPVOID Data, DWORD Length, WORD MainProtocol, WORD Su
 		if (MainProtocol != ID_PKT_VERSION_REQ && MainProtocol != ID_PKT_LOGIN_REQ)
 		{
 		}
-
+#ifdef  _DEBUG
 		const google::protobuf::EnumDescriptor* descriptor = PROTOCOL_descriptor();
 		std::string name = descriptor->FindValueByNumber(MainProtocol)->name();
 
-		if(MainProtocol != ID_PKT_ROOM_LIST_REQ && MainProtocol != ID_PKT_PRAY_MESSAGE_REQ)
+		if (MainProtocol != ID_PKT_ROOM_LIST_REQ && MainProtocol != ID_PKT_PRAY_MESSAGE_REQ)
 			BLOG("%s MainProtocol %s Length %d\n", __FUNCTION__, name.c_str(), Length);
-
+#endif //  _DEBUG
 		
 		//hub·Î Àü¼Û
 

@@ -30,6 +30,7 @@ VOID GSClientMgr::CheckAliveTime()
 	GSServer::GSServer* pServer = (GSServer::GSServer*)m_GSServer;
 
 	int debug_null_cnt = 0;
+	int connection_cnt = 0;
 
 	for each (auto& client in m_Clients)
 	{
@@ -48,9 +49,10 @@ VOID GSClientMgr::CheckAliveTime()
 
 			if ((client_time + server_check_time) <= system_tick)
 			{
-			//	client.second->OnDisconnect(client.second);
 				client.second->Close();
 			}
+
+			connection_cnt++;
 		}
 	}
 
@@ -94,6 +96,9 @@ VOID GSClientMgr::CheckAliveTime()
 		}
 	}
 
+	//접속가능한 세션이 50명 이하면 다시 100개 할당한다. 
+	if ((m_MaxClients - connection_cnt) < 50)
+		NewClient();
 
 	//SYSTEMTIME		sysTime;
 	//::GetLocalTime(&sysTime);
@@ -112,9 +117,9 @@ VOID GSClientMgr::CheckAliveTime()
 
 		char msg[256];
 		
-		sprintf_s(msg,256,"[Conncted:%d] [Debug:%d] [RemoveQ:%zd] [Total:%d] [Toal New : %d][Total Close : %d] [Total Recv : %llu] [Total Send : %llu]\n",
-			GetActiveSocketCount(), DebugCount.fetch_add(0), m_Remove_Queue.unsafe_size(), ConnectCount.fetch_add(0), NewConnectount.fetch_add(0), DisConnectCount.fetch_add(0),
-			pServer->TotalRecvBytes.fetch_add(0)/1024/1024,pServer->TotalSendBytes.fetch_add(0) / 1024 / 1024);
+		sprintf_s(msg, 256, "[Conncted:%d] [Debug:%d] [RemoveQ:%zd] [accept :%d] [Toal New : %d][Total Close : %d] [debug_null %d]\n",
+			connection_cnt, DebugCount.fetch_add(0), m_Remove_Queue.unsafe_size(), ConnectCount.fetch_add(0), NewConnectount.fetch_add(0), DisConnectCount.fetch_add(0), debug_null_cnt);
+		//	pServer->TotalRecvBytes.fetch_add(0)/1024/1024,pServer->TotalSendBytes.fetch_add(0) / 1024 / 1024);
 
 		ConsoleHelper::DebugConsoleString(0, msg);
 
@@ -164,8 +169,6 @@ GSCLIENT_PTR GSClientMgr::GetClient(int id)
 
 BOOL GSClientMgr::AddClient(GSCLIENT_PTR newclient)
 {
-	CThreadSync sync;
-	
 	auto& find = m_Clients.find(newclient->GetId());
 	if (find != m_Clients.end())
 	{
@@ -230,18 +233,20 @@ BOOL GSClientMgr::NewClient()
 
 	CThreadSync Sync;
 
-	NewConnectount.fetch_add(1);
-
 	int NewClient = 1;
 	//임시 주석
-	if (GetActiveSocketCount() < 20)
+	if ((m_MaxClients - std::abs(ConnectCount - DisConnectCount)) < 50)
 	{
 		NewClient = 100;
 		SYSLOG().Write("Resize Client  %d \n", NewClient);
+		printf("Resize Client  %d \n", NewClient);
 
 		m_MaxClients += NewClient;
 	}
 	
+	NewConnectount.fetch_add(NewClient);
+
+
 	for (int i = 0; i < NewClient; i++)
 	{
 		GSCLIENT_PTR pClient = ALLOCATOR.Create<GSClient>();
@@ -294,7 +299,6 @@ GSCLIENT_PTR GSClientMgr::NewClient2()
 	}
 
 	CThreadSync Sync;
-
 	for (int i = 0; i < 1; i++)
 	{
 		GSCLIENT_PTR pClient = ALLOCATOR.Create<GSClient>();

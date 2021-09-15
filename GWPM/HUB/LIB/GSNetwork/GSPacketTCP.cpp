@@ -266,8 +266,6 @@ BOOL	GSPacketTCP::WritePacket(WORD MainProtocol,WORD SubProtocol, const BYTE * P
 
 BOOL GSPacketTCP::WriteComplete(VOID)
 {
-	CThreadSync Sync;
-
 #ifndef CLIENT_MODULE
 	if(m_WrietQueue.unsafe_size() == 0) return FALSE;
 

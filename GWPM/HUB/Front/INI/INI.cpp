@@ -30,5 +30,5 @@ VOID FrontINI::Load()
 	HubSessionCount = GetPrivateProfileInt(("SERVER"), ("HUB_SESSION_COUNT"), 10, (Name.c_str()));
 
 
-	printf("[ Front ] Port [ %d ] MaxUser [ %d ] Alive Seconds[ %d ] Version [%f] [Hub Ip] [ %s ] [ Hub Port ][ %d]\n", Port, MaxUser, AliveSeconds, Version, HubIp, HubPort);
+	printf("\n[ Front ] Port [ %d ] MaxUser [ %d ] Alive Seconds[ %d ] Version [%f]\n[Hub Ip] [ %s ] [ Hub Port ][ %d]\n", Port, MaxUser, AliveSeconds, Version, HubIp, HubPort);
 }

@@ -25,15 +25,11 @@ typedef void (SESSIONNAME::*NETFUNC)(WORD,LPVOID,DWORD,boost::shared_ptr<GSClien
 	bool _result_ = NAME.ParseFromArray((char*)Data, Length);	\
 	if (_result_ == false)	\
 		return;	\
-	printf("%s\n",typeid(NAME).name());\
-	NAME.PrintDebugString();
 
 
 
 #define SEND_PROTO_BUFFER(NAME,SESSION)	\
 {	\
-	printf("%s\n",typeid(NAME).name());\
-	NAME.PrintDebugString();\
 	if(SESSION->GetConnected() == true)	\
 	{	\
 	size_t _bufSize__ = NAME.ByteSizeLong();	\
@@ -47,8 +43,6 @@ typedef void (SESSIONNAME::*NETFUNC)(WORD,LPVOID,DWORD,boost::shared_ptr<GSClien
 
 #define SEND_PROTO_BUFFER2(SUB_ID,NAME,SESSION)	\
 {	\
-	printf("%s\n",typeid(NAME).name());\
-	NAME.PrintDebugString();\
 	if(SESSION->GetConnected() == true)	\
 	{	\
 	size_t _bufSize__ = NAME.ByteSizeLong();	\

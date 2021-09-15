@@ -42,8 +42,8 @@ namespace Antioch
         {
             if (check_time < DateTime.Now)
             {
-              // string ip = "211.212.37.238";//"192.168.0.9"
-               string ip = "192.168.0.9";
+                // string ip = "211.212.37.238";//"192.168.0.9"
+                string ip = "192.168.0.9";
 
                 client.StartClient(ip, 20000);
 
@@ -126,7 +126,7 @@ namespace Antioch
 
                                     User.LoginSuccess = true;
                                     SQLLiteDB.Upsert(User.CacheData.FontSize, User.CacheData.BibleName, User.CacheData.Chapter, User.CacheData.Verse,
-                                        User.CacheData.UserName ,User.CacheData.Passwd);
+                                        User.CacheData.UserName, User.CacheData.Passwd);
 
                                     Device.BeginInvokeOnMainThread(() =>
                                     {
@@ -234,12 +234,12 @@ namespace Antioch
                                     {
                                         User.CurrentChatViewNumber = res.VarRoomId;
                                         var chatview = new MainChatView();
-                                        mainpage.lobby.chatpage.Add(res.VarRoomId,chatview);
+                                        mainpage.lobby.chatpage.Add(res.VarRoomId, chatview);
                                         MainChatView chatpage = chatview;
 
                                         mainpage.LoadView(chatpage);
 
-                                       
+
                                     }
 
 
@@ -289,7 +289,7 @@ namespace Antioch
                                     }
                                     catch (Exception e)
                                     {
-                                       
+
                                     }
                                 });
                             }
@@ -311,7 +311,7 @@ namespace Antioch
 
                                     foreach (var msg in res.VarMessages)
                                     {
-                                        outivew.ReceiveMessage(msg.VarMessage, msg.VarName,msg.VarTime);
+                                        outivew.ReceiveMessage(msg.VarMessage, msg.VarName, msg.VarTime);
                                     }
                                 });
                             }
@@ -336,7 +336,7 @@ namespace Antioch
 
                                     if (res.VarName == User.CacheData.UserName)
                                     {
-                                        User.RoomIdList.Remove(res.VarRoomNumber);                                       
+                                        User.RoomIdList.Remove(res.VarRoomNumber);
 
                                         mainpage.lobby.chatpage.Remove(res.VarRoomNumber);
 
@@ -498,7 +498,7 @@ namespace Antioch
 
             var data = new ROOM_LIST_REQ
             {
-               
+
             };
             using (MemoryStream stream = new MemoryStream())
             {
@@ -512,7 +512,7 @@ namespace Antioch
         {
             if (client == null || client.socket == null || client.socket.Connected == false)
                 return;
-      
+
             PRAY_MESSAGE_REG_REQ person = new PRAY_MESSAGE_REG_REQ
             {
                 VarMessage = Content,
@@ -650,9 +650,9 @@ namespace Antioch
             if (client == null || client.socket == null || client.socket.Connected == false)
                 return;
 
-           // var bytearray = System.Text.Encoding.GetEncoding(949).GetBytes(msg);
+            // var bytearray = System.Text.Encoding.GetEncoding(949).GetBytes(msg);
 
-           // var bytearray = System.Text.Encoding.UTF8.GetBytes(msg);
+            // var bytearray = System.Text.Encoding.UTF8.GetBytes(msg);
 
             ROOM_PASS_THROUGH_REQ message = new ROOM_PASS_THROUGH_REQ
             {

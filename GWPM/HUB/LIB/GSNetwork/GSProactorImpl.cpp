@@ -59,7 +59,6 @@ bool GSProactorImpl::Activate(int Type,int TCnt)
 bool GSProactorImpl::RegisterCommand(IMessagePtr msg)
 {
 	m_InputJobList.push(msg);
-	SetEvent(m_InputJobEvt);
 
 	return TRUE;
 }
@@ -79,9 +78,6 @@ bool GSProactorImpl::Register(int Type,IMessagePtr Msg)
 
 	m_JobMap[Type]->push(Msg);
 
-
-	SetEvent(m_ExecuteJobEvt[Type]);
-	
 	return TRUE;
 }
 
@@ -109,8 +105,6 @@ unsigned int __stdcall DistributionThread(LPVOID parameter)
 			SYSLOG().Write("pJob is null");
 		}
 
-//		if(Owner->m_InputJobList.unsafe_size() == 0)
-//			ResetEvent(Owner->m_InputJobEvt);
 	}
 
 	return 0;
@@ -154,9 +148,6 @@ bool GSProactorImpl::Handle_Event(int ProcId)
 		pJob->Execute(pJob->Message);
 	else
 		SYSLOG().Write("execute pjob is null");
-
-//	if(m_JobList[ProcId].try_pop(pJob) == FALSE) 
-//		ResetEvent(m_ExecuteJobEvt[ProcId]);
 
 	return true;
 }

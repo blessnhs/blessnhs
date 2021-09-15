@@ -24,7 +24,7 @@ namespace Antioch
 
     public class Client
     {
-       
+
         public Socket socket = null;
 
         public void StartClient(string address, int port)
@@ -42,7 +42,7 @@ namespace Antioch
                     if (socket.Connected == true)
                     {
                         //이미 접속은 했는데 로그인 실패면 다시 한다.
-                        if(User.LoginSuccess == true)
+                        if (User.LoginSuccess == true)
                         {
                             return;
                         }
@@ -69,7 +69,7 @@ namespace Antioch
                 mainpage.setting.UpdateLoginState("(dis connect)");
 
 
-                  socket.Connect(remoteEP);
+                socket.Connect(remoteEP);
 
                 if (socket.Connected == true)
                 {
@@ -95,7 +95,7 @@ namespace Antioch
                 client.EndConnect(ar);
 
                 // Signal that the connection has been made.
-                   NetProcess.SendVersion();
+                //   NetProcess.SendVersion();
 
             }
             catch (Exception e)
@@ -107,10 +107,10 @@ namespace Antioch
         private int m_RemainLength = 0;
         private byte[] m_PacketBuffer = new byte[RecvPacketBuffer.MTU];
 
-        public bool GetPacket(ref int protocol, ref byte[] packet, ref int dataLength,ref int compressflag)
+        public bool GetPacket(ref int protocol, ref byte[] packet, ref int dataLength, ref int compressflag)
         {
             compressflag = 0;
-            
+
             if (m_RemainLength <= 4)
                 return false;
 
@@ -126,7 +126,7 @@ namespace Antioch
             {
                 dataLength = PacketLength - sizeof(Int32) - sizeof(Int16) - sizeof(Int16) - sizeof(Int32);
                 packet = new byte[dataLength];
-            
+
                 protocol = BitConverter.ToInt16(m_PacketBuffer, sizeof(Int32));
                 compressflag = BitConverter.ToInt32(m_PacketBuffer, sizeof(Int32) + sizeof(Int16) + sizeof(Int16));
 
@@ -185,9 +185,9 @@ namespace Antioch
             int compressflag = 0;
             byte[] mCompletePacketBuffer = null;
 
-            while (GetPacket(ref Protocol, ref mCompletePacketBuffer, ref PacketLength,ref compressflag))
+            while (GetPacket(ref Protocol, ref mCompletePacketBuffer, ref PacketLength, ref compressflag))
             {
-                if(compressflag == 1)
+                if (compressflag == 1)
                 {
                     var byteout = CLZF2.Decompress(mCompletePacketBuffer);
 
@@ -220,7 +220,7 @@ namespace Antioch
         public bool WritePacket(int protocol, byte[] packet, int payloadsize)
         {
 
-            if(payloadsize > CheckCompressSize)
+            if (payloadsize > CheckCompressSize)
             {
                 var compress = CLZF2.Compress(packet);
 
@@ -233,7 +233,7 @@ namespace Antioch
                 mCompressFlag = 1;
 
                 byte[] TempBuffer = new byte[PacketLength];
-                
+
                 byte[] byteslegnth = BitConverter.GetBytes((Int32)PacketLength);
                 Buffer.BlockCopy(byteslegnth, 0, TempBuffer, 0, sizeof(Int32));
 
@@ -242,7 +242,7 @@ namespace Antioch
 
                 byte[] bytesPacketNumber = BitConverter.GetBytes((Int32)mCompressFlag);
                 Buffer.BlockCopy(bytesPacketNumber, 0, TempBuffer, sizeof(Int32) + sizeof(Int16) + sizeof(Int16), sizeof(Int32));
-          
+
                 Buffer.BlockCopy(compress, 0, TempBuffer, sizeof(Int32) + sizeof(Int16) + sizeof(Int16) + sizeof(Int32), compress.Length);
 
                 try
@@ -260,39 +260,39 @@ namespace Antioch
             }
             else
             {
-               Int32 PacketLength = sizeof(Int32) +
-                   sizeof(Int16) +
-                   sizeof(Int16) +
-                   sizeof(Int32) +
-                  payloadsize;
+                Int32 PacketLength = sizeof(Int32) +
+                    sizeof(Int16) +
+                    sizeof(Int16) +
+                    sizeof(Int32) +
+                   payloadsize;
 
-               mCompressFlag = 0;
+                mCompressFlag = 0;
 
-               byte[] TempBuffer = new byte[PacketLength];
+                byte[] TempBuffer = new byte[PacketLength];
 
-               byte[] byteslegnth = BitConverter.GetBytes((Int32)PacketLength);
-               Buffer.BlockCopy(byteslegnth, 0, TempBuffer, 0, sizeof(Int32));
+                byte[] byteslegnth = BitConverter.GetBytes((Int32)PacketLength);
+                Buffer.BlockCopy(byteslegnth, 0, TempBuffer, 0, sizeof(Int32));
 
-               byte[] bytesProtocol = BitConverter.GetBytes((Int16)protocol);
-               Buffer.BlockCopy(bytesProtocol, 0, TempBuffer, sizeof(Int32), sizeof(Int16));
+                byte[] bytesProtocol = BitConverter.GetBytes((Int16)protocol);
+                Buffer.BlockCopy(bytesProtocol, 0, TempBuffer, sizeof(Int32), sizeof(Int16));
 
-               byte[] bytesPacketNumber = BitConverter.GetBytes((Int32)mCompressFlag);
-               Buffer.BlockCopy(bytesPacketNumber, 0, TempBuffer, sizeof(Int32) + sizeof(Int16) + sizeof(Int16), sizeof(Int32));
+                byte[] bytesPacketNumber = BitConverter.GetBytes((Int32)mCompressFlag);
+                Buffer.BlockCopy(bytesPacketNumber, 0, TempBuffer, sizeof(Int32) + sizeof(Int16) + sizeof(Int16), sizeof(Int32));
 
-               Buffer.BlockCopy(packet, 0, TempBuffer, sizeof(Int32) + sizeof(Int16) + sizeof(Int16) + sizeof(Int32), payloadsize);
+                Buffer.BlockCopy(packet, 0, TempBuffer, sizeof(Int32) + sizeof(Int16) + sizeof(Int16) + sizeof(Int32), payloadsize);
 
-               try
-               {
-                   socket.Send(TempBuffer);
-               }
-               catch (SocketException e)
-               {
-                   // 10035 == WSAEWOULDBLOCK
-                   if (!e.NativeErrorCode.Equals(10035))
-                       Console.Write("Disconnected: error code :" + e.NativeErrorCode + "(" + e.Message + ")");
-               }
+                try
+                {
+                    socket.Send(TempBuffer);
+                }
+                catch (SocketException e)
+                {
+                    // 10035 == WSAEWOULDBLOCK
+                    if (!e.NativeErrorCode.Equals(10035))
+                        Console.Write("Disconnected: error code :" + e.NativeErrorCode + "(" + e.Message + ")");
+                }
 
-               TempBuffer = null;
+                TempBuffer = null;
             }
 
             return true;
