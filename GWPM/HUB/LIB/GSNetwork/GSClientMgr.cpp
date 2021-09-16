@@ -237,7 +237,7 @@ BOOL GSClientMgr::NewClient()
 	//임시 주석
 	if ((m_MaxClients - std::abs(ConnectCount - DisConnectCount)) < 50)
 	{
-		NewClient = 100;
+		NewClient = 101;
 		SYSLOG().Write("Resize Client  %d \n", NewClient);
 		printf("Resize Client  %d \n", NewClient);
 
@@ -280,7 +280,6 @@ BOOL GSClientMgr::NewClient()
 			End();
 			return FALSE;
 		}
-
 	}
 
 	return TRUE;

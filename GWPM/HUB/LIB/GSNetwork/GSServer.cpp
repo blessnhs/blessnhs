@@ -112,8 +112,6 @@ VOID GSServer::OnWrote(int client_id, DWORD dataLength)
 
 VOID GSServer::OnConnected(int client_id)
 {
-	CThreadSync Sync;
-
 	boost::shared_ptr<GSClient> pClient = GetClient(client_id);
 	if (pClient == NULL)
 	{
@@ -153,7 +151,6 @@ VOID GSServer::OnConnected(int client_id)
 
 VOID GSServer::OnDisconnected(int client_id, bool isForce)
 {
-	CThreadSync Sync;
 	boost::shared_ptr<GSClient> pClient = GetClient(client_id);
 	if (pClient == NULL)
 	{
