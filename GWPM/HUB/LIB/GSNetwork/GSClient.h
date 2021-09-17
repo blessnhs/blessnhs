@@ -145,6 +145,9 @@ public:
 
 	ClientType										m_ClientType;
 
+public:
+	SOCKET											m_Socket;
+
 };
 
 #define GSCLIENT  GSClient

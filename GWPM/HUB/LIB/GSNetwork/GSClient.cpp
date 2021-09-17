@@ -26,6 +26,7 @@ GSClient::GSClient(void)
 	m_PairPlayerId			= 0;
 	m_GSServer				= NULL;
 	m_DeleteTime			= 0;
+	m_Socket = 0;
 
 	DebugCount.fetch_add(1);
 }
@@ -61,8 +62,6 @@ GSClient::~GSClient(void)
 
 BOOL  GSClient::Create(BYTE Type,ClientType type)
 {
-	CThreadSync Sync;
-	
 	m_ClientType = type;
 	m_CreateType = Type;
 
@@ -131,8 +130,6 @@ void GSClient::SetCompleteJob(const std::wstring str,bool Value)
 
 BOOL GSClient::InitializeReadForIocp(VOID)
 {
-	CThreadSync Sync;
-
 	if(m_CreateType == TCP)
 	{
 		return m_TCPSocket->InitializeReadForIocp();
@@ -250,7 +247,7 @@ void GSClient::OnEvt(IMessagePtr Arg)
  
 VOID GSClient::Close()
 {
-	closesocket(GetSocket());
+	closesocket(m_Socket);
 }
 
 ClientType	GSClient::GetClientType()
@@ -265,8 +262,6 @@ BYTE GSClient::GetCreateType()
 
 VOID GSClient::ProcPacket(boost::shared_ptr<GSClient> pClient)
 {
-	CThreadSync Sync;
-
 	boost::shared_ptr<XDATA> pBuffer;
 
 	SetAliveTime(GetTickCount());
@@ -317,8 +312,6 @@ VOID GSClient::ProcPacket(boost::shared_ptr<GSClient> pClient)
 
 VOID GSClient::ProcDisconnect(boost::shared_ptr<GSClient> pClient,bool isForce)
 {
-	CThreadSync Sync;
-
 	GSServer::GSServer *pServer = (GSServer::GSServer *)m_GSServer;
 
 	//accpet를 안거치고 바로 disconnect되는 애들은 this->GetProcess() null이다 

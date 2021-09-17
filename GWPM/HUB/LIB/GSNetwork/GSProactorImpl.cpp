@@ -87,12 +87,12 @@ unsigned int __stdcall DistributionThread(LPVOID parameter)
 
 	while(TRUE)
 	{
-		if( WaitForSingleObject( Owner->m_hKillEvent, 1 ) == WAIT_OBJECT_0 ){ break; }
+//		if( WaitForSingleObject( Owner->m_hKillEvent, 1 ) == WAIT_OBJECT_0 ){ break; }
 		
 		IMessagePtr pJob;
 		if(Owner->m_InputJobList.try_pop(pJob) == FALSE) 
 		{
-			Sleep(100);
+			Sleep(10);
 			continue;
 		}
 	
@@ -102,6 +102,7 @@ unsigned int __stdcall DistributionThread(LPVOID parameter)
 		}
 		else
 		{
+
 			SYSLOG().Write("pJob is null");
 		}
 
@@ -119,7 +120,7 @@ unsigned int __stdcall ExecuteThread(LPVOID parameter)
 
 	while(TRUE)
 	{
-		if( WaitForSingleObject( Owner->m_ProcactorImpl->m_hKillEvent, 1 ) == WAIT_OBJECT_0 ){ break; }
+//		if( WaitForSingleObject( Owner->m_ProcactorImpl->m_hKillEvent, 1 ) == WAIT_OBJECT_0 ){ break; }
 
 		Owner->m_ProcactorImpl->Handle_Event(ProcId);
 	}
@@ -140,9 +141,10 @@ bool GSProactorImpl::Handle_Event(int ProcId)
 	IMessagePtr pJob;
 	if(m_JobMap[ProcId]->try_pop(pJob) == FALSE)
 	{
-		Sleep(50);
+		Sleep(10);
 		return false;
 	}
+
 		
 	if(pJob != NULL)
 		pJob->Execute(pJob->Message);

@@ -35,6 +35,9 @@ VOID FrontProcess::Process(LPVOID Data, DWORD Length, WORD MainProtocol, WORD Su
 		auto hub = PROXYHUB.GetHub();
 		if (hub != NULL)
 		{
+			if (hub->GetConnected() == FALSE)
+				return;
+
 			hub->GetTCPSocket()->WritePacket(MainProtocol, Client->GetId(), (BYTE*)Data, Length);
 		}
 

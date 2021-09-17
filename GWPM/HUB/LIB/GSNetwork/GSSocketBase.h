@@ -19,7 +19,7 @@ typedef struct _OVERLAPPED_EX
 class WRITE_PACKET_INFO
 {
 public:
-	WRITE_PACKET_INFO() { Data = NULL;  DataLength = 0;  }
+	WRITE_PACKET_INFO() { Data = NULL;  DataLength = 0;  Time = 0; }
 	virtual ~WRITE_PACKET_INFO() 
 	{
 		if (Data != NULL)
@@ -36,6 +36,8 @@ public:
 	CHAR	RemoteAddress[14];
 	USHORT	RemotePort;
 	DWORD	PacketNumber;
+
+	DWORD   Time;
 
 };
 

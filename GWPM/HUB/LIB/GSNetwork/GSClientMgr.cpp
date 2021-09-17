@@ -348,6 +348,8 @@ BOOL GSClientMgr::Begin(SOCKET ListenSocket,WORD MaxClients,LPVOID pServer)
 			return FALSE;
 		}
 
+		pClient->m_Socket = pClient->GetTCPSocket()->GetSocket();
+
 		AddClient(pClient);
 	}
 
