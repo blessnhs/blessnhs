@@ -112,6 +112,9 @@ VOID GSServer::OnWrote(int client_id, DWORD dataLength)
 
 VOID GSServer::OnConnected(int client_id)
 {
+//이락은 필수 안그럼 종료되었는데 남아 있고 꼬인다.
+	CThreadSync Sync;
+
 	boost::shared_ptr<GSClient> pClient = GetClient(client_id);
 	if (pClient == NULL)
 	{
@@ -164,12 +167,18 @@ VOID GSServer::OnDisconnected(int client_id, bool isForce)
 
 VOID GSServer::OnDisconnected2(int client_id, int type)
 {
+//이락은 필수
+
+	CThreadSync Sync;
+
 	boost::shared_ptr<GSClient> pClient = GetClient(client_id);
 	if (pClient == NULL)
 	{
 		SYSLOG().Write("!!!alert cant find OnDisconnected2222 client id\n");
 		return;
 	}
+
+	pClient->checkd = true;
 
 	if (pClient->GetCreateType() == TCP)
 	{

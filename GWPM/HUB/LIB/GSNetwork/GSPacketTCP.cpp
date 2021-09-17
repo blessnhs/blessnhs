@@ -167,11 +167,10 @@ BOOL	GSPacketTCP::WritePacketNoneCompress(WORD MainProtocol, WORD SubProtocol, c
 
 	//GSCrypt::Encrypt(TempBuffer + sizeof(WORD), TempBuffer + sizeof(WORD), PacketLength - sizeof(WORD));
 
-	boost::shared_ptr<WRITE_PACKET_INFO> pWriteData(/*new WRITE_PACKET_INFO*/m_WritePool.alloc());
+	boost::shared_ptr<WRITE_PACKET_INFO> pWriteData(new WRITE_PACKET_INFO);
 
 	pWriteData->Data = sendBuff;
 	pWriteData->DataLength = PacketLength;
-	pWriteData->Object = this;
 #ifndef CLIENT_MODULE	
 	m_WrietQueue.push(pWriteData);
 #endif	
@@ -243,16 +242,15 @@ BOOL	GSPacketTCP::WritePacketCompress(WORD MainProtocol, WORD SubProtocol, const
 	//
 	delete lzf_compress_buffer;
 
-	boost::shared_ptr<WRITE_PACKET_INFO> pWriteData(/*new WRITE_PACKET_INFO*/m_WritePool.alloc());
+	boost::shared_ptr<WRITE_PACKET_INFO> pWriteData(new WRITE_PACKET_INFO);
 
 	pWriteData->Data = sendBuff;
 	pWriteData->DataLength = PacketLength;
-	pWriteData->Object = this;
 #ifndef CLIENT_MODULE	
 	m_WrietQueue.push(pWriteData);
 #endif	
 
-	return GSSocketTCP::Write((BYTE*)pWriteData->Data, pWriteData->DataLength);
+	return GSSocketTCP::Write(pWriteData);
 }
 
 BOOL	GSPacketTCP::WritePacket(WORD MainProtocol,WORD SubProtocol, const BYTE * Packet, DWORD PayloadSize)
