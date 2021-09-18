@@ -243,8 +243,7 @@ void GSClient::OnEvt(IMessagePtr Arg)
  
 VOID GSClient::Close()
 {
-	
-	closesocket(GetTCPSocket()->GetSocket());
+	shutdown(GetTCPSocket()->GetSocket(),2);
 }
 
 ClientType	GSClient::GetClientType()
