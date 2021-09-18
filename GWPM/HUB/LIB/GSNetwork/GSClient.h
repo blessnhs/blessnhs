@@ -115,7 +115,7 @@ private:
 	boost::shared_ptr<IProcess<int>>				m_Process;
 
 	BYTE											m_CreateType;			//tcp,udp
-	BOOL											m_bConnected;
+	std::atomic<BOOL>								m_bConnected;
 
 	boost::shared_ptr<GSPacketTCP>					m_TCPSocket;
 	boost::shared_ptr<GSPacketUDP>					m_UDPSocket;

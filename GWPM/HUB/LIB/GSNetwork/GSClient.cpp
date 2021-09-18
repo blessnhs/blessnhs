@@ -158,15 +158,11 @@ BOOL GSClient::WriteComplete(VOID)
 
 VOID GSClient::SetConnected(BOOL bConnected)
 {
-	CThreadSync Sync;
-
 	m_bConnected = bConnected;
 }
 
 BOOL GSClient::GetConnected(VOID)
 {
-	CThreadSync Sync;
-
 	return m_bConnected;
 }
 
