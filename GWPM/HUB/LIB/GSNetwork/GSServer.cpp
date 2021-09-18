@@ -178,7 +178,6 @@ VOID GSServer::OnDisconnected2(int client_id, int type)
 		return;
 	}
 
-	pClient->checkd = true;
 
 	if (pClient->GetCreateType() == TCP)
 	{
