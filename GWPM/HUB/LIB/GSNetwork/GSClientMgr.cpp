@@ -40,7 +40,7 @@ VOID GSClientMgr::CheckAliveTime()
 			continue;
 		}
 
-		if (client.second->GetConnected() && client.second->GetClientType() == CLIENT)
+		if (client.second->GetConnected())
 		{
 			DWORD client_time = client.second->GetAliveTime();
 			DWORD server_check_time = pServer->GetArgument().m_AliveTime;
@@ -98,7 +98,7 @@ VOID GSClientMgr::CheckAliveTime()
 
 	//접속가능한 세션이 50명 이하면 다시 100개 할당한다. 
 	if ((m_MaxClients - connection_cnt) < 50)
-		NewClient();
+		NewClient(false);
 
 	//SYSTEMTIME		sysTime;
 	//::GetLocalTime(&sysTime);
@@ -220,7 +220,7 @@ void GSClientMgr::InsertRecycleId(int _id)
 	m_Reycle_Id_Queue.push(_id);
 }
 
-BOOL GSClientMgr::NewClient()
+BOOL GSClientMgr::NewClient(bool disalloc)
 {
 	GSServer::GSServer *pServer = (GSServer::GSServer *)m_GSServer;
 	SOCKET ListenSocket = pServer->GetTcpListen()->GetSocket();
@@ -237,9 +237,12 @@ BOOL GSClientMgr::NewClient()
 	//임시 주석
 	if ((m_MaxClients - std::abs(ConnectCount - DisConnectCount)) < 50)
 	{
-		NewClient = 101;
+		if(disalloc == true)
+			NewClient = 101;
+		else
+			NewClient = 100;
+
 		SYSLOG().Write("Resize Client  %d \n", NewClient);
-		printf("Resize Client  %d \n", NewClient);
 
 		m_MaxClients += NewClient;
 	}

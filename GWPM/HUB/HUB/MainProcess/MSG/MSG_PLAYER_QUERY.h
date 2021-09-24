@@ -363,6 +363,7 @@ public:
 #pragma region LoadDBRoomList
 	DECLARE_DB_CLASS_BEGIN(LoadDBRoomList)
 	{
+		printf("LoadRoom Begin\n");
 		auto ret = pProcess->LoadRooms(1000);
 		for each (auto room  in ret)
 		{
@@ -387,7 +388,11 @@ public:
 
 				ROOMPTR->AddRoomMessage(msg);
 			}
+
 		}
+		printf("LoadRoom End\n");
+
+
 	}
 	DECLARE_DB_CLASS_END
 #pragma endregion

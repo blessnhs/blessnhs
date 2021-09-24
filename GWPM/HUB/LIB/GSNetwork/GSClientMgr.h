@@ -23,7 +23,7 @@ public:
 	int IncClientId();
 
 	BOOL Begin(SOCKET ListenSocket,WORD MaxClients,LPVOID PServer);
-	BOOL NewClient();
+	BOOL NewClient(bool disalloc = true);
 
 	//서버와의 연결을 위한 클라이언트 세션 생성
 	GSCLIENT_PTR NewClient2();

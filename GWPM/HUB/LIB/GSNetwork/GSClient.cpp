@@ -342,7 +342,9 @@ VOID GSClient::ProcDisconnect(boost::shared_ptr<GSClient> pClient,bool isForce)
 	//상태값 초기화
 	SetConnected(FALSE);
 
-	pServer->GetClientMgr().BookDelClient(pClient->GetId());
+	//pServer->GetClientMgr().BookDelClient(pClient->GetId());
+
+	pServer->GetClientMgr().DelClient(pClient->GetId());
 
 	pServer->GetClientMgr().NewClient();
 
