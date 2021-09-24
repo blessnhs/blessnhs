@@ -240,11 +240,11 @@ void GSClient::OnEvt(IMessagePtr Arg)
 {
 
 }
- 
 VOID GSClient::Close()
 {
 	shutdown(GetTCPSocket()->GetSocket(),2);
 }
+
 
 ClientType	GSClient::GetClientType()
 {
@@ -402,7 +402,7 @@ void GSClient::OnDisconnect(boost::shared_ptr<GSClient> client, bool isForce)
 {
 	CThreadSync Sync;
 
-	if(m_TCPSocket->m_Accept_OLP->Overlapped.Internal != 0)
+/*	if (m_TCPSocket->m_Accept_OLP->Overlapped.Internal != 0)
 	{
 		DWORD Code = GetLastError();
 		if(Code == ERROR_NETNAME_DELETED)
@@ -420,7 +420,7 @@ void GSClient::OnDisconnect(boost::shared_ptr<GSClient> client, bool isForce)
 		}
 
 		SYSLOG().Write("Overlapped.Internal != 0\n");
-	}
+	}*/
 
 	//소켓 접속 여유 풀이 없을때 만약 100명이면 100명다 붙어 있을때 클라에서 소켓 연결 요청하면
 	//connect에는 콜이 안떨어진다 그 상태에서 접속 종료하면 disconnected만 떨어짐 Connected exception ...2

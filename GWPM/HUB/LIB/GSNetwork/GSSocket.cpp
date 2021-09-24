@@ -6,20 +6,12 @@ namespace GSNetwork	{ namespace GSSocket	{
 
 GSSocket::GSSocket(VOID)
 {
-	m_Accept_OLP = new OVERLAPPED_EX();
-	m_Read_OLP = new OVERLAPPED_EX();
-	m_Write_OLP = new OVERLAPPED_EX();
-
 	m_OLP_REMAIN_COUNT_ACC = 0;
 	m_OLP_REMAIN_COUNT_REC = 0;
 	m_OLP_REMAIN_COUNT_SND = 0;
 
 	memset(m_Buffer, 0, sizeof(m_Buffer));
 	m_Socket							= NULL;
-
-	m_Accept_OLP->IoType				= IO_ACCEPT;
-	m_Read_OLP->IoType					= IO_READ;
-	m_Write_OLP->IoType					= IO_WRITE;
 
 	m_bConnected = FALSE;
 
@@ -33,13 +25,6 @@ BYTE *GSSocket::GetBuffer()
 
 GSSocket::~GSSocket(VOID)
 {
-	delete m_Accept_OLP;
-	delete m_Read_OLP;
-	delete m_Write_OLP;
-
-	m_Accept_OLP = NULL;
-	m_Read_OLP = NULL;
-	m_Write_OLP = NULL;
 }
 
 BOOL GSSocket::Initialize(VOID)
@@ -85,6 +70,10 @@ BOOL GSSocket::Listen(USHORT port, INT backLog)
 	ListenSocketInfo.sin_family				= AF_INET;
 	ListenSocketInfo.sin_port				= htons(port);
 	ListenSocketInfo.sin_addr.S_un.S_addr	= htonl(INADDR_ANY);
+
+	int option = 1;
+
+	setsockopt(m_Socket, SOL_SOCKET, SO_REUSEADDR, (char*)&option, sizeof(option));
 
 	if (::bind(m_Socket, (struct sockaddr*) &ListenSocketInfo, sizeof(SOCKADDR_IN)) == SOCKET_ERROR)
 	{
@@ -143,6 +132,8 @@ SOCKET GSSocket::Connect2(LPSTR address, USHORT port)
 		return FALSE;
 	}
 
+	OVERLAPPED_EX* m_Accept_OLP = new OVERLAPPED_EX;
+	m_Accept_OLP->IoType = IO_ACCEPT;	
 	m_Accept_OLP->ObjectId = m_ClientId;
 
 	struct linger lingerOpt;
@@ -194,6 +185,8 @@ BOOL GSSocket::Accept(SOCKET listenSocket)
 
 	m_OLP_REMAIN_COUNT_ACC.fetch_add(1);
 
+	OVERLAPPED_EX* m_Accept_OLP = new OVERLAPPED_EX;
+	m_Accept_OLP->IoType = IO_ACCEPT;
 	m_Accept_OLP->ObjectId = m_ClientId;
 
 	//BOOL NoDelay = TRUE;
@@ -237,6 +230,8 @@ BOOL GSSocket::Accept2(SOCKET listenSocket)
 
 	m_OLP_REMAIN_COUNT_ACC.fetch_add(1);
 
+	OVERLAPPED_EX* m_Accept_OLP = new OVERLAPPED_EX;
+	m_Accept_OLP->IoType = IO_ACCEPT;
 	m_Accept_OLP->ObjectId = m_ClientId;
 
 	//BOOL NoDelay = TRUE;

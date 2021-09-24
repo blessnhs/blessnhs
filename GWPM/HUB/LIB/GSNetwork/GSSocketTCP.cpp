@@ -76,6 +76,8 @@ BOOL GSSocketTCP::InitializeReadForIocp(VOID)
 
 	m_OLP_REMAIN_COUNT_REC.fetch_add(1);
 
+	OVERLAPPED_EX* m_Read_OLP = new OVERLAPPED_EX;
+	m_Read_OLP->IoType = IO_READ;
 	m_Read_OLP->ObjectId = m_ClientId;
 
 	INT		ReturnValue = WSARecv(m_Socket,
@@ -145,6 +147,8 @@ BOOL			GSSocketTCP::ReadForEventSelect(BYTE *Data, DWORD &DataLength)
 
 	m_OLP_REMAIN_COUNT_REC.fetch_add(1);
 
+	OVERLAPPED_EX* m_Read_OLP = new OVERLAPPED_EX;
+	m_Read_OLP->IoType = IO_READ;
 	m_Read_OLP->ObjectId = m_ClientId;
 
 	INT		ReturnValue = WSARecv(m_Socket,
@@ -206,6 +210,8 @@ BOOL GSSocketTCP::Write(BYTE * Data, DWORD DataLength)
 
 	m_OLP_REMAIN_COUNT_SND.fetch_add(1);
 
+	OVERLAPPED_EX* m_Write_OLP = new OVERLAPPED_EX;
+	m_Write_OLP->IoType = IO_WRITE;
 	m_Write_OLP->ObjectId = m_ClientId;
 
 	INT		ReturnValue	= WSASend(m_Socket,

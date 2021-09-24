@@ -16,9 +16,6 @@ public:
 	virtual ~GSSocket(VOID);
 
 public:
-	OVERLAPPED_EX	*m_Accept_OLP;
-	OVERLAPPED_EX	*m_Read_OLP;
-	OVERLAPPED_EX	*m_Write_OLP;
 
 	std::atomic<int>		m_OLP_REMAIN_COUNT_ACC;
 	std::atomic<int>		m_OLP_REMAIN_COUNT_REC;

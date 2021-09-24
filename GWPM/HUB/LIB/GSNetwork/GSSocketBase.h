@@ -11,6 +11,17 @@ enum IO_TYPE
 
 typedef struct _OVERLAPPED_EX
 {
+	_OVERLAPPED_EX()
+	{
+		memset(&Overlapped, 0, sizeof(OVERLAPPED));
+		ObjectId = 0;
+	}
+
+	~_OVERLAPPED_EX()
+	{
+		
+	}
+
 	OVERLAPPED	Overlapped;
 	IO_TYPE		IoType;
 	int			ObjectId;

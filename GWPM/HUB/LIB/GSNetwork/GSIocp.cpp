@@ -82,6 +82,7 @@ BOOL GSIocp::Termination(VOID)
 	return TRUE;
 }
 
+
 BOOL GSIocp::RegIocpHandler(SOCKET socket, ULONG_PTR completionKey)
 {
 	if (!socket || !completionKey)
@@ -123,7 +124,9 @@ VOID GSIocp::WorkerThread()
 
 			if(Overlapped == NULL) continue;
 
-			OverlappedEx	= (OVERLAPPED_EX*) Overlapped;
+	
+			boost::shared_ptr<OVERLAPPED_EX> OverlappedEx((OVERLAPPED_EX*)Overlapped);
+
 	
 			if(Overlapped == NULL && Successed == FALSE)
 			{
@@ -219,5 +222,18 @@ LONG GSIocp::ExceptionFilter(LPEXCEPTION_POINTERS pExceptionInfo, LPCSTR szPosit
 
 	return ( EXCEPTION_EXECUTE_HANDLER );
 }
+
+VOID GSIocp::Close(SOCKET client)
+{
+		//iocp에서 closesocket하면 안된다. 
+
+		OVERLAPPED_EX* ex = new OVERLAPPED_EX;
+
+		ex->ObjectId = client;
+		ex->IoType = IO_READ;
+
+		PostQueuedCompletionStatus(m_Handle, 0, (ULONG_PTR)ex, (LPOVERLAPPED)ex);
+}
+
 
 }	}

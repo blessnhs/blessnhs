@@ -115,7 +115,8 @@ void ProxyHubContainer::TryConnect()
 		{
 			SYSLOG().Write(" ProxyHubContainer::Initialize failed...3 \n");
 			Del(pClient);
-			pClient->Close();
+
+			SERVER.Close(pClient->GetTCPSocket()->GetSocket());
 			break;
 		}
 
@@ -123,7 +124,8 @@ void ProxyHubContainer::TryConnect()
 		{
 			SYSLOG().Write(" ProxyHubContainer::Initialize failed...4 \n");
 			Del(pClient);
-			pClient->Close();
+			SERVER.Close(pClient->GetTCPSocket()->GetSocket());
+
 			break;
 		}
 
@@ -131,7 +133,8 @@ void ProxyHubContainer::TryConnect()
 		{
 			SYSLOG().Write(" ProxyHubContainer::Initialize failed...5 \n");
 			Del(pClient);
-			pClient->Close();
+			SERVER.Close(pClient->GetTCPSocket()->GetSocket());
+
 			break;
 		}
 	}

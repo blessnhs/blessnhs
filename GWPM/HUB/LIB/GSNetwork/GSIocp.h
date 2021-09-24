@@ -35,6 +35,8 @@ public:
 	
 	LONG				ExceptionFilter( LPEXCEPTION_POINTERS pExceptionInfo, LPCSTR szPosition );
 
+
+	VOID				Close(SOCKET client);
 };
 
 }	}

@@ -161,6 +161,8 @@ BOOL GSSocketUDP::InitializeReadFromForIocp(VOID)
 	WsaBuf.buf			= (CHAR*) m_Buffer;
 	WsaBuf.len			= MAX_BUFFER_LENGTH;
 
+	OVERLAPPED_EX* m_Read_OLP = new OVERLAPPED_EX;
+	m_Read_OLP->IoType = IO_READ;
 	m_Read_OLP->ObjectId = m_ClientId;
 	m_OLP_REMAIN_COUNT_REC.fetch_add(1);
 
@@ -205,7 +207,11 @@ BOOL			GSSocketUDP::ReadFromForEventSelect(LPSTR remoteAddress, USHORT &remotePo
 
 	WsaBuf.buf			= (CHAR*) m_Buffer;
 	WsaBuf.len			= MAX_BUFFER_LENGTH;
-	m_Read_OLP->ObjectId = m_ClientId;
+	
+	
+	OVERLAPPED_EX* m_Read_OLP = new OVERLAPPED_EX;
+	m_Read_OLP->IoType = IO_READ;
+	m_Read_OLP->ObjectId = m_ClientId;	
 
 
 	m_OLP_REMAIN_COUNT_REC.fetch_add(1);
@@ -377,6 +383,8 @@ BOOL			GSSocketUDP::WriteTo2(LPSTR remoteAddress, USHORT remotePort, BYTE *data,
 	RemoteAddressInfo.sin_addr.S_un.S_addr	= inet_addr(remoteAddress);
     RemoteAddressInfo.sin_port				= htons(remotePort);
 
+	OVERLAPPED_EX* m_Write_OLP = new OVERLAPPED_EX;
+	m_Write_OLP->IoType = IO_WRITE;
 	m_Write_OLP->ObjectId = m_ClientId;
 
 	m_OLP_REMAIN_COUNT_SND.fetch_add(1);

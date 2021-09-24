@@ -104,7 +104,6 @@ public:
 	WORD											GetMyDBTP(WORD StartIndex = MSG_TYPE_DB_1);
 
 	VOID											Close();
-
 	BYTE											GetCreateType();
 
 	ClientType										GetClientType();

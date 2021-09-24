@@ -40,7 +40,7 @@ VOID GSClientMgr::CheckAliveTime()
 			continue;
 		}
 
-		if (client.second->GetConnected())
+		if (client.second->GetConnected() && client.second->GetClientType() == CLIENT)
 		{
 			DWORD client_time = client.second->GetAliveTime();
 			DWORD server_check_time = pServer->GetArgument().m_AliveTime;
@@ -49,7 +49,7 @@ VOID GSClientMgr::CheckAliveTime()
 
 			if ((client_time + server_check_time) <= system_tick)
 			{
-				client.second->Close();
+				pServer->Close(client.second->GetTCPSocket()->GetSocket());
 			}
 
 			connection_cnt++;
