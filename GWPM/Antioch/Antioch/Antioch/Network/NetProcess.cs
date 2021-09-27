@@ -45,7 +45,7 @@ namespace Antioch
                 // string ip = "211.212.37.238";//"192.168.0.9"
                 string ip = "192.168.0.9";
 
-                client.StartClient(ip, 20000);
+                client.StartClient(ip, 23000);
 
                 check_time = DateTime.Now.AddSeconds(5);
 
@@ -251,6 +251,7 @@ namespace Antioch
                             {
                                 ENTER_ROOM_RES res = new ENTER_ROOM_RES();
                                 res = ENTER_ROOM_RES.Parser.ParseFrom(data.Data);
+                                
                                 if (res.VarCode != ErrorCode.DuplicateEnterRoom && res.VarCode != ErrorCode.Success)
                                     break;
 

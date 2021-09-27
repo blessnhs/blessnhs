@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Antioch.Network;
+using System;
 using System.Collections.Concurrent;
 using System.Net;
 using System.Net.Sockets;
@@ -189,7 +190,7 @@ namespace Antioch
             {
                 if (compressflag == 1)
                 {
-                    var byteout = CLZF2.Decompress(mCompletePacketBuffer);
+                    var byteout = GZip.Decompress(mCompletePacketBuffer);
 
                     CompletePacket complete = new CompletePacket();
                     complete.Protocol = Protocol;
@@ -222,7 +223,7 @@ namespace Antioch
 
             if (payloadsize > CheckCompressSize)
             {
-                var compress = CLZF2.Compress(packet);
+                var compress = GZip.Compress(packet);
 
                 Int32 PacketLength = sizeof(Int32) +
                     sizeof(Int16) +

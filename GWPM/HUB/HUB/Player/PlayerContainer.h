@@ -50,6 +50,9 @@ public:
 
 	VOID OnResponse(LPVOID Data);
 
+	VOID Disconnect(GSCLIENT_PTR pSession);
+	VOID Disconnect(PlayerPtr pPlayer);
+
 protected:
 
 	//원래 concurrent_unordered_map 자료 구조는 캐싱용도의 쓰레드 세이프한 자료 구조이기 때문에

@@ -64,6 +64,8 @@
 #include "GSClientMgr.h"
 #include "SingleTonHolder.h"
 
+#include "zip.h"
+
 using namespace std;
 
 #define WIN32_LEAN_AND_MEAN             // Exclude rarely-used stuff from Windows headers

@@ -618,6 +618,8 @@ public:
 
 					//pSession->Close();
 
+					PLAYERMGR.Disconnect(pSession);
+
 					CLIENT_KICK kick;
 					SEND_PROTO_BUFFER2(pRequst.FrontSid, kick, pSession)
 					return;
@@ -645,6 +647,8 @@ public:
 						BLOG("1.Login Fail Invalid Password %d  INDEX  %lld\n", nRet, Index);
 						//pSession->Close();
 
+						PLAYERMGR.Disconnect(pSession);
+
 						CLIENT_KICK kick;
 						SEND_PROTO_BUFFER2(pRequst.FrontSid, kick, pSession)
 						return;
@@ -665,6 +669,8 @@ public:
 						SEND_PROTO_BUFFER2(pRequst.FrontSid, kick, pSession)
 						//pSession->Close();
 
+						PLAYERMGR.Disconnect(pSession);
+
 						//기존 세션과 신규 세션 양쪽 다 팅기는 것으로 변경
 						//이미 접속중이면 이전 접속을 끊는다.
 						//다른쓰레드에서 아직 캐릭터를 생성하기 전이면 못찾을수도 있다.
@@ -676,7 +682,7 @@ public:
 							{
 								BLOG("2.Login Fail Exist player %lld and session close\n", Index);
 
-								//pPair->Close();
+								PLAYERMGR.Disconnect(existClient);
 
 								CLIENT_KICK kick;
 								SEND_PROTO_BUFFER2(existClient->GetFrontSid(), kick, pSession)
@@ -694,6 +700,10 @@ public:
 				{
 					BLOG("Duplicate Login Fail Exist player %lld close\n", Index);
 					//pSession->Close();
+
+
+					PLAYERMGR.Disconnect(existClient);
+
 					CLIENT_KICK kick;
 					SEND_PROTO_BUFFER2(pRequst.FrontSid, kick, pSession)
 
@@ -712,6 +722,10 @@ public:
 
 						CLIENT_KICK kick1;
 						SEND_PROTO_BUFFER2(existClient->GetFrontSid(), kick1, pSession)
+
+						PLAYERMGR.Disconnect(pPair);
+
+						PLAYERMGR.Disconnect(pSession);
 
 					//	pPair->Close();
 

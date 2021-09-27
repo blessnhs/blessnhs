@@ -4,7 +4,6 @@
 #include "GSIocp.h"
 #include "GSClientMgr.h"
 
-
 namespace GSNetwork	{	namespace GSServer	{
 
 
@@ -62,6 +61,13 @@ public:
 
 	virtual BOOL												  Disconnect(GSCLIENT_PTR object) = 0;
 	virtual VOID												  Accept(GSCLIENT_PTR object) = 0;
+
+
+	std::string decompress(const std::string& data);
+
+	std::string compress(const std::string& data);
+
+
 
 public:
 	atomic<unsigned long long>		TotalRecvBytes;

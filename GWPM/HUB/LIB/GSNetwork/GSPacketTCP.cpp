@@ -188,26 +188,16 @@ BOOL	GSPacketTCP::WritePacketCompress(WORD MainProtocol, WORD SubProtocol, const
 
 	//compress
 
-	int lzf_compress_size = PayloadSize + (PayloadSize / 2); //더 늘어날수도 있다.
-	byte* lzf_compress_buffer = new byte[lzf_compress_size];
+	std::string src((char*)Packet, PayloadSize);
 
-	int out_lzf_size = lzf_compress(Packet, PayloadSize, lzf_compress_buffer, lzf_compress_size);
+	std::string out = Gzip::compress(src);
 
-	if (out_lzf_size == 0)
-	{
-		SYSLOG().Write("lzf_compress failed src size %d alloc size %d dst size %d mid %d payloadsize %d\n", PayloadSize, lzf_compress_size, out_lzf_size, MainProtocol, PayloadSize);
-
-		delete lzf_compress_buffer;
-		return false;
-	}
-	//
-
-
+	
 	DWORD PacketLength = sizeof(DWORD) +
 		sizeof(WORD) +
 		sizeof(WORD) +
 		sizeof(DWORD) +
-		out_lzf_size;
+		out.size();
 
 	byte* sendBuff = new byte[PacketLength];
 
@@ -235,12 +225,10 @@ BOOL	GSPacketTCP::WritePacketCompress(WORD MainProtocol, WORD SubProtocol, const
 		sizeof(WORD) +
 		sizeof(WORD) +
 		sizeof(DWORD),
-		lzf_compress_buffer, out_lzf_size);
+		out.c_str(), out.size());
 
 	//GSCrypt::Encrypt(TempBuffer + sizeof(WORD), TempBuffer + sizeof(WORD), PacketLength - sizeof(WORD));
 
-	//
-	delete lzf_compress_buffer;
 
 	boost::shared_ptr<WRITE_PACKET_INFO> pWriteData(new WRITE_PACKET_INFO);
 
@@ -348,39 +336,11 @@ BOOL GSPacketTCP::GetPacket()
 
 		if(CompressFlag == 1)
 		{
+			std::string src((char *)(m_PacketBuffer + sizeof(DWORD) + sizeof(WORD) + sizeof(WORD) + sizeof(DWORD)), PayLoadLength);
 
-			//압축해제 사이즈가 부족할수 있다. 최대 20번까지 시도
-			int decompress_buffer_size = PayLoadLength * 2;
-			byte* decompress_buff = new byte[decompress_buffer_size];
-			int decompress_out_size = 0;
-			bool success = false;
-			for (int i = 0; i < 20; i++)
-			{
-				decompress_out_size = lzf_decompress(m_PacketBuffer + sizeof(DWORD) + sizeof(WORD) + sizeof(WORD) + sizeof(DWORD), 
-					PayLoadLength, decompress_buff, decompress_buffer_size);
-				if (decompress_out_size != 0)
-				{
-					//SYSLOG().Write(" src size %d dst size %d\n", PayLoadLength, decompress_out_size);
-					success = true;
-					break;
-				}
+			std::string out = Gzip::decompress(src);
 
-				delete decompress_buff;
-				decompress_buffer_size += decompress_buffer_size;
-
-				decompress_buff = new byte[decompress_buffer_size];
-			}
-
-			if (success == false)
-			{
-				SYSLOG().Write("decompress error mid %d payloadsize %d\n", MainProtocol, PacketLength);
-				delete decompress_buff;
-				return -1;
-			}
-
-			pBuffer->m_Buffer.SetBuffer(decompress_buff, decompress_out_size);
-
-			delete decompress_buff;
+			pBuffer->m_Buffer.SetBuffer((BYTE *)out.c_str(), out.size());
 		}
 		else
 		{
