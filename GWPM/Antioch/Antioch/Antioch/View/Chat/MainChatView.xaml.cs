@@ -40,17 +40,16 @@ namespace Antioch
 
             vm.Messages.CollectionChanged += (sender, e) =>
             {
-                var target = vm.Messages[vm.Messages.Count - 1];
-                MessagesListView.ScrollTo(target, ScrollToPosition.End, true);
+           //     var target = vm.Messages[vm.Messages.Count - 1];
+           //     MessagesListView.ScrollTo(target, ScrollToPosition.End, true);
             };
 
             MessagesListView.ItemAppearing += (sender, e) =>
             {
                 if (vm.Messages.Count > 0)
                 {
-                    var target = vm.Messages[vm.Messages.Count - 1];
-                    if(target == (Antioch.Message)e.Item)
-                        MessagesListView.ScrollTo(target, ScrollToPosition.MakeVisible, false);
+                  
+                        MessagesListView.ScrollTo(vm.Messages.Last(), ScrollToPosition.MakeVisible, false);
                 }
               
             };
@@ -69,6 +68,14 @@ namespace Antioch
             else
                 vm.AddMessage(text, name,time, Message.type.Outgoing);
             
+        }
+
+        public void ScrollEnd()
+        {
+            if (vm.Messages.Count > 0)
+            {
+                MessagesListView.ScrollTo(vm.Messages.Last(), ScrollToPosition.MakeVisible, true);
+            }
         }
 
         public void ReceiveMessage(string text, string name, Message.type type)

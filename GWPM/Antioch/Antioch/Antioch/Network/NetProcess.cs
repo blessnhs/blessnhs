@@ -279,12 +279,15 @@ namespace Antioch
 
                                                 foreach (var msg in res.VarMessages)
                                                 {
-                                                    chatview.ReceiveMessage(msg.VarMessage, msg.VarName, msg.VarTime);
+                                                   chatview.ReceiveMessage(msg.VarMessage, msg.VarName, msg.VarTime);
                                                 }
+
+                                                chatview.ScrollEnd();
                                             }
                                             else  //이미 존재하는 방이면 해당 방에 넣는다. 
                                             {
                                                 mainpage.LoadView(outivew);
+                                                outivew.ScrollEnd();
                                             }
                                         }
                                     }
