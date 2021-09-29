@@ -6,6 +6,7 @@ Player::Player(void)
 	m_ChannelId = 1;
 	m_FrontId = 0;
     m_FrontSid = 0;
+	m_AliveTime = 0;
 }
 
 Player::~Player(void)
@@ -59,6 +60,3 @@ void Player::Initialize()
 {
 	m_PairSessionId = 0;
 }
-
-
-

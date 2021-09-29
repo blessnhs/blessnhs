@@ -37,16 +37,23 @@ HubProcess::~HubProcess(void)
 VOID HubProcess::Process(LPVOID Data, DWORD Length, WORD MainProtocol, WORD SubProtocol, boost::shared_ptr<GSClient> Client)
 {
 	try
-	{	//로그인 하지 않은 유저가 패킷을 요청 했을때
+	{
+
+		PlayerPtr pPlayer = PLAYERMGR.SearchByFrontSid(SubProtocol);
+		if (pPlayer != NULL)
+		{
+			pPlayer->m_AliveTime = GetTickCount();
+		}
+		
+		//로그인 하지 않은 유저가 패킷을 요청 했을때
 		// 버전이나 로그인 패킷이 아닌 경우 처리하지 않는다.
 		if (MainProtocol != ID_PKT_VERSION_REQ && MainProtocol != ID_PKT_LOGIN_REQ)
 		{
-			PlayerPtr pPlayer = PLAYERMGR.SearchByFrontSid(SubProtocol);
 			if (pPlayer == NULL)
 			{
 #ifdef _DEBUG
 #else
-				return;
+			//	return;
 #endif
 			}
 		}
@@ -58,8 +65,7 @@ VOID HubProcess::Process(LPVOID Data, DWORD Length, WORD MainProtocol, WORD SubP
 		if(MainProtocol != ID_PKT_ROOM_LIST_REQ && MainProtocol != ID_PKT_PRAY_MESSAGE_REQ)
 			BLOG("%s MainProtocol %s Length %d\n", __FUNCTION__, name.c_str(), Length);
 #endif
-
-
+	
 		NET_FUNC_EXE2(MainProtocol, SubProtocol,Data, Length, Client);
 	}
 	catch (int exception)
@@ -128,7 +134,7 @@ VOID HubProcess::LOGIN_PLAYER(WORD SubProtocol,LPVOID Data, DWORD Length, boost:
 
 	//로그인아웃 처리는 고정해야할 필요가 있다.
 	//id에 의해 분할되면 멀티 쓰레드 동기화 문제가 발생할 가능성이 존재한다.
-	PLAYER_MSG->Type = MSG_TYPE_DB_1;
+	PLAYER_MSG->Type = Client->GetMyDBTP();
 	PLAYER_MSG->SubType = ONQUERY;
 	MAINPROC.RegisterCommand(PLAYER_MSG);
 }

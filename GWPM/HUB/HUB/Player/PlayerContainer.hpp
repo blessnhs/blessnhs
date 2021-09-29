@@ -224,6 +224,44 @@ template<template<class T> class CreationPolicy> void PlayerContainer<CreationPo
 
 		WORD SessionId = iter->second->GetPair();
 
+		DWORD CurrentTick = GetTickCount();
+
+		//5분보다 크다
+		if (CurrentTick > iter->second->m_AliveTime + (1000 * 60 * 5))
+		{
+			PlayerPtr pPlayer = iter->second;
+			if (pPlayer != NULL)
+			{
+				printf("Player Client %lld AliveTime Check \n", pPlayer->GetId());
+
+				for each (auto room in pPlayer->m_Char[0].GetRoom())
+				{
+					ROOMMGR.LeaveRoomPlayer(pPlayer, room);
+				}
+
+				pPlayer->SetPair(ULONG_MAX);
+				PLAYERMGR.Del(pPlayer);
+
+				//로그아웃 쿼리를 날린다.
+
+				boost::shared_ptr<Hub::MSG_PLAYER_QUERY<Hub::RequestLogout>>		PLAYER_MSG = ALLOCATOR.Create<Hub::MSG_PLAYER_QUERY<Hub::RequestLogout>>();
+				PLAYER_MSG->Request.m_args = std::tuple<INT64>(pPlayer->GetId());
+				PLAYER_MSG->Type = MSG_TYPE_DB_1;				//그냥 디폴트
+				PLAYER_MSG->SubType = ONQUERY;
+				MAINPROC.RegisterCommand(PLAYER_MSG);
+
+				//로그아웃 날린다.
+				GSCLIENT_PTR pSession = SERVER.GetClient(SessionId);
+				if (pSession != NULL)
+				{
+					CLIENT_KICK kick;
+					SEND_PROTO_BUFFER2(pPlayer->GetFrontSid(), kick, pSession)
+				}
+			}
+
+			continue;
+		}
+
 		//미아가 된 player들
 		GSCLIENT_PTR pSession = SERVER.GetClient(SessionId);
 		if (pSession == NULL)

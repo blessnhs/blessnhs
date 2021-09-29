@@ -65,6 +65,9 @@ public:
 	Account		m_Account;
 	Character	m_Char[MAX_CHAR_CNT];
 
+	DWORD		m_AliveTime;
+
+
 private:
 
 	DWORD       m_PairSessionId;

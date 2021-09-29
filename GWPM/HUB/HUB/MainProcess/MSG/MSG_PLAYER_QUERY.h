@@ -755,6 +755,9 @@ public:
 			//	pSession->SetPair(Index);
 
 				pNewPlayer->m_Char[0].SetLevel(level);
+
+				pNewPlayer->m_AliveTime = GetTickCount();
+
 				PLAYERMGR.Add(pNewPlayer);
 
 				res.set_var_code(Success);
