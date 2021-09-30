@@ -39,38 +39,52 @@ namespace Antioch
 
         public void AddMessage(string text,string name, Message.type type)
         {
-            var message = new Message
+            try
+            { 
+                var message = new Message
+                {
+                    Text = text,
+                    MessageType = type,
+                    AttachementUrl = "",
+                    MessageDateTime = DateTime.Now,
+                    ProfileUrl = name// "https://lh4.googleusercontent.com/-MEdrkpWi6Yg/AAAAAAAAAAI/AAAAAAAAAAA/AMZuuckIeT9M_SOv920jGkFwWiOCWkZRJA/s96-c/photo.jpg"
+                };
+
+                Messages.Add(message);
+
+                OutGoingText = string.Empty;
+            }
+            catch (Exception e)
             {
-                Text = text,
-                MessageType = type,
-                AttachementUrl = "",
-                MessageDateTime = DateTime.Now,
-                ProfileUrl = name// "https://lh4.googleusercontent.com/-MEdrkpWi6Yg/AAAAAAAAAAI/AAAAAAAAAAA/AMZuuckIeT9M_SOv920jGkFwWiOCWkZRJA/s96-c/photo.jpg"
-            };
 
-            Messages.Add(message);
-
-            OutGoingText = string.Empty;
+            }
         }
 
         public void AddMessage(string text, string name, string timestring,Message.type type)
         {
-            DateTime time;
-            if (DateTime.TryParse(timestring, out time) == false)
-                time = DateTime.Now;
-
-            var message = new Message
+            try
             {
-                Text = text,
-                MessageType = type,
-                AttachementUrl = "",
-                MessageDateTime = time,
-                ProfileUrl = name// "https://lh4.googleusercontent.com/-MEdrkpWi6Yg/AAAAAAAAAAI/AAAAAAAAAAA/AMZuuckIeT9M_SOv920jGkFwWiOCWkZRJA/s96-c/photo.jpg"
-            };
+                DateTime time;
+                if (DateTime.TryParse(timestring, out time) == false)
+                    time = DateTime.Now;
 
-            Messages.Add(message);
+                var message = new Message
+                {
+                    Text = text,
+                    MessageType = type,
+                    AttachementUrl = "",
+                    MessageDateTime = time,
+                    ProfileUrl = name// "https://lh4.googleusercontent.com/-MEdrkpWi6Yg/AAAAAAAAAAI/AAAAAAAAAAA/AMZuuckIeT9M_SOv920jGkFwWiOCWkZRJA/s96-c/photo.jpg"
+                };
 
-            OutGoingText = string.Empty;
+                Messages.Add(message);
+
+                OutGoingText = string.Empty;
+            }
+            catch(Exception e)
+            {
+
+            }
         }
 
         public void AddChatUserMessage(string name)

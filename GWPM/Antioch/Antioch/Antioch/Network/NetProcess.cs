@@ -90,7 +90,11 @@ namespace Antioch
 
                                 var currentVersion = VersionTracking.CurrentVersion;
 
-                                var myversion = double.Parse(currentVersion);
+                                double myversion;
+                                if(double.TryParse(currentVersion,out myversion) == false)
+                                { 
+                                }
+
                                 const Double Eps = 0.000000000000001;
 
                                 User.Version = res.VarVersion;
@@ -266,7 +270,6 @@ namespace Antioch
                                         User.RoomIdList.Add(res.VarRoomId);
                                         {
                                             User.CurrentChatViewNumber = res.VarRoomId;
-
 
                                             MainChatView outivew;
 
