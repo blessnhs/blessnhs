@@ -49,7 +49,6 @@ namespace Antioch
 
                 check_time = DateTime.Now.AddSeconds(5);
 
-                SendRoomList();
 
             }
 
@@ -62,7 +61,9 @@ namespace Antioch
 
                 SendPrayList();
 
-                notice_time = DateTime.Now.AddSeconds(30);
+                SendRoomList();
+
+                notice_time = DateTime.Now.AddSeconds(10);
             }
         }
 
@@ -320,6 +321,8 @@ namespace Antioch
                                     {
                                         outivew.ReceiveMessage(msg.VarMessage, msg.VarName, msg.VarTime);
                                     }
+
+                                    outivew.ScrollEnd();
                                 });
                             }
                             break;

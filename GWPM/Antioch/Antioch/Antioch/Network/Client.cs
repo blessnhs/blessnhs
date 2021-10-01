@@ -3,6 +3,7 @@ using System;
 using System.Collections.Concurrent;
 using System.Net;
 using System.Net.Sockets;
+using System.Threading;
 using Xamarin.Forms;
 
 
@@ -174,6 +175,63 @@ namespace Antioch
                 Console.WriteLine(e.ToString());
             }
         }
+
+
+        public void PacketRecvSync2()
+        {
+            try
+            {
+                if (socket == null || socket.Connected == false)
+                    return;
+
+                var readEvent = new AutoResetEvent(false);
+                var recieveArgs = new SocketAsyncEventArgs()
+                {
+                    UserToken = readEvent
+                };
+
+
+                recieveArgs.SetBuffer(state.buffer, 0, RecvPacketBuffer.MTU);
+                recieveArgs.Completed += recieveArgs_Completed;
+                socket.ReceiveAsync(recieveArgs);
+
+                if (recieveArgs.BytesTransferred == 0)
+                {
+                    if (recieveArgs.SocketError != SocketError.Success)
+                        throw new SocketException((int)recieveArgs.SocketError);
+                    //        throw new CommunicationException();
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+            }
+        }
+
+        void recieveArgs_Completed(object sender, SocketAsyncEventArgs e)
+        {
+            try
+            {
+                lock (this)
+                {
+                    var are = (AutoResetEvent)e.UserToken;
+
+                    Buffer.BlockCopy(state.buffer, 0, m_PacketBuffer, m_RemainLength, e.BytesTransferred);
+
+                    m_RemainLength += e.BytesTransferred;
+
+                    OnRecvPacketProc();
+
+                    are.Set();
+                }
+            }
+            catch (Exception ee)
+            {
+                Console.WriteLine(ee.ToString());
+            }
+
+        }
+
 
         RecvPacketBuffer state = new RecvPacketBuffer();
 

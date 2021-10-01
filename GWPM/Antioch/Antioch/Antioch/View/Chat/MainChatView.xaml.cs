@@ -74,7 +74,7 @@ namespace Antioch
         {
             if (vm.Messages.Count > 0)
             {
-                MessagesListView.ScrollTo(vm.Messages.Last(), ScrollToPosition.MakeVisible, true);
+                MessagesListView.ScrollTo(vm.Messages.Last(), ScrollToPosition.MakeVisible, false);
             }
         }
 

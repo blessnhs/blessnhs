@@ -136,11 +136,18 @@ namespace Antioch
                 {
                     while (true)
                     {
-                        NetProcess.start();
-                        NetProcess.client.PacketRecvSync();
-                        NetProcess.Loop();
+                        try
+                        {
 
-                        Thread.Sleep(10);
+                            NetProcess.start();
+                            NetProcess.client.PacketRecvSync2();
+                            NetProcess.Loop();
+
+                            Thread.Sleep(10);
+                        }catch(Exception e)
+                        {
+                            
+                        }
                     }
                 });
             }
