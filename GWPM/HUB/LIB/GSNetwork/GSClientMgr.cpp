@@ -47,7 +47,7 @@ VOID GSClientMgr::CheckAliveTime()
 			DWORD system_tick = GetTickCount();
 			int Diff = system_tick - (client_time + server_check_time);
 
-			if ((client_time + server_check_time) <= system_tick)
+			if (client_time != 0 && (client_time + server_check_time) <= system_tick)
 			{
 				pServer->Close(client.second->GetTCPSocket()->GetSocket());
 			}
