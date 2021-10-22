@@ -19,16 +19,26 @@
 #include <mongocxx/client.hpp>
 #include <mongocxx/instance.hpp>
 #include <mongocxx/uri.hpp>
+#include <mongocxx/pool.hpp> 
 #include <rpc.h>
 #include <windows.h>
 #include <iostream>
 
 #include <time.h>
 #include <boost/make_shared.hpp>
-
+#include <boost/tuple/tuple.hpp>
 
 #include "CLI.GS.pb.h"
 // add headers that you want to pre-compile here
 #include "framework.h"
+
+#define _CRT_SECURE_NO_WARNINGS
+
+#include <chrono>  // chrono::system_clock
+#include <ctime>   // localtime
+#include <sstream> // stringstream
+#include <iomanip> // put_time
+#include <string>  // string
+
 
 #endif //PCH_H
