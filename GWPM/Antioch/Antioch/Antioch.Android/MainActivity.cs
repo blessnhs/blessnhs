@@ -6,6 +6,9 @@ using Android.Views;
 using Android.OS;
 using Android.Content;
 using Android.Content.PM;
+using Android.Support.V4.Content;
+using System.Collections.Generic;
+using Android;
 
 namespace Antioch.Droid
 {
@@ -18,6 +21,9 @@ namespace Antioch.Droid
             ToolbarResource = Resource.Layout.Toolbar;
 
             base.OnCreate(savedInstanceState);
+
+            RequestPermissionsManually();
+
 
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
@@ -94,6 +100,43 @@ namespace Antioch.Droid
                 StartService(startService);
             }
 
+        }
+
+        List<string> _permission = new List<string>();
+        private void RequestPermissionsManually()
+        {
+            try
+            {
+                if (ContextCompat.CheckSelfPermission(this, Manifest.Permission.RecordAudio) != Permission.Granted)
+                    _permission.Add(Manifest.Permission.RecordAudio);
+
+                if (ContextCompat.CheckSelfPermission(this, Manifest.Permission.Camera) != Permission.Granted)
+                    _permission.Add(Manifest.Permission.Camera);
+
+                if (ContextCompat.CheckSelfPermission(this, Manifest.Permission.WriteExternalStorage) != Permission.Granted)
+                    _permission.Add(Manifest.Permission.WriteExternalStorage);
+
+                if (ContextCompat.CheckSelfPermission(this, Manifest.Permission.CallPhone) != Permission.Granted)
+                    _permission.Add(Manifest.Permission.CallPhone);
+
+                if (ContextCompat.CheckSelfPermission(this, Manifest.Permission.AccessNetworkState) != Permission.Granted)
+                    _permission.Add(Manifest.Permission.AccessNetworkState);
+
+                if (ContextCompat.CheckSelfPermission(this, Manifest.Permission.Internet) != Permission.Granted)
+                    _permission.Add(Manifest.Permission.Internet);
+
+                if (_permission.Count > 0)
+                {
+                    string[] array = _permission.ToArray();
+
+                    RequestPermissions(array, array.Length);
+                }
+
+            }
+            catch (Exception ex)
+            {
+
+            }
         }
     }
 }

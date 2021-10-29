@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Antioch.View.LobbyView">
   <ContentView.Content>
+
         <Grid x:Name="main_grid" Padding="10,20,20,20">
             <Grid.RowDefinitions BackgroundColor="White">
                 <RowDefinition Height="2*" />
@@ -21,11 +22,14 @@
             
             <Frame BorderColor="Gray" Grid.Row="0" Grid.Column="0" BackgroundColor="#D77186">
                 <StackLayout x:Name="Notice">
+                    <Button Clicked="OnBtn_Clicked"></Button>
                     <Label  x:Name="Noti" Text=" Noti"   TextColor="White" FontSize="Large" FontAttributes="Bold" />
                     <Label Text=" Notice "   TextColor="White" FontSize="Body" FontAttributes="Bold"/>
                     <StackLayout.GestureRecognizers>
                         <TapGestureRecognizer Tapped="OnTapped"/>
                     </StackLayout.GestureRecognizers>
+                 
+
                 </StackLayout>
             </Frame>
             

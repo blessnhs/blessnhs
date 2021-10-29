@@ -35,6 +35,11 @@ namespace Antioch.View
             LoadView(roompage);
         }
 
+        private async void OnBtn_Clicked(object sender, EventArgs e)
+        {
+            await Navigation.PushModalAsync(new CameraPage());
+        }
+
         public LobbyView()
         {
             InitializeComponent();
@@ -142,7 +147,8 @@ namespace Antioch.View
                       //  LoadView(new Hymn());
                         break;
                     case "QnA":
-                          LoadView(new QnAView());
+
+                        LoadView(new QnAView());
                         break;
                     case "Pray":
                         {

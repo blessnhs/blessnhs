@@ -79,14 +79,14 @@ namespace FullCameraApp.Droid
                             //서버쪽은 임시 주석
                             //server.ImagesSource.Enqueue(outStream);
                       
-                            if (Frames.Count > 5)
+                            if (Frames.Count > 0)
                             {
                                 NetProcess.SendRoomBITMAPMessage(Frames);
 
                                 Frames.Clear();
                             }
 
-                            checktime = DateTime.Now.AddMilliseconds(100);
+                            checktime = DateTime.Now.AddMilliseconds(30);
                         }
                     }
                     break;
@@ -378,7 +378,7 @@ namespace FullCameraApp.Droid
 
                             }, null);
                         }
-                        Thread.Sleep(100);
+                        Thread.Sleep(30);
                     }
                 });
 
