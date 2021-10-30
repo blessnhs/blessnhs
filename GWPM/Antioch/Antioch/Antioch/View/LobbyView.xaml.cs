@@ -35,11 +35,6 @@ namespace Antioch.View
             LoadView(roompage);
         }
 
-        private async void OnBtn_Clicked(object sender, EventArgs e)
-        {
-            await Navigation.PushModalAsync(new CameraPage());
-        }
-
         public LobbyView()
         {
             InitializeComponent();

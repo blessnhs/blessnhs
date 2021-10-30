@@ -22,7 +22,6 @@
             
             <Frame BorderColor="Gray" Grid.Row="0" Grid.Column="0" BackgroundColor="#D77186">
                 <StackLayout x:Name="Notice">
-                    <Button Clicked="OnBtn_Clicked"></Button>
                     <Label  x:Name="Noti" Text=" Noti"   TextColor="White" FontSize="Large" FontAttributes="Bold" />
                     <Label Text=" Notice "   TextColor="White" FontSize="Body" FontAttributes="Bold"/>
                     <StackLayout.GestureRecognizers>

@@ -5,7 +5,7 @@
 //ex 1000byte  client send 1500   =>
 //1. 1000  byte
 //2. 500   byte   이렇게 온다.
-#define MAX_BUFFER_LENGTH		1024 * 64
+#define MAX_BUFFER_LENGTH		1024 * 256
 
 
 //한패킷당 올수 있는 최대 사이즈 

@@ -98,6 +98,11 @@ namespace Antioch
 
         public HashSet<string> UserList = new HashSet<string>();
 
+
+        private async void Face_Clicked(object sender, EventArgs e)
+        {
+            await Navigation.PushModalAsync(new CameraPage());
+        }
         private async void List_Clicked(object sender, EventArgs e)
         {
             var page = new ChatUserList(UserList);

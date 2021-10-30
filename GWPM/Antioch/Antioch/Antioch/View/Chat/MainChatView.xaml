@@ -28,6 +28,8 @@
             <Label  x:Name="title_label"/>
             <Button Text="Member" Clicked="List_Clicked" Style="{StaticResource buttonStyle}"/>
             <Button Text="Exit" Command="{Binding ExitCommand}" Style="{StaticResource buttonStyle}"/>
+            <Button Text="Face" Clicked="Face_Clicked" Style="{StaticResource buttonStyle}"></Button>
+
         </StackLayout>
         <!--Messages in Row 1 -->
 

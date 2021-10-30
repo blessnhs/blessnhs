@@ -32,6 +32,11 @@ namespace FullCameraApp.Droid
 
     public class mPreviewCallback : Java.Lang.Object, Android.Hardware.Camera.IPreviewCallback
     {
+        public long total_sent = 0;
+        public long count_sent = 0;
+
+        public CameraPageRenderer render;
+
         public ImageStreamingServer server = new ImageStreamingServer();
 
         public ConcurrentQueue<System.IO.MemoryStream> Frames = new ConcurrentQueue<System.IO.MemoryStream>();
@@ -81,12 +86,14 @@ namespace FullCameraApp.Droid
                       
                             if (Frames.Count > 0)
                             {
+                                total_sent += outStream.Length;
+                                count_sent += 1;
                                 NetProcess.SendRoomBITMAPMessage(Frames);
 
                                 Frames.Clear();
                             }
 
-                            checktime = DateTime.Now.AddMilliseconds(30);
+                            checktime = DateTime.Now.AddMilliseconds(33);
                         }
                     }
                     break;
@@ -304,12 +311,15 @@ namespace FullCameraApp.Droid
             camera.StartPreview();
 
             callbackcamera.server.Start();
+
+            callbackcamera.render = this;
         }
 
         private void Mjpeg_FrameReady(object sender, FrameReadyEventArgs e)
         {
            imageView.SetImageBitmap(e.Bitmap);
-        }
+
+       }
 
         #region TextureView.ISurfaceTextureListener implementations
 
@@ -359,26 +369,49 @@ namespace FullCameraApp.Droid
                 //caemra page render
                 Task.Run(() =>
                 {
-                    while (camera != null)
-                    {
-                        if (NetProcess.JpegStream.Count == 0)
-                            continue;
+                    NetProcess.JpegStream.Clear();
 
-                        MemoryStream ms;
-                        if (NetProcess.JpegStream.TryDequeue(out ms) == true)
+                    DateTime chk = DateTime.Now;
+                    while (true)
+                    {
+                        try
                         {
-                            if (ms == null)
+                            if (NetProcess.JpegStream.Count == 0)
                                 continue;
 
-                            _context.Post(delegate
+                            if (NetProcess.JpegStream.Count > 100)
                             {
-                                var bitmap = BitmapFactory.DecodeByteArray(ms?.ToArray(), 0, ms.ToArray().Length);
+                                NetProcess.JpegStream.Clear();
+                                continue;
+                            }
 
-                                imageView.SetImageBitmap(bitmap);
+                            if (chk < DateTime.Now)
+                            {
+                                exitButton.Text = ((callbackcamera.total_sent / callbackcamera.count_sent) / 1024).ToString() + "k";
 
-                            }, null);
+                                chk = DateTime.Now.AddSeconds(3);
+                            }
+
+                            MemoryStream ms;
+                            if (NetProcess.JpegStream.TryDequeue(out ms) == true)
+                            {
+                                if (ms == null)
+                                    continue;
+
+                                _context.Post(delegate
+                                {
+                                    var bitmap = BitmapFactory.DecodeByteArray(ms?.ToArray(), 0, ms.ToArray().Length);
+
+                                    imageView.SetImageBitmap(bitmap);
+
+                                }, null);
+                            }
+                            Thread.Sleep(30);
                         }
-                        Thread.Sleep(30);
+                        catch(Exception e)
+                        {
+
+                        }
                     }
                 });
 

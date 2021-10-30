@@ -447,7 +447,7 @@ namespace Antioch
                 return;
             {
                 BITMAP_MESSAGE_REQ message = new BITMAP_MESSAGE_REQ();
-                message.VarRoomNumber = 0;
+                message.VarRoomNumber = User.CurrentChatViewNumber;
                 foreach (var msg in list)
                 {
                     message.VarMessage.Add(ByteString.CopyFrom(msg.ToArray()));
@@ -467,7 +467,7 @@ namespace Antioch
                 return;
             {
                 AUDIO_MESSAGE_REQ message = new AUDIO_MESSAGE_REQ();
-                message.VarRoomNumber = 0;
+                message.VarRoomNumber = User.CurrentChatViewNumber;
                 foreach (var msg in list)
                 {
                     message.VarMessage.Add(ByteString.CopyFrom(msg.ToArray()));
