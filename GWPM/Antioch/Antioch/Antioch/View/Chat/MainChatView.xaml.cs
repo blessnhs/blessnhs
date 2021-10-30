@@ -101,7 +101,7 @@ namespace Antioch
 
         private async void Face_Clicked(object sender, EventArgs e)
         {
-            await Navigation.PushModalAsync(new CameraPage());
+            await PopupNavigation.Instance.PushAsync(new CameraPage());
         }
         private async void List_Clicked(object sender, EventArgs e)
         {

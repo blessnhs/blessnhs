@@ -20,7 +20,7 @@ namespace Antioch.Droid
 {
     public class AudioManagerM
     {
-         int sampleRate = 8000;
+         int sampleRate = 44100;
          ChannelOut channelOut = ChannelOut.Mono;
          ChannelIn channelIn = ChannelIn.Mono;
          Encoding encoding = Encoding.Pcm16bit;

@@ -25,6 +25,8 @@ using Plugin.CurrentActivity;
 using rtaNetworking.Streaming;
 using Xamarin.Forms.Platform.Android;
 using Antioch.View;
+using Rg.Plugins.Popup.Pages;
+using Rg.Plugins.Popup.Services;
 
 [assembly: Xamarin.Forms.ExportRenderer(typeof(CameraPage), typeof(CameraPageRenderer))]
 namespace FullCameraApp.Droid
@@ -153,9 +155,7 @@ namespace FullCameraApp.Droid
         {
             audiomgr.Clear();
 
-            //var page = (Element as CameraPage);
-
-            //page.Close();
+          
 
         }
 
@@ -224,13 +224,18 @@ namespace FullCameraApp.Droid
             mainLayout.AddView(exitButton);
             void ButtonClicked(object sender, EventArgs args)
             {
-                //var page = Element as CameraPage;
+                var page = Element as CameraPage;
 
-                //page.Close();
+                PopupNavigation.Instance.PopAsync();
             }
             ///////////////////////////////////////////////////////////////////////////////
 
             AddView(mainLayout);
+        }
+
+        public void AddNewUser()
+        {
+
         }
 
      
