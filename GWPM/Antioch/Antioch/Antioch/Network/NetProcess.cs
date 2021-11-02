@@ -43,9 +43,9 @@ namespace Antioch
             if (check_time < DateTime.Now)
             {
                 // string ip = "211.212.37.238";//"192.168.0.9"
-                string ip = "192.168.0.9";
+                string ip = GetIPAddress("blessnhs.iptime.org");
 
-                client.StartClient(ip, 23000);
+                client.StartClient(ip, 20000);
 
                 check_time = DateTime.Now.AddSeconds(5);
 
@@ -67,8 +67,8 @@ namespace Antioch
             }
         }
 
-        public static ConcurrentQueue<MemoryStream> JpegStream = new ConcurrentQueue<MemoryStream>();
-        public static ConcurrentQueue<MemoryStream> AudioStream = new ConcurrentQueue<MemoryStream>();
+        public static ConcurrentQueue<StreamWrapper> JpegStream = new ConcurrentQueue<StreamWrapper>();
+        public static ConcurrentQueue<StreamWrapper> AudioStream = new ConcurrentQueue<StreamWrapper>();
 
 
         static public void Loop()
@@ -370,7 +370,10 @@ namespace Antioch
 
                                 foreach (var msg in res.VarMessage)
                                 {
-                                    AudioStream.Enqueue(new MemoryStream(msg.ToByteArray()));
+                                    StreamWrapper wra = new StreamWrapper();
+                                    wra.stream = new MemoryStream(msg.ToByteArray());
+                                    wra.pos = res.VarPos;
+                                    AudioStream.Enqueue(wra);
                                 }
                             }
                             break;
@@ -381,7 +384,10 @@ namespace Antioch
 
                                 foreach (var msg in res.VarMessage)
                                 {
-                                    JpegStream.Enqueue(new MemoryStream(msg.ToByteArray()));
+                                    StreamWrapper wra = new StreamWrapper();
+                                    wra.stream = new MemoryStream(msg.ToByteArray());
+                                    wra.pos = res.VarPos;
+                                    JpegStream.Enqueue(wra);
                                 }
 
                             }

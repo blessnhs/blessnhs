@@ -17,5 +17,26 @@ namespace Antioch.View
 		{
 			InitializeComponent ();
 		}
+
+		public void DrawLayout()
+        {
+            var controlGrid = new Grid { RowSpacing = 1, ColumnSpacing = 1 ,BackgroundColor=Color.Red};
+
+            controlGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(2, GridUnitType.Star) });
+            controlGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(2, GridUnitType.Star) });
+
+            for (int i = 0; i < 3; i++)
+            {
+                controlGrid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
+            }
+
+            Content = new Label()
+            {
+                Text = "hllo"
+            }  ;
+        }
+
+
+
 	}
 }

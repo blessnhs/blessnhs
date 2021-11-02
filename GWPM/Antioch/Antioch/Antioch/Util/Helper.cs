@@ -1,10 +1,18 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
 using System.Text;
 using Xamarin.Forms;
 
 namespace Antioch
 {
+
+    public class StreamWrapper
+    {
+        public MemoryStream stream = new MemoryStream();
+        public int pos = 0;
+    }
+
 
     static class Helper
     {
