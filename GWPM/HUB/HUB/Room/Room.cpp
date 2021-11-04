@@ -2,6 +2,27 @@
 #include "./Room.h"
 #include "../Server/GSHub.h"
 
+
+int  Room::FindPlayerPos(PLAYER_PTR Player)
+{
+	int pos = 0;
+	for each (auto iter in m_PlayerMap)
+	{
+		PlayerPtr pPlayer = iter.second;
+		if (pPlayer == NULL)
+			continue;
+
+		if (iter.second->GetId() == Player->GetId())
+		{
+			return pos;
+		}
+
+		pos++;
+	}
+
+	return 0;
+}
+
 bool Room::FindPlayer(PLAYER_PTR Player)
 {
 	for each(auto iter in m_PlayerMap)

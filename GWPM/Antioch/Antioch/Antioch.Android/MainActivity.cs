@@ -9,6 +9,7 @@ using Android.Content.PM;
 using Android.Support.V4.Content;
 using System.Collections.Generic;
 using Android;
+using static Android.OS.PowerManager;
 
 namespace Antioch.Droid
 {
@@ -22,8 +23,14 @@ namespace Antioch.Droid
 
             base.OnCreate(savedInstanceState);
 
-            RequestPermissionsManually();
 
+            Window.AddFlags(WindowManagerFlags.KeepScreenOn |
+                      WindowManagerFlags.DismissKeyguard |
+                      WindowManagerFlags.ShowWhenLocked |
+                      WindowManagerFlags.TurnScreenOn);
+         
+
+            RequestPermissionsManually();
 
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
@@ -32,6 +39,8 @@ namespace Antioch.Droid
             Rg.Plugins.Popup.Popup.Init(this, savedInstanceState);
 
             RegisterForegroundService();
+
+            unlockScreen();
         }
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
         {
@@ -40,15 +49,12 @@ namespace Antioch.Droid
             base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
         }
 
-        public override void OnBackPressed()
-        {
-            if (Rg.Plugins.Popup.Popup.SendBackPressed(base.OnBackPressed))
-            {
-            }
-            else
-            {
-            }
+        private void unlockScreen()
+        { 
+            WakeLock screenLock = ((PowerManager)GetSystemService(Context.PowerService)).NewWakeLock(WakeLockFlags.ScreenBright | WakeLockFlags.AcquireCausesWakeup, "tag");
+            screenLock.Acquire();
         }
+     
     
 
         void RegisterForegroundService()

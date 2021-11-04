@@ -31,6 +31,8 @@ public:
 
 	bool FindPlayer(PLAYER_PTR Player);
 
+	int  FindPlayerPos(PLAYER_PTR Player);
+
 	bool RemovePlayer(PLAYER_PTR Player);
 
 	bool IsAllComplete();

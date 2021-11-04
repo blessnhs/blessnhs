@@ -26,9 +26,7 @@ namespace FullCameraApp.Droid
         public long total_bytes_sent = 0;
         public long count_sent = 0;
 
-        public CameraPageRenderer render;
-
-        public ImageStreamingServer server = new ImageStreamingServer();
+        public CameraPageRenderer renderer;
 
         public ConcurrentQueue<System.IO.MemoryStream> Frames = new ConcurrentQueue<System.IO.MemoryStream>();
 
@@ -56,19 +54,31 @@ namespace FullCameraApp.Droid
 
                             var frameToStream = outStream.ToArray();
                             var bitmap = BitmapFactory.DecodeByteArray(frameToStream, 0, frameToStream.Length);
+                    
                             outStream = null;
 
                             outStream = new System.IO.MemoryStream();
 
                             bitmap = Bitmap.CreateScaledBitmap(bitmap, 320, 240, true);
+
+                            var mat = new Matrix();
+
+                            if (renderer.currentFacing == Android.Hardware.CameraFacing.Front)
+                                mat.PostRotate(-90);
+                            else
+                                mat.PostRotate(90);
+
+                            bitmap = Bitmap.CreateBitmap(bitmap, 0, 0, bitmap.Width, bitmap.Height, mat, true);
+
                             bitmap.Compress(Bitmap.CompressFormat.Jpeg, 50, outStream);
 
+                         
 
                             Frames.Enqueue(outStream);
-                            
+
                             //서버쪽은 임시 주석
-                            //server.ImagesSource.Enqueue(outStream);
-                      
+                            //render.server.ImagesSource.Enqueue(outStream);
+
                             if (Frames.Count > 0)
                             {
                                 total_bytes_sent += outStream.Length;
@@ -90,7 +100,7 @@ namespace FullCameraApp.Droid
                     {
                         foreach (var frame in Frames)
                         {
-                            server.ImagesSource.Enqueue(frame);
+                            renderer.server.ImagesSource.Enqueue(frame);
                         }
 
                         Frames.Clear();
@@ -108,6 +118,8 @@ namespace FullCameraApp.Droid
     {
         Activity CurrentContext => CrossCurrentActivity.Current.Activity;
 
+        public ImageStreamingServer server = new ImageStreamingServer();
+
         public CameraPageRenderer(Context context) : base(context)
         {
             _context = SynchronizationContext.Current;
@@ -118,7 +130,7 @@ namespace FullCameraApp.Droid
 
         RelativeLayout mainLayout;
         
-        //내 정보
+        //내 정보 이미지 카메라
         TextureView liveView;
        
         // 상대방정보들
@@ -126,7 +138,10 @@ namespace FullCameraApp.Droid
 
         //퇴장버튼
         Button exitButton;
-    
+
+        //카메라 스위치
+        Button switchButton;
+
         Android.Hardware.Camera camera;
 
         AudioManagerM audiomgr = new AudioManagerM();
@@ -162,7 +177,7 @@ namespace FullCameraApp.Droid
             imageViewParams.Height = half_height;
             imageViewParams.Width = half_width;
 
-            imageView.Rotation = 270;
+            imageView.Rotation = 0;
             imageView.LayoutParameters = imageViewParams;
             imageView.SetScaleType(ImageView.ScaleType.FitXy);
             mainLayout.AddView(imageView);
@@ -218,24 +233,70 @@ namespace FullCameraApp.Droid
             ButtonParams.Width  = 150;
             exitButton.LayoutParameters = ButtonParams;
             exitButton.Text = "EXIT";
-            exitButton.Click += ButtonClicked;
-            mainLayout.AddView(exitButton);
-            void ButtonClicked(object sender, EventArgs args)
+            exitButton.Click += async (s, e) =>
             {
                 var page = Element as CameraPage;
 
                 PopupNavigation.Instance.PopAsync();
-            }
+            };
+            mainLayout.AddView(exitButton);
+            ////////////////////////////////////////////////////////////DrawLayout///////////////////
+            switchButton = new Button(Context);
+            switchButton.LayoutParameters = ButtonParams;
+            switchButton.Text = "Switch";
+            switchButton.Click += async (s, e) =>
+            {
+                StopCamera();
+
+                if (currentFacing == Android.Hardware.CameraFacing.Front)
+                    currentFacing = Android.Hardware.CameraFacing.Back;
+                else
+                    currentFacing = Android.Hardware.CameraFacing.Front;
+
+                {
+                    int cameraCount = Android.Hardware.Camera.NumberOfCameras;
+                    int cameraId = 0;
+                    Android.Hardware.Camera.CameraInfo cameraInfo = new Android.Hardware.Camera.CameraInfo();
+                    for (int camIdx = 0; camIdx < cameraCount; camIdx++)
+                    {
+                        Android.Hardware.Camera.GetCameraInfo(camIdx, cameraInfo);
+                        if (cameraInfo.Facing == currentFacing)
+                        {
+                            camera = Android.Hardware.Camera.Open(camIdx);
+                            cameraId = camIdx;
+                            break;
+                        }
+                    }
+
+                    if (camera == null)
+                        camera = Android.Hardware.Camera.Open();
+
+                    var parameters = camera.GetParameters();
+
+                    // Find the preview aspect ratio that is closest to the surface aspect
+                    //var previewSize = parameters.SupportedPreviewSizes
+                    //                            .OrderBy(s => Math.Abs(s.Width / (decimal)s.Height - aspect))
+                    //                            .First();
+
+                    var previewSize = parameters.SupportedPreviewSizes[2];
+                    //     mainLayout.LayoutParameters.Height = previewSize.Height;
+                    //     mainLayout.LayoutParameters.Width = previewSize.Width;
+
+                    parameters.SetPreviewSize(previewSize.Width, previewSize.Height);
+                    camera.SetParameters(parameters);
+                    camera.SetPreviewTexture(_surface);
+                    StartCamera();
+                }
+            };
+            mainLayout.AddView(switchButton);
+
             ////////////////////////////////////////////////////////////DrawLayout///////////////////
 
-         
-       
+
+
+
+
             AddView(mainLayout);
-        }
-
-        public void AddNewUser()
-        {
-
         }
 
      
@@ -270,6 +331,9 @@ namespace FullCameraApp.Droid
        
             exitButton.SetX(half_width);
             exitButton.SetY(metrics.HeightPixels-200);
+
+            switchButton.SetX(half_width + 250);
+            switchButton.SetY(metrics.HeightPixels - 200);
         }
 
         public void SetupEventHandlers()
@@ -306,24 +370,25 @@ namespace FullCameraApp.Droid
 
         private void StopCamera()
         {
+          
             camera.SetPreviewCallback(null);
-
             camera.StopPreview();
             camera.Release();
-            camera.Dispose();
             camera = null;
         }
 
-        mPreviewCallback callbackcamera = new mPreviewCallback();
+    
 
         private void StartCamera()
         {
+            mPreviewCallback callbackcamera = new mPreviewCallback();
+
             camera.SetPreviewCallback(callbackcamera);
             camera.StartPreview();
 
-            callbackcamera.server.Start();
+            server.Start();
 
-            callbackcamera.render = this;
+            callbackcamera.renderer = this;
         }
 
         private void Mjpeg_FrameReady(object sender, FrameReadyEventArgs e)
@@ -334,10 +399,12 @@ namespace FullCameraApp.Droid
 
         #region TextureView.ISurfaceTextureListener implementations
 
+        public Android.Hardware.CameraFacing currentFacing;
+        SurfaceTexture _surface;
         public void OnSurfaceTextureAvailable(SurfaceTexture surface, int width, int height)
         {
             {
-
+                _surface = surface;
                 {
                     int cameraCount = Android.Hardware.Camera.NumberOfCameras;
                     int cameraId = 0;
@@ -349,6 +416,7 @@ namespace FullCameraApp.Droid
                         {
                             camera = Android.Hardware.Camera.Open(camIdx);
 
+                            currentFacing = Android.Hardware.CameraFacing.Front;
                             cameraId = camIdx;
                             break;
                         }
@@ -398,7 +466,7 @@ namespace FullCameraApp.Droid
 
                             if (chk < DateTime.Now)
                             {
-                                exitButton.Text = ((callbackcamera.total_bytes_sent / callbackcamera.count_sent) / 1024).ToString() + "k";
+                                exitButton.Text = "exit";// ((callbackcamera.total_bytes_sent / callbackcamera.count_sent) / 1024).ToString() + "k";
 
                                 chk = DateTime.Now.AddSeconds(3);
                             }

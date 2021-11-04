@@ -460,6 +460,9 @@ VOID HubProcess::ROOM_AUDIO_CHAT(WORD SubProtocol,LPVOID Data, DWORD Length, boo
 	ROOM_PTR pPtr = ROOMMGR.Search(message.var_room_number());
 	if (pPtr != NULL)
 	{
+		int pos = pPtr->FindPlayerPos(pPlayer);
+		res.set_var_pos(pos);
+
 		pPtr->SendToAll(res, pPlayer->GetId());
 	}
 	else
@@ -485,11 +488,15 @@ VOID HubProcess::ROOM_BITMAP_CHAT(WORD SubProtocol,LPVOID Data, DWORD Length, bo
 		res.add_var_message(msg);
 	}
 
+
 	res.set_var_name(pPlayer->m_Account.GetName());
 
 	ROOM_PTR pPtr = ROOMMGR.Search(message.var_room_number());
 	if (pPtr != NULL)
 	{
+		int pos = pPtr->FindPlayerPos(pPlayer);
+		res.set_var_pos(pos);
+
 		pPtr->SendToAll(res, pPlayer->GetId());
 	}
 	else

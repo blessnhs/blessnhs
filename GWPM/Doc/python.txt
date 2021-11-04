@@ -1,0 +1,2 @@
+PS C:\Users\nhs\AppData\Local\Programs\Python\Python38> python -m pip install pymongo
+PS C:\Users\nhs\AppData\Local\Programs\Python\Python38> python -m pip install protobuf
