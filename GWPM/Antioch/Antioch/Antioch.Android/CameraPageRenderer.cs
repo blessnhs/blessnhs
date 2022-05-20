@@ -24,7 +24,6 @@ namespace FullCameraApp.Droid
     public class mPreviewCallback : Java.Lang.Object, Android.Hardware.Camera.IPreviewCallback
     {
         public long total_bytes_sent = 0;
-        public long count_sent = 0;
 
         public CameraPageRenderer renderer;
 
@@ -50,7 +49,7 @@ namespace FullCameraApp.Droid
 
                             System.IO.MemoryStream outStream = new System.IO.MemoryStream();
 
-                            img.CompressToJpeg(new Rect(0, 0, paras.PreviewSize.Width, paras.PreviewSize.Height), 50, outStream);
+                            img.CompressToJpeg(new Rect(0, 0, paras.PreviewSize.Width, paras.PreviewSize.Height), 100, outStream);
 
                             var frameToStream = outStream.ToArray();
                             var bitmap = BitmapFactory.DecodeByteArray(frameToStream, 0, frameToStream.Length);
@@ -72,23 +71,20 @@ namespace FullCameraApp.Droid
 
                             bitmap.Compress(Bitmap.CompressFormat.Jpeg, 50, outStream);
 
-                         
-
                             Frames.Enqueue(outStream);
 
                             //서버쪽은 임시 주석
                             //render.server.ImagesSource.Enqueue(outStream);
 
-                            if (Frames.Count > 0)
+                            if (Frames.Count > 10)
                             {
                                 total_bytes_sent += outStream.Length;
-                                count_sent += 1;
                                 NetProcess.SendRoomBITMAPMessage(Frames);                              
 
                                 Frames.Clear();
                             }
 
-                            checktime = DateTime.Now.AddMilliseconds(33);
+                            checktime = DateTime.Now.AddMilliseconds(1);
                         }
                     }
                     break;
@@ -472,32 +468,33 @@ namespace FullCameraApp.Droid
                             }
 
                             StreamWrapper ms;
-                            if (NetProcess.JpegStream.TryDequeue(out ms) == true)
+                            while (NetProcess.JpegStream.TryDequeue(out ms) == true)
                             {
                                 if (ms == null)
                                     continue;
 
-                                _context.Post(delegate
+                                //   _context.Post(delegate
                                 {
-                                   
-                                  var bitmap = BitmapFactory.DecodeByteArray(ms?.stream.ToArray(), 0, ms.stream.ToArray().Length);
 
-                                  ImageView imageView;
-                                  if (imageViewDic.TryGetValue(ms.pos, out imageView) == true)
-                                      imageView.SetImageBitmap(bitmap);
-                                  else
-                                  {
-                                      AddImageView(ms.pos);
+                                    var bitmap = BitmapFactory.DecodeByteArray(ms?.stream.ToArray(), 0, ms.stream.ToArray().Length);
 
-                                      if (imageViewDic.TryGetValue(ms.pos, out imageView) == true)
-                                          imageView.SetImageBitmap(bitmap);
-                                  }
-                                   
+                                    ImageView imageView;
+                                    if (imageViewDic.TryGetValue(ms.pos, out imageView) == true)
+                                        imageView.SetImageBitmap(bitmap);
+                                    else
+                                    {
+                                        AddImageView(ms.pos);
 
-                                }, null);
+                                        if (imageViewDic.TryGetValue(ms.pos, out imageView) == true)
+                                            imageView.SetImageBitmap(bitmap);
+                                    }
+
+
+                                    Thread.Sleep(2);
+                                    //   }, null);
+                                }
                             }
 
-                            Thread.Sleep(30);
                         }
                         catch(Exception e)
                         {

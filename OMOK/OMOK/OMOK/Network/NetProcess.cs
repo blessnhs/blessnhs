@@ -38,7 +38,7 @@ namespace OMOK.Network
    
         static public void start()
         {
-            string ip = "211.212.37.238";
+            string ip = "192.168.0.9";
 
 
             //연결중이면 안한다. 
@@ -48,7 +48,7 @@ namespace OMOK.Network
                 {
                     time = DateTime.Now;
                     if(User.Token != null && User.Token != "")
-                        client.StartClient(ip, 20000);
+                        client.StartClient(ip, 1982);
                 }
             }
 

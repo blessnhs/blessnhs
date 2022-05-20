@@ -27,7 +27,7 @@ using Plugin.CurrentActivity;
 using rtaNetworking.Streaming;
 using Xamarin.Forms.Platform.Android;
 
-[assembly: Xamarin.Forms.ExportRenderer(typeof(CameraPage), typeof(CameraPageRenderer))]
+[assembly: Xamarin.Forms.ExportRenderer(typeof(OMOK.CameraPage), typeof(CameraPageRenderer))]
 namespace FullCameraApp.Droid
 {
 
@@ -143,16 +143,6 @@ namespace FullCameraApp.Droid
             SetupEventHandlers();
         }
 
-        void ButtonClicked(object sender, EventArgs args)
-        {
-            audiomgr.Clear();
-
-            var page = (Element as CameraPage);
-
-            page.Close();
-
-        }
-
         int half_width;
         int half_height;
 
@@ -218,9 +208,11 @@ namespace FullCameraApp.Droid
             mainLayout.AddView(exitButton);
             void ButtonClicked(object sender, EventArgs args)
             {
-                var page = Element as CameraPage;
+                var page = Element as OMOK.CameraPage;
 
-                page.Close();
+              
+
+                StopCamera();
             }
             ///////////////////////////////////////////////////////////////////////////////
 
@@ -264,9 +256,9 @@ namespace FullCameraApp.Droid
         {
             if (keyCode == Keycode.Back)
             {
-                var page = Element as CameraPage;
+                var page = Element as OMOK.CameraPage;
 
-                page.Close();
+              //  page.Close();
             }
             return base.OnKeyDown(keyCode, e);
         }

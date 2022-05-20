@@ -316,6 +316,10 @@ namespace OMOK.Views
 
         async void OnShopClicked(object sender, System.EventArgs e)
         {
+            var cameraPage = new CameraPage();
+            //Navigation.PushAsync((new CameraPage()/*_MachPage*/));
+            Navigation.PushPopupAsync(cameraPage);
+
             //await DisplayAlert("Info", "Comming Soon", "OK");
             DependencyService.Get<Toast>().Show("Comming Soon");
         }

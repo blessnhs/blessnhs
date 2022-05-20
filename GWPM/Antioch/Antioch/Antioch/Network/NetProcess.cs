@@ -42,8 +42,8 @@ namespace Antioch
         {
             if (check_time < DateTime.Now)
             {
-                string ip = "192.168.0.9";
-                //string ip = GetIPAddress("blessnhs.iptime.org");
+                //string ip = "192.168.0.9";
+                string ip = GetIPAddress("blessnhs.iptime.org");
 
                 client.StartClient(ip, 20000);
 

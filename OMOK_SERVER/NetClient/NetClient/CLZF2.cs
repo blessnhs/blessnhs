@@ -202,7 +202,7 @@ public class CLZF2
         // Estimate necessary output buffer size.
         int outputByteCountGuess = inputBytes.Length * BUFFER_SIZE_ESTIMATE;
         if (outputBuffer == null || outputBuffer.Length < outputByteCountGuess)
-            outputBuffer = new byte[outputByteCountGuess];
+            outputBuffer = new byte[outputByteCountGuess * 2];
 
         int byteCount = lzf_decompress(inputBytes, ref outputBuffer, inputLength);
 
@@ -210,7 +210,7 @@ public class CLZF2
         while (byteCount == 0)
         {
             outputByteCountGuess *= 2;
-            outputBuffer = new byte[outputByteCountGuess];
+            outputBuffer = new byte[outputByteCountGuess * 2];
             byteCount = lzf_decompress(inputBytes, ref outputBuffer, inputLength);
         }
 

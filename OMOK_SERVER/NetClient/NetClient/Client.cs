@@ -4,6 +4,7 @@ using System.Collections.Concurrent;
 using System.IO;
 using System.Net;
 using System.Net.Sockets;
+using System.Threading;
 
 namespace NetClient
 {
@@ -24,7 +25,9 @@ namespace NetClient
 
     public class Client
     {
-       
+        public int id;
+        public int chat_count;
+        public int room_number;
         public Socket socket = null;
 
         public void StartClient(string address, int port)
@@ -54,20 +57,25 @@ namespace NetClient
                     socket = new Socket(AddressFamily.InterNetwork,
                          SocketType.Stream, ProtocolType.Tcp);
                 }
+                socket.ReceiveTimeout = 100;
+                socket.SendTimeout = 10;
 
                 socket.Connect(remoteEP);
 
+                if (socket.Connected == false)
+                    return;
 
-                VERSION_REQ person = new VERSION_REQ
-                {
+               
+               VERSION_REQ person = new VERSION_REQ
+               {
 
-                };
-                using (MemoryStream stream = new MemoryStream())
-                {
-                    person.WriteTo(stream);
+               };
+               using (MemoryStream stream = new MemoryStream())
+               {
+                   person.WriteTo(stream);
 
-                    WritePacket((int)PROTOCOL.IdPktVersionReq, stream.ToArray(), stream.ToArray().Length);
-                }
+                   WritePacket((int)PROTOCOL.IdPktVersionReq, stream.ToArray(), stream.ToArray().Length);
+               }
             }
             catch (Exception e)
             {
@@ -128,7 +136,6 @@ namespace NetClient
 
         RecvPacketBuffer state = new RecvPacketBuffer();
 
-
         private void Receive(Socket client)
         {
             try
@@ -146,10 +153,49 @@ namespace NetClient
 
                     OnRecvPacketProc();
                 }
+
+              //  lock (this)
+                //{
+                //    var readEvent = new AutoResetEvent(false);
+                //    var recieveArgs = new SocketAsyncEventArgs()
+                //    {
+                //        UserToken = readEvent
+                //    };
+
+
+                //    recieveArgs.SetBuffer(state.buffer, 0, RecvPacketBuffer.MTU);
+                //    recieveArgs.Completed += recieveArgs_Completed;
+                //    client.ReceiveAsync(recieveArgs);
+
+                //    if (recieveArgs.BytesTransferred == 0)
+                //    {
+                //        if (recieveArgs.SocketError != SocketError.Success)
+                //            throw new SocketException((int)recieveArgs.SocketError);
+                //        //        throw new CommunicationException();
+                //    }
+                //}
             }
             catch (Exception e)
             {
-                Console.WriteLine(e.ToString());
+              
+            }
+        }
+
+
+        void recieveArgs_Completed(object sender, SocketAsyncEventArgs e)
+        {
+            var are = (AutoResetEvent)e.UserToken;
+
+            lock (this)
+            {
+
+                Buffer.BlockCopy(state.buffer, 0, m_PacketBuffer, m_RemainLength, e.BytesTransferred);
+
+                m_RemainLength += e.BytesTransferred;
+
+                OnRecvPacketProc();
+
+                are.Set();
             }
         }
 
@@ -166,7 +212,8 @@ namespace NetClient
             {
                 if(compressflag == 1)
                 {
-                    var byteout = CLZF2.Decompress(mCompletePacketBuffer);
+
+                    var byteout = GZip.Decompress(mCompletePacketBuffer);
 
                     CompletePacket complete = new CompletePacket();
                     complete.Protocol = Protocol;
@@ -191,7 +238,7 @@ namespace NetClient
             }
         }
 
-        private const int CheckCompressSize = 750;
+        private const int CheckCompressSize = 1;
         private int mCompressFlag = 0;
 
         public bool WritePacket(int protocol, byte[] packet, int payloadsize)
@@ -199,7 +246,7 @@ namespace NetClient
 
             if(payloadsize > CheckCompressSize)
             {
-                var compress = CLZF2.Compress(packet);
+                var compress = GZip.Compress(packet);
 
                 Int32 PacketLength = sizeof(Int32) +
                     sizeof(Int16) +
