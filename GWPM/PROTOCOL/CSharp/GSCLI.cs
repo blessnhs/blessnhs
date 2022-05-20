@@ -51,29 +51,30 @@ public static partial class GSCLIReflection {
           "ZXMYAyADKAsyDC5Sb29tTWVzc2FnZRIXCg92YXJfcm9vbV9udW1iZXIYBCAB",
           "KAUiVQoKTk9USUNFX1JFUxIoCgJpZBgBIAEoDjIJLlBST1RPQ09MOhFJRF9Q",
           "S1RfTk9USUNFX1JFUxIdCgh2YXJfbGlzdBgCIAMoCzILLk5vdGlmeUluZm8i",
-          "iwEKEkJJVE1BUF9NRVNTQUdFX1JFUxIwCgJpZBgBIAEoDjIJLlBST1RPQ09M",
+          "nAEKEkJJVE1BUF9NRVNTQUdFX1JFUxIwCgJpZBgBIAEoDjIJLlBST1RPQ09M",
           "OhlJRF9QS1RfQklUTUFQX01FU1NBR0VfUkVTEhwKCHZhcl9jb2RlGAIgASgO",
           "MgouRXJyb3JDb2RlEhMKC3Zhcl9tZXNzYWdlGAMgAygMEhAKCHZhcl9uYW1l",
-          "GAQgASgMIokBChFBVURJT19NRVNTQUdFX1JFUxIvCgJpZBgBIAEoDjIJLlBS",
-          "T1RPQ09MOhhJRF9QS1RfQVVESU9fTUVTU0FHRV9SRVMSHAoIdmFyX2NvZGUY",
-          "AiABKA4yCi5FcnJvckNvZGUSEwoLdmFyX21lc3NhZ2UYAyADKAwSEAoIdmFy",
-          "X25hbWUYBCABKAwifQoQUFJBWV9NRVNTQUdFX1JFUxIuCgJpZBgBIAEoDjIJ",
-          "LlBST1RPQ09MOhdJRF9QS1RfUFJBWV9NRVNTQUdFX1JFUxIcCgh2YXJfY29k",
-          "ZRgCIAEoDjIKLkVycm9yQ29kZRIbCgh2YXJfbGlzdBgDIAMoCzIJLlByYXlJ",
-          "bmZvIo8BChRQUkFZX01FU1NBR0VfUkVHX1JFUxIyCgJpZBgBIAEoDjIJLlBS",
-          "T1RPQ09MOhtJRF9QS1RfUFJBWV9NRVNTQUdFX1JFR19SRVMSHAoIdmFyX2Nv",
-          "ZGUYAiABKA4yCi5FcnJvckNvZGUSEwoLdmFyX21lc3NhZ2UYAyABKAkSEAoI",
-          "dmFyX3RpbWUYBCABKAkiTgoHUU5BX1JFUxIlCgJpZBgBIAEoDjIJLlBST1RP",
-          "Q09MOg5JRF9QS1RfUU5BX1JFUxIcCgh2YXJfY29kZRgCIAEoDjIKLkVycm9y",
-          "Q29kZSJ3Cg1NQUlMX0xJU1RfUkVTEisKAmlkGAEgASgOMgkuUFJPVE9DT0w6",
-          "FElEX1BLVF9NQUlMX0xJU1RfUkVTEhwKCHZhcl9jb2RlGAIgASgOMgouRXJy",
-          "b3JDb2RlEhsKCHZhcl9saXN0GAMgAygLMgkuTWFpbEluZm8iTgoHUkVHX1JF",
-          "UxIlCgJpZBgBIAEoDjIJLlBST1RPQ09MOg5JRF9QS1RfUkVHX1JFUxIcCgh2",
-          "YXJfY29kZRgCIAEoDjIKLkVycm9yQ29kZSJiChFDTElFTlRfTE9HT1VUX1JF",
-          "UxIvCgJpZBgBIAEoDjIJLlBST1RPQ09MOhhJRF9QS1RfQ0xJRU5UX0xPR09V",
-          "VF9SRVMSHAoIdmFyX2NvZGUYAiABKA4yCi5FcnJvckNvZGUiRQoLQ0xJRU5U",
-          "X0tJQ0sSKQoCaWQYASABKA4yCS5QUk9UT0NPTDoSSURfUEtUX0NMSUVOVF9L",
-          "SUNLEgsKA3NpZBgCIAEoBUICSAE="));
+          "GAQgASgMEg8KB3Zhcl9wb3MYBSABKAUimgEKEUFVRElPX01FU1NBR0VfUkVT",
+          "Ei8KAmlkGAEgASgOMgkuUFJPVE9DT0w6GElEX1BLVF9BVURJT19NRVNTQUdF",
+          "X1JFUxIcCgh2YXJfY29kZRgCIAEoDjIKLkVycm9yQ29kZRITCgt2YXJfbWVz",
+          "c2FnZRgDIAMoDBIQCgh2YXJfbmFtZRgEIAEoDBIPCgd2YXJfcG9zGAUgASgF",
+          "In0KEFBSQVlfTUVTU0FHRV9SRVMSLgoCaWQYASABKA4yCS5QUk9UT0NPTDoX",
+          "SURfUEtUX1BSQVlfTUVTU0FHRV9SRVMSHAoIdmFyX2NvZGUYAiABKA4yCi5F",
+          "cnJvckNvZGUSGwoIdmFyX2xpc3QYAyADKAsyCS5QcmF5SW5mbyKPAQoUUFJB",
+          "WV9NRVNTQUdFX1JFR19SRVMSMgoCaWQYASABKA4yCS5QUk9UT0NPTDobSURf",
+          "UEtUX1BSQVlfTUVTU0FHRV9SRUdfUkVTEhwKCHZhcl9jb2RlGAIgASgOMgou",
+          "RXJyb3JDb2RlEhMKC3Zhcl9tZXNzYWdlGAMgASgJEhAKCHZhcl90aW1lGAQg",
+          "ASgJIk4KB1FOQV9SRVMSJQoCaWQYASABKA4yCS5QUk9UT0NPTDoOSURfUEtU",
+          "X1FOQV9SRVMSHAoIdmFyX2NvZGUYAiABKA4yCi5FcnJvckNvZGUidwoNTUFJ",
+          "TF9MSVNUX1JFUxIrCgJpZBgBIAEoDjIJLlBST1RPQ09MOhRJRF9QS1RfTUFJ",
+          "TF9MSVNUX1JFUxIcCgh2YXJfY29kZRgCIAEoDjIKLkVycm9yQ29kZRIbCgh2",
+          "YXJfbGlzdBgDIAMoCzIJLk1haWxJbmZvIk4KB1JFR19SRVMSJQoCaWQYASAB",
+          "KA4yCS5QUk9UT0NPTDoOSURfUEtUX1JFR19SRVMSHAoIdmFyX2NvZGUYAiAB",
+          "KA4yCi5FcnJvckNvZGUiYgoRQ0xJRU5UX0xPR09VVF9SRVMSLwoCaWQYASAB",
+          "KA4yCS5QUk9UT0NPTDoYSURfUEtUX0NMSUVOVF9MT0dPVVRfUkVTEhwKCHZh",
+          "cl9jb2RlGAIgASgOMgouRXJyb3JDb2RlIkUKC0NMSUVOVF9LSUNLEikKAmlk",
+          "GAEgASgOMgkuUFJPVE9DT0w6EklEX1BLVF9DTElFTlRfS0lDSxILCgNzaWQY",
+          "AiABKAVCAkgB"));
     descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
         new pbr::FileDescriptor[] { global::EnumReflection.Descriptor, global::StructureReflection.Descriptor, },
         new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
@@ -86,8 +87,8 @@ public static partial class GSCLIReflection {
           new pbr::GeneratedClrTypeInfo(typeof(global::ROOM_LIST_RES), global::ROOM_LIST_RES.Parser, new[]{ "Id", "VarCode", "VarRoomList" }, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::ROOM_PASS_THROUGH_RES), global::ROOM_PASS_THROUGH_RES.Parser, new[]{ "Id", "VarCode", "VarMessages", "VarRoomNumber" }, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::NOTICE_RES), global::NOTICE_RES.Parser, new[]{ "Id", "VarList" }, null, null, null, null),
-          new pbr::GeneratedClrTypeInfo(typeof(global::BITMAP_MESSAGE_RES), global::BITMAP_MESSAGE_RES.Parser, new[]{ "Id", "VarCode", "VarMessage", "VarName" }, null, null, null, null),
-          new pbr::GeneratedClrTypeInfo(typeof(global::AUDIO_MESSAGE_RES), global::AUDIO_MESSAGE_RES.Parser, new[]{ "Id", "VarCode", "VarMessage", "VarName" }, null, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::BITMAP_MESSAGE_RES), global::BITMAP_MESSAGE_RES.Parser, new[]{ "Id", "VarCode", "VarMessage", "VarName", "VarPos" }, null, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::AUDIO_MESSAGE_RES), global::AUDIO_MESSAGE_RES.Parser, new[]{ "Id", "VarCode", "VarMessage", "VarName", "VarPos" }, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::PRAY_MESSAGE_RES), global::PRAY_MESSAGE_RES.Parser, new[]{ "Id", "VarCode", "VarList" }, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::PRAY_MESSAGE_REG_RES), global::PRAY_MESSAGE_REG_RES.Parser, new[]{ "Id", "VarCode", "VarMessage", "VarTime" }, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::QNA_RES), global::QNA_RES.Parser, new[]{ "Id", "VarCode" }, null, null, null, null),
@@ -2408,6 +2409,7 @@ public sealed partial class BITMAP_MESSAGE_RES : pb::IMessage<BITMAP_MESSAGE_RES
     varCode_ = other.varCode_;
     varMessage_ = other.varMessage_.Clone();
     varName_ = other.varName_;
+    varPos_ = other.varPos_;
     _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
   }
 
@@ -2497,6 +2499,30 @@ public sealed partial class BITMAP_MESSAGE_RES : pb::IMessage<BITMAP_MESSAGE_RES
     varName_ = null;
   }
 
+  /// <summary>Field number for the "var_pos" field.</summary>
+  public const int VarPosFieldNumber = 5;
+  private readonly static int VarPosDefaultValue = 0;
+
+  private int varPos_;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public int VarPos {
+    get { if ((_hasBits0 & 4) != 0) { return varPos_; } else { return VarPosDefaultValue; } }
+    set {
+      _hasBits0 |= 4;
+      varPos_ = value;
+    }
+  }
+  /// <summary>Gets whether the "var_pos" field is set</summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public bool HasVarPos {
+    get { return (_hasBits0 & 4) != 0; }
+  }
+  /// <summary>Clears the value of the "var_pos" field</summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void ClearVarPos() {
+    _hasBits0 &= ~4;
+  }
+
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public override bool Equals(object other) {
     return Equals(other as BITMAP_MESSAGE_RES);
@@ -2514,6 +2540,7 @@ public sealed partial class BITMAP_MESSAGE_RES : pb::IMessage<BITMAP_MESSAGE_RES
     if (VarCode != other.VarCode) return false;
     if(!varMessage_.Equals(other.varMessage_)) return false;
     if (VarName != other.VarName) return false;
+    if (VarPos != other.VarPos) return false;
     return Equals(_unknownFields, other._unknownFields);
   }
 
@@ -2524,6 +2551,7 @@ public sealed partial class BITMAP_MESSAGE_RES : pb::IMessage<BITMAP_MESSAGE_RES
     if (HasVarCode) hash ^= VarCode.GetHashCode();
     hash ^= varMessage_.GetHashCode();
     if (HasVarName) hash ^= VarName.GetHashCode();
+    if (HasVarPos) hash ^= VarPos.GetHashCode();
     if (_unknownFields != null) {
       hash ^= _unknownFields.GetHashCode();
     }
@@ -2550,6 +2578,10 @@ public sealed partial class BITMAP_MESSAGE_RES : pb::IMessage<BITMAP_MESSAGE_RES
       output.WriteRawTag(34);
       output.WriteBytes(VarName);
     }
+    if (HasVarPos) {
+      output.WriteRawTag(40);
+      output.WriteInt32(VarPos);
+    }
     if (_unknownFields != null) {
       _unknownFields.WriteTo(output);
     }
@@ -2567,6 +2599,9 @@ public sealed partial class BITMAP_MESSAGE_RES : pb::IMessage<BITMAP_MESSAGE_RES
     size += varMessage_.CalculateSize(_repeated_varMessage_codec);
     if (HasVarName) {
       size += 1 + pb::CodedOutputStream.ComputeBytesSize(VarName);
+    }
+    if (HasVarPos) {
+      size += 1 + pb::CodedOutputStream.ComputeInt32Size(VarPos);
     }
     if (_unknownFields != null) {
       size += _unknownFields.CalculateSize();
@@ -2588,6 +2623,9 @@ public sealed partial class BITMAP_MESSAGE_RES : pb::IMessage<BITMAP_MESSAGE_RES
     varMessage_.Add(other.varMessage_);
     if (other.HasVarName) {
       VarName = other.VarName;
+    }
+    if (other.HasVarPos) {
+      VarPos = other.VarPos;
     }
     _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
   }
@@ -2614,6 +2652,10 @@ public sealed partial class BITMAP_MESSAGE_RES : pb::IMessage<BITMAP_MESSAGE_RES
         }
         case 34: {
           VarName = input.ReadBytes();
+          break;
+        }
+        case 40: {
+          VarPos = input.ReadInt32();
           break;
         }
       }
@@ -2653,6 +2695,7 @@ public sealed partial class AUDIO_MESSAGE_RES : pb::IMessage<AUDIO_MESSAGE_RES> 
     varCode_ = other.varCode_;
     varMessage_ = other.varMessage_.Clone();
     varName_ = other.varName_;
+    varPos_ = other.varPos_;
     _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
   }
 
@@ -2742,6 +2785,30 @@ public sealed partial class AUDIO_MESSAGE_RES : pb::IMessage<AUDIO_MESSAGE_RES> 
     varName_ = null;
   }
 
+  /// <summary>Field number for the "var_pos" field.</summary>
+  public const int VarPosFieldNumber = 5;
+  private readonly static int VarPosDefaultValue = 0;
+
+  private int varPos_;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public int VarPos {
+    get { if ((_hasBits0 & 4) != 0) { return varPos_; } else { return VarPosDefaultValue; } }
+    set {
+      _hasBits0 |= 4;
+      varPos_ = value;
+    }
+  }
+  /// <summary>Gets whether the "var_pos" field is set</summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public bool HasVarPos {
+    get { return (_hasBits0 & 4) != 0; }
+  }
+  /// <summary>Clears the value of the "var_pos" field</summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void ClearVarPos() {
+    _hasBits0 &= ~4;
+  }
+
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public override bool Equals(object other) {
     return Equals(other as AUDIO_MESSAGE_RES);
@@ -2759,6 +2826,7 @@ public sealed partial class AUDIO_MESSAGE_RES : pb::IMessage<AUDIO_MESSAGE_RES> 
     if (VarCode != other.VarCode) return false;
     if(!varMessage_.Equals(other.varMessage_)) return false;
     if (VarName != other.VarName) return false;
+    if (VarPos != other.VarPos) return false;
     return Equals(_unknownFields, other._unknownFields);
   }
 
@@ -2769,6 +2837,7 @@ public sealed partial class AUDIO_MESSAGE_RES : pb::IMessage<AUDIO_MESSAGE_RES> 
     if (HasVarCode) hash ^= VarCode.GetHashCode();
     hash ^= varMessage_.GetHashCode();
     if (HasVarName) hash ^= VarName.GetHashCode();
+    if (HasVarPos) hash ^= VarPos.GetHashCode();
     if (_unknownFields != null) {
       hash ^= _unknownFields.GetHashCode();
     }
@@ -2795,6 +2864,10 @@ public sealed partial class AUDIO_MESSAGE_RES : pb::IMessage<AUDIO_MESSAGE_RES> 
       output.WriteRawTag(34);
       output.WriteBytes(VarName);
     }
+    if (HasVarPos) {
+      output.WriteRawTag(40);
+      output.WriteInt32(VarPos);
+    }
     if (_unknownFields != null) {
       _unknownFields.WriteTo(output);
     }
@@ -2812,6 +2885,9 @@ public sealed partial class AUDIO_MESSAGE_RES : pb::IMessage<AUDIO_MESSAGE_RES> 
     size += varMessage_.CalculateSize(_repeated_varMessage_codec);
     if (HasVarName) {
       size += 1 + pb::CodedOutputStream.ComputeBytesSize(VarName);
+    }
+    if (HasVarPos) {
+      size += 1 + pb::CodedOutputStream.ComputeInt32Size(VarPos);
     }
     if (_unknownFields != null) {
       size += _unknownFields.CalculateSize();
@@ -2833,6 +2909,9 @@ public sealed partial class AUDIO_MESSAGE_RES : pb::IMessage<AUDIO_MESSAGE_RES> 
     varMessage_.Add(other.varMessage_);
     if (other.HasVarName) {
       VarName = other.VarName;
+    }
+    if (other.HasVarPos) {
+      VarPos = other.VarPos;
     }
     _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
   }
@@ -2859,6 +2938,10 @@ public sealed partial class AUDIO_MESSAGE_RES : pb::IMessage<AUDIO_MESSAGE_RES> 
         }
         case 34: {
           VarName = input.ReadBytes();
+          break;
+        }
+        case 40: {
+          VarPos = input.ReadInt32();
           break;
         }
       }

@@ -20,7 +20,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   package='',
   syntax='proto2',
   serialized_options=b'H\001',
-  serialized_pb=b'\n\x0cGS.CLI.proto\x1a\nEnum.proto\x1a\x0fStructure.proto\"k\n\x0bVERSION_RES\x12)\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x12ID_PKT_VERSION_RES\x12\x13\n\x0bvar_version\x18\x02 \x01(\x02\x12\x1c\n\x08var_code\x18\x03 \x01(\x0e\x32\n.ErrorCode\"\x8b\x01\n\tLOGIN_RES\x12\'\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x10ID_PKT_LOGIN_RES\x12\x1c\n\x08var_code\x18\x02 \x01(\x0e\x32\n.ErrorCode\x12\x11\n\tvar_index\x18\x03 \x01(\x03\x12\x12\n\nvar_locale\x18\x04 \x01(\t\x12\x10\n\x08var_name\x18\x05 \x01(\t\"\x85\x01\n\x0f\x43REATE_ROOM_RES\x12-\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x16ID_PKT_CREATE_ROOM_RES\x12\x10\n\x08var_name\x18\x02 \x01(\t\x12\x13\n\x0bvar_room_id\x18\x03 \x01(\x05\x12\x1c\n\x08var_code\x18\x04 \x01(\x0e\x32\n.ErrorCode\"\xa7\x01\n\x0e\x45NTER_ROOM_RES\x12,\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x15ID_PKT_ENTER_ROOM_RES\x12\x10\n\x08var_name\x18\x02 \x01(\t\x12\x13\n\x0bvar_room_id\x18\x03 \x01(\x05\x12\x1c\n\x08var_code\x18\x04 \x01(\x0e\x32\n.ErrorCode\x12\"\n\x0cvar_messages\x18\x05 \x03(\x0b\x32\x0c.RoomMessage\"\xa0\x01\n\x14NEW_USER_IN_ROOM_NTY\x12\x32\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x1bID_PKT_NEW_USER_IN_ROOM_NTY\x12$\n\rvar_room_user\x18\x02 \x01(\x0b\x32\r.RoomUserInfo\x12\x1c\n\x08var_code\x18\x03 \x01(\x0e\x32\n.ErrorCode\x12\x10\n\x08var_type\x18\x04 \x01(\x05\"\x9a\x01\n\x0eLEAVE_ROOM_RES\x12,\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x15ID_PKT_LEAVE_ROOM_RES\x12\x10\n\x08var_name\x18\x02 \x01(\t\x12\x1c\n\x08var_code\x18\x03 \x01(\x0e\x32\n.ErrorCode\x12\x11\n\tvar_index\x18\x04 \x01(\x03\x12\x17\n\x0fvar_room_number\x18\x05 \x01(\x05\"}\n\rROOM_LIST_RES\x12+\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x14ID_PKT_ROOM_LIST_RES\x12\x1c\n\x08var_code\x18\x02 \x01(\x0e\x32\n.ErrorCode\x12!\n\rvar_room_list\x18\x03 \x03(\x0b\x32\n.RoomInfo2\"\xa7\x01\n\x15ROOM_PASS_THROUGH_RES\x12\x33\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x1cID_PKT_ROOM_PASS_THROUGH_RES\x12\x1c\n\x08var_code\x18\x02 \x01(\x0e\x32\n.ErrorCode\x12\"\n\x0cvar_messages\x18\x03 \x03(\x0b\x32\x0c.RoomMessage\x12\x17\n\x0fvar_room_number\x18\x04 \x01(\x05\"U\n\nNOTICE_RES\x12(\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x11ID_PKT_NOTICE_RES\x12\x1d\n\x08var_list\x18\x02 \x03(\x0b\x32\x0b.NotifyInfo\"\x8b\x01\n\x12\x42ITMAP_MESSAGE_RES\x12\x30\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x19ID_PKT_BITMAP_MESSAGE_RES\x12\x1c\n\x08var_code\x18\x02 \x01(\x0e\x32\n.ErrorCode\x12\x13\n\x0bvar_message\x18\x03 \x03(\x0c\x12\x10\n\x08var_name\x18\x04 \x01(\x0c\"\x89\x01\n\x11\x41UDIO_MESSAGE_RES\x12/\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x18ID_PKT_AUDIO_MESSAGE_RES\x12\x1c\n\x08var_code\x18\x02 \x01(\x0e\x32\n.ErrorCode\x12\x13\n\x0bvar_message\x18\x03 \x03(\x0c\x12\x10\n\x08var_name\x18\x04 \x01(\x0c\"}\n\x10PRAY_MESSAGE_RES\x12.\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x17ID_PKT_PRAY_MESSAGE_RES\x12\x1c\n\x08var_code\x18\x02 \x01(\x0e\x32\n.ErrorCode\x12\x1b\n\x08var_list\x18\x03 \x03(\x0b\x32\t.PrayInfo\"\x8f\x01\n\x14PRAY_MESSAGE_REG_RES\x12\x32\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x1bID_PKT_PRAY_MESSAGE_REG_RES\x12\x1c\n\x08var_code\x18\x02 \x01(\x0e\x32\n.ErrorCode\x12\x13\n\x0bvar_message\x18\x03 \x01(\t\x12\x10\n\x08var_time\x18\x04 \x01(\t\"N\n\x07QNA_RES\x12%\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x0eID_PKT_QNA_RES\x12\x1c\n\x08var_code\x18\x02 \x01(\x0e\x32\n.ErrorCode\"w\n\rMAIL_LIST_RES\x12+\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x14ID_PKT_MAIL_LIST_RES\x12\x1c\n\x08var_code\x18\x02 \x01(\x0e\x32\n.ErrorCode\x12\x1b\n\x08var_list\x18\x03 \x03(\x0b\x32\t.MailInfo\"N\n\x07REG_RES\x12%\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x0eID_PKT_REG_RES\x12\x1c\n\x08var_code\x18\x02 \x01(\x0e\x32\n.ErrorCode\"b\n\x11\x43LIENT_LOGOUT_RES\x12/\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x18ID_PKT_CLIENT_LOGOUT_RES\x12\x1c\n\x08var_code\x18\x02 \x01(\x0e\x32\n.ErrorCode\"E\n\x0b\x43LIENT_KICK\x12)\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x12ID_PKT_CLIENT_KICK\x12\x0b\n\x03sid\x18\x02 \x01(\x05\x42\x02H\x01'
+  serialized_pb=b'\n\x0cGS.CLI.proto\x1a\nEnum.proto\x1a\x0fStructure.proto\"k\n\x0bVERSION_RES\x12)\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x12ID_PKT_VERSION_RES\x12\x13\n\x0bvar_version\x18\x02 \x01(\x02\x12\x1c\n\x08var_code\x18\x03 \x01(\x0e\x32\n.ErrorCode\"\x8b\x01\n\tLOGIN_RES\x12\'\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x10ID_PKT_LOGIN_RES\x12\x1c\n\x08var_code\x18\x02 \x01(\x0e\x32\n.ErrorCode\x12\x11\n\tvar_index\x18\x03 \x01(\x03\x12\x12\n\nvar_locale\x18\x04 \x01(\t\x12\x10\n\x08var_name\x18\x05 \x01(\t\"\x85\x01\n\x0f\x43REATE_ROOM_RES\x12-\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x16ID_PKT_CREATE_ROOM_RES\x12\x10\n\x08var_name\x18\x02 \x01(\t\x12\x13\n\x0bvar_room_id\x18\x03 \x01(\x05\x12\x1c\n\x08var_code\x18\x04 \x01(\x0e\x32\n.ErrorCode\"\xa7\x01\n\x0e\x45NTER_ROOM_RES\x12,\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x15ID_PKT_ENTER_ROOM_RES\x12\x10\n\x08var_name\x18\x02 \x01(\t\x12\x13\n\x0bvar_room_id\x18\x03 \x01(\x05\x12\x1c\n\x08var_code\x18\x04 \x01(\x0e\x32\n.ErrorCode\x12\"\n\x0cvar_messages\x18\x05 \x03(\x0b\x32\x0c.RoomMessage\"\xa0\x01\n\x14NEW_USER_IN_ROOM_NTY\x12\x32\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x1bID_PKT_NEW_USER_IN_ROOM_NTY\x12$\n\rvar_room_user\x18\x02 \x01(\x0b\x32\r.RoomUserInfo\x12\x1c\n\x08var_code\x18\x03 \x01(\x0e\x32\n.ErrorCode\x12\x10\n\x08var_type\x18\x04 \x01(\x05\"\x9a\x01\n\x0eLEAVE_ROOM_RES\x12,\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x15ID_PKT_LEAVE_ROOM_RES\x12\x10\n\x08var_name\x18\x02 \x01(\t\x12\x1c\n\x08var_code\x18\x03 \x01(\x0e\x32\n.ErrorCode\x12\x11\n\tvar_index\x18\x04 \x01(\x03\x12\x17\n\x0fvar_room_number\x18\x05 \x01(\x05\"}\n\rROOM_LIST_RES\x12+\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x14ID_PKT_ROOM_LIST_RES\x12\x1c\n\x08var_code\x18\x02 \x01(\x0e\x32\n.ErrorCode\x12!\n\rvar_room_list\x18\x03 \x03(\x0b\x32\n.RoomInfo2\"\xa7\x01\n\x15ROOM_PASS_THROUGH_RES\x12\x33\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x1cID_PKT_ROOM_PASS_THROUGH_RES\x12\x1c\n\x08var_code\x18\x02 \x01(\x0e\x32\n.ErrorCode\x12\"\n\x0cvar_messages\x18\x03 \x03(\x0b\x32\x0c.RoomMessage\x12\x17\n\x0fvar_room_number\x18\x04 \x01(\x05\"U\n\nNOTICE_RES\x12(\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x11ID_PKT_NOTICE_RES\x12\x1d\n\x08var_list\x18\x02 \x03(\x0b\x32\x0b.NotifyInfo\"\x9c\x01\n\x12\x42ITMAP_MESSAGE_RES\x12\x30\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x19ID_PKT_BITMAP_MESSAGE_RES\x12\x1c\n\x08var_code\x18\x02 \x01(\x0e\x32\n.ErrorCode\x12\x13\n\x0bvar_message\x18\x03 \x03(\x0c\x12\x10\n\x08var_name\x18\x04 \x01(\x0c\x12\x0f\n\x07var_pos\x18\x05 \x01(\x05\"\x9a\x01\n\x11\x41UDIO_MESSAGE_RES\x12/\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x18ID_PKT_AUDIO_MESSAGE_RES\x12\x1c\n\x08var_code\x18\x02 \x01(\x0e\x32\n.ErrorCode\x12\x13\n\x0bvar_message\x18\x03 \x03(\x0c\x12\x10\n\x08var_name\x18\x04 \x01(\x0c\x12\x0f\n\x07var_pos\x18\x05 \x01(\x05\"}\n\x10PRAY_MESSAGE_RES\x12.\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x17ID_PKT_PRAY_MESSAGE_RES\x12\x1c\n\x08var_code\x18\x02 \x01(\x0e\x32\n.ErrorCode\x12\x1b\n\x08var_list\x18\x03 \x03(\x0b\x32\t.PrayInfo\"\x8f\x01\n\x14PRAY_MESSAGE_REG_RES\x12\x32\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x1bID_PKT_PRAY_MESSAGE_REG_RES\x12\x1c\n\x08var_code\x18\x02 \x01(\x0e\x32\n.ErrorCode\x12\x13\n\x0bvar_message\x18\x03 \x01(\t\x12\x10\n\x08var_time\x18\x04 \x01(\t\"N\n\x07QNA_RES\x12%\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x0eID_PKT_QNA_RES\x12\x1c\n\x08var_code\x18\x02 \x01(\x0e\x32\n.ErrorCode\"w\n\rMAIL_LIST_RES\x12+\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x14ID_PKT_MAIL_LIST_RES\x12\x1c\n\x08var_code\x18\x02 \x01(\x0e\x32\n.ErrorCode\x12\x1b\n\x08var_list\x18\x03 \x03(\x0b\x32\t.MailInfo\"N\n\x07REG_RES\x12%\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x0eID_PKT_REG_RES\x12\x1c\n\x08var_code\x18\x02 \x01(\x0e\x32\n.ErrorCode\"b\n\x11\x43LIENT_LOGOUT_RES\x12/\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x18ID_PKT_CLIENT_LOGOUT_RES\x12\x1c\n\x08var_code\x18\x02 \x01(\x0e\x32\n.ErrorCode\"E\n\x0b\x43LIENT_KICK\x12)\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x12ID_PKT_CLIENT_KICK\x12\x0b\n\x03sid\x18\x02 \x01(\x05\x42\x02H\x01'
   ,
   dependencies=[Enum__pb2.DESCRIPTOR,Structure__pb2.DESCRIPTOR,])
 
@@ -523,6 +523,13 @@ _BITMAP_MESSAGE_RES = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='var_pos', full_name='BITMAP_MESSAGE_RES.var_pos', index=4,
+      number=5, type=5, cpp_type=1, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
   ],
   extensions=[
   ],
@@ -536,7 +543,7 @@ _BITMAP_MESSAGE_RES = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=1307,
-  serialized_end=1446,
+  serialized_end=1463,
 )
 
 
@@ -575,6 +582,13 @@ _AUDIO_MESSAGE_RES = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='var_pos', full_name='AUDIO_MESSAGE_RES.var_pos', index=4,
+      number=5, type=5, cpp_type=1, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
   ],
   extensions=[
   ],
@@ -587,8 +601,8 @@ _AUDIO_MESSAGE_RES = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1449,
-  serialized_end=1586,
+  serialized_start=1466,
+  serialized_end=1620,
 )
 
 
@@ -632,8 +646,8 @@ _PRAY_MESSAGE_RES = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1588,
-  serialized_end=1713,
+  serialized_start=1622,
+  serialized_end=1747,
 )
 
 
@@ -684,8 +698,8 @@ _PRAY_MESSAGE_REG_RES = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1716,
-  serialized_end=1859,
+  serialized_start=1750,
+  serialized_end=1893,
 )
 
 
@@ -722,8 +736,8 @@ _QNA_RES = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1861,
-  serialized_end=1939,
+  serialized_start=1895,
+  serialized_end=1973,
 )
 
 
@@ -767,8 +781,8 @@ _MAIL_LIST_RES = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1941,
-  serialized_end=2060,
+  serialized_start=1975,
+  serialized_end=2094,
 )
 
 
@@ -805,8 +819,8 @@ _REG_RES = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2062,
-  serialized_end=2140,
+  serialized_start=2096,
+  serialized_end=2174,
 )
 
 
@@ -843,8 +857,8 @@ _CLIENT_LOGOUT_RES = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2142,
-  serialized_end=2240,
+  serialized_start=2176,
+  serialized_end=2274,
 )
 
 
@@ -881,8 +895,8 @@ _CLIENT_KICK = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2242,
-  serialized_end=2311,
+  serialized_start=2276,
+  serialized_end=2345,
 )
 
 _VERSION_RES.fields_by_name['id'].enum_type = Enum__pb2._PROTOCOL

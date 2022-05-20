@@ -89,6 +89,7 @@ message BITMAP_MESSAGE_RES
     optional  ErrorCode    var_code         = 2;
     repeated bytes     var_message          = 3;
     optional bytes     var_name	            = 4;
+    optional  int32    var_pos		             = 5;
 }
 
 message AUDIO_MESSAGE_RES
@@ -97,6 +98,7 @@ message AUDIO_MESSAGE_RES
     optional  ErrorCode    var_code         = 2;
     repeated bytes     var_message          = 3;
     optional bytes     var_name	            = 4;
+    optional  int32    var_pos		             = 5;
 }
 
 message PRAY_MESSAGE_RES

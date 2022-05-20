@@ -1956,6 +1956,7 @@ class BITMAP_MESSAGE_RES :
     kVarMessageFieldNumber = 3,
     kVarNameFieldNumber = 4,
     kVarCodeFieldNumber = 2,
+    kVarPosFieldNumber = 5,
     kIdFieldNumber = 1,
   };
   // repeated bytes var_message = 3;
@@ -2015,6 +2016,19 @@ class BITMAP_MESSAGE_RES :
   void _internal_set_var_code(::ErrorCode value);
   public:
 
+  // optional int32 var_pos = 5;
+  bool has_var_pos() const;
+  private:
+  bool _internal_has_var_pos() const;
+  public:
+  void clear_var_pos();
+  ::PROTOBUF_NAMESPACE_ID::int32 var_pos() const;
+  void set_var_pos(::PROTOBUF_NAMESPACE_ID::int32 value);
+  private:
+  ::PROTOBUF_NAMESPACE_ID::int32 _internal_var_pos() const;
+  void _internal_set_var_pos(::PROTOBUF_NAMESPACE_ID::int32 value);
+  public:
+
   // optional .PROTOCOL id = 1 [default = ID_PKT_BITMAP_MESSAGE_RES];
   bool has_id() const;
   private:
@@ -2038,6 +2052,7 @@ class BITMAP_MESSAGE_RES :
   ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string> var_message_;
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr var_name_;
   int var_code_;
+  ::PROTOBUF_NAMESPACE_ID::int32 var_pos_;
   int id_;
   friend struct ::TableStruct_GS_2eCLI_2eproto;
 };
@@ -2159,6 +2174,7 @@ class AUDIO_MESSAGE_RES :
     kVarMessageFieldNumber = 3,
     kVarNameFieldNumber = 4,
     kVarCodeFieldNumber = 2,
+    kVarPosFieldNumber = 5,
     kIdFieldNumber = 1,
   };
   // repeated bytes var_message = 3;
@@ -2218,6 +2234,19 @@ class AUDIO_MESSAGE_RES :
   void _internal_set_var_code(::ErrorCode value);
   public:
 
+  // optional int32 var_pos = 5;
+  bool has_var_pos() const;
+  private:
+  bool _internal_has_var_pos() const;
+  public:
+  void clear_var_pos();
+  ::PROTOBUF_NAMESPACE_ID::int32 var_pos() const;
+  void set_var_pos(::PROTOBUF_NAMESPACE_ID::int32 value);
+  private:
+  ::PROTOBUF_NAMESPACE_ID::int32 _internal_var_pos() const;
+  void _internal_set_var_pos(::PROTOBUF_NAMESPACE_ID::int32 value);
+  public:
+
   // optional .PROTOCOL id = 1 [default = ID_PKT_AUDIO_MESSAGE_RES];
   bool has_id() const;
   private:
@@ -2241,6 +2270,7 @@ class AUDIO_MESSAGE_RES :
   ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string> var_message_;
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr var_name_;
   int var_code_;
+  ::PROTOBUF_NAMESPACE_ID::int32 var_pos_;
   int id_;
   friend struct ::TableStruct_GS_2eCLI_2eproto;
 };
@@ -4734,7 +4764,7 @@ NOTICE_RES::var_list() const {
 
 // optional .PROTOCOL id = 1 [default = ID_PKT_BITMAP_MESSAGE_RES];
 inline bool BITMAP_MESSAGE_RES::_internal_has_id() const {
-  bool value = (_has_bits_[0] & 0x00000004u) != 0;
+  bool value = (_has_bits_[0] & 0x00000008u) != 0;
   return value;
 }
 inline bool BITMAP_MESSAGE_RES::has_id() const {
@@ -4742,7 +4772,7 @@ inline bool BITMAP_MESSAGE_RES::has_id() const {
 }
 inline void BITMAP_MESSAGE_RES::clear_id() {
   id_ = 11;
-  _has_bits_[0] &= ~0x00000004u;
+  _has_bits_[0] &= ~0x00000008u;
 }
 inline ::PROTOCOL BITMAP_MESSAGE_RES::_internal_id() const {
   return static_cast< ::PROTOCOL >(id_);
@@ -4753,7 +4783,7 @@ inline ::PROTOCOL BITMAP_MESSAGE_RES::id() const {
 }
 inline void BITMAP_MESSAGE_RES::_internal_set_id(::PROTOCOL value) {
   assert(::PROTOCOL_IsValid(value));
-  _has_bits_[0] |= 0x00000004u;
+  _has_bits_[0] |= 0x00000008u;
   id_ = value;
 }
 inline void BITMAP_MESSAGE_RES::set_id(::PROTOCOL value) {
@@ -4935,13 +4965,41 @@ inline void BITMAP_MESSAGE_RES::set_allocated_var_name(std::string* var_name) {
   // @@protoc_insertion_point(field_set_allocated:BITMAP_MESSAGE_RES.var_name)
 }
 
+// optional int32 var_pos = 5;
+inline bool BITMAP_MESSAGE_RES::_internal_has_var_pos() const {
+  bool value = (_has_bits_[0] & 0x00000004u) != 0;
+  return value;
+}
+inline bool BITMAP_MESSAGE_RES::has_var_pos() const {
+  return _internal_has_var_pos();
+}
+inline void BITMAP_MESSAGE_RES::clear_var_pos() {
+  var_pos_ = 0;
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 BITMAP_MESSAGE_RES::_internal_var_pos() const {
+  return var_pos_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 BITMAP_MESSAGE_RES::var_pos() const {
+  // @@protoc_insertion_point(field_get:BITMAP_MESSAGE_RES.var_pos)
+  return _internal_var_pos();
+}
+inline void BITMAP_MESSAGE_RES::_internal_set_var_pos(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  _has_bits_[0] |= 0x00000004u;
+  var_pos_ = value;
+}
+inline void BITMAP_MESSAGE_RES::set_var_pos(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  _internal_set_var_pos(value);
+  // @@protoc_insertion_point(field_set:BITMAP_MESSAGE_RES.var_pos)
+}
+
 // -------------------------------------------------------------------
 
 // AUDIO_MESSAGE_RES
 
 // optional .PROTOCOL id = 1 [default = ID_PKT_AUDIO_MESSAGE_RES];
 inline bool AUDIO_MESSAGE_RES::_internal_has_id() const {
-  bool value = (_has_bits_[0] & 0x00000004u) != 0;
+  bool value = (_has_bits_[0] & 0x00000008u) != 0;
   return value;
 }
 inline bool AUDIO_MESSAGE_RES::has_id() const {
@@ -4949,7 +5007,7 @@ inline bool AUDIO_MESSAGE_RES::has_id() const {
 }
 inline void AUDIO_MESSAGE_RES::clear_id() {
   id_ = 22;
-  _has_bits_[0] &= ~0x00000004u;
+  _has_bits_[0] &= ~0x00000008u;
 }
 inline ::PROTOCOL AUDIO_MESSAGE_RES::_internal_id() const {
   return static_cast< ::PROTOCOL >(id_);
@@ -4960,7 +5018,7 @@ inline ::PROTOCOL AUDIO_MESSAGE_RES::id() const {
 }
 inline void AUDIO_MESSAGE_RES::_internal_set_id(::PROTOCOL value) {
   assert(::PROTOCOL_IsValid(value));
-  _has_bits_[0] |= 0x00000004u;
+  _has_bits_[0] |= 0x00000008u;
   id_ = value;
 }
 inline void AUDIO_MESSAGE_RES::set_id(::PROTOCOL value) {
@@ -5140,6 +5198,34 @@ inline void AUDIO_MESSAGE_RES::set_allocated_var_name(std::string* var_name) {
   }
   var_name_.SetAllocatedNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), var_name);
   // @@protoc_insertion_point(field_set_allocated:AUDIO_MESSAGE_RES.var_name)
+}
+
+// optional int32 var_pos = 5;
+inline bool AUDIO_MESSAGE_RES::_internal_has_var_pos() const {
+  bool value = (_has_bits_[0] & 0x00000004u) != 0;
+  return value;
+}
+inline bool AUDIO_MESSAGE_RES::has_var_pos() const {
+  return _internal_has_var_pos();
+}
+inline void AUDIO_MESSAGE_RES::clear_var_pos() {
+  var_pos_ = 0;
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 AUDIO_MESSAGE_RES::_internal_var_pos() const {
+  return var_pos_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 AUDIO_MESSAGE_RES::var_pos() const {
+  // @@protoc_insertion_point(field_get:AUDIO_MESSAGE_RES.var_pos)
+  return _internal_var_pos();
+}
+inline void AUDIO_MESSAGE_RES::_internal_set_var_pos(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  _has_bits_[0] |= 0x00000004u;
+  var_pos_ = value;
+}
+inline void AUDIO_MESSAGE_RES::set_var_pos(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  _internal_set_var_pos(value);
+  // @@protoc_insertion_point(field_set:AUDIO_MESSAGE_RES.var_pos)
 }
 
 // -------------------------------------------------------------------
