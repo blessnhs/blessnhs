@@ -6,6 +6,7 @@
 // -------------------------------------------------
 using System.Collections.Concurrent;
 using System.IO;
+using System.Threading;
 
 namespace rtaNetworking.Streaming
 {
@@ -193,6 +194,8 @@ namespace rtaNetworking.Streaming
 
                             wr.Write(ms);
                         }
+
+                        Thread.Sleep(1);
                     }
 
 

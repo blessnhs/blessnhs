@@ -42,7 +42,7 @@ namespace FullCameraApp.Droid
                 case ImageFormatType.Yuy2:
                 case ImageFormatType.Yv12:
                     {
-                        if (checktime < DateTime.Now)
+                    //    if (checktime < DateTime.Now)
                         {
                             Android.Graphics.YuvImage img = new Android.Graphics.YuvImage(data,
                                                            imageformat, paras.PreviewSize.Width, paras.PreviewSize.Height, null);
@@ -69,12 +69,15 @@ namespace FullCameraApp.Droid
 
                             bitmap = Bitmap.CreateBitmap(bitmap, 0, 0, bitmap.Width, bitmap.Height, mat, true);
 
-                            bitmap.Compress(Bitmap.CompressFormat.Jpeg, 50, outStream);
+                            bitmap.Compress(Bitmap.CompressFormat.Jpeg, 70, outStream);
 
                             Frames.Enqueue(outStream);
 
                             //서버쪽은 임시 주석
-                            //render.server.ImagesSource.Enqueue(outStream);
+                            if (renderer.server.ImagesSource.Count > 1000)
+                                renderer.server.ImagesSource.Clear();
+
+                            renderer.server.ImagesSource.Enqueue(outStream);
 
                             if (Frames.Count > 10)
                             {
@@ -295,7 +298,8 @@ namespace FullCameraApp.Droid
             AddView(mainLayout);
         }
 
-     
+
+
 
         protected override void OnLayout(bool changed, int l, int t, int r, int b)
         {
@@ -439,8 +443,7 @@ namespace FullCameraApp.Droid
                 camera.SetParameters(parameters);
                 camera.SetPreviewTexture(surface);
                 StartCamera();
-
-
+             
                 //caemra page render
                 Task.Run(() =>
                 {
@@ -454,11 +457,11 @@ namespace FullCameraApp.Droid
                             if (NetProcess.JpegStream.Count == 0)
                                 continue;
 
-                            if (NetProcess.JpegStream.Count > 100)
-                            {
-                                NetProcess.JpegStream.Clear();
-                                continue;
-                            }
+                            //if (NetProcess.JpegStream.Count > 100)
+                            //{
+                            //    NetProcess.JpegStream.Clear();
+                            //    continue;
+                            //}
 
                             if (chk < DateTime.Now)
                             {
@@ -490,7 +493,7 @@ namespace FullCameraApp.Droid
                                     }
 
 
-                                    Thread.Sleep(2);
+                                    Thread.Sleep(50);
                                     //   }, null);
                                 }
                             }
