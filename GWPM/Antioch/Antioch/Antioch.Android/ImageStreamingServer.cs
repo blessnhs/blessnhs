@@ -30,9 +30,7 @@ namespace rtaNetworking.Streaming
             _Clients = new System.Collections.Generic.List<System.Net.Sockets.Socket>();
             _Thread = null;
             this.Interval = 50;
-
-            Start();
-        }
+       }
 
 
         public ImageStreamingServer(ConcurrentQueue<System.IO.MemoryStream> imagesSource)
@@ -86,16 +84,6 @@ namespace rtaNetworking.Streaming
             }
 
         }
-
-
-        /// <summary>
-        /// Starts the server to accepts any new connections on the default port (8080).
-        /// </summary>
-        public void Start()
-        {
-            this.Start(8080);
-        }
-
 
         public void Stop()
         {
