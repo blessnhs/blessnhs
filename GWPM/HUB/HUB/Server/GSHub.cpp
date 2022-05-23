@@ -93,7 +93,7 @@ BOOL GSHub::Initialize()
 
 	//default
 	//
-	SetHandler<IUdpProcess>();
+	SetHandler<HubProcess>();
 
 	DeleteAllConcurrentUser();
 
