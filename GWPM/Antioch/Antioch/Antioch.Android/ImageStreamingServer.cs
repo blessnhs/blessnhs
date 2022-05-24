@@ -19,7 +19,7 @@ namespace rtaNetworking.Streaming
     public class ImageStreamingServer : System.IDisposable
     {
 
-        private System.Collections.Generic.List<System.Net.Sockets.Socket> _Clients;
+        public System.Collections.Generic.List<System.Net.Sockets.Socket> _Clients;
         private System.Threading.Thread _Thread;
 
 
@@ -167,7 +167,8 @@ namespace rtaNetworking.Streaming
                 {
 
                     // Writes the response header to the client.
-                    wr.WriteHeader();
+
+                   wr.WriteHeader();
 
                     while (socket.Connected == true)
                     {
@@ -179,6 +180,8 @@ namespace rtaNetworking.Streaming
 
                             wr.Write(img);
                         }
+
+                        ImagesSource.Clear();
                     }
                 }
 
