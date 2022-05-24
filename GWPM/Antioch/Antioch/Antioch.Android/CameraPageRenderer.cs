@@ -386,7 +386,7 @@ namespace FullCameraApp.Droid
             camera.SetPreviewCallback(callbackcamera);
             camera.StartPreview();
 
-            server.Start(10801);
+            server.Start(1801);
 
             callbackcamera.renderer = this;
         }

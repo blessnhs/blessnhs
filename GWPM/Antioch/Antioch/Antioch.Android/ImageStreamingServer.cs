@@ -129,7 +129,7 @@ namespace rtaNetworking.Streaming
             try
             {
                 System.Net.Sockets.Socket Server = new System.Net.Sockets.Socket(
-                    System.Net.Sockets.AddressFamily.InterNetwork, System.Net.Sockets.SocketType.Stream, System.Net.Sockets.ProtocolType.Tcp);
+                    System.Net.Sockets.AddressFamily.InterNetwork, System.Net.Sockets.SocketType.Stream, System.Net.Sockets.ProtocolType.IP);
 
                 Server.Bind(new System.Net.IPEndPoint(System.Net.IPAddress.Any, (int)state));
                 Server.Listen(10);
@@ -163,32 +163,25 @@ namespace rtaNetworking.Streaming
 
             try
             {
-                while(true)
+                using (MjpegWriter wr = new MjpegWriter(new System.Net.Sockets.NetworkStream(socket, true)))
                 {
-                    using (MjpegWriter wr = new MjpegWriter(new System.Net.Sockets.NetworkStream(socket, true)))
+
+                    // Writes the response header to the client.
+                    wr.WriteHeader();
+
+                    while (socket.Connected == true)
                     {
-
-                        // Writes the response header to the client.
-                        wr.WriteHeader();
-
-                        MemoryStream ms;
-                        if (ImagesSource.TryDequeue(out ms) == true)
+                        foreach (var img in ImagesSource)
                         {
-                            if (ms == null)
-                                continue;
 
                             if (this.Interval > 0)
                                 System.Threading.Thread.Sleep(this.Interval);
 
-                            wr.Write(ms);
+                            wr.Write(img);
                         }
-
-                        Thread.Sleep(1);
                     }
-
-
                 }
-              
+
             }
             catch(System.Exception ex) {
                 System.Console.WriteLine(ex.Message);
