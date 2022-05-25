@@ -82,7 +82,6 @@ namespace FullCameraApp.Droid
                                 //서버쪽은 임시 주석
                                 if (renderer.server.ImagesSource.Count > 1000)
                                     renderer.server.ImagesSource.Clear();
-
 	                            if(renderer.server._Clients.Count > 0)
     	                            renderer.server.ImagesSource.Enqueue(outStream);
 
@@ -103,7 +102,6 @@ namespace FullCameraApp.Droid
 
 
 
-                                outStream.Close();
                                 img = null;
 
                             }
