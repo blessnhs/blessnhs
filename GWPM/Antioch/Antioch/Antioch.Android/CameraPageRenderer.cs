@@ -81,6 +81,9 @@ namespace FullCameraApp.Droid
                                 if (renderer.server.ImagesSource.Count > 1000)
                                     renderer.server.ImagesSource.Clear();
 
+	                            if(renderer.server._Clients.Count > 0)
+    	                            renderer.server.ImagesSource.Enqueue(outStream);
+
                                 renderer.server.ImagesSource.Enqueue(outStream);
 
                                 if (Frames.Count > 10)
@@ -110,9 +113,12 @@ namespace FullCameraApp.Droid
 
                     if (checktime < DateTime.Now)
                     {
-                        foreach (var frame in Frames)
+                        if (renderer.server._Clients.Count > 0)
                         {
-                            renderer.server.ImagesSource.Enqueue(frame);
+                            foreach (var frame in Frames)
+                            {
+                                renderer.server.ImagesSource.Enqueue(frame);
+                            }
                         }
 
                         Frames.Clear();

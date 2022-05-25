@@ -53,6 +53,34 @@ namespace rtaNetworking.Streaming
         }
 
 
+        //private static void hejHopp()
+        //{
+        //    //http://www.codeproject.com/Articles/7388/A-Simple-C-Wrapper-for-the-AviFile-Library
+
+        //    //myReadyNAS device, got files via FTP from my webcam
+        //    var jpgFileList = Directory.EnumerateFiles(sourcePath, "*.jpg");
+
+        //    //load the first image
+        //    Bitmap bitmap = (Bitmap)Image.FromFile(jpgFileList.First());
+
+        //    //create a new AVI file
+        //    AviManager aviManager = new AviManager(sourcePath + "\\tada.avi", false);
+
+        //    //add a new video stream and one frame to the new file
+        //    //set IsCompressed = false
+        //    VideoStream aviStream = aviManager.AddVideoStream(false, 2, bitmap);
+
+        //    jpgFileList.Skip(1).ToList().ForEach(file =>
+        //    {
+        //        bitmap = (Bitmap)Bitmap.FromFile(file);
+        //        aviStream.AddFrame(bitmap);
+        //        bitmap.Dispose();
+        //    });
+
+        //    aviManager.Close();
+        //}
+
+
 
         public void Write(System.IO.MemoryStream imageStream)
         {

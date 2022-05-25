@@ -278,81 +278,83 @@ namespace Antioch
 
         public bool WritePacket(int protocol, byte[] packet, int payloadsize)
         {
-
-            if (payloadsize > CheckCompressSize)
+            lock (this)
             {
-                var compress = GZip.Compress(packet);
-
-                Int32 PacketLength = sizeof(Int32) +
-                    sizeof(Int16) +
-                    sizeof(Int16) +
-                    sizeof(Int32) +
-                    compress.Length;
-
-                mCompressFlag = 1;
-
-                byte[] TempBuffer = new byte[PacketLength];
-
-                byte[] byteslegnth = BitConverter.GetBytes((Int32)PacketLength);
-                Buffer.BlockCopy(byteslegnth, 0, TempBuffer, 0, sizeof(Int32));
-
-                byte[] bytesProtocol = BitConverter.GetBytes((Int16)protocol);
-                Buffer.BlockCopy(bytesProtocol, 0, TempBuffer, sizeof(Int32), sizeof(Int16));
-
-                byte[] bytesPacketNumber = BitConverter.GetBytes((Int32)mCompressFlag);
-                Buffer.BlockCopy(bytesPacketNumber, 0, TempBuffer, sizeof(Int32) + sizeof(Int16) + sizeof(Int16), sizeof(Int32));
-
-                Buffer.BlockCopy(compress, 0, TempBuffer, sizeof(Int32) + sizeof(Int16) + sizeof(Int16) + sizeof(Int32), compress.Length);
-
-                try
+                if (payloadsize > CheckCompressSize)
                 {
-                    socket.Send(TempBuffer);
+                    var compress = GZip.Compress(packet);
+
+                    Int32 PacketLength = sizeof(Int32) +
+                        sizeof(Int16) +
+                        sizeof(Int16) +
+                        sizeof(Int32) +
+                        compress.Length;
+
+                    mCompressFlag = 1;
+
+                    byte[] TempBuffer = new byte[PacketLength];
+
+                    byte[] byteslegnth = BitConverter.GetBytes((Int32)PacketLength);
+                    Buffer.BlockCopy(byteslegnth, 0, TempBuffer, 0, sizeof(Int32));
+
+                    byte[] bytesProtocol = BitConverter.GetBytes((Int16)protocol);
+                    Buffer.BlockCopy(bytesProtocol, 0, TempBuffer, sizeof(Int32), sizeof(Int16));
+
+                    byte[] bytesPacketNumber = BitConverter.GetBytes((Int32)mCompressFlag);
+                    Buffer.BlockCopy(bytesPacketNumber, 0, TempBuffer, sizeof(Int32) + sizeof(Int16) + sizeof(Int16), sizeof(Int32));
+
+                    Buffer.BlockCopy(compress, 0, TempBuffer, sizeof(Int32) + sizeof(Int16) + sizeof(Int16) + sizeof(Int32), compress.Length);
+
+                    try
+                    {
+                        socket.Send(TempBuffer);
+                    }
+                    catch (SocketException e)
+                    {
+                        // 10035 == WSAEWOULDBLOCK
+                        if (!e.NativeErrorCode.Equals(10035))
+                            Console.Write("Disconnected: error code :" + e.NativeErrorCode + "(" + e.Message + ")");
+                    }
+
+                    TempBuffer = null;
                 }
-                catch (SocketException e)
+                else
                 {
-                    // 10035 == WSAEWOULDBLOCK
-                    if (!e.NativeErrorCode.Equals(10035))
-                        Console.Write("Disconnected: error code :" + e.NativeErrorCode + "(" + e.Message + ")");
+                    Int32 PacketLength = sizeof(Int32) +
+                        sizeof(Int16) +
+                        sizeof(Int16) +
+                        sizeof(Int32) +
+                       payloadsize;
+
+                    mCompressFlag = 0;
+
+                    byte[] TempBuffer = new byte[PacketLength];
+
+                    byte[] byteslegnth = BitConverter.GetBytes((Int32)PacketLength);
+                    Buffer.BlockCopy(byteslegnth, 0, TempBuffer, 0, sizeof(Int32));
+
+                    byte[] bytesProtocol = BitConverter.GetBytes((Int16)protocol);
+                    Buffer.BlockCopy(bytesProtocol, 0, TempBuffer, sizeof(Int32), sizeof(Int16));
+
+                    byte[] bytesPacketNumber = BitConverter.GetBytes((Int32)mCompressFlag);
+                    Buffer.BlockCopy(bytesPacketNumber, 0, TempBuffer, sizeof(Int32) + sizeof(Int16) + sizeof(Int16), sizeof(Int32));
+
+                    Buffer.BlockCopy(packet, 0, TempBuffer, sizeof(Int32) + sizeof(Int16) + sizeof(Int16) + sizeof(Int32), payloadsize);
+
+                    try
+                    {
+                        socket.Send(TempBuffer);
+                    }
+                    catch (SocketException e)
+                    {
+                        // 10035 == WSAEWOULDBLOCK
+                        if (!e.NativeErrorCode.Equals(10035))
+                            Console.Write("Disconnected: error code :" + e.NativeErrorCode + "(" + e.Message + ")");
+                    }
+
+                    TempBuffer = null;
                 }
-
-                TempBuffer = null;
-            }
-            else
-            {
-                Int32 PacketLength = sizeof(Int32) +
-                    sizeof(Int16) +
-                    sizeof(Int16) +
-                    sizeof(Int32) +
-                   payloadsize;
-
-                mCompressFlag = 0;
-
-                byte[] TempBuffer = new byte[PacketLength];
-
-                byte[] byteslegnth = BitConverter.GetBytes((Int32)PacketLength);
-                Buffer.BlockCopy(byteslegnth, 0, TempBuffer, 0, sizeof(Int32));
-
-                byte[] bytesProtocol = BitConverter.GetBytes((Int16)protocol);
-                Buffer.BlockCopy(bytesProtocol, 0, TempBuffer, sizeof(Int32), sizeof(Int16));
-
-                byte[] bytesPacketNumber = BitConverter.GetBytes((Int32)mCompressFlag);
-                Buffer.BlockCopy(bytesPacketNumber, 0, TempBuffer, sizeof(Int32) + sizeof(Int16) + sizeof(Int16), sizeof(Int32));
-
-                Buffer.BlockCopy(packet, 0, TempBuffer, sizeof(Int32) + sizeof(Int16) + sizeof(Int16) + sizeof(Int32), payloadsize);
-
-                try
-                {
-                    socket.Send(TempBuffer);
-                }
-                catch (SocketException e)
-                {
-                    // 10035 == WSAEWOULDBLOCK
-                    if (!e.NativeErrorCode.Equals(10035))
-                        Console.Write("Disconnected: error code :" + e.NativeErrorCode + "(" + e.Message + ")");
-                }
-
-                TempBuffer = null;
-            }
+            } 
 
             return true;
         }
