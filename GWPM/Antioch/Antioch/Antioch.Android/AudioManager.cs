@@ -112,17 +112,18 @@ namespace Antioch.Droid
 
                     Frames.Enqueue(new MemoryStream(buffer));
 
-                    if (Frames.Count > 1)
+                    if (Frames.Count > 10)
                     {
                         NetProcess.SendAudioMessage(Frames);
                         Frames.Clear();
                     }
 
-                    Thread.Sleep(1);
+                    Thread.Sleep(10);
                 }
             }
             catch (Exception e)
             {
+                
             }
             finally
             {

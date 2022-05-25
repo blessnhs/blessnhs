@@ -142,7 +142,10 @@ namespace rtaNetworking.Streaming
                 } // Next client 
 
             }
-            catch { }
+            catch (System.Exception ex)
+            {
+                System.Console.WriteLine(ex.Message);
+            }
 
             this.Stop();
         }

@@ -16,6 +16,7 @@ using rtaNetworking.Streaming;
 using Xamarin.Forms.Platform.Android;
 using Antioch.View;
 using Rg.Plugins.Popup.Services;
+using Xamarin.Essentials;
 
 [assembly: Xamarin.Forms.ExportRenderer(typeof(CameraPage), typeof(CameraPageRenderer))]
 namespace FullCameraApp.Droid
@@ -42,52 +43,64 @@ namespace FullCameraApp.Droid
                 case ImageFormatType.Yuy2:
                 case ImageFormatType.Yv12:
                     {
-                    //    if (checktime < DateTime.Now)
+                        if (checktime < DateTime.Now)
                         {
-                            Android.Graphics.YuvImage img = new Android.Graphics.YuvImage(data,
+                            try
+                            {
+                                Android.Graphics.YuvImage img = new Android.Graphics.YuvImage(data,
                                                            imageformat, paras.PreviewSize.Width, paras.PreviewSize.Height, null);
 
-                            System.IO.MemoryStream outStream = new System.IO.MemoryStream();
+                                System.IO.MemoryStream outStream = new System.IO.MemoryStream();
 
-                            img.CompressToJpeg(new Rect(0, 0, paras.PreviewSize.Width, paras.PreviewSize.Height), 100, outStream);
+                                img.CompressToJpeg(new Rect(0, 0, paras.PreviewSize.Width, paras.PreviewSize.Height), 80, outStream);
 
-                            var frameToStream = outStream.ToArray();
-                            var bitmap = BitmapFactory.DecodeByteArray(frameToStream, 0, frameToStream.Length);
-                    
-                            outStream = null;
+                                var frameToStream = outStream.ToArray();
+                                var bitmap = BitmapFactory.DecodeByteArray(frameToStream, 0, frameToStream.Length);
 
-                            outStream = new System.IO.MemoryStream();
+                                outStream.Close();
+                                outStream = null;
 
-                            bitmap = Bitmap.CreateScaledBitmap(bitmap, 320, 240, true);
+                                outStream = new System.IO.MemoryStream();
 
-                            var mat = new Matrix();
+                                bitmap = Bitmap.CreateScaledBitmap(bitmap, 320, 240, true);
 
-                            if (renderer.currentFacing == Android.Hardware.CameraFacing.Front)
-                                mat.PostRotate(-90);
-                            else
-                                mat.PostRotate(90);
+                                var mat = new Matrix();
 
-                            bitmap = Bitmap.CreateBitmap(bitmap, 0, 0, bitmap.Width, bitmap.Height, mat, true);
+                                if (renderer.currentFacing == Android.Hardware.CameraFacing.Front)
+                                    mat.PostRotate(-90);
+                                else
+                                    mat.PostRotate(90);
 
-                            bitmap.Compress(Bitmap.CompressFormat.Jpeg, 70, outStream);
+                                bitmap = Bitmap.CreateBitmap(bitmap, 0, 0, bitmap.Width, bitmap.Height, mat, true);
 
-                            Frames.Enqueue(outStream);
+                                bitmap.Compress(Bitmap.CompressFormat.Jpeg, 80, outStream);
 
-                            //서버쪽은 임시 주석
-                            if (renderer.server.ImagesSource.Count > 1000)
-                                renderer.server.ImagesSource.Clear();
+                                Frames.Enqueue(outStream);
 
-                            renderer.server.ImagesSource.Enqueue(outStream);
+                                //서버쪽은 임시 주석
+                                if (renderer.server.ImagesSource.Count > 1000)
+                                    renderer.server.ImagesSource.Clear();
 
-                            if (Frames.Count > 10)
-                            {
-                                total_bytes_sent += outStream.Length;
-                                NetProcess.SendRoomBITMAPMessage(Frames);                              
+                                renderer.server.ImagesSource.Enqueue(outStream);
 
-                                Frames.Clear();
+                                if (Frames.Count > 10)
+                                {
+                                    total_bytes_sent += outStream.Length;
+                                    NetProcess.SendRoomBITMAPMessage(Frames);                              
+
+                                    Frames.Clear();
+                                }
+
+                                checktime = DateTime.Now.AddMilliseconds(10);
+
+                                outStream.Close();
+                                img = null;
+
                             }
-
-                            checktime = DateTime.Now.AddMilliseconds(1);
+                            catch (System.Exception ex)
+                            {
+                                System.Console.WriteLine(ex.Message);
+                            }
                         }
                     }
                     break;
@@ -475,27 +488,22 @@ namespace FullCameraApp.Droid
                             {
                                 if (ms == null)
                                     continue;
+                              
+                               var bitmap = BitmapFactory.DecodeByteArray(ms?.stream.ToArray(), 0, ms.stream.ToArray().Length);
 
-                                //   _context.Post(delegate
-                                {
+                               ImageView imageView;
+                               if (imageViewDic.TryGetValue(ms.pos, out imageView) == true)
+                                   imageView.SetImageBitmap(bitmap);
+                               else
+                               {
+                                   AddImageView(ms.pos);
 
-                                    var bitmap = BitmapFactory.DecodeByteArray(ms?.stream.ToArray(), 0, ms.stream.ToArray().Length);
-
-                                    ImageView imageView;
-                                    if (imageViewDic.TryGetValue(ms.pos, out imageView) == true)
-                                        imageView.SetImageBitmap(bitmap);
-                                    else
-                                    {
-                                        AddImageView(ms.pos);
-
-                                        if (imageViewDic.TryGetValue(ms.pos, out imageView) == true)
-                                            imageView.SetImageBitmap(bitmap);
-                                    }
+                                   if (imageViewDic.TryGetValue(ms.pos, out imageView) == true)
+                                       imageView.SetImageBitmap(bitmap);
+                               }
 
 
-                                    Thread.Sleep(50);
-                                    //   }, null);
-                                }
+                               Thread.Sleep(50);
                             }
 
                         }
@@ -510,29 +518,31 @@ namespace FullCameraApp.Droid
                 //caemra page render
                 Task.Run(() =>
                 {
-                    audiomgr?.record();
+               //     audiomgr?.record();
                 });
 
 
                 Task.Run(() =>
                 {
-                    while (isDestroy == false)
-                    {
-                        StreamWrapper ms;
-                        if (NetProcess.AudioStream.TryDequeue(out ms) == true)
-                        {
-                            if (ms == null)
-                                continue;
+                    //while (isDestroy == false)
+                    //{
+                    //    StreamWrapper ms;
+                    //    if (NetProcess.AudioStream.TryDequeue(out ms) == true)
+                    //    {
+                    //        if (ms == null)
+                    //            continue;
 
-                      //      _context.Post(delegate
-                     //       {
-                                audiomgr?.play(ms.stream.ToArray());
+                    //  //      _context.Post(delegate
+                    // //       {
+                    //            audiomgr?.play(ms.stream.ToArray());
 
-                        //    }, null);
-                        }
+                    //    //    }, null);
+                    //    }
 
-                        Thread.Sleep(1);
-                    }
+                    //    ms = null;
+
+                    //    Thread.Sleep(10);
+                    //}
                    
                 });
 
