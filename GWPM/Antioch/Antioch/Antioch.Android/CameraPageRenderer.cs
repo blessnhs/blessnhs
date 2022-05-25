@@ -43,7 +43,9 @@ namespace FullCameraApp.Droid
                 case ImageFormatType.Yuy2:
                 case ImageFormatType.Yv12:
                     {
-                        if (checktime < DateTime.Now)
+
+
+                      //  if (checktime < DateTime.Now)
                         {
                             try
                             {
@@ -84,17 +86,22 @@ namespace FullCameraApp.Droid
 	                            if(renderer.server._Clients.Count > 0)
     	                            renderer.server.ImagesSource.Enqueue(outStream);
 
-                                renderer.server.ImagesSource.Enqueue(outStream);
-
-                                if (Frames.Count > 10)
+                                if (Frames.Count > 20)
                                 {
-                                    total_bytes_sent += outStream.Length;
-                                    NetProcess.SendRoomBITMAPMessage(Frames);                              
+                                    Task.Run(() =>
+                                    {
+                                        total_bytes_sent += outStream.Length;
+                                        NetProcess.SendRoomBITMAPMessage(Frames);
 
-                                    Frames.Clear();
+                                        Frames.Clear();
+
+                                        var diff = (DateTime.Now - checktime).TotalMilliseconds;
+                                        checktime = DateTime.Now.AddMilliseconds(0);
+                                    });
+
                                 }
 
-                                checktime = DateTime.Now.AddMilliseconds(10);
+
 
                                 outStream.Close();
                                 img = null;
@@ -123,7 +130,7 @@ namespace FullCameraApp.Droid
 
                         Frames.Clear();
 
-                        checktime = DateTime.Now.AddMilliseconds(33);
+                        checktime = DateTime.Now.AddMilliseconds(0);
                     }
                     break;
             }
@@ -509,7 +516,7 @@ namespace FullCameraApp.Droid
                                }
 
 
-                               Thread.Sleep(50);
+                               Thread.Sleep(70);
                             }
 
                         }
