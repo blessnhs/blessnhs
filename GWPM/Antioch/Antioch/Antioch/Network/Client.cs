@@ -71,7 +71,13 @@ namespace Antioch
                 mainpage.setting.UpdateLoginState("(dis connect)");
 
 
-                socket.Connect(remoteEP);
+                var result = socket.BeginConnect(remoteEP,null,null);
+
+                bool success = result.AsyncWaitHandle.WaitOne(500, true);
+                if (success)
+                {
+                    socket.EndConnect(result);
+                }
 
                 if (socket.Connected == true)
                 {
