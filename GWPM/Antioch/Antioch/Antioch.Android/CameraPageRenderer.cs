@@ -54,7 +54,7 @@ namespace FullCameraApp.Droid
 
                                 System.IO.MemoryStream outStream = new System.IO.MemoryStream();
 
-                                img.CompressToJpeg(new Rect(0, 0, paras.PreviewSize.Width, paras.PreviewSize.Height), 80, outStream);
+                                img.CompressToJpeg(new Rect(0, 0, paras.PreviewSize.Width, paras.PreviewSize.Height), 70, outStream);
 
                                 var frameToStream = outStream.ToArray();
                                 var bitmap = BitmapFactory.DecodeByteArray(frameToStream, 0, frameToStream.Length);
@@ -75,7 +75,7 @@ namespace FullCameraApp.Droid
 
                                 bitmap = Bitmap.CreateBitmap(bitmap, 0, 0, bitmap.Width, bitmap.Height, mat, true);
 
-                                bitmap.Compress(Bitmap.CompressFormat.Jpeg, 80, outStream);
+                                bitmap.Compress(Bitmap.CompressFormat.Jpeg, 70, outStream);
 
                                 Frames.Enqueue(outStream);
 
@@ -85,7 +85,7 @@ namespace FullCameraApp.Droid
 	                            if(renderer.server._Clients.Count > 0)
     	                            renderer.server.ImagesSource.Enqueue(outStream);
 
-                                if (Frames.Count > 20)
+                                if (Frames.Count > 3)
                                 {
                                     Task.Run(() =>
                                     {
@@ -315,10 +315,6 @@ namespace FullCameraApp.Droid
 
             ////////////////////////////////////////////////////////////DrawLayout///////////////////
 
-
-
-
-
             AddView(mainLayout);
         }
 
@@ -514,7 +510,7 @@ namespace FullCameraApp.Droid
                                }
 
 
-                               Thread.Sleep(70);
+                               Thread.Sleep(50);
                             }
 
                         }
@@ -529,31 +525,31 @@ namespace FullCameraApp.Droid
                 //caemra page render
                 Task.Run(() =>
                 {
-               //     audiomgr?.record();
+                    audiomgr?.record();
                 });
 
 
                 Task.Run(() =>
                 {
-                    //while (isDestroy == false)
-                    //{
-                    //    StreamWrapper ms;
-                    //    if (NetProcess.AudioStream.TryDequeue(out ms) == true)
-                    //    {
-                    //        if (ms == null)
-                    //            continue;
+                    while (isDestroy == false)
+                    {
+                        StreamWrapper ms;
+                        if (NetProcess.AudioStream.TryDequeue(out ms) == true)
+                        {
+                            if (ms == null)
+                                continue;
 
-                    //  //      _context.Post(delegate
-                    // //       {
-                    //            audiomgr?.play(ms.stream.ToArray());
+                      //      _context.Post(delegate
+                     //       {
+                                audiomgr?.play(ms.stream.ToArray());
 
-                    //    //    }, null);
-                    //    }
+                        //    }, null);
+                        }
 
-                    //    ms = null;
+                        ms = null;
 
-                    //    Thread.Sleep(10);
-                    //}
+                        Thread.Sleep(10);
+                    }
                    
                 });
 
