@@ -40,16 +40,22 @@ namespace FullCameraApp.Droid
         {
             try
             {
-                var paras = camera.GetParameters();
-                var imageformat = paras.PreviewFormat;
+                if (DateTime.Now > checktime)
+                {
+                    var paras = camera.GetParameters();
+                    var imageformat = paras.PreviewFormat;
 
-                //프레임 마다정보를 저장
-                CameraFrameInfo info = new CameraFrameInfo();
-                info.data = new byte[data.Length];
-                Buffer.BlockCopy(info.data, 0, data, 0, data.Length);
-                info.width = paras.PreviewSize.Width;
-                info.height = paras.PreviewSize.Height;
-                renderer.BytesQueue.Enqueue(info);
+                    //프레임 마다정보를 저장
+                    CameraFrameInfo info = new CameraFrameInfo();
+                    info.data = new byte[data.Length];
+                    Buffer.BlockCopy(data, 0, info.data, 0, data.Length);
+                    info.width = paras.PreviewSize.Width;
+                    info.height = paras.PreviewSize.Height;
+                    info.type = imageformat;
+                    renderer.BytesQueue.Enqueue(info);
+
+                    checktime = DateTime.Now.AddMilliseconds(100);
+                };
 
             }
             catch (System.Exception ex)
