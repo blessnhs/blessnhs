@@ -33,38 +33,36 @@ namespace FullCameraApp.Droid
         DateTime checktime = DateTime.Now;
         public void OnPreviewFrame(byte[] data, Android.Hardware.Camera camera)
         {
-            var paras = camera.GetParameters();
-            var imageformat = paras.PreviewFormat;
-
-            switch (imageformat)
+            try
             {
-                case ImageFormatType.Nv16:
-                case ImageFormatType.Nv21:
-                case ImageFormatType.Yuy2:
-                case ImageFormatType.Yv12:
-                    {
+                var paras = camera.GetParameters();
+                var imageformat = paras.PreviewFormat;
 
-
-                      //  if (checktime < DateTime.Now)
+                switch (imageformat)
+                {
+                    case ImageFormatType.Nv16:
+                    case ImageFormatType.Nv21:
+                    case ImageFormatType.Yuy2:
+                    case ImageFormatType.Yv12:
                         {
-                            try
+
+
+                            //  if (checktime < DateTime.Now)
                             {
-                                Android.Graphics.YuvImage img = new Android.Graphics.YuvImage(data,
-                                                           imageformat, paras.PreviewSize.Width, paras.PreviewSize.Height, null);
+
+                                YuvImage img = new YuvImage(data, imageformat, paras.PreviewSize.Width, paras.PreviewSize.Height, null);
 
                                 System.IO.MemoryStream outStream = new System.IO.MemoryStream();
 
-                                img.CompressToJpeg(new Rect(0, 0, paras.PreviewSize.Width, paras.PreviewSize.Height), 70, outStream);
+                                if (img.CompressToJpeg(new Rect(0, 0, paras.PreviewSize.Width, paras.PreviewSize.Height), 80, outStream) == false)
+                                    return;
 
                                 var frameToStream = outStream.ToArray();
                                 var bitmap = BitmapFactory.DecodeByteArray(frameToStream, 0, frameToStream.Length);
+                                if (bitmap == null)
+                                    return;
 
-                                outStream.Close();
-                                outStream = null;
-
-                                outStream = new System.IO.MemoryStream();
-
-                                bitmap = Bitmap.CreateScaledBitmap(bitmap, 320, 240, true);
+                                var sbitmap = Bitmap.CreateScaledBitmap(bitmap, 320, 240, true);
 
                                 var mat = new Matrix();
 
@@ -73,19 +71,24 @@ namespace FullCameraApp.Droid
                                 else
                                     mat.PostRotate(90);
 
-                                bitmap = Bitmap.CreateBitmap(bitmap, 0, 0, bitmap.Width, bitmap.Height, mat, true);
+                                var rbitmap = Bitmap.CreateBitmap(sbitmap, 0, 0, sbitmap.Width, sbitmap.Height, mat, true);
+                                if (rbitmap == null)
+                                    return;
 
-                                bitmap.Compress(Bitmap.CompressFormat.Jpeg, 70, outStream);
+                                var soutStream = new System.IO.MemoryStream();
+                                if (rbitmap.Compress(Bitmap.CompressFormat.Jpeg, 80, soutStream) == false)
+                                    return;
 
-                                Frames.Enqueue(outStream);
+                                Frames.Enqueue(soutStream);
+
 
                                 //서버쪽은 임시 주석
                                 if (renderer.server.ImagesSource.Count > 1000)
                                     renderer.server.ImagesSource.Clear();
-	                            if(renderer.server._Clients.Count > 0)
-    	                            renderer.server.ImagesSource.Enqueue(outStream);
+                                if (renderer.server._Clients.Count > 0)
+                                    renderer.server.ImagesSource.Enqueue(outStream);
 
-                                if (Frames.Count > 3)
+                                if (Frames.Count > 0)
                                 {
                                     Task.Run(() =>
                                     {
@@ -93,44 +96,37 @@ namespace FullCameraApp.Droid
                                         NetProcess.SendRoomBITMAPMessage(Frames);
 
                                         Frames.Clear();
-
-                                        var diff = (DateTime.Now - checktime).TotalMilliseconds;
-                                        checktime = DateTime.Now.AddMilliseconds(0);
                                     });
 
                                 }
-
-
-
-                                img = null;
-
-                            }
-                            catch (System.Exception ex)
-                            {
-                                System.Console.WriteLine(ex.Message);
                             }
                         }
-                    }
-                    break;
-                case ImageFormatType.Jpeg:
+                        break;
+                    case ImageFormatType.Jpeg:
 
-                    Frames.Enqueue(new System.IO.MemoryStream(data));
+                        Frames.Enqueue(new System.IO.MemoryStream(data));
 
-                    if (checktime < DateTime.Now)
-                    {
-                        if (renderer.server._Clients.Count > 0)
+                        if (checktime < DateTime.Now)
                         {
-                            foreach (var frame in Frames)
+                            if (renderer.server._Clients.Count > 0)
                             {
-                                renderer.server.ImagesSource.Enqueue(frame);
+                                foreach (var frame in Frames)
+                                {
+                                    renderer.server.ImagesSource.Enqueue(frame);
+                                }
                             }
+
+                            Frames.Clear();
+
+                            checktime = DateTime.Now.AddMilliseconds(0);
                         }
+                        break;
+                }
 
-                        Frames.Clear();
-
-                        checktime = DateTime.Now.AddMilliseconds(0);
-                    }
-                    break;
+            }
+            catch (System.Exception ex)
+            {
+                System.Console.WriteLine(ex.Message);
             }
         }
     }
