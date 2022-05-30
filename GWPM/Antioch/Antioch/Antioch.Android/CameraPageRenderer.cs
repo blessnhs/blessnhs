@@ -103,7 +103,7 @@ namespace FullCameraApp.Droid
                                     Task.Run(() =>
                                     {
                                         total_bytes_sent += outStream.Length;
-                                        NetProcess.SendRoomBITMAPMessage(Frames,0);
+                                        NetProcess.SendRoomBITMAPMessage(Frames, 0);
 
                                         Frames.Clear();
                                     });
@@ -233,7 +233,7 @@ namespace FullCameraApp.Droid
         }
 
 
-        void AddImageView(int pos,int width,int height)
+        void AddImageView(int pos, int width, int height)
         {
             ///////////////////////////////////////////////////////////////////////////////
             var imageView = new ImageView(Context);
@@ -321,12 +321,18 @@ namespace FullCameraApp.Droid
             mainScreenButton.Click += async (s, e) =>
             {
                 ImageView view;
-                if(imageViewDic.TryGetValue(6, out view) == true)
+                if (imageViewDic.TryGetValue(6, out view) == true)
                 {
                     if (view.Visibility == ViewStates.Visible)
+                    {
                         view.Visibility = ViewStates.Invisible;
+                        mainScreenButton.Text = "Show";
+                    }
                     else
+                    {
                         view.Visibility = ViewStates.Visible;
+                        mainScreenButton.Text = "Hide";
+                    }
                 }
             };
             mainLayout.AddView(mainScreenButton);
@@ -535,12 +541,6 @@ namespace FullCameraApp.Droid
             callbackcamera.renderer = this;
         }
 
-        private void Mjpeg_FrameReady(object sender, FrameReadyEventArgs e)
-        {
-            //    imageView.SetImageBitmap(e.Bitmap);
-
-        }
-
         #region TextureView.ISurfaceTextureListener implementations
 
         public Android.Hardware.CameraFacing currentFacing;
@@ -591,29 +591,22 @@ namespace FullCameraApp.Droid
                 //caemra page render
                 Task.Run(() =>
                 {
-                NetProcess.JpegStream.Clear();
+                    NetProcess.JpegStream.Clear();
 
-                DateTime chk = DateTime.Now;
-                while (isDestroy == false)
-                {
-                    try
+                    DateTime chk = DateTime.Now;
+                    while (isDestroy == false)
                     {
-                        if (NetProcess.JpegStream.Count == 0)
-                            continue;
-
-                        //if (NetProcess.JpegStream.Count > 100)
-                        //{
-                        //    NetProcess.JpegStream.Clear();
-                        //    continue;
-                        //}
-
-                        if (chk < DateTime.Now)
+                        try
                         {
-                            exitButton.Text = "exit";// ((callbackcamera.total_bytes_sent / callbackcamera.count_sent) / 1024).ToString() + "k";
+                            if (NetProcess.JpegStream.Count == 0)
+                                continue;
 
-                            chk = DateTime.Now.AddSeconds(3);
-                        }
+                            if (chk < DateTime.Now)
+                            {
+                                exitButton.Text = "exit";
 
+                                chk = DateTime.Now.AddSeconds(3);
+                            }
 
 
                             MainThread.BeginInvokeOnMainThread(() =>
@@ -654,8 +647,6 @@ namespace FullCameraApp.Droid
                                                 imageView2?.SetImageBitmap(bitmap);
                                         }
                                     }
-
-
                                 }
                             });
 
@@ -685,11 +676,8 @@ namespace FullCameraApp.Droid
                             if (ms == null)
                                 continue;
 
-                            //      _context.Post(delegate
-                            //       {
                             audiomgr?.play(ms.stream.ToArray());
 
-                            //    }, null);
                         }
                     }
 
