@@ -64,7 +64,7 @@ namespace FullCameraApp.Droid
 
                                 System.IO.MemoryStream outStream = new System.IO.MemoryStream();
 
-                                if (img.CompressToJpeg(new Rect(0, 0, paras.PreviewSize.Width, paras.PreviewSize.Height), 20, outStream) == false)
+                                if (img.CompressToJpeg(new Rect(0, 0, paras.PreviewSize.Width, paras.PreviewSize.Height), renderer.quality, outStream) == false)
                                     return;
 
                                 var frameToStream = outStream.ToArray();
@@ -86,10 +86,13 @@ namespace FullCameraApp.Droid
                                     return;
 
                                 var soutStream = new System.IO.MemoryStream();
-                                if (rbitmap.Compress(Bitmap.CompressFormat.Jpeg, 20, soutStream) == false)
+                                if (rbitmap.Compress(Bitmap.CompressFormat.Jpeg, renderer.quality, soutStream) == false)
                                     return;
 
                                 Frames.Enqueue(soutStream);
+
+
+                                renderer.textViewMain.Text = outStream.Length.ToString();
 
                                 //서버쪽은 임시 주석
                                 if (renderer.server.ImagesSource.Count > 100)
@@ -148,6 +151,8 @@ namespace FullCameraApp.Droid
 
         public ImageStreamingServer server = new ImageStreamingServer();
 
+        public int quality = 20;
+
         public CameraPageRenderer(Context context) : base(context)
         {
             _context = SynchronizationContext.Current;
@@ -169,6 +174,14 @@ namespace FullCameraApp.Droid
 
         //카메라 스위치
         Button switchButton;
+
+
+        //퀄리티 업 다운
+        Button qualityUp;
+        Button qualityDown;
+
+        public TextView textViewMain;
+
 
         Android.Hardware.Camera camera;
 
@@ -252,13 +265,54 @@ namespace FullCameraApp.Droid
             AddImageView(3);
             AddImageView(4);
             AddImageView(5);
+
+
             ///////////////////////////////////////////////////////////////////////////////
-            exitButton = new Button(Context);
-            RelativeLayout.LayoutParams ButtonParams = new RelativeLayout.LayoutParams(
+            textViewMain = new TextView(Context);
+            RelativeLayout.LayoutParams TextViewParams = new RelativeLayout.LayoutParams(
             RelativeLayout.LayoutParams.WrapContent,
             RelativeLayout.LayoutParams.WrapContent);
-            ButtonParams.Height = 150;
-            ButtonParams.Width = 150;
+            textViewMain.LayoutParameters = TextViewParams;
+            textViewMain.Text = "123124";
+            textViewMain.SetTextColor(Color.White);
+            textViewMain.Click += async (s, e) =>
+            {
+                textViewMain.Text = "";
+            };
+            mainLayout.AddView(textViewMain);
+            ///////////////////////////////////////////////////////////////////////////////
+
+            ///////////////////////////////////////////////////////////////////////////////
+            qualityUp = new Button(Context);
+            RelativeLayout.LayoutParams ButtonParams = new RelativeLayout.LayoutParams(
+            RelativeLayout.LayoutParams.WrapContent,
+             RelativeLayout.LayoutParams.WrapContent);
+            qualityUp.LayoutParameters = ButtonParams;
+            qualityUp.Text = "Up";
+            qualityUp.Click += async (s, e) =>
+            {
+                quality++;
+                if (quality > 100)
+                    quality = 100;
+
+                qualityUp.Text = quality.ToString();
+            };
+            mainLayout.AddView(qualityUp);
+            ///////////////////////////////////////////////////////////////////////////////
+            qualityDown = new Button(Context);
+            qualityDown.LayoutParameters = ButtonParams;
+            qualityDown.Text = "Down";
+            qualityDown.Click += async (s, e) =>
+            {
+                quality--;
+                if (quality < 0)
+                    quality = 0;
+
+                qualityUp.Text = quality.ToString();
+            };
+            mainLayout.AddView(qualityDown);
+            ///////////////////////////////////////////////////////////////////////////////
+            exitButton = new Button(Context);
             exitButton.LayoutParameters = ButtonParams;
             exitButton.Text = "EXIT";
             exitButton.Click += async (s, e) =>
@@ -353,6 +407,15 @@ namespace FullCameraApp.Droid
                 posx++;
                 posy = posx / 2;
             }
+
+            textViewMain.SetX(half_width);
+            textViewMain.SetY(metrics.HeightPixels - 70);
+
+            qualityUp.SetX(half_width);
+            qualityUp.SetY(metrics.HeightPixels - 300);
+
+            qualityDown.SetX(half_width + 250);
+            qualityDown.SetY(metrics.HeightPixels - 300);
 
             exitButton.SetX(half_width);
             exitButton.SetY(metrics.HeightPixels - 200);

@@ -38,6 +38,8 @@
     <AndroidEnableProfiledAot>false</AndroidEnableProfiledAot>
     <BundleAssemblies>false</BundleAssemblies>
     <MandroidI18n>CJK</MandroidI18n>
+    <AndroidSupportedAbis />
+    <MonoDroidExtraArgs>MONO_GC_PARAMS=bridge-implementation=new,nursery-size=128‌​m,soft-heap-limit=51‌​2m</MonoDroidExtraArgs>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
