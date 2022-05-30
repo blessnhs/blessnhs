@@ -140,7 +140,7 @@ namespace Antioch
                         {
 
                             NetProcess.start();
-                            NetProcess.client.PacketRecvSync2();
+                            NetProcess.client.PacketRecvSync();
                             NetProcess.Loop();
 
                             Thread.Sleep(10);

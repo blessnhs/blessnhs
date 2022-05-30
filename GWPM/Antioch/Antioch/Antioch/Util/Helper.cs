@@ -11,6 +11,7 @@ namespace Antioch
     {
         public MemoryStream stream = new MemoryStream();
         public int pos = 0;
+        public int type = 0;
     }
 
 

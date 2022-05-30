@@ -117,8 +117,6 @@ namespace Antioch.Droid
                         NetProcess.SendAudioMessage(Frames);
                         Frames.Clear();
                     }
-
-                    Thread.Sleep(10);
                 }
             }
             catch (Exception e)

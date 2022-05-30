@@ -64,6 +64,7 @@ message BITMAP_MESSAGE_REQ
     optional PROTOCOL   id                  = 1 [default = ID_PKT_BITMAP_MESSAGE_REQ ];
     repeated bytes     var_message         = 2;
     required int32       var_room_number        = 3;	
+    required int32       var_type        = 4;	
 }
 
 message AUDIO_MESSAGE_REQ

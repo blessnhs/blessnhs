@@ -20,7 +20,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   package='',
   syntax='proto2',
   serialized_options=b'H\001',
-  serialized_pb=b'\n\x0c\x43LI.GS.proto\x1a\nEnum.proto\x1a\x0fStructure.proto\"8\n\x0bVERSION_REQ\x12)\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x12ID_PKT_VERSION_REQ\"U\n\tLOGIN_REQ\x12\'\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x10ID_PKT_LOGIN_REQ\x12\x0e\n\x06var_id\x18\x02 \x02(\t\x12\x0f\n\x07var_pwd\x18\x03 \x02(\t\"R\n\x0f\x43REATE_ROOM_REQ\x12-\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x16ID_PKT_CREATE_ROOM_REQ\x12\x10\n\x08var_name\x18\x02 \x02(\t\"W\n\x0e\x45NTER_ROOM_REQ\x12,\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x15ID_PKT_ENTER_ROOM_REQ\x12\x17\n\x0fvar_room_number\x18\x02 \x02(\x05\"g\n\x0eLEAVE_ROOM_REQ\x12,\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x15ID_PKT_LEAVE_ROOM_REQ\x12\x0e\n\x06var_id\x18\x02 \x02(\x05\x12\x17\n\x0fvar_room_number\x18\x03 \x02(\x05\"<\n\rROOM_LIST_REQ\x12+\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x14ID_PKT_ROOM_LIST_REQ\"\xa5\x01\n\x15ROOM_PASS_THROUGH_REQ\x12\x33\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x1cID_PKT_ROOM_PASS_THROUGH_REQ\x12\x13\n\x0bvar_message\x18\x02 \x02(\t\x12\x17\n\x0fvar_message_int\x18\x03 \x02(\x05\x12\x17\n\x0fvar_room_number\x18\x04 \x02(\x05\x12\x10\n\x08var_time\x18\x05 \x02(\t\"6\n\nNOTICE_REQ\x12(\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x11ID_PKT_NOTICE_REQ\"t\n\x12\x42ITMAP_MESSAGE_REQ\x12\x30\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x19ID_PKT_BITMAP_MESSAGE_REQ\x12\x13\n\x0bvar_message\x18\x02 \x03(\x0c\x12\x17\n\x0fvar_room_number\x18\x03 \x02(\x05\"r\n\x11\x41UDIO_MESSAGE_REQ\x12/\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x18ID_PKT_AUDIO_MESSAGE_REQ\x12\x13\n\x0bvar_message\x18\x02 \x03(\x0c\x12\x17\n\x0fvar_room_number\x18\x03 \x02(\x05\"B\n\x10PRAY_MESSAGE_REQ\x12.\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x17ID_PKT_PRAY_MESSAGE_REQ\"_\n\x14PRAY_MESSAGE_REG_REQ\x12\x32\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x1bID_PKT_PRAY_MESSAGE_REG_REQ\x12\x13\n\x0bvar_message\x18\x02 \x01(\t\"E\n\x07QNA_REQ\x12%\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x0eID_PKT_QNA_REQ\x12\x13\n\x0bvar_message\x18\x02 \x01(\t\"<\n\rMAIL_LIST_REQ\x12+\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x14ID_PKT_MAIL_LIST_REQ\"@\n\x07REG_REQ\x12%\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x0eID_PKT_REG_REQ\x12\x0e\n\x06var_id\x18\x02 \x02(\x05\"D\n\x11\x43LIENT_LOGOUT_REQ\x12/\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x18ID_PKT_CLIENT_LOGOUT_REQB\x02H\x01'
+  serialized_pb=b'\n\x0c\x43LI.GS.proto\x1a\nEnum.proto\x1a\x0fStructure.proto\"8\n\x0bVERSION_REQ\x12)\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x12ID_PKT_VERSION_REQ\"U\n\tLOGIN_REQ\x12\'\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x10ID_PKT_LOGIN_REQ\x12\x0e\n\x06var_id\x18\x02 \x02(\t\x12\x0f\n\x07var_pwd\x18\x03 \x02(\t\"R\n\x0f\x43REATE_ROOM_REQ\x12-\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x16ID_PKT_CREATE_ROOM_REQ\x12\x10\n\x08var_name\x18\x02 \x02(\t\"W\n\x0e\x45NTER_ROOM_REQ\x12,\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x15ID_PKT_ENTER_ROOM_REQ\x12\x17\n\x0fvar_room_number\x18\x02 \x02(\x05\"g\n\x0eLEAVE_ROOM_REQ\x12,\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x15ID_PKT_LEAVE_ROOM_REQ\x12\x0e\n\x06var_id\x18\x02 \x02(\x05\x12\x17\n\x0fvar_room_number\x18\x03 \x02(\x05\"<\n\rROOM_LIST_REQ\x12+\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x14ID_PKT_ROOM_LIST_REQ\"\xa5\x01\n\x15ROOM_PASS_THROUGH_REQ\x12\x33\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x1cID_PKT_ROOM_PASS_THROUGH_REQ\x12\x13\n\x0bvar_message\x18\x02 \x02(\t\x12\x17\n\x0fvar_message_int\x18\x03 \x02(\x05\x12\x17\n\x0fvar_room_number\x18\x04 \x02(\x05\x12\x10\n\x08var_time\x18\x05 \x02(\t\"6\n\nNOTICE_REQ\x12(\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x11ID_PKT_NOTICE_REQ\"\x86\x01\n\x12\x42ITMAP_MESSAGE_REQ\x12\x30\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x19ID_PKT_BITMAP_MESSAGE_REQ\x12\x13\n\x0bvar_message\x18\x02 \x03(\x0c\x12\x17\n\x0fvar_room_number\x18\x03 \x02(\x05\x12\x10\n\x08var_type\x18\x04 \x02(\x05\"r\n\x11\x41UDIO_MESSAGE_REQ\x12/\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x18ID_PKT_AUDIO_MESSAGE_REQ\x12\x13\n\x0bvar_message\x18\x02 \x03(\x0c\x12\x17\n\x0fvar_room_number\x18\x03 \x02(\x05\"B\n\x10PRAY_MESSAGE_REQ\x12.\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x17ID_PKT_PRAY_MESSAGE_REQ\"_\n\x14PRAY_MESSAGE_REG_REQ\x12\x32\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x1bID_PKT_PRAY_MESSAGE_REG_REQ\x12\x13\n\x0bvar_message\x18\x02 \x01(\t\"E\n\x07QNA_REQ\x12%\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x0eID_PKT_QNA_REQ\x12\x13\n\x0bvar_message\x18\x02 \x01(\t\"<\n\rMAIL_LIST_REQ\x12+\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x14ID_PKT_MAIL_LIST_REQ\"@\n\x07REG_REQ\x12%\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x0eID_PKT_REG_REQ\x12\x0e\n\x06var_id\x18\x02 \x02(\x05\"D\n\x11\x43LIENT_LOGOUT_REQ\x12/\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x18ID_PKT_CLIENT_LOGOUT_REQB\x02H\x01'
   ,
   dependencies=[Enum__pb2.DESCRIPTOR,Structure__pb2.DESCRIPTOR,])
 
@@ -373,6 +373,13 @@ _BITMAP_MESSAGE_REQ = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='var_type', full_name='BITMAP_MESSAGE_REQ.var_type', index=3,
+      number=4, type=5, cpp_type=1, label=2,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
   ],
   extensions=[
   ],
@@ -385,8 +392,8 @@ _BITMAP_MESSAGE_REQ = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=754,
-  serialized_end=870,
+  serialized_start=755,
+  serialized_end=889,
 )
 
 
@@ -430,8 +437,8 @@ _AUDIO_MESSAGE_REQ = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=872,
-  serialized_end=986,
+  serialized_start=891,
+  serialized_end=1005,
 )
 
 
@@ -461,8 +468,8 @@ _PRAY_MESSAGE_REQ = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=988,
-  serialized_end=1054,
+  serialized_start=1007,
+  serialized_end=1073,
 )
 
 
@@ -499,8 +506,8 @@ _PRAY_MESSAGE_REG_REQ = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1056,
-  serialized_end=1151,
+  serialized_start=1075,
+  serialized_end=1170,
 )
 
 
@@ -537,8 +544,8 @@ _QNA_REQ = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1153,
-  serialized_end=1222,
+  serialized_start=1172,
+  serialized_end=1241,
 )
 
 
@@ -568,8 +575,8 @@ _MAIL_LIST_REQ = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1224,
-  serialized_end=1284,
+  serialized_start=1243,
+  serialized_end=1303,
 )
 
 
@@ -606,8 +613,8 @@ _REG_REQ = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1286,
-  serialized_end=1350,
+  serialized_start=1305,
+  serialized_end=1369,
 )
 
 
@@ -637,8 +644,8 @@ _CLIENT_LOGOUT_REQ = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1352,
-  serialized_end=1420,
+  serialized_start=1371,
+  serialized_end=1439,
 )
 
 _VERSION_REQ.fields_by_name['id'].enum_type = Enum__pb2._PROTOCOL

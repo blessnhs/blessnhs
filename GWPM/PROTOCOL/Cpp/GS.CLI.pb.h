@@ -1957,6 +1957,7 @@ class BITMAP_MESSAGE_RES :
     kVarNameFieldNumber = 4,
     kVarCodeFieldNumber = 2,
     kVarPosFieldNumber = 5,
+    kVarTypeFieldNumber = 6,
     kIdFieldNumber = 1,
   };
   // repeated bytes var_message = 3;
@@ -2029,6 +2030,19 @@ class BITMAP_MESSAGE_RES :
   void _internal_set_var_pos(::PROTOBUF_NAMESPACE_ID::int32 value);
   public:
 
+  // optional int32 var_type = 6;
+  bool has_var_type() const;
+  private:
+  bool _internal_has_var_type() const;
+  public:
+  void clear_var_type();
+  ::PROTOBUF_NAMESPACE_ID::int32 var_type() const;
+  void set_var_type(::PROTOBUF_NAMESPACE_ID::int32 value);
+  private:
+  ::PROTOBUF_NAMESPACE_ID::int32 _internal_var_type() const;
+  void _internal_set_var_type(::PROTOBUF_NAMESPACE_ID::int32 value);
+  public:
+
   // optional .PROTOCOL id = 1 [default = ID_PKT_BITMAP_MESSAGE_RES];
   bool has_id() const;
   private:
@@ -2053,6 +2067,7 @@ class BITMAP_MESSAGE_RES :
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr var_name_;
   int var_code_;
   ::PROTOBUF_NAMESPACE_ID::int32 var_pos_;
+  ::PROTOBUF_NAMESPACE_ID::int32 var_type_;
   int id_;
   friend struct ::TableStruct_GS_2eCLI_2eproto;
 };
@@ -4764,7 +4779,7 @@ NOTICE_RES::var_list() const {
 
 // optional .PROTOCOL id = 1 [default = ID_PKT_BITMAP_MESSAGE_RES];
 inline bool BITMAP_MESSAGE_RES::_internal_has_id() const {
-  bool value = (_has_bits_[0] & 0x00000008u) != 0;
+  bool value = (_has_bits_[0] & 0x00000010u) != 0;
   return value;
 }
 inline bool BITMAP_MESSAGE_RES::has_id() const {
@@ -4772,7 +4787,7 @@ inline bool BITMAP_MESSAGE_RES::has_id() const {
 }
 inline void BITMAP_MESSAGE_RES::clear_id() {
   id_ = 11;
-  _has_bits_[0] &= ~0x00000008u;
+  _has_bits_[0] &= ~0x00000010u;
 }
 inline ::PROTOCOL BITMAP_MESSAGE_RES::_internal_id() const {
   return static_cast< ::PROTOCOL >(id_);
@@ -4783,7 +4798,7 @@ inline ::PROTOCOL BITMAP_MESSAGE_RES::id() const {
 }
 inline void BITMAP_MESSAGE_RES::_internal_set_id(::PROTOCOL value) {
   assert(::PROTOCOL_IsValid(value));
-  _has_bits_[0] |= 0x00000008u;
+  _has_bits_[0] |= 0x00000010u;
   id_ = value;
 }
 inline void BITMAP_MESSAGE_RES::set_id(::PROTOCOL value) {
@@ -4991,6 +5006,34 @@ inline void BITMAP_MESSAGE_RES::_internal_set_var_pos(::PROTOBUF_NAMESPACE_ID::i
 inline void BITMAP_MESSAGE_RES::set_var_pos(::PROTOBUF_NAMESPACE_ID::int32 value) {
   _internal_set_var_pos(value);
   // @@protoc_insertion_point(field_set:BITMAP_MESSAGE_RES.var_pos)
+}
+
+// optional int32 var_type = 6;
+inline bool BITMAP_MESSAGE_RES::_internal_has_var_type() const {
+  bool value = (_has_bits_[0] & 0x00000008u) != 0;
+  return value;
+}
+inline bool BITMAP_MESSAGE_RES::has_var_type() const {
+  return _internal_has_var_type();
+}
+inline void BITMAP_MESSAGE_RES::clear_var_type() {
+  var_type_ = 0;
+  _has_bits_[0] &= ~0x00000008u;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 BITMAP_MESSAGE_RES::_internal_var_type() const {
+  return var_type_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 BITMAP_MESSAGE_RES::var_type() const {
+  // @@protoc_insertion_point(field_get:BITMAP_MESSAGE_RES.var_type)
+  return _internal_var_type();
+}
+inline void BITMAP_MESSAGE_RES::_internal_set_var_type(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  _has_bits_[0] |= 0x00000008u;
+  var_type_ = value;
+}
+inline void BITMAP_MESSAGE_RES::set_var_type(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  _internal_set_var_type(value);
+  // @@protoc_insertion_point(field_set:BITMAP_MESSAGE_RES.var_type)
 }
 
 // -------------------------------------------------------------------

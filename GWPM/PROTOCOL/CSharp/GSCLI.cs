@@ -51,30 +51,30 @@ public static partial class GSCLIReflection {
           "ZXMYAyADKAsyDC5Sb29tTWVzc2FnZRIXCg92YXJfcm9vbV9udW1iZXIYBCAB",
           "KAUiVQoKTk9USUNFX1JFUxIoCgJpZBgBIAEoDjIJLlBST1RPQ09MOhFJRF9Q",
           "S1RfTk9USUNFX1JFUxIdCgh2YXJfbGlzdBgCIAMoCzILLk5vdGlmeUluZm8i",
-          "nAEKEkJJVE1BUF9NRVNTQUdFX1JFUxIwCgJpZBgBIAEoDjIJLlBST1RPQ09M",
+          "rgEKEkJJVE1BUF9NRVNTQUdFX1JFUxIwCgJpZBgBIAEoDjIJLlBST1RPQ09M",
           "OhlJRF9QS1RfQklUTUFQX01FU1NBR0VfUkVTEhwKCHZhcl9jb2RlGAIgASgO",
           "MgouRXJyb3JDb2RlEhMKC3Zhcl9tZXNzYWdlGAMgAygMEhAKCHZhcl9uYW1l",
-          "GAQgASgMEg8KB3Zhcl9wb3MYBSABKAUimgEKEUFVRElPX01FU1NBR0VfUkVT",
-          "Ei8KAmlkGAEgASgOMgkuUFJPVE9DT0w6GElEX1BLVF9BVURJT19NRVNTQUdF",
-          "X1JFUxIcCgh2YXJfY29kZRgCIAEoDjIKLkVycm9yQ29kZRITCgt2YXJfbWVz",
-          "c2FnZRgDIAMoDBIQCgh2YXJfbmFtZRgEIAEoDBIPCgd2YXJfcG9zGAUgASgF",
-          "In0KEFBSQVlfTUVTU0FHRV9SRVMSLgoCaWQYASABKA4yCS5QUk9UT0NPTDoX",
-          "SURfUEtUX1BSQVlfTUVTU0FHRV9SRVMSHAoIdmFyX2NvZGUYAiABKA4yCi5F",
-          "cnJvckNvZGUSGwoIdmFyX2xpc3QYAyADKAsyCS5QcmF5SW5mbyKPAQoUUFJB",
-          "WV9NRVNTQUdFX1JFR19SRVMSMgoCaWQYASABKA4yCS5QUk9UT0NPTDobSURf",
-          "UEtUX1BSQVlfTUVTU0FHRV9SRUdfUkVTEhwKCHZhcl9jb2RlGAIgASgOMgou",
-          "RXJyb3JDb2RlEhMKC3Zhcl9tZXNzYWdlGAMgASgJEhAKCHZhcl90aW1lGAQg",
-          "ASgJIk4KB1FOQV9SRVMSJQoCaWQYASABKA4yCS5QUk9UT0NPTDoOSURfUEtU",
-          "X1FOQV9SRVMSHAoIdmFyX2NvZGUYAiABKA4yCi5FcnJvckNvZGUidwoNTUFJ",
-          "TF9MSVNUX1JFUxIrCgJpZBgBIAEoDjIJLlBST1RPQ09MOhRJRF9QS1RfTUFJ",
-          "TF9MSVNUX1JFUxIcCgh2YXJfY29kZRgCIAEoDjIKLkVycm9yQ29kZRIbCgh2",
-          "YXJfbGlzdBgDIAMoCzIJLk1haWxJbmZvIk4KB1JFR19SRVMSJQoCaWQYASAB",
-          "KA4yCS5QUk9UT0NPTDoOSURfUEtUX1JFR19SRVMSHAoIdmFyX2NvZGUYAiAB",
-          "KA4yCi5FcnJvckNvZGUiYgoRQ0xJRU5UX0xPR09VVF9SRVMSLwoCaWQYASAB",
-          "KA4yCS5QUk9UT0NPTDoYSURfUEtUX0NMSUVOVF9MT0dPVVRfUkVTEhwKCHZh",
-          "cl9jb2RlGAIgASgOMgouRXJyb3JDb2RlIkUKC0NMSUVOVF9LSUNLEikKAmlk",
-          "GAEgASgOMgkuUFJPVE9DT0w6EklEX1BLVF9DTElFTlRfS0lDSxILCgNzaWQY",
-          "AiABKAVCAkgB"));
+          "GAQgASgMEg8KB3Zhcl9wb3MYBSABKAUSEAoIdmFyX3R5cGUYBiABKAUimgEK",
+          "EUFVRElPX01FU1NBR0VfUkVTEi8KAmlkGAEgASgOMgkuUFJPVE9DT0w6GElE",
+          "X1BLVF9BVURJT19NRVNTQUdFX1JFUxIcCgh2YXJfY29kZRgCIAEoDjIKLkVy",
+          "cm9yQ29kZRITCgt2YXJfbWVzc2FnZRgDIAMoDBIQCgh2YXJfbmFtZRgEIAEo",
+          "DBIPCgd2YXJfcG9zGAUgASgFIn0KEFBSQVlfTUVTU0FHRV9SRVMSLgoCaWQY",
+          "ASABKA4yCS5QUk9UT0NPTDoXSURfUEtUX1BSQVlfTUVTU0FHRV9SRVMSHAoI",
+          "dmFyX2NvZGUYAiABKA4yCi5FcnJvckNvZGUSGwoIdmFyX2xpc3QYAyADKAsy",
+          "CS5QcmF5SW5mbyKPAQoUUFJBWV9NRVNTQUdFX1JFR19SRVMSMgoCaWQYASAB",
+          "KA4yCS5QUk9UT0NPTDobSURfUEtUX1BSQVlfTUVTU0FHRV9SRUdfUkVTEhwK",
+          "CHZhcl9jb2RlGAIgASgOMgouRXJyb3JDb2RlEhMKC3Zhcl9tZXNzYWdlGAMg",
+          "ASgJEhAKCHZhcl90aW1lGAQgASgJIk4KB1FOQV9SRVMSJQoCaWQYASABKA4y",
+          "CS5QUk9UT0NPTDoOSURfUEtUX1FOQV9SRVMSHAoIdmFyX2NvZGUYAiABKA4y",
+          "Ci5FcnJvckNvZGUidwoNTUFJTF9MSVNUX1JFUxIrCgJpZBgBIAEoDjIJLlBS",
+          "T1RPQ09MOhRJRF9QS1RfTUFJTF9MSVNUX1JFUxIcCgh2YXJfY29kZRgCIAEo",
+          "DjIKLkVycm9yQ29kZRIbCgh2YXJfbGlzdBgDIAMoCzIJLk1haWxJbmZvIk4K",
+          "B1JFR19SRVMSJQoCaWQYASABKA4yCS5QUk9UT0NPTDoOSURfUEtUX1JFR19S",
+          "RVMSHAoIdmFyX2NvZGUYAiABKA4yCi5FcnJvckNvZGUiYgoRQ0xJRU5UX0xP",
+          "R09VVF9SRVMSLwoCaWQYASABKA4yCS5QUk9UT0NPTDoYSURfUEtUX0NMSUVO",
+          "VF9MT0dPVVRfUkVTEhwKCHZhcl9jb2RlGAIgASgOMgouRXJyb3JDb2RlIkUK",
+          "C0NMSUVOVF9LSUNLEikKAmlkGAEgASgOMgkuUFJPVE9DT0w6EklEX1BLVF9D",
+          "TElFTlRfS0lDSxILCgNzaWQYAiABKAVCAkgB"));
     descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
         new pbr::FileDescriptor[] { global::EnumReflection.Descriptor, global::StructureReflection.Descriptor, },
         new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
@@ -87,7 +87,7 @@ public static partial class GSCLIReflection {
           new pbr::GeneratedClrTypeInfo(typeof(global::ROOM_LIST_RES), global::ROOM_LIST_RES.Parser, new[]{ "Id", "VarCode", "VarRoomList" }, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::ROOM_PASS_THROUGH_RES), global::ROOM_PASS_THROUGH_RES.Parser, new[]{ "Id", "VarCode", "VarMessages", "VarRoomNumber" }, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::NOTICE_RES), global::NOTICE_RES.Parser, new[]{ "Id", "VarList" }, null, null, null, null),
-          new pbr::GeneratedClrTypeInfo(typeof(global::BITMAP_MESSAGE_RES), global::BITMAP_MESSAGE_RES.Parser, new[]{ "Id", "VarCode", "VarMessage", "VarName", "VarPos" }, null, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::BITMAP_MESSAGE_RES), global::BITMAP_MESSAGE_RES.Parser, new[]{ "Id", "VarCode", "VarMessage", "VarName", "VarPos", "VarType" }, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::AUDIO_MESSAGE_RES), global::AUDIO_MESSAGE_RES.Parser, new[]{ "Id", "VarCode", "VarMessage", "VarName", "VarPos" }, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::PRAY_MESSAGE_RES), global::PRAY_MESSAGE_RES.Parser, new[]{ "Id", "VarCode", "VarList" }, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::PRAY_MESSAGE_REG_RES), global::PRAY_MESSAGE_REG_RES.Parser, new[]{ "Id", "VarCode", "VarMessage", "VarTime" }, null, null, null, null),
@@ -2410,6 +2410,7 @@ public sealed partial class BITMAP_MESSAGE_RES : pb::IMessage<BITMAP_MESSAGE_RES
     varMessage_ = other.varMessage_.Clone();
     varName_ = other.varName_;
     varPos_ = other.varPos_;
+    varType_ = other.varType_;
     _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
   }
 
@@ -2523,6 +2524,30 @@ public sealed partial class BITMAP_MESSAGE_RES : pb::IMessage<BITMAP_MESSAGE_RES
     _hasBits0 &= ~4;
   }
 
+  /// <summary>Field number for the "var_type" field.</summary>
+  public const int VarTypeFieldNumber = 6;
+  private readonly static int VarTypeDefaultValue = 0;
+
+  private int varType_;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public int VarType {
+    get { if ((_hasBits0 & 8) != 0) { return varType_; } else { return VarTypeDefaultValue; } }
+    set {
+      _hasBits0 |= 8;
+      varType_ = value;
+    }
+  }
+  /// <summary>Gets whether the "var_type" field is set</summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public bool HasVarType {
+    get { return (_hasBits0 & 8) != 0; }
+  }
+  /// <summary>Clears the value of the "var_type" field</summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void ClearVarType() {
+    _hasBits0 &= ~8;
+  }
+
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public override bool Equals(object other) {
     return Equals(other as BITMAP_MESSAGE_RES);
@@ -2541,6 +2566,7 @@ public sealed partial class BITMAP_MESSAGE_RES : pb::IMessage<BITMAP_MESSAGE_RES
     if(!varMessage_.Equals(other.varMessage_)) return false;
     if (VarName != other.VarName) return false;
     if (VarPos != other.VarPos) return false;
+    if (VarType != other.VarType) return false;
     return Equals(_unknownFields, other._unknownFields);
   }
 
@@ -2552,6 +2578,7 @@ public sealed partial class BITMAP_MESSAGE_RES : pb::IMessage<BITMAP_MESSAGE_RES
     hash ^= varMessage_.GetHashCode();
     if (HasVarName) hash ^= VarName.GetHashCode();
     if (HasVarPos) hash ^= VarPos.GetHashCode();
+    if (HasVarType) hash ^= VarType.GetHashCode();
     if (_unknownFields != null) {
       hash ^= _unknownFields.GetHashCode();
     }
@@ -2582,6 +2609,10 @@ public sealed partial class BITMAP_MESSAGE_RES : pb::IMessage<BITMAP_MESSAGE_RES
       output.WriteRawTag(40);
       output.WriteInt32(VarPos);
     }
+    if (HasVarType) {
+      output.WriteRawTag(48);
+      output.WriteInt32(VarType);
+    }
     if (_unknownFields != null) {
       _unknownFields.WriteTo(output);
     }
@@ -2602,6 +2633,9 @@ public sealed partial class BITMAP_MESSAGE_RES : pb::IMessage<BITMAP_MESSAGE_RES
     }
     if (HasVarPos) {
       size += 1 + pb::CodedOutputStream.ComputeInt32Size(VarPos);
+    }
+    if (HasVarType) {
+      size += 1 + pb::CodedOutputStream.ComputeInt32Size(VarType);
     }
     if (_unknownFields != null) {
       size += _unknownFields.CalculateSize();
@@ -2626,6 +2660,9 @@ public sealed partial class BITMAP_MESSAGE_RES : pb::IMessage<BITMAP_MESSAGE_RES
     }
     if (other.HasVarPos) {
       VarPos = other.VarPos;
+    }
+    if (other.HasVarType) {
+      VarType = other.VarType;
     }
     _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
   }
@@ -2656,6 +2693,10 @@ public sealed partial class BITMAP_MESSAGE_RES : pb::IMessage<BITMAP_MESSAGE_RES
         }
         case 40: {
           VarPos = input.ReadInt32();
+          break;
+        }
+        case 48: {
+          VarType = input.ReadInt32();
           break;
         }
       }

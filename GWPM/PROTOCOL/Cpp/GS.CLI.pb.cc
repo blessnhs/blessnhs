@@ -481,11 +481,13 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_GS_2eCLI_2eproto::offsets[] PR
   PROTOBUF_FIELD_OFFSET(::BITMAP_MESSAGE_RES, var_message_),
   PROTOBUF_FIELD_OFFSET(::BITMAP_MESSAGE_RES, var_name_),
   PROTOBUF_FIELD_OFFSET(::BITMAP_MESSAGE_RES, var_pos_),
-  3,
+  PROTOBUF_FIELD_OFFSET(::BITMAP_MESSAGE_RES, var_type_),
+  4,
   1,
   ~0u,
   0,
   2,
+  3,
   PROTOBUF_FIELD_OFFSET(::AUDIO_MESSAGE_RES, _has_bits_),
   PROTOBUF_FIELD_OFFSET(::AUDIO_MESSAGE_RES, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -583,15 +585,15 @@ static const ::PROTOBUF_NAMESPACE_ID::internal::MigrationSchema schemas[] PROTOB
   { 82, 90, sizeof(::ROOM_LIST_RES)},
   { 93, 102, sizeof(::ROOM_PASS_THROUGH_RES)},
   { 106, 113, sizeof(::NOTICE_RES)},
-  { 115, 125, sizeof(::BITMAP_MESSAGE_RES)},
-  { 130, 140, sizeof(::AUDIO_MESSAGE_RES)},
-  { 145, 153, sizeof(::PRAY_MESSAGE_RES)},
-  { 156, 165, sizeof(::PRAY_MESSAGE_REG_RES)},
-  { 169, 176, sizeof(::QNA_RES)},
-  { 178, 186, sizeof(::MAIL_LIST_RES)},
-  { 189, 196, sizeof(::REG_RES)},
-  { 198, 205, sizeof(::CLIENT_LOGOUT_RES)},
-  { 207, 214, sizeof(::CLIENT_KICK)},
+  { 115, 126, sizeof(::BITMAP_MESSAGE_RES)},
+  { 132, 142, sizeof(::AUDIO_MESSAGE_RES)},
+  { 147, 155, sizeof(::PRAY_MESSAGE_RES)},
+  { 158, 167, sizeof(::PRAY_MESSAGE_REG_RES)},
+  { 171, 178, sizeof(::QNA_RES)},
+  { 180, 188, sizeof(::MAIL_LIST_RES)},
+  { 191, 198, sizeof(::REG_RES)},
+  { 200, 207, sizeof(::CLIENT_LOGOUT_RES)},
+  { 209, 216, sizeof(::CLIENT_KICK)},
 };
 
 static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] = {
@@ -648,33 +650,34 @@ const char descriptor_table_protodef_GS_2eCLI_2eproto[] PROTOBUF_SECTION_VARIABL
   "var_messages\030\003 \003(\0132\014.RoomMessage\022\027\n\017var_"
   "room_number\030\004 \001(\005\"U\n\nNOTICE_RES\022(\n\002id\030\001 "
   "\001(\0162\t.PROTOCOL:\021ID_PKT_NOTICE_RES\022\035\n\010var"
-  "_list\030\002 \003(\0132\013.NotifyInfo\"\234\001\n\022BITMAP_MESS"
+  "_list\030\002 \003(\0132\013.NotifyInfo\"\256\001\n\022BITMAP_MESS"
   "AGE_RES\0220\n\002id\030\001 \001(\0162\t.PROTOCOL:\031ID_PKT_B"
   "ITMAP_MESSAGE_RES\022\034\n\010var_code\030\002 \001(\0162\n.Er"
   "rorCode\022\023\n\013var_message\030\003 \003(\014\022\020\n\010var_name"
-  "\030\004 \001(\014\022\017\n\007var_pos\030\005 \001(\005\"\232\001\n\021AUDIO_MESSAG"
-  "E_RES\022/\n\002id\030\001 \001(\0162\t.PROTOCOL:\030ID_PKT_AUD"
-  "IO_MESSAGE_RES\022\034\n\010var_code\030\002 \001(\0162\n.Error"
-  "Code\022\023\n\013var_message\030\003 \003(\014\022\020\n\010var_name\030\004 "
-  "\001(\014\022\017\n\007var_pos\030\005 \001(\005\"}\n\020PRAY_MESSAGE_RES"
-  "\022.\n\002id\030\001 \001(\0162\t.PROTOCOL:\027ID_PKT_PRAY_MES"
-  "SAGE_RES\022\034\n\010var_code\030\002 \001(\0162\n.ErrorCode\022\033"
-  "\n\010var_list\030\003 \003(\0132\t.PrayInfo\"\217\001\n\024PRAY_MES"
-  "SAGE_REG_RES\0222\n\002id\030\001 \001(\0162\t.PROTOCOL:\033ID_"
-  "PKT_PRAY_MESSAGE_REG_RES\022\034\n\010var_code\030\002 \001"
-  "(\0162\n.ErrorCode\022\023\n\013var_message\030\003 \001(\t\022\020\n\010v"
-  "ar_time\030\004 \001(\t\"N\n\007QNA_RES\022%\n\002id\030\001 \001(\0162\t.P"
-  "ROTOCOL:\016ID_PKT_QNA_RES\022\034\n\010var_code\030\002 \001("
-  "\0162\n.ErrorCode\"w\n\rMAIL_LIST_RES\022+\n\002id\030\001 \001"
-  "(\0162\t.PROTOCOL:\024ID_PKT_MAIL_LIST_RES\022\034\n\010v"
-  "ar_code\030\002 \001(\0162\n.ErrorCode\022\033\n\010var_list\030\003 "
-  "\003(\0132\t.MailInfo\"N\n\007REG_RES\022%\n\002id\030\001 \001(\0162\t."
-  "PROTOCOL:\016ID_PKT_REG_RES\022\034\n\010var_code\030\002 \001"
-  "(\0162\n.ErrorCode\"b\n\021CLIENT_LOGOUT_RES\022/\n\002i"
-  "d\030\001 \001(\0162\t.PROTOCOL:\030ID_PKT_CLIENT_LOGOUT"
-  "_RES\022\034\n\010var_code\030\002 \001(\0162\n.ErrorCode\"E\n\013CL"
-  "IENT_KICK\022)\n\002id\030\001 \001(\0162\t.PROTOCOL:\022ID_PKT"
-  "_CLIENT_KICK\022\013\n\003sid\030\002 \001(\005B\002H\001"
+  "\030\004 \001(\014\022\017\n\007var_pos\030\005 \001(\005\022\020\n\010var_type\030\006 \001("
+  "\005\"\232\001\n\021AUDIO_MESSAGE_RES\022/\n\002id\030\001 \001(\0162\t.PR"
+  "OTOCOL:\030ID_PKT_AUDIO_MESSAGE_RES\022\034\n\010var_"
+  "code\030\002 \001(\0162\n.ErrorCode\022\023\n\013var_message\030\003 "
+  "\003(\014\022\020\n\010var_name\030\004 \001(\014\022\017\n\007var_pos\030\005 \001(\005\"}"
+  "\n\020PRAY_MESSAGE_RES\022.\n\002id\030\001 \001(\0162\t.PROTOCO"
+  "L:\027ID_PKT_PRAY_MESSAGE_RES\022\034\n\010var_code\030\002"
+  " \001(\0162\n.ErrorCode\022\033\n\010var_list\030\003 \003(\0132\t.Pra"
+  "yInfo\"\217\001\n\024PRAY_MESSAGE_REG_RES\0222\n\002id\030\001 \001"
+  "(\0162\t.PROTOCOL:\033ID_PKT_PRAY_MESSAGE_REG_R"
+  "ES\022\034\n\010var_code\030\002 \001(\0162\n.ErrorCode\022\023\n\013var_"
+  "message\030\003 \001(\t\022\020\n\010var_time\030\004 \001(\t\"N\n\007QNA_R"
+  "ES\022%\n\002id\030\001 \001(\0162\t.PROTOCOL:\016ID_PKT_QNA_RE"
+  "S\022\034\n\010var_code\030\002 \001(\0162\n.ErrorCode\"w\n\rMAIL_"
+  "LIST_RES\022+\n\002id\030\001 \001(\0162\t.PROTOCOL:\024ID_PKT_"
+  "MAIL_LIST_RES\022\034\n\010var_code\030\002 \001(\0162\n.ErrorC"
+  "ode\022\033\n\010var_list\030\003 \003(\0132\t.MailInfo\"N\n\007REG_"
+  "RES\022%\n\002id\030\001 \001(\0162\t.PROTOCOL:\016ID_PKT_REG_R"
+  "ES\022\034\n\010var_code\030\002 \001(\0162\n.ErrorCode\"b\n\021CLIE"
+  "NT_LOGOUT_RES\022/\n\002id\030\001 \001(\0162\t.PROTOCOL:\030ID"
+  "_PKT_CLIENT_LOGOUT_RES\022\034\n\010var_code\030\002 \001(\016"
+  "2\n.ErrorCode\"E\n\013CLIENT_KICK\022)\n\002id\030\001 \001(\0162"
+  "\t.PROTOCOL:\022ID_PKT_CLIENT_KICK\022\013\n\003sid\030\002 "
+  "\001(\005B\002H\001"
   ;
 static const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable*const descriptor_table_GS_2eCLI_2eproto_deps[2] = {
   &::descriptor_table_Enum_2eproto,
@@ -703,7 +706,7 @@ static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_GS_
 static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_GS_2eCLI_2eproto_once;
 static bool descriptor_table_GS_2eCLI_2eproto_initialized = false;
 const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_GS_2eCLI_2eproto = {
-  &descriptor_table_GS_2eCLI_2eproto_initialized, descriptor_table_protodef_GS_2eCLI_2eproto, "GS.CLI.proto", 2349,
+  &descriptor_table_GS_2eCLI_2eproto_initialized, descriptor_table_protodef_GS_2eCLI_2eproto, "GS.CLI.proto", 2367,
   &descriptor_table_GS_2eCLI_2eproto_once, descriptor_table_GS_2eCLI_2eproto_sccs, descriptor_table_GS_2eCLI_2eproto_deps, 18, 2,
   schemas, file_default_instances, TableStruct_GS_2eCLI_2eproto::offsets,
   file_level_metadata_GS_2eCLI_2eproto, 18, file_level_enum_descriptors_GS_2eCLI_2eproto, file_level_service_descriptors_GS_2eCLI_2eproto,
@@ -3574,7 +3577,7 @@ class BITMAP_MESSAGE_RES::_Internal {
  public:
   using HasBits = decltype(std::declval<BITMAP_MESSAGE_RES>()._has_bits_);
   static void set_has_id(HasBits* has_bits) {
-    (*has_bits)[0] |= 8u;
+    (*has_bits)[0] |= 16u;
   }
   static void set_has_var_code(HasBits* has_bits) {
     (*has_bits)[0] |= 2u;
@@ -3584,6 +3587,9 @@ class BITMAP_MESSAGE_RES::_Internal {
   }
   static void set_has_var_pos(HasBits* has_bits) {
     (*has_bits)[0] |= 4u;
+  }
+  static void set_has_var_type(HasBits* has_bits) {
+    (*has_bits)[0] |= 8u;
   }
 };
 
@@ -3612,8 +3618,8 @@ void BITMAP_MESSAGE_RES::SharedCtor() {
   ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&scc_info_BITMAP_MESSAGE_RES_GS_2eCLI_2eproto.base);
   var_name_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
   ::memset(&var_code_, 0, static_cast<size_t>(
-      reinterpret_cast<char*>(&var_pos_) -
-      reinterpret_cast<char*>(&var_code_)) + sizeof(var_pos_));
+      reinterpret_cast<char*>(&var_type_) -
+      reinterpret_cast<char*>(&var_code_)) + sizeof(var_type_));
   id_ = 11;
 }
 
@@ -3646,10 +3652,10 @@ void BITMAP_MESSAGE_RES::Clear() {
   if (cached_has_bits & 0x00000001u) {
     var_name_.ClearNonDefaultToEmptyNoArena();
   }
-  if (cached_has_bits & 0x0000000eu) {
+  if (cached_has_bits & 0x0000001eu) {
     ::memset(&var_code_, 0, static_cast<size_t>(
-        reinterpret_cast<char*>(&var_pos_) -
-        reinterpret_cast<char*>(&var_code_)) + sizeof(var_pos_));
+        reinterpret_cast<char*>(&var_type_) -
+        reinterpret_cast<char*>(&var_code_)) + sizeof(var_type_));
     id_ = 11;
   }
   _has_bits_.Clear();
@@ -3717,6 +3723,14 @@ const char* BITMAP_MESSAGE_RES::_InternalParse(const char* ptr, ::PROTOBUF_NAMES
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
+      // optional int32 var_type = 6;
+      case 6:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 48)) {
+          _Internal::set_has_var_type(&has_bits);
+          var_type_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
       default: {
       handle_unusual:
         if ((tag & 7) == 4 || tag == 0) {
@@ -3746,7 +3760,7 @@ failure:
 
   cached_has_bits = _has_bits_[0];
   // optional .PROTOCOL id = 1 [default = ID_PKT_BITMAP_MESSAGE_RES];
-  if (cached_has_bits & 0x00000008u) {
+  if (cached_has_bits & 0x00000010u) {
     target = stream->EnsureSpace(target);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteEnumToArray(
       1, this->_internal_id(), target);
@@ -3777,6 +3791,12 @@ failure:
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32ToArray(5, this->_internal_var_pos(), target);
   }
 
+  // optional int32 var_type = 6;
+  if (cached_has_bits & 0x00000008u) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32ToArray(6, this->_internal_var_type(), target);
+  }
+
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields(), target, stream);
@@ -3802,7 +3822,7 @@ size_t BITMAP_MESSAGE_RES::ByteSizeLong() const {
   }
 
   cached_has_bits = _has_bits_[0];
-  if (cached_has_bits & 0x0000000fu) {
+  if (cached_has_bits & 0x0000001fu) {
     // optional bytes var_name = 4;
     if (cached_has_bits & 0x00000001u) {
       total_size += 1 +
@@ -3823,8 +3843,15 @@ size_t BITMAP_MESSAGE_RES::ByteSizeLong() const {
           this->_internal_var_pos());
     }
 
-    // optional .PROTOCOL id = 1 [default = ID_PKT_BITMAP_MESSAGE_RES];
+    // optional int32 var_type = 6;
     if (cached_has_bits & 0x00000008u) {
+      total_size += 1 +
+        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32Size(
+          this->_internal_var_type());
+    }
+
+    // optional .PROTOCOL id = 1 [default = ID_PKT_BITMAP_MESSAGE_RES];
+    if (cached_has_bits & 0x00000010u) {
       total_size += 1 +
         ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::EnumSize(this->_internal_id());
     }
@@ -3863,7 +3890,7 @@ void BITMAP_MESSAGE_RES::MergeFrom(const BITMAP_MESSAGE_RES& from) {
 
   var_message_.MergeFrom(from.var_message_);
   cached_has_bits = from._has_bits_[0];
-  if (cached_has_bits & 0x0000000fu) {
+  if (cached_has_bits & 0x0000001fu) {
     if (cached_has_bits & 0x00000001u) {
       _has_bits_[0] |= 0x00000001u;
       var_name_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.var_name_);
@@ -3875,6 +3902,9 @@ void BITMAP_MESSAGE_RES::MergeFrom(const BITMAP_MESSAGE_RES& from) {
       var_pos_ = from.var_pos_;
     }
     if (cached_has_bits & 0x00000008u) {
+      var_type_ = from.var_type_;
+    }
+    if (cached_has_bits & 0x00000010u) {
       id_ = from.id_;
     }
     _has_bits_[0] |= cached_has_bits;
@@ -3908,6 +3938,7 @@ void BITMAP_MESSAGE_RES::InternalSwap(BITMAP_MESSAGE_RES* other) {
     GetArenaNoVirtual());
   swap(var_code_, other->var_code_);
   swap(var_pos_, other->var_pos_);
+  swap(var_type_, other->var_type_);
   swap(id_, other->id_);
 }
 

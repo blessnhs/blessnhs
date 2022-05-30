@@ -1554,6 +1554,7 @@ class BITMAP_MESSAGE_REQ :
   enum : int {
     kVarMessageFieldNumber = 2,
     kVarRoomNumberFieldNumber = 3,
+    kVarTypeFieldNumber = 4,
     kIdFieldNumber = 1,
   };
   // repeated bytes var_message = 2;
@@ -1593,6 +1594,19 @@ class BITMAP_MESSAGE_REQ :
   void _internal_set_var_room_number(::PROTOBUF_NAMESPACE_ID::int32 value);
   public:
 
+  // required int32 var_type = 4;
+  bool has_var_type() const;
+  private:
+  bool _internal_has_var_type() const;
+  public:
+  void clear_var_type();
+  ::PROTOBUF_NAMESPACE_ID::int32 var_type() const;
+  void set_var_type(::PROTOBUF_NAMESPACE_ID::int32 value);
+  private:
+  ::PROTOBUF_NAMESPACE_ID::int32 _internal_var_type() const;
+  void _internal_set_var_type(::PROTOBUF_NAMESPACE_ID::int32 value);
+  public:
+
   // optional .PROTOCOL id = 1 [default = ID_PKT_BITMAP_MESSAGE_REQ];
   bool has_id() const;
   private:
@@ -1610,11 +1624,15 @@ class BITMAP_MESSAGE_REQ :
  private:
   class _Internal;
 
+  // helper for ByteSizeLong()
+  size_t RequiredFieldsByteSizeFallback() const;
+
   ::PROTOBUF_NAMESPACE_ID::internal::InternalMetadataWithArena _internal_metadata_;
   ::PROTOBUF_NAMESPACE_ID::internal::HasBits<1> _has_bits_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string> var_message_;
   ::PROTOBUF_NAMESPACE_ID::int32 var_room_number_;
+  ::PROTOBUF_NAMESPACE_ID::int32 var_type_;
   int id_;
   friend struct ::TableStruct_CLI_2eGS_2eproto;
 };
@@ -3470,7 +3488,7 @@ inline void NOTICE_REQ::set_id(::PROTOCOL value) {
 
 // optional .PROTOCOL id = 1 [default = ID_PKT_BITMAP_MESSAGE_REQ];
 inline bool BITMAP_MESSAGE_REQ::_internal_has_id() const {
-  bool value = (_has_bits_[0] & 0x00000002u) != 0;
+  bool value = (_has_bits_[0] & 0x00000004u) != 0;
   return value;
 }
 inline bool BITMAP_MESSAGE_REQ::has_id() const {
@@ -3478,7 +3496,7 @@ inline bool BITMAP_MESSAGE_REQ::has_id() const {
 }
 inline void BITMAP_MESSAGE_REQ::clear_id() {
   id_ = 10;
-  _has_bits_[0] &= ~0x00000002u;
+  _has_bits_[0] &= ~0x00000004u;
 }
 inline ::PROTOCOL BITMAP_MESSAGE_REQ::_internal_id() const {
   return static_cast< ::PROTOCOL >(id_);
@@ -3489,7 +3507,7 @@ inline ::PROTOCOL BITMAP_MESSAGE_REQ::id() const {
 }
 inline void BITMAP_MESSAGE_REQ::_internal_set_id(::PROTOCOL value) {
   assert(::PROTOCOL_IsValid(value));
-  _has_bits_[0] |= 0x00000002u;
+  _has_bits_[0] |= 0x00000004u;
   id_ = value;
 }
 inline void BITMAP_MESSAGE_REQ::set_id(::PROTOCOL value) {
@@ -3597,6 +3615,34 @@ inline void BITMAP_MESSAGE_REQ::_internal_set_var_room_number(::PROTOBUF_NAMESPA
 inline void BITMAP_MESSAGE_REQ::set_var_room_number(::PROTOBUF_NAMESPACE_ID::int32 value) {
   _internal_set_var_room_number(value);
   // @@protoc_insertion_point(field_set:BITMAP_MESSAGE_REQ.var_room_number)
+}
+
+// required int32 var_type = 4;
+inline bool BITMAP_MESSAGE_REQ::_internal_has_var_type() const {
+  bool value = (_has_bits_[0] & 0x00000002u) != 0;
+  return value;
+}
+inline bool BITMAP_MESSAGE_REQ::has_var_type() const {
+  return _internal_has_var_type();
+}
+inline void BITMAP_MESSAGE_REQ::clear_var_type() {
+  var_type_ = 0;
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 BITMAP_MESSAGE_REQ::_internal_var_type() const {
+  return var_type_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 BITMAP_MESSAGE_REQ::var_type() const {
+  // @@protoc_insertion_point(field_get:BITMAP_MESSAGE_REQ.var_type)
+  return _internal_var_type();
+}
+inline void BITMAP_MESSAGE_REQ::_internal_set_var_type(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  _has_bits_[0] |= 0x00000002u;
+  var_type_ = value;
+}
+inline void BITMAP_MESSAGE_REQ::set_var_type(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  _internal_set_var_type(value);
+  // @@protoc_insertion_point(field_set:BITMAP_MESSAGE_REQ.var_type)
 }
 
 // -------------------------------------------------------------------

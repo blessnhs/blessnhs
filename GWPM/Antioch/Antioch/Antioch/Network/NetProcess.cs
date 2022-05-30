@@ -387,6 +387,7 @@ namespace Antioch
                                     StreamWrapper wra = new StreamWrapper();
                                     wra.stream = new MemoryStream(msg.ToByteArray());
                                     wra.pos = res.VarPos;
+                                    wra.type = res.VarType;
                                     JpegStream.Enqueue(wra);
                                 }
 
@@ -446,7 +447,7 @@ namespace Antioch
             }
         }
 
-        static public void SendRoomBITMAPMessage(ConcurrentQueue<System.IO.MemoryStream> list)
+        static public void SendRoomBITMAPMessage(ConcurrentQueue<System.IO.MemoryStream> list, int type)
         {
 
             if (client == null || client.socket == null || client.socket.Connected == false)
@@ -454,6 +455,7 @@ namespace Antioch
             {
                 BITMAP_MESSAGE_REQ message = new BITMAP_MESSAGE_REQ();
                 message.VarRoomNumber = User.CurrentChatViewNumber;
+                message.VarType = type;
                 foreach (var msg in list)
                 {
                     message.VarMessage.Add(ByteString.CopyFrom(msg.ToArray()));

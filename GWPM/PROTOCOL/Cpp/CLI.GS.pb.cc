@@ -391,9 +391,11 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_CLI_2eGS_2eproto::offsets[] PR
   PROTOBUF_FIELD_OFFSET(::BITMAP_MESSAGE_REQ, id_),
   PROTOBUF_FIELD_OFFSET(::BITMAP_MESSAGE_REQ, var_message_),
   PROTOBUF_FIELD_OFFSET(::BITMAP_MESSAGE_REQ, var_room_number_),
-  1,
+  PROTOBUF_FIELD_OFFSET(::BITMAP_MESSAGE_REQ, var_type_),
+  2,
   ~0u,
   0,
+  1,
   PROTOBUF_FIELD_OFFSET(::AUDIO_MESSAGE_REQ, _has_bits_),
   PROTOBUF_FIELD_OFFSET(::AUDIO_MESSAGE_REQ, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -463,14 +465,14 @@ static const ::PROTOBUF_NAMESPACE_ID::internal::MigrationSchema schemas[] PROTOB
   { 47, 53, sizeof(::ROOM_LIST_REQ)},
   { 54, 64, sizeof(::ROOM_PASS_THROUGH_REQ)},
   { 69, 75, sizeof(::NOTICE_REQ)},
-  { 76, 84, sizeof(::BITMAP_MESSAGE_REQ)},
-  { 87, 95, sizeof(::AUDIO_MESSAGE_REQ)},
-  { 98, 104, sizeof(::PRAY_MESSAGE_REQ)},
-  { 105, 112, sizeof(::PRAY_MESSAGE_REG_REQ)},
-  { 114, 121, sizeof(::QNA_REQ)},
-  { 123, 129, sizeof(::MAIL_LIST_REQ)},
-  { 130, 137, sizeof(::REG_REQ)},
-  { 139, 145, sizeof(::CLIENT_LOGOUT_REQ)},
+  { 76, 85, sizeof(::BITMAP_MESSAGE_REQ)},
+  { 89, 97, sizeof(::AUDIO_MESSAGE_REQ)},
+  { 100, 106, sizeof(::PRAY_MESSAGE_REQ)},
+  { 107, 114, sizeof(::PRAY_MESSAGE_REG_REQ)},
+  { 116, 123, sizeof(::QNA_REQ)},
+  { 125, 131, sizeof(::MAIL_LIST_REQ)},
+  { 132, 139, sizeof(::REG_REQ)},
+  { 141, 147, sizeof(::CLIENT_LOGOUT_REQ)},
 };
 
 static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] = {
@@ -511,24 +513,25 @@ const char descriptor_table_protodef_CLI_2eGS_2eproto[] PROTOBUF_SECTION_VARIABL
   "UGH_REQ\022\023\n\013var_message\030\002 \002(\t\022\027\n\017var_mess"
   "age_int\030\003 \002(\005\022\027\n\017var_room_number\030\004 \002(\005\022\020"
   "\n\010var_time\030\005 \002(\t\"6\n\nNOTICE_REQ\022(\n\002id\030\001 \001"
-  "(\0162\t.PROTOCOL:\021ID_PKT_NOTICE_REQ\"t\n\022BITM"
-  "AP_MESSAGE_REQ\0220\n\002id\030\001 \001(\0162\t.PROTOCOL:\031I"
-  "D_PKT_BITMAP_MESSAGE_REQ\022\023\n\013var_message\030"
-  "\002 \003(\014\022\027\n\017var_room_number\030\003 \002(\005\"r\n\021AUDIO_"
-  "MESSAGE_REQ\022/\n\002id\030\001 \001(\0162\t.PROTOCOL:\030ID_P"
-  "KT_AUDIO_MESSAGE_REQ\022\023\n\013var_message\030\002 \003("
-  "\014\022\027\n\017var_room_number\030\003 \002(\005\"B\n\020PRAY_MESSA"
-  "GE_REQ\022.\n\002id\030\001 \001(\0162\t.PROTOCOL:\027ID_PKT_PR"
-  "AY_MESSAGE_REQ\"_\n\024PRAY_MESSAGE_REG_REQ\0222"
-  "\n\002id\030\001 \001(\0162\t.PROTOCOL:\033ID_PKT_PRAY_MESSA"
-  "GE_REG_REQ\022\023\n\013var_message\030\002 \001(\t\"E\n\007QNA_R"
-  "EQ\022%\n\002id\030\001 \001(\0162\t.PROTOCOL:\016ID_PKT_QNA_RE"
-  "Q\022\023\n\013var_message\030\002 \001(\t\"<\n\rMAIL_LIST_REQ\022"
-  "+\n\002id\030\001 \001(\0162\t.PROTOCOL:\024ID_PKT_MAIL_LIST"
-  "_REQ\"@\n\007REG_REQ\022%\n\002id\030\001 \001(\0162\t.PROTOCOL:\016"
-  "ID_PKT_REG_REQ\022\016\n\006var_id\030\002 \002(\005\"D\n\021CLIENT"
-  "_LOGOUT_REQ\022/\n\002id\030\001 \001(\0162\t.PROTOCOL:\030ID_P"
-  "KT_CLIENT_LOGOUT_REQB\002H\001"
+  "(\0162\t.PROTOCOL:\021ID_PKT_NOTICE_REQ\"\206\001\n\022BIT"
+  "MAP_MESSAGE_REQ\0220\n\002id\030\001 \001(\0162\t.PROTOCOL:\031"
+  "ID_PKT_BITMAP_MESSAGE_REQ\022\023\n\013var_message"
+  "\030\002 \003(\014\022\027\n\017var_room_number\030\003 \002(\005\022\020\n\010var_t"
+  "ype\030\004 \002(\005\"r\n\021AUDIO_MESSAGE_REQ\022/\n\002id\030\001 \001"
+  "(\0162\t.PROTOCOL:\030ID_PKT_AUDIO_MESSAGE_REQ\022"
+  "\023\n\013var_message\030\002 \003(\014\022\027\n\017var_room_number\030"
+  "\003 \002(\005\"B\n\020PRAY_MESSAGE_REQ\022.\n\002id\030\001 \001(\0162\t."
+  "PROTOCOL:\027ID_PKT_PRAY_MESSAGE_REQ\"_\n\024PRA"
+  "Y_MESSAGE_REG_REQ\0222\n\002id\030\001 \001(\0162\t.PROTOCOL"
+  ":\033ID_PKT_PRAY_MESSAGE_REG_REQ\022\023\n\013var_mes"
+  "sage\030\002 \001(\t\"E\n\007QNA_REQ\022%\n\002id\030\001 \001(\0162\t.PROT"
+  "OCOL:\016ID_PKT_QNA_REQ\022\023\n\013var_message\030\002 \001("
+  "\t\"<\n\rMAIL_LIST_REQ\022+\n\002id\030\001 \001(\0162\t.PROTOCO"
+  "L:\024ID_PKT_MAIL_LIST_REQ\"@\n\007REG_REQ\022%\n\002id"
+  "\030\001 \001(\0162\t.PROTOCOL:\016ID_PKT_REG_REQ\022\016\n\006var"
+  "_id\030\002 \002(\005\"D\n\021CLIENT_LOGOUT_REQ\022/\n\002id\030\001 \001"
+  "(\0162\t.PROTOCOL:\030ID_PKT_CLIENT_LOGOUT_REQB"
+  "\002H\001"
   ;
 static const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable*const descriptor_table_CLI_2eGS_2eproto_deps[2] = {
   &::descriptor_table_Enum_2eproto,
@@ -555,7 +558,7 @@ static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_CLI
 static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_CLI_2eGS_2eproto_once;
 static bool descriptor_table_CLI_2eGS_2eproto_initialized = false;
 const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_CLI_2eGS_2eproto = {
-  &descriptor_table_CLI_2eGS_2eproto_initialized, descriptor_table_protodef_CLI_2eGS_2eproto, "CLI.GS.proto", 1424,
+  &descriptor_table_CLI_2eGS_2eproto_initialized, descriptor_table_protodef_CLI_2eGS_2eproto, "CLI.GS.proto", 1443,
   &descriptor_table_CLI_2eGS_2eproto_once, descriptor_table_CLI_2eGS_2eproto_sccs, descriptor_table_CLI_2eGS_2eproto_deps, 16, 2,
   schemas, file_default_instances, TableStruct_CLI_2eGS_2eproto::offsets,
   file_level_metadata_CLI_2eGS_2eproto, 16, file_level_enum_descriptors_CLI_2eGS_2eproto, file_level_service_descriptors_CLI_2eGS_2eproto,
@@ -2691,10 +2694,13 @@ class BITMAP_MESSAGE_REQ::_Internal {
  public:
   using HasBits = decltype(std::declval<BITMAP_MESSAGE_REQ>()._has_bits_);
   static void set_has_id(HasBits* has_bits) {
-    (*has_bits)[0] |= 2u;
+    (*has_bits)[0] |= 4u;
   }
   static void set_has_var_room_number(HasBits* has_bits) {
     (*has_bits)[0] |= 1u;
+  }
+  static void set_has_var_type(HasBits* has_bits) {
+    (*has_bits)[0] |= 2u;
   }
 };
 
@@ -2717,7 +2723,9 @@ BITMAP_MESSAGE_REQ::BITMAP_MESSAGE_REQ(const BITMAP_MESSAGE_REQ& from)
 
 void BITMAP_MESSAGE_REQ::SharedCtor() {
   ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&scc_info_BITMAP_MESSAGE_REQ_CLI_2eGS_2eproto.base);
-  var_room_number_ = 0;
+  ::memset(&var_room_number_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&var_type_) -
+      reinterpret_cast<char*>(&var_room_number_)) + sizeof(var_type_));
   id_ = 10;
 }
 
@@ -2746,8 +2754,10 @@ void BITMAP_MESSAGE_REQ::Clear() {
 
   var_message_.Clear();
   cached_has_bits = _has_bits_[0];
-  if (cached_has_bits & 0x00000003u) {
-    var_room_number_ = 0;
+  if (cached_has_bits & 0x00000007u) {
+    ::memset(&var_room_number_, 0, static_cast<size_t>(
+        reinterpret_cast<char*>(&var_type_) -
+        reinterpret_cast<char*>(&var_room_number_)) + sizeof(var_type_));
     id_ = 10;
   }
   _has_bits_.Clear();
@@ -2795,6 +2805,14 @@ const char* BITMAP_MESSAGE_REQ::_InternalParse(const char* ptr, ::PROTOBUF_NAMES
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
+      // required int32 var_type = 4;
+      case 4:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 32)) {
+          _Internal::set_has_var_type(&has_bits);
+          var_type_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
       default: {
       handle_unusual:
         if ((tag & 7) == 4 || tag == 0) {
@@ -2824,7 +2842,7 @@ failure:
 
   cached_has_bits = _has_bits_[0];
   // optional .PROTOCOL id = 1 [default = ID_PKT_BITMAP_MESSAGE_REQ];
-  if (cached_has_bits & 0x00000002u) {
+  if (cached_has_bits & 0x00000004u) {
     target = stream->EnsureSpace(target);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteEnumToArray(
       1, this->_internal_id(), target);
@@ -2842,6 +2860,12 @@ failure:
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32ToArray(3, this->_internal_var_room_number(), target);
   }
 
+  // required int32 var_type = 4;
+  if (cached_has_bits & 0x00000002u) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32ToArray(4, this->_internal_var_type(), target);
+  }
+
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields(), target, stream);
@@ -2850,15 +2874,43 @@ failure:
   return target;
 }
 
+size_t BITMAP_MESSAGE_REQ::RequiredFieldsByteSizeFallback() const {
+// @@protoc_insertion_point(required_fields_byte_size_fallback_start:BITMAP_MESSAGE_REQ)
+  size_t total_size = 0;
+
+  if (_internal_has_var_room_number()) {
+    // required int32 var_room_number = 3;
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32Size(
+        this->_internal_var_room_number());
+  }
+
+  if (_internal_has_var_type()) {
+    // required int32 var_type = 4;
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32Size(
+        this->_internal_var_type());
+  }
+
+  return total_size;
+}
 size_t BITMAP_MESSAGE_REQ::ByteSizeLong() const {
 // @@protoc_insertion_point(message_byte_size_start:BITMAP_MESSAGE_REQ)
   size_t total_size = 0;
 
-  // required int32 var_room_number = 3;
-  if (_internal_has_var_room_number()) {
+  if (((_has_bits_[0] & 0x00000003) ^ 0x00000003) == 0) {  // All required fields are present.
+    // required int32 var_room_number = 3;
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32Size(
         this->_internal_var_room_number());
+
+    // required int32 var_type = 4;
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32Size(
+        this->_internal_var_type());
+
+  } else {
+    total_size += RequiredFieldsByteSizeFallback();
   }
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
@@ -2874,7 +2926,7 @@ size_t BITMAP_MESSAGE_REQ::ByteSizeLong() const {
 
   // optional .PROTOCOL id = 1 [default = ID_PKT_BITMAP_MESSAGE_REQ];
   cached_has_bits = _has_bits_[0];
-  if (cached_has_bits & 0x00000002u) {
+  if (cached_has_bits & 0x00000004u) {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::EnumSize(this->_internal_id());
   }
@@ -2912,11 +2964,14 @@ void BITMAP_MESSAGE_REQ::MergeFrom(const BITMAP_MESSAGE_REQ& from) {
 
   var_message_.MergeFrom(from.var_message_);
   cached_has_bits = from._has_bits_[0];
-  if (cached_has_bits & 0x00000003u) {
+  if (cached_has_bits & 0x00000007u) {
     if (cached_has_bits & 0x00000001u) {
       var_room_number_ = from.var_room_number_;
     }
     if (cached_has_bits & 0x00000002u) {
+      var_type_ = from.var_type_;
+    }
+    if (cached_has_bits & 0x00000004u) {
       id_ = from.id_;
     }
     _has_bits_[0] |= cached_has_bits;
@@ -2938,7 +2993,7 @@ void BITMAP_MESSAGE_REQ::CopyFrom(const BITMAP_MESSAGE_REQ& from) {
 }
 
 bool BITMAP_MESSAGE_REQ::IsInitialized() const {
-  if ((_has_bits_[0] & 0x00000001) != 0x00000001) return false;
+  if ((_has_bits_[0] & 0x00000003) != 0x00000003) return false;
   return true;
 }
 
@@ -2948,6 +3003,7 @@ void BITMAP_MESSAGE_REQ::InternalSwap(BITMAP_MESSAGE_REQ* other) {
   swap(_has_bits_[0], other->_has_bits_[0]);
   var_message_.InternalSwap(&other->var_message_);
   swap(var_room_number_, other->var_room_number_);
+  swap(var_type_, other->var_type_);
   swap(id_, other->id_);
 }
 

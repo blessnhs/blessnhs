@@ -90,6 +90,7 @@ message BITMAP_MESSAGE_RES
     repeated bytes     var_message          = 3;
     optional bytes     var_name	            = 4;
     optional  int32    var_pos		             = 5;
+    optional int32       var_type        = 6;	
 }
 
 message AUDIO_MESSAGE_RES
