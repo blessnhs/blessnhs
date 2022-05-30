@@ -56,8 +56,6 @@ namespace FullCameraApp.Droid
                     case ImageFormatType.Yv12:
                         {
 
-
-                            //  if (checktime < DateTime.Now)
                             {
 
                                 YuvImage img = new YuvImage(data, imageformat, paras.PreviewSize.Width, paras.PreviewSize.Height, null);
@@ -152,6 +150,7 @@ namespace FullCameraApp.Droid
         public ImageStreamingServer server = new ImageStreamingServer();
 
         public int quality = 20;
+        public int target_pos = 0;
 
         public CameraPageRenderer(Context context) : base(context)
         {
@@ -174,6 +173,9 @@ namespace FullCameraApp.Droid
 
         //카메라 스위치
         Button switchButton;
+
+        //가운대 화면 감추기 버튼
+        Button mainScreenButton;
 
 
         //퀄리티 업 다운
@@ -211,12 +213,36 @@ namespace FullCameraApp.Droid
         {
             ///////////////////////////////////////////////////////////////////////////////
             var imageView = new ImageView(Context);
+            imageView.Click += async (s, e) =>
+            {
+                target_pos = pos;
+            };
 
             RelativeLayout.LayoutParams imageViewParams = new RelativeLayout.LayoutParams(
              RelativeLayout.LayoutParams.WrapContent,
              RelativeLayout.LayoutParams.WrapContent);
             imageViewParams.Height = half_height;
             imageViewParams.Width = half_width;
+
+            imageView.Rotation = 0;
+            imageView.LayoutParameters = imageViewParams;
+            imageView.SetScaleType(ImageView.ScaleType.FitXy);
+            mainLayout.AddView(imageView);
+            imageViewDic.Add(pos, imageView);
+            ///////////////////////////////////////////////////////////////////////////////
+        }
+
+
+        void AddImageView(int pos,int width,int height)
+        {
+            ///////////////////////////////////////////////////////////////////////////////
+            var imageView = new ImageView(Context);
+
+            RelativeLayout.LayoutParams imageViewParams = new RelativeLayout.LayoutParams(
+             RelativeLayout.LayoutParams.WrapContent,
+             RelativeLayout.LayoutParams.WrapContent);
+            imageViewParams.Height = height;
+            imageViewParams.Width = width;
 
             imageView.Rotation = 0;
             imageView.LayoutParameters = imageViewParams;
@@ -266,6 +292,8 @@ namespace FullCameraApp.Droid
             AddImageView(4);
             AddImageView(5);
 
+            //중앙 스크린
+            AddImageView(6, metrics.WidthPixels, half_height * 2);
 
             ///////////////////////////////////////////////////////////////////////////////
             textViewMain = new TextView(Context);
@@ -281,12 +309,30 @@ namespace FullCameraApp.Droid
             };
             mainLayout.AddView(textViewMain);
             ///////////////////////////////////////////////////////////////////////////////
+            ///
 
             ///////////////////////////////////////////////////////////////////////////////
-            qualityUp = new Button(Context);
+            mainScreenButton = new Button(Context);
             RelativeLayout.LayoutParams ButtonParams = new RelativeLayout.LayoutParams(
             RelativeLayout.LayoutParams.WrapContent,
              RelativeLayout.LayoutParams.WrapContent);
+            mainScreenButton.LayoutParameters = ButtonParams;
+            mainScreenButton.Text = "Hide";
+            mainScreenButton.Click += async (s, e) =>
+            {
+                ImageView view;
+                if(imageViewDic.TryGetValue(6, out view) == true)
+                {
+                    if (view.Visibility == ViewStates.Visible)
+                        view.Visibility = ViewStates.Invisible;
+                    else
+                        view.Visibility = ViewStates.Visible;
+                }
+            };
+            mainLayout.AddView(mainScreenButton);
+
+            ///////////////////////////////////////////////////////////////////////////////
+            qualityUp = new Button(Context);
             qualityUp.LayoutParameters = ButtonParams;
             qualityUp.Text = "Up";
             qualityUp.Click += async (s, e) =>
@@ -404,6 +450,13 @@ namespace FullCameraApp.Droid
                 image.Value.SetX(posx % 2 == 0 ? 0 : half_width);
                 image.Value.SetY((half_height * posy));
 
+                //마지막 뷰는 0으로 고정 하단 큰뷰
+                if (posx == 7)
+                {
+                    image.Value.SetX(0);
+                    image.Value.SetY((half_height * 1));
+                }
+
                 posx++;
                 posy = posx / 2;
             }
@@ -416,6 +469,9 @@ namespace FullCameraApp.Droid
 
             qualityDown.SetX(half_width + 250);
             qualityDown.SetY(metrics.HeightPixels - 300);
+
+            mainScreenButton.SetX(half_width - 200);
+            mainScreenButton.SetY(metrics.HeightPixels - 200);
 
             exitButton.SetX(half_width);
             exitButton.SetY(metrics.HeightPixels - 200);
@@ -535,49 +591,73 @@ namespace FullCameraApp.Droid
                 //caemra page render
                 Task.Run(() =>
                 {
-                    NetProcess.JpegStream.Clear();
+                NetProcess.JpegStream.Clear();
 
-                    DateTime chk = DateTime.Now;
-                    while (isDestroy == false)
+                DateTime chk = DateTime.Now;
+                while (isDestroy == false)
+                {
+                    try
                     {
-                        try
+                        if (NetProcess.JpegStream.Count == 0)
+                            continue;
+
+                        //if (NetProcess.JpegStream.Count > 100)
+                        //{
+                        //    NetProcess.JpegStream.Clear();
+                        //    continue;
+                        //}
+
+                        if (chk < DateTime.Now)
                         {
-                            if (NetProcess.JpegStream.Count == 0)
-                                continue;
+                            exitButton.Text = "exit";// ((callbackcamera.total_bytes_sent / callbackcamera.count_sent) / 1024).ToString() + "k";
 
-                            //if (NetProcess.JpegStream.Count > 100)
-                            //{
-                            //    NetProcess.JpegStream.Clear();
-                            //    continue;
-                            //}
+                            chk = DateTime.Now.AddSeconds(3);
+                        }
 
-                            if (chk < DateTime.Now)
+
+
+                            MainThread.BeginInvokeOnMainThread(() =>
                             {
-                                exitButton.Text = "exit";// ((callbackcamera.total_bytes_sent / callbackcamera.count_sent) / 1024).ToString() + "k";
-
-                                chk = DateTime.Now.AddSeconds(3);
-                            }
-
-                            StreamWrapper ms;
-                            while (NetProcess.JpegStream.TryDequeue(out ms) == true)
-                            {
-                                if (ms == null)
-                                    continue;
-
-                                var bitmap = BitmapFactory.DecodeByteArray(ms?.stream.ToArray(), 0, ms.stream.ToArray().Length);
-
-                                ImageView imageView;
-                                if (imageViewDic.TryGetValue(ms.pos, out imageView) == true)
-                                    imageView.SetImageBitmap(bitmap);
-                                else
+                                StreamWrapper ms;
+                                while (NetProcess.JpegStream.TryDequeue(out ms) == true)
                                 {
-                                    AddImageView(ms.pos);
+                                    if (ms == null)
+                                        continue;
 
+                                    var bitmap = BitmapFactory.DecodeByteArray(ms?.stream.ToArray(), 0, ms.stream.ToArray().Length);
+
+
+                                    ImageView imageView;
                                     if (imageViewDic.TryGetValue(ms.pos, out imageView) == true)
-                                        imageView.SetImageBitmap(bitmap);
-                                }
+                                        imageView?.SetImageBitmap(bitmap);
+                                    else
+                                    {
+                                        AddImageView(ms.pos);
 
-                            }
+                                        if (imageViewDic.TryGetValue(ms.pos, out imageView) == true)
+                                            imageView?.SetImageBitmap(bitmap);
+                                    }
+
+
+                                    //제일 하단 큰 스크린
+
+                                    if (ms.pos == target_pos)
+                                    {
+                                        ImageView imageView2;
+                                        if (imageViewDic.TryGetValue(6, out imageView2) == true)
+                                            imageView2?.SetImageBitmap(bitmap);
+                                        else
+                                        {
+                                            AddImageView(ms.pos);
+
+                                            if (imageViewDic.TryGetValue(6, out imageView2) == true)
+                                                imageView2?.SetImageBitmap(bitmap);
+                                        }
+                                    }
+
+
+                                }
+                            });
 
                         }
                         catch (Exception e)
