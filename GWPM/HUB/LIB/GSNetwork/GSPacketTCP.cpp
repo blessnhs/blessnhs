@@ -179,6 +179,63 @@ BOOL	GSPacketTCP::WritePacketNoneCompress(WORD MainProtocol, WORD SubProtocol, c
 	return GSSocketTCP::Write(pWriteData);
 }
 
+BOOL	GSPacketTCP::RelayPacket(WORD MainProtocol, WORD SubProtocol, BOOL Compress, const BYTE* Packet, DWORD PayloadSize)
+{
+
+	CThreadSync Sync;
+
+	if (!Packet)
+		return FALSE;
+
+	DWORD PacketLength = sizeof(DWORD) +
+		sizeof(WORD) +
+		sizeof(WORD) +
+		sizeof(DWORD) +
+		PayloadSize;
+
+	byte* sendBuff = new byte[PacketLength];
+
+	int compressflag = Compress;
+
+	memcpy(sendBuff, &PacketLength, sizeof(DWORD));
+
+	memcpy(sendBuff +
+		sizeof(DWORD),
+		&MainProtocol, sizeof(WORD));
+
+	memcpy(sendBuff +
+		sizeof(DWORD) +
+		sizeof(WORD),
+		&SubProtocol, sizeof(WORD));
+
+	memcpy(sendBuff +
+		sizeof(DWORD) +
+		sizeof(WORD) +
+		sizeof(WORD),
+		&compressflag, sizeof(DWORD));
+
+	memcpy(sendBuff +
+		sizeof(DWORD) +
+		sizeof(WORD) +
+		sizeof(WORD) +
+		sizeof(DWORD),
+		Packet, PayloadSize);
+
+	//GSCrypt::Encrypt(TempBuffer + sizeof(WORD), TempBuffer + sizeof(WORD), PacketLength - sizeof(WORD));
+
+	boost::shared_ptr<WRITE_PACKET_INFO> pWriteData(new WRITE_PACKET_INFO);
+
+	pWriteData->Data = sendBuff;
+	pWriteData->DataLength = PacketLength;
+#ifndef CLIENT_MODULE	
+	m_WrietQueue.push(pWriteData);
+#endif	
+
+	//return GSSocketTCP::Write((BYTE*)pWriteData->Data, pWriteData->DataLength);
+	return GSSocketTCP::Write(pWriteData);
+}
+
+
 BOOL	GSPacketTCP::WritePacketCompress(WORD MainProtocol, WORD SubProtocol, const BYTE* Packet, DWORD PayloadSize)
 {
 	CThreadSync Sync;
@@ -334,7 +391,7 @@ BOOL GSPacketTCP::GetPacket()
 
 		boost::shared_ptr<XDATA> pBuffer(m_GSBufferPool.alloc());
 
-		if(CompressFlag == 1)
+		if(CompressFlag == 1 && m_UseCompress == true)
 		{
 			std::string src((char *)(m_PacketBuffer + sizeof(DWORD) + sizeof(WORD) + sizeof(WORD) + sizeof(DWORD)), PayLoadLength);
 
@@ -347,6 +404,7 @@ BOOL GSPacketTCP::GetPacket()
 			pBuffer->m_Buffer.SetBuffer(m_PacketBuffer + sizeof(DWORD) + sizeof(WORD) + sizeof(WORD) + sizeof(DWORD), PayLoadLength);
 		}
 	
+		pBuffer->IsCompress = CompressFlag;
 		pBuffer->MainId = MainProtocol;
 		pBuffer->SubId = SubProtocol;
 		pBuffer->Length = pBuffer->m_Buffer.GetLength();

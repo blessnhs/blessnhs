@@ -14,7 +14,7 @@ HubProcess::~HubProcess(void)
 {
 }
 
-VOID HubProcess::Process(LPVOID Data, DWORD Length, WORD MainProtocol, WORD SubProtocol, boost::shared_ptr<GSClient> Client)
+VOID HubProcess::Process(LPVOID Data, DWORD Length, WORD MainProtocol, WORD SubProtocol, BOOL Compress, boost::shared_ptr<GSClient> Client)
 {
 	try
 	{	//로그인 하지 않은 유저가 패킷을 요청 했을때
@@ -43,8 +43,8 @@ VOID HubProcess::Process(LPVOID Data, DWORD Length, WORD MainProtocol, WORD SubP
 				SEND_PROTO_BUFFER(kick, pPair)
 //				SERVER.Close(pPair->GetTCPSocket()->GetSocket());
 			}
-			else
-				pPair->GetTCPSocket()->WritePacket(MainProtocol, 0, (BYTE*)Data, Length);
+			else //그냥 전달만 한다.
+				pPair->GetTCPSocket()->RelayPacket(MainProtocol, 0, Compress,(BYTE*)Data, Length);
 		}
 	
 	}

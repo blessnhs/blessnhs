@@ -7,7 +7,7 @@ public:
 	~FrontProcess(void);
 
 
-	virtual VOID Process(LPVOID Data, DWORD Length, WORD MainProtocol, WORD SubProtocol, boost::shared_ptr<GSClient> Client);
+	virtual VOID Process(LPVOID Data, DWORD Length, WORD MainProtocol, WORD SubProtocol,BOOL IsCompress, boost::shared_ptr<GSClient> Client);
 	virtual VOID Process2(LPVOID Data, DWORD Length, WORD MainProtocol, WORD SubProtocol, boost::shared_ptr<GSClient> pClient, string remoteaddress, int remoteport) {}
 
 protected:

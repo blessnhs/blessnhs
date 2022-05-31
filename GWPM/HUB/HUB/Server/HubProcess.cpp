@@ -34,7 +34,7 @@ HubProcess::~HubProcess(void)
 }
 
 
-VOID HubProcess::Process(LPVOID Data, DWORD Length, WORD MainProtocol, WORD SubProtocol, boost::shared_ptr<GSClient> Client)
+VOID HubProcess::Process(LPVOID Data, DWORD Length, WORD MainProtocol, WORD SubProtocol, BOOL Compress, boost::shared_ptr<GSClient> Client)
 {
 	try
 	{
@@ -489,6 +489,7 @@ VOID HubProcess::ROOM_BITMAP_CHAT(WORD SubProtocol,LPVOID Data, DWORD Length, bo
 	}
 
 
+	res.set_var_type(message.var_type());
 	res.set_var_name(pPlayer->m_Account.GetName());
 
 	ROOM_PTR pPtr = ROOMMGR.Search(message.var_room_number());
@@ -497,7 +498,7 @@ VOID HubProcess::ROOM_BITMAP_CHAT(WORD SubProtocol,LPVOID Data, DWORD Length, bo
 		int pos = pPtr->FindPlayerPos(pPlayer);
 		res.set_var_pos(pos);
 
-		pPtr->SendToAll(res, pPlayer->GetId());
+		pPtr->SendToAll(res, -1);
 	}
 	else
 	{

@@ -24,6 +24,9 @@ public:
 	//얼라이브 타임 설정 second 
 	DWORD m_AliveTime;
 
+	//압축해제 사용하지 않음 릴레이 서버만 false
+	BOOL m_UseCompress = true;
+
 	//udp바인트 포트
 	std::vector<DWORD> m_UdpPorts;
 

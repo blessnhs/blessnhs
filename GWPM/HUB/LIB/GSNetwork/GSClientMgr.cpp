@@ -261,7 +261,7 @@ BOOL GSClientMgr::NewClient(bool disalloc)
 		pClient->SetId(newid);
 		pClient->Create(TCP);
 		pClient->m_GSServer = pServer;
-
+		pClient->GetTCPSocket()->m_UseCompress = pServer->GetArgument().m_UseCompress;
 		if (AddClient(pClient) == FALSE)
 		{
 			SYSLOG().Write("NewClient failed...1 \n");
@@ -332,12 +332,17 @@ BOOL GSClientMgr::Begin(SOCKET ListenSocket,WORD MaxClients,LPVOID pServer)
 
 	DWORD MaxUser = m_MaxClients = MaxClients;
 
+
+	GSServer::GSServer* Server = (GSServer::GSServer*)pServer;
+
+
 	for (DWORD i=0;i<MaxUser;i++)
 	{
 		GSCLIENT_PTR pClient = ALLOCATOR.Create<GSClient>();
 		pClient->SetId(IncClientId());
 		pClient->Create(TCP);
 		pClient->m_GSServer = pServer;
+		pClient->GetTCPSocket()->m_UseCompress = Server->GetArgument().m_UseCompress;
 
 		if (!pClient->GetTCPSocket()->Initialize())
 		{

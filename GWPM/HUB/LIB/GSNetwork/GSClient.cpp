@@ -278,7 +278,7 @@ VOID GSClient::ProcPacket(boost::shared_ptr<GSClient> pClient)
 				return;
 			}
 
-			GetProcess()->Process(pBuffer->m_Buffer.GetBuffer(), pBuffer->Length, pBuffer->MainId, pBuffer->SubId, pClient);
+			GetProcess()->Process(pBuffer->m_Buffer.GetBuffer(), pBuffer->Length, pBuffer->MainId, pBuffer->SubId, pBuffer->IsCompress, pClient);
 		}
 	}
 	else if (GetCreateType() == UDP)
@@ -467,7 +467,7 @@ void GSClient::OnConnect(boost::shared_ptr<GSClient> pClient)
 	printf("connected ip %s port %d\n",ip.c_str(),port);
 #endif
 
-//	printf("connected ip %s port %d\n", ip.c_str(), port);
+	printf("connected ip %s port %d\n", ip.c_str(), port);
 	/*
 	GSServer::GSServer *pServer = (GSServer::GSServer *)m_GSServer;
 

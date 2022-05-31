@@ -59,6 +59,7 @@ BOOL GSFront::Initialize()
 	_arg.m_MaxClient = m_Ini.MaxUser;
 	_arg.m_Naggle = false;
 	_arg.m_AliveTime = m_Ini.AliveSeconds * 1000;
+	_arg.m_UseCompress = false; //릴레이서버 그냥 릴레이만 한다.
 
 	DBPROCESSCONTAINER_CER.Initialize(_arg.m_DBThreadCnt);
 

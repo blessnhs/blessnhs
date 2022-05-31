@@ -14,7 +14,7 @@ FrontProcess::~FrontProcess(void)
 {
 }
 
-VOID FrontProcess::Process(LPVOID Data, DWORD Length, WORD MainProtocol, WORD SubProtocol, boost::shared_ptr<GSClient> Client)
+VOID FrontProcess::Process(LPVOID Data, DWORD Length, WORD MainProtocol, WORD SubProtocol, BOOL IsCompress,boost::shared_ptr<GSClient> Client)
 {
 	try
 	{	//로그인 하지 않은 유저가 패킷을 요청 했을때
@@ -38,7 +38,8 @@ VOID FrontProcess::Process(LPVOID Data, DWORD Length, WORD MainProtocol, WORD Su
 			if (hub->GetConnected() == FALSE)
 				return;
 
-			hub->GetTCPSocket()->WritePacket(MainProtocol, Client->GetId(), (BYTE*)Data, Length);
+			//압축해제를 하지않고 허브로 그냥 전달만 한다.
+			hub->GetTCPSocket()->RelayPacket(MainProtocol, Client->GetId(), IsCompress,(BYTE*)Data, Length);
 		}
 
 

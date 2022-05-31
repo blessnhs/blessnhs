@@ -22,6 +22,7 @@ public:
 
 	BOOL	WritePacketCompress(WORD MainProtocol, WORD SubProtocol, const BYTE* Packet, DWORD PayloadSize);
 	BOOL	WritePacketNoneCompress(WORD MainProtocol, WORD SubProtocol, const BYTE* Packet, DWORD PayloadSize);
+	BOOL	RelayPacket(WORD MainProtocol, WORD SubProtocol, BOOL Compress,const BYTE* Packet, DWORD PayloadSize);
 
 	BOOL	WriteComplete(VOID);
 	BOOL	GetPacket();
@@ -29,6 +30,8 @@ public:
 	VOID	MakePacket(DWORD &dataLength);
 
 	virtual VOID MakeMsg(WORD Mainprotocol, WORD Subprotocol,DWORD dataLength);
+
+	BOOL m_UseCompress;
 
 };
 
