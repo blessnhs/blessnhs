@@ -84,7 +84,7 @@ namespace FullCameraApp.Droid
                                     return;
 
                                 var soutStream = new System.IO.MemoryStream();
-                                if (rbitmap.Compress(Bitmap.CompressFormat.Jpeg, 0, soutStream) == false)
+                                if (rbitmap.Compress(Bitmap.CompressFormat.Jpeg, renderer.quality, soutStream) == false)
                                     return;
 
                                 Frames.Enqueue(soutStream);
