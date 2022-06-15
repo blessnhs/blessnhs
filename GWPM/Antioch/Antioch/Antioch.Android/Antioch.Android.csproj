@@ -80,7 +80,7 @@
     <Compile Include="CameraPageRender-B2.cs" />
     <Compile Include="CameraPageRender-B3.cs" />
     <Compile Include="CameraPageRenderer.cs" />
-    <Compile Include="CameraQualityBraod.cs" />
+    <Compile Include="CameraQualityBroad.cs" />
     <Compile Include="Dependency.cs" />
     <Compile Include="ImageStreamingServer.cs" />
     <Compile Include="MainActivity.cs" />

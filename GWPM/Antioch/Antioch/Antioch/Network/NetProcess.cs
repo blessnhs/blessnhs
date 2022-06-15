@@ -72,7 +72,6 @@ namespace Antioch
 
         public static ConcurrentQueue<StreamWrapper> Mpeg2Stream = new ConcurrentQueue<StreamWrapper>();
 
-
         static public void Loop()
         {
 
@@ -492,11 +491,12 @@ namespace Antioch
             if (client == null || client.socket == null || client.socket.Connected == false)
                 return;
             {
-                MPEG2TS_MESSAGE_RES message = new MPEG2TS_MESSAGE_RES();
+                MPEG2TS_MESSAGE_REQ message = new MPEG2TS_MESSAGE_REQ();
+                message.VarRoomNumber = User.CurrentChatViewNumber;
                 message.VarType = type;
                 message.VarMessage.Add(ByteString.CopyFrom(stream.ToArray()));
 
-                client.WritePacket((int)PROTOCOL.IdPktBitmapMessageReq, message.ToByteArray(), message.ToByteArray().Length);
+                client.WritePacket((int)PROTOCOL.IdPktMpeg2TsMessageReq, message.ToByteArray(), message.ToByteArray().Length);
 
             }
 

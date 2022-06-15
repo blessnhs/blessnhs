@@ -22,10 +22,104 @@ using Android.OS;
 using Java.IO;
 using System.IO;
 using static Android.Hardware.Camera;
+using System.Linq;
 
 [assembly: Xamarin.Forms.ExportRenderer(typeof(QualityCam), typeof(QualityCamRenderer))]
 namespace FullCameraApp.Droid
 {
+    public class StreamMediaDataSource : MediaDataSource
+    {
+        private volatile byte[] mBuffer;    // byte array for whole media
+
+        private int fileSize;
+
+        private int writeIndex;
+
+        public StreamMediaDataSource(int fileSize)
+        {
+            this.fileSize = fileSize;
+
+            mBuffer = new byte[this.fileSize];
+
+        }
+
+        public void inputData(byte[] data, int length)
+        {
+
+            if (mBuffer != null)
+            {
+
+                Buffer.BlockCopy(data, 0, mBuffer, writeIndex, length);
+
+                writeIndex += length;
+
+            }
+
+        }
+
+        public override long Size
+            => fileSize;
+
+        public override void Close()
+        {
+            mBuffer = null;
+        }
+
+        public override int ReadAt(long position, byte[] buffer, int offset, int size)
+        {
+            if (position == writeIndex)
+            {
+
+                return -1;
+
+            }
+
+            if (position + size > writeIndex)
+            {
+
+                if (fileSize == writeIndex)
+                {
+
+                    int rest = (int)(writeIndex - position);
+
+                    Buffer.BlockCopy(mBuffer, (int)position, buffer, offset, rest);
+
+                    return rest;
+
+                }
+                else
+                {
+
+                    // loading data is faster than downloading data.
+
+                    try
+                    {
+
+                        Thread.Sleep(300);    // wait a second for downloading.
+
+                        // or MediaPlayer.pause();
+
+                    }
+                    catch (Exception e)
+                    {
+                    }
+
+                }
+
+            }
+
+            if (mBuffer != null)
+            {
+
+                Buffer.BlockCopy(mBuffer, (int)position, buffer, offset, size);
+
+                return size;
+
+            }
+
+            return 0;
+        }
+    }
 
     public class mPreviewCallback2 : Java.Lang.Object, Android.Hardware.Camera.IPreviewCallback
     {
@@ -80,6 +174,7 @@ namespace FullCameraApp.Droid
         Button mainScreenButton;
 
         VideoView video_view;
+        VideoView video_view2;
 
 
         //퀄리티 업 다운
@@ -142,6 +237,8 @@ namespace FullCameraApp.Droid
 
         bool cameraon = true;
 
+        Dictionary<int,byte[]> check = new Dictionary<int,byte[]>();
+
         Java.IO.File file()
         {
 
@@ -153,57 +250,30 @@ namespace FullCameraApp.Droid
             Java.IO.File f = new Java.IO.File(path);
 
             ParcelFileDescriptor pipe = ParcelFileDescriptor.Open(f,
-                             ParcelFileMode.ReadOnly
-                             | ParcelFileMode.Create
+                             ParcelFileMode.Create
                             | ParcelFileMode.Append
-                            | ParcelFileMode.WorldWriteable);
+                            | ParcelFileMode.ReadWrite);
 
 
 
-            byte[] buffer = new byte[4024];
+            byte[] buffer = new byte[1024 * 40];
             int length;
-
             Task.Run(() =>
             {
-
                 InputStream fileStream = new FileInputStream(pipe.FileDescriptor);
-
-                var path2 = System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyDocuments);
-                path2 = System.IO.Path.Combine(path2, "test211.mp4");
-                System.IO.File.Delete(path2);
-
-
-                var stream = new FileStream(path2, FileMode.Create);
-
-                bool first = false;
-
+                int order = 1;
                 while (cameraon == true)
                 {
                     length = fileStream.Read(buffer);
                     if (length > 0)
                     {
-                        stream.Write(buffer, 0, length);
-                        stream.Flush();
+                        byte[] c = new byte[length];
+                        Buffer.BlockCopy(buffer, 0, c, 0, length);
+                        check[order] = c;
+                        NetProcess.SendRoomMPEG2TSMessage(new MemoryStream(buffer,0, length), order++);
 
-                        byte[] write = new byte[length];
-
-                        Buffer.BlockCopy(buffer, 0, write, 0, length);
-
-                        if (first == false)
-                        {
-                            NetProcess.SendRoomMPEG2TSMessage(new MemoryStream(write), 0);
-                            first = true;
-                        }
-                        else
-                            NetProcess.SendRoomMPEG2TSMessage(new MemoryStream(write), 1);
-
-
-                        write = null;
                     }       
                 }
-
-
-                stream.Close();
 
             });
             return f;
@@ -318,8 +388,18 @@ namespace FullCameraApp.Droid
             ////////////////////////////////////////////////////////////////////////////////
             /// 
             video_view = new VideoView(Context);
-            video_view.LayoutParameters = ButtonParams;
+            RelativeLayout.LayoutParams VideoViewParams = new RelativeLayout.LayoutParams(half_width*2, half_height*2);
+            video_view.LayoutParameters = VideoViewParams;
+        
+
             mainLayout.AddView(video_view);
+
+
+            video_view2 = new VideoView(Context);
+            video_view2.LayoutParameters = VideoViewParams;
+
+
+            mainLayout.AddView(video_view2);
 
             ///////////////////////////////////////////////////////////////////////////////
             qualityUp = new Button(Context);
@@ -352,7 +432,7 @@ namespace FullCameraApp.Droid
 
                 recorder.SetVideoEncoder(VideoEncoder.H264);
                 recorder.SetAudioEncoder(AudioEncoder.Aac);
-
+                recorder.SetVideoEncodingBitRate(3000000);
 
                 recorder.SetPreviewDisplay(video_view.Holder.Surface);
 
@@ -372,32 +452,35 @@ namespace FullCameraApp.Droid
                 if (quality < 0)
                     quality = 0;
 
-                qualityUp.Text = quality.ToString();
+                qualityUp.Text = (quality / 1024).ToString();
 
                 try
                 {
                     var path = System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyDocuments);
-                    path = System.IO.Path.Combine(path, "test211.mp4");
+                    path = System.IO.Path.Combine(path, "test2111.mp4");
+                   
 
                     Java.IO.File f = new Java.IO.File(path);
+                              
 
                     ParcelFileDescriptor pipe = ParcelFileDescriptor.Open(f,
                                      ParcelFileMode.ReadOnly
                                    );
 
-
+                    var ll = f.Length();
+                    
                     var mediaPlayer = new MediaPlayer();
 
-                    ISurfaceHolder holder = video_view.Holder;
+                    video_view2.StopPlayback();
+
+                    ISurfaceHolder holder = video_view2.Holder;
                     mediaPlayer.SetDisplay(holder);
 
                     mediaPlayer.SetDataSource(pipe.FileDescriptor);
 
 
-                    var ll = f.Length();
                     mediaPlayer.Prepare();
                     mediaPlayer.Start();
-
 
                     mediaPlayer.Completion += (sender, args) =>
                     {
@@ -412,11 +495,11 @@ namespace FullCameraApp.Droid
 
                         mediaPlayer.Reset();
                         mediaPlayer.SetDisplay(holder);
-                        mediaPlayer.SetDataSource(pipe2.FileDescriptor);
+                        mediaPlayer.SetDataSource(path);
                         mediaPlayer.Prepare();
                         mediaPlayer.SeekTo(pos);
 
-                        mediaPlayer.Prepared += (s, a) =>
+                        mediaPlayer.Prepared += (sa, a) =>
                         {
                             mediaPlayer.Start();
                         };
@@ -427,9 +510,8 @@ namespace FullCameraApp.Droid
                     };
 
                 }
-                catch (Exception)
+                catch (Exception eb)
                 {
-
                 }
             };
             mainLayout.AddView(qualityDown);
@@ -531,11 +613,17 @@ namespace FullCameraApp.Droid
                 {
                     image.Value.SetX(0);
                     image.Value.SetY((half_height * 1));
+
+                  
                 }
 
                 posx++;
                 posy = posx / 2;
             }
+
+            video_view2.SetX(0);
+            video_view2.SetY(half_height);
+
 
             textViewMain.SetX(half_width);
             textViewMain.SetY(metrics.HeightPixels - 70);
@@ -657,14 +745,15 @@ namespace FullCameraApp.Droid
                 //caemra page render
                 Task.Run(() =>
                 {
-                    byte[] buffer = new byte[1024 * 10];
-                    int length = 0;
+                    NetProcess.Mpeg2Stream.Clear();
 
                     var path2 = System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyDocuments);
-                    path2 = System.IO.Path.Combine(path2, "test211.mp4");
+                    path2 = System.IO.Path.Combine(path2, "test2111.mp4");
                     System.IO.File.Delete(path2);
 
-                    var stream = new FileStream(path2, FileMode.Create);
+                     var stream = new FileStream(path2, FileMode.Create);
+                    int order = 1;
+
                     while (isDestroy == false)
                     {
                         StreamWrapper ms;
@@ -673,44 +762,29 @@ namespace FullCameraApp.Droid
                             if (ms == null)
                                 continue;
 
-                            if(ms.type == 0)
-                                NetProcess.Mpeg2Stream.Clear();
+                            if (ms.type != order)
+                                ;
 
-                         
+                            order++;
 
-                            stream.Write(buffer, 0, length);
+                            var r1 = check[ms.type];
+                            var r2 = ms.stream.ToArray(); 
+
+                            var r = r1.SequenceEqual(r2);
+                            if (r == false)
+                                ;
+
+                            quality += (int)ms.stream.Length;
+                            stream.Write(ms.stream.ToArray(), 0, (int)ms.stream.Length);
                             stream.Flush();
+
+
+                            textViewMain.Text = (quality / 1024 / 1024).ToString();
                         }
                     }
 
                     stream.Close();
                 });
-
-
-                //caemra page render
-                Task.Run(() =>
-                {
-                    audiomgr?.record();
-                });
-
-
-                Task.Run(() =>
-                {
-                    while (isDestroy == false)
-                    {
-                        StreamWrapper ms;
-                        if (NetProcess.AudioStream.TryDequeue(out ms) == true)
-                        {
-                            if (ms == null)
-                                continue;
-
-                            audiomgr?.play(ms.stream.ToArray());
-
-                        }
-                    }
-
-                });
-
             }
 
         }
