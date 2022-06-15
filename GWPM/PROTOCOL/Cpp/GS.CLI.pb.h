@@ -49,7 +49,7 @@ struct TableStruct_GS_2eCLI_2eproto {
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::PROTOBUF_NAMESPACE_ID::internal::AuxillaryParseTableField aux[]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
-  static const ::PROTOBUF_NAMESPACE_ID::internal::ParseTable schema[18]
+  static const ::PROTOBUF_NAMESPACE_ID::internal::ParseTable schema[21]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::PROTOBUF_NAMESPACE_ID::internal::FieldMetadata field_metadata[];
   static const ::PROTOBUF_NAMESPACE_ID::internal::SerializationTable serialization_table[];
@@ -62,6 +62,9 @@ extern AUDIO_MESSAGE_RESDefaultTypeInternal _AUDIO_MESSAGE_RES_default_instance_
 class BITMAP_MESSAGE_RES;
 class BITMAP_MESSAGE_RESDefaultTypeInternal;
 extern BITMAP_MESSAGE_RESDefaultTypeInternal _BITMAP_MESSAGE_RES_default_instance_;
+class CAMERA_CONTROL_RES;
+class CAMERA_CONTROL_RESDefaultTypeInternal;
+extern CAMERA_CONTROL_RESDefaultTypeInternal _CAMERA_CONTROL_RES_default_instance_;
 class CLIENT_KICK;
 class CLIENT_KICKDefaultTypeInternal;
 extern CLIENT_KICKDefaultTypeInternal _CLIENT_KICK_default_instance_;
@@ -83,6 +86,12 @@ extern LOGIN_RESDefaultTypeInternal _LOGIN_RES_default_instance_;
 class MAIL_LIST_RES;
 class MAIL_LIST_RESDefaultTypeInternal;
 extern MAIL_LIST_RESDefaultTypeInternal _MAIL_LIST_RES_default_instance_;
+class MPEG2TS_MESSAGE_RES;
+class MPEG2TS_MESSAGE_RESDefaultTypeInternal;
+extern MPEG2TS_MESSAGE_RESDefaultTypeInternal _MPEG2TS_MESSAGE_RES_default_instance_;
+class MPEG2TS_WAKE_UP_RES;
+class MPEG2TS_WAKE_UP_RESDefaultTypeInternal;
+extern MPEG2TS_WAKE_UP_RESDefaultTypeInternal _MPEG2TS_WAKE_UP_RES_default_instance_;
 class NEW_USER_IN_ROOM_NTY;
 class NEW_USER_IN_ROOM_NTYDefaultTypeInternal;
 extern NEW_USER_IN_ROOM_NTYDefaultTypeInternal _NEW_USER_IN_ROOM_NTY_default_instance_;
@@ -113,6 +122,7 @@ extern VERSION_RESDefaultTypeInternal _VERSION_RES_default_instance_;
 PROTOBUF_NAMESPACE_OPEN
 template<> ::AUDIO_MESSAGE_RES* Arena::CreateMaybeMessage<::AUDIO_MESSAGE_RES>(Arena*);
 template<> ::BITMAP_MESSAGE_RES* Arena::CreateMaybeMessage<::BITMAP_MESSAGE_RES>(Arena*);
+template<> ::CAMERA_CONTROL_RES* Arena::CreateMaybeMessage<::CAMERA_CONTROL_RES>(Arena*);
 template<> ::CLIENT_KICK* Arena::CreateMaybeMessage<::CLIENT_KICK>(Arena*);
 template<> ::CLIENT_LOGOUT_RES* Arena::CreateMaybeMessage<::CLIENT_LOGOUT_RES>(Arena*);
 template<> ::CREATE_ROOM_RES* Arena::CreateMaybeMessage<::CREATE_ROOM_RES>(Arena*);
@@ -120,6 +130,8 @@ template<> ::ENTER_ROOM_RES* Arena::CreateMaybeMessage<::ENTER_ROOM_RES>(Arena*)
 template<> ::LEAVE_ROOM_RES* Arena::CreateMaybeMessage<::LEAVE_ROOM_RES>(Arena*);
 template<> ::LOGIN_RES* Arena::CreateMaybeMessage<::LOGIN_RES>(Arena*);
 template<> ::MAIL_LIST_RES* Arena::CreateMaybeMessage<::MAIL_LIST_RES>(Arena*);
+template<> ::MPEG2TS_MESSAGE_RES* Arena::CreateMaybeMessage<::MPEG2TS_MESSAGE_RES>(Arena*);
+template<> ::MPEG2TS_WAKE_UP_RES* Arena::CreateMaybeMessage<::MPEG2TS_WAKE_UP_RES>(Arena*);
 template<> ::NEW_USER_IN_ROOM_NTY* Arena::CreateMaybeMessage<::NEW_USER_IN_ROOM_NTY>(Arena*);
 template<> ::NOTICE_RES* Arena::CreateMaybeMessage<::NOTICE_RES>(Arena*);
 template<> ::PRAY_MESSAGE_REG_RES* Arena::CreateMaybeMessage<::PRAY_MESSAGE_REG_RES>(Arena*);
@@ -3458,6 +3470,572 @@ class CLIENT_KICK :
   int id_;
   friend struct ::TableStruct_GS_2eCLI_2eproto;
 };
+// -------------------------------------------------------------------
+
+class CAMERA_CONTROL_RES :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:CAMERA_CONTROL_RES) */ {
+ public:
+  CAMERA_CONTROL_RES();
+  virtual ~CAMERA_CONTROL_RES();
+
+  CAMERA_CONTROL_RES(const CAMERA_CONTROL_RES& from);
+  CAMERA_CONTROL_RES(CAMERA_CONTROL_RES&& from) noexcept
+    : CAMERA_CONTROL_RES() {
+    *this = ::std::move(from);
+  }
+
+  inline CAMERA_CONTROL_RES& operator=(const CAMERA_CONTROL_RES& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline CAMERA_CONTROL_RES& operator=(CAMERA_CONTROL_RES&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  inline const ::PROTOBUF_NAMESPACE_ID::UnknownFieldSet& unknown_fields() const {
+    return _internal_metadata_.unknown_fields();
+  }
+  inline ::PROTOBUF_NAMESPACE_ID::UnknownFieldSet* mutable_unknown_fields() {
+    return _internal_metadata_.mutable_unknown_fields();
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return GetMetadataStatic().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return GetMetadataStatic().reflection;
+  }
+  static const CAMERA_CONTROL_RES& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const CAMERA_CONTROL_RES* internal_default_instance() {
+    return reinterpret_cast<const CAMERA_CONTROL_RES*>(
+               &_CAMERA_CONTROL_RES_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    18;
+
+  friend void swap(CAMERA_CONTROL_RES& a, CAMERA_CONTROL_RES& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(CAMERA_CONTROL_RES* other) {
+    if (other == this) return;
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline CAMERA_CONTROL_RES* New() const final {
+    return CreateMaybeMessage<CAMERA_CONTROL_RES>(nullptr);
+  }
+
+  CAMERA_CONTROL_RES* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
+    return CreateMaybeMessage<CAMERA_CONTROL_RES>(arena);
+  }
+  void CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void CopyFrom(const CAMERA_CONTROL_RES& from);
+  void MergeFrom(const CAMERA_CONTROL_RES& from);
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  ::PROTOBUF_NAMESPACE_ID::uint8* _InternalSerialize(
+      ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  inline void SharedCtor();
+  inline void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(CAMERA_CONTROL_RES* other);
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "CAMERA_CONTROL_RES";
+  }
+  private:
+  inline ::PROTOBUF_NAMESPACE_ID::Arena* GetArenaNoVirtual() const {
+    return nullptr;
+  }
+  inline void* MaybeArenaPtr() const {
+    return nullptr;
+  }
+  public:
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+  private:
+  static ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadataStatic() {
+    ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&::descriptor_table_GS_2eCLI_2eproto);
+    return ::descriptor_table_GS_2eCLI_2eproto.file_level_metadata[kIndexInFileMessages];
+  }
+
+  public:
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kVarCodeFieldNumber = 2,
+    kVarTypeFieldNumber = 3,
+    kVarPosFieldNumber = 4,
+    kIdFieldNumber = 1,
+  };
+  // optional .ErrorCode var_code = 2;
+  bool has_var_code() const;
+  private:
+  bool _internal_has_var_code() const;
+  public:
+  void clear_var_code();
+  ::ErrorCode var_code() const;
+  void set_var_code(::ErrorCode value);
+  private:
+  ::ErrorCode _internal_var_code() const;
+  void _internal_set_var_code(::ErrorCode value);
+  public:
+
+  // optional .CameraControlType var_type = 3;
+  bool has_var_type() const;
+  private:
+  bool _internal_has_var_type() const;
+  public:
+  void clear_var_type();
+  ::CameraControlType var_type() const;
+  void set_var_type(::CameraControlType value);
+  private:
+  ::CameraControlType _internal_var_type() const;
+  void _internal_set_var_type(::CameraControlType value);
+  public:
+
+  // optional int32 var_pos = 4;
+  bool has_var_pos() const;
+  private:
+  bool _internal_has_var_pos() const;
+  public:
+  void clear_var_pos();
+  ::PROTOBUF_NAMESPACE_ID::int32 var_pos() const;
+  void set_var_pos(::PROTOBUF_NAMESPACE_ID::int32 value);
+  private:
+  ::PROTOBUF_NAMESPACE_ID::int32 _internal_var_pos() const;
+  void _internal_set_var_pos(::PROTOBUF_NAMESPACE_ID::int32 value);
+  public:
+
+  // optional .PROTOCOL id = 1 [default = ID_PKT_CAMERA_CONTROL];
+  bool has_id() const;
+  private:
+  bool _internal_has_id() const;
+  public:
+  void clear_id();
+  ::PROTOCOL id() const;
+  void set_id(::PROTOCOL value);
+  private:
+  ::PROTOCOL _internal_id() const;
+  void _internal_set_id(::PROTOCOL value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:CAMERA_CONTROL_RES)
+ private:
+  class _Internal;
+
+  ::PROTOBUF_NAMESPACE_ID::internal::InternalMetadataWithArena _internal_metadata_;
+  ::PROTOBUF_NAMESPACE_ID::internal::HasBits<1> _has_bits_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  int var_code_;
+  int var_type_;
+  ::PROTOBUF_NAMESPACE_ID::int32 var_pos_;
+  int id_;
+  friend struct ::TableStruct_GS_2eCLI_2eproto;
+};
+// -------------------------------------------------------------------
+
+class MPEG2TS_MESSAGE_RES :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:MPEG2TS_MESSAGE_RES) */ {
+ public:
+  MPEG2TS_MESSAGE_RES();
+  virtual ~MPEG2TS_MESSAGE_RES();
+
+  MPEG2TS_MESSAGE_RES(const MPEG2TS_MESSAGE_RES& from);
+  MPEG2TS_MESSAGE_RES(MPEG2TS_MESSAGE_RES&& from) noexcept
+    : MPEG2TS_MESSAGE_RES() {
+    *this = ::std::move(from);
+  }
+
+  inline MPEG2TS_MESSAGE_RES& operator=(const MPEG2TS_MESSAGE_RES& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline MPEG2TS_MESSAGE_RES& operator=(MPEG2TS_MESSAGE_RES&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  inline const ::PROTOBUF_NAMESPACE_ID::UnknownFieldSet& unknown_fields() const {
+    return _internal_metadata_.unknown_fields();
+  }
+  inline ::PROTOBUF_NAMESPACE_ID::UnknownFieldSet* mutable_unknown_fields() {
+    return _internal_metadata_.mutable_unknown_fields();
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return GetMetadataStatic().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return GetMetadataStatic().reflection;
+  }
+  static const MPEG2TS_MESSAGE_RES& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const MPEG2TS_MESSAGE_RES* internal_default_instance() {
+    return reinterpret_cast<const MPEG2TS_MESSAGE_RES*>(
+               &_MPEG2TS_MESSAGE_RES_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    19;
+
+  friend void swap(MPEG2TS_MESSAGE_RES& a, MPEG2TS_MESSAGE_RES& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(MPEG2TS_MESSAGE_RES* other) {
+    if (other == this) return;
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline MPEG2TS_MESSAGE_RES* New() const final {
+    return CreateMaybeMessage<MPEG2TS_MESSAGE_RES>(nullptr);
+  }
+
+  MPEG2TS_MESSAGE_RES* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
+    return CreateMaybeMessage<MPEG2TS_MESSAGE_RES>(arena);
+  }
+  void CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void CopyFrom(const MPEG2TS_MESSAGE_RES& from);
+  void MergeFrom(const MPEG2TS_MESSAGE_RES& from);
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  ::PROTOBUF_NAMESPACE_ID::uint8* _InternalSerialize(
+      ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  inline void SharedCtor();
+  inline void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(MPEG2TS_MESSAGE_RES* other);
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "MPEG2TS_MESSAGE_RES";
+  }
+  private:
+  inline ::PROTOBUF_NAMESPACE_ID::Arena* GetArenaNoVirtual() const {
+    return nullptr;
+  }
+  inline void* MaybeArenaPtr() const {
+    return nullptr;
+  }
+  public:
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+  private:
+  static ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadataStatic() {
+    ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&::descriptor_table_GS_2eCLI_2eproto);
+    return ::descriptor_table_GS_2eCLI_2eproto.file_level_metadata[kIndexInFileMessages];
+  }
+
+  public:
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kVarMessageFieldNumber = 3,
+    kVarCodeFieldNumber = 2,
+    kVarTypeFieldNumber = 4,
+    kIdFieldNumber = 1,
+  };
+  // repeated bytes var_message = 3;
+  int var_message_size() const;
+  private:
+  int _internal_var_message_size() const;
+  public:
+  void clear_var_message();
+  const std::string& var_message(int index) const;
+  std::string* mutable_var_message(int index);
+  void set_var_message(int index, const std::string& value);
+  void set_var_message(int index, std::string&& value);
+  void set_var_message(int index, const char* value);
+  void set_var_message(int index, const void* value, size_t size);
+  std::string* add_var_message();
+  void add_var_message(const std::string& value);
+  void add_var_message(std::string&& value);
+  void add_var_message(const char* value);
+  void add_var_message(const void* value, size_t size);
+  const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>& var_message() const;
+  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>* mutable_var_message();
+  private:
+  const std::string& _internal_var_message(int index) const;
+  std::string* _internal_add_var_message();
+  public:
+
+  // optional .ErrorCode var_code = 2;
+  bool has_var_code() const;
+  private:
+  bool _internal_has_var_code() const;
+  public:
+  void clear_var_code();
+  ::ErrorCode var_code() const;
+  void set_var_code(::ErrorCode value);
+  private:
+  ::ErrorCode _internal_var_code() const;
+  void _internal_set_var_code(::ErrorCode value);
+  public:
+
+  // optional int32 var_type = 4;
+  bool has_var_type() const;
+  private:
+  bool _internal_has_var_type() const;
+  public:
+  void clear_var_type();
+  ::PROTOBUF_NAMESPACE_ID::int32 var_type() const;
+  void set_var_type(::PROTOBUF_NAMESPACE_ID::int32 value);
+  private:
+  ::PROTOBUF_NAMESPACE_ID::int32 _internal_var_type() const;
+  void _internal_set_var_type(::PROTOBUF_NAMESPACE_ID::int32 value);
+  public:
+
+  // optional .PROTOCOL id = 1 [default = ID_PKT_MPEG2TS_MESSAGE_RES];
+  bool has_id() const;
+  private:
+  bool _internal_has_id() const;
+  public:
+  void clear_id();
+  ::PROTOCOL id() const;
+  void set_id(::PROTOCOL value);
+  private:
+  ::PROTOCOL _internal_id() const;
+  void _internal_set_id(::PROTOCOL value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:MPEG2TS_MESSAGE_RES)
+ private:
+  class _Internal;
+
+  ::PROTOBUF_NAMESPACE_ID::internal::InternalMetadataWithArena _internal_metadata_;
+  ::PROTOBUF_NAMESPACE_ID::internal::HasBits<1> _has_bits_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string> var_message_;
+  int var_code_;
+  ::PROTOBUF_NAMESPACE_ID::int32 var_type_;
+  int id_;
+  friend struct ::TableStruct_GS_2eCLI_2eproto;
+};
+// -------------------------------------------------------------------
+
+class MPEG2TS_WAKE_UP_RES :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:MPEG2TS_WAKE_UP_RES) */ {
+ public:
+  MPEG2TS_WAKE_UP_RES();
+  virtual ~MPEG2TS_WAKE_UP_RES();
+
+  MPEG2TS_WAKE_UP_RES(const MPEG2TS_WAKE_UP_RES& from);
+  MPEG2TS_WAKE_UP_RES(MPEG2TS_WAKE_UP_RES&& from) noexcept
+    : MPEG2TS_WAKE_UP_RES() {
+    *this = ::std::move(from);
+  }
+
+  inline MPEG2TS_WAKE_UP_RES& operator=(const MPEG2TS_WAKE_UP_RES& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline MPEG2TS_WAKE_UP_RES& operator=(MPEG2TS_WAKE_UP_RES&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  inline const ::PROTOBUF_NAMESPACE_ID::UnknownFieldSet& unknown_fields() const {
+    return _internal_metadata_.unknown_fields();
+  }
+  inline ::PROTOBUF_NAMESPACE_ID::UnknownFieldSet* mutable_unknown_fields() {
+    return _internal_metadata_.mutable_unknown_fields();
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return GetMetadataStatic().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return GetMetadataStatic().reflection;
+  }
+  static const MPEG2TS_WAKE_UP_RES& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const MPEG2TS_WAKE_UP_RES* internal_default_instance() {
+    return reinterpret_cast<const MPEG2TS_WAKE_UP_RES*>(
+               &_MPEG2TS_WAKE_UP_RES_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    20;
+
+  friend void swap(MPEG2TS_WAKE_UP_RES& a, MPEG2TS_WAKE_UP_RES& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(MPEG2TS_WAKE_UP_RES* other) {
+    if (other == this) return;
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline MPEG2TS_WAKE_UP_RES* New() const final {
+    return CreateMaybeMessage<MPEG2TS_WAKE_UP_RES>(nullptr);
+  }
+
+  MPEG2TS_WAKE_UP_RES* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
+    return CreateMaybeMessage<MPEG2TS_WAKE_UP_RES>(arena);
+  }
+  void CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void CopyFrom(const MPEG2TS_WAKE_UP_RES& from);
+  void MergeFrom(const MPEG2TS_WAKE_UP_RES& from);
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  ::PROTOBUF_NAMESPACE_ID::uint8* _InternalSerialize(
+      ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  inline void SharedCtor();
+  inline void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(MPEG2TS_WAKE_UP_RES* other);
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "MPEG2TS_WAKE_UP_RES";
+  }
+  private:
+  inline ::PROTOBUF_NAMESPACE_ID::Arena* GetArenaNoVirtual() const {
+    return nullptr;
+  }
+  inline void* MaybeArenaPtr() const {
+    return nullptr;
+  }
+  public:
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+  private:
+  static ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadataStatic() {
+    ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&::descriptor_table_GS_2eCLI_2eproto);
+    return ::descriptor_table_GS_2eCLI_2eproto.file_level_metadata[kIndexInFileMessages];
+  }
+
+  public:
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kVarCodeFieldNumber = 2,
+    kVarTypeFieldNumber = 3,
+    kVarRoomNumberFieldNumber = 4,
+    kIdFieldNumber = 1,
+  };
+  // optional .ErrorCode var_code = 2;
+  bool has_var_code() const;
+  private:
+  bool _internal_has_var_code() const;
+  public:
+  void clear_var_code();
+  ::ErrorCode var_code() const;
+  void set_var_code(::ErrorCode value);
+  private:
+  ::ErrorCode _internal_var_code() const;
+  void _internal_set_var_code(::ErrorCode value);
+  public:
+
+  // optional int32 var_type = 3;
+  bool has_var_type() const;
+  private:
+  bool _internal_has_var_type() const;
+  public:
+  void clear_var_type();
+  ::PROTOBUF_NAMESPACE_ID::int32 var_type() const;
+  void set_var_type(::PROTOBUF_NAMESPACE_ID::int32 value);
+  private:
+  ::PROTOBUF_NAMESPACE_ID::int32 _internal_var_type() const;
+  void _internal_set_var_type(::PROTOBUF_NAMESPACE_ID::int32 value);
+  public:
+
+  // optional int32 var_room_number = 4;
+  bool has_var_room_number() const;
+  private:
+  bool _internal_has_var_room_number() const;
+  public:
+  void clear_var_room_number();
+  ::PROTOBUF_NAMESPACE_ID::int32 var_room_number() const;
+  void set_var_room_number(::PROTOBUF_NAMESPACE_ID::int32 value);
+  private:
+  ::PROTOBUF_NAMESPACE_ID::int32 _internal_var_room_number() const;
+  void _internal_set_var_room_number(::PROTOBUF_NAMESPACE_ID::int32 value);
+  public:
+
+  // optional .PROTOCOL id = 1 [default = ID_PKT_MPEG2TS_WAKE_UP_RES];
+  bool has_id() const;
+  private:
+  bool _internal_has_id() const;
+  public:
+  void clear_id();
+  ::PROTOCOL id() const;
+  void set_id(::PROTOCOL value);
+  private:
+  ::PROTOCOL _internal_id() const;
+  void _internal_set_id(::PROTOCOL value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:MPEG2TS_WAKE_UP_RES)
+ private:
+  class _Internal;
+
+  ::PROTOBUF_NAMESPACE_ID::internal::InternalMetadataWithArena _internal_metadata_;
+  ::PROTOBUF_NAMESPACE_ID::internal::HasBits<1> _has_bits_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  int var_code_;
+  ::PROTOBUF_NAMESPACE_ID::int32 var_type_;
+  ::PROTOBUF_NAMESPACE_ID::int32 var_room_number_;
+  int id_;
+  friend struct ::TableStruct_GS_2eCLI_2eproto;
+};
 // ===================================================================
 
 
@@ -5918,9 +6496,416 @@ inline void CLIENT_KICK::set_sid(::PROTOBUF_NAMESPACE_ID::int32 value) {
   // @@protoc_insertion_point(field_set:CLIENT_KICK.sid)
 }
 
+// -------------------------------------------------------------------
+
+// CAMERA_CONTROL_RES
+
+// optional .PROTOCOL id = 1 [default = ID_PKT_CAMERA_CONTROL];
+inline bool CAMERA_CONTROL_RES::_internal_has_id() const {
+  bool value = (_has_bits_[0] & 0x00000008u) != 0;
+  return value;
+}
+inline bool CAMERA_CONTROL_RES::has_id() const {
+  return _internal_has_id();
+}
+inline void CAMERA_CONTROL_RES::clear_id() {
+  id_ = 42;
+  _has_bits_[0] &= ~0x00000008u;
+}
+inline ::PROTOCOL CAMERA_CONTROL_RES::_internal_id() const {
+  return static_cast< ::PROTOCOL >(id_);
+}
+inline ::PROTOCOL CAMERA_CONTROL_RES::id() const {
+  // @@protoc_insertion_point(field_get:CAMERA_CONTROL_RES.id)
+  return _internal_id();
+}
+inline void CAMERA_CONTROL_RES::_internal_set_id(::PROTOCOL value) {
+  assert(::PROTOCOL_IsValid(value));
+  _has_bits_[0] |= 0x00000008u;
+  id_ = value;
+}
+inline void CAMERA_CONTROL_RES::set_id(::PROTOCOL value) {
+  _internal_set_id(value);
+  // @@protoc_insertion_point(field_set:CAMERA_CONTROL_RES.id)
+}
+
+// optional .ErrorCode var_code = 2;
+inline bool CAMERA_CONTROL_RES::_internal_has_var_code() const {
+  bool value = (_has_bits_[0] & 0x00000001u) != 0;
+  return value;
+}
+inline bool CAMERA_CONTROL_RES::has_var_code() const {
+  return _internal_has_var_code();
+}
+inline void CAMERA_CONTROL_RES::clear_var_code() {
+  var_code_ = 0;
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline ::ErrorCode CAMERA_CONTROL_RES::_internal_var_code() const {
+  return static_cast< ::ErrorCode >(var_code_);
+}
+inline ::ErrorCode CAMERA_CONTROL_RES::var_code() const {
+  // @@protoc_insertion_point(field_get:CAMERA_CONTROL_RES.var_code)
+  return _internal_var_code();
+}
+inline void CAMERA_CONTROL_RES::_internal_set_var_code(::ErrorCode value) {
+  assert(::ErrorCode_IsValid(value));
+  _has_bits_[0] |= 0x00000001u;
+  var_code_ = value;
+}
+inline void CAMERA_CONTROL_RES::set_var_code(::ErrorCode value) {
+  _internal_set_var_code(value);
+  // @@protoc_insertion_point(field_set:CAMERA_CONTROL_RES.var_code)
+}
+
+// optional .CameraControlType var_type = 3;
+inline bool CAMERA_CONTROL_RES::_internal_has_var_type() const {
+  bool value = (_has_bits_[0] & 0x00000002u) != 0;
+  return value;
+}
+inline bool CAMERA_CONTROL_RES::has_var_type() const {
+  return _internal_has_var_type();
+}
+inline void CAMERA_CONTROL_RES::clear_var_type() {
+  var_type_ = 0;
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline ::CameraControlType CAMERA_CONTROL_RES::_internal_var_type() const {
+  return static_cast< ::CameraControlType >(var_type_);
+}
+inline ::CameraControlType CAMERA_CONTROL_RES::var_type() const {
+  // @@protoc_insertion_point(field_get:CAMERA_CONTROL_RES.var_type)
+  return _internal_var_type();
+}
+inline void CAMERA_CONTROL_RES::_internal_set_var_type(::CameraControlType value) {
+  assert(::CameraControlType_IsValid(value));
+  _has_bits_[0] |= 0x00000002u;
+  var_type_ = value;
+}
+inline void CAMERA_CONTROL_RES::set_var_type(::CameraControlType value) {
+  _internal_set_var_type(value);
+  // @@protoc_insertion_point(field_set:CAMERA_CONTROL_RES.var_type)
+}
+
+// optional int32 var_pos = 4;
+inline bool CAMERA_CONTROL_RES::_internal_has_var_pos() const {
+  bool value = (_has_bits_[0] & 0x00000004u) != 0;
+  return value;
+}
+inline bool CAMERA_CONTROL_RES::has_var_pos() const {
+  return _internal_has_var_pos();
+}
+inline void CAMERA_CONTROL_RES::clear_var_pos() {
+  var_pos_ = 0;
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 CAMERA_CONTROL_RES::_internal_var_pos() const {
+  return var_pos_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 CAMERA_CONTROL_RES::var_pos() const {
+  // @@protoc_insertion_point(field_get:CAMERA_CONTROL_RES.var_pos)
+  return _internal_var_pos();
+}
+inline void CAMERA_CONTROL_RES::_internal_set_var_pos(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  _has_bits_[0] |= 0x00000004u;
+  var_pos_ = value;
+}
+inline void CAMERA_CONTROL_RES::set_var_pos(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  _internal_set_var_pos(value);
+  // @@protoc_insertion_point(field_set:CAMERA_CONTROL_RES.var_pos)
+}
+
+// -------------------------------------------------------------------
+
+// MPEG2TS_MESSAGE_RES
+
+// optional .PROTOCOL id = 1 [default = ID_PKT_MPEG2TS_MESSAGE_RES];
+inline bool MPEG2TS_MESSAGE_RES::_internal_has_id() const {
+  bool value = (_has_bits_[0] & 0x00000004u) != 0;
+  return value;
+}
+inline bool MPEG2TS_MESSAGE_RES::has_id() const {
+  return _internal_has_id();
+}
+inline void MPEG2TS_MESSAGE_RES::clear_id() {
+  id_ = 44;
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline ::PROTOCOL MPEG2TS_MESSAGE_RES::_internal_id() const {
+  return static_cast< ::PROTOCOL >(id_);
+}
+inline ::PROTOCOL MPEG2TS_MESSAGE_RES::id() const {
+  // @@protoc_insertion_point(field_get:MPEG2TS_MESSAGE_RES.id)
+  return _internal_id();
+}
+inline void MPEG2TS_MESSAGE_RES::_internal_set_id(::PROTOCOL value) {
+  assert(::PROTOCOL_IsValid(value));
+  _has_bits_[0] |= 0x00000004u;
+  id_ = value;
+}
+inline void MPEG2TS_MESSAGE_RES::set_id(::PROTOCOL value) {
+  _internal_set_id(value);
+  // @@protoc_insertion_point(field_set:MPEG2TS_MESSAGE_RES.id)
+}
+
+// optional .ErrorCode var_code = 2;
+inline bool MPEG2TS_MESSAGE_RES::_internal_has_var_code() const {
+  bool value = (_has_bits_[0] & 0x00000001u) != 0;
+  return value;
+}
+inline bool MPEG2TS_MESSAGE_RES::has_var_code() const {
+  return _internal_has_var_code();
+}
+inline void MPEG2TS_MESSAGE_RES::clear_var_code() {
+  var_code_ = 0;
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline ::ErrorCode MPEG2TS_MESSAGE_RES::_internal_var_code() const {
+  return static_cast< ::ErrorCode >(var_code_);
+}
+inline ::ErrorCode MPEG2TS_MESSAGE_RES::var_code() const {
+  // @@protoc_insertion_point(field_get:MPEG2TS_MESSAGE_RES.var_code)
+  return _internal_var_code();
+}
+inline void MPEG2TS_MESSAGE_RES::_internal_set_var_code(::ErrorCode value) {
+  assert(::ErrorCode_IsValid(value));
+  _has_bits_[0] |= 0x00000001u;
+  var_code_ = value;
+}
+inline void MPEG2TS_MESSAGE_RES::set_var_code(::ErrorCode value) {
+  _internal_set_var_code(value);
+  // @@protoc_insertion_point(field_set:MPEG2TS_MESSAGE_RES.var_code)
+}
+
+// repeated bytes var_message = 3;
+inline int MPEG2TS_MESSAGE_RES::_internal_var_message_size() const {
+  return var_message_.size();
+}
+inline int MPEG2TS_MESSAGE_RES::var_message_size() const {
+  return _internal_var_message_size();
+}
+inline void MPEG2TS_MESSAGE_RES::clear_var_message() {
+  var_message_.Clear();
+}
+inline std::string* MPEG2TS_MESSAGE_RES::add_var_message() {
+  // @@protoc_insertion_point(field_add_mutable:MPEG2TS_MESSAGE_RES.var_message)
+  return _internal_add_var_message();
+}
+inline const std::string& MPEG2TS_MESSAGE_RES::_internal_var_message(int index) const {
+  return var_message_.Get(index);
+}
+inline const std::string& MPEG2TS_MESSAGE_RES::var_message(int index) const {
+  // @@protoc_insertion_point(field_get:MPEG2TS_MESSAGE_RES.var_message)
+  return _internal_var_message(index);
+}
+inline std::string* MPEG2TS_MESSAGE_RES::mutable_var_message(int index) {
+  // @@protoc_insertion_point(field_mutable:MPEG2TS_MESSAGE_RES.var_message)
+  return var_message_.Mutable(index);
+}
+inline void MPEG2TS_MESSAGE_RES::set_var_message(int index, const std::string& value) {
+  // @@protoc_insertion_point(field_set:MPEG2TS_MESSAGE_RES.var_message)
+  var_message_.Mutable(index)->assign(value);
+}
+inline void MPEG2TS_MESSAGE_RES::set_var_message(int index, std::string&& value) {
+  // @@protoc_insertion_point(field_set:MPEG2TS_MESSAGE_RES.var_message)
+  var_message_.Mutable(index)->assign(std::move(value));
+}
+inline void MPEG2TS_MESSAGE_RES::set_var_message(int index, const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  var_message_.Mutable(index)->assign(value);
+  // @@protoc_insertion_point(field_set_char:MPEG2TS_MESSAGE_RES.var_message)
+}
+inline void MPEG2TS_MESSAGE_RES::set_var_message(int index, const void* value, size_t size) {
+  var_message_.Mutable(index)->assign(
+    reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_set_pointer:MPEG2TS_MESSAGE_RES.var_message)
+}
+inline std::string* MPEG2TS_MESSAGE_RES::_internal_add_var_message() {
+  return var_message_.Add();
+}
+inline void MPEG2TS_MESSAGE_RES::add_var_message(const std::string& value) {
+  var_message_.Add()->assign(value);
+  // @@protoc_insertion_point(field_add:MPEG2TS_MESSAGE_RES.var_message)
+}
+inline void MPEG2TS_MESSAGE_RES::add_var_message(std::string&& value) {
+  var_message_.Add(std::move(value));
+  // @@protoc_insertion_point(field_add:MPEG2TS_MESSAGE_RES.var_message)
+}
+inline void MPEG2TS_MESSAGE_RES::add_var_message(const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  var_message_.Add()->assign(value);
+  // @@protoc_insertion_point(field_add_char:MPEG2TS_MESSAGE_RES.var_message)
+}
+inline void MPEG2TS_MESSAGE_RES::add_var_message(const void* value, size_t size) {
+  var_message_.Add()->assign(reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_add_pointer:MPEG2TS_MESSAGE_RES.var_message)
+}
+inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>&
+MPEG2TS_MESSAGE_RES::var_message() const {
+  // @@protoc_insertion_point(field_list:MPEG2TS_MESSAGE_RES.var_message)
+  return var_message_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>*
+MPEG2TS_MESSAGE_RES::mutable_var_message() {
+  // @@protoc_insertion_point(field_mutable_list:MPEG2TS_MESSAGE_RES.var_message)
+  return &var_message_;
+}
+
+// optional int32 var_type = 4;
+inline bool MPEG2TS_MESSAGE_RES::_internal_has_var_type() const {
+  bool value = (_has_bits_[0] & 0x00000002u) != 0;
+  return value;
+}
+inline bool MPEG2TS_MESSAGE_RES::has_var_type() const {
+  return _internal_has_var_type();
+}
+inline void MPEG2TS_MESSAGE_RES::clear_var_type() {
+  var_type_ = 0;
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 MPEG2TS_MESSAGE_RES::_internal_var_type() const {
+  return var_type_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 MPEG2TS_MESSAGE_RES::var_type() const {
+  // @@protoc_insertion_point(field_get:MPEG2TS_MESSAGE_RES.var_type)
+  return _internal_var_type();
+}
+inline void MPEG2TS_MESSAGE_RES::_internal_set_var_type(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  _has_bits_[0] |= 0x00000002u;
+  var_type_ = value;
+}
+inline void MPEG2TS_MESSAGE_RES::set_var_type(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  _internal_set_var_type(value);
+  // @@protoc_insertion_point(field_set:MPEG2TS_MESSAGE_RES.var_type)
+}
+
+// -------------------------------------------------------------------
+
+// MPEG2TS_WAKE_UP_RES
+
+// optional .PROTOCOL id = 1 [default = ID_PKT_MPEG2TS_WAKE_UP_RES];
+inline bool MPEG2TS_WAKE_UP_RES::_internal_has_id() const {
+  bool value = (_has_bits_[0] & 0x00000008u) != 0;
+  return value;
+}
+inline bool MPEG2TS_WAKE_UP_RES::has_id() const {
+  return _internal_has_id();
+}
+inline void MPEG2TS_WAKE_UP_RES::clear_id() {
+  id_ = 46;
+  _has_bits_[0] &= ~0x00000008u;
+}
+inline ::PROTOCOL MPEG2TS_WAKE_UP_RES::_internal_id() const {
+  return static_cast< ::PROTOCOL >(id_);
+}
+inline ::PROTOCOL MPEG2TS_WAKE_UP_RES::id() const {
+  // @@protoc_insertion_point(field_get:MPEG2TS_WAKE_UP_RES.id)
+  return _internal_id();
+}
+inline void MPEG2TS_WAKE_UP_RES::_internal_set_id(::PROTOCOL value) {
+  assert(::PROTOCOL_IsValid(value));
+  _has_bits_[0] |= 0x00000008u;
+  id_ = value;
+}
+inline void MPEG2TS_WAKE_UP_RES::set_id(::PROTOCOL value) {
+  _internal_set_id(value);
+  // @@protoc_insertion_point(field_set:MPEG2TS_WAKE_UP_RES.id)
+}
+
+// optional .ErrorCode var_code = 2;
+inline bool MPEG2TS_WAKE_UP_RES::_internal_has_var_code() const {
+  bool value = (_has_bits_[0] & 0x00000001u) != 0;
+  return value;
+}
+inline bool MPEG2TS_WAKE_UP_RES::has_var_code() const {
+  return _internal_has_var_code();
+}
+inline void MPEG2TS_WAKE_UP_RES::clear_var_code() {
+  var_code_ = 0;
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline ::ErrorCode MPEG2TS_WAKE_UP_RES::_internal_var_code() const {
+  return static_cast< ::ErrorCode >(var_code_);
+}
+inline ::ErrorCode MPEG2TS_WAKE_UP_RES::var_code() const {
+  // @@protoc_insertion_point(field_get:MPEG2TS_WAKE_UP_RES.var_code)
+  return _internal_var_code();
+}
+inline void MPEG2TS_WAKE_UP_RES::_internal_set_var_code(::ErrorCode value) {
+  assert(::ErrorCode_IsValid(value));
+  _has_bits_[0] |= 0x00000001u;
+  var_code_ = value;
+}
+inline void MPEG2TS_WAKE_UP_RES::set_var_code(::ErrorCode value) {
+  _internal_set_var_code(value);
+  // @@protoc_insertion_point(field_set:MPEG2TS_WAKE_UP_RES.var_code)
+}
+
+// optional int32 var_type = 3;
+inline bool MPEG2TS_WAKE_UP_RES::_internal_has_var_type() const {
+  bool value = (_has_bits_[0] & 0x00000002u) != 0;
+  return value;
+}
+inline bool MPEG2TS_WAKE_UP_RES::has_var_type() const {
+  return _internal_has_var_type();
+}
+inline void MPEG2TS_WAKE_UP_RES::clear_var_type() {
+  var_type_ = 0;
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 MPEG2TS_WAKE_UP_RES::_internal_var_type() const {
+  return var_type_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 MPEG2TS_WAKE_UP_RES::var_type() const {
+  // @@protoc_insertion_point(field_get:MPEG2TS_WAKE_UP_RES.var_type)
+  return _internal_var_type();
+}
+inline void MPEG2TS_WAKE_UP_RES::_internal_set_var_type(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  _has_bits_[0] |= 0x00000002u;
+  var_type_ = value;
+}
+inline void MPEG2TS_WAKE_UP_RES::set_var_type(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  _internal_set_var_type(value);
+  // @@protoc_insertion_point(field_set:MPEG2TS_WAKE_UP_RES.var_type)
+}
+
+// optional int32 var_room_number = 4;
+inline bool MPEG2TS_WAKE_UP_RES::_internal_has_var_room_number() const {
+  bool value = (_has_bits_[0] & 0x00000004u) != 0;
+  return value;
+}
+inline bool MPEG2TS_WAKE_UP_RES::has_var_room_number() const {
+  return _internal_has_var_room_number();
+}
+inline void MPEG2TS_WAKE_UP_RES::clear_var_room_number() {
+  var_room_number_ = 0;
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 MPEG2TS_WAKE_UP_RES::_internal_var_room_number() const {
+  return var_room_number_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 MPEG2TS_WAKE_UP_RES::var_room_number() const {
+  // @@protoc_insertion_point(field_get:MPEG2TS_WAKE_UP_RES.var_room_number)
+  return _internal_var_room_number();
+}
+inline void MPEG2TS_WAKE_UP_RES::_internal_set_var_room_number(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  _has_bits_[0] |= 0x00000004u;
+  var_room_number_ = value;
+}
+inline void MPEG2TS_WAKE_UP_RES::set_var_room_number(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  _internal_set_var_room_number(value);
+  // @@protoc_insertion_point(field_set:MPEG2TS_WAKE_UP_RES.var_room_number)
+}
+
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

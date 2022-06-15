@@ -99,12 +99,17 @@ enum PROTOCOL : int {
   ID_PKT_CLIENT_LOGOUT_REQ = 39,
   ID_PKT_CLIENT_LOGOUT_RES = 40,
   ID_PKT_CLIENT_KICK = 41,
+  ID_PKT_CAMERA_CONTROL = 42,
+  ID_PKT_MPEG2TS_MESSAGE_REQ = 43,
+  ID_PKT_MPEG2TS_MESSAGE_RES = 44,
+  ID_PKT_MPEG2TS_WAKE_UP_REQ = 45,
+  ID_PKT_MPEG2TS_WAKE_UP_RES = 46,
   PROTOCOL_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<::PROTOBUF_NAMESPACE_ID::int32>::min(),
   PROTOCOL_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<::PROTOBUF_NAMESPACE_ID::int32>::max()
 };
 bool PROTOCOL_IsValid(int value);
 constexpr PROTOCOL PROTOCOL_MIN = ID_PKT_VERSION_REQ;
-constexpr PROTOCOL PROTOCOL_MAX = ID_PKT_CLIENT_KICK;
+constexpr PROTOCOL PROTOCOL_MAX = ID_PKT_MPEG2TS_WAKE_UP_RES;
 constexpr int PROTOCOL_ARRAYSIZE = PROTOCOL_MAX + 1;
 
 const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* PROTOCOL_descriptor();
@@ -150,6 +155,32 @@ inline bool ErrorCode_Parse(
   return ::PROTOBUF_NAMESPACE_ID::internal::ParseNamedEnum<ErrorCode>(
     ErrorCode_descriptor(), name, value);
 }
+enum CameraControlType : int {
+  SwitchCamera = 0,
+  Quality = 1,
+  SaveFile = 2,
+  CameraControlType_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<::PROTOBUF_NAMESPACE_ID::int32>::min(),
+  CameraControlType_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<::PROTOBUF_NAMESPACE_ID::int32>::max()
+};
+bool CameraControlType_IsValid(int value);
+constexpr CameraControlType CameraControlType_MIN = SwitchCamera;
+constexpr CameraControlType CameraControlType_MAX = SaveFile;
+constexpr int CameraControlType_ARRAYSIZE = CameraControlType_MAX + 1;
+
+const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* CameraControlType_descriptor();
+template<typename T>
+inline const std::string& CameraControlType_Name(T enum_t_value) {
+  static_assert(::std::is_same<T, CameraControlType>::value ||
+    ::std::is_integral<T>::value,
+    "Incorrect type passed to function CameraControlType_Name.");
+  return ::PROTOBUF_NAMESPACE_ID::internal::NameOfEnum(
+    CameraControlType_descriptor(), enum_t_value);
+}
+inline bool CameraControlType_Parse(
+    const std::string& name, CameraControlType* value) {
+  return ::PROTOBUF_NAMESPACE_ID::internal::ParseNamedEnum<CameraControlType>(
+    CameraControlType_descriptor(), name, value);
+}
 // ===================================================================
 
 
@@ -180,6 +211,11 @@ template <> struct is_proto_enum< ::ErrorCode> : ::std::true_type {};
 template <>
 inline const EnumDescriptor* GetEnumDescriptor< ::ErrorCode>() {
   return ::ErrorCode_descriptor();
+}
+template <> struct is_proto_enum< ::CameraControlType> : ::std::true_type {};
+template <>
+inline const EnumDescriptor* GetEnumDescriptor< ::CameraControlType>() {
+  return ::CameraControlType_descriptor();
 }
 
 PROTOBUF_NAMESPACE_CLOSE

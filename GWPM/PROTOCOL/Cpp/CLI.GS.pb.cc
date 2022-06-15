@@ -78,6 +78,18 @@ class CLIENT_LOGOUT_REQDefaultTypeInternal {
  public:
   ::PROTOBUF_NAMESPACE_ID::internal::ExplicitlyConstructed<CLIENT_LOGOUT_REQ> _instance;
 } _CLIENT_LOGOUT_REQ_default_instance_;
+class CAMERA_CONTROL_REQDefaultTypeInternal {
+ public:
+  ::PROTOBUF_NAMESPACE_ID::internal::ExplicitlyConstructed<CAMERA_CONTROL_REQ> _instance;
+} _CAMERA_CONTROL_REQ_default_instance_;
+class MPEG2TS_MESSAGE_REQDefaultTypeInternal {
+ public:
+  ::PROTOBUF_NAMESPACE_ID::internal::ExplicitlyConstructed<MPEG2TS_MESSAGE_REQ> _instance;
+} _MPEG2TS_MESSAGE_REQ_default_instance_;
+class MPEG2TS_WAKE_UP_REQDefaultTypeInternal {
+ public:
+  ::PROTOBUF_NAMESPACE_ID::internal::ExplicitlyConstructed<MPEG2TS_WAKE_UP_REQ> _instance;
+} _MPEG2TS_WAKE_UP_REQ_default_instance_;
 static void InitDefaultsscc_info_AUDIO_MESSAGE_REQ_CLI_2eGS_2eproto() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
@@ -105,6 +117,20 @@ static void InitDefaultsscc_info_BITMAP_MESSAGE_REQ_CLI_2eGS_2eproto() {
 
 ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_BITMAP_MESSAGE_REQ_CLI_2eGS_2eproto =
     {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 0, 0, InitDefaultsscc_info_BITMAP_MESSAGE_REQ_CLI_2eGS_2eproto}, {}};
+
+static void InitDefaultsscc_info_CAMERA_CONTROL_REQ_CLI_2eGS_2eproto() {
+  GOOGLE_PROTOBUF_VERIFY_VERSION;
+
+  {
+    void* ptr = &::_CAMERA_CONTROL_REQ_default_instance_;
+    new (ptr) ::CAMERA_CONTROL_REQ();
+    ::PROTOBUF_NAMESPACE_ID::internal::OnShutdownDestroyMessage(ptr);
+  }
+  ::CAMERA_CONTROL_REQ::InitAsDefaultInstance();
+}
+
+::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_CAMERA_CONTROL_REQ_CLI_2eGS_2eproto =
+    {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 0, 0, InitDefaultsscc_info_CAMERA_CONTROL_REQ_CLI_2eGS_2eproto}, {}};
 
 static void InitDefaultsscc_info_CLIENT_LOGOUT_REQ_CLI_2eGS_2eproto() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
@@ -189,6 +215,34 @@ static void InitDefaultsscc_info_MAIL_LIST_REQ_CLI_2eGS_2eproto() {
 
 ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_MAIL_LIST_REQ_CLI_2eGS_2eproto =
     {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 0, 0, InitDefaultsscc_info_MAIL_LIST_REQ_CLI_2eGS_2eproto}, {}};
+
+static void InitDefaultsscc_info_MPEG2TS_MESSAGE_REQ_CLI_2eGS_2eproto() {
+  GOOGLE_PROTOBUF_VERIFY_VERSION;
+
+  {
+    void* ptr = &::_MPEG2TS_MESSAGE_REQ_default_instance_;
+    new (ptr) ::MPEG2TS_MESSAGE_REQ();
+    ::PROTOBUF_NAMESPACE_ID::internal::OnShutdownDestroyMessage(ptr);
+  }
+  ::MPEG2TS_MESSAGE_REQ::InitAsDefaultInstance();
+}
+
+::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_MPEG2TS_MESSAGE_REQ_CLI_2eGS_2eproto =
+    {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 0, 0, InitDefaultsscc_info_MPEG2TS_MESSAGE_REQ_CLI_2eGS_2eproto}, {}};
+
+static void InitDefaultsscc_info_MPEG2TS_WAKE_UP_REQ_CLI_2eGS_2eproto() {
+  GOOGLE_PROTOBUF_VERIFY_VERSION;
+
+  {
+    void* ptr = &::_MPEG2TS_WAKE_UP_REQ_default_instance_;
+    new (ptr) ::MPEG2TS_WAKE_UP_REQ();
+    ::PROTOBUF_NAMESPACE_ID::internal::OnShutdownDestroyMessage(ptr);
+  }
+  ::MPEG2TS_WAKE_UP_REQ::InitAsDefaultInstance();
+}
+
+::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_MPEG2TS_WAKE_UP_REQ_CLI_2eGS_2eproto =
+    {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 0, 0, InitDefaultsscc_info_MPEG2TS_WAKE_UP_REQ_CLI_2eGS_2eproto}, {}};
 
 static void InitDefaultsscc_info_NOTICE_REQ_CLI_2eGS_2eproto() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
@@ -302,7 +356,7 @@ static void InitDefaultsscc_info_VERSION_REQ_CLI_2eGS_2eproto() {
 ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_VERSION_REQ_CLI_2eGS_2eproto =
     {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 0, 0, InitDefaultsscc_info_VERSION_REQ_CLI_2eGS_2eproto}, {}};
 
-static ::PROTOBUF_NAMESPACE_ID::Metadata file_level_metadata_CLI_2eGS_2eproto[16];
+static ::PROTOBUF_NAMESPACE_ID::Metadata file_level_metadata_CLI_2eGS_2eproto[19];
 static constexpr ::PROTOBUF_NAMESPACE_ID::EnumDescriptor const** file_level_enum_descriptors_CLI_2eGS_2eproto = nullptr;
 static constexpr ::PROTOBUF_NAMESPACE_ID::ServiceDescriptor const** file_level_service_descriptors_CLI_2eGS_2eproto = nullptr;
 
@@ -455,6 +509,41 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_CLI_2eGS_2eproto::offsets[] PR
   ~0u,  // no _weak_field_map_
   PROTOBUF_FIELD_OFFSET(::CLIENT_LOGOUT_REQ, id_),
   0,
+  PROTOBUF_FIELD_OFFSET(::CAMERA_CONTROL_REQ, _has_bits_),
+  PROTOBUF_FIELD_OFFSET(::CAMERA_CONTROL_REQ, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  PROTOBUF_FIELD_OFFSET(::CAMERA_CONTROL_REQ, id_),
+  PROTOBUF_FIELD_OFFSET(::CAMERA_CONTROL_REQ, var_type_),
+  PROTOBUF_FIELD_OFFSET(::CAMERA_CONTROL_REQ, var_pos_),
+  2,
+  0,
+  1,
+  PROTOBUF_FIELD_OFFSET(::MPEG2TS_MESSAGE_REQ, _has_bits_),
+  PROTOBUF_FIELD_OFFSET(::MPEG2TS_MESSAGE_REQ, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  PROTOBUF_FIELD_OFFSET(::MPEG2TS_MESSAGE_REQ, id_),
+  PROTOBUF_FIELD_OFFSET(::MPEG2TS_MESSAGE_REQ, var_message_),
+  PROTOBUF_FIELD_OFFSET(::MPEG2TS_MESSAGE_REQ, var_room_number_),
+  PROTOBUF_FIELD_OFFSET(::MPEG2TS_MESSAGE_REQ, var_type_),
+  2,
+  ~0u,
+  0,
+  1,
+  PROTOBUF_FIELD_OFFSET(::MPEG2TS_WAKE_UP_REQ, _has_bits_),
+  PROTOBUF_FIELD_OFFSET(::MPEG2TS_WAKE_UP_REQ, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  PROTOBUF_FIELD_OFFSET(::MPEG2TS_WAKE_UP_REQ, id_),
+  PROTOBUF_FIELD_OFFSET(::MPEG2TS_WAKE_UP_REQ, var_type_),
+  PROTOBUF_FIELD_OFFSET(::MPEG2TS_WAKE_UP_REQ, var_room_number_),
+  2,
+  0,
+  1,
 };
 static const ::PROTOBUF_NAMESPACE_ID::internal::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
   { 0, 6, sizeof(::VERSION_REQ)},
@@ -473,6 +562,9 @@ static const ::PROTOBUF_NAMESPACE_ID::internal::MigrationSchema schemas[] PROTOB
   { 125, 131, sizeof(::MAIL_LIST_REQ)},
   { 132, 139, sizeof(::REG_REQ)},
   { 141, 147, sizeof(::CLIENT_LOGOUT_REQ)},
+  { 148, 156, sizeof(::CAMERA_CONTROL_REQ)},
+  { 159, 168, sizeof(::MPEG2TS_MESSAGE_REQ)},
+  { 172, 180, sizeof(::MPEG2TS_WAKE_UP_REQ)},
 };
 
 static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] = {
@@ -492,6 +584,9 @@ static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] =
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::_MAIL_LIST_REQ_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::_REG_REQ_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::_CLIENT_LOGOUT_REQ_default_instance_),
+  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::_CAMERA_CONTROL_REQ_default_instance_),
+  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::_MPEG2TS_MESSAGE_REQ_default_instance_),
+  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::_MPEG2TS_WAKE_UP_REQ_default_instance_),
 };
 
 const char descriptor_table_protodef_CLI_2eGS_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
@@ -530,22 +625,34 @@ const char descriptor_table_protodef_CLI_2eGS_2eproto[] PROTOBUF_SECTION_VARIABL
   "L:\024ID_PKT_MAIL_LIST_REQ\"@\n\007REG_REQ\022%\n\002id"
   "\030\001 \001(\0162\t.PROTOCOL:\016ID_PKT_REG_REQ\022\016\n\006var"
   "_id\030\002 \002(\005\"D\n\021CLIENT_LOGOUT_REQ\022/\n\002id\030\001 \001"
-  "(\0162\t.PROTOCOL:\030ID_PKT_CLIENT_LOGOUT_REQB"
-  "\002H\001"
+  "(\0162\t.PROTOCOL:\030ID_PKT_CLIENT_LOGOUT_REQ\""
+  "y\n\022CAMERA_CONTROL_REQ\022,\n\002id\030\001 \001(\0162\t.PROT"
+  "OCOL:\025ID_PKT_CAMERA_CONTROL\022$\n\010var_type\030"
+  "\002 \002(\0162\022.CameraControlType\022\017\n\007var_pos\030\003 \002"
+  "(\005\"\210\001\n\023MPEG2TS_MESSAGE_REQ\0221\n\002id\030\001 \001(\0162\t"
+  ".PROTOCOL:\032ID_PKT_MPEG2TS_MESSAGE_REQ\022\023\n"
+  "\013var_message\030\002 \003(\014\022\027\n\017var_room_number\030\003 "
+  "\002(\005\022\020\n\010var_type\030\004 \002(\005\"s\n\023MPEG2TS_WAKE_UP"
+  "_REQ\0221\n\002id\030\001 \001(\0162\t.PROTOCOL:\032ID_PKT_MPEG"
+  "2TS_WAKE_UP_REQ\022\020\n\010var_type\030\002 \002(\005\022\027\n\017var"
+  "_room_number\030\003 \002(\005B\002H\001"
   ;
 static const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable*const descriptor_table_CLI_2eGS_2eproto_deps[2] = {
   &::descriptor_table_Enum_2eproto,
   &::descriptor_table_Structure_2eproto,
 };
-static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_CLI_2eGS_2eproto_sccs[16] = {
+static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_CLI_2eGS_2eproto_sccs[19] = {
   &scc_info_AUDIO_MESSAGE_REQ_CLI_2eGS_2eproto.base,
   &scc_info_BITMAP_MESSAGE_REQ_CLI_2eGS_2eproto.base,
+  &scc_info_CAMERA_CONTROL_REQ_CLI_2eGS_2eproto.base,
   &scc_info_CLIENT_LOGOUT_REQ_CLI_2eGS_2eproto.base,
   &scc_info_CREATE_ROOM_REQ_CLI_2eGS_2eproto.base,
   &scc_info_ENTER_ROOM_REQ_CLI_2eGS_2eproto.base,
   &scc_info_LEAVE_ROOM_REQ_CLI_2eGS_2eproto.base,
   &scc_info_LOGIN_REQ_CLI_2eGS_2eproto.base,
   &scc_info_MAIL_LIST_REQ_CLI_2eGS_2eproto.base,
+  &scc_info_MPEG2TS_MESSAGE_REQ_CLI_2eGS_2eproto.base,
+  &scc_info_MPEG2TS_WAKE_UP_REQ_CLI_2eGS_2eproto.base,
   &scc_info_NOTICE_REQ_CLI_2eGS_2eproto.base,
   &scc_info_PRAY_MESSAGE_REG_REQ_CLI_2eGS_2eproto.base,
   &scc_info_PRAY_MESSAGE_REQ_CLI_2eGS_2eproto.base,
@@ -558,10 +665,10 @@ static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_CLI
 static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_CLI_2eGS_2eproto_once;
 static bool descriptor_table_CLI_2eGS_2eproto_initialized = false;
 const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_CLI_2eGS_2eproto = {
-  &descriptor_table_CLI_2eGS_2eproto_initialized, descriptor_table_protodef_CLI_2eGS_2eproto, "CLI.GS.proto", 1443,
-  &descriptor_table_CLI_2eGS_2eproto_once, descriptor_table_CLI_2eGS_2eproto_sccs, descriptor_table_CLI_2eGS_2eproto_deps, 16, 2,
+  &descriptor_table_CLI_2eGS_2eproto_initialized, descriptor_table_protodef_CLI_2eGS_2eproto, "CLI.GS.proto", 1822,
+  &descriptor_table_CLI_2eGS_2eproto_once, descriptor_table_CLI_2eGS_2eproto_sccs, descriptor_table_CLI_2eGS_2eproto_deps, 19, 2,
   schemas, file_default_instances, TableStruct_CLI_2eGS_2eproto::offsets,
-  file_level_metadata_CLI_2eGS_2eproto, 16, file_level_enum_descriptors_CLI_2eGS_2eproto, file_level_service_descriptors_CLI_2eGS_2eproto,
+  file_level_metadata_CLI_2eGS_2eproto, 19, file_level_enum_descriptors_CLI_2eGS_2eproto, file_level_service_descriptors_CLI_2eGS_2eproto,
 };
 
 // Force running AddDescriptors() at dynamic initialization time.
@@ -4648,6 +4755,923 @@ void CLIENT_LOGOUT_REQ::InternalSwap(CLIENT_LOGOUT_REQ* other) {
 }
 
 
+// ===================================================================
+
+void CAMERA_CONTROL_REQ::InitAsDefaultInstance() {
+}
+class CAMERA_CONTROL_REQ::_Internal {
+ public:
+  using HasBits = decltype(std::declval<CAMERA_CONTROL_REQ>()._has_bits_);
+  static void set_has_id(HasBits* has_bits) {
+    (*has_bits)[0] |= 4u;
+  }
+  static void set_has_var_type(HasBits* has_bits) {
+    (*has_bits)[0] |= 1u;
+  }
+  static void set_has_var_pos(HasBits* has_bits) {
+    (*has_bits)[0] |= 2u;
+  }
+};
+
+CAMERA_CONTROL_REQ::CAMERA_CONTROL_REQ()
+  : ::PROTOBUF_NAMESPACE_ID::Message(), _internal_metadata_(nullptr) {
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:CAMERA_CONTROL_REQ)
+}
+CAMERA_CONTROL_REQ::CAMERA_CONTROL_REQ(const CAMERA_CONTROL_REQ& from)
+  : ::PROTOBUF_NAMESPACE_ID::Message(),
+      _internal_metadata_(nullptr),
+      _has_bits_(from._has_bits_) {
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  ::memcpy(&var_type_, &from.var_type_,
+    static_cast<size_t>(reinterpret_cast<char*>(&id_) -
+    reinterpret_cast<char*>(&var_type_)) + sizeof(id_));
+  // @@protoc_insertion_point(copy_constructor:CAMERA_CONTROL_REQ)
+}
+
+void CAMERA_CONTROL_REQ::SharedCtor() {
+  ::memset(&var_type_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&var_pos_) -
+      reinterpret_cast<char*>(&var_type_)) + sizeof(var_pos_));
+  id_ = 42;
+}
+
+CAMERA_CONTROL_REQ::~CAMERA_CONTROL_REQ() {
+  // @@protoc_insertion_point(destructor:CAMERA_CONTROL_REQ)
+  SharedDtor();
+}
+
+void CAMERA_CONTROL_REQ::SharedDtor() {
+}
+
+void CAMERA_CONTROL_REQ::SetCachedSize(int size) const {
+  _cached_size_.Set(size);
+}
+const CAMERA_CONTROL_REQ& CAMERA_CONTROL_REQ::default_instance() {
+  ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&::scc_info_CAMERA_CONTROL_REQ_CLI_2eGS_2eproto.base);
+  return *internal_default_instance();
+}
+
+
+void CAMERA_CONTROL_REQ::Clear() {
+// @@protoc_insertion_point(message_clear_start:CAMERA_CONTROL_REQ)
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  cached_has_bits = _has_bits_[0];
+  if (cached_has_bits & 0x00000007u) {
+    ::memset(&var_type_, 0, static_cast<size_t>(
+        reinterpret_cast<char*>(&var_pos_) -
+        reinterpret_cast<char*>(&var_type_)) + sizeof(var_pos_));
+    id_ = 42;
+  }
+  _has_bits_.Clear();
+  _internal_metadata_.Clear();
+}
+
+const char* CAMERA_CONTROL_REQ::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
+#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  _Internal::HasBits has_bits{};
+  while (!ctx->Done(&ptr)) {
+    ::PROTOBUF_NAMESPACE_ID::uint32 tag;
+    ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
+    CHK_(ptr);
+    switch (tag >> 3) {
+      // optional .PROTOCOL id = 1 [default = ID_PKT_CAMERA_CONTROL];
+      case 1:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 8)) {
+          ::PROTOBUF_NAMESPACE_ID::uint64 val = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
+          CHK_(ptr);
+          if (PROTOBUF_PREDICT_TRUE(::PROTOCOL_IsValid(val))) {
+            _internal_set_id(static_cast<::PROTOCOL>(val));
+          } else {
+            ::PROTOBUF_NAMESPACE_ID::internal::WriteVarint(1, val, mutable_unknown_fields());
+          }
+        } else goto handle_unusual;
+        continue;
+      // required .CameraControlType var_type = 2;
+      case 2:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 16)) {
+          ::PROTOBUF_NAMESPACE_ID::uint64 val = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
+          CHK_(ptr);
+          if (PROTOBUF_PREDICT_TRUE(::CameraControlType_IsValid(val))) {
+            _internal_set_var_type(static_cast<::CameraControlType>(val));
+          } else {
+            ::PROTOBUF_NAMESPACE_ID::internal::WriteVarint(2, val, mutable_unknown_fields());
+          }
+        } else goto handle_unusual;
+        continue;
+      // required int32 var_pos = 3;
+      case 3:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 24)) {
+          _Internal::set_has_var_pos(&has_bits);
+          var_pos_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      default: {
+      handle_unusual:
+        if ((tag & 7) == 4 || tag == 0) {
+          ctx->SetLastTag(tag);
+          goto success;
+        }
+        ptr = UnknownFieldParse(tag, &_internal_metadata_, ptr, ctx);
+        CHK_(ptr != nullptr);
+        continue;
+      }
+    }  // switch
+  }  // while
+success:
+  _has_bits_.Or(has_bits);
+  return ptr;
+failure:
+  ptr = nullptr;
+  goto success;
+#undef CHK_
+}
+
+::PROTOBUF_NAMESPACE_ID::uint8* CAMERA_CONTROL_REQ::_InternalSerialize(
+    ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:CAMERA_CONTROL_REQ)
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  cached_has_bits = _has_bits_[0];
+  // optional .PROTOCOL id = 1 [default = ID_PKT_CAMERA_CONTROL];
+  if (cached_has_bits & 0x00000004u) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteEnumToArray(
+      1, this->_internal_id(), target);
+  }
+
+  // required .CameraControlType var_type = 2;
+  if (cached_has_bits & 0x00000001u) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteEnumToArray(
+      2, this->_internal_var_type(), target);
+  }
+
+  // required int32 var_pos = 3;
+  if (cached_has_bits & 0x00000002u) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32ToArray(3, this->_internal_var_pos(), target);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields(), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:CAMERA_CONTROL_REQ)
+  return target;
+}
+
+size_t CAMERA_CONTROL_REQ::RequiredFieldsByteSizeFallback() const {
+// @@protoc_insertion_point(required_fields_byte_size_fallback_start:CAMERA_CONTROL_REQ)
+  size_t total_size = 0;
+
+  if (_internal_has_var_type()) {
+    // required .CameraControlType var_type = 2;
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::EnumSize(this->_internal_var_type());
+  }
+
+  if (_internal_has_var_pos()) {
+    // required int32 var_pos = 3;
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32Size(
+        this->_internal_var_pos());
+  }
+
+  return total_size;
+}
+size_t CAMERA_CONTROL_REQ::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:CAMERA_CONTROL_REQ)
+  size_t total_size = 0;
+
+  if (((_has_bits_[0] & 0x00000003) ^ 0x00000003) == 0) {  // All required fields are present.
+    // required .CameraControlType var_type = 2;
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::EnumSize(this->_internal_var_type());
+
+    // required int32 var_pos = 3;
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32Size(
+        this->_internal_var_pos());
+
+  } else {
+    total_size += RequiredFieldsByteSizeFallback();
+  }
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // optional .PROTOCOL id = 1 [default = ID_PKT_CAMERA_CONTROL];
+  cached_has_bits = _has_bits_[0];
+  if (cached_has_bits & 0x00000004u) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::EnumSize(this->_internal_id());
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    return ::PROTOBUF_NAMESPACE_ID::internal::ComputeUnknownFieldsSize(
+        _internal_metadata_, total_size, &_cached_size_);
+  }
+  int cached_size = ::PROTOBUF_NAMESPACE_ID::internal::ToCachedSize(total_size);
+  SetCachedSize(cached_size);
+  return total_size;
+}
+
+void CAMERA_CONTROL_REQ::MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:CAMERA_CONTROL_REQ)
+  GOOGLE_DCHECK_NE(&from, this);
+  const CAMERA_CONTROL_REQ* source =
+      ::PROTOBUF_NAMESPACE_ID::DynamicCastToGenerated<CAMERA_CONTROL_REQ>(
+          &from);
+  if (source == nullptr) {
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:CAMERA_CONTROL_REQ)
+    ::PROTOBUF_NAMESPACE_ID::internal::ReflectionOps::Merge(from, this);
+  } else {
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:CAMERA_CONTROL_REQ)
+    MergeFrom(*source);
+  }
+}
+
+void CAMERA_CONTROL_REQ::MergeFrom(const CAMERA_CONTROL_REQ& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:CAMERA_CONTROL_REQ)
+  GOOGLE_DCHECK_NE(&from, this);
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  cached_has_bits = from._has_bits_[0];
+  if (cached_has_bits & 0x00000007u) {
+    if (cached_has_bits & 0x00000001u) {
+      var_type_ = from.var_type_;
+    }
+    if (cached_has_bits & 0x00000002u) {
+      var_pos_ = from.var_pos_;
+    }
+    if (cached_has_bits & 0x00000004u) {
+      id_ = from.id_;
+    }
+    _has_bits_[0] |= cached_has_bits;
+  }
+}
+
+void CAMERA_CONTROL_REQ::CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:CAMERA_CONTROL_REQ)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void CAMERA_CONTROL_REQ::CopyFrom(const CAMERA_CONTROL_REQ& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:CAMERA_CONTROL_REQ)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool CAMERA_CONTROL_REQ::IsInitialized() const {
+  if ((_has_bits_[0] & 0x00000003) != 0x00000003) return false;
+  return true;
+}
+
+void CAMERA_CONTROL_REQ::InternalSwap(CAMERA_CONTROL_REQ* other) {
+  using std::swap;
+  _internal_metadata_.Swap(&other->_internal_metadata_);
+  swap(_has_bits_[0], other->_has_bits_[0]);
+  swap(var_type_, other->var_type_);
+  swap(var_pos_, other->var_pos_);
+  swap(id_, other->id_);
+}
+
+::PROTOBUF_NAMESPACE_ID::Metadata CAMERA_CONTROL_REQ::GetMetadata() const {
+  return GetMetadataStatic();
+}
+
+
+// ===================================================================
+
+void MPEG2TS_MESSAGE_REQ::InitAsDefaultInstance() {
+}
+class MPEG2TS_MESSAGE_REQ::_Internal {
+ public:
+  using HasBits = decltype(std::declval<MPEG2TS_MESSAGE_REQ>()._has_bits_);
+  static void set_has_id(HasBits* has_bits) {
+    (*has_bits)[0] |= 4u;
+  }
+  static void set_has_var_room_number(HasBits* has_bits) {
+    (*has_bits)[0] |= 1u;
+  }
+  static void set_has_var_type(HasBits* has_bits) {
+    (*has_bits)[0] |= 2u;
+  }
+};
+
+MPEG2TS_MESSAGE_REQ::MPEG2TS_MESSAGE_REQ()
+  : ::PROTOBUF_NAMESPACE_ID::Message(), _internal_metadata_(nullptr) {
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:MPEG2TS_MESSAGE_REQ)
+}
+MPEG2TS_MESSAGE_REQ::MPEG2TS_MESSAGE_REQ(const MPEG2TS_MESSAGE_REQ& from)
+  : ::PROTOBUF_NAMESPACE_ID::Message(),
+      _internal_metadata_(nullptr),
+      _has_bits_(from._has_bits_),
+      var_message_(from.var_message_) {
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  ::memcpy(&var_room_number_, &from.var_room_number_,
+    static_cast<size_t>(reinterpret_cast<char*>(&id_) -
+    reinterpret_cast<char*>(&var_room_number_)) + sizeof(id_));
+  // @@protoc_insertion_point(copy_constructor:MPEG2TS_MESSAGE_REQ)
+}
+
+void MPEG2TS_MESSAGE_REQ::SharedCtor() {
+  ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&scc_info_MPEG2TS_MESSAGE_REQ_CLI_2eGS_2eproto.base);
+  ::memset(&var_room_number_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&var_type_) -
+      reinterpret_cast<char*>(&var_room_number_)) + sizeof(var_type_));
+  id_ = 43;
+}
+
+MPEG2TS_MESSAGE_REQ::~MPEG2TS_MESSAGE_REQ() {
+  // @@protoc_insertion_point(destructor:MPEG2TS_MESSAGE_REQ)
+  SharedDtor();
+}
+
+void MPEG2TS_MESSAGE_REQ::SharedDtor() {
+}
+
+void MPEG2TS_MESSAGE_REQ::SetCachedSize(int size) const {
+  _cached_size_.Set(size);
+}
+const MPEG2TS_MESSAGE_REQ& MPEG2TS_MESSAGE_REQ::default_instance() {
+  ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&::scc_info_MPEG2TS_MESSAGE_REQ_CLI_2eGS_2eproto.base);
+  return *internal_default_instance();
+}
+
+
+void MPEG2TS_MESSAGE_REQ::Clear() {
+// @@protoc_insertion_point(message_clear_start:MPEG2TS_MESSAGE_REQ)
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  var_message_.Clear();
+  cached_has_bits = _has_bits_[0];
+  if (cached_has_bits & 0x00000007u) {
+    ::memset(&var_room_number_, 0, static_cast<size_t>(
+        reinterpret_cast<char*>(&var_type_) -
+        reinterpret_cast<char*>(&var_room_number_)) + sizeof(var_type_));
+    id_ = 43;
+  }
+  _has_bits_.Clear();
+  _internal_metadata_.Clear();
+}
+
+const char* MPEG2TS_MESSAGE_REQ::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
+#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  _Internal::HasBits has_bits{};
+  while (!ctx->Done(&ptr)) {
+    ::PROTOBUF_NAMESPACE_ID::uint32 tag;
+    ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
+    CHK_(ptr);
+    switch (tag >> 3) {
+      // optional .PROTOCOL id = 1 [default = ID_PKT_MPEG2TS_MESSAGE_REQ];
+      case 1:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 8)) {
+          ::PROTOBUF_NAMESPACE_ID::uint64 val = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
+          CHK_(ptr);
+          if (PROTOBUF_PREDICT_TRUE(::PROTOCOL_IsValid(val))) {
+            _internal_set_id(static_cast<::PROTOCOL>(val));
+          } else {
+            ::PROTOBUF_NAMESPACE_ID::internal::WriteVarint(1, val, mutable_unknown_fields());
+          }
+        } else goto handle_unusual;
+        continue;
+      // repeated bytes var_message = 2;
+      case 2:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 18)) {
+          ptr -= 1;
+          do {
+            ptr += 1;
+            auto str = _internal_add_var_message();
+            ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
+            CHK_(ptr);
+            if (!ctx->DataAvailable(ptr)) break;
+          } while (::PROTOBUF_NAMESPACE_ID::internal::ExpectTag<18>(ptr));
+        } else goto handle_unusual;
+        continue;
+      // required int32 var_room_number = 3;
+      case 3:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 24)) {
+          _Internal::set_has_var_room_number(&has_bits);
+          var_room_number_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // required int32 var_type = 4;
+      case 4:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 32)) {
+          _Internal::set_has_var_type(&has_bits);
+          var_type_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      default: {
+      handle_unusual:
+        if ((tag & 7) == 4 || tag == 0) {
+          ctx->SetLastTag(tag);
+          goto success;
+        }
+        ptr = UnknownFieldParse(tag, &_internal_metadata_, ptr, ctx);
+        CHK_(ptr != nullptr);
+        continue;
+      }
+    }  // switch
+  }  // while
+success:
+  _has_bits_.Or(has_bits);
+  return ptr;
+failure:
+  ptr = nullptr;
+  goto success;
+#undef CHK_
+}
+
+::PROTOBUF_NAMESPACE_ID::uint8* MPEG2TS_MESSAGE_REQ::_InternalSerialize(
+    ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:MPEG2TS_MESSAGE_REQ)
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  cached_has_bits = _has_bits_[0];
+  // optional .PROTOCOL id = 1 [default = ID_PKT_MPEG2TS_MESSAGE_REQ];
+  if (cached_has_bits & 0x00000004u) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteEnumToArray(
+      1, this->_internal_id(), target);
+  }
+
+  // repeated bytes var_message = 2;
+  for (int i = 0, n = this->_internal_var_message_size(); i < n; i++) {
+    const auto& s = this->_internal_var_message(i);
+    target = stream->WriteBytes(2, s, target);
+  }
+
+  // required int32 var_room_number = 3;
+  if (cached_has_bits & 0x00000001u) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32ToArray(3, this->_internal_var_room_number(), target);
+  }
+
+  // required int32 var_type = 4;
+  if (cached_has_bits & 0x00000002u) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32ToArray(4, this->_internal_var_type(), target);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields(), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:MPEG2TS_MESSAGE_REQ)
+  return target;
+}
+
+size_t MPEG2TS_MESSAGE_REQ::RequiredFieldsByteSizeFallback() const {
+// @@protoc_insertion_point(required_fields_byte_size_fallback_start:MPEG2TS_MESSAGE_REQ)
+  size_t total_size = 0;
+
+  if (_internal_has_var_room_number()) {
+    // required int32 var_room_number = 3;
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32Size(
+        this->_internal_var_room_number());
+  }
+
+  if (_internal_has_var_type()) {
+    // required int32 var_type = 4;
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32Size(
+        this->_internal_var_type());
+  }
+
+  return total_size;
+}
+size_t MPEG2TS_MESSAGE_REQ::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:MPEG2TS_MESSAGE_REQ)
+  size_t total_size = 0;
+
+  if (((_has_bits_[0] & 0x00000003) ^ 0x00000003) == 0) {  // All required fields are present.
+    // required int32 var_room_number = 3;
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32Size(
+        this->_internal_var_room_number());
+
+    // required int32 var_type = 4;
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32Size(
+        this->_internal_var_type());
+
+  } else {
+    total_size += RequiredFieldsByteSizeFallback();
+  }
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // repeated bytes var_message = 2;
+  total_size += 1 *
+      ::PROTOBUF_NAMESPACE_ID::internal::FromIntSize(var_message_.size());
+  for (int i = 0, n = var_message_.size(); i < n; i++) {
+    total_size += ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::BytesSize(
+      var_message_.Get(i));
+  }
+
+  // optional .PROTOCOL id = 1 [default = ID_PKT_MPEG2TS_MESSAGE_REQ];
+  cached_has_bits = _has_bits_[0];
+  if (cached_has_bits & 0x00000004u) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::EnumSize(this->_internal_id());
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    return ::PROTOBUF_NAMESPACE_ID::internal::ComputeUnknownFieldsSize(
+        _internal_metadata_, total_size, &_cached_size_);
+  }
+  int cached_size = ::PROTOBUF_NAMESPACE_ID::internal::ToCachedSize(total_size);
+  SetCachedSize(cached_size);
+  return total_size;
+}
+
+void MPEG2TS_MESSAGE_REQ::MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:MPEG2TS_MESSAGE_REQ)
+  GOOGLE_DCHECK_NE(&from, this);
+  const MPEG2TS_MESSAGE_REQ* source =
+      ::PROTOBUF_NAMESPACE_ID::DynamicCastToGenerated<MPEG2TS_MESSAGE_REQ>(
+          &from);
+  if (source == nullptr) {
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:MPEG2TS_MESSAGE_REQ)
+    ::PROTOBUF_NAMESPACE_ID::internal::ReflectionOps::Merge(from, this);
+  } else {
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:MPEG2TS_MESSAGE_REQ)
+    MergeFrom(*source);
+  }
+}
+
+void MPEG2TS_MESSAGE_REQ::MergeFrom(const MPEG2TS_MESSAGE_REQ& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:MPEG2TS_MESSAGE_REQ)
+  GOOGLE_DCHECK_NE(&from, this);
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  var_message_.MergeFrom(from.var_message_);
+  cached_has_bits = from._has_bits_[0];
+  if (cached_has_bits & 0x00000007u) {
+    if (cached_has_bits & 0x00000001u) {
+      var_room_number_ = from.var_room_number_;
+    }
+    if (cached_has_bits & 0x00000002u) {
+      var_type_ = from.var_type_;
+    }
+    if (cached_has_bits & 0x00000004u) {
+      id_ = from.id_;
+    }
+    _has_bits_[0] |= cached_has_bits;
+  }
+}
+
+void MPEG2TS_MESSAGE_REQ::CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:MPEG2TS_MESSAGE_REQ)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void MPEG2TS_MESSAGE_REQ::CopyFrom(const MPEG2TS_MESSAGE_REQ& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:MPEG2TS_MESSAGE_REQ)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool MPEG2TS_MESSAGE_REQ::IsInitialized() const {
+  if ((_has_bits_[0] & 0x00000003) != 0x00000003) return false;
+  return true;
+}
+
+void MPEG2TS_MESSAGE_REQ::InternalSwap(MPEG2TS_MESSAGE_REQ* other) {
+  using std::swap;
+  _internal_metadata_.Swap(&other->_internal_metadata_);
+  swap(_has_bits_[0], other->_has_bits_[0]);
+  var_message_.InternalSwap(&other->var_message_);
+  swap(var_room_number_, other->var_room_number_);
+  swap(var_type_, other->var_type_);
+  swap(id_, other->id_);
+}
+
+::PROTOBUF_NAMESPACE_ID::Metadata MPEG2TS_MESSAGE_REQ::GetMetadata() const {
+  return GetMetadataStatic();
+}
+
+
+// ===================================================================
+
+void MPEG2TS_WAKE_UP_REQ::InitAsDefaultInstance() {
+}
+class MPEG2TS_WAKE_UP_REQ::_Internal {
+ public:
+  using HasBits = decltype(std::declval<MPEG2TS_WAKE_UP_REQ>()._has_bits_);
+  static void set_has_id(HasBits* has_bits) {
+    (*has_bits)[0] |= 4u;
+  }
+  static void set_has_var_type(HasBits* has_bits) {
+    (*has_bits)[0] |= 1u;
+  }
+  static void set_has_var_room_number(HasBits* has_bits) {
+    (*has_bits)[0] |= 2u;
+  }
+};
+
+MPEG2TS_WAKE_UP_REQ::MPEG2TS_WAKE_UP_REQ()
+  : ::PROTOBUF_NAMESPACE_ID::Message(), _internal_metadata_(nullptr) {
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:MPEG2TS_WAKE_UP_REQ)
+}
+MPEG2TS_WAKE_UP_REQ::MPEG2TS_WAKE_UP_REQ(const MPEG2TS_WAKE_UP_REQ& from)
+  : ::PROTOBUF_NAMESPACE_ID::Message(),
+      _internal_metadata_(nullptr),
+      _has_bits_(from._has_bits_) {
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  ::memcpy(&var_type_, &from.var_type_,
+    static_cast<size_t>(reinterpret_cast<char*>(&id_) -
+    reinterpret_cast<char*>(&var_type_)) + sizeof(id_));
+  // @@protoc_insertion_point(copy_constructor:MPEG2TS_WAKE_UP_REQ)
+}
+
+void MPEG2TS_WAKE_UP_REQ::SharedCtor() {
+  ::memset(&var_type_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&var_room_number_) -
+      reinterpret_cast<char*>(&var_type_)) + sizeof(var_room_number_));
+  id_ = 45;
+}
+
+MPEG2TS_WAKE_UP_REQ::~MPEG2TS_WAKE_UP_REQ() {
+  // @@protoc_insertion_point(destructor:MPEG2TS_WAKE_UP_REQ)
+  SharedDtor();
+}
+
+void MPEG2TS_WAKE_UP_REQ::SharedDtor() {
+}
+
+void MPEG2TS_WAKE_UP_REQ::SetCachedSize(int size) const {
+  _cached_size_.Set(size);
+}
+const MPEG2TS_WAKE_UP_REQ& MPEG2TS_WAKE_UP_REQ::default_instance() {
+  ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&::scc_info_MPEG2TS_WAKE_UP_REQ_CLI_2eGS_2eproto.base);
+  return *internal_default_instance();
+}
+
+
+void MPEG2TS_WAKE_UP_REQ::Clear() {
+// @@protoc_insertion_point(message_clear_start:MPEG2TS_WAKE_UP_REQ)
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  cached_has_bits = _has_bits_[0];
+  if (cached_has_bits & 0x00000007u) {
+    ::memset(&var_type_, 0, static_cast<size_t>(
+        reinterpret_cast<char*>(&var_room_number_) -
+        reinterpret_cast<char*>(&var_type_)) + sizeof(var_room_number_));
+    id_ = 45;
+  }
+  _has_bits_.Clear();
+  _internal_metadata_.Clear();
+}
+
+const char* MPEG2TS_WAKE_UP_REQ::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
+#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  _Internal::HasBits has_bits{};
+  while (!ctx->Done(&ptr)) {
+    ::PROTOBUF_NAMESPACE_ID::uint32 tag;
+    ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
+    CHK_(ptr);
+    switch (tag >> 3) {
+      // optional .PROTOCOL id = 1 [default = ID_PKT_MPEG2TS_WAKE_UP_REQ];
+      case 1:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 8)) {
+          ::PROTOBUF_NAMESPACE_ID::uint64 val = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
+          CHK_(ptr);
+          if (PROTOBUF_PREDICT_TRUE(::PROTOCOL_IsValid(val))) {
+            _internal_set_id(static_cast<::PROTOCOL>(val));
+          } else {
+            ::PROTOBUF_NAMESPACE_ID::internal::WriteVarint(1, val, mutable_unknown_fields());
+          }
+        } else goto handle_unusual;
+        continue;
+      // required int32 var_type = 2;
+      case 2:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 16)) {
+          _Internal::set_has_var_type(&has_bits);
+          var_type_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // required int32 var_room_number = 3;
+      case 3:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 24)) {
+          _Internal::set_has_var_room_number(&has_bits);
+          var_room_number_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      default: {
+      handle_unusual:
+        if ((tag & 7) == 4 || tag == 0) {
+          ctx->SetLastTag(tag);
+          goto success;
+        }
+        ptr = UnknownFieldParse(tag, &_internal_metadata_, ptr, ctx);
+        CHK_(ptr != nullptr);
+        continue;
+      }
+    }  // switch
+  }  // while
+success:
+  _has_bits_.Or(has_bits);
+  return ptr;
+failure:
+  ptr = nullptr;
+  goto success;
+#undef CHK_
+}
+
+::PROTOBUF_NAMESPACE_ID::uint8* MPEG2TS_WAKE_UP_REQ::_InternalSerialize(
+    ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:MPEG2TS_WAKE_UP_REQ)
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  cached_has_bits = _has_bits_[0];
+  // optional .PROTOCOL id = 1 [default = ID_PKT_MPEG2TS_WAKE_UP_REQ];
+  if (cached_has_bits & 0x00000004u) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteEnumToArray(
+      1, this->_internal_id(), target);
+  }
+
+  // required int32 var_type = 2;
+  if (cached_has_bits & 0x00000001u) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32ToArray(2, this->_internal_var_type(), target);
+  }
+
+  // required int32 var_room_number = 3;
+  if (cached_has_bits & 0x00000002u) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32ToArray(3, this->_internal_var_room_number(), target);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields(), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:MPEG2TS_WAKE_UP_REQ)
+  return target;
+}
+
+size_t MPEG2TS_WAKE_UP_REQ::RequiredFieldsByteSizeFallback() const {
+// @@protoc_insertion_point(required_fields_byte_size_fallback_start:MPEG2TS_WAKE_UP_REQ)
+  size_t total_size = 0;
+
+  if (_internal_has_var_type()) {
+    // required int32 var_type = 2;
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32Size(
+        this->_internal_var_type());
+  }
+
+  if (_internal_has_var_room_number()) {
+    // required int32 var_room_number = 3;
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32Size(
+        this->_internal_var_room_number());
+  }
+
+  return total_size;
+}
+size_t MPEG2TS_WAKE_UP_REQ::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:MPEG2TS_WAKE_UP_REQ)
+  size_t total_size = 0;
+
+  if (((_has_bits_[0] & 0x00000003) ^ 0x00000003) == 0) {  // All required fields are present.
+    // required int32 var_type = 2;
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32Size(
+        this->_internal_var_type());
+
+    // required int32 var_room_number = 3;
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32Size(
+        this->_internal_var_room_number());
+
+  } else {
+    total_size += RequiredFieldsByteSizeFallback();
+  }
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // optional .PROTOCOL id = 1 [default = ID_PKT_MPEG2TS_WAKE_UP_REQ];
+  cached_has_bits = _has_bits_[0];
+  if (cached_has_bits & 0x00000004u) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::EnumSize(this->_internal_id());
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    return ::PROTOBUF_NAMESPACE_ID::internal::ComputeUnknownFieldsSize(
+        _internal_metadata_, total_size, &_cached_size_);
+  }
+  int cached_size = ::PROTOBUF_NAMESPACE_ID::internal::ToCachedSize(total_size);
+  SetCachedSize(cached_size);
+  return total_size;
+}
+
+void MPEG2TS_WAKE_UP_REQ::MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:MPEG2TS_WAKE_UP_REQ)
+  GOOGLE_DCHECK_NE(&from, this);
+  const MPEG2TS_WAKE_UP_REQ* source =
+      ::PROTOBUF_NAMESPACE_ID::DynamicCastToGenerated<MPEG2TS_WAKE_UP_REQ>(
+          &from);
+  if (source == nullptr) {
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:MPEG2TS_WAKE_UP_REQ)
+    ::PROTOBUF_NAMESPACE_ID::internal::ReflectionOps::Merge(from, this);
+  } else {
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:MPEG2TS_WAKE_UP_REQ)
+    MergeFrom(*source);
+  }
+}
+
+void MPEG2TS_WAKE_UP_REQ::MergeFrom(const MPEG2TS_WAKE_UP_REQ& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:MPEG2TS_WAKE_UP_REQ)
+  GOOGLE_DCHECK_NE(&from, this);
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  cached_has_bits = from._has_bits_[0];
+  if (cached_has_bits & 0x00000007u) {
+    if (cached_has_bits & 0x00000001u) {
+      var_type_ = from.var_type_;
+    }
+    if (cached_has_bits & 0x00000002u) {
+      var_room_number_ = from.var_room_number_;
+    }
+    if (cached_has_bits & 0x00000004u) {
+      id_ = from.id_;
+    }
+    _has_bits_[0] |= cached_has_bits;
+  }
+}
+
+void MPEG2TS_WAKE_UP_REQ::CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:MPEG2TS_WAKE_UP_REQ)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void MPEG2TS_WAKE_UP_REQ::CopyFrom(const MPEG2TS_WAKE_UP_REQ& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:MPEG2TS_WAKE_UP_REQ)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool MPEG2TS_WAKE_UP_REQ::IsInitialized() const {
+  if ((_has_bits_[0] & 0x00000003) != 0x00000003) return false;
+  return true;
+}
+
+void MPEG2TS_WAKE_UP_REQ::InternalSwap(MPEG2TS_WAKE_UP_REQ* other) {
+  using std::swap;
+  _internal_metadata_.Swap(&other->_internal_metadata_);
+  swap(_has_bits_[0], other->_has_bits_[0]);
+  swap(var_type_, other->var_type_);
+  swap(var_room_number_, other->var_room_number_);
+  swap(id_, other->id_);
+}
+
+::PROTOBUF_NAMESPACE_ID::Metadata MPEG2TS_WAKE_UP_REQ::GetMetadata() const {
+  return GetMetadataStatic();
+}
+
+
 // @@protoc_insertion_point(namespace_scope)
 PROTOBUF_NAMESPACE_OPEN
 template<> PROTOBUF_NOINLINE ::VERSION_REQ* Arena::CreateMaybeMessage< ::VERSION_REQ >(Arena* arena) {
@@ -4697,6 +5721,15 @@ template<> PROTOBUF_NOINLINE ::REG_REQ* Arena::CreateMaybeMessage< ::REG_REQ >(A
 }
 template<> PROTOBUF_NOINLINE ::CLIENT_LOGOUT_REQ* Arena::CreateMaybeMessage< ::CLIENT_LOGOUT_REQ >(Arena* arena) {
   return Arena::CreateInternal< ::CLIENT_LOGOUT_REQ >(arena);
+}
+template<> PROTOBUF_NOINLINE ::CAMERA_CONTROL_REQ* Arena::CreateMaybeMessage< ::CAMERA_CONTROL_REQ >(Arena* arena) {
+  return Arena::CreateInternal< ::CAMERA_CONTROL_REQ >(arena);
+}
+template<> PROTOBUF_NOINLINE ::MPEG2TS_MESSAGE_REQ* Arena::CreateMaybeMessage< ::MPEG2TS_MESSAGE_REQ >(Arena* arena) {
+  return Arena::CreateInternal< ::MPEG2TS_MESSAGE_REQ >(arena);
+}
+template<> PROTOBUF_NOINLINE ::MPEG2TS_WAKE_UP_REQ* Arena::CreateMaybeMessage< ::MPEG2TS_WAKE_UP_REQ >(Arena* arena) {
+  return Arena::CreateInternal< ::MPEG2TS_WAKE_UP_REQ >(arena);
 }
 PROTOBUF_NAMESPACE_CLOSE
 

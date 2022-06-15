@@ -147,3 +147,26 @@ message CLIENT_KICK
     optional  int32 sid         = 2;
 }
 
+message CAMERA_CONTROL_RES
+{
+    optional PROTOCOL   id                  = 1 [default = ID_PKT_CAMERA_CONTROL ];
+    optional ErrorCode    var_code         = 2;
+    optional CameraControlType       var_type        = 3;
+    optional int32     var_pos         = 4;	
+}
+
+message MPEG2TS_MESSAGE_RES
+{
+    optional PROTOCOL   id                  = 1 [default = ID_PKT_MPEG2TS_MESSAGE_RES ];
+    optional  ErrorCode    var_code         = 2;
+    repeated bytes     var_message          = 3;
+    optional int32       var_type        	= 4;	
+}
+
+message MPEG2TS_WAKE_UP_RES
+{
+    optional PROTOCOL   id                  = 1 [default = ID_PKT_MPEG2TS_WAKE_UP_RES ];
+    optional  ErrorCode    var_code         = 2;
+    optional int32       var_type        	= 3;	
+    optional int32       var_room_number        = 4;	
+}

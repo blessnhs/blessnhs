@@ -106,3 +106,26 @@ message CLIENT_LOGOUT_REQ
 {
     optional PROTOCOL   id                  = 1 [default = ID_PKT_CLIENT_LOGOUT_REQ ];
 }
+
+message CAMERA_CONTROL_REQ
+{
+    optional PROTOCOL   id                  = 1 [default = ID_PKT_CAMERA_CONTROL ];
+    required CameraControlType       var_type        = 2	;
+    required int32     var_pos         = 3;	
+}
+
+message MPEG2TS_MESSAGE_REQ
+{
+    optional PROTOCOL   id                  = 1 [default = ID_PKT_MPEG2TS_MESSAGE_REQ ];
+    repeated bytes     var_message         = 2;
+    required int32       var_room_number        = 3;	
+    required int32       var_type        = 4;	
+}
+
+
+message MPEG2TS_WAKE_UP_REQ
+{
+    optional PROTOCOL   id                  = 1 [default = ID_PKT_MPEG2TS_WAKE_UP_REQ ];
+    required int32       var_type        = 2;	
+    required int32       var_room_number        = 3;	
+}

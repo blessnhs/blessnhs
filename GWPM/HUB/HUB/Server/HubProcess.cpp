@@ -25,6 +25,10 @@ HubProcess::HubProcess(void)
 
 	ADD_NET_FUNC(HubProcess, ID_PKT_CLIENT_LOGOUT_REQ, LOGOUT_CLIENT);
 
+	ADD_NET_FUNC(HubProcess, ID_PKT_MPEG2TS_MESSAGE_REQ, MPEG2TS_MESSAGE);
+
+	ADD_NET_FUNC(HubProcess, ID_PKT_MPEG2TS_WAKE_UP_REQ, MPEG2TS_WAKE_UP);
+
 	
 }
 
@@ -498,13 +502,76 @@ VOID HubProcess::ROOM_BITMAP_CHAT(WORD SubProtocol,LPVOID Data, DWORD Length, bo
 		int pos = pPtr->FindPlayerPos(pPlayer);
 		res.set_var_pos(pos);
 
-		pPtr->SendToAll(res, -1);
+		pPtr->SendToAll(res, /*pPlayer->GetId()*/-1);
 	}
 	else
 	{
 		SEND_PROTO_BUFFER2(SubProtocol, res, Client)
 	}
 }
+
+
+VOID HubProcess::MPEG2TS_MESSAGE(WORD SubProtocol, LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client)
+{
+	DECLARE_RECV_TYPE(MPEG2TS_MESSAGE_REQ, message)
+
+	MPEG2TS_MESSAGE_RES res;
+
+	PlayerPtr pPlayer = PLAYERMGR.SearchByFrontSid(SubProtocol);
+	if (pPlayer == NULL)
+	{
+		return;
+	}
+
+	for each (auto msg  in message.var_message())
+	{
+		res.add_var_message(msg);
+	}
+
+
+	res.set_var_type(message.var_type());
+
+	ROOM_PTR pPtr = ROOMMGR.Search(message.var_room_number());
+	if (pPtr != NULL)
+	{
+		int pos = pPtr->FindPlayerPos(pPlayer);
+
+		pPtr->SendToAll(res, /*pPlayer->GetId()*/-1);
+	}
+	else
+	{
+		SEND_PROTO_BUFFER2(SubProtocol, res, Client)
+	}
+}
+
+VOID HubProcess::MPEG2TS_WAKE_UP(WORD SubProtocol, LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client)
+{
+	DECLARE_RECV_TYPE(MPEG2TS_WAKE_UP_REQ, message)
+
+	MPEG2TS_WAKE_UP_RES res;
+
+	PlayerPtr pPlayer = PLAYERMGR.SearchByFrontSid(SubProtocol);
+	if (pPlayer == NULL)
+	{
+		return;
+	}
+	
+
+	res.set_var_type(message.var_type());
+
+	ROOM_PTR pPtr = ROOMMGR.Search(message.var_room_number());
+	if (pPtr != NULL)
+	{
+		int pos = pPtr->FindPlayerPos(pPlayer);
+
+		pPtr->SendToAll(res, pPlayer->GetId());
+	}
+	else
+	{
+		SEND_PROTO_BUFFER2(SubProtocol, res, Client)
+	}
+}
+
 
 VOID HubProcess::ROOM_LIST(WORD SubProtocol,LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client)
 {

@@ -103,6 +103,11 @@ namespace Antioch
         {
             await PopupNavigation.Instance.PushAsync(new CameraPage());
         }
+
+        private async void Cam_Clicked(object sender, EventArgs e)
+        {
+            await PopupNavigation.Instance.PushAsync(new QualityCam());
+        }
         private async void List_Clicked(object sender, EventArgs e)
         {
             var page = new ChatUserList(UserList);

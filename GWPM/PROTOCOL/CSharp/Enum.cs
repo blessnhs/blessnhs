@@ -22,7 +22,7 @@ public static partial class EnumReflection {
   static EnumReflection() {
     byte[] descriptorData = global::System.Convert.FromBase64String(
         string.Concat(
-          "CgpFbnVtLnByb3RvKvAICghQUk9UT0NPTBIWChJJRF9QS1RfVkVSU0lPTl9S",
+          "CgpFbnVtLnByb3RvKosKCghQUk9UT0NPTBIWChJJRF9QS1RfVkVSU0lPTl9S",
           "RVEQABIWChJJRF9QS1RfVkVSU0lPTl9SRVMQARIUChBJRF9QS1RfTE9HSU5f",
           "UkVREAISFAoQSURfUEtUX0xPR0lOX1JFUxADEhoKFklEX1BLVF9DUkVBVEVf",
           "Uk9PTV9SRVEQBBIaChZJRF9QS1RfQ1JFQVRFX1JPT01fUkVTEAUSGQoVSURf",
@@ -47,13 +47,18 @@ public static partial class EnumReflection {
           "X1JFQURfUkVRECMSGAoUSURfUEtUX01BSUxfUkVBRF9SRVMQJBISCg5JRF9Q",
           "S1RfUkVHX1JFURAlEhIKDklEX1BLVF9SRUdfUkVTECYSHAoYSURfUEtUX0NM",
           "SUVOVF9MT0dPVVRfUkVRECcSHAoYSURfUEtUX0NMSUVOVF9MT0dPVVRfUkVT",
-          "ECgSFgoSSURfUEtUX0NMSUVOVF9LSUNLECkqewoJRXJyb3JDb2RlEgsKB1N1",
-          "Y2Nlc3MQABIRCg1EYXRhQmFzZUVycm9yEAESEgoOTG9naW5EdXBsaWNhdGUQ",
-          "AhIPCgtTeXN0ZW1FcnJvchADEg8KC0xvZ2luRmFpbGVkEAQSGAoURHVwbGlj",
-          "YXRlX0VudGVyX1Jvb20QBUICSAFiBnByb3RvMw=="));
+          "ECgSFgoSSURfUEtUX0NMSUVOVF9LSUNLECkSGQoVSURfUEtUX0NBTUVSQV9D",
+          "T05UUk9MECoSHgoaSURfUEtUX01QRUcyVFNfTUVTU0FHRV9SRVEQKxIeChpJ",
+          "RF9QS1RfTVBFRzJUU19NRVNTQUdFX1JFUxAsEh4KGklEX1BLVF9NUEVHMlRT",
+          "X1dBS0VfVVBfUkVREC0SHgoaSURfUEtUX01QRUcyVFNfV0FLRV9VUF9SRVMQ",
+          "Lip7CglFcnJvckNvZGUSCwoHU3VjY2VzcxAAEhEKDURhdGFCYXNlRXJyb3IQ",
+          "ARISCg5Mb2dpbkR1cGxpY2F0ZRACEg8KC1N5c3RlbUVycm9yEAMSDwoLTG9n",
+          "aW5GYWlsZWQQBBIYChREdXBsaWNhdGVfRW50ZXJfUm9vbRAFKkAKEUNhbWVy",
+          "YUNvbnRyb2xUeXBlEhAKDFN3aXRjaENhbWVyYRAAEgsKB1F1YWxpdHkQARIM",
+          "CghTYXZlRmlsZRACQgJIAWIGcHJvdG8z"));
     descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
         new pbr::FileDescriptor[] { },
-        new pbr::GeneratedClrTypeInfo(new[] {typeof(global::PROTOCOL), typeof(global::ErrorCode), }, null, null));
+        new pbr::GeneratedClrTypeInfo(new[] {typeof(global::PROTOCOL), typeof(global::ErrorCode), typeof(global::CameraControlType), }, null, null));
   }
   #endregion
 
@@ -102,6 +107,11 @@ public enum PROTOCOL {
   [pbr::OriginalName("ID_PKT_CLIENT_LOGOUT_REQ")] IdPktClientLogoutReq = 39,
   [pbr::OriginalName("ID_PKT_CLIENT_LOGOUT_RES")] IdPktClientLogoutRes = 40,
   [pbr::OriginalName("ID_PKT_CLIENT_KICK")] IdPktClientKick = 41,
+  [pbr::OriginalName("ID_PKT_CAMERA_CONTROL")] IdPktCameraControl = 42,
+  [pbr::OriginalName("ID_PKT_MPEG2TS_MESSAGE_REQ")] IdPktMpeg2TsMessageReq = 43,
+  [pbr::OriginalName("ID_PKT_MPEG2TS_MESSAGE_RES")] IdPktMpeg2TsMessageRes = 44,
+  [pbr::OriginalName("ID_PKT_MPEG2TS_WAKE_UP_REQ")] IdPktMpeg2TsWakeUpReq = 45,
+  [pbr::OriginalName("ID_PKT_MPEG2TS_WAKE_UP_RES")] IdPktMpeg2TsWakeUpRes = 46,
 }
 
 public enum ErrorCode {
@@ -111,6 +121,12 @@ public enum ErrorCode {
   [pbr::OriginalName("SystemError")] SystemError = 3,
   [pbr::OriginalName("LoginFailed")] LoginFailed = 4,
   [pbr::OriginalName("Duplicate_Enter_Room")] DuplicateEnterRoom = 5,
+}
+
+public enum CameraControlType {
+  [pbr::OriginalName("SwitchCamera")] SwitchCamera = 0,
+  [pbr::OriginalName("Quality")] Quality = 1,
+  [pbr::OriginalName("SaveFile")] SaveFile = 2,
 }
 
 #endregion

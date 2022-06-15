@@ -59,6 +59,14 @@ enum PROTOCOL
 	ID_PKT_CLIENT_LOGOUT_RES = 40; 	
 
 	ID_PKT_CLIENT_KICK = 41;
+	ID_PKT_CAMERA_CONTROL = 42;
+
+	ID_PKT_MPEG2TS_MESSAGE_REQ =43;
+	ID_PKT_MPEG2TS_MESSAGE_RES = 44;
+
+
+	ID_PKT_MPEG2TS_WAKE_UP_REQ =45;
+	ID_PKT_MPEG2TS_WAKE_UP_RES = 46;
 
 };
 
@@ -73,3 +81,9 @@ enum ErrorCode
 	Duplicate_Enter_Room = 5;
 };
 
+enum CameraControlType
+{
+	SwitchCamera = 0;
+	Quality = 1;
+	SaveFile = 2;
+};

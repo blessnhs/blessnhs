@@ -45,6 +45,10 @@ public:
 
 	VOID LOGOUT_CLIENT(WORD SubProtocol, LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client);
 
+	VOID MPEG2TS_MESSAGE(WORD SubProtocol, LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client);
+
+	VOID MPEG2TS_WAKE_UP(WORD SubProtocol, LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client);
+
 protected:
 
 	DECLARE_MSG_MAP2(HubProcess)

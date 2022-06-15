@@ -70,6 +70,8 @@ namespace Antioch
         public static ConcurrentQueue<StreamWrapper> JpegStream = new ConcurrentQueue<StreamWrapper>();
         public static ConcurrentQueue<StreamWrapper> AudioStream = new ConcurrentQueue<StreamWrapper>();
 
+        public static ConcurrentQueue<StreamWrapper> Mpeg2Stream = new ConcurrentQueue<StreamWrapper>();
+
 
         static public void Loop()
         {
@@ -393,6 +395,21 @@ namespace Antioch
 
                             }
                             break;
+                        case (int)PROTOCOL.IdPktMpeg2TsMessageRes:
+                            {
+                                MPEG2TS_MESSAGE_RES res = new MPEG2TS_MESSAGE_RES();
+                                res = MPEG2TS_MESSAGE_RES.Parser.ParseFrom(data.Data);
+
+                                foreach (var msg in res.VarMessage)
+                                {
+                                    StreamWrapper wra = new StreamWrapper();
+                                    wra.stream = new MemoryStream(msg.ToByteArray());
+                                    wra.type = res.VarType;
+                                    Mpeg2Stream.Enqueue(wra);
+                                }
+
+                            }
+                            break;
                         case (int)PROTOCOL.IdPktNewUserInRoomNty:
                             {
                                 NEW_USER_IN_ROOM_NTY res = new NEW_USER_IN_ROOM_NTY();
@@ -461,6 +478,23 @@ namespace Antioch
                     message.VarMessage.Add(ByteString.CopyFrom(msg.ToArray()));
                 };
 
+
+                client.WritePacket((int)PROTOCOL.IdPktBitmapMessageReq, message.ToByteArray(), message.ToByteArray().Length);
+
+            }
+
+        }
+
+
+        static public void SendRoomMPEG2TSMessage(System.IO.MemoryStream stream, int type)
+        {
+
+            if (client == null || client.socket == null || client.socket.Connected == false)
+                return;
+            {
+                MPEG2TS_MESSAGE_RES message = new MPEG2TS_MESSAGE_RES();
+                message.VarType = type;
+                message.VarMessage.Add(ByteString.CopyFrom(stream.ToArray()));
 
                 client.WritePacket((int)PROTOCOL.IdPktBitmapMessageReq, message.ToByteArray(), message.ToByteArray().Length);
 
