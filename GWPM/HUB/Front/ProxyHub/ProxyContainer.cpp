@@ -40,7 +40,7 @@ GSCLIENT_PTR ProxyHubContainer::Search(INT64 Id)
 	return GSCLIENT_PTR();
 }
 
-GSCLIENT_PTR ProxyHubContainer::GetHub()
+GSCLIENT_PTR ProxyHubContainer::GetHub(unsigned long id)
 {
 	std::vector< GSCLIENT_PTR> vt;
 
@@ -59,7 +59,7 @@ GSCLIENT_PTR ProxyHubContainer::GetHub()
 		return GSCLIENT_PTR();
 	else
 	{
-		return vt[GetTickCount() % vt.size()];
+		return vt[id % vt.size()];
 	}
 }
 

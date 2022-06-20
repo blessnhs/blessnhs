@@ -25,7 +25,7 @@ BOOL GSFront::Disconnect(GSCLIENT_PTR pSession)
 	}
 	else if(pSession->GetClientType() == CLIENT)
 	{
-		auto hub = PROXYHUB.GetHub();
+		auto hub = PROXYHUB.GetHub(pSession->GetId());
 		if (hub != NULL)
 		{
 			CLIENT_LOGOUT_REQ res;

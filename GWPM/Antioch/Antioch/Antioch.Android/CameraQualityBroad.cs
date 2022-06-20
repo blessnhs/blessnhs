@@ -8,6 +8,7 @@ using Android.Content;
 using Android.Graphics;
 using Android.Views;
 using Android.Widget;
+using Android.Content.PM;
 using FullCameraApp.Droid;
 using Antioch;
 using Antioch.Droid;
@@ -23,6 +24,7 @@ using Java.IO;
 using System.IO;
 using static Android.Hardware.Camera;
 using System.Linq;
+
 
 [assembly: Xamarin.Forms.ExportRenderer(typeof(QualityCam), typeof(QualityCamRenderer))]
 namespace FullCameraApp.Droid
@@ -132,8 +134,8 @@ namespace FullCameraApp.Droid
         DateTime checktime = DateTime.Now;
         public void OnPreviewFrame(byte[] data, Android.Hardware.Camera camera)
         {
-           
-              
+
+
         }
     }
 
@@ -145,7 +147,7 @@ namespace FullCameraApp.Droid
 
         public ImageStreamingServer server = new ImageStreamingServer();
 
-        public int quality = 20;
+        public int quality = 0;
         public int target_pos = 0;
 
         public QualityCamRenderer(Context context) : base(context)
@@ -236,15 +238,15 @@ namespace FullCameraApp.Droid
         }
 
         bool cameraon = true;
+        string dw_path = Android.OS.Environment.GetExternalStoragePublicDirectory(Android.OS.Environment.DirectoryDownloads).AbsolutePath;
 
-        Dictionary<int,byte[]> check = new Dictionary<int,byte[]>();
+        Dictionary<int, byte[]> check = new Dictionary<int, byte[]>();
 
         Java.IO.File file()
         {
 
 
-            var path = System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyDocuments);
-            path = System.IO.Path.Combine(path, "test21.mp4");
+            var path = System.IO.Path.Combine(dw_path, "1.ts");
             System.IO.File.Delete(path);
 
             Java.IO.File f = new Java.IO.File(path);
@@ -256,8 +258,9 @@ namespace FullCameraApp.Droid
 
 
 
-            byte[] buffer = new byte[1024 * 40];
+            byte[] buffer = new byte[4024];
             int length;
+            int total = 0;
             Task.Run(() =>
             {
                 InputStream fileStream = new FileInputStream(pipe.FileDescriptor);
@@ -270,9 +273,12 @@ namespace FullCameraApp.Droid
                         byte[] c = new byte[length];
                         Buffer.BlockCopy(buffer, 0, c, 0, length);
                         check[order] = c;
-                        NetProcess.SendRoomMPEG2TSMessage(new MemoryStream(buffer,0, length), order++);
+                        NetProcess.SendRoomMPEG2TSMessage(new MemoryStream(buffer, 0, length), order++);
 
-                    }       
+                        total += length;
+                        mainScreenButton.Text = (total / 1024).ToString();
+
+                    }
                 }
 
             });
@@ -295,6 +301,33 @@ namespace FullCameraApp.Droid
             mainLayout.AddView(imageView);
             imageViewDic.Add(pos, imageView);
             ///////////////////////////////////////////////////////////////////////////////
+        }
+
+        string CreateNewPlayFile(ParcelFileDescriptor pipe)
+        {
+            var pathw = System.IO.Path.Combine(dw_path, "3.ts");
+
+
+            byte[] buffer = new byte[1024 * 40];
+            int length;
+
+            InputStream fileStream = new FileInputStream(pipe.FileDescriptor);
+            var stream = new FileStream(pathw, FileMode.Create);
+            while ((length = fileStream.Read(buffer)) > 0)
+            {
+                stream.Write(buffer, 0, length);
+                stream.Flush();
+            }
+            stream.Close();
+
+            return pathw;
+
+
+        }
+
+        void play()
+        {
+           
         }
 
         void SetupUserInterface()
@@ -356,7 +389,7 @@ namespace FullCameraApp.Droid
             ///////////////////////////////////////////////////////////////////////////////
             ///
 
-         
+
 
             ///////////////////////////////////////////////////////////////////////////////
             mainScreenButton = new Button(Context);
@@ -388,9 +421,9 @@ namespace FullCameraApp.Droid
             ////////////////////////////////////////////////////////////////////////////////
             /// 
             video_view = new VideoView(Context);
-            RelativeLayout.LayoutParams VideoViewParams = new RelativeLayout.LayoutParams(half_width*2, half_height*2);
+            RelativeLayout.LayoutParams VideoViewParams = new RelativeLayout.LayoutParams(half_width * 2, half_height * 2);
             video_view.LayoutParameters = VideoViewParams;
-        
+
 
             mainLayout.AddView(video_view);
 
@@ -413,7 +446,9 @@ namespace FullCameraApp.Droid
 
                 qualityUp.Text = quality.ToString();
 
-
+                var ct = Android.App.Application.Context;
+                var audiosvr = ((AudioManager)ct.GetSystemService("audio"));
+                audiosvr.SetStreamMute(Android.Media.Stream.Alarm, true);
 
 
                 this.recorder = new MediaRecorder();
@@ -448,27 +483,18 @@ namespace FullCameraApp.Droid
             qualityDown.Text = "Down";
             qualityDown.Click += async (s, e) =>
             {
-                quality--;
-                if (quality < 0)
-                    quality = 0;
 
-                qualityUp.Text = (quality / 1024).ToString();
+                qualityUp.Text = (quality).ToString();
 
                 try
                 {
-                    var path = System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyDocuments);
-                    path = System.IO.Path.Combine(path, "test2111.mp4");
-                   
+                    var path = System.IO.Path.Combine(dw_path, "2.ts");
 
                     Java.IO.File f = new Java.IO.File(path);
-                              
 
                     ParcelFileDescriptor pipe = ParcelFileDescriptor.Open(f,
-                                     ParcelFileMode.ReadOnly
-                                   );
+                                     ParcelFileMode.ReadOnly);
 
-                    var ll = f.Length();
-                    
                     var mediaPlayer = new MediaPlayer();
 
                     video_view2.StopPlayback();
@@ -476,7 +502,17 @@ namespace FullCameraApp.Droid
                     ISurfaceHolder holder = video_view2.Holder;
                     mediaPlayer.SetDisplay(holder);
 
-                    mediaPlayer.SetDataSource(pipe.FileDescriptor);
+
+                    //////////////////////////////////////////////////////////////////////
+                    ///새파일 쓰기
+                    ///
+
+                    var newPipe = CreateNewPlayFile(pipe);
+
+
+                    //////////////////////////////////////////////////////////////////////
+                    ///
+                    mediaPlayer.SetDataSource(newPipe);
 
 
                     mediaPlayer.Prepare();
@@ -484,18 +520,15 @@ namespace FullCameraApp.Droid
 
                     mediaPlayer.Completion += (sender, args) =>
                     {
+                        video_view2.StopPlayback();
+
                         int pos = mediaPlayer.CurrentPosition;
 
-                        f = new Java.IO.File(path);
-                        var pipe2 = ParcelFileDescriptor.Open(f,
-                                     ParcelFileMode.ReadOnly
-                                   );
-
-                        ll = f.Length();
+                        var Pipew2 = CreateNewPlayFile(pipe);
 
                         mediaPlayer.Reset();
                         mediaPlayer.SetDisplay(holder);
-                        mediaPlayer.SetDataSource(path);
+                        mediaPlayer.SetDataSource(Pipew2);
                         mediaPlayer.Prepare();
                         mediaPlayer.SeekTo(pos);
 
@@ -614,7 +647,7 @@ namespace FullCameraApp.Droid
                     image.Value.SetX(0);
                     image.Value.SetY((half_height * 1));
 
-                  
+
                 }
 
                 posx++;
@@ -747,11 +780,10 @@ namespace FullCameraApp.Droid
                 {
                     NetProcess.Mpeg2Stream.Clear();
 
-                    var path2 = System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyDocuments);
-                    path2 = System.IO.Path.Combine(path2, "test2111.mp4");
+                    var path2 = System.IO.Path.Combine(dw_path, "2.ts");
                     System.IO.File.Delete(path2);
 
-                     var stream = new FileStream(path2, FileMode.Create);
+                    var stream = new FileStream(path2, FileMode.Create);
                     int order = 1;
 
                     while (isDestroy == false)
@@ -768,7 +800,7 @@ namespace FullCameraApp.Droid
                             order++;
 
                             var r1 = check[ms.type];
-                            var r2 = ms.stream.ToArray(); 
+                            var r2 = ms.stream.ToArray();
 
                             var r = r1.SequenceEqual(r2);
                             if (r == false)
@@ -779,7 +811,7 @@ namespace FullCameraApp.Droid
                             stream.Flush();
 
 
-                            textViewMain.Text = (quality / 1024 / 1024).ToString();
+                            textViewMain.Text = (quality / 1024).ToString();
                         }
                     }
 

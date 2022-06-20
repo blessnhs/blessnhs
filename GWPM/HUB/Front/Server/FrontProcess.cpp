@@ -32,7 +32,7 @@ VOID FrontProcess::Process(LPVOID Data, DWORD Length, WORD MainProtocol, WORD Su
 		
 		//hub·Î Àü¼Û
 
-		auto hub = PROXYHUB.GetHub();
+		auto hub = PROXYHUB.GetHub(Client->GetId());
 		if (hub != NULL)
 		{
 			if (hub->GetConnected() == FALSE)

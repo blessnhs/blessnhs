@@ -138,12 +138,10 @@ namespace Antioch
                     {
                         try
                         {
-
                             NetProcess.start();
                             NetProcess.client.PacketRecvSync();
                             NetProcess.Loop();
 
-                            Thread.Sleep(10);
                         }catch(Exception e)
                         {
                             

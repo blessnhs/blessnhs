@@ -15,7 +15,7 @@ public:
 
 	void Create(INT Count = 1);
 
-	GSCLIENT_PTR GetHub();
+	GSCLIENT_PTR GetHub(unsigned long id);
 
 	//클라이어언트 맵
 	concurrency::concurrent_unordered_map<int, GSCLIENT_PTR> m_Proxy_Map;
