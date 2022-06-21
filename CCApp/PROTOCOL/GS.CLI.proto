@@ -1,0 +1,172 @@
+﻿syntax = "proto2";
+
+import "Enum.proto";
+import "Structure.proto";
+
+option optimize_for = SPEED;
+
+message VERSION_RES
+{
+    optional PROTOCOL   id                  	= 1 [default = ID_PKT_VERSION_RES  ];
+    optional  float   var_version         	= 2;
+    optional  ErrorCode    var_code         	= 3;
+}
+
+
+message LOGIN_RES
+{
+    optional PROTOCOL   id                  = 1 [default = ID_PKT_LOGIN_RES];
+
+    optional  ErrorCode    var_code         = 2;
+
+    optional  int64      var_index         = 3;
+
+    optional string   var_locale     = 4;
+    optional string   var_name       = 5;
+}
+
+message CREATE_ROOM_RES
+{
+    optional PROTOCOL   id                  = 1 [default = ID_PKT_CREATE_ROOM_RES ];
+    optional string var_name                  = 2;
+    optional int32  var_room_id               = 3; 
+    optional  ErrorCode    var_code         = 4;
+}
+
+message ENTER_ROOM_RES
+{
+    optional PROTOCOL   id                  = 1 [default = ID_PKT_ENTER_ROOM_RES ];
+    optional string var_name                   = 2;
+    optional int32  var_room_id               = 3; 
+    optional  ErrorCode    var_code         = 4;
+    repeated RoomMessage var_messages   = 5;	
+}
+ 
+ message NEW_USER_IN_ROOM_NTY
+{
+    optional PROTOCOL   id                        = 1 [default = ID_PKT_NEW_USER_IN_ROOM_NTY ];
+    optional RoomUserInfo var_room_user     = 2;
+    optional  ErrorCode    var_code               = 3;
+    optional int32 var_type	 = 4;
+}
+
+message LEAVE_ROOM_RES
+{
+    optional PROTOCOL   id                  = 1 [default = ID_PKT_LEAVE_ROOM_RES ];
+    optional string var_name                  = 2;
+    optional  ErrorCode    var_code         = 3;
+    optional  int64    var_index	             = 4;
+    optional int32 var_room_number	 = 5;
+}
+
+message ROOM_LIST_RES
+{
+    optional  PROTOCOL   id                 = 1 [default = ID_PKT_ROOM_LIST_RES];
+    optional  ErrorCode    var_code         = 2;
+    repeated RoomInfo2 var_room_list 	     = 3;
+}
+
+
+message ROOM_PASS_THROUGH_RES
+{
+    optional PROTOCOL   id                        = 1 [default = ID_PKT_ROOM_PASS_THROUGH_RES    ];
+    optional  ErrorCode    var_code         = 2;
+
+    repeated RoomMessage var_messages   = 3;		
+    optional int32 var_room_number	       = 4;
+}
+
+message NOTICE_RES
+{
+    optional PROTOCOL   id                        = 1 [default = ID_PKT_NOTICE_RES    ];
+    repeated NotifyInfo   var_list         = 2;
+}
+
+
+message BITMAP_MESSAGE_RES
+{
+    optional PROTOCOL   id                  = 1 [default = ID_PKT_BITMAP_MESSAGE_RES ];
+    optional  ErrorCode    var_code         = 2;
+    repeated bytes     var_message          = 3;
+    optional bytes     var_name	            = 4;
+    optional  int32    var_pos		             = 5;
+    optional int32       var_type        = 6;	
+}
+
+message AUDIO_MESSAGE_RES
+{
+    optional PROTOCOL   id                  = 1 [default = ID_PKT_AUDIO_MESSAGE_RES ];
+    optional  ErrorCode    var_code         = 2;
+    repeated bytes     var_message          = 3;
+    optional bytes     var_name	            = 4;
+    optional  int32    var_pos		             = 5;
+}
+
+message PRAY_MESSAGE_RES
+{
+    optional PROTOCOL   id                  = 1 [default = ID_PKT_PRAY_MESSAGE_RES ];
+    optional  ErrorCode    var_code         = 2;
+    repeated PrayInfo     var_list         = 3;
+}
+
+message PRAY_MESSAGE_REG_RES
+{
+    optional PROTOCOL   id                  = 1 [default = ID_PKT_PRAY_MESSAGE_REG_RES ];
+    optional  ErrorCode    var_code         = 2;
+    optional string     var_message          = 3;
+    optional string     var_time	     = 4;
+}
+
+message QNA_RES
+{
+    optional PROTOCOL   id                  = 1 [default = ID_PKT_QNA_RES ];
+    optional  ErrorCode    var_code         = 2;
+}
+
+message MAIL_LIST_RES
+{
+    optional PROTOCOL   id                  = 1 [default = ID_PKT_MAIL_LIST_RES ];
+    optional  ErrorCode    var_code         = 2;
+    repeated MailInfo     var_list         = 3;
+}
+
+message REG_RES
+{
+    optional PROTOCOL   id                  = 1 [default = ID_PKT_REG_RES ];
+      optional  ErrorCode    var_code         = 2;
+}
+
+message CLIENT_LOGOUT_RES
+{
+    optional PROTOCOL   id                  = 1 [default = ID_PKT_CLIENT_LOGOUT_RES ];
+    optional  ErrorCode    var_code         = 2;
+}
+message CLIENT_KICK
+{
+    optional PROTOCOL   id                  = 1 [default = ID_PKT_CLIENT_KICK ];
+    optional  int32 sid         = 2;
+}
+
+message CAMERA_CONTROL_RES
+{
+    optional PROTOCOL   id                  = 1 [default = ID_PKT_CAMERA_CONTROL ];
+    optional ErrorCode    var_code         = 2;
+    optional CameraControlType       var_type        = 3;
+    optional int32     var_pos         = 4;	
+}
+
+message MPEG2TS_MESSAGE_RES
+{
+    optional PROTOCOL   id                  = 1 [default = ID_PKT_MPEG2TS_MESSAGE_RES ];
+    optional  ErrorCode    var_code         = 2;
+    repeated bytes     var_message          = 3;
+    optional int32       var_type        	= 4;	
+}
+
+message MPEG2TS_WAKE_UP_RES
+{
+    optional PROTOCOL   id                  = 1 [default = ID_PKT_MPEG2TS_WAKE_UP_RES ];
+    optional  ErrorCode    var_code         = 2;
+    optional int32       var_type        	= 3;	
+    optional int32       var_room_number        = 4;	
+}

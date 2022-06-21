@@ -1,0 +1,50 @@
+﻿syntax = "proto2";
+
+option optimize_for = SPEED;
+
+message RoomUserInfo
+{
+	optional string var_name = 1 ;
+	optional int64 var_index = 2  ;
+	optional string picture_uri = 3  ;
+	optional int32 var_room_number = 4 ;
+}
+
+message RoomInfo2
+{
+	optional int32 var_id = 1 ;
+	optional string var_name = 2 ;
+	optional int32  var_current_count = 3 ;
+	optional int32  var_max_count = 4 ;
+}
+
+message PrayInfo
+{
+	optional string var_name = 1 ;
+	optional string var_message = 2 ;
+	optional string var_time = 3 ;
+}
+
+message NotifyInfo
+{
+	optional int64 var_id = 1 ;
+	optional string var_content = 2  ;
+	optional string var_date = 3  ;
+}
+
+message MailInfo
+{
+	optional int64 var_id = 1 ;
+	optional string var_title = 2  ;
+	optional string var_content = 3  ;
+	optional string var_date = 4  ;
+	optional string var_name = 5 ;
+}
+
+message RoomMessage
+{
+	optional string     var_name    	     = 1;
+    	optional string     var_message    	     = 2;
+    	optional int32     var_message_int       = 3;
+	optional string     var_time    	     = 4;
+}

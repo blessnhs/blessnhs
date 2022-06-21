@@ -1,0 +1,131 @@
+﻿syntax = "proto2";
+
+import "Enum.proto";
+import "Structure.proto";
+
+option optimize_for = SPEED;
+
+message VERSION_REQ
+{
+    optional PROTOCOL   id                  = 1 [default = ID_PKT_VERSION_REQ  ];
+}
+
+message LOGIN_REQ
+{
+    optional PROTOCOL   id                  = 1 [default = ID_PKT_LOGIN_REQ ];
+
+    required string  var_id                = 2;
+    required string  var_pwd              = 3;
+   
+}
+
+message CREATE_ROOM_REQ
+{
+    optional PROTOCOL   id                  = 1 [default = ID_PKT_CREATE_ROOM_REQ ];
+    required string var_name                  = 2;
+   
+}
+
+message ENTER_ROOM_REQ
+{
+    optional PROTOCOL   id                  = 1 [default = ID_PKT_ENTER_ROOM_REQ ];
+    required int32       var_room_number        = 2;
+}
+
+message LEAVE_ROOM_REQ
+{
+    optional PROTOCOL   id                  = 1 [default = ID_PKT_LEAVE_ROOM_REQ ];
+    required int32      var_id                  = 2;
+    required int32       var_room_number        = 3;
+}
+
+message ROOM_LIST_REQ
+{
+    optional PROTOCOL   id                  = 1 [default = ID_PKT_ROOM_LIST_REQ ];
+}
+
+message ROOM_PASS_THROUGH_REQ
+{
+    optional PROTOCOL   id                        = 1 [default = ID_PKT_ROOM_PASS_THROUGH_REQ    ];
+    required string     var_message    	     = 2;
+    required int32       var_message_int         = 3;
+    required int32       var_room_number        = 4;
+    required string       var_time        = 5;
+}
+
+
+message NOTICE_REQ
+{
+    optional PROTOCOL   id                        = 1 [default = ID_PKT_NOTICE_REQ    ];
+}
+
+message BITMAP_MESSAGE_REQ
+{
+    optional PROTOCOL   id                  = 1 [default = ID_PKT_BITMAP_MESSAGE_REQ ];
+    repeated bytes     var_message         = 2;
+    required int32       var_room_number        = 3;	
+    required int32       var_type        = 4;	
+}
+
+message AUDIO_MESSAGE_REQ
+{
+    optional PROTOCOL   id                  = 1 [default = ID_PKT_AUDIO_MESSAGE_REQ ];
+    repeated bytes     var_message         = 2;
+    required int32       var_room_number        = 3;
+}
+
+message PRAY_MESSAGE_REQ
+{
+    optional PROTOCOL   id                  = 1 [default = ID_PKT_PRAY_MESSAGE_REQ ];
+}
+
+message PRAY_MESSAGE_REG_REQ
+{
+    optional PROTOCOL   id                  = 1 [default = ID_PKT_PRAY_MESSAGE_REG_REQ ];
+    optional string     var_message         = 2;
+}
+
+message QNA_REQ
+{
+    optional PROTOCOL   id                  = 1 [default = ID_PKT_QNA_REQ ];
+    optional string     var_message         = 2;
+}
+
+message MAIL_LIST_REQ
+{
+    optional PROTOCOL   id                  = 1 [default = ID_PKT_MAIL_LIST_REQ ];
+}
+
+message REG_REQ
+{
+    optional PROTOCOL   id                  = 1 [default = ID_PKT_REG_REQ ];
+     required int32     var_id         = 2;
+}
+
+message CLIENT_LOGOUT_REQ
+{
+    optional PROTOCOL   id                  = 1 [default = ID_PKT_CLIENT_LOGOUT_REQ ];
+}
+
+message CAMERA_CONTROL_REQ
+{
+    optional PROTOCOL   id                  = 1 [default = ID_PKT_CAMERA_CONTROL ];
+    required CameraControlType       var_type        = 2	;
+    required int32     var_pos         = 3;	
+}
+
+message MPEG2TS_MESSAGE_REQ
+{
+    optional PROTOCOL   id                  = 1 [default = ID_PKT_MPEG2TS_MESSAGE_REQ ];
+    repeated bytes     var_message         = 2;
+    required int32       var_room_number        = 3;	
+    required int32       var_type        = 4;	
+}
+
+
+message MPEG2TS_WAKE_UP_REQ
+{
+    optional PROTOCOL   id                  = 1 [default = ID_PKT_MPEG2TS_WAKE_UP_REQ ];
+    required int32       var_type        = 2;	
+    required int32       var_room_number        = 3;	
+}
