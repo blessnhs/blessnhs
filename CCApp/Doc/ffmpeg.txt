@@ -1,0 +1,630 @@
+For those who are interested in the answer, and need some code, here:
+cameraObject.setPreviewCallback(new Camera.PreviewCallback(){
+#Override
+public void onPreviewFrame(byte[] data, Camera camera) {
+try {
+if (cameraObject.getParameters().getPreviewFormat() == ImageFormat.NV21) {
+timestampBeforecompression = SystemClock.uptimeMillis();
+yuvImage = new YuvImage(data, imageFormat, width, height, null);
+yuvImage.compressToJpeg(rect, 75, mByteArrayOutputStream);
+frameToStream = mByteArrayOutputStream.toByteArray();
+bitmap = BitmapFactory.decodeByteArray(frameToStream, 0, frameToStream.length);
+mByteArrayOutputStream.reset();
+bitmap = Bitmap.createScaledBitmap(bitmap, 320, 240, true);
+bitmap.compress(Bitmap.CompressFormat.JPEG, 60, mByteArrayOutputStream);
+frameToStream = null;
+frameToStream = mByteArrayOutputStream.toByteArray();
+compressionMillis = SystemClock.uptimeMillis() - timestampBeforecompression;
+if (125 - compressionMillis > 0) {
+SystemClock.sleep(125 - compressionMillis);
+}
+if (mJpegStream != null) {
+mJpegStream.streamJpeg(frameToStream, frameToStream.length, Long.MIN_VALUE);
+}
+if (mByteArrayOutputStream != null) {
+mByteArrayOutputStream.reset();
+}
+frameToStream = null;
+}
+} catch (Exception e) {
+System.out.println("Oops: " + e.getMessage());
+}
+}
+});
+Note that you can omit compressionMillis and System.sleep(). I used them to control frame rate, if you have any misunderstanding feel free to write.
+
+ 
+관련
+IplImage 자르기 및 회전 - 안드로이드
+I'm using ffmpeg to video capture for 30 seconds.
+#Override
+public void onPreviewFrame(byte[] data, Camera camera) {
+if (yuvIplimage != null && recording && rec)
+{
+new SaveFrame().execute(data);
+}
+}
+}
+save frame class is below
+private class SaveFrame extends AsyncTask<byte[], Void, File> {
+long t;
+protected File doInBackground(byte[]... arg) {
+t = 1000 * (System.currentTimeMillis() - firstTime - pausedTime);
+toSaveFrames++;
+File pathCache = new File(Environment.getExternalStorageDirectory()+"/DCIM", (System.currentTimeMillis() / 1000L)+ "_" + toSaveFrames + ".tmp");
+BufferedOutputStream bos;
+try {
+bos = new BufferedOutputStream(new FileOutputStream(pathCache));
+bos.write(arg[0]);
+bos.flush();
+bos.close();
+} catch (FileNotFoundException e) {
+e.printStackTrace();
+pathCache = null;
+toSaveFrames--;
+} catch (IOException e) {
+e.printStackTrace();
+pathCache = null;
+toSaveFrames--;
+}
+return pathCache;
+}
+#Override
+protected void onPostExecute(File filename)
+{
+if(filename!=null)
+{
+savedFrames++;
+tempList.add(new FileFrame(t,filename));
+}
+}
+}
+finally i add all frames with crop and rotation
+private class AddFrame extends AsyncTask<Void, Integer, Void> {
+private int serial = 0;
+#Override
+protected Void doInBackground(Void... params) {
+for(int i=0; i<tempList.size(); i++)
+{
+byte[] bytes = new byte[(int) tempList.get(i).file.length()];
+try {
+BufferedInputStream buf = new BufferedInputStream(new FileInputStream(tempList.get(i).file));
+buf.read(bytes, 0, bytes.length);
+buf.close();
+IplImage image = IplImage.create(imageWidth, imageHeight, IPL_DEPTH_8U, 2);
+// final int startY = 640*(480-480)/2;
+// final int lenY = 640*480;
+// yuvIplimage.getByteBuffer().put(bytes, startY, lenY);
+// final int startVU = 640*480+ 640*(480-480)/4;
+// final int lenVU = 640* 480/2;
+// yuvIplimage.getByteBuffer().put(bytes, startVU, lenVU);
+if (tempList.get(i).time > recorder.getTimestamp()) {
+recorder.setTimestamp(tempList.get(i).time);
+}
+image = cropImage(image);
+image = rotate(image, 270);
+// image = rotateImage(image);
+recorder.record(image);
+Log.i(LOG_TAG, "record " + i);
+image = null;
+serial++;
+publishProgress(serial);
+} catch (FileNotFoundException e) {
+e.printStackTrace();
+} catch (IOException e) {
+e.printStackTrace();
+} catch (com.googlecode.javacv.FrameRecorder.Exception e) {
+e.printStackTrace();
+}
+}
+return null;
+}
+#Override
+protected void onProgressUpdate(Integer... serial) {
+int value = serial[0];
+creatingProgress.setProgress(value);
+}
+#Override
+protected void onPostExecute(Void v)
+{
+creatingProgress.dismiss();
+if (recorder != null && recording) {
+recording = false;
+Log.v(LOG_TAG,"Finishing recording, calling stop and release on recorder");
+try {
+recorder.stop();
+recorder.release();
+finish();
+startActivity(new Intent(RecordActivity.this,AnswerViewActivity.class));
+} catch (FFmpegFrameRecorder.Exception e) {
+e.printStackTrace();
+}
+recorder = null;
+}
+}
+}
+my crop and rotate method are below
+private IplImage cropImage(IplImage src)
+{
+cvSetImageROI(src, r);
+IplImage cropped = IplImage.create(imageHeight, imageHeight, IPL_DEPTH_8U, 2);
+cvCopy(src, cropped);
+return cropped;
+}
+public static IplImage rotate(IplImage image, double angle) {
+IplImage copy = opencv_core.cvCloneImage(image);
+IplImage rotatedImage = opencv_core.cvCreateImage(opencv_core.cvGetSize(copy), copy.depth(), copy.nChannels());
+CvMat mapMatrix = opencv_core.cvCreateMat( 2, 3, opencv_core.CV_32FC1 );
+//Define Mid Point
+CvPoint2D32f centerPoint = new CvPoint2D32f();
+centerPoint.x(copy.width()/2);
+centerPoint.y(copy.height()/2);
+//Get Rotational Matrix
+opencv_imgproc.cv2DRotationMatrix(centerPoint, angle, 1.0, mapMatrix);
+//Rotate the Image
+opencv_imgproc.cvWarpAffine(copy, rotatedImage, mapMatrix, opencv_imgproc.CV_INTER_CUBIC + opencv_imgproc.CV_WARP_FILL_OUTLIERS, opencv_core.cvScalarAll(170));
+opencv_core.cvReleaseImage(copy);
+opencv_core.cvReleaseMat(mapMatrix);
+return rotatedImage;
+}
+my final video crop and rotate but green frames and colored frames mixed with this.
+How to fix this problem. I'm not aware of iplimage. In some blogs they mention its YUV format. first u need to convert Y and then convert UV.
+How to solve this problem?
+I have modified the onPreviewFrame method of this Open Source Android Touch-To-Record library to take transpose and resize a captured frame.
+I defined "yuvIplImage" as following in my setCameraParams() method.
+IplImage yuvIplImage = IplImage.create(mPreviewSize.height, mPreviewSize.width, opencv_core.IPL_DEPTH_8U, 2);
+Also initialize your videoRecorder object as following, giving width as height and vice versa.
+//call initVideoRecorder() method like this to initialize videoRecorder object of FFmpegFrameRecorder class.
+initVideoRecorder(strVideoPath, mPreview.getPreviewSize().height, mPreview.getPreviewSize().width, recorderParameters);
+//method implementation
+public void initVideoRecorder(String videoPath, int width, int height, RecorderParameters recorderParameters)
+{
+Log.e(TAG, "initVideoRecorder");
+videoRecorder = new FFmpegFrameRecorder(videoPath, width, height, 1);
+videoRecorder.setFormat(recorderParameters.getVideoOutputFormat());
+videoRecorder.setSampleRate(recorderParameters.getAudioSamplingRate());
+videoRecorder.setFrameRate(recorderParameters.getVideoFrameRate());
+videoRecorder.setVideoCodec(recorderParameters.getVideoCodec());
+videoRecorder.setVideoQuality(recorderParameters.getVideoQuality());
+videoRecorder.setAudioQuality(recorderParameters.getVideoQuality());
+videoRecorder.setAudioCodec(recorderParameters.getAudioCodec());
+videoRecorder.setVideoBitrate(1000000);
+videoRecorder.setAudioBitrate(64000);
+}
+This is my onPreviewFrame() method:
+#Override
+public void onPreviewFrame(byte[] data, Camera camera)
+{
+long frameTimeStamp = 0L;
+if(FragmentCamera.mAudioTimestamp == 0L && FragmentCamera.firstTime > 0L)
+{
+frameTimeStamp = 1000L * (System.currentTimeMillis() - FragmentCamera.firstTime);
+}
+else if(FragmentCamera.mLastAudioTimestamp == FragmentCamera.mAudioTimestamp)
+{
+frameTimeStamp = FragmentCamera.mAudioTimestamp + FragmentCamera.frameTime;
+}
+else
+{
+long l2 = (System.nanoTime() - FragmentCamera.mAudioTimeRecorded) / 1000L;
+frameTimeStamp = l2 + FragmentCamera.mAudioTimestamp;
+FragmentCamera.mLastAudioTimestamp = FragmentCamera.mAudioTimestamp;
+}
+synchronized(FragmentCamera.mVideoRecordLock)
+{
+if(FragmentCamera.recording && FragmentCamera.rec && lastSavedframe != null && lastSavedframe.getFrameBytesData() != null && yuvIplImage != null)
+{
+FragmentCamera.mVideoTimestamp += FragmentCamera.frameTime;
+if(lastSavedframe.getTimeStamp() > FragmentCamera.mVideoTimestamp)
+{
+FragmentCamera.mVideoTimestamp = lastSavedframe.getTimeStamp();
+}
+try
+{
+yuvIplImage.getByteBuffer().put(lastSavedframe.getFrameBytesData());
+IplImage bgrImage = IplImage.create(mPreviewSize.width, mPreviewSize.height, opencv_core.IPL_DEPTH_8U, 4);// In my case, mPreviewSize.width = 1280 and mPreviewSize.height = 720
+IplImage transposed = IplImage.create(mPreviewSize.height, mPreviewSize.width, yuvIplImage.depth(), 4);
+IplImage squared = IplImage.create(mPreviewSize.height, mPreviewSize.height, yuvIplImage.depth(), 4);
+int[] _temp = new int[mPreviewSize.width * mPreviewSize.height];
+Util.YUV_NV21_TO_BGR(_temp, data, mPreviewSize.width, mPreviewSize.height);
+bgrImage.getIntBuffer().put(_temp);
+opencv_core.cvTranspose(bgrImage, transposed);
+opencv_core.cvFlip(transposed, transposed, 1);
+opencv_core.cvSetImageROI(transposed, opencv_core.cvRect(0, 0, mPreviewSize.height, mPreviewSize.height));
+opencv_core.cvCopy(transposed, squared, null);
+opencv_core.cvResetImageROI(transposed);
+videoRecorder.setTimestamp(lastSavedframe.getTimeStamp());
+videoRecorder.record(squared);
+}
+catch(com.googlecode.javacv.FrameRecorder.Exception e)
+{
+e.printStackTrace();
+}
+}
+lastSavedframe = new SavedFrames(data, frameTimeStamp);
+}
+}
+This code uses a method "YUV_NV21_TO_BGR", which I found from this link
+Basically this method is used to resolve, which I call as, "The Green Devil problem on Android", just like yours. I was having the same issue and wasted almost 3-4 days. Before adding "YUV_NV21_TO_BGR" method when I just took transpose of YuvIplImage, more importantly a combination of transpose, flip (with or without resizing), there was greenish output in resulting video. This "YUV_NV21_TO_BGR" method saved the day. Thanks to #David Han from above google groups thread.
+Also you should know that all this processing (transpose, flip and resize), in onPreviewFrame, takes much time which causes a very serious hit on Frames Per Second (FPS) rate. When I used this code, inside onPreviewFrame method, the resulting FPS of the recorded video was down to 3 frames/sec from 30fps.
+I would advise not to use this approach. Rather you can go for post-recording processing (transpose, flip and resize) of your video file using JavaCV in an AsyncTask. Hope this helps.
+#Override
+public void onPreviewFrame(byte[] data, Camera camera) {
+//IplImage newImage = cvCreateImage(cvGetSize(yuvIplimage), IPL_DEPTH_8U, 1);
+if (recording) {
+videoTimestamp = 1000 * (System.currentTimeMillis() - startTime);
+yuvimage = IplImage.create(imageWidth, imageHeight * 3 / 2, IPL_DEPTH_8U,1);
+yuvimage.getByteBuffer().put(data);
+rgbimage = IplImage.create(imageWidth, imageHeight, IPL_DEPTH_8U, 3);
+opencv_imgproc.cvCvtColor(yuvimage, rgbimage, opencv_imgproc.CV_YUV2BGR_NV21);
+IplImage rotateimage=null;
+try {
+recorder.setTimestamp(videoTimestamp);
+int rot=0;
+switch (degrees) {
+case 0:
+rot =1;
+rotateimage=rotate(rgbimage,rot);
+break;
+case 180:
+rot = -1;
+rotateimage=rotate(rgbimage,rot);
+break;
+default:
+rotateimage=rgbimage;
+}
+recorder.record(rotateimage);
+} catch (FFmpegFrameRecorder.Exception e) {
+e.printStackTrace();
+}
+}
+}
+IplImage rotate(IplImage IplSrc,int angle) {
+IplImage img= IplImage.create(IplSrc.height(), IplSrc.width(), IplSrc.depth(), IplSrc.nChannels());
+cvTranspose(IplSrc, img);
+cvFlip(img, img, angle);
+return img;
+}
+}
+after many searches this works for me.
+
+ 
+로컬 정적 웹 사이트에 안드로이드 자바 CV FFmpeg 웹 스트림
+For my integrated test I'm working on an application that needs to provide a live stream to a locally hosted website. I've already built a working site that run's on nanohttpd. This application performs also special image processing. Therefore I use JavaCV. The library is working perfectly and all cpp bindings are working too.
+My question: How to set up a live stream that can directly be played in a static site hosted by nanohttpd? - I am on the right way?
+My code:
+init:
+private void initLiveStream() throws FrameRecorder.Exception {
+/* ~~~ https://github.com/bytedeco/javacv/issues/598 ~~~ */
+frameRecorder = new FFmpegFrameRecorder("http://localhost:9090", imageWidth, imageHeight, 0);
+frameRecorder.setVideoOption("preset", "ultrafast");
+frameRecorder.setVideoCodec(avcodec.AV_CODEC_ID_H264);
+frameRecorder.setAudioCodec(0);
+frameRecorder.setPixelFormat(avutil.AV_PIX_FMT_YUV420P);
+frameRecorder.setFormat("webm");
+frameRecorder.setGopSize(10);
+frameRecorder.setFrameRate(frameRate);
+frameRecorder.setVideoBitrate(5000);
+frameRecorder.setOption("content_type","video/webm");
+frameRecorder.setOption("listen", "1");
+frameRecorder.start();
+}
+In my CameraView:
+#Override
+public void onPreviewFrame(byte[] data, Camera camera) {
+Camera.Size size = camera.getParameters().getPreviewSize();
+Frame frame = new AndroidFrameConverter().convert(data, size.width, size.height);
+try {
+if(frameRecorder!=null){
+frameRecorder.record(frame);
+}
+} catch (FrameRecorder.Exception e) {
+e.printStackTrace();
+}
+}
+Here is one of the stack traces that ar shown frequently in my search to the solution:
+org.bytedeco.javacv.FrameRecorder$Exception: avio_open error() error -111: Could not open 'http://localhost:9090'
+I couldn't find any other thread addressing this specific issue.
+Thanks in advance
+EDIT
+Thanks to Chester Cobus, Here is my used code:
+Websocket:
+//Constructor
+AsyncHttpServer serverStream = new AsyncHttpServer();
+List<WebSocket> sockets = new ArrayList<>();
+//http://stackoverflow.com/a/33021907/5500092
+//I'm planning to use more sockets. This is the only uniform expression I found.
+serverStream.websocket("/((?:[^/]*/)*)(.*)", new AsyncHttpServer.WebSocketRequestCallback() {
+#Override
+public void onConnected(final WebSocket webSocket, AsyncHttpServerRequest request) {
+String uri = request.getPath();
+if (uri.equals("/live")) {
+sockets.add(webSocket);
+//Use this to clean up any references to your websocket
+webSocket.setClosedCallback(new CompletedCallback() {
+#Override
+public void onCompleted(Exception ex) {
+try {
+if (ex != null)
+Log.e("WebSocket", "Error");
+} finally {
+sockets.remove(webSocket);
+}
+}
+});
+}
+}
+});
+//Updater (Observer pattern)
+#Override
+public void updated(byte[] data) {
+for (WebSocket socket : sockets) {
+socket.write(new ByteBufferList(data));
+}
+}
+Record Acitivy
+private long start_time = System.currentTimeMillis();
+#Override
+public void onPreviewFrame(byte[] data, Camera camera) {
+long now_time = System.currentTimeMillis();
+if ((now_time - start_time) > 250) {
+start_time = now_time;
+//https://forums.xamarin.com/discussion/40991/onpreviewframe-issue-converting-preview-byte-to-android-graphics-bitmap
+Camera.Size size = camera.getParameters().getPreviewSize();
+YuvImage image = new YuvImage(data, ImageFormat.NV21, size.width, size.height, null);
+ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+image.compressToJpeg(new Rect(0, 0, size.width, size.height), 60, byteArrayOutputStream);
+MainActivity.getWebStreamer().updated(byteArrayOutputStream.toByteArray());
+}
+}
+JavaScript
+var socket;
+var imageElement;
+/**
+* path - String.Format("ws://{0}:8090/live", Window.Location.HostName)
+* image - HTMLImageElement
+*/
+function imageStreamer(path, image) {
+imageElement = image;
+socket = new WebSocket(path);
+socket.onmessage = function(msg) {
+var arrayBuffer = msg.data;
+var reader = new FileReader();
+reader.onload = function(e) {
+imageElement.src = e.target.result;
+};
+reader.readAsDataURL(arrayBuffer);
+};
+}
+Here's an example of what the web socket implementation will look like:
+//This code must run just before Camera is opened.
+AsyncHttpServer server = new AsyncHttpServer();
+server.websocket("/live","ws", new WebSocketRequestCallback() {
+#Override
+public void onConnected(final WebSocket webSocket, AsyncHttpServerRequest request) {
+this.webSocket = webSocket //webSocket make it an instance variable
+}
+});
+//listen on port 5000
+server.listen(5000);
+//browsing ws://{IP Address assigned by wifi}:5000/live
+#Override
+public void onPreviewFrame(byte[] data, Camera camera) {
+this.websocket.send(data);
+}
+Use Gradle to get the library above
+dependencies {
+compile 'com.koushikdutta.async:androidasync:2.+'
+}
+Here's client code for your site:
+var socket = new WebSocket('ws://{IP Address assigned by wifi}:5000/live', ['soap', 'xmpp']);
+socket.onmessage = function(msg) {
+var arrayBuffer = msg.data;
+var image = document.getElementById('image'); //<img id="image" /> in HTML
+var reader = new FileReader();
+reader.onload = function(e) {
+image.src = e.target.result;
+};
+reader.readAsDataURL(arrayBuffer);
+};
+
+ 
+pjsip 안드로이드에서 전면에서 다시 카메라를 전환
+I am working on pjsip video calling app. I want to switch preview camera in an ongoing call.
+Here is the code that I am trying.
+private void switchCamera(boolean isFront) {
+try {
+int w = (int) SipCallService.currentCall.vidPrev.getVideoWindow()
+.getInfo().getSize().getW();
+int h = (int) SipCallService.currentCall.vidPrev.getVideoWindow()
+.getInfo().getSize().getH();
+if (isFront) {
+PjCamera camera = new PjCamera(0, w, h, 0, 0, 0,
+mSurfaceCapture);
+camera.SwitchDevice(0);
+} else {
+PjCamera camera = new PjCamera(0, w, h, 0, 0, 0,
+mSurfaceCapture);
+camera.SwitchDevice(1);
+}
+} catch (Exception e) {
+e.printStackTrace();
+showToast("Error while switching camera");
+}
+}
+PjCamera is the class provided by pjsip.
+I am not able to switch camera using above code.
+If there is any other method please guide me to it.
+I have never used the pjsip library, but from looking at their source code, this is how your method could be rewritten:
+public class PjsipActivity extends Activity {
+PjCamera pjCamera;
+…
+void switchCamera(boolean isFront) {
+if (pjCamera == null) {
+int w = (int) SipCallService.currentCall.vidPrev.getVideoWindow()
+.getInfo().getSize().getW();
+int h = (int) SipCallService.currentCall.vidPrev.getVideoWindow()
+.getInfo().getSize().getH();
+pjCamera = new PjCamera(0, w, h, 0, 0, 0, mSurfaceCapture);
+}
+CameraInfo ci = new CameraInfo();
+for (int i = 0; i < Camera.getNumberOfCameras(); i++) {
+Camera.getCameraInfo(i, ci);
+if (isFront && ci.facing == CameraInfo.CAMERA_FACING_FRONT ||
+!isFront && ci.facing == CameraInfo.CAMERA_FACING_BACK) {
+if (pjCamera.SwitchDevice(i) == 0) {
+return;
+}
+}
+}
+showToast("Error while switching camera");
+}
+}
+Note that this snippet does not address the preview size issue. As far as I can judge, the PjCamera does not support changing width and height on the fly. The size of the video window should probably be negotiated between the two peers separately before the session is established. If the front-facing camera or the back-facing camera does not support this preview size, SwitchDevice() will most likely fail with return code -30 but it could also crash or fail silently.
+I used this code, to switch between the front / back cameras.
+int cameraId = isFront? 1 :2;
+CallVidSetStreamParam callVidSetStreamParam = new CallVidSetStreamParam();
+callVidSetStreamParam.setCapDev(cameraId);
+try {
+sipCall.vidSetStream(pjsua_call_vid_strm_op.PJSUA_CALL_VID_STRM_CHANGE_CAP_DEV, callVidSetStreamParam);
+result = true;
+} catch (Exception e) {
+e.printStackTrace();
+}
+This is the best method to Switch Camera in PJSIP Android front camera ID=1; back camera ID=2 (In this case only it support these IDs).
+try {
+CallVidSetStreamParam callVidSetStreamParam = new CallVidSetStreamParam();
+callVidSetStreamParam.setCapDev(cameraId);
+currentCall.vidSetStream(pjsua_call_vid_strm_op.PJSUA_CALL_VID_STRM_CHANGE_CAP_DEV, callVidSetStreamParam);
+} catch (Exception e) {
+e.printStackTrace();
+}
+
+ 
+JNI 바이트어레이에서 안드로이드 넥서스 10 빈 png
+I am developing an application using JNI and a third party engine (Unreal Engine 4) in charge of managing the graphics pipeline/rendering.
+The third party engine is written in C++, thus the need of using JNI to bridge it with Android.
+The app requires to save a screenshot on the device of what is being displayed on the screen (in other words a dump of the framebuffer).
+The third party engine exposes an API that calls a custom handler, passing in the width, height and color data of the screen.
+colordata is a custom container of uint8 representing RGBA components.
+I successfully managed to convert the colorData to a jbyteArray and pass it as an argument to a function on the JAVA side.
+On the java side things are simpler: I create a bitmap from the byteArray, flip it and save it as a jpg/png via a custom AsyncTask.
+The problem:
+The code works marvellously o Samsung Galaxy S4/Note3 (Both Android 5.0), whereas on a Nexus 10 Android version 5.1.1 the png that gets saved is blank.
+I am afraid that the problem with this lies on a depper level than the ones I have access to, i.e. graphics card/drivers/OS version, but I am not an expert in that field, so I would like to know if someone has already experienced a similar issue or could shed some light on what is causing it.
+This is the code used to bridge the engine with Java (I started c++ with this project so maybe there are ownership/memory issues in this snippet. You are more than welcome to correct me in case :))
+void AndroidInterface::SaveBitmap(const TArray<FColor>& colorData, int32 width, int32 height) {
+JNIEnv* env = FAndroidApplication::GetJavaEnv(true);
+TArray<FColor> bitmap = colorData;
+TArray<uint8> compressedBitmap;
+FImageUtils::CompressImageArray(width, height, bitmap, compressedBitmap);
+size_t len = width*height*compressedBitmap.GetTypeSize();
+LOGD("===========Width: %i, height: %i - Len of bitmap element: %i==========", width, height, len);
+jbyteArray bitmapData = env->NewByteArray(len);
+LOGD("===========Called new byte array==========");
+env->SetByteArrayRegion(bitmapData, 0, len, (const jbyte*)compressedBitmap.GetData() );
+LOGD("===========Populated byte array==========");
+check (bitmapData != NULL && "Couldn't create byte array");
+jclass gameActivityClass = FAndroidApplication::FindJavaClass("com/epicgames/ue4/GameActivity");
+check (gameActivityClass != nullptr && "GameActivityClassNotFound");
+//get the method signature to take a game screenshot
+jmethodID saveScreenshot = env->GetMethodID(gameActivityClass, "saveScreenshot", "([BII)V");
+env->CallVoidMethod(AndroidInterface::sGameActivity, saveScreenshot, bitmapData, width, height);
+env->DeleteLocalRef(bitmapData);
+}
+This is the java code in charge of converting from byte[] to Bitmap:
+public void saveScreenshot(final byte[] colors, int width, int height) {
+android.util.Log.d("GameActivity", "======saveScreenshot called. Width: " + width + " height: " + height + "=======");
+android.util.Log.d("GameActivity", "Color content---->\n " + Arrays.toString(colors));
+final BitmapFactory.Options opts = new BitmapFactory.Options();
+opts.inPreferredConfig = Bitmap.Config.ARGB_8888;
+final Bitmap bitmap = BitmapFactory.decodeByteArray(colors, 0, colors.length, opts);
+final FlipBitmap flipBitmapTask = new FlipBitmap();
+flipBitmapTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, bitmap);
+}
+FlipBitmap is the AsyncTask in charge of saving the bitmap to a file:
+private class FlipBitmap extends AsyncTask<Bitmap, Void, File> {
+#Override
+protected File doInBackground(Bitmap... params) {
+final Bitmap src = params[0];
+final File file = new File(MainActivity.SCREENSHOT_FOLDER + "screenshot" + System.currentTimeMillis() + ".png");
+final Matrix matrix = new Matrix();
+matrix.setScale(1, -1);
+final Bitmap dst = Bitmap.createBitmap(src, 0, 0, src.getWidth(), src.getHeight(), matrix, false);
+try {
+final FileOutputStream out = new FileOutputStream(file);
+dst.compress(Bitmap.CompressFormat.PNG, 90, out);
+out.flush();
+out.close();
+} catch (Exception e) {
+e.printStackTrace();
+}
+return file;
+}
+#Override
+protected void onPostExecute(File file) {
+android.util.Log.d("GameActivity", "FlipBitmap onPostExecute");
+if (file.exists()) {
+final Intent i = new Intent(Intent.ACTION_SENDTO);
+i.setData(Uri.parse("mailto:" + Globals.Network.MAIL_TO));
+i.putExtra(Intent.EXTRA_SUBJECT, Globals.Network.MAIL_SUBJECT);
+i.putExtra(Intent.EXTRA_TEXT, mBodyEmail);
+i.putExtra(Intent.EXTRA_STREAM, Uri.parse("file://" + file.getAbsolutePath()));
+startActivity(Intent.createChooser(i, "Invia via email"));
+}
+}
+}
+Thanks in advance!
+
+ 
+구글 유리에 QR 코드를 디코딩 zxing 항상 던져 NotFoundExcexption
+I have much trouble with xzing and decoding QR Code on a Google glass. The code works fine with starting the camera an calling the decoding method for the camera preview. The decoding always throws a "NotFoundExecption". The Test QRCode works fine on http://zxing.org/w/decode.jspx. I have tried many hints from other posts, but the problem always exists. I have taken the example from the zxing glass folder.
+Here is my code for the method decode:
+private void decode(byte[] data) {
+Result rawResult = null;
+int subtendedWidth = width / CameraConfigurationManager.ZOOM;
+int subtendedHeight = height / CameraConfigurationManager.ZOOM;
+int excessWidth = width - subtendedWidth;
+int excessHeight = height - subtendedHeight;
+//long start = System.currentTimeMillis();
+PlanarYUVLuminanceSource source =
+new PlanarYUVLuminanceSource(data,
+width, height,
+excessWidth / 2, excessHeight / 2,
+subtendedWidth, subtendedHeight,
+false);
+BinaryBitmap bitmap = new BinaryBitmap(new HybridBinarizer(source));
+try {
+rawResult = new MultiFormatReader().decode(bitmap, hints);
+//rawResult = new QRCodeReader().decode(bitmap, hints);
+} catch (ReaderException re) {
+// continue
+Log.i(TAG,"Decode Result: " + re.getMessage());
+}
+//long end = System.currentTimeMillis();
+//Log.i(TAG, "Decode in " + (end - start));
+Handler handler = getHandler();
+Message message;
+if (rawResult == null) {
+message = handler.obtainMessage(R.id.decode_failed);
+} else {
+Log.i(TAG, "Decode succeeded: " + rawResult.getText());
+message = handler.obtainMessage(R.id.decode_succeeded, rawResult);
+}
+message.sendToTarget();
+}
+And here my code on the preview call:
+public void onPreviewFrame(byte[] data, Camera camera) {
+if (running) {
+getHandler().obtainMessage(R.id.decode, data).sendToTarget();
+}
+}
+The Constructor for my handler sets the following DecodingHints:
+DecodeHandler() {
+hints = new EnumMap<>(DecodeHintType.class);
+hints.put(DecodeHintType.POSSIBLE_FORMATS,
+Arrays.asList(BarcodeFormat.AZTEC, BarcodeFormat.QR_CODE, BarcodeFormat.DATA_MATRIX));
+hints.put(DecodeHintType.TRY_HARDER, Boolean.TRUE);
+hints.put(DecodeHintType.PURE_BARCODE, Boolean.TRUE);
+}
+Does anybody see what my problem is?
