@@ -1,0 +1,203 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Command">
+      <UniqueIdentifier>{83d6aac9-eef2-40e5-8d84-f017b3f1fb02}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Constructor">
+      <UniqueIdentifier>{5f5a1b91-db62-45fd-9417-23d5e4112c1f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DB">
+      <UniqueIdentifier>{d949774d-b55d-4361-8b03-c96d7f1b158a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DB\DBJob">
+      <UniqueIdentifier>{2a2a1a1b-7bfa-46fc-a4f8-d9eaa57b1c14}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DB\DBProxy">
+      <UniqueIdentifier>{9c1826fa-3402-478b-816b-fe45b6b4da15}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="INI">
+      <UniqueIdentifier>{eccb2959-60be-4b89-9ac4-027891cfd60d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Log">
+      <UniqueIdentifier>{e37dda24-2068-44ff-a847-223532cb6492}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainProcess">
+      <UniqueIdentifier>{30c2250f-b5a3-46c9-85ed-4a1922367a91}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainProcess\MSG">
+      <UniqueIdentifier>{88b6c71a-9a8c-4030-9524-4e8bb292fcee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Server">
+      <UniqueIdentifier>{175644b1-59b3-4472-9285-51da6b26fc4d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Timer">
+      <UniqueIdentifier>{b7dc3f19-3179-4d1a-a0be-7fcd32b16fad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Protocol">
+      <UniqueIdentifier>{f53fe161-3c1c-4e7a-ae1a-2acc4394e8f7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ProxyHub">
+      <UniqueIdentifier>{51e12459-f08d-4569-a653-cf6e2f1052dc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Server\Process">
+      <UniqueIdentifier>{56cfe65e-d5a0-470a-bed7-297103403df6}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Front.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Command\Command.cpp">
+      <Filter>Command</Filter>
+    </ClCompile>
+    <ClCompile Include="Constructor\Constructor.cpp">
+      <Filter>Constructor</Filter>
+    </ClCompile>
+    <ClCompile Include="DB\DBJob\DBContext.cpp">
+      <Filter>DB\DBJob</Filter>
+    </ClCompile>
+    <ClCompile Include="DB\DBProxy\DBProcess.cpp">
+      <Filter>DB\DBProxy</Filter>
+    </ClCompile>
+    <ClCompile Include="DB\DBProxy\DBProcessContainer.cpp">
+      <Filter>DB\DBProxy</Filter>
+    </ClCompile>
+    <ClCompile Include="INI\INI.cpp">
+      <Filter>INI</Filter>
+    </ClCompile>
+    <ClCompile Include="Log\Log.cpp">
+      <Filter>Log</Filter>
+    </ClCompile>
+    <ClCompile Include="MainProcess\MSG\MSG_PLAYER_QUERY.cpp">
+      <Filter>MainProcess\MSG</Filter>
+    </ClCompile>
+    <ClCompile Include="MainProcess\MSG\MSG_PLAYER_QUERY_RES.cpp">
+      <Filter>MainProcess\MSG</Filter>
+    </ClCompile>
+    <ClCompile Include="Server\GSFront.cpp">
+      <Filter>Server</Filter>
+    </ClCompile>
+    <ClCompile Include="Timer\ContentsTimer.cpp">
+      <Filter>Timer</Filter>
+    </ClCompile>
+    <ClCompile Include="Timer\ContentsTimerJob.cpp">
+      <Filter>Timer</Filter>
+    </ClCompile>
+    <ClCompile Include="Timer\RankTimerJob.cpp">
+      <Filter>Timer</Filter>
+    </ClCompile>
+    <ClCompile Include="stdafx.cpp" />
+    <ClCompile Include="..\..\PROTOCOL\Cpp\CLI.GS.pb.cc">
+      <Filter>Protocol</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\PROTOCOL\Cpp\Enum.pb.cc">
+      <Filter>Protocol</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\PROTOCOL\Cpp\GS.CLI.pb.cc">
+      <Filter>Protocol</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\PROTOCOL\Cpp\sample.pb.cc">
+      <Filter>Protocol</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\PROTOCOL\Cpp\Structure.pb.cc">
+      <Filter>Protocol</Filter>
+    </ClCompile>
+    <ClCompile Include="ProxyHub\ProxyContainer.cpp">
+      <Filter>ProxyHub</Filter>
+    </ClCompile>
+    <ClCompile Include="Server\FrontProcess.cpp">
+      <Filter>Server\Process</Filter>
+    </ClCompile>
+    <ClCompile Include="Server\HubProcess.cpp">
+      <Filter>Server\Process</Filter>
+    </ClCompile>
+    <ClCompile Include="Server\IUdpProcess.cpp">
+      <Filter>Server\Process</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Command\Command.h">
+      <Filter>Command</Filter>
+    </ClInclude>
+    <ClInclude Include="Constructor\Constructor.h">
+      <Filter>Constructor</Filter>
+    </ClInclude>
+    <ClInclude Include="DB\DBJob\DBContext.h">
+      <Filter>DB\DBJob</Filter>
+    </ClInclude>
+    <ClInclude Include="DB\DBProxy\DBProcess.h">
+      <Filter>DB\DBProxy</Filter>
+    </ClInclude>
+    <ClInclude Include="DB\DBProxy\DBProcessContainer.h">
+      <Filter>DB\DBProxy</Filter>
+    </ClInclude>
+    <ClInclude Include="INI\INI.h">
+      <Filter>INI</Filter>
+    </ClInclude>
+    <ClInclude Include="Log\Log.h">
+      <Filter>Log</Filter>
+    </ClInclude>
+    <ClInclude Include="MainProcess\MSG\MSG_PLAYER_QUERY.h">
+      <Filter>MainProcess\MSG</Filter>
+    </ClInclude>
+    <ClInclude Include="MainProcess\MSG\MSG_PLAYER_QUERY.hpp">
+      <Filter>MainProcess\MSG</Filter>
+    </ClInclude>
+    <ClInclude Include="MainProcess\MSG\MSG_PLAYER_QUERY_RES.h">
+      <Filter>MainProcess\MSG</Filter>
+    </ClInclude>
+    <ClInclude Include="Server\GSFront.h">
+      <Filter>Server</Filter>
+    </ClInclude>
+    <ClInclude Include="Timer\ContentsTimer.h">
+      <Filter>Timer</Filter>
+    </ClInclude>
+    <ClInclude Include="Timer\ContentsTimerJob.h">
+      <Filter>Timer</Filter>
+    </ClInclude>
+    <ClInclude Include="Timer\RankTimerJob.h">
+      <Filter>Timer</Filter>
+    </ClInclude>
+    <ClInclude Include="stdafx.h" />
+    <ClInclude Include="..\..\PROTOCOL\Cpp\CLI.GS.pb.h">
+      <Filter>Protocol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\PROTOCOL\Cpp\Enum.pb.h">
+      <Filter>Protocol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\PROTOCOL\Cpp\GS.CLI.pb.h">
+      <Filter>Protocol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\PROTOCOL\Cpp\sample.pb.h">
+      <Filter>Protocol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\PROTOCOL\Cpp\Structure.pb.h">
+      <Filter>Protocol</Filter>
+    </ClInclude>
+    <ClInclude Include="ProxyHub\ProxyContainer.h">
+      <Filter>ProxyHub</Filter>
+    </ClInclude>
+    <ClInclude Include="Server\FrontProcess.h">
+      <Filter>Server\Process</Filter>
+    </ClInclude>
+    <ClInclude Include="Server\HubProcess.h">
+      <Filter>Server\Process</Filter>
+    </ClInclude>
+    <ClInclude Include="Server\IUdpProcess.h">
+      <Filter>Server\Process</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

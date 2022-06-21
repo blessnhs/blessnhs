@@ -1,0 +1,612 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="소스 파일">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="헤더 파일">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="리소스 파일">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Network">
+      <UniqueIdentifier>{3d0f70e5-f9da-4d02-b73f-75e74859e976}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Network\Connect">
+      <UniqueIdentifier>{c18ff4de-9307-4462-8b78-3e907075fe23}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Network\Connect\NC">
+      <UniqueIdentifier>{f2a6d3de-8e60-4b3e-a3f2-1b09f2764f02}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Network\Connect\Net">
+      <UniqueIdentifier>{81c6e625-2077-4110-be72-4c7f58d6d8c3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Network\Connect\SOCKET">
+      <UniqueIdentifier>{248cc840-6bb8-4c03-8dc9-0cc92869ff87}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Network\Connect\IProcess">
+      <UniqueIdentifier>{2ee2cb5d-3952-403d-9f75-4a9cafe6cf7a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Network\Connect\DB">
+      <UniqueIdentifier>{bfe06ac8-4ff3-4b4c-9284-3639539c927f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Network\Connect\DB\JOB">
+      <UniqueIdentifier>{f5afca21-b210-4f11-ab75-bc2f29e11941}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Network\Connect\MSG">
+      <UniqueIdentifier>{2413117a-faa6-430c-a331-2c870f558720}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Network\Connect\Alloc">
+      <UniqueIdentifier>{ded92292-3e6c-477a-b808-f86c140d5e2a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Network\Connect\Timer">
+      <UniqueIdentifier>{50a26925-c88c-43e0-ae00-faaf2e619d45}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Network\Connect\ServerAgent">
+      <UniqueIdentifier>{7dc545fb-c933-451d-93a7-cbd6be1bfb14}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Network\Connect\MP">
+      <UniqueIdentifier>{bf60d4a7-27b1-4da0-821d-690c6916e8e0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Network\Connect\debug">
+      <UniqueIdentifier>{2fb9e637-f534-4d8f-8809-a662ecad306d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Network\MessageMap">
+      <UniqueIdentifier>{543a440f-1e50-4f61-bd7c-5e40b6916164}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Frame">
+      <UniqueIdentifier>{00f5cbdd-b0ea-420b-bf4b-14148ee2b96a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Frame\SQL">
+      <UniqueIdentifier>{6cce11e0-22d0-4827-9a9d-b87077406652}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Network\Compress">
+      <UniqueIdentifier>{75a33f72-6e6b-4712-9828-9cf283dfe8be}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CrashHandler">
+      <UniqueIdentifier>{2be2ec76-981f-49f9-a4f9-d0bfa26a3b80}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ReadMe.txt" />
+    <None Include="GSReactor.h.bak">
+      <Filter>Frame</Filter>
+    </None>
+    <None Include="SQL\sqlite3.def">
+      <Filter>Frame\SQL</Filter>
+    </None>
+    <None Include="SQL\sqlite3.dll">
+      <Filter>Frame\SQL</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="stdafx.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="CommonSock.h">
+      <Filter>Network\Connect\NC</Filter>
+    </ClInclude>
+    <ClInclude Include="PacketBuffer.h">
+      <Filter>Network\Connect\NC</Filter>
+    </ClInclude>
+    <ClInclude Include="MiniDump.h">
+      <Filter>Network\Connect\debug</Filter>
+    </ClInclude>
+    <ClInclude Include="MessageMapDef.h">
+      <Filter>Network\MessageMap</Filter>
+    </ClInclude>
+    <ClInclude Include="GSClient.h">
+      <Filter>Network\Connect\Net</Filter>
+    </ClInclude>
+    <ClInclude Include="GSServer.h">
+      <Filter>Network\Connect\Net</Filter>
+    </ClInclude>
+    <ClInclude Include="GSArgument.h">
+      <Filter>Network\Connect\Net</Filter>
+    </ClInclude>
+    <ClInclude Include="GSClientMgr.h">
+      <Filter>Network\Connect\Net</Filter>
+    </ClInclude>
+    <ClInclude Include="IClientSession.h">
+      <Filter>Network\Connect\SOCKET</Filter>
+    </ClInclude>
+    <ClInclude Include="GSClientModule.h">
+      <Filter>Network\Connect\SOCKET</Filter>
+    </ClInclude>
+    <ClInclude Include="GSEventSelect.h">
+      <Filter>Network\Connect\SOCKET</Filter>
+    </ClInclude>
+    <ClInclude Include="GSIocp.h">
+      <Filter>Network\Connect\SOCKET</Filter>
+    </ClInclude>
+    <ClInclude Include="GSPacket.h">
+      <Filter>Network\Connect\SOCKET</Filter>
+    </ClInclude>
+    <ClInclude Include="GSPacketTCP.h">
+      <Filter>Network\Connect\SOCKET</Filter>
+    </ClInclude>
+    <ClInclude Include="GSPacketUDP.h">
+      <Filter>Network\Connect\SOCKET</Filter>
+    </ClInclude>
+    <ClInclude Include="GSSocket.h">
+      <Filter>Network\Connect\SOCKET</Filter>
+    </ClInclude>
+    <ClInclude Include="GSSocketBase.h">
+      <Filter>Network\Connect\SOCKET</Filter>
+    </ClInclude>
+    <ClInclude Include="GSSocketTCP.h">
+      <Filter>Network\Connect\SOCKET</Filter>
+    </ClInclude>
+    <ClInclude Include="GSSocketUDP.h">
+      <Filter>Network\Connect\SOCKET</Filter>
+    </ClInclude>
+    <ClInclude Include="MSG_PLAYER.h">
+      <Filter>Network\Connect\MSG</Filter>
+    </ClInclude>
+    <ClInclude Include="MSG_PLAYER_ACCEPT.h">
+      <Filter>Network\Connect\MSG</Filter>
+    </ClInclude>
+    <ClInclude Include="MSG_PLAYER_CLOSE.h">
+      <Filter>Network\Connect\MSG</Filter>
+    </ClInclude>
+    <ClInclude Include="MSG_PLAYER_PACKET.h">
+      <Filter>Network\Connect\MSG</Filter>
+    </ClInclude>
+    <ClInclude Include="MSG_PLAYER_TIME.h">
+      <Filter>Network\Connect\MSG</Filter>
+    </ClInclude>
+    <ClInclude Include="IPlayerProcess.h">
+      <Filter>Network\Connect\IProcess</Filter>
+    </ClInclude>
+    <ClInclude Include="IServerProcess.h">
+      <Filter>Network\Connect\IProcess</Filter>
+    </ClInclude>
+    <ClInclude Include="Adapt.h">
+      <Filter>Network\Connect\IProcess</Filter>
+    </ClInclude>
+    <ClInclude Include="MSG_PLAYER_QUERY.h">
+      <Filter>Network\Connect\MSG</Filter>
+    </ClInclude>
+    <ClInclude Include="MSG_PLAYER_QUERY.hpp">
+      <Filter>Network\Connect\MSG</Filter>
+    </ClInclude>
+    <ClInclude Include="MSG_PLAYER_QUERY_RES.h">
+      <Filter>Network\Connect\MSG</Filter>
+    </ClInclude>
+    <ClInclude Include="MSG_PLAYER_QUERY_RES.hpp">
+      <Filter>Network\Connect\MSG</Filter>
+    </ClInclude>
+    <ClInclude Include="DBProcess.h">
+      <Filter>Network\Connect\DB</Filter>
+    </ClInclude>
+    <ClInclude Include="DBProcess.hpp">
+      <Filter>Network\Connect\DB</Filter>
+    </ClInclude>
+    <ClInclude Include="DBProcessContainer.h">
+      <Filter>Network\Connect\DB</Filter>
+    </ClInclude>
+    <ClInclude Include="DBJob\ClearConcurrent.h">
+      <Filter>Network\Connect\DB\JOB</Filter>
+    </ClInclude>
+    <ClInclude Include="DBJob\ClosePlayer.h">
+      <Filter>Network\Connect\DB\JOB</Filter>
+    </ClInclude>
+    <ClInclude Include="DBJob\RequestPlayerAuth.h">
+      <Filter>Network\Connect\DB\JOB</Filter>
+    </ClInclude>
+    <ClInclude Include="GSAllocator.h">
+      <Filter>Network\Connect\Alloc</Filter>
+    </ClInclude>
+    <ClInclude Include="MSG_PACKET_UDP.h">
+      <Filter>Network\Connect\MSG</Filter>
+    </ClInclude>
+    <ClInclude Include="IUdpProcess.h">
+      <Filter>Network\Connect\IProcess</Filter>
+    </ClInclude>
+    <ClInclude Include="SysTimer.h">
+      <Filter>Network\Connect\Timer</Filter>
+    </ClInclude>
+    <ClInclude Include="SysTimerJob.h">
+      <Filter>Network\Connect\Timer</Filter>
+    </ClInclude>
+    <ClInclude Include="GSServerAgent.h">
+      <Filter>Network\Connect\ServerAgent</Filter>
+    </ClInclude>
+    <ClInclude Include="GSServerAgentContainer.h">
+      <Filter>Network\Connect\ServerAgent</Filter>
+    </ClInclude>
+    <ClInclude Include="GSMainProcess.h">
+      <Filter>Network\Connect\MP</Filter>
+    </ClInclude>
+    <ClInclude Include="Lock.h">
+      <Filter>Network</Filter>
+    </ClInclude>
+    <ClInclude Include="GSBuffer.h">
+      <Filter>Network</Filter>
+    </ClInclude>
+    <ClInclude Include="GSCrypt.h">
+      <Filter>Network</Filter>
+    </ClInclude>
+    <ClInclude Include="GSGuard.h">
+      <Filter>Network</Filter>
+    </ClInclude>
+    <ClInclude Include="GSMemPool.h">
+      <Filter>Network</Filter>
+    </ClInclude>
+    <ClInclude Include="GSObject.h">
+      <Filter>Network</Filter>
+    </ClInclude>
+    <ClInclude Include="Functor.h">
+      <Filter>Frame</Filter>
+    </ClInclude>
+    <ClInclude Include="GSCommand.h">
+      <Filter>Frame</Filter>
+    </ClInclude>
+    <ClInclude Include="GSDispatch.h">
+      <Filter>Frame</Filter>
+    </ClInclude>
+    <ClInclude Include="GSExecuteArgument.h">
+      <Filter>Frame</Filter>
+    </ClInclude>
+    <ClInclude Include="GSFactory.h">
+      <Filter>Frame</Filter>
+    </ClInclude>
+    <ClInclude Include="GSLog.h">
+      <Filter>Frame</Filter>
+    </ClInclude>
+    <ClInclude Include="GSOdbc.h">
+      <Filter>Frame</Filter>
+    </ClInclude>
+    <ClInclude Include="GSProactor.h">
+      <Filter>Frame</Filter>
+    </ClInclude>
+    <ClInclude Include="GSProactorImpl.h">
+      <Filter>Frame</Filter>
+    </ClInclude>
+    <ClInclude Include="GSReactor.h">
+      <Filter>Frame</Filter>
+    </ClInclude>
+    <ClInclude Include="GSReactorImpl.h">
+      <Filter>Frame</Filter>
+    </ClInclude>
+    <ClInclude Include="GSSerialize.h">
+      <Filter>Frame</Filter>
+    </ClInclude>
+    <ClInclude Include="GSTAllocator.h">
+      <Filter>Frame</Filter>
+    </ClInclude>
+    <ClInclude Include="GSTimerJob.h">
+      <Filter>Frame</Filter>
+    </ClInclude>
+    <ClInclude Include="GSTimerQ.h">
+      <Filter>Frame</Filter>
+    </ClInclude>
+    <ClInclude Include="IFactory.h">
+      <Filter>Frame</Filter>
+    </ClInclude>
+    <ClInclude Include="IGSContainer.h">
+      <Filter>Frame</Filter>
+    </ClInclude>
+    <ClInclude Include="IHandler.h">
+      <Filter>Frame</Filter>
+    </ClInclude>
+    <ClInclude Include="IManager.h">
+      <Filter>Frame</Filter>
+    </ClInclude>
+    <ClInclude Include="IMessage.h">
+      <Filter>Frame</Filter>
+    </ClInclude>
+    <ClInclude Include="IPlayer.h">
+      <Filter>Frame</Filter>
+    </ClInclude>
+    <ClInclude Include="IProcess.h">
+      <Filter>Frame</Filter>
+    </ClInclude>
+    <ClInclude Include="IResponse.h">
+      <Filter>Frame</Filter>
+    </ClInclude>
+    <ClInclude Include="TemplateStrategyPattern.h">
+      <Filter>Frame</Filter>
+    </ClInclude>
+    <ClInclude Include="TypeList.h">
+      <Filter>Frame</Filter>
+    </ClInclude>
+    <ClInclude Include="SQL\CppSQLite3.h">
+      <Filter>Frame\SQL</Filter>
+    </ClInclude>
+    <ClInclude Include="SQL\GwSqlLiteMgr.h">
+      <Filter>Frame\SQL</Filter>
+    </ClInclude>
+    <ClInclude Include="SQL\sqlite3.h">
+      <Filter>Frame\SQL</Filter>
+    </ClInclude>
+    <ClInclude Include="SQL\sqlite3ext.h">
+      <Filter>Frame\SQL</Filter>
+    </ClInclude>
+    <ClInclude Include="lzf.h">
+      <Filter>Network\Compress</Filter>
+    </ClInclude>
+    <ClInclude Include="lzfP.h">
+      <Filter>Network\Compress</Filter>
+    </ClInclude>
+    <ClInclude Include="MinidumpHelp.h">
+      <Filter>Frame</Filter>
+    </ClInclude>
+    <ClInclude Include="SingleTonHolder.h">
+      <Filter>Frame</Filter>
+    </ClInclude>
+    <ClInclude Include="Base64.h">
+      <Filter>Frame</Filter>
+    </ClInclude>
+    <ClInclude Include="ConsoleHelper.h">
+      <Filter>Frame</Filter>
+    </ClInclude>
+    <ClInclude Include="CrashHandler\CrashHandler.h">
+      <Filter>CrashHandler</Filter>
+    </ClInclude>
+    <ClInclude Include="CrashHandler\CrashRepoter.h">
+      <Filter>CrashHandler</Filter>
+    </ClInclude>
+    <ClInclude Include="CrashHandler\dump.h">
+      <Filter>CrashHandler</Filter>
+    </ClInclude>
+    <ClInclude Include="CrashHandler\SFCrashHandler.h">
+      <Filter>CrashHandler</Filter>
+    </ClInclude>
+    <ClInclude Include="CrashHandler\SFExceptionHandlerUtil.h">
+      <Filter>CrashHandler</Filter>
+    </ClInclude>
+    <ClInclude Include="CrashHandler\StackWalker.h">
+      <Filter>CrashHandler</Filter>
+    </ClInclude>
+    <ClInclude Include="zip.h">
+      <Filter>Network\Compress</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="CommonSock.cpp">
+      <Filter>Network\Connect\NC</Filter>
+    </ClCompile>
+    <ClCompile Include="PacketBuffer.cpp">
+      <Filter>Network\Connect\NC</Filter>
+    </ClCompile>
+    <ClCompile Include="MiniDump.cpp">
+      <Filter>Network\Connect\debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GSClient.cpp">
+      <Filter>Network\Connect\Net</Filter>
+    </ClCompile>
+    <ClCompile Include="GSServer.cpp">
+      <Filter>Network\Connect\Net</Filter>
+    </ClCompile>
+    <ClCompile Include="GSArgument.cpp">
+      <Filter>Network\Connect\Net</Filter>
+    </ClCompile>
+    <ClCompile Include="GSClientMgr.cpp">
+      <Filter>Network\Connect\Net</Filter>
+    </ClCompile>
+    <ClCompile Include="GSClientModule.cpp">
+      <Filter>Network\Connect\SOCKET</Filter>
+    </ClCompile>
+    <ClCompile Include="GSEventSelect.cpp">
+      <Filter>Network\Connect\SOCKET</Filter>
+    </ClCompile>
+    <ClCompile Include="GSIocp.cpp">
+      <Filter>Network\Connect\SOCKET</Filter>
+    </ClCompile>
+    <ClCompile Include="GSPacket.cpp">
+      <Filter>Network\Connect\SOCKET</Filter>
+    </ClCompile>
+    <ClCompile Include="GSPacketTCP.cpp">
+      <Filter>Network\Connect\SOCKET</Filter>
+    </ClCompile>
+    <ClCompile Include="GSPacketUDP.cpp">
+      <Filter>Network\Connect\SOCKET</Filter>
+    </ClCompile>
+    <ClCompile Include="GSSocket.cpp">
+      <Filter>Network\Connect\SOCKET</Filter>
+    </ClCompile>
+    <ClCompile Include="GSSocketTCP.cpp">
+      <Filter>Network\Connect\SOCKET</Filter>
+    </ClCompile>
+    <ClCompile Include="GSSocketUDP.cpp">
+      <Filter>Network\Connect\SOCKET</Filter>
+    </ClCompile>
+    <ClCompile Include="IClientSession.cpp">
+      <Filter>Network\Connect\SOCKET</Filter>
+    </ClCompile>
+    <ClCompile Include="MSG_PLAYER_ACCEPT.cpp">
+      <Filter>Network\Connect\MSG</Filter>
+    </ClCompile>
+    <ClCompile Include="MSG_PLAYER_CLOSE.cpp">
+      <Filter>Network\Connect\MSG</Filter>
+    </ClCompile>
+    <ClCompile Include="MSG_PLAYER_PACKET.cpp">
+      <Filter>Network\Connect\MSG</Filter>
+    </ClCompile>
+    <ClCompile Include="MSG_PLAYER_TIME.cpp">
+      <Filter>Network\Connect\MSG</Filter>
+    </ClCompile>
+    <ClCompile Include="IPlayerProcess.cpp">
+      <Filter>Network\Connect\IProcess</Filter>
+    </ClCompile>
+    <ClCompile Include="IServerProcess.cpp">
+      <Filter>Network\Connect\IProcess</Filter>
+    </ClCompile>
+    <ClCompile Include="Adapt.cpp">
+      <Filter>Network\Connect\IProcess</Filter>
+    </ClCompile>
+    <ClCompile Include="MSG_PLAYER_QUERY.cpp">
+      <Filter>Network\Connect\MSG</Filter>
+    </ClCompile>
+    <ClCompile Include="MSG_PLAYER_QUERY_RES.cpp">
+      <Filter>Network\Connect\MSG</Filter>
+    </ClCompile>
+    <ClCompile Include="DBProcess.cpp">
+      <Filter>Network\Connect\DB</Filter>
+    </ClCompile>
+    <ClCompile Include="DBProcessContainer.cpp">
+      <Filter>Network\Connect\DB</Filter>
+    </ClCompile>
+    <ClCompile Include="DBJob\ClearConcurrent.cpp">
+      <Filter>Network\Connect\DB\JOB</Filter>
+    </ClCompile>
+    <ClCompile Include="DBJob\ClosePlayer.cpp">
+      <Filter>Network\Connect\DB\JOB</Filter>
+    </ClCompile>
+    <ClCompile Include="DBJob\RequestPlayerAuth.cpp">
+      <Filter>Network\Connect\DB\JOB</Filter>
+    </ClCompile>
+    <ClCompile Include="GSAllocator.cpp">
+      <Filter>Network\Connect\Alloc</Filter>
+    </ClCompile>
+    <ClCompile Include="MSG_PACKET_UDP.cpp">
+      <Filter>Network\Connect\MSG</Filter>
+    </ClCompile>
+    <ClCompile Include="IUdpProcess.cpp">
+      <Filter>Network\Connect\IProcess</Filter>
+    </ClCompile>
+    <ClCompile Include="SysTimer.cpp">
+      <Filter>Network\Connect\Timer</Filter>
+    </ClCompile>
+    <ClCompile Include="SysTimerJob.cpp">
+      <Filter>Network\Connect\Timer</Filter>
+    </ClCompile>
+    <ClCompile Include="GSServerAgent.cpp">
+      <Filter>Network\Connect\ServerAgent</Filter>
+    </ClCompile>
+    <ClCompile Include="GSMainProcess.cpp">
+      <Filter>Network\Connect\MP</Filter>
+    </ClCompile>
+    <ClCompile Include="GSBuffer.cpp">
+      <Filter>Network</Filter>
+    </ClCompile>
+    <ClCompile Include="GSCrypt.cpp">
+      <Filter>Network</Filter>
+    </ClCompile>
+    <ClCompile Include="GSGuard.cpp">
+      <Filter>Network</Filter>
+    </ClCompile>
+    <ClCompile Include="GSMemPool.cpp">
+      <Filter>Network</Filter>
+    </ClCompile>
+    <ClCompile Include="GSObject.cpp">
+      <Filter>Network</Filter>
+    </ClCompile>
+    <ClCompile Include="Lock.cpp">
+      <Filter>Network</Filter>
+    </ClCompile>
+    <ClCompile Include="Functor.cpp">
+      <Filter>Frame</Filter>
+    </ClCompile>
+    <ClCompile Include="GSCommand.cpp">
+      <Filter>Frame</Filter>
+    </ClCompile>
+    <ClCompile Include="GSDispatch.cpp">
+      <Filter>Frame</Filter>
+    </ClCompile>
+    <ClCompile Include="GSLog.cpp">
+      <Filter>Frame</Filter>
+    </ClCompile>
+    <ClCompile Include="GSOdbc.cpp">
+      <Filter>Frame</Filter>
+    </ClCompile>
+    <ClCompile Include="GSProactor.cpp">
+      <Filter>Frame</Filter>
+    </ClCompile>
+    <ClCompile Include="GSProactorImpl.cpp">
+      <Filter>Frame</Filter>
+    </ClCompile>
+    <ClCompile Include="GSReactor.cpp">
+      <Filter>Frame</Filter>
+    </ClCompile>
+    <ClCompile Include="GSReactorImpl.cpp">
+      <Filter>Frame</Filter>
+    </ClCompile>
+    <ClCompile Include="GSSerialize.cpp">
+      <Filter>Frame</Filter>
+    </ClCompile>
+    <ClCompile Include="GSTAllocator.cpp">
+      <Filter>Frame</Filter>
+    </ClCompile>
+    <ClCompile Include="GSTimerJob.cpp">
+      <Filter>Frame</Filter>
+    </ClCompile>
+    <ClCompile Include="GSTimerQ.cpp">
+      <Filter>Frame</Filter>
+    </ClCompile>
+    <ClCompile Include="IFactory.cpp">
+      <Filter>Frame</Filter>
+    </ClCompile>
+    <ClCompile Include="IGSContainer.cpp">
+      <Filter>Frame</Filter>
+    </ClCompile>
+    <ClCompile Include="IManager.cpp">
+      <Filter>Frame</Filter>
+    </ClCompile>
+    <ClCompile Include="IPlayer.cpp">
+      <Filter>Frame</Filter>
+    </ClCompile>
+    <ClCompile Include="IProcess.cpp">
+      <Filter>Frame</Filter>
+    </ClCompile>
+    <ClCompile Include="TypeList.cpp">
+      <Filter>Frame</Filter>
+    </ClCompile>
+    <ClCompile Include="SQL\CppSQLite3.cpp">
+      <Filter>Frame\SQL</Filter>
+    </ClCompile>
+    <ClCompile Include="SQL\GwSqlLiteMgr.cpp">
+      <Filter>Frame\SQL</Filter>
+    </ClCompile>
+    <ClCompile Include="SQL\shell.c">
+      <Filter>Frame\SQL</Filter>
+    </ClCompile>
+    <ClCompile Include="SQL\sqlite3.c">
+      <Filter>Frame\SQL</Filter>
+    </ClCompile>
+    <ClCompile Include="lzf_c.cpp">
+      <Filter>Network\Compress</Filter>
+    </ClCompile>
+    <ClCompile Include="lzf_d.cpp">
+      <Filter>Network\Compress</Filter>
+    </ClCompile>
+    <ClCompile Include="MinidumpHelp.cpp">
+      <Filter>Frame</Filter>
+    </ClCompile>
+    <ClCompile Include="SingleTonHolder.cpp">
+      <Filter>Frame</Filter>
+    </ClCompile>
+    <ClCompile Include="Base64.cpp">
+      <Filter>Frame</Filter>
+    </ClCompile>
+    <ClCompile Include="ConsoleHelper.cpp">
+      <Filter>Frame</Filter>
+    </ClCompile>
+    <ClCompile Include="CrashHandler\CrashRepoter.cpp">
+      <Filter>CrashHandler</Filter>
+    </ClCompile>
+    <ClCompile Include="CrashHandler\dump.cpp">
+      <Filter>CrashHandler</Filter>
+    </ClCompile>
+    <ClCompile Include="CrashHandler\SFCrashHandler.cpp">
+      <Filter>CrashHandler</Filter>
+    </ClCompile>
+    <ClCompile Include="CrashHandler\SFExceptionHandlerUtil.cpp">
+      <Filter>CrashHandler</Filter>
+    </ClCompile>
+    <ClCompile Include="CrashHandler\StackWalker.cpp">
+      <Filter>CrashHandler</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

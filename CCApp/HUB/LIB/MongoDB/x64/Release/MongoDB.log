@@ -1,0 +1,14 @@
+﻿C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(477,5): warning MSB8004: Output Directory does not end with a trailing slash.  This build instance will add the slash as it is required to allow proper evaluation of the Output Directory.
+  pch.cpp
+C:\work\vcpkg\installed\x64-windows\include\mongocxx\options\index.hpp(1,1): warning C4819: The file contains a character that cannot be represented in the current code page (949). Save the file in Unicode format to prevent data loss
+C:\work\vcpkg\installed\x64-windows\include\mongocxx\options\change_stream.hpp(1,1): warning C4819: The file contains a character that cannot be represented in the current code page (949). Save the file in Unicode format to prevent data loss
+C:\work\vcpkg\installed\x64-windows\include\mongocxx\events\command_failed_event.hpp(1,1): warning C4819: The file contains a character that cannot be represented in the current code page (949). Save the file in Unicode format to prevent data loss
+  MongoDB.cpp
+C:\work\vcpkg\installed\x64-windows\include\mongocxx\options\index.hpp(1,1): warning C4819: The file contains a character that cannot be represented in the current code page (949). Save the file in Unicode format to prevent data loss
+C:\work\vcpkg\installed\x64-windows\include\mongocxx\options\change_stream.hpp(1,1): warning C4819: The file contains a character that cannot be represented in the current code page (949). Save the file in Unicode format to prevent data loss
+C:\work\vcpkg\installed\x64-windows\include\mongocxx\events\command_failed_event.hpp(1,1): warning C4819: The file contains a character that cannot be represented in the current code page (949). Save the file in Unicode format to prevent data loss
+C:\work\33\blessnhs\GWPM\HUB\LIB\MongoDB\MongoDB.h(306,1): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+C:\work\33\blessnhs\GWPM\HUB\LIB\MongoDB\MongoDB.h(313,1): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+C:\work\33\blessnhs\GWPM\HUB\LIB\MongoDB\MongoDB.h(527,17): warning C4101: 's': unreferenced local variable
+C:\work\33\blessnhs\GWPM\HUB\LIB\MongoDB\MongoDB.h(597,18): warning C4101: 's': unreferenced local variable
+  MongoDB.vcxproj -> C:\work\33\blessnhs\GWPM\HUB\LIB\common\MongoDB\MongoDB.lib

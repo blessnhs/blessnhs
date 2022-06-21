@@ -1,0 +1,26 @@
+#pragma once
+
+#include "GSReactorImpl.h"
+
+
+namespace GSFrames	{	namespace GSReactor	{
+
+class GSReactor : public GSGuard<GSReactor> , public IHandler<IMessage>
+{
+public:
+	GSReactor(GSFrames::GSReactorImpl::GSReactorImpl *pimpl);
+	~GSReactor(void);
+
+	virtual int Initialize();
+	virtual void Terminate();
+
+	virtual bool Register(IMessage &Msg);
+	virtual bool Remove(IMessage &Msg);
+
+protected:
+
+	GSFrames::GSReactorImpl::GSReactorImpl		*m_ReactorImpl;
+
+};
+
+}	}

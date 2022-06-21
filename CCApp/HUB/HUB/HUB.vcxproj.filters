@@ -1,0 +1,231 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Server">
+      <UniqueIdentifier>{48404dd9-0bf9-4b9a-b3c5-ff9c33c8d018}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Command">
+      <UniqueIdentifier>{0376158c-6a1c-431a-9003-477b1aa8f156}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Constructor">
+      <UniqueIdentifier>{ac1c9963-e359-4026-a54f-dbc688c0585d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DB">
+      <UniqueIdentifier>{1ec19800-c069-4017-b55f-fc5f3cf4d91d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="INI">
+      <UniqueIdentifier>{d0951435-bea5-44b6-8aeb-5397212d8791}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Log">
+      <UniqueIdentifier>{1420713d-7bf5-44a6-8ef5-0445e701323a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainProcess">
+      <UniqueIdentifier>{20d38bd8-4c25-4bd3-9426-70f44693c33d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Player">
+      <UniqueIdentifier>{11aecf9b-98b9-4619-a1d3-235d7a14aa5a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Room">
+      <UniqueIdentifier>{0fd5d3af-e740-4ad2-b9ab-f6afe7de58d7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Timer">
+      <UniqueIdentifier>{55cec3ac-7ab6-43bd-b734-1fff791431d2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DB\DBProxy">
+      <UniqueIdentifier>{3e6c12c6-e6f7-484f-b460-a004f2d5afc0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DB\DBJob">
+      <UniqueIdentifier>{8f4d1f46-a964-4e6d-ac23-d2a4a0b26dce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainProcess\MSG">
+      <UniqueIdentifier>{bec699fa-79bd-413f-a5af-449122106926}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Protocol">
+      <UniqueIdentifier>{9431236d-2439-41e0-92a8-751aaa0d591b}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="HUB.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Server\GSHub.cpp">
+      <Filter>Server</Filter>
+    </ClCompile>
+    <ClCompile Include="Server\HubProcess.cpp">
+      <Filter>Server</Filter>
+    </ClCompile>
+    <ClCompile Include="Server\IUdpProcess.cpp">
+      <Filter>Server</Filter>
+    </ClCompile>
+    <ClCompile Include="Command\Command.cpp">
+      <Filter>Command</Filter>
+    </ClCompile>
+    <ClCompile Include="Constructor\Constructor.cpp">
+      <Filter>Constructor</Filter>
+    </ClCompile>
+    <ClCompile Include="DB\DBJob\DBContext.cpp">
+      <Filter>DB\DBJob</Filter>
+    </ClCompile>
+    <ClCompile Include="DB\DBProxy\DBProcess.cpp">
+      <Filter>DB\DBProxy</Filter>
+    </ClCompile>
+    <ClCompile Include="DB\DBProxy\DBProcessContainer.cpp">
+      <Filter>DB\DBProxy</Filter>
+    </ClCompile>
+    <ClCompile Include="INI\INI.cpp">
+      <Filter>INI</Filter>
+    </ClCompile>
+    <ClCompile Include="Log\Log.cpp">
+      <Filter>Log</Filter>
+    </ClCompile>
+    <ClCompile Include="MainProcess\MSG\MSG_PLAYER_QUERY.cpp">
+      <Filter>MainProcess\MSG</Filter>
+    </ClCompile>
+    <ClCompile Include="MainProcess\MSG\MSG_PLAYER_QUERY_RES.cpp">
+      <Filter>MainProcess\MSG</Filter>
+    </ClCompile>
+    <ClCompile Include="Timer\ContentsTimer.cpp">
+      <Filter>Timer</Filter>
+    </ClCompile>
+    <ClCompile Include="Timer\ContentsTimerJob.cpp">
+      <Filter>Timer</Filter>
+    </ClCompile>
+    <ClCompile Include="Timer\RankTimerJob.cpp">
+      <Filter>Timer</Filter>
+    </ClCompile>
+    <ClCompile Include="Room\Room.cpp">
+      <Filter>Room</Filter>
+    </ClCompile>
+    <ClCompile Include="Room\RoomContainer.cpp">
+      <Filter>Room</Filter>
+    </ClCompile>
+    <ClCompile Include="Player\Character.cpp">
+      <Filter>Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Player\Player.cpp">
+      <Filter>Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Player\PlayerContainer.cpp">
+      <Filter>Player</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\PROTOCOL\Cpp\CLI.GS.pb.cc">
+      <Filter>Protocol</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\PROTOCOL\Cpp\Enum.pb.cc">
+      <Filter>Protocol</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\PROTOCOL\Cpp\GS.CLI.pb.cc">
+      <Filter>Protocol</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\PROTOCOL\Cpp\sample.pb.cc">
+      <Filter>Protocol</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\PROTOCOL\Cpp\Structure.pb.cc">
+      <Filter>Protocol</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="stdafx.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Server\GSHub.h">
+      <Filter>Server</Filter>
+    </ClInclude>
+    <ClInclude Include="Server\HubProcess.h">
+      <Filter>Server</Filter>
+    </ClInclude>
+    <ClInclude Include="Server\IUdpProcess.h">
+      <Filter>Server</Filter>
+    </ClInclude>
+    <ClInclude Include="Command\Command.h">
+      <Filter>Command</Filter>
+    </ClInclude>
+    <ClInclude Include="Constructor\Constructor.h">
+      <Filter>Constructor</Filter>
+    </ClInclude>
+    <ClInclude Include="DB\DBJob\DBContext.h">
+      <Filter>DB\DBJob</Filter>
+    </ClInclude>
+    <ClInclude Include="DB\DBProxy\DBProcess.h">
+      <Filter>DB\DBProxy</Filter>
+    </ClInclude>
+    <ClInclude Include="DB\DBProxy\DBProcessContainer.h">
+      <Filter>DB\DBProxy</Filter>
+    </ClInclude>
+    <ClInclude Include="INI\INI.h">
+      <Filter>INI</Filter>
+    </ClInclude>
+    <ClInclude Include="Log\Log.h">
+      <Filter>Log</Filter>
+    </ClInclude>
+    <ClInclude Include="MainProcess\MSG\MSG_PLAYER_QUERY.h">
+      <Filter>MainProcess\MSG</Filter>
+    </ClInclude>
+    <ClInclude Include="MainProcess\MSG\MSG_PLAYER_QUERY.hpp">
+      <Filter>MainProcess\MSG</Filter>
+    </ClInclude>
+    <ClInclude Include="MainProcess\MSG\MSG_PLAYER_QUERY_RES.h">
+      <Filter>MainProcess\MSG</Filter>
+    </ClInclude>
+    <ClInclude Include="Timer\ContentsTimer.h">
+      <Filter>Timer</Filter>
+    </ClInclude>
+    <ClInclude Include="Timer\ContentsTimerJob.h">
+      <Filter>Timer</Filter>
+    </ClInclude>
+    <ClInclude Include="Timer\RankTimerJob.h">
+      <Filter>Timer</Filter>
+    </ClInclude>
+    <ClInclude Include="Room\Room.h">
+      <Filter>Room</Filter>
+    </ClInclude>
+    <ClInclude Include="Room\RoomContainer.h">
+      <Filter>Room</Filter>
+    </ClInclude>
+    <ClInclude Include="Room\RoomContainer.hpp">
+      <Filter>Room</Filter>
+    </ClInclude>
+    <ClInclude Include="Player\Character.h">
+      <Filter>Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Player\Player.h">
+      <Filter>Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Player\PlayerContainer.h">
+      <Filter>Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Player\PlayerContainer.hpp">
+      <Filter>Player</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\PROTOCOL\Cpp\CLI.GS.pb.h">
+      <Filter>Protocol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\PROTOCOL\Cpp\Enum.pb.h">
+      <Filter>Protocol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\PROTOCOL\Cpp\GS.CLI.pb.h">
+      <Filter>Protocol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\PROTOCOL\Cpp\sample.pb.h">
+      <Filter>Protocol</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\PROTOCOL\Cpp\Structure.pb.h">
+      <Filter>Protocol</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
