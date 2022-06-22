@@ -11,7 +11,20 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Include="..\..\..\PROTOCOL\CSharp\CLIGS.cs" Link="Network\Protocol\CLIGS.cs" />
+    <Compile Include="..\..\..\PROTOCOL\CSharp\Enum.cs" Link="Network\Protocol\Enum.cs" />
+    <Compile Include="..\..\..\PROTOCOL\CSharp\GSCLI.cs" Link="Network\Protocol\GSCLI.cs" />
+    <Compile Include="..\..\..\PROTOCOL\CSharp\Structure.cs" Link="Network\Protocol\Structure.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Google.Protobuf" Version="3.21.1" />
+    <PackageReference Include="sqlite-net-pcl" Version="1.8.116" />
     <PackageReference Include="Xamarin.Forms" Version="5.0.0.2012" />
     <PackageReference Include="Xamarin.Essentials" Version="1.6.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Network\Protocol\" />
   </ItemGroup>
 </Project>

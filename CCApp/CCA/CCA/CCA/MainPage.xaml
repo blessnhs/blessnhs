@@ -2,12 +2,89 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="CCA.MainPage">
+    <Grid x:Name="main_grid" Padding="10,20,20,20">
+        <Grid.RowDefinitions BackgroundColor="White">
+            <RowDefinition Height="2*" />
+            <RowDefinition Height="2*" />
+            <RowDefinition Height="2*" />
+            <RowDefinition Height="2*" />
+            <RowDefinition Height="2*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="3*" />
+            <ColumnDefinition Width="3*" />
+        </Grid.ColumnDefinitions>
 
-    <StackLayout>
-        <Frame BackgroundColor="#2196F3" Padding="24" CornerRadius="0">
-            <Label Text="Welcome to Xamarin.Forms!" HorizontalTextAlignment="Center" TextColor="White" FontSize="36"/>
+
+        <Frame BorderColor="Gray"  CornerRadius="5"  Grid.Row="0" Grid.ColumnSpan="2"  BackgroundColor="White" Padding="0,0,0,0">
+            <Image x:Name="banner_top_image" Aspect="Fill" Source="Antioch.Resource.Image.banner.png"/>
         </Frame>
-       
-    </StackLayout>
 
+
+        <Frame BorderColor="Gray" Grid.Row="1" Grid.Column="0" BackgroundColor="#D77186">
+            <StackLayout x:Name="Notice">
+                <Label  x:Name="Noti" Text=" 공지"   TextColor="White" FontSize="Large" FontAttributes="Bold" />
+                <Label Text=" Notice "   TextColor="White" FontSize="Body" FontAttributes="Bold"/>
+                <StackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnTapped"/>
+                </StackLayout.GestureRecognizers>
+            </StackLayout>
+        </Frame>
+
+        <Frame BorderColor="Gray" Grid.Row="1" Grid.Column="1" BackgroundColor="#61A2DA">
+            <StackLayout x:Name="RegCamera">
+                <Label   x:Name="RegCam" Text="카메라 등록" TextColor="White" FontSize="Large" FontAttributes="Bold" />
+                <Label  Text="Bulletin" TextColor="White" FontSize="Body" FontAttributes="Bold" />
+                <StackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnTapped"/>
+                </StackLayout.GestureRecognizers>
+            </StackLayout>
+        </Frame>
+
+        <Frame BorderColor="Gray"  CornerRadius="5"  Grid.Row="2" Grid.Column="0"  BackgroundColor="#65B9DC">
+            <StackLayout x:Name="Network">
+                <Label  x:Name="Net" Text="공유된 카메라들"  TextColor="White" FontSize="Large" FontAttributes="Bold" />
+                <Label  Text="Lecture"  TextColor="White" FontSize="Body" FontAttributes="Bold" />
+                <StackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnTapped"/>
+                </StackLayout.GestureRecognizers>
+            </StackLayout>
+        </Frame>
+
+        <Frame BorderColor="Gray"  CornerRadius="5"  Grid.Row="2" Grid.Column="1" BackgroundColor="#B13691">
+            <StackLayout x:Name="MyCamera">
+                <Label   x:Name="MyCam" Text="내 카메라"  TextColor="White" FontSize="Large" FontAttributes="Bold" />
+                <Label  Text="Chat"  TextColor="White" FontSize="Body" FontAttributes="Bold" />
+                <StackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnTapped"/>
+                </StackLayout.GestureRecognizers>
+            </StackLayout>
+        </Frame>
+
+        <Frame BorderColor="Gray"  CornerRadius="5"  Grid.Row="3" Grid.Column="0"  BackgroundColor="#94B19F">
+            <StackLayout x:Name="Qna">
+                <Label   x:Name="LQna" Text="문의"  TextColor="White" FontSize="Large" FontAttributes="Bold" />
+                <Label  Text="Lecture2"  TextColor="White" FontSize="Body" FontAttributes="Bold" />
+                <StackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnTapped"/>
+                </StackLayout.GestureRecognizers>
+            </StackLayout>
+        </Frame>
+
+
+        <Frame BorderColor="Gray"  CornerRadius="5"  Grid.Row="3" Grid.Column="1"  BackgroundColor="#171635">
+            <StackLayout  x:Name="Setting">
+                <Label  x:Name="Set" Text="설정" TextColor="White" FontSize="Large" FontAttributes="Bold" />
+                <Label Text="QnA" TextColor="White" FontSize="Body" FontAttributes="Bold" />
+                <StackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnTapped"/>
+                </StackLayout.GestureRecognizers>
+            </StackLayout>
+        </Frame>
+
+        <Frame BorderColor="Gray"  CornerRadius="5"  Grid.Row="4" Grid.ColumnSpan="2"  BackgroundColor="White" Padding="0,0,0,0">
+            <Image x:Name="banner_bottom_image" Aspect="Fill" Source="Antioch.Resource.Image.banner.png"/>
+        </Frame>
+
+    </Grid>
 </ContentPage>

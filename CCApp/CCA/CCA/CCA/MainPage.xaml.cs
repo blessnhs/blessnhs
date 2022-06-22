@@ -14,5 +14,23 @@ namespace CCA
         {
             InitializeComponent();
         }
+
+        void OnTapped(object sender, EventArgs e)
+        {
+            try
+            {
+                var sndObject = sender as StackLayout;
+                var grid = this.Parent as Grid;
+
+                switch (sndObject.StyleId)
+                {
+                  
+                }
+            }
+            catch (Exception)
+            {
+
+            }
+        }
     }
 }
