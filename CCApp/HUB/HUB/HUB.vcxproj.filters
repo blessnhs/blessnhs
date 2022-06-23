@@ -114,9 +114,6 @@
     <ClCompile Include="Room\RoomContainer.cpp">
       <Filter>Room</Filter>
     </ClCompile>
-    <ClCompile Include="Player\Character.cpp">
-      <Filter>Player</Filter>
-    </ClCompile>
     <ClCompile Include="Player\Player.cpp">
       <Filter>Player</Filter>
     </ClCompile>
@@ -199,9 +196,6 @@
     </ClInclude>
     <ClInclude Include="Room\RoomContainer.hpp">
       <Filter>Room</Filter>
-    </ClInclude>
-    <ClInclude Include="Player\Character.h">
-      <Filter>Player</Filter>
     </ClInclude>
     <ClInclude Include="Player\Player.h">
       <Filter>Player</Filter>

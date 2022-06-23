@@ -7,6 +7,7 @@ Player::Player(void)
 	m_FrontId = 0;
     m_FrontSid = 0;
 	m_AliveTime = 0;
+	m_DBId = 0;
 }
 
 Player::~Player(void)
@@ -39,6 +40,16 @@ DWORD Player::GetFront()
 	return m_FrontId;
 }
 
+void Player::SetDBIndex(DWORD _id)
+{
+	m_DBId = _id;
+}
+
+DWORD Player::GetDBIndex()
+{
+	return m_DBId;
+}
+
 void Player::SetFrontSid(DWORD _id)
 {
 	m_FrontSid = _id;
@@ -59,4 +70,29 @@ DWORD Player::GetChannel()
 void Player::Initialize()
 {
 	m_PairSessionId = 0;
+}
+
+VOID Player::DelRoom(DWORD _id)
+{
+	m_RoomNumbers.erase(_id);
+}
+
+VOID Player::SetRoom(DWORD _id)
+{
+	m_RoomNumbers.insert(_id);
+}
+
+std::set<DWORD> Player::GetRoom()
+{
+	return m_RoomNumbers;
+}
+
+std::string& Player::GetName()
+{
+	return m_Name;
+}
+
+void Player::SetName(std::string& _Name)
+{
+	m_Name = _Name;
 }

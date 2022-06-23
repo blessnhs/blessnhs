@@ -35,8 +35,6 @@ public:
 
 	bool RemovePlayer(PLAYER_PTR Player);
 
-	bool IsAllComplete();
-
 	WORD GetCurrPlayer();
 
 	template<class T>

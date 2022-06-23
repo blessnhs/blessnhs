@@ -253,10 +253,6 @@ template<template<class T> class CreationPolicy> void RoomContainer<CreationPoli
 				Del(RoomPtr, pPlayer);
 		}
 
-		pPlayer->m_Char[0].SetAllComplete(FALSE);
-		pPlayer->m_Char[0].SetReady(FALSE);
-
-
 	}
 }
 

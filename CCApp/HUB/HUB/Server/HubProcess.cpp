@@ -27,7 +27,7 @@ HubProcess::HubProcess(void)
 
 	ADD_NET_FUNC(HubProcess, ID_PKT_MPEG2TS_MESSAGE_REQ, MPEG2TS_MESSAGE);
 
-	ADD_NET_FUNC(HubProcess, ID_PKT_MPEG2TS_WAKE_UP_REQ, MPEG2TS_WAKE_UP);
+	ADD_NET_FUNC(HubProcess, ID_PKT_CAMERA_WAKE_UP_REQ, CAMERA_WAKE_UP);
 
 	
 }
@@ -119,10 +119,10 @@ VOID HubProcess::LOGIN_PLAYER(WORD SubProtocol,LPVOID Data, DWORD Length, boost:
 {
 	DECLARE_RECV_TYPE(LOGIN_REQ, login)
 
-	if (_result_, login.var_id().size() <= 0 || login.var_pwd().size() <= 0)
+	if (_result_, login.var_id().size() <= 0 )
 		return;
 
-	if (_result_, login.var_id().size() >= 256 || login.var_pwd().size() >= 256)
+	if (_result_, login.var_id().size() >= 256)
 		return;
 
 	boost::shared_ptr<Hub::MSG_PLAYER_QUERY<RequestPlayerAuth>>		PLAYER_MSG = ALLOCATOR.Create<Hub::MSG_PLAYER_QUERY<RequestPlayerAuth>>();
@@ -130,7 +130,6 @@ VOID HubProcess::LOGIN_PLAYER(WORD SubProtocol,LPVOID Data, DWORD Length, boost:
 
 	{
 		PLAYER_MSG->pRequst.id.assign(login.var_id().begin(), login.var_id().end());
-		PLAYER_MSG->pRequst.pwd.assign(login.var_pwd().begin(), login.var_pwd().end());
 		PLAYER_MSG->pRequst.channel = 1;// login.var_channel();
 		PLAYER_MSG->pRequst.ForntId = Client->GetId();
 		PLAYER_MSG->pRequst.FrontSid = SubProtocol;
@@ -170,7 +169,7 @@ VOID HubProcess::ROOM_CREATE(WORD SubProtocol,LPVOID Data, DWORD Length, boost::
 	PLAYER_MSG->pSession = Client;
 
 	{
-		PLAYER_MSG->Request.m_args = std::tuple<string, INT64, string, PlayerPtr>(createroom.var_name(), pPlayer->GetId(), pPlayer->m_Char[0].GetName(), pPlayer);;
+		PLAYER_MSG->Request.m_args = std::tuple<string, INT64, string, PlayerPtr>(createroom.var_name(), pPlayer->GetId(), pPlayer->GetName(), pPlayer);;
 	}
 
 	PLAYER_MSG->Type = Client->GetMyDBTP();
@@ -216,7 +215,7 @@ VOID HubProcess::REG_PRAY(WORD SubProtocol,LPVOID Data, DWORD Length, boost::sha
 	PLAYER_MSG->pSession = Client;
 
 	{
-		PLAYER_MSG->Request.m_args = std::tuple<string,string, PlayerPtr>(message.var_message(), pPlayer->m_Char[0].GetName(), pPlayer);
+		PLAYER_MSG->Request.m_args = std::tuple<string,string, PlayerPtr>(message.var_message(), pPlayer->GetName(), pPlayer);
 	}
 
 	PLAYER_MSG->Type = Client->GetMyDBTP();
@@ -282,7 +281,7 @@ VOID HubProcess::ROOM_PASSTHROUGH(WORD SubProtocol,LPVOID Data, DWORD Length, bo
 	auto pass_msg = res.add_var_messages();
 	pass_msg->set_var_message(message.var_message());
 	pass_msg->set_var_message_int(message.var_message_int());
-	pass_msg->set_var_name(pPlayer->m_Char[0].GetName());
+	pass_msg->set_var_name(pPlayer->GetName());
 	pass_msg->set_var_time(message.var_time());
 
 	res.set_var_room_number(RoomPtr->GetId());
@@ -296,7 +295,7 @@ VOID HubProcess::ROOM_PASSTHROUGH(WORD SubProtocol,LPVOID Data, DWORD Length, bo
 	PLAYER_MSG->pSession = Client;
 
 	{
-		PLAYER_MSG->Request.m_args = std::tuple<int, INT64, string, string>(RoomPtr->GetId(), pPlayer->GetId(), pPlayer->m_Char[0].GetName(), message.var_message());
+		PLAYER_MSG->Request.m_args = std::tuple<int, INT64, string, string>(RoomPtr->GetId(), pPlayer->GetId(), pPlayer->GetName(), message.var_message());
 	}
 
 	PLAYER_MSG->Type = Client->GetMyDBTP();
@@ -345,7 +344,7 @@ VOID HubProcess::ROOM_ENTER(WORD SubProtocol,LPVOID Data, DWORD Length, boost::s
 	PLAYER_MSG->pSession = Client;
 
 	{
-		PLAYER_MSG->Request.m_args = std::tuple<int, INT64, string, PlayerPtr>(RoomPtr->GetId(), pPlayer->GetId(), pPlayer->m_Char[0].GetName(), pPlayer);
+		PLAYER_MSG->Request.m_args = std::tuple<int, INT64, string, PlayerPtr>(RoomPtr->GetId(), pPlayer->GetId(), pPlayer->GetName(), pPlayer);
 	}
 
 	PLAYER_MSG->Type = Client->GetMyDBTP();
@@ -375,7 +374,7 @@ VOID HubProcess::ROOM_LEAVE(WORD SubProtocol,LPVOID Data, DWORD Length, boost::s
 	PLAYER_MSG->pSession = Client;
 
 	{
-		PLAYER_MSG->Request.m_args = std::tuple<int, INT64, string, PlayerPtr>(RoomPtr->GetId(), pPlayer->GetId(), pPlayer->m_Char[0].GetName(), pPlayer);
+		PLAYER_MSG->Request.m_args = std::tuple<int, INT64, string, PlayerPtr>(RoomPtr->GetId(), pPlayer->GetId(), pPlayer->GetName(), pPlayer);
 	}
 
 	PLAYER_MSG->Type = Client->GetMyDBTP();
@@ -419,18 +418,18 @@ VOID HubProcess::ROOM_READY(WORD SubProtocol,LPVOID Data, DWORD Length, boost::s
 	//	ROOM_PTR pPtr = ROOMMGR.Search(pPlayer->m_RoomNumber);
 	//	if (pPtr != NULL)
 	//	{
-	//		if (pPlayer->m_Char[0].GetReady() == FALSE)
-	//			pPlayer->m_Char[0].SetReady(TRUE);
+	//		if (pPlayer->GetReady() == FALSE)
+	//			pPlayer->SetReady(TRUE);
 	//		else
-	//			pPlayer->m_Char[0].SetReady(FALSE);
+	//			pPlayer->SetReady(FALSE);
 
 	//		FC_PKT_READY_ROOM_RES snd;
-	//		snd.Name = pPlayer->m_Char[0].GetName();
-	//		snd.Result = pPlayer->m_Char[0].GetReady();
+	//		snd.Name = pPlayer->GetName();
+	//		snd.Result = pPlayer->GetReady();
 
 	//		DECLARE_JSON_WRITER
-	//		ADD_JSON_WSTR_MEMBER("Name", pPlayer->m_Char[0].GetName())
-	//			ADD_JSON_MEMBER("Result", pPlayer->m_Char[0].GetReady())
+	//		ADD_JSON_WSTR_MEMBER("Name", pPlayer->GetName())
+	//			ADD_JSON_MEMBER("Result", pPlayer->GetReady())
 
 	//			Json::FastWriter writer;
 	//		std::string outputConfig = writer.write(root2);
@@ -544,11 +543,11 @@ VOID HubProcess::MPEG2TS_MESSAGE(WORD SubProtocol, LPVOID Data, DWORD Length, bo
 	}
 }
 
-VOID HubProcess::MPEG2TS_WAKE_UP(WORD SubProtocol, LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client)
+VOID HubProcess::CAMERA_WAKE_UP(WORD SubProtocol, LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client)
 {
-	DECLARE_RECV_TYPE(MPEG2TS_WAKE_UP_REQ, message)
+	DECLARE_RECV_TYPE(CAMERA_WAKE_UP_REQ, message)
 
-	MPEG2TS_WAKE_UP_RES res;
+	CAMERA_WAKE_UP_RES res;
 
 	PlayerPtr pPlayer = PLAYERMGR.SearchByFrontSid(SubProtocol);
 	if (pPlayer == NULL)
@@ -640,7 +639,7 @@ VOID HubProcess::ALL_COMPLETE(WORD SubProtocol,LPVOID Data, DWORD Length, boost:
 	//	return;
 	//}
 
-	//pPlayer->m_Char[0].SetAllComplete(TRUE);
+	//pPlayer->SetAllComplete(TRUE);
 
 	//ROOM_PTR pPtr = ROOMMGR.Search(pPlayer->m_RoomNumber);
 	//if (pPtr != NULL)
@@ -676,7 +675,7 @@ VOID HubProcess::LOGOUT_CLIENT(WORD SubProtocol, LPVOID Data, DWORD Length, boos
 		////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-		for each (auto room in pPlayer->m_Char[0].GetRoom())
+		for each (auto room in pPlayer->GetRoom())
 		{
 			ROOMMGR.LeaveRoomPlayer(pPlayer, room);
 		}

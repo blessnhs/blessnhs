@@ -61,10 +61,18 @@ public:
 
 	void Initialize();
 
+	VOID DelRoom(DWORD _id);
+	VOID SetRoom(DWORD _id);
+	std::set<DWORD> GetRoom();
+
+	std::string& GetName();
+	void SetName(std::string& _Name);
+
+
+	VOID SetDBIndex(DWORD _id);
+	DWORD GetDBIndex();
 
 	Account		m_Account;
-	Character	m_Char[MAX_CHAR_CNT];
-
 	DWORD		m_AliveTime;
 
 
@@ -75,6 +83,13 @@ private:
 
 	DWORD		m_FrontId;
 	DWORD       m_FrontSid;
+
+	DWORD		m_DBId;
+
+	std::set<DWORD>		m_RoomNumbers;
+
+	std::string			m_Name;
+
 };
 
 typedef boost::shared_ptr<Player> PlayerPtr;

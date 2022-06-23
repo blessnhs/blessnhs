@@ -47,7 +47,7 @@ public:
 
 	VOID MPEG2TS_MESSAGE(WORD SubProtocol, LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client);
 
-	VOID MPEG2TS_WAKE_UP(WORD SubProtocol, LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client);
+	VOID CAMERA_WAKE_UP(WORD SubProtocol, LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client);
 
 protected:
 

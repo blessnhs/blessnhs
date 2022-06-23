@@ -55,14 +55,14 @@ Room::~Room(void)
 bool Room::RemovePlayer(PLAYER_PTR Player)
 {
 	m_PlayerMap[Player->GetId()] = NULL;
-	Player->m_Char[0].DelRoom(GetId());
+	Player->DelRoom(GetId());
 	return FALSE;
 }
 
 bool Room::InsertPlayer(PLAYER_PTR Player)
 {
 	m_PlayerMap[Player->GetId()] = Player;
-	Player->m_Char[0].SetRoom(GetId());
+	Player->SetRoom(GetId());
 	return true;
 }
 
@@ -94,27 +94,6 @@ void Room::SendNewUserInfo(PLAYER_PTR Player,int RoomNumber)
 		}
 	}
 }
-
-bool Room::IsAllComplete()
-{
-	for each(auto iter in m_PlayerMap)
-	{
-		PlayerPtr pPlayer = iter.second;
-		if (pPlayer == NULL)
-			continue;
-		
-		if (iter.second != NULL)
-		{
-			if (iter.second->m_Char[0].GetAllComplete() == false)
-			{
-				return FALSE;
-			}
-		}
-	}
-
-	return TRUE;
-}
-
 
 WORD Room::GetCurrPlayer()
 {

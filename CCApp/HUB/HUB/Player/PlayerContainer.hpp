@@ -234,7 +234,7 @@ template<template<class T> class CreationPolicy> void PlayerContainer<CreationPo
 			{
 				printf("Player Client %lld AliveTime Check \n", pPlayer->GetId());
 
-				for each (auto room in pPlayer->m_Char[0].GetRoom())
+				for each (auto room in pPlayer->GetRoom())
 				{
 					ROOMMGR.LeaveRoomPlayer(pPlayer, room);
 				}
@@ -271,7 +271,7 @@ template<template<class T> class CreationPolicy> void PlayerContainer<CreationPo
 			{
 				printf("Player Client %lld Session mia\n",pPlayer->GetId());			
 
-				for each (auto room in pPlayer->m_Char[0].GetRoom())
+				for each (auto room in pPlayer->GetRoom())
 				{
 					ROOMMGR.LeaveRoomPlayer(pPlayer,room);
 				}
@@ -379,7 +379,7 @@ template<template<class T> class CreationPolicy>  VOID PlayerContainer<CreationP
 	if (pPlayer != NULL)
 	{
 
-		for each (auto room in pPlayer->m_Char[0].GetRoom())
+		for each (auto room in pPlayer->GetRoom())
 		{
 			ROOMMGR.LeaveRoomPlayer(pPlayer, room);
 		}
@@ -397,7 +397,7 @@ template<template<class T> class CreationPolicy>  VOID PlayerContainer<CreationP
 	if (pPlayer != NULL)
 	{
 		
-		for each (auto room in pPlayer->m_Char[0].GetRoom())
+		for each (auto room in pPlayer->GetRoom())
 		{
 			ROOMMGR.LeaveRoomPlayer(pPlayer, room);
 		}

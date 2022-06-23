@@ -258,8 +258,6 @@ public:
 
 		RoomPtr->InsertPlayer(pPlayerPtr);
 
-		pPlayerPtr->m_Char[0].SetRoom(std::get<0>(Request.m_args));
-
 		res.set_var_room_id(std::get<0>(Request.m_args));
 		res.set_var_name(RoomPtr->m_Stock.Name.c_str());
 		SEND_PROTO_BUFFER2(pPlayerPtr->GetFrontSid(), res, pSession)
@@ -301,7 +299,6 @@ public:
 			RoomUserInfo* userinfo = nty.mutable_var_room_user();
 
 			userinfo->set_var_index(pPlayerPtr->GetId());
-			userinfo->set_var_name(pPlayerPtr->m_Char[0].GetName());
 			userinfo->set_var_room_number(RoomPtr->GetId());
 
 			SEND_PROTO_BUFFER2(iter.second->GetFrontSid(),nty, pPair)
@@ -608,7 +605,7 @@ public:
 					return;
 				}
 
-				if (pRequst.id.size() == 0 || pRequst.id.size() > 256 || pRequst.pwd.size() == 0 || pRequst.pwd.size() > 256)
+				if (pRequst.id.size() == 0 || pRequst.id.size() > 256)
 				{
 					BLOG("DBPROCESSCONTAINER_CER.Search token size error %d \n", pRequst.id.size());
 
@@ -635,126 +632,25 @@ public:
 				//-1 비밀번호 다름
 				//-2 이미 접속
 				//-3 접속 로그남기기 실패
-				int nRet = pProcess->ProcedureUserLogin(pRequst.id, pRequst.pwd, authentickey, score, Index, level);
-
-				//이미 접속해 있는 세션이 있고(디비에 접속기록이 남아 있다.)
-				if (nRet != _ERR_NONE)
-				{
-					//-1 비밀번호 다름
-					//접속 종료만 처리
-					if (nRet == -1)
-					{
-						BLOG("1.Login Fail Invalid Password %d  INDEX  %lld\n", nRet, Index);
-						//pSession->Close();
-
-						PLAYERMGR.Disconnect(pSession);
-
-						CLIENT_KICK kick;
-						SEND_PROTO_BUFFER2(pRequst.FrontSid, kick, pSession)
-						return;
-					}
-					//- 2 이미 접속
-					// 양쪽 다 종료 처리
-					else if (nRet == -2)
-					{
-						//디비에 접속 기록을 그냥 날린다. 어차피 양쪽 다 팅긴다. 
-						pProcess->ProcedureUserLogout(Index);
-
-						BLOG("2.Login Fail Concurrent Table Exist data Ret %d  INDEX  %lld\n", nRet, Index);
-						res.set_var_code(LoginFailed);
-						SEND_PROTO_BUFFER2(pRequst.FrontSid, res, pSession)
-
-
-						CLIENT_KICK kick;
-						SEND_PROTO_BUFFER2(pRequst.FrontSid, kick, pSession)
-						//pSession->Close();
-
-						PLAYERMGR.Disconnect(pSession);
-
-						//기존 세션과 신규 세션 양쪽 다 팅기는 것으로 변경
-						//이미 접속중이면 이전 접속을 끊는다.
-						//다른쓰레드에서 아직 캐릭터를 생성하기 전이면 못찾을수도 있다.
-						auto existClient = PLAYERMGR.Search(Index);
-						if (existClient != NULL)
-						{
-							GSCLIENT_PTR pPair = SERVER.GetClient(existClient->GetFront());
-							if (pPair != NULL)
-							{
-								BLOG("2.Login Fail Exist player %lld and session close\n", Index);
-
-								PLAYERMGR.Disconnect(existClient);
-
-								CLIENT_KICK kick;
-								SEND_PROTO_BUFFER2(existClient->GetFrontSid(), kick, pSession)
-							}
-							return;
-						}
-
-						return;
-					}
-				}
-
-				//해당 세센으로 이미 로그인을 했다.
-				auto existClient = PLAYERMGR.Search(pRequst.ForntId,pRequst.FrontSid);
-				if (existClient != NULL)
-				{
-					BLOG("Duplicate Login Fail Exist player %lld close\n", Index);
-					//pSession->Close();
-
-
-					PLAYERMGR.Disconnect(existClient);
-
-					CLIENT_KICK kick;
-					SEND_PROTO_BUFFER2(pRequst.FrontSid, kick, pSession)
-
-					return;
-				}
-
-				//해당 디비 index 유저가이미 존재
-				existClient = PLAYERMGR.Search(Index);
-				if (existClient != NULL)
-				{
-					GSCLIENT_PTR pPair = SERVER.GetClient(existClient->GetFront());
-					if (pPair != NULL)
-					{
-						BLOG("3.Login Fail Exist player %lld and session close\n", Index);
-
-
-						CLIENT_KICK kick1;
-						SEND_PROTO_BUFFER2(existClient->GetFrontSid(), kick1, pSession)
-
-						PLAYERMGR.Disconnect(pPair);
-
-						PLAYERMGR.Disconnect(pSession);
-
-					//	pPair->Close();
-
-					// pSession->Close();
-
-						CLIENT_KICK kick2;
-						SEND_PROTO_BUFFER2(pRequst.FrontSid, kick2, pSession)
-					}
-					return;
-				}
+				int nRet = pProcess->ProcedureUserLogin(pRequst.id, "", authentickey, score, Index, level);
 
 				PlayerPtr pNewPlayer = PLAYERMGR.Create();
 
 				pNewPlayer->Initialize();
-				pNewPlayer->m_Char[0].SetName(pRequst.id);
 				pNewPlayer->m_Account.SetName(pRequst.id);
 
 
 				pNewPlayer->SetFront(pRequst.ForntId);
 				pNewPlayer->SetFrontSid(pRequst.FrontSid);
 
+				//중복 로그인이 가능하기 때문에 고유 아이드를 소켓 아이디로 같이 매칭시킨다.
+				pNewPlayer->SetId(pSession->GetId());
 
-				pNewPlayer->SetId(Index);
+				pNewPlayer->SetDBIndex(Index);
 				
 				
 				pNewPlayer->SetPair(pRequst.ForntId);
 			//	pSession->SetPair(Index);
-
-				pNewPlayer->m_Char[0].SetLevel(level);
 
 				pNewPlayer->m_AliveTime = GetTickCount();
 
