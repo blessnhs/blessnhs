@@ -12,7 +12,7 @@ CDBProcessCer::CDBProcessCer(void)
 	m_IsOpen = false;
 	InitializeCriticalSection(&m_CS);
 
-	m_DB = new MongoDB("Hub");
+	m_DB = new MongoDB("CCA");
 	
 }
 
@@ -79,6 +79,16 @@ int  CDBProcessCer::DeleteAllConcurrentUser()
 int		CDBProcessCer::ProcedureUserLogin(const std::string id, const std::string pwd, std::string& szKey,int& Score, INT64& Index, int& Level)
 {
 	return m_DB->ProcedureUserLogin(id, pwd, szKey, Score, Index, Level);
+}
+
+int CDBProcessCer::RegisterCamera(int64_t INDEX, std::string machine_id, std::string machine_name)
+{
+	return m_DB->RegisterCamera(INDEX, machine_id, machine_name);
+}
+
+std::list<tuple<INT64, string, string>> CDBProcessCer::RegCameraList(int64_t INDEX)
+{
+	return m_DB->RegCameraList(INDEX);
 }
 
 

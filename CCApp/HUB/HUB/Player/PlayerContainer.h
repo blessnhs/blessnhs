@@ -41,6 +41,8 @@ public:
 
 	VOID CheckUserList();
 
+	int GetIncId() {return intAtomic.fetch_add(1);}
+
 	int Count();
 
 	template<class TYPE>
@@ -54,7 +56,7 @@ public:
 	VOID Disconnect(PlayerPtr pPlayer);
 
 protected:
-
+	atomic<int> intAtomic = 0;
 	//원래 concurrent_unordered_map 자료 구조는 캐싱용도의 쓰레드 세이프한 자료 구조이기 때문에
 	//루프같은 순회할때를 위해 루프용을 하나 만든다.
 	//m_PlayerMap erase 대신 key value에 null을 넣었기 때문이다.

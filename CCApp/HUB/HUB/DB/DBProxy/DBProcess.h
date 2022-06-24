@@ -32,6 +32,10 @@ public:
 	int AddRoomMessage(int room_id, INT64 user_id, string user_name, string msg,string time);
 	std::list<tuple<__int64, string, int, string, string>> LoadRoomMessage(int room_id, int count = 100);
 	std::list<tuple<int, string, string>> LoadRooms(int count = 100);
+	int RegisterCamera(int64_t INDEX, std::string machine_id, std::string machine_name);
+
+	std::list<tuple<INT64, string, string>> RegCameraList(int64_t INDEX);
+
 
 	bool				m_IsOpen;
 

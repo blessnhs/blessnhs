@@ -29,7 +29,10 @@ HubProcess::HubProcess(void)
 
 	ADD_NET_FUNC(HubProcess, ID_PKT_CAMERA_WAKE_UP_REQ, CAMERA_WAKE_UP);
 
-	
+	ADD_NET_FUNC(HubProcess, ID_PKT_REG_CAMERA_REQ, CAMERA_REGISTER);
+
+	ADD_NET_FUNC(HubProcess, ID_PKT_CAMERA_LIST_REQ, CAMERA_LIST);
+
 }
 
 
@@ -119,17 +122,17 @@ VOID HubProcess::LOGIN_PLAYER(WORD SubProtocol,LPVOID Data, DWORD Length, boost:
 {
 	DECLARE_RECV_TYPE(LOGIN_REQ, login)
 
-	if (_result_, login.var_id().size() <= 0 )
+	if (_result_, login.var_token().size() <= 0 )
 		return;
 
-	if (_result_, login.var_id().size() >= 256)
+	if (_result_, login.var_token().size() >= 256)
 		return;
 
 	boost::shared_ptr<Hub::MSG_PLAYER_QUERY<RequestPlayerAuth>>		PLAYER_MSG = ALLOCATOR.Create<Hub::MSG_PLAYER_QUERY<RequestPlayerAuth>>();
 	PLAYER_MSG->pSession = Client;
 
 	{
-		PLAYER_MSG->pRequst.id.assign(login.var_id().begin(), login.var_id().end());
+		PLAYER_MSG->pRequst.token.assign(login.var_token().begin(), login.var_token().end());
 		PLAYER_MSG->pRequst.channel = 1;// login.var_channel();
 		PLAYER_MSG->pRequst.ForntId = Client->GetId();
 		PLAYER_MSG->pRequst.FrontSid = SubProtocol;
@@ -541,6 +544,50 @@ VOID HubProcess::MPEG2TS_MESSAGE(WORD SubProtocol, LPVOID Data, DWORD Length, bo
 	{
 		SEND_PROTO_BUFFER2(SubProtocol, res, Client)
 	}
+}
+
+VOID HubProcess::CAMERA_LIST(WORD SubProtocol, LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client)
+{
+	DECLARE_RECV_TYPE(CAMERA_LIST_REQ, message)
+
+	PlayerPtr pPlayer = PLAYERMGR.SearchByFrontSid(SubProtocol);
+	if (pPlayer == NULL)
+	{
+		return;
+	}
+
+	boost::shared_ptr<Hub::MSG_PLAYER_QUERY<Hub::CameraList>>		PLAYER_MSG = ALLOCATOR.Create<Hub::MSG_PLAYER_QUERY<Hub::CameraList>>();
+	PLAYER_MSG->pSession = Client;
+
+	{
+		PLAYER_MSG->Request.m_args = std::tuple< PlayerPtr>( pPlayer);;
+	}
+
+	PLAYER_MSG->Type = Client->GetMyDBTP();
+	PLAYER_MSG->SubType = ONQUERY;
+	MAINPROC.RegisterCommand(PLAYER_MSG);
+}
+
+VOID HubProcess::CAMERA_REGISTER(WORD SubProtocol, LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client)
+{
+	DECLARE_RECV_TYPE(REG_CAMERA_REQ, message)
+
+	PlayerPtr pPlayer = PLAYERMGR.SearchByFrontSid(SubProtocol);
+	if (pPlayer == NULL)
+	{
+		return;
+	}
+
+	boost::shared_ptr<Hub::MSG_PLAYER_QUERY<Hub::RegCamera>>		PLAYER_MSG = ALLOCATOR.Create<Hub::MSG_PLAYER_QUERY<Hub::RegCamera>>();
+	PLAYER_MSG->pSession = Client;
+
+	{
+		PLAYER_MSG->Request.m_args = std::tuple<string, string, PlayerPtr>(message.var_machine_id(),message.var_cam_name(), pPlayer);;
+	}
+
+	PLAYER_MSG->Type = Client->GetMyDBTP();
+	PLAYER_MSG->SubType = ONQUERY;
+	MAINPROC.RegisterCommand(PLAYER_MSG);
 }
 
 VOID HubProcess::CAMERA_WAKE_UP(WORD SubProtocol, LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client)

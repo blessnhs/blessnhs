@@ -366,6 +366,7 @@ BOOL GSPacketTCP::GetPacket()
 
 	//2020.10.13 서버 덤프없이 사라지는 버그 패킷 전송시 클라이언트에서 Size패킷을 변조해 헤더보다 작은 값으로 보내서
 	//복사하다 죽었다.
+	//4바이트 (크기) + 2바이트(protocolid)  + 2바이트 (sid) + 4바이트(압축여부)
 	if (PacketLength < (sizeof(DWORD) + sizeof(WORD) + sizeof(WORD) + sizeof(DWORD)))
 	{
 		SYSLOG().Write("!!GetPacket Packet Size Wrong %d\n", PacketLength);

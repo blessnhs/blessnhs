@@ -65,6 +65,8 @@ template<template<class T> class CreationPolicy> bool PlayerContainer<CreationPo
 
 template<template<class T> class CreationPolicy> bool PlayerContainer<CreationPolicy>::Add(PlayerPtr &pObj)
 {
+	pObj->SetId(GetIncId());
+
 	m_PlayerMap[pObj->GetId()] = pObj;
 
 	bool find = false;

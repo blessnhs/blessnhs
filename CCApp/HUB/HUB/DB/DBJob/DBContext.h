@@ -13,9 +13,7 @@ public:
 
 	~RequestPlayerAuth(void) {}
 
-	std::string id;
-	std::string pwd;
-	std::string SessionKey;
+	std::string token;
 	INT64 Index;
 	int Result;
 	int channel;

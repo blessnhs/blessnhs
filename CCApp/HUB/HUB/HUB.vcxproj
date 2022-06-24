@@ -180,7 +180,6 @@
     <ClCompile Include="Log\Log.cpp" />
     <ClCompile Include="MainProcess\MSG\MSG_PLAYER_QUERY.cpp" />
     <ClCompile Include="MainProcess\MSG\MSG_PLAYER_QUERY_RES.cpp" />
-    <ClCompile Include="Player\Character.cpp" />
     <ClCompile Include="Player\Player.cpp" />
     <ClCompile Include="Player\PlayerContainer.cpp" />
     <ClCompile Include="Room\Room.cpp" />
@@ -212,7 +211,6 @@
     <ClInclude Include="MainProcess\MSG\MSG_PLAYER_QUERY.h" />
     <ClInclude Include="MainProcess\MSG\MSG_PLAYER_QUERY.hpp" />
     <ClInclude Include="MainProcess\MSG\MSG_PLAYER_QUERY_RES.h" />
-    <ClInclude Include="Player\Character.h" />
     <ClInclude Include="Player\Player.h" />
     <ClInclude Include="Player\PlayerContainer.h" />
     <ClInclude Include="Player\PlayerContainer.hpp" />

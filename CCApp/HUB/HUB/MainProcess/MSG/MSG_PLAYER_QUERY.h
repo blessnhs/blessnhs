@@ -394,6 +394,56 @@ public:
 	DECLARE_DB_CLASS_END
 #pragma endregion
 
+#pragma region RegCamera
+	DECLARE_DB_CLASS_BEGIN_3(RegCamera, string, string, PlayerPtr)
+	{
+
+		PlayerPtr pPlayerPtr = std::get<2>(Request.m_args);
+		if (pPlayerPtr == NULL)
+		{
+			return;
+		}
+
+		REG_CAMERA_RES res;
+
+		auto ret = pProcess->RegisterCamera(pPlayerPtr->GetDBIndex(), std::get<0>(Request.m_args), std::get<1>(Request.m_args));
+
+		SEND_PROTO_BUFFER2(pPlayerPtr->GetFrontSid(), res, pSession)
+
+	}
+	DECLARE_DB_CLASS_END
+#pragma endregion
+
+
+#pragma region LoadCamera List
+	DECLARE_DB_CLASS_BEGIN_1(CameraList, PlayerPtr)
+	{
+
+		PlayerPtr pPlayerPtr = std::get<0>(Request.m_args);
+		if (pPlayerPtr == NULL)
+		{
+			return;
+		}
+
+		CAMERA_LIST_RES res;
+		res.set_var_code(Success);
+
+		auto camList = pProcess->RegCameraList(pPlayerPtr->GetDBIndex());
+
+		for each (auto cam  in camList)
+		{
+			auto caminfo = res.add_var_camera();
+
+			caminfo->set_var_machine_name(std::get<1>(cam));
+			caminfo->set_var_machine_id(std::get<0>(cam));
+		}
+
+		SEND_PROTO_BUFFER2(pPlayerPtr->GetFrontSid(), res, pSession)
+
+	}
+	DECLARE_DB_CLASS_END
+#pragma endregion
+
 #pragma region RequestLogout
 	DECLARE_DB_CLASS_BEGIN_1(RequestLogout,INT64)
 	{
@@ -605,9 +655,9 @@ public:
 					return;
 				}
 
-				if (pRequst.id.size() == 0 || pRequst.id.size() > 256)
+				if (pRequst.token.size() == 0 || pRequst.token.size() > 256)
 				{
-					BLOG("DBPROCESSCONTAINER_CER.Search token size error %d \n", pRequst.id.size());
+					BLOG("DBPROCESSCONTAINER_CER.Search token size error %d \n", pRequst.token.size());
 
 					res.set_var_code(DataBaseError);
 
@@ -628,23 +678,21 @@ public:
 				INT64 Index = 0;
 				int score = 0, level = 0;
 
+				auto result = GetGoogleAuth(pRequst.token);
 
-				//-1 비밀번호 다름
-				//-2 이미 접속
-				//-3 접속 로그남기기 실패
-				int nRet = pProcess->ProcedureUserLogin(pRequst.id, "", authentickey, score, Index, level);
+
+				int nRet = pProcess->ProcedureUserLogin(pRequst.token, "", authentickey, score, Index, level);
 
 				PlayerPtr pNewPlayer = PLAYERMGR.Create();
 
 				pNewPlayer->Initialize();
-				pNewPlayer->m_Account.SetName(pRequst.id);
+
+				//추후 수정
+			//	pNewPlayer->m_Account.SetName(pRequst.token);
 
 
 				pNewPlayer->SetFront(pRequst.ForntId);
 				pNewPlayer->SetFrontSid(pRequst.FrontSid);
-
-				//중복 로그인이 가능하기 때문에 고유 아이드를 소켓 아이디로 같이 매칭시킨다.
-				pNewPlayer->SetId(pSession->GetId());
 
 				pNewPlayer->SetDBIndex(Index);
 				
@@ -659,7 +707,7 @@ public:
 				res.set_var_code(Success);
 				res.set_var_index(Index);
 
-				res.set_var_name(pRequst.id);
+				res.set_var_name(pRequst.token);
 
 				SEND_PROTO_BUFFER2(pRequst.FrontSid, res, pSession)
 

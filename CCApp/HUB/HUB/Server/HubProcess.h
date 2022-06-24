@@ -49,6 +49,10 @@ public:
 
 	VOID CAMERA_WAKE_UP(WORD SubProtocol, LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client);
 
+	VOID CAMERA_LIST(WORD SubProtocol, LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client);
+
+	VOID CAMERA_REGISTER(WORD SubProtocol, LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> Client);
+
 protected:
 
 	DECLARE_MSG_MAP2(HubProcess)
