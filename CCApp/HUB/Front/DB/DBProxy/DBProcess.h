@@ -20,7 +20,7 @@ public:
 
 	int UpdaetQNS(INT64 Index, string contents);
 	std::list<tuple<__int64, string, string>> NoticeInfoInfo();
-	float ProcedureVersion();
+	double ProcedureVersion();
 
 
 	list<tuple<string, string,string>> PrayList();

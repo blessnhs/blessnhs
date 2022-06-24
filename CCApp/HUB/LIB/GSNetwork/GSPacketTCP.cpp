@@ -12,6 +12,7 @@ namespace GSNetwork	{ namespace GSSocket	{	namespace GSPacket	{	namespace GSPack
 GSPacketTCP::GSPacketTCP(void)
 {
 	SetSocketType(SOCKET_TCP);
+	m_SequenceNum = 0;
 }
 
 GSPacketTCP::~GSPacketTCP(void)
@@ -122,24 +123,34 @@ BOOL	GSPacketTCP::ReadPacketForEventSelect()
 //#endif
 //	return GSSocketTCP::Write((BYTE*)pWriteData->Data, Size);
 //}
+// 
+// 
+// 
+// 
 
-BOOL	GSPacketTCP::WritePacketNoneCompress(WORD MainProtocol, WORD SubProtocol, const BYTE* Packet, DWORD PayloadSize)
+//2022 06 24 extend protocol header
+// size 4 + main protocol id 2 + sub protocol id 2 + sequence 4 + reserve1 1 + reserver2 8
+//
+
+BOOL	GSPacketTCP::WritePacketNoneCompress(WORD MainProtocol, WORD SubProtocol, const BYTE* Packet, DWORD PayloadSize, long long Reserve2)
 {
-
 	CThreadSync Sync;
 
 	if (!Packet)
 		return FALSE;
 
-	DWORD PacketLength = sizeof(DWORD) +
-		sizeof(WORD) +
-		sizeof(WORD) +
-		sizeof(DWORD) +
+	DWORD PacketLength = 
+		sizeof(DWORD) +			// size 4
+		sizeof(WORD) +			// main protocol id 2
+		sizeof(WORD) +			// sub protocol id 2
+		sizeof(DWORD) +			// sequence 4
+		sizeof(byte) +			// reserve1 1
+		sizeof(long long) +		//reserver2 8
 		PayloadSize;
 
 	byte* sendBuff = new byte[PacketLength];
 
-	int compressflag = 0;
+	byte compressflag = 0;
 
 	memcpy(sendBuff, &PacketLength, sizeof(DWORD));
 
@@ -156,13 +167,30 @@ BOOL	GSPacketTCP::WritePacketNoneCompress(WORD MainProtocol, WORD SubProtocol, c
 		sizeof(DWORD) +
 		sizeof(WORD) +
 		sizeof(WORD),
-		&compressflag, sizeof(DWORD));
+		&m_SequenceNum, sizeof(DWORD));
+
+	memcpy(sendBuff +
+		sizeof(DWORD) +
+		sizeof(WORD) +
+		sizeof(WORD) + 
+		sizeof(DWORD),
+		&compressflag, sizeof(byte));
 
 	memcpy(sendBuff +
 		sizeof(DWORD) +
 		sizeof(WORD) +
 		sizeof(WORD) +
-		sizeof(DWORD),
+		sizeof(DWORD) + 
+		sizeof(byte),
+		&Reserve2, sizeof(long long));
+
+	memcpy(sendBuff +
+		sizeof(DWORD) +
+		sizeof(WORD) +
+		sizeof(WORD) +
+		sizeof(DWORD) + 
+		sizeof(byte) + 
+		sizeof(long long),
 		Packet, PayloadSize);
 
 	//GSCrypt::Encrypt(TempBuffer + sizeof(WORD), TempBuffer + sizeof(WORD), PacketLength - sizeof(WORD));
@@ -179,7 +207,7 @@ BOOL	GSPacketTCP::WritePacketNoneCompress(WORD MainProtocol, WORD SubProtocol, c
 	return GSSocketTCP::Write(pWriteData);
 }
 
-BOOL	GSPacketTCP::RelayPacket(WORD MainProtocol, WORD SubProtocol, BOOL Compress, const BYTE* Packet, DWORD PayloadSize)
+BOOL	GSPacketTCP::RelayPacket(WORD MainProtocol, WORD SubProtocol, BOOL Compress, const BYTE* Packet, DWORD PayloadSize, long long Reserve2)
 {
 
 	CThreadSync Sync;
@@ -187,15 +215,18 @@ BOOL	GSPacketTCP::RelayPacket(WORD MainProtocol, WORD SubProtocol, BOOL Compress
 	if (!Packet)
 		return FALSE;
 
-	DWORD PacketLength = sizeof(DWORD) +
-		sizeof(WORD) +
-		sizeof(WORD) +
-		sizeof(DWORD) +
+	DWORD PacketLength =
+		sizeof(DWORD) +			// size 4
+		sizeof(WORD) +			// main protocol id 2
+		sizeof(WORD) +			// sub protocol id 2
+		sizeof(DWORD) +			// sequence 4
+		sizeof(byte) +			// reserve1 1
+		sizeof(long long) +		//reserver2 8
 		PayloadSize;
 
 	byte* sendBuff = new byte[PacketLength];
 
-	int compressflag = Compress;
+	byte compressflag = Compress;
 
 	memcpy(sendBuff, &PacketLength, sizeof(DWORD));
 
@@ -212,13 +243,31 @@ BOOL	GSPacketTCP::RelayPacket(WORD MainProtocol, WORD SubProtocol, BOOL Compress
 		sizeof(DWORD) +
 		sizeof(WORD) +
 		sizeof(WORD),
-		&compressflag, sizeof(DWORD));
+		&m_SequenceNum, sizeof(DWORD));
 
 	memcpy(sendBuff +
 		sizeof(DWORD) +
 		sizeof(WORD) +
 		sizeof(WORD) +
 		sizeof(DWORD),
+		&compressflag, sizeof(byte));
+
+	memcpy(sendBuff +
+		sizeof(DWORD) +
+		sizeof(WORD) +
+		sizeof(WORD) +
+		sizeof(DWORD) +
+		sizeof(byte),
+		&Reserve2, sizeof(long long));
+
+
+	memcpy(sendBuff +
+		sizeof(DWORD) +
+		sizeof(WORD) +
+		sizeof(WORD) +
+		sizeof(DWORD) +
+		sizeof(byte) +
+		sizeof(long long),
 		Packet, PayloadSize);
 
 	//GSCrypt::Encrypt(TempBuffer + sizeof(WORD), TempBuffer + sizeof(WORD), PacketLength - sizeof(WORD));
@@ -236,7 +285,7 @@ BOOL	GSPacketTCP::RelayPacket(WORD MainProtocol, WORD SubProtocol, BOOL Compress
 }
 
 
-BOOL	GSPacketTCP::WritePacketCompress(WORD MainProtocol, WORD SubProtocol, const BYTE* Packet, DWORD PayloadSize)
+BOOL	GSPacketTCP::WritePacketCompress(WORD MainProtocol, WORD SubProtocol, const BYTE* Packet, DWORD PayloadSize, long long Reserve2)
 {
 	CThreadSync Sync;
 
@@ -248,17 +297,19 @@ BOOL	GSPacketTCP::WritePacketCompress(WORD MainProtocol, WORD SubProtocol, const
 	std::string src((char*)Packet, PayloadSize);
 
 	std::string out = Gzip::compress(src);
-
 	
-	DWORD PacketLength = sizeof(DWORD) +
-		sizeof(WORD) +
-		sizeof(WORD) +
-		sizeof(DWORD) +
+	DWORD PacketLength =
+		sizeof(DWORD) +			// size 4
+		sizeof(WORD) +			// main protocol id 2
+		sizeof(WORD) +			// sub protocol id 2
+		sizeof(DWORD) +			// sequence 4
+		sizeof(byte) +			// reserve1 1
+		sizeof(long long) +		//reserver2 8
 		out.size();
 
 	byte* sendBuff = new byte[PacketLength];
 
-	int compressflag = 1;
+	byte compressflag = 1;
 
 	memcpy(sendBuff, &PacketLength, sizeof(DWORD));
 
@@ -275,13 +326,30 @@ BOOL	GSPacketTCP::WritePacketCompress(WORD MainProtocol, WORD SubProtocol, const
 		sizeof(DWORD) +
 		sizeof(WORD) +
 		sizeof(WORD),
-		&compressflag, sizeof(DWORD));
+		&m_SequenceNum, sizeof(DWORD));
 
 	memcpy(sendBuff +
 		sizeof(DWORD) +
 		sizeof(WORD) +
 		sizeof(WORD) +
 		sizeof(DWORD),
+		&compressflag, sizeof(byte));
+
+	memcpy(sendBuff +
+		sizeof(DWORD) +
+		sizeof(WORD) +
+		sizeof(WORD) +
+		sizeof(DWORD) +
+		sizeof(byte),
+		&Reserve2, sizeof(long long));
+
+	memcpy(sendBuff +
+		sizeof(DWORD) +
+		sizeof(WORD) +
+		sizeof(WORD) +
+		sizeof(DWORD) +
+		sizeof(byte) +
+		sizeof(long long),
 		out.c_str(), out.size());
 
 	//GSCrypt::Encrypt(TempBuffer + sizeof(WORD), TempBuffer + sizeof(WORD), PacketLength - sizeof(WORD));
@@ -298,12 +366,12 @@ BOOL	GSPacketTCP::WritePacketCompress(WORD MainProtocol, WORD SubProtocol, const
 	return GSSocketTCP::Write(pWriteData);
 }
 
-BOOL	GSPacketTCP::WritePacket(WORD MainProtocol,WORD SubProtocol, const BYTE * Packet, DWORD PayloadSize)
+BOOL	GSPacketTCP::WritePacket(WORD MainProtocol,WORD SubProtocol, const BYTE * Packet, DWORD PayloadSize, long long Reserve2)
 {
 	if (PayloadSize > 760)
-		return WritePacketCompress(MainProtocol, SubProtocol, Packet, PayloadSize);
+		return WritePacketCompress(MainProtocol, SubProtocol, Packet, PayloadSize, Reserve2);
 	else
-		return WritePacketNoneCompress(MainProtocol, SubProtocol, Packet, PayloadSize);
+		return WritePacketNoneCompress(MainProtocol, SubProtocol, Packet, PayloadSize, Reserve2);
 
 }
 
@@ -366,8 +434,8 @@ BOOL GSPacketTCP::GetPacket()
 
 	//2020.10.13 서버 덤프없이 사라지는 버그 패킷 전송시 클라이언트에서 Size패킷을 변조해 헤더보다 작은 값으로 보내서
 	//복사하다 죽었다.
-	//4바이트 (크기) + 2바이트(protocolid)  + 2바이트 (sid) + 4바이트(압축여부)
-	if (PacketLength < (sizeof(DWORD) + sizeof(WORD) + sizeof(WORD) + sizeof(DWORD)))
+	//4바이트 (크기) + 2바이트(protocolid)  + 2바이트 (sub protocolid) + 4바이트(sequence number) + 1바이트(압축여부) reserver1 + 8바이트 reserver2
+	if (PacketLength < (sizeof(DWORD) + sizeof(WORD) + sizeof(WORD) + sizeof(DWORD) + sizeof(byte) + sizeof(long long) ))
 	{
 		SYSLOG().Write("!!GetPacket Packet Size Wrong %d\n", PacketLength);
 		return FALSE;
@@ -382,19 +450,25 @@ BOOL GSPacketTCP::GetPacket()
 	
 		WORD MainProtocol = 0;
 		WORD SubProtocol = 0;
-		DWORD CompressFlag     = 0;
+		DWORD SequenceNumber = 0;
+		byte CompressFlag     = 0;
+
+		long long Reserve2;
 
 		memcpy(&MainProtocol   , m_PacketBuffer + sizeof(DWORD),   sizeof(WORD));
 		memcpy(&SubProtocol    , m_PacketBuffer + sizeof(DWORD)  + sizeof(WORD) , sizeof(WORD));
-		memcpy(&CompressFlag, m_PacketBuffer + sizeof(DWORD)  + sizeof(WORD)  + sizeof(WORD), sizeof(DWORD));
+		memcpy(&SequenceNumber, m_PacketBuffer + sizeof(DWORD)  + sizeof(WORD)  + sizeof(WORD), sizeof(DWORD));
+
+		memcpy(&CompressFlag, m_PacketBuffer + sizeof(DWORD) + sizeof(WORD) + sizeof(WORD) + sizeof(DWORD), sizeof(byte));
+		memcpy(&Reserve2, m_PacketBuffer + sizeof(DWORD) + sizeof(WORD) + sizeof(WORD) + sizeof(DWORD) + sizeof(byte), sizeof(long long));
 		
-		PayLoadLength = PacketLength - sizeof(DWORD) - sizeof(WORD) - sizeof(WORD) - sizeof(DWORD);
+		PayLoadLength = PacketLength - sizeof(DWORD) - sizeof(WORD) - sizeof(WORD) - sizeof(DWORD) - sizeof(byte) - sizeof(long long);
 
 		boost::shared_ptr<XDATA> pBuffer(m_GSBufferPool.alloc());
 
 		if(CompressFlag == 1 && m_UseCompress == true)
 		{
-			std::string src((char *)(m_PacketBuffer + sizeof(DWORD) + sizeof(WORD) + sizeof(WORD) + sizeof(DWORD)), PayLoadLength);
+			std::string src((char *)(m_PacketBuffer + sizeof(DWORD) + sizeof(WORD) + sizeof(WORD) + sizeof(DWORD) + sizeof(byte) + sizeof(long long)), PayLoadLength);
 
 			std::string out = Gzip::decompress(src);
 
@@ -402,12 +476,13 @@ BOOL GSPacketTCP::GetPacket()
 		}
 		else
 		{
-			pBuffer->m_Buffer.SetBuffer(m_PacketBuffer + sizeof(DWORD) + sizeof(WORD) + sizeof(WORD) + sizeof(DWORD), PayLoadLength);
+			pBuffer->m_Buffer.SetBuffer(m_PacketBuffer + sizeof(DWORD) + sizeof(WORD) + sizeof(WORD) + sizeof(DWORD) + sizeof(byte) + sizeof(long long), PayLoadLength);
 		}
 	
 		pBuffer->IsCompress = CompressFlag;
 		pBuffer->MainId = MainProtocol;
 		pBuffer->SubId = SubProtocol;
+		pBuffer->Reserve2 = Reserve2;
 		pBuffer->Length = pBuffer->m_Buffer.GetLength();
 
 		m_PacketList.push(pBuffer);

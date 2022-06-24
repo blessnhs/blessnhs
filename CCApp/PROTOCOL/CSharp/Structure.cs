@@ -34,7 +34,8 @@ public static partial class StructureReflection {
           "X2NvbnRlbnQYAyABKAkSEAoIdmFyX2RhdGUYBCABKAkSEAoIdmFyX25hbWUY",
           "BSABKAkiXwoLUm9vbU1lc3NhZ2USEAoIdmFyX25hbWUYASABKAkSEwoLdmFy",
           "X21lc3NhZ2UYAiABKAkSFwoPdmFyX21lc3NhZ2VfaW50GAMgASgFEhAKCHZh",
-          "cl90aW1lGAQgASgJQgJIAQ=="));
+          "cl90aW1lGAQgASgJIj4KCkNhbWVyYUluZm8SGAoQdmFyX21hY2hpbmVfbmFt",
+          "ZRgBIAEoCRIWCg52YXJfbWFjaGluZV9pZBgCIAEoA0ICSAE="));
     descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
         new pbr::FileDescriptor[] { },
         new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
@@ -43,7 +44,8 @@ public static partial class StructureReflection {
           new pbr::GeneratedClrTypeInfo(typeof(global::PrayInfo), global::PrayInfo.Parser, new[]{ "VarName", "VarMessage", "VarTime" }, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::NotifyInfo), global::NotifyInfo.Parser, new[]{ "VarId", "VarContent", "VarDate" }, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::MailInfo), global::MailInfo.Parser, new[]{ "VarId", "VarTitle", "VarContent", "VarDate", "VarName" }, null, null, null, null),
-          new pbr::GeneratedClrTypeInfo(typeof(global::RoomMessage), global::RoomMessage.Parser, new[]{ "VarName", "VarMessage", "VarMessageInt", "VarTime" }, null, null, null, null)
+          new pbr::GeneratedClrTypeInfo(typeof(global::RoomMessage), global::RoomMessage.Parser, new[]{ "VarName", "VarMessage", "VarMessageInt", "VarTime" }, null, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::CameraInfo), global::CameraInfo.Parser, new[]{ "VarMachineName", "VarMachineId" }, null, null, null, null)
         }));
   }
   #endregion
@@ -1586,6 +1588,190 @@ public sealed partial class RoomMessage : pb::IMessage<RoomMessage> {
         }
         case 34: {
           VarTime = input.ReadString();
+          break;
+        }
+      }
+    }
+  }
+
+}
+
+public sealed partial class CameraInfo : pb::IMessage<CameraInfo> {
+  private static readonly pb::MessageParser<CameraInfo> _parser = new pb::MessageParser<CameraInfo>(() => new CameraInfo());
+  private pb::UnknownFieldSet _unknownFields;
+  private int _hasBits0;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public static pb::MessageParser<CameraInfo> Parser { get { return _parser; } }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public static pbr::MessageDescriptor Descriptor {
+    get { return global::StructureReflection.Descriptor.MessageTypes[6]; }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  pbr::MessageDescriptor pb::IMessage.Descriptor {
+    get { return Descriptor; }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public CameraInfo() {
+    OnConstruction();
+  }
+
+  partial void OnConstruction();
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public CameraInfo(CameraInfo other) : this() {
+    _hasBits0 = other._hasBits0;
+    varMachineName_ = other.varMachineName_;
+    varMachineId_ = other.varMachineId_;
+    _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public CameraInfo Clone() {
+    return new CameraInfo(this);
+  }
+
+  /// <summary>Field number for the "var_machine_name" field.</summary>
+  public const int VarMachineNameFieldNumber = 1;
+  private readonly static string VarMachineNameDefaultValue = "";
+
+  private string varMachineName_;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public string VarMachineName {
+    get { return varMachineName_ ?? VarMachineNameDefaultValue; }
+    set {
+      varMachineName_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+    }
+  }
+  /// <summary>Gets whether the "var_machine_name" field is set</summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public bool HasVarMachineName {
+    get { return varMachineName_ != null; }
+  }
+  /// <summary>Clears the value of the "var_machine_name" field</summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void ClearVarMachineName() {
+    varMachineName_ = null;
+  }
+
+  /// <summary>Field number for the "var_machine_id" field.</summary>
+  public const int VarMachineIdFieldNumber = 2;
+  private readonly static long VarMachineIdDefaultValue = 0L;
+
+  private long varMachineId_;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public long VarMachineId {
+    get { if ((_hasBits0 & 1) != 0) { return varMachineId_; } else { return VarMachineIdDefaultValue; } }
+    set {
+      _hasBits0 |= 1;
+      varMachineId_ = value;
+    }
+  }
+  /// <summary>Gets whether the "var_machine_id" field is set</summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public bool HasVarMachineId {
+    get { return (_hasBits0 & 1) != 0; }
+  }
+  /// <summary>Clears the value of the "var_machine_id" field</summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void ClearVarMachineId() {
+    _hasBits0 &= ~1;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public override bool Equals(object other) {
+    return Equals(other as CameraInfo);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public bool Equals(CameraInfo other) {
+    if (ReferenceEquals(other, null)) {
+      return false;
+    }
+    if (ReferenceEquals(other, this)) {
+      return true;
+    }
+    if (VarMachineName != other.VarMachineName) return false;
+    if (VarMachineId != other.VarMachineId) return false;
+    return Equals(_unknownFields, other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public override int GetHashCode() {
+    int hash = 1;
+    if (HasVarMachineName) hash ^= VarMachineName.GetHashCode();
+    if (HasVarMachineId) hash ^= VarMachineId.GetHashCode();
+    if (_unknownFields != null) {
+      hash ^= _unknownFields.GetHashCode();
+    }
+    return hash;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public override string ToString() {
+    return pb::JsonFormatter.ToDiagnosticString(this);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void WriteTo(pb::CodedOutputStream output) {
+    if (HasVarMachineName) {
+      output.WriteRawTag(10);
+      output.WriteString(VarMachineName);
+    }
+    if (HasVarMachineId) {
+      output.WriteRawTag(16);
+      output.WriteInt64(VarMachineId);
+    }
+    if (_unknownFields != null) {
+      _unknownFields.WriteTo(output);
+    }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public int CalculateSize() {
+    int size = 0;
+    if (HasVarMachineName) {
+      size += 1 + pb::CodedOutputStream.ComputeStringSize(VarMachineName);
+    }
+    if (HasVarMachineId) {
+      size += 1 + pb::CodedOutputStream.ComputeInt64Size(VarMachineId);
+    }
+    if (_unknownFields != null) {
+      size += _unknownFields.CalculateSize();
+    }
+    return size;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void MergeFrom(CameraInfo other) {
+    if (other == null) {
+      return;
+    }
+    if (other.HasVarMachineName) {
+      VarMachineName = other.VarMachineName;
+    }
+    if (other.HasVarMachineId) {
+      VarMachineId = other.VarMachineId;
+    }
+    _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void MergeFrom(pb::CodedInputStream input) {
+    uint tag;
+    while ((tag = input.ReadTag()) != 0) {
+      switch(tag) {
+        default:
+          _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+          break;
+        case 10: {
+          VarMachineName = input.ReadString();
+          break;
+        }
+        case 16: {
+          VarMachineId = input.ReadInt64();
           break;
         }
       }

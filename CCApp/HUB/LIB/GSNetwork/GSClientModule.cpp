@@ -134,7 +134,7 @@ BOOL GSClientModule::ReadPacket(WORD &protocol, BYTE *packet, WORD &packetLength
 
 BOOL GSClientModule::WritePacket(WORD protocol, WORD Subprotocol,const BYTE *packet, WORD packetLength)
 {
-	if (!mTCPSession.WritePacket(protocol,Subprotocol, packet, packetLength))
+	if (!mTCPSession.WritePacket(protocol,Subprotocol, packet, packetLength,0))
 		return FALSE;
 
 	if (!mTCPSession.WriteComplete())

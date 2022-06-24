@@ -219,6 +219,8 @@ template<template<class T> class CreationPolicy> PlayerPtr PlayerContainer<Creat
 
 template<template<class T> class CreationPolicy> void PlayerContainer<CreationPolicy>::CheckUserList()
 {
+	printf("player total cnt %d\n", Count());
+
 	for (auto iter = m_PlayerMapForLoop.begin(); iter != m_PlayerMapForLoop.end(); iter++)
 	{
 		if (iter->second == NULL)
@@ -257,7 +259,7 @@ template<template<class T> class CreationPolicy> void PlayerContainer<CreationPo
 				if (pSession != NULL)
 				{
 					CLIENT_KICK kick;
-					SEND_PROTO_BUFFER2(pPlayer->GetFrontSid(), kick, pSession)
+					SEND_PROTO_BUFFER( kick, pSession, pPlayer->GetFrontSid())
 				}
 			}
 

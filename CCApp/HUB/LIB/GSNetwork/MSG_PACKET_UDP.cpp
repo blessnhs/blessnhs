@@ -22,7 +22,7 @@ void MSG_PACKET_UDP::Execute(LPVOID Param)
 			//	pClient->SetProcess( new IUdpProcess() );
 			}
 
-			pClient->GetProcess()->Process(pBuffer->m_Buffer.GetBuffer(),pBuffer->Length,pBuffer->MainId,pBuffer->SubId, pBuffer->IsCompress,pClient);
+			pClient->GetProcess()->Process(pBuffer,pClient);
 		}
 	}
 }

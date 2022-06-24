@@ -28,7 +28,11 @@ namespace CCA.UWP
         /// </summary>
         public App()
         {
+
             this.InitializeComponent();
+
+            Rg.Plugins.Popup.Popup.Init();
+
             this.Suspending += OnSuspending;
         }
 

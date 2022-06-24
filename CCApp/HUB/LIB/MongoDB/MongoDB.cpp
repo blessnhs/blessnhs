@@ -120,6 +120,7 @@ bool MongoDB::IsExistNickName(string name, int64_t Index)
 	catch (...)
 	{
 		printf("exception IsExistNickName \n");
+		return false;
 	}
 }
 
@@ -166,6 +167,101 @@ std::list<tuple<__int64, string, string>> MongoDB::NoticeInfoInfo()
 	}
 }
 
+std::list<tuple<INT64, string, string>> MongoDB::RegCameraList(int64_t INDEX)
+{
+
+	try
+	{
+		auto _client = pool.acquire();
+		mongocxx::client& client = *_client;
+
+		auto db = client[default_db_name];
+
+		std::list<tuple<__int64, string, string>> list;
+		auto collection = db["CAMERA"];
+
+		auto order = bsoncxx::builder::stream::document{} << "reg-time" << -1 << bsoncxx::builder::stream::finalize;
+
+		auto opts = mongocxx::options::find{ };
+		opts.sort(order.view());
+		opts.limit(10);
+
+		auto cursor = collection.find({ document{} << "INDEX" << INDEX << finalize }, opts);
+
+		int irank = 1;
+
+		for (auto doc : cursor)
+		{
+			auto index = doc["INDEX"].get_int64();
+			auto machineid = doc["MachineId"].get_utf8().value;
+			auto machinename = doc["MachineName"].get_utf8().value;
+
+			list.push_back(tuple<__int64, string, string>(index, machineid, machinename));
+		}
+
+		return list;
+	}
+	catch (...)
+	{
+
+		printf("exception NoticeInfoInfo \n");
+		return std::list<tuple<__int64, string, string>>();
+	}
+}
+
+int MongoDB::RegisterCamera(int64_t INDEX, std::string machine_id, std::string machine_name)
+{
+	try
+	{
+		auto _client = pool.acquire();
+		mongocxx::client& client = *_client;
+
+		auto db = client[default_db_name];
+
+		mongocxx::collection collection = db["CAMERA"];
+		bsoncxx::stdx::optional<bsoncxx::document::value> maybe_result =
+			collection.find_one(document{} << "INDEX" << INDEX << "MachineId" << machine_id <<finalize);
+		if (maybe_result) //카메라가 이미 존재한다.
+		{
+			return 0;
+		}
+		else
+		{
+			///////////////////////////////////////////////////////////
+			///////insert 
+			{
+				auto builder = bsoncxx::builder::stream::document{};
+				bsoncxx::document::value doc_value = builder
+					<< "INDEX" << INDEX
+					<< "MachineId" << machine_id
+					<< "MachineName" << machine_name
+					<< "RegTime" << bsoncxx::types::b_date(std::chrono::system_clock::now())
+					<< bsoncxx::builder::stream::finalize;
+
+				bsoncxx::document::view view = doc_value.view();
+
+				bsoncxx::stdx::optional<mongocxx::result::insert_one> result =
+					collection.insert_one(view);
+
+				//카메라 생성 실패
+				if (!result)
+				{
+					printf("fail insert Index %I64d query failed \n", INDEX);
+
+					return -1;
+				}
+
+			}
+		}
+		return 0;
+	}
+	catch (...)
+	{
+		printf("exception ProcedureUserLogin \n");
+		return 0;
+	}
+}
+
 int MongoDB::UpdaetQNS(int64_t Index, std::string contents)
 {
 	try
@@ -202,6 +298,7 @@ int MongoDB::UpdaetQNS(int64_t Index, std::string contents)
 	catch (...)
 	{
 		printf("exception UpdaetQNS \n");
+		return 0;
 	}
 }
 
@@ -302,7 +399,7 @@ int MongoDB::UpdaetPray(string name, string contents)
 
 		if (!result)
 		{
-			printf("UpdaetQNS  Index %s query failed \n", name);
+			printf("UpdaetQNS  Index %s query failed \n", name.c_str());
 
 			return -1;
 		}
@@ -312,6 +409,7 @@ int MongoDB::UpdaetPray(string name, string contents)
 	catch (...)
 	{
 		printf("exception UpdaetQNS \n");
+		return 0;
 	}
 }
 
@@ -333,6 +431,7 @@ int	 MongoDB::ProcedureUserLogout(const int64_t id)
 	catch (...)
 	{
 		printf("exception ProcedureUserLogout \n");
+		return 0;
 	}
 }
 
@@ -353,6 +452,7 @@ int  MongoDB::DeleteAllConcurrentUser()
 	catch (...)
 	{
 		printf("exception DeleteAllConcurrentUser \n");
+		return 0;
 	}
 }
 
@@ -408,10 +508,11 @@ int64_t MongoDB::GetNextIndex()
 	catch (...)
 	{
 		printf("exception GetNextIndex \n");
+		return 0;
 	}
 }
 
-int		MongoDB::ProcedureUserLogin(std::string id, std::string pwd, std::string& szKey, int& Score, INT64& Index, int& Level)
+int		MongoDB::ProcedureUserLogin(std::string google_uid, std::string pwd, std::string& szKey, int& Score, INT64& Index, int& Level)
 {
 	try
 	{
@@ -422,13 +523,13 @@ int		MongoDB::ProcedureUserLogin(std::string id, std::string pwd, std::string& s
 
 		mongocxx::collection collection = db["ACCOUNT"];
 		bsoncxx::stdx::optional<bsoncxx::document::value> maybe_result =
-			collection.find_one(document{} << "Id" << id << finalize);
+			collection.find_one(document{} << "GoogleUId" << google_uid << finalize);
 		if (maybe_result) //캐릭터가 이미 존재한다.
 		{
 			auto passwd = maybe_result->view()["Pwd"];
 			if (passwd.get_utf8().value.data() != pwd)
 			{
-				printf("invalid passwd %s\n", id.c_str());
+				printf("invalid passwd %s\n", google_uid.c_str());
 				return -1;
 			}
 
@@ -440,47 +541,6 @@ int		MongoDB::ProcedureUserLogin(std::string id, std::string pwd, std::string& s
 
 			auto viewIndex = maybe_result->view()["INDEX"];
 			Index = viewIndex.get_int64().value;
-
-			//concurrent
-			//접속 기록이 있다. 중복 접속
-			{
-				mongocxx::collection collection2 = db["CONCURRENTUSER"];
-				bsoncxx::stdx::optional<bsoncxx::document::value> maybe_result =
-					collection2.find_one(document{} << "INDEX" << Index << finalize);
-				if (maybe_result)
-				{
-					//printf("duplicate login ProcedureUserLogin CONCURRENTUSER  Index %I64d query failed \n", Index);
-					return -2;
-				}
-
-				UUID id1;
-				UuidCreate(&id1);
-				RPC_STATUS s;
-				char* tmp;
-				UuidToStringA(&id1, (RPC_CSTR*)&tmp);
-
-				szKey = (char*)tmp;
-
-				auto builder2 = bsoncxx::builder::stream::document{};
-				bsoncxx::document::value doc_value2 = builder2
-					<< "Type" << 2
-					<< "SessionKey" << szKey
-					<< "INDEX" << Index
-					<< bsoncxx::builder::stream::finalize;
-
-				bsoncxx::document::view view2 = doc_value2.view();
-
-				bsoncxx::stdx::optional<mongocxx::result::insert_one> result =
-					collection2.insert_one(view2);
-
-				if (!result)
-				{
-					printf("fail insert CONCURRENTUSER  Index %I64d query failed \n", Index);
-
-					return -3;
-				}
-			}
-
 		}
 		else
 		{
@@ -491,10 +551,9 @@ int		MongoDB::ProcedureUserLogin(std::string id, std::string pwd, std::string& s
 
 				auto builder = bsoncxx::builder::stream::document{};
 				bsoncxx::document::value doc_value = builder
-					<< "Id" << id
+					<< "GoogleUId" << google_uid
 					<< "Pwd" << pwd
 					<< "LastLoginTime" << bsoncxx::types::b_date(std::chrono::system_clock::now())
-					<< "Score" << 0
 					<< "Score" << 0
 					<< "Level" << 0
 					<< "INDEX" << index
@@ -517,7 +576,6 @@ int		MongoDB::ProcedureUserLogin(std::string id, std::string pwd, std::string& s
 				{
 					UUID id1;
 					UuidCreate(&id1);
-					RPC_STATUS s;
 					char* tmp;
 					UuidToStringA(&id1, (RPC_CSTR*)&tmp);
 
@@ -554,6 +612,7 @@ int		MongoDB::ProcedureUserLogin(std::string id, std::string pwd, std::string& s
 	catch (...)
 	{
 		printf("exception ProcedureUserLogin \n");
+		return 0;
 	}
 }
 
@@ -622,6 +681,7 @@ int MongoDB::CreateRoom(string room_name, INT64& user_id, string user_name)
 	catch (...)
 	{
 		printf("exception ProcedureUserLogin \n");
+		return 0;
 	}
 }
 
@@ -681,6 +741,7 @@ int MongoDB::EnterRoom(int room_id, INT64& user_id, string user_name)
 	catch (...)
 	{
 		printf("exception ProcedureUserLogin \n");
+		return 0;
 	}
 }
 
@@ -724,6 +785,7 @@ int MongoDB::LeaveRoom(int room_id, INT64 user_id, string user_name)
 	catch (...)
 	{
 		printf("exception ProcedureUserLogin \n");
+		return 0;
 	}
 }
 
@@ -759,6 +821,8 @@ int MongoDB::AddRoomMessage(int room_id, INT64 user_id, string user_name, string
 
 		return -1;
 	}
+
+	return 0;
 }
 
 

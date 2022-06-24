@@ -89,7 +89,7 @@ void Room::SendNewUserInfo(PLAYER_PTR Player,int RoomNumber)
 				userinfo->set_var_name(Player->m_Account.GetName());
 				userinfo->set_picture_uri(Player->m_Account.GetPicture_url());
 				userinfo->set_var_room_number(RoomNumber);
-				SEND_PROTO_BUFFER2(pPlayer->GetFront(),nty, pPair)
+				SEND_PROTO_BUFFER(nty, pPair, pPlayer->GetFrontSid())
 			}
 		}
 	}
@@ -114,10 +114,10 @@ void Room::SendToAll(WORD MainId, BYTE * Data, WORD Length)
 		if (pPlayer == NULL)
 			continue;
 
-		GSCLIENT_PTR pSession = SERVER.GetClient(iter.second->GetPair());
+		GSCLIENT_PTR pSession = SERVER.GetClient(pPlayer->GetPair());
 
 		if (pSession)
-			pSession->GetTCPSocket()->WritePacket(MainId, 0, Data, Length);
+			pSession->GetTCPSocket()->WritePacket(MainId, 0, Data, Length, pPlayer->GetFrontSid());
 	}
 }
 

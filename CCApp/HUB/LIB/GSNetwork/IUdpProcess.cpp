@@ -19,12 +19,12 @@ IUdpProcess::~IUdpProcess(void)
 }
 
 
-VOID IUdpProcess::Process2(LPVOID Data, DWORD Length, WORD MainProtocol, WORD SubProtocol, boost::shared_ptr<GSClient> pClient, string remoteaddress, int remoteport)
+VOID IUdpProcess::Process2(boost::shared_ptr<XDATA> pBuffer, boost::shared_ptr<GSClient> pClient, string remoteaddress, int remoteport)
 {
 	
 }
 //
-VOID IUdpProcess::ENTER_ROOM(WORD SubProtocol,LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> pClient)
+VOID IUdpProcess::ENTER_ROOM(boost::shared_ptr<XDATA> pBuffer,  boost::shared_ptr<GSClient> pClient)
 {
 }
 

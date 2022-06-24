@@ -35,7 +35,7 @@ CDBProcessCer &GetDBProcess()
 	static CDBProcessCer g_DBProcess;
 	return g_DBProcess;
 }
-float CDBProcessCer::ProcedureVersion()
+double CDBProcessCer::ProcedureVersion()
 {
 	return m_DB->ProcedureVersion(1);
 }

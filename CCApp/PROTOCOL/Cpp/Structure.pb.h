@@ -47,13 +47,16 @@ struct TableStruct_Structure_2eproto {
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::PROTOBUF_NAMESPACE_ID::internal::AuxillaryParseTableField aux[]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
-  static const ::PROTOBUF_NAMESPACE_ID::internal::ParseTable schema[6]
+  static const ::PROTOBUF_NAMESPACE_ID::internal::ParseTable schema[7]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::PROTOBUF_NAMESPACE_ID::internal::FieldMetadata field_metadata[];
   static const ::PROTOBUF_NAMESPACE_ID::internal::SerializationTable serialization_table[];
   static const ::PROTOBUF_NAMESPACE_ID::uint32 offsets[];
 };
 extern const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_Structure_2eproto;
+class CameraInfo;
+class CameraInfoDefaultTypeInternal;
+extern CameraInfoDefaultTypeInternal _CameraInfo_default_instance_;
 class MailInfo;
 class MailInfoDefaultTypeInternal;
 extern MailInfoDefaultTypeInternal _MailInfo_default_instance_;
@@ -73,6 +76,7 @@ class RoomUserInfo;
 class RoomUserInfoDefaultTypeInternal;
 extern RoomUserInfoDefaultTypeInternal _RoomUserInfo_default_instance_;
 PROTOBUF_NAMESPACE_OPEN
+template<> ::CameraInfo* Arena::CreateMaybeMessage<::CameraInfo>(Arena*);
 template<> ::MailInfo* Arena::CreateMaybeMessage<::MailInfo>(Arena*);
 template<> ::NotifyInfo* Arena::CreateMaybeMessage<::NotifyInfo>(Arena*);
 template<> ::PrayInfo* Arena::CreateMaybeMessage<::PrayInfo>(Arena*);
@@ -1279,6 +1283,168 @@ class RoomMessage :
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr var_message_;
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr var_time_;
   ::PROTOBUF_NAMESPACE_ID::int32 var_message_int_;
+  friend struct ::TableStruct_Structure_2eproto;
+};
+// -------------------------------------------------------------------
+
+class CameraInfo :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:CameraInfo) */ {
+ public:
+  CameraInfo();
+  virtual ~CameraInfo();
+
+  CameraInfo(const CameraInfo& from);
+  CameraInfo(CameraInfo&& from) noexcept
+    : CameraInfo() {
+    *this = ::std::move(from);
+  }
+
+  inline CameraInfo& operator=(const CameraInfo& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline CameraInfo& operator=(CameraInfo&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  inline const ::PROTOBUF_NAMESPACE_ID::UnknownFieldSet& unknown_fields() const {
+    return _internal_metadata_.unknown_fields();
+  }
+  inline ::PROTOBUF_NAMESPACE_ID::UnknownFieldSet* mutable_unknown_fields() {
+    return _internal_metadata_.mutable_unknown_fields();
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return GetMetadataStatic().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return GetMetadataStatic().reflection;
+  }
+  static const CameraInfo& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const CameraInfo* internal_default_instance() {
+    return reinterpret_cast<const CameraInfo*>(
+               &_CameraInfo_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    6;
+
+  friend void swap(CameraInfo& a, CameraInfo& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(CameraInfo* other) {
+    if (other == this) return;
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline CameraInfo* New() const final {
+    return CreateMaybeMessage<CameraInfo>(nullptr);
+  }
+
+  CameraInfo* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
+    return CreateMaybeMessage<CameraInfo>(arena);
+  }
+  void CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void CopyFrom(const CameraInfo& from);
+  void MergeFrom(const CameraInfo& from);
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  ::PROTOBUF_NAMESPACE_ID::uint8* _InternalSerialize(
+      ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  inline void SharedCtor();
+  inline void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(CameraInfo* other);
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "CameraInfo";
+  }
+  private:
+  inline ::PROTOBUF_NAMESPACE_ID::Arena* GetArenaNoVirtual() const {
+    return nullptr;
+  }
+  inline void* MaybeArenaPtr() const {
+    return nullptr;
+  }
+  public:
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+  private:
+  static ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadataStatic() {
+    ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&::descriptor_table_Structure_2eproto);
+    return ::descriptor_table_Structure_2eproto.file_level_metadata[kIndexInFileMessages];
+  }
+
+  public:
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kVarMachineNameFieldNumber = 1,
+    kVarMachineIdFieldNumber = 2,
+  };
+  // optional string var_machine_name = 1;
+  bool has_var_machine_name() const;
+  private:
+  bool _internal_has_var_machine_name() const;
+  public:
+  void clear_var_machine_name();
+  const std::string& var_machine_name() const;
+  void set_var_machine_name(const std::string& value);
+  void set_var_machine_name(std::string&& value);
+  void set_var_machine_name(const char* value);
+  void set_var_machine_name(const char* value, size_t size);
+  std::string* mutable_var_machine_name();
+  std::string* release_var_machine_name();
+  void set_allocated_var_machine_name(std::string* var_machine_name);
+  private:
+  const std::string& _internal_var_machine_name() const;
+  void _internal_set_var_machine_name(const std::string& value);
+  std::string* _internal_mutable_var_machine_name();
+  public:
+
+  // optional int64 var_machine_id = 2;
+  bool has_var_machine_id() const;
+  private:
+  bool _internal_has_var_machine_id() const;
+  public:
+  void clear_var_machine_id();
+  ::PROTOBUF_NAMESPACE_ID::int64 var_machine_id() const;
+  void set_var_machine_id(::PROTOBUF_NAMESPACE_ID::int64 value);
+  private:
+  ::PROTOBUF_NAMESPACE_ID::int64 _internal_var_machine_id() const;
+  void _internal_set_var_machine_id(::PROTOBUF_NAMESPACE_ID::int64 value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:CameraInfo)
+ private:
+  class _Internal;
+
+  ::PROTOBUF_NAMESPACE_ID::internal::InternalMetadataWithArena _internal_metadata_;
+  ::PROTOBUF_NAMESPACE_ID::internal::HasBits<1> _has_bits_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr var_machine_name_;
+  ::PROTOBUF_NAMESPACE_ID::int64 var_machine_id_;
   friend struct ::TableStruct_Structure_2eproto;
 };
 // ===================================================================
@@ -2601,9 +2767,114 @@ inline void RoomMessage::set_allocated_var_time(std::string* var_time) {
   // @@protoc_insertion_point(field_set_allocated:RoomMessage.var_time)
 }
 
+// -------------------------------------------------------------------
+
+// CameraInfo
+
+// optional string var_machine_name = 1;
+inline bool CameraInfo::_internal_has_var_machine_name() const {
+  bool value = (_has_bits_[0] & 0x00000001u) != 0;
+  return value;
+}
+inline bool CameraInfo::has_var_machine_name() const {
+  return _internal_has_var_machine_name();
+}
+inline void CameraInfo::clear_var_machine_name() {
+  var_machine_name_.ClearToEmptyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline const std::string& CameraInfo::var_machine_name() const {
+  // @@protoc_insertion_point(field_get:CameraInfo.var_machine_name)
+  return _internal_var_machine_name();
+}
+inline void CameraInfo::set_var_machine_name(const std::string& value) {
+  _internal_set_var_machine_name(value);
+  // @@protoc_insertion_point(field_set:CameraInfo.var_machine_name)
+}
+inline std::string* CameraInfo::mutable_var_machine_name() {
+  // @@protoc_insertion_point(field_mutable:CameraInfo.var_machine_name)
+  return _internal_mutable_var_machine_name();
+}
+inline const std::string& CameraInfo::_internal_var_machine_name() const {
+  return var_machine_name_.GetNoArena();
+}
+inline void CameraInfo::_internal_set_var_machine_name(const std::string& value) {
+  _has_bits_[0] |= 0x00000001u;
+  var_machine_name_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), value);
+}
+inline void CameraInfo::set_var_machine_name(std::string&& value) {
+  _has_bits_[0] |= 0x00000001u;
+  var_machine_name_.SetNoArena(
+    &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:CameraInfo.var_machine_name)
+}
+inline void CameraInfo::set_var_machine_name(const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  _has_bits_[0] |= 0x00000001u;
+  var_machine_name_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:CameraInfo.var_machine_name)
+}
+inline void CameraInfo::set_var_machine_name(const char* value, size_t size) {
+  _has_bits_[0] |= 0x00000001u;
+  var_machine_name_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:CameraInfo.var_machine_name)
+}
+inline std::string* CameraInfo::_internal_mutable_var_machine_name() {
+  _has_bits_[0] |= 0x00000001u;
+  return var_machine_name_.MutableNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline std::string* CameraInfo::release_var_machine_name() {
+  // @@protoc_insertion_point(field_release:CameraInfo.var_machine_name)
+  if (!_internal_has_var_machine_name()) {
+    return nullptr;
+  }
+  _has_bits_[0] &= ~0x00000001u;
+  return var_machine_name_.ReleaseNonDefaultNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline void CameraInfo::set_allocated_var_machine_name(std::string* var_machine_name) {
+  if (var_machine_name != nullptr) {
+    _has_bits_[0] |= 0x00000001u;
+  } else {
+    _has_bits_[0] &= ~0x00000001u;
+  }
+  var_machine_name_.SetAllocatedNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), var_machine_name);
+  // @@protoc_insertion_point(field_set_allocated:CameraInfo.var_machine_name)
+}
+
+// optional int64 var_machine_id = 2;
+inline bool CameraInfo::_internal_has_var_machine_id() const {
+  bool value = (_has_bits_[0] & 0x00000002u) != 0;
+  return value;
+}
+inline bool CameraInfo::has_var_machine_id() const {
+  return _internal_has_var_machine_id();
+}
+inline void CameraInfo::clear_var_machine_id() {
+  var_machine_id_ = PROTOBUF_LONGLONG(0);
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int64 CameraInfo::_internal_var_machine_id() const {
+  return var_machine_id_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int64 CameraInfo::var_machine_id() const {
+  // @@protoc_insertion_point(field_get:CameraInfo.var_machine_id)
+  return _internal_var_machine_id();
+}
+inline void CameraInfo::_internal_set_var_machine_id(::PROTOBUF_NAMESPACE_ID::int64 value) {
+  _has_bits_[0] |= 0x00000002u;
+  var_machine_id_ = value;
+}
+inline void CameraInfo::set_var_machine_id(::PROTOBUF_NAMESPACE_ID::int64 value) {
+  _internal_set_var_machine_id(value);
+  // @@protoc_insertion_point(field_set:CameraInfo.var_machine_id)
+}
+
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

@@ -29,7 +29,7 @@ BOOL GSFront::Disconnect(GSCLIENT_PTR pSession)
 		if (hub != NULL)
 		{
 			CLIENT_LOGOUT_REQ res;
-			SEND_PROTO_BUFFER2(pSession->GetId(), res, hub)
+			SEND_PROTO_BUFFER( res, hub, pSession->GetId())
 		}
 	
 	}

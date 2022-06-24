@@ -19,32 +19,32 @@ IUdpProcess::~IUdpProcess(void)
 }
 
 
-VOID IUdpProcess::Process2(LPVOID Data, DWORD Length, WORD MainProtocol, WORD SubProtocol, boost::shared_ptr<GSClient> pClient, string remoteaddress, int remoteport)
+VOID IUdpProcess::Process2(boost::shared_ptr<XDATA> pBuffer, boost::shared_ptr<GSClient> pClient, string remoteaddress, int remoteport)
 {
-	switch (MainProtocol)
+	switch (pBuffer->MainId)
 	{
 	case UDP_PROTOCOL::REG_USER_UDP:
-		REG_USER_UDP(Data, Length, pClient, remoteaddress, remoteport);
+		REG_USER_UDP(pBuffer, pClient, remoteaddress, remoteport);
 		break;
 	case UDP_PROTOCOL::BROAD_ROOM:
-		BROAD_CAST_ROOM_UDP(Data, Length, pClient, remoteaddress, remoteport);
+		BROAD_CAST_ROOM_UDP(pBuffer, pClient, remoteaddress, remoteport);
 		break;
 
 
 	}
 }
 //
-VOID IUdpProcess::REG_USER_UDP(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> pClient, string remoteaddress, int remoteport)
+VOID IUdpProcess::REG_USER_UDP(boost::shared_ptr<XDATA> pBuffer, boost::shared_ptr<GSClient> pClient, string remoteaddress, int remoteport)
 {
-	if (sizeof(WORD) + sizeof(WORD) > Length)
+	if (sizeof(WORD) + sizeof(WORD) > pBuffer->Length)
 		return;
 
 	WORD UID;
 	WORD RID;
 
 
-	memcpy(&UID, Data, sizeof(WORD));
-	memcpy(&RID, (char*)Data + sizeof(WORD), sizeof(WORD));
+	memcpy(&UID, pBuffer->m_Buffer.GetBuffer(), sizeof(WORD));
+	memcpy(&RID, (char*)pBuffer->m_Buffer.GetBuffer() + sizeof(WORD), sizeof(WORD));
 
 
 	//auto player = PLAYERMGR.Search(UID);
@@ -68,17 +68,17 @@ VOID IUdpProcess::REG_USER_UDP(LPVOID Data, DWORD Length, boost::shared_ptr<GSCl
 	//player->m_Account.RemoteUdpPort = remoteport;
 }
 
-VOID IUdpProcess::BROAD_CAST_ROOM_UDP(LPVOID Data, DWORD Length, boost::shared_ptr<GSClient> pClient, string remoteaddress, int remoteport)
+VOID IUdpProcess::BROAD_CAST_ROOM_UDP(boost::shared_ptr<XDATA> pBuffer, boost::shared_ptr<GSClient> pClient, string remoteaddress, int remoteport)
 {
-	if (sizeof(WORD) + sizeof(WORD) > Length)
+	if (sizeof(WORD) + sizeof(WORD) > pBuffer->Length)
 		return;
 
 	WORD UID;
 	WORD RID;
 
 
-	memcpy(&UID, Data, sizeof(WORD));
-	memcpy(&RID, (char*)Data + sizeof(WORD), sizeof(WORD));
+	memcpy(&UID, pBuffer->m_Buffer.GetBuffer(), sizeof(WORD));
+	memcpy(&RID, (char*)pBuffer->m_Buffer.GetBuffer() + sizeof(WORD), sizeof(WORD));
 
 
 	//auto player = PLAYERMGR.Search(UID);

@@ -9,6 +9,7 @@ using System.Collections.Concurrent;
 using Xamarin.Forms;
 using System.Linq;
 using DependencyHelper;
+using Rg.Plugins.Popup.Services;
 
 namespace CCA
 {
@@ -56,8 +57,6 @@ namespace CCA
                 SendMailList();
 
                 SendAlaram();
-
-                SendPrayList();
 
                 SendRoomList();
 
@@ -107,15 +106,14 @@ namespace CCA
                                         Device.BeginInvokeOnMainThread(() =>
                                         {
                                             User.OnceVersionNotify = true;
-                                            DependencyService.Get<Toast>().Notification("New Version Updated");
+                                            DependencyService.Get<MethodExt>().Notification("New Version Updated");
                                         });
                                     }
                                 }
 
-
                                 SQLLiteDB.LoadCacheData();
                                 if (User.CacheData.UserName != null)
-                                    NetProcess.SendLogin(User.CacheData.UserName, User.CacheData.Passwd);
+                                    NetProcess.SendLogin(User.CacheData.UserName);
                             }
                             break;
                         case (int)PROTOCOL.IdPktLoginRes:
@@ -127,15 +125,12 @@ namespace CCA
 
                                 if (res.VarCode == ErrorCode.Success)
                                 {
+                                    Xamarin.Forms.DependencyService.Register<MethodExt>();
 
+                                    DependencyService.Get<MethodExt>().Notification("New Version Updated");
+                                    PopupNavigation.Instance.PopAsync();
                                     User.LoginSuccess = true;
-                                    SQLLiteDB.Upsert(User.CacheData.FontSize, User.CacheData.BibleName, User.CacheData.Chapter, User.CacheData.Verse,
-                                        User.CacheData.UserName, User.CacheData.Passwd);
-
-                                    Device.BeginInvokeOnMainThread(() =>
-                                    {
-                                      
-                                    });
+                                    SQLLiteDB.Upsert(res.VarName,"");
 
                                 }
                                 else
@@ -165,6 +160,32 @@ namespace CCA
 
                                 NOTICE_RES res = new NOTICE_RES();
                                 res = NOTICE_RES.Parser.ParseFrom(data.Data);
+
+                                Device.BeginInvokeOnMainThread(() =>
+                                {
+                                    var mainpage = (MainPage)Application.Current.MainPage;
+
+                                });
+                            }
+                            break;
+                        case (int)PROTOCOL.IdPktRegCameraRes:
+                            {
+
+                                REG_CAMERA_RES res = new REG_CAMERA_RES();
+                                res = REG_CAMERA_RES.Parser.ParseFrom(data.Data);
+
+                                Device.BeginInvokeOnMainThread(() =>
+                                {
+                                    var mainpage = (MainPage)Application.Current.MainPage;
+
+                                });
+                            }
+                            break;
+                        case (int)PROTOCOL.IdPktCameraListRes:
+                            {
+
+                                CAMERA_LIST_RES res = new CAMERA_LIST_RES();
+                                res = CAMERA_LIST_RES.Parser.ParseFrom(data.Data);
 
                                 Device.BeginInvokeOnMainThread(() =>
                                 {
@@ -398,19 +419,17 @@ namespace CCA
 
         }
 
-        static public void SendLogin(string id, string pwd)
+        static public void SendLogin(string token)
         {
             if (client == null || client.socket == null || client.socket.Connected == false)
                 return;
 
-
-            if (id == null || pwd == null || User.LoginSuccess == true)
+            if (token == null  || User.LoginSuccess == true)
                 return;
 
             var data = new LOGIN_REQ
             {
-                VarId = id,
-                VarPwd = pwd
+                VarToken = token,
             };
             using (MemoryStream stream = new MemoryStream())
             {
@@ -488,6 +507,44 @@ namespace CCA
                 message.WriteTo(stream);
 
                 client.WritePacket((int)PROTOCOL.IdPktQnaReq, stream.ToArray(), stream.ToArray().Length);
+            }
+        }
+
+        static public void SendRegCamera(string camName, string machineid)
+        {
+            if (client == null || client.socket == null || client.socket.Connected == false)
+                return;
+
+            REG_CAMERA_REQ message = new REG_CAMERA_REQ
+            {
+                VarCamName = camName,
+                VarMachineId = machineid
+
+            };
+            using (MemoryStream stream = new MemoryStream())
+            {
+                message.WriteTo(stream);
+
+                client.WritePacket((int)PROTOCOL.IdPktRegCameraReq, stream.ToArray(), stream.ToArray().Length);
+            }
+        }
+
+        static public void SendReqCameraList()
+        {
+            if (client == null || client.socket == null || client.socket.Connected == false)
+                return;
+
+
+            CAMERA_LIST_REQ message = new CAMERA_LIST_REQ
+            {
+               
+
+            };
+            using (MemoryStream stream = new MemoryStream())
+            {
+                message.WriteTo(stream);
+
+                client.WritePacket((int)PROTOCOL.IdPktCameraListReq, stream.ToArray(), stream.ToArray().Length);
             }
         }
 

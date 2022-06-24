@@ -21,15 +21,15 @@ IUdpProcess::~IUdpProcess(void)
 }
 
 
-VOID IUdpProcess::Process2(LPVOID Data, DWORD Length, WORD MainProtocol, WORD SubProtocol, boost::shared_ptr<GSClient> pClient, string remoteaddress, int remoteport)
+VOID IUdpProcess::Process2(boost::shared_ptr<XDATA> pBuffer, boost::shared_ptr<GSClient> pClient, string remoteaddress, int remoteport)
 {
-	switch (MainProtocol)
+	switch (pBuffer->MainId)
 	{
 	case UDP_PROTOCOL::REG_USER_UDP:
-		REG_USER_UDP(Data, Length, pClient, remoteaddress, remoteport);
+		REG_USER_UDP(pBuffer->m_Buffer.GetBuffer(), pBuffer->Length, pClient, remoteaddress, remoteport);
 		break;
 	case UDP_PROTOCOL::BROAD_ROOM:
-		BROAD_CAST_ROOM_UDP(Data, Length, pClient, remoteaddress, remoteport);
+		BROAD_CAST_ROOM_UDP(pBuffer->m_Buffer.GetBuffer(), pBuffer->Length, pClient, remoteaddress, remoteport);
 		break;
 
 

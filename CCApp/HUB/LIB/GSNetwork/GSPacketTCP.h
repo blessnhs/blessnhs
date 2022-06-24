@@ -18,11 +18,11 @@ public:
 			
 	//BOOL    SendPacking(LPVOID Packet,DWORD Size);
 	//BOOL	Send(LPVOID Packet,DWORD Size);
-	BOOL	WritePacket(WORD MainProtocol,WORD SubProtocol, const BYTE *Packet, DWORD PayloadSize);
+	BOOL	WritePacket(WORD MainProtocol,WORD SubProtocol, const BYTE *Packet, DWORD PayloadSize, long long Reserve2);
 
-	BOOL	WritePacketCompress(WORD MainProtocol, WORD SubProtocol, const BYTE* Packet, DWORD PayloadSize);
-	BOOL	WritePacketNoneCompress(WORD MainProtocol, WORD SubProtocol, const BYTE* Packet, DWORD PayloadSize);
-	BOOL	RelayPacket(WORD MainProtocol, WORD SubProtocol, BOOL Compress,const BYTE* Packet, DWORD PayloadSize);
+	BOOL	WritePacketCompress(WORD MainProtocol, WORD SubProtocol, const BYTE* Packet, DWORD PayloadSize,long long Reserve2 = 0);
+	BOOL	WritePacketNoneCompress(WORD MainProtocol, WORD SubProtocol, const BYTE* Packet, DWORD PayloadSize, long long Reserve2 = 0);
+	BOOL	RelayPacket(WORD MainProtocol, WORD SubProtocol, BOOL Compress,const BYTE* Packet, DWORD PayloadSize, long long Reserve2 = 0);
 
 	BOOL	WriteComplete(VOID);
 	BOOL	GetPacket();
@@ -32,6 +32,7 @@ public:
 	virtual VOID MakeMsg(WORD Mainprotocol, WORD Subprotocol,DWORD dataLength);
 
 	BOOL m_UseCompress;
+	DWORD m_SequenceNum;
 
 };
 

@@ -204,7 +204,7 @@ public:
 		if (ret == -1)
 		{
 			res.set_var_code(SystemError);
-			SEND_PROTO_BUFFER2(pPlayerPtr->GetFrontSid(),res, pSession)
+			SEND_PROTO_BUFFER(res, pSession, pPlayerPtr->GetFrontSid())
 			return;
 		}
 
@@ -218,7 +218,7 @@ public:
 
 		res.set_var_room_id(RoomPtr->GetId());
 		res.mutable_var_name()->assign(RoomPtr->m_Stock.Name);
-		SEND_PROTO_BUFFER2(pPlayerPtr->GetFrontSid(),res, pSession)
+		SEND_PROTO_BUFFER(res, pSession, pPlayerPtr->GetFrontSid())
 
 		RoomPtr->SendNewUserInfo(std::get<3>(Request.m_args), RoomPtr->GetId());	//방에 있는 유저들에게 새로운 유저 정보전송f
 	}
@@ -242,7 +242,7 @@ public:
 		if (RoomPtr == NULL)
 		{
 			res.set_var_code(SystemError);
-			SEND_PROTO_BUFFER2(pPlayerPtr->GetFrontSid(), res, pSession)
+			SEND_PROTO_BUFFER( res, pSession, pPlayerPtr->GetFrontSid())
 			return;
 		}
 
@@ -250,7 +250,7 @@ public:
 		if (ret != 0)
 		{
 			res.set_var_code(SystemError);
-			SEND_PROTO_BUFFER2(pPlayerPtr->GetFrontSid(), res, pSession)
+			SEND_PROTO_BUFFER( res, pSession, pPlayerPtr->GetFrontSid())
 			return;
 		}
 
@@ -260,7 +260,7 @@ public:
 
 		res.set_var_room_id(std::get<0>(Request.m_args));
 		res.set_var_name(RoomPtr->m_Stock.Name.c_str());
-		SEND_PROTO_BUFFER2(pPlayerPtr->GetFrontSid(), res, pSession)
+		SEND_PROTO_BUFFER( res, pSession, pPlayerPtr->GetFrontSid())
 
 			//새로 입장한 유저에게 방안의 유저 정보전송
 			for each (auto iter in RoomPtr->m_PlayerMap)
@@ -280,7 +280,7 @@ public:
 				if (pPair == NULL)
 					continue;
 
-				SEND_PROTO_BUFFER2(iter.second->GetFrontSid(), nty, pPair)
+				SEND_PROTO_BUFFER( nty, pPair, iter.second->GetFrontSid())
 			}
 
 
@@ -301,7 +301,7 @@ public:
 			userinfo->set_var_index(pPlayerPtr->GetId());
 			userinfo->set_var_room_number(RoomPtr->GetId());
 
-			SEND_PROTO_BUFFER2(iter.second->GetFrontSid(),nty, pPair)
+			SEND_PROTO_BUFFER(nty, pPair, iter.second->GetFrontSid())
 		}
 	}
 	DECLARE_DB_CLASS_END
@@ -408,7 +408,7 @@ public:
 
 		auto ret = pProcess->RegisterCamera(pPlayerPtr->GetDBIndex(), std::get<0>(Request.m_args), std::get<1>(Request.m_args));
 
-		SEND_PROTO_BUFFER2(pPlayerPtr->GetFrontSid(), res, pSession)
+		SEND_PROTO_BUFFER( res, pSession, pPlayerPtr->GetFrontSid())
 
 	}
 	DECLARE_DB_CLASS_END
@@ -438,7 +438,7 @@ public:
 			caminfo->set_var_machine_id(std::get<0>(cam));
 		}
 
-		SEND_PROTO_BUFFER2(pPlayerPtr->GetFrontSid(), res, pSession)
+		SEND_PROTO_BUFFER( res, pSession, pPlayerPtr->GetFrontSid())
 
 	}
 	DECLARE_DB_CLASS_END
@@ -472,7 +472,7 @@ public:
 			info->mutable_var_message()->assign(std::get<1>(pray));
 			info->mutable_var_time()->assign(std::get<2>(pray));
 		}
-		SEND_PROTO_BUFFER2(pPlayerPtr->GetFrontSid(), res, pSession)
+		SEND_PROTO_BUFFER( res, pSession, pPlayerPtr->GetFrontSid())
 	}
 	DECLARE_DB_CLASS_END
 #pragma endregion
@@ -490,7 +490,7 @@ public:
 		res.set_var_code(Success);
 
 
-		SEND_PROTO_BUFFER2(pPlayerPtr->GetFrontSid(), res, pSession)
+		SEND_PROTO_BUFFER( res, pSession, pPlayerPtr->GetFrontSid())
 	}
 	DECLARE_DB_CLASS_END
 #pragma endregion
@@ -511,7 +511,7 @@ public:
 		QNA_RES res;
 		res.set_var_code(code);
 
-		SEND_PROTO_BUFFER2(pPlayerPtr->GetFrontSid(), res, pSession)
+		SEND_PROTO_BUFFER( res, pSession, pPlayerPtr->GetFrontSid())
 	}
 	DECLARE_DB_CLASS_END
 #pragma endregion
@@ -536,7 +536,7 @@ public:
 			data->set_var_date(std::get<2>(notice));
 		}
 
-		SEND_PROTO_BUFFER2(pPlayerPtr->GetFrontSid(), res, pSession)
+		SEND_PROTO_BUFFER( res, pSession, pPlayerPtr->GetFrontSid())
 	}
 	DECLARE_DB_CLASS_END
 #pragma endregion
@@ -640,7 +640,7 @@ public:
 				{
 					res.set_var_code(DataBaseError);
 
-					SEND_PROTO_BUFFER2(pRequst.FrontSid,res, pSession)
+					SEND_PROTO_BUFFER(res, pSession, pRequst.FrontSid)
 					return;
 				}
 
@@ -651,7 +651,7 @@ public:
 
 					res.set_var_code(DataBaseError);
 
-					SEND_PROTO_BUFFER2(pRequst.FrontSid, res, pSession)
+					SEND_PROTO_BUFFER( res, pSession, pRequst.FrontSid)
 					return;
 				}
 
@@ -661,14 +661,14 @@ public:
 
 					res.set_var_code(DataBaseError);
 
-					SEND_PROTO_BUFFER2(pRequst.FrontSid, res, pSession)
+					SEND_PROTO_BUFFER( res, pSession, pRequst.FrontSid)
 
 					//pSession->Close();
 
 					PLAYERMGR.Disconnect(pSession);
 
 					CLIENT_KICK kick;
-					SEND_PROTO_BUFFER2(pRequst.FrontSid, kick, pSession)
+					SEND_PROTO_BUFFER( kick, pSession, pRequst.FrontSid)
 					return;
 				}
 
@@ -709,7 +709,7 @@ public:
 
 				res.set_var_name(pRequst.token);
 
-				SEND_PROTO_BUFFER2(pRequst.FrontSid, res, pSession)
+				SEND_PROTO_BUFFER( res, pSession, pRequst.FrontSid)
 
 				pNewPlayer->SetChannel(pRequst.channel);
 			}

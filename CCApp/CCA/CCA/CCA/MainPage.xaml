@@ -34,7 +34,7 @@
         <Frame BorderColor="Gray" Grid.Row="1" Grid.Column="1" BackgroundColor="#61A2DA">
             <StackLayout x:Name="RegCamera">
                 <Label   x:Name="RegCam" Text="카메라 등록" TextColor="White" FontSize="Large" FontAttributes="Bold" />
-                <Label  Text="Bulletin" TextColor="White" FontSize="Body" FontAttributes="Bold" />
+                <Label  Text="RegCamera" TextColor="White" FontSize="Body" FontAttributes="Bold" />
                 <StackLayout.GestureRecognizers>
                     <TapGestureRecognizer Tapped="OnTapped"/>
                 </StackLayout.GestureRecognizers>
@@ -44,7 +44,7 @@
         <Frame BorderColor="Gray"  CornerRadius="5"  Grid.Row="2" Grid.Column="0"  BackgroundColor="#65B9DC">
             <StackLayout x:Name="Network">
                 <Label  x:Name="Net" Text="공유된 카메라들"  TextColor="White" FontSize="Large" FontAttributes="Bold" />
-                <Label  Text="Lecture"  TextColor="White" FontSize="Body" FontAttributes="Bold" />
+                <Label  Text="Network Cam"  TextColor="White" FontSize="Body" FontAttributes="Bold" />
                 <StackLayout.GestureRecognizers>
                     <TapGestureRecognizer Tapped="OnTapped"/>
                 </StackLayout.GestureRecognizers>
@@ -54,7 +54,7 @@
         <Frame BorderColor="Gray"  CornerRadius="5"  Grid.Row="2" Grid.Column="1" BackgroundColor="#B13691">
             <StackLayout x:Name="MyCamera">
                 <Label   x:Name="MyCam" Text="내 카메라"  TextColor="White" FontSize="Large" FontAttributes="Bold" />
-                <Label  Text="Chat"  TextColor="White" FontSize="Body" FontAttributes="Bold" />
+                <Label  Text="MyCamera"  TextColor="White" FontSize="Body" FontAttributes="Bold" />
                 <StackLayout.GestureRecognizers>
                     <TapGestureRecognizer Tapped="OnTapped"/>
                 </StackLayout.GestureRecognizers>
@@ -64,7 +64,7 @@
         <Frame BorderColor="Gray"  CornerRadius="5"  Grid.Row="3" Grid.Column="0"  BackgroundColor="#94B19F">
             <StackLayout x:Name="Qna">
                 <Label   x:Name="LQna" Text="문의"  TextColor="White" FontSize="Large" FontAttributes="Bold" />
-                <Label  Text="Lecture2"  TextColor="White" FontSize="Body" FontAttributes="Bold" />
+                <Label  Text="Qna"  TextColor="White" FontSize="Body" FontAttributes="Bold" />
                 <StackLayout.GestureRecognizers>
                     <TapGestureRecognizer Tapped="OnTapped"/>
                 </StackLayout.GestureRecognizers>
@@ -75,7 +75,7 @@
         <Frame BorderColor="Gray"  CornerRadius="5"  Grid.Row="3" Grid.Column="1"  BackgroundColor="#171635">
             <StackLayout  x:Name="Setting">
                 <Label  x:Name="Set" Text="설정" TextColor="White" FontSize="Large" FontAttributes="Bold" />
-                <Label Text="QnA" TextColor="White" FontSize="Body" FontAttributes="Bold" />
+                <Label Text="Setting" TextColor="White" FontSize="Body" FontAttributes="Bold" />
                 <StackLayout.GestureRecognizers>
                     <TapGestureRecognizer Tapped="OnTapped"/>
                 </StackLayout.GestureRecognizers>

@@ -29,6 +29,10 @@ public:
 
 	int UpdaetQNS(int64_t Index, std::string contents);
 
+	int RegisterCamera(int64_t INDEX, std::string machine_id, std::string machine_name);
+
+	std::list<tuple<INT64, string, string>> RegCameraList(int64_t INDEX);
+
 	std::list<tuple<string, string, string>> PrayList(int count = 100);
 
 	int UpdaetPray(string name, string contents);
@@ -38,7 +42,7 @@ public:
 
 	int64_t GetNextIndex();
 
-	int		ProcedureUserLogin(std::string id, std::string pwd, std::string& szKey, int& Score, INT64& Index, int& Level);
+	int		ProcedureUserLogin(std::string google_uid, std::string pwd, std::string& szKey, int& Score, INT64& Index, int& Level);
 
 	int CreateRoom(string room_name, INT64& user_id, string user_name);
 

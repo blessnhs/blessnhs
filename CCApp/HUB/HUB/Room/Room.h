@@ -49,7 +49,7 @@ public:
 			GSCLIENT_PTR pSession = SERVER.GetClient(pPlayer->GetFront());
 
 			if (pSession)
-				SEND_PROTO_BUFFER2(pPlayer->GetFrontSid(),snd,pSession)
+				SEND_PROTO_BUFFER(snd,pSession, pPlayer->GetFrontSid())
 		}
 	}
 
@@ -68,7 +68,7 @@ public:
 			GSCLIENT_PTR pSession = SERVER.GetClient(pPlayer->GetFront());
 
 			if (pSession)
-				SEND_PROTO_BUFFER2(pPlayer->GetFrontSid(), snd, pSession)
+				SEND_PROTO_BUFFER( snd, pSession, pPlayer->GetFrontSid())
 		}
 	}
 

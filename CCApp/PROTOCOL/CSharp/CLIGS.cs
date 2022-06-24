@@ -24,50 +24,56 @@ public static partial class CLIGSReflection {
         string.Concat(
           "CgxDTEkuR1MucHJvdG8aCkVudW0ucHJvdG8aD1N0cnVjdHVyZS5wcm90byI4",
           "CgtWRVJTSU9OX1JFURIpCgJpZBgBIAEoDjIJLlBST1RPQ09MOhJJRF9QS1Rf",
-          "VkVSU0lPTl9SRVEiVQoJTE9HSU5fUkVREicKAmlkGAEgASgOMgkuUFJPVE9D",
-          "T0w6EElEX1BLVF9MT0dJTl9SRVESDgoGdmFyX2lkGAIgAigJEg8KB3Zhcl9w",
-          "d2QYAyACKAkiUgoPQ1JFQVRFX1JPT01fUkVREi0KAmlkGAEgASgOMgkuUFJP",
-          "VE9DT0w6FklEX1BLVF9DUkVBVEVfUk9PTV9SRVESEAoIdmFyX25hbWUYAiAC",
-          "KAkiVwoORU5URVJfUk9PTV9SRVESLAoCaWQYASABKA4yCS5QUk9UT0NPTDoV",
-          "SURfUEtUX0VOVEVSX1JPT01fUkVREhcKD3Zhcl9yb29tX251bWJlchgCIAIo",
-          "BSJnCg5MRUFWRV9ST09NX1JFURIsCgJpZBgBIAEoDjIJLlBST1RPQ09MOhVJ",
-          "RF9QS1RfTEVBVkVfUk9PTV9SRVESDgoGdmFyX2lkGAIgAigFEhcKD3Zhcl9y",
-          "b29tX251bWJlchgDIAIoBSI8Cg1ST09NX0xJU1RfUkVREisKAmlkGAEgASgO",
-          "MgkuUFJPVE9DT0w6FElEX1BLVF9ST09NX0xJU1RfUkVRIqUBChVST09NX1BB",
-          "U1NfVEhST1VHSF9SRVESMwoCaWQYASABKA4yCS5QUk9UT0NPTDocSURfUEtU",
-          "X1JPT01fUEFTU19USFJPVUdIX1JFURITCgt2YXJfbWVzc2FnZRgCIAIoCRIX",
-          "Cg92YXJfbWVzc2FnZV9pbnQYAyACKAUSFwoPdmFyX3Jvb21fbnVtYmVyGAQg",
-          "AigFEhAKCHZhcl90aW1lGAUgAigJIjYKCk5PVElDRV9SRVESKAoCaWQYASAB",
-          "KA4yCS5QUk9UT0NPTDoRSURfUEtUX05PVElDRV9SRVEihgEKEkJJVE1BUF9N",
-          "RVNTQUdFX1JFURIwCgJpZBgBIAEoDjIJLlBST1RPQ09MOhlJRF9QS1RfQklU",
-          "TUFQX01FU1NBR0VfUkVREhMKC3Zhcl9tZXNzYWdlGAIgAygMEhcKD3Zhcl9y",
-          "b29tX251bWJlchgDIAIoBRIQCgh2YXJfdHlwZRgEIAIoBSJyChFBVURJT19N",
-          "RVNTQUdFX1JFURIvCgJpZBgBIAEoDjIJLlBST1RPQ09MOhhJRF9QS1RfQVVE",
-          "SU9fTUVTU0FHRV9SRVESEwoLdmFyX21lc3NhZ2UYAiADKAwSFwoPdmFyX3Jv",
-          "b21fbnVtYmVyGAMgAigFIkIKEFBSQVlfTUVTU0FHRV9SRVESLgoCaWQYASAB",
-          "KA4yCS5QUk9UT0NPTDoXSURfUEtUX1BSQVlfTUVTU0FHRV9SRVEiXwoUUFJB",
-          "WV9NRVNTQUdFX1JFR19SRVESMgoCaWQYASABKA4yCS5QUk9UT0NPTDobSURf",
-          "UEtUX1BSQVlfTUVTU0FHRV9SRUdfUkVREhMKC3Zhcl9tZXNzYWdlGAIgASgJ",
-          "IkUKB1FOQV9SRVESJQoCaWQYASABKA4yCS5QUk9UT0NPTDoOSURfUEtUX1FO",
-          "QV9SRVESEwoLdmFyX21lc3NhZ2UYAiABKAkiPAoNTUFJTF9MSVNUX1JFURIr",
-          "CgJpZBgBIAEoDjIJLlBST1RPQ09MOhRJRF9QS1RfTUFJTF9MSVNUX1JFUSJA",
-          "CgdSRUdfUkVREiUKAmlkGAEgASgOMgkuUFJPVE9DT0w6DklEX1BLVF9SRUdf",
-          "UkVREg4KBnZhcl9pZBgCIAIoBSJEChFDTElFTlRfTE9HT1VUX1JFURIvCgJp",
-          "ZBgBIAEoDjIJLlBST1RPQ09MOhhJRF9QS1RfQ0xJRU5UX0xPR09VVF9SRVEi",
-          "eQoSQ0FNRVJBX0NPTlRST0xfUkVREiwKAmlkGAEgASgOMgkuUFJPVE9DT0w6",
-          "FUlEX1BLVF9DQU1FUkFfQ09OVFJPTBIkCgh2YXJfdHlwZRgCIAIoDjISLkNh",
-          "bWVyYUNvbnRyb2xUeXBlEg8KB3Zhcl9wb3MYAyACKAUiiAEKE01QRUcyVFNf",
-          "TUVTU0FHRV9SRVESMQoCaWQYASABKA4yCS5QUk9UT0NPTDoaSURfUEtUX01Q",
-          "RUcyVFNfTUVTU0FHRV9SRVESEwoLdmFyX21lc3NhZ2UYAiADKAwSFwoPdmFy",
-          "X3Jvb21fbnVtYmVyGAMgAigFEhAKCHZhcl90eXBlGAQgAigFInMKE01QRUcy",
-          "VFNfV0FLRV9VUF9SRVESMQoCaWQYASABKA4yCS5QUk9UT0NPTDoaSURfUEtU",
-          "X01QRUcyVFNfV0FLRV9VUF9SRVESEAoIdmFyX3R5cGUYAiACKAUSFwoPdmFy",
-          "X3Jvb21fbnVtYmVyGAMgAigFQgJIAQ=="));
+          "VkVSU0lPTl9SRVEiRwoJTE9HSU5fUkVREicKAmlkGAEgASgOMgkuUFJPVE9D",
+          "T0w6EElEX1BLVF9MT0dJTl9SRVESEQoJdmFyX3Rva2VuGAIgAigJIlIKD0NS",
+          "RUFURV9ST09NX1JFURItCgJpZBgBIAEoDjIJLlBST1RPQ09MOhZJRF9QS1Rf",
+          "Q1JFQVRFX1JPT01fUkVREhAKCHZhcl9uYW1lGAIgAigJIlcKDkVOVEVSX1JP",
+          "T01fUkVREiwKAmlkGAEgASgOMgkuUFJPVE9DT0w6FUlEX1BLVF9FTlRFUl9S",
+          "T09NX1JFURIXCg92YXJfcm9vbV9udW1iZXIYAiACKAUiZwoOTEVBVkVfUk9P",
+          "TV9SRVESLAoCaWQYASABKA4yCS5QUk9UT0NPTDoVSURfUEtUX0xFQVZFX1JP",
+          "T01fUkVREg4KBnZhcl9pZBgCIAIoBRIXCg92YXJfcm9vbV9udW1iZXIYAyAC",
+          "KAUiPAoNUk9PTV9MSVNUX1JFURIrCgJpZBgBIAEoDjIJLlBST1RPQ09MOhRJ",
+          "RF9QS1RfUk9PTV9MSVNUX1JFUSKlAQoVUk9PTV9QQVNTX1RIUk9VR0hfUkVR",
+          "EjMKAmlkGAEgASgOMgkuUFJPVE9DT0w6HElEX1BLVF9ST09NX1BBU1NfVEhS",
+          "T1VHSF9SRVESEwoLdmFyX21lc3NhZ2UYAiACKAkSFwoPdmFyX21lc3NhZ2Vf",
+          "aW50GAMgAigFEhcKD3Zhcl9yb29tX251bWJlchgEIAIoBRIQCgh2YXJfdGlt",
+          "ZRgFIAIoCSI2CgpOT1RJQ0VfUkVREigKAmlkGAEgASgOMgkuUFJPVE9DT0w6",
+          "EUlEX1BLVF9OT1RJQ0VfUkVRIoYBChJCSVRNQVBfTUVTU0FHRV9SRVESMAoC",
+          "aWQYASABKA4yCS5QUk9UT0NPTDoZSURfUEtUX0JJVE1BUF9NRVNTQUdFX1JF",
+          "URITCgt2YXJfbWVzc2FnZRgCIAMoDBIXCg92YXJfcm9vbV9udW1iZXIYAyAC",
+          "KAUSEAoIdmFyX3R5cGUYBCACKAUicgoRQVVESU9fTUVTU0FHRV9SRVESLwoC",
+          "aWQYASABKA4yCS5QUk9UT0NPTDoYSURfUEtUX0FVRElPX01FU1NBR0VfUkVR",
+          "EhMKC3Zhcl9tZXNzYWdlGAIgAygMEhcKD3Zhcl9yb29tX251bWJlchgDIAIo",
+          "BSJCChBQUkFZX01FU1NBR0VfUkVREi4KAmlkGAEgASgOMgkuUFJPVE9DT0w6",
+          "F0lEX1BLVF9QUkFZX01FU1NBR0VfUkVRIl8KFFBSQVlfTUVTU0FHRV9SRUdf",
+          "UkVREjIKAmlkGAEgASgOMgkuUFJPVE9DT0w6G0lEX1BLVF9QUkFZX01FU1NB",
+          "R0VfUkVHX1JFURITCgt2YXJfbWVzc2FnZRgCIAEoCSJFCgdRTkFfUkVREiUK",
+          "AmlkGAEgASgOMgkuUFJPVE9DT0w6DklEX1BLVF9RTkFfUkVREhMKC3Zhcl9t",
+          "ZXNzYWdlGAIgASgJIjwKDU1BSUxfTElTVF9SRVESKwoCaWQYASABKA4yCS5Q",
+          "Uk9UT0NPTDoUSURfUEtUX01BSUxfTElTVF9SRVEiQAoHUkVHX1JFURIlCgJp",
+          "ZBgBIAEoDjIJLlBST1RPQ09MOg5JRF9QS1RfUkVHX1JFURIOCgZ2YXJfaWQY",
+          "AiACKAUiRAoRQ0xJRU5UX0xPR09VVF9SRVESLwoCaWQYASABKA4yCS5QUk9U",
+          "T0NPTDoYSURfUEtUX0NMSUVOVF9MT0dPVVRfUkVRInkKEkNBTUVSQV9DT05U",
+          "Uk9MX1JFURIsCgJpZBgBIAEoDjIJLlBST1RPQ09MOhVJRF9QS1RfQ0FNRVJB",
+          "X0NPTlRST0wSJAoIdmFyX3R5cGUYAiACKA4yEi5DYW1lcmFDb250cm9sVHlw",
+          "ZRIPCgd2YXJfcG9zGAMgAigFIogBChNNUEVHMlRTX01FU1NBR0VfUkVREjEK",
+          "AmlkGAEgASgOMgkuUFJPVE9DT0w6GklEX1BLVF9NUEVHMlRTX01FU1NBR0Vf",
+          "UkVREhMKC3Zhcl9tZXNzYWdlGAIgAygMEhcKD3Zhcl9yb29tX251bWJlchgD",
+          "IAIoBRIQCgh2YXJfdHlwZRgEIAIoBSJxChJDQU1FUkFfV0FLRV9VUF9SRVES",
+          "MAoCaWQYASABKA4yCS5QUk9UT0NPTDoZSURfUEtUX0NBTUVSQV9XQUtFX1VQ",
+          "X1JFURIQCgh2YXJfdHlwZRgCIAIoBRIXCg92YXJfcm9vbV9udW1iZXIYAyAC",
+          "KAUibAoOUkVHX0NBTUVSQV9SRVESLAoCaWQYASABKA4yCS5QUk9UT0NPTDoV",
+          "SURfUEtUX1JFR19DQU1FUkFfUkVREhQKDHZhcl9jYW1fbmFtZRgCIAIoCRIW",
+          "Cg52YXJfbWFjaGluZV9pZBgDIAIoCSJYCg9TVE9QX1NUUkVBTV9SRVESLQoC",
+          "aWQYASABKA4yCS5QUk9UT0NPTDoWSURfUEtUX1NUT1BfU1RSRUFNX1JFURIW",
+          "Cg52YXJfbWFjaGluZV9pZBgCIAIoAyJACg9DQU1FUkFfTElTVF9SRVESLQoC",
+          "aWQYASABKA4yCS5QUk9UT0NPTDoWSURfUEtUX0NBTUVSQV9MSVNUX1JFUUIC",
+          "SAE="));
     descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
         new pbr::FileDescriptor[] { global::EnumReflection.Descriptor, global::StructureReflection.Descriptor, },
         new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
           new pbr::GeneratedClrTypeInfo(typeof(global::VERSION_REQ), global::VERSION_REQ.Parser, new[]{ "Id" }, null, null, null, null),
-          new pbr::GeneratedClrTypeInfo(typeof(global::LOGIN_REQ), global::LOGIN_REQ.Parser, new[]{ "Id", "VarId", "VarPwd" }, null, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::LOGIN_REQ), global::LOGIN_REQ.Parser, new[]{ "Id", "VarToken" }, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::CREATE_ROOM_REQ), global::CREATE_ROOM_REQ.Parser, new[]{ "Id", "VarName" }, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::ENTER_ROOM_REQ), global::ENTER_ROOM_REQ.Parser, new[]{ "Id", "VarRoomNumber" }, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::LEAVE_ROOM_REQ), global::LEAVE_ROOM_REQ.Parser, new[]{ "Id", "VarId", "VarRoomNumber" }, null, null, null, null),
@@ -84,7 +90,10 @@ public static partial class CLIGSReflection {
           new pbr::GeneratedClrTypeInfo(typeof(global::CLIENT_LOGOUT_REQ), global::CLIENT_LOGOUT_REQ.Parser, new[]{ "Id" }, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::CAMERA_CONTROL_REQ), global::CAMERA_CONTROL_REQ.Parser, new[]{ "Id", "VarType", "VarPos" }, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::MPEG2TS_MESSAGE_REQ), global::MPEG2TS_MESSAGE_REQ.Parser, new[]{ "Id", "VarMessage", "VarRoomNumber", "VarType" }, null, null, null, null),
-          new pbr::GeneratedClrTypeInfo(typeof(global::MPEG2TS_WAKE_UP_REQ), global::MPEG2TS_WAKE_UP_REQ.Parser, new[]{ "Id", "VarType", "VarRoomNumber" }, null, null, null, null)
+          new pbr::GeneratedClrTypeInfo(typeof(global::CAMERA_WAKE_UP_REQ), global::CAMERA_WAKE_UP_REQ.Parser, new[]{ "Id", "VarType", "VarRoomNumber" }, null, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::REG_CAMERA_REQ), global::REG_CAMERA_REQ.Parser, new[]{ "Id", "VarCamName", "VarMachineId" }, null, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::STOP_STREAM_REQ), global::STOP_STREAM_REQ.Parser, new[]{ "Id", "VarMachineId" }, null, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::CAMERA_LIST_REQ), global::CAMERA_LIST_REQ.Parser, new[]{ "Id" }, null, null, null, null)
         }));
   }
   #endregion
@@ -263,8 +272,7 @@ public sealed partial class LOGIN_REQ : pb::IMessage<LOGIN_REQ> {
   public LOGIN_REQ(LOGIN_REQ other) : this() {
     _hasBits0 = other._hasBits0;
     id_ = other.id_;
-    varId_ = other.varId_;
-    varPwd_ = other.varPwd_;
+    varToken_ = other.varToken_;
     _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
   }
 
@@ -297,50 +305,27 @@ public sealed partial class LOGIN_REQ : pb::IMessage<LOGIN_REQ> {
     _hasBits0 &= ~1;
   }
 
-  /// <summary>Field number for the "var_id" field.</summary>
-  public const int VarIdFieldNumber = 2;
-  private readonly static string VarIdDefaultValue = "";
+  /// <summary>Field number for the "var_token" field.</summary>
+  public const int VarTokenFieldNumber = 2;
+  private readonly static string VarTokenDefaultValue = "";
 
-  private string varId_;
+  private string varToken_;
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  public string VarId {
-    get { return varId_ ?? VarIdDefaultValue; }
+  public string VarToken {
+    get { return varToken_ ?? VarTokenDefaultValue; }
     set {
-      varId_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      varToken_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
     }
   }
-  /// <summary>Gets whether the "var_id" field is set</summary>
+  /// <summary>Gets whether the "var_token" field is set</summary>
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  public bool HasVarId {
-    get { return varId_ != null; }
+  public bool HasVarToken {
+    get { return varToken_ != null; }
   }
-  /// <summary>Clears the value of the "var_id" field</summary>
+  /// <summary>Clears the value of the "var_token" field</summary>
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  public void ClearVarId() {
-    varId_ = null;
-  }
-
-  /// <summary>Field number for the "var_pwd" field.</summary>
-  public const int VarPwdFieldNumber = 3;
-  private readonly static string VarPwdDefaultValue = "";
-
-  private string varPwd_;
-  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  public string VarPwd {
-    get { return varPwd_ ?? VarPwdDefaultValue; }
-    set {
-      varPwd_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
-    }
-  }
-  /// <summary>Gets whether the "var_pwd" field is set</summary>
-  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  public bool HasVarPwd {
-    get { return varPwd_ != null; }
-  }
-  /// <summary>Clears the value of the "var_pwd" field</summary>
-  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  public void ClearVarPwd() {
-    varPwd_ = null;
+  public void ClearVarToken() {
+    varToken_ = null;
   }
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -357,8 +342,7 @@ public sealed partial class LOGIN_REQ : pb::IMessage<LOGIN_REQ> {
       return true;
     }
     if (Id != other.Id) return false;
-    if (VarId != other.VarId) return false;
-    if (VarPwd != other.VarPwd) return false;
+    if (VarToken != other.VarToken) return false;
     return Equals(_unknownFields, other._unknownFields);
   }
 
@@ -366,8 +350,7 @@ public sealed partial class LOGIN_REQ : pb::IMessage<LOGIN_REQ> {
   public override int GetHashCode() {
     int hash = 1;
     if (HasId) hash ^= Id.GetHashCode();
-    if (HasVarId) hash ^= VarId.GetHashCode();
-    if (HasVarPwd) hash ^= VarPwd.GetHashCode();
+    if (HasVarToken) hash ^= VarToken.GetHashCode();
     if (_unknownFields != null) {
       hash ^= _unknownFields.GetHashCode();
     }
@@ -385,13 +368,9 @@ public sealed partial class LOGIN_REQ : pb::IMessage<LOGIN_REQ> {
       output.WriteRawTag(8);
       output.WriteEnum((int) Id);
     }
-    if (HasVarId) {
+    if (HasVarToken) {
       output.WriteRawTag(18);
-      output.WriteString(VarId);
-    }
-    if (HasVarPwd) {
-      output.WriteRawTag(26);
-      output.WriteString(VarPwd);
+      output.WriteString(VarToken);
     }
     if (_unknownFields != null) {
       _unknownFields.WriteTo(output);
@@ -404,11 +383,8 @@ public sealed partial class LOGIN_REQ : pb::IMessage<LOGIN_REQ> {
     if (HasId) {
       size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Id);
     }
-    if (HasVarId) {
-      size += 1 + pb::CodedOutputStream.ComputeStringSize(VarId);
-    }
-    if (HasVarPwd) {
-      size += 1 + pb::CodedOutputStream.ComputeStringSize(VarPwd);
+    if (HasVarToken) {
+      size += 1 + pb::CodedOutputStream.ComputeStringSize(VarToken);
     }
     if (_unknownFields != null) {
       size += _unknownFields.CalculateSize();
@@ -424,11 +400,8 @@ public sealed partial class LOGIN_REQ : pb::IMessage<LOGIN_REQ> {
     if (other.HasId) {
       Id = other.Id;
     }
-    if (other.HasVarId) {
-      VarId = other.VarId;
-    }
-    if (other.HasVarPwd) {
-      VarPwd = other.VarPwd;
+    if (other.HasVarToken) {
+      VarToken = other.VarToken;
     }
     _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
   }
@@ -446,11 +419,7 @@ public sealed partial class LOGIN_REQ : pb::IMessage<LOGIN_REQ> {
           break;
         }
         case 18: {
-          VarId = input.ReadString();
-          break;
-        }
-        case 26: {
-          VarPwd = input.ReadString();
+          VarToken = input.ReadString();
           break;
         }
       }
@@ -3556,12 +3525,12 @@ public sealed partial class MPEG2TS_MESSAGE_REQ : pb::IMessage<MPEG2TS_MESSAGE_R
 
 }
 
-public sealed partial class MPEG2TS_WAKE_UP_REQ : pb::IMessage<MPEG2TS_WAKE_UP_REQ> {
-  private static readonly pb::MessageParser<MPEG2TS_WAKE_UP_REQ> _parser = new pb::MessageParser<MPEG2TS_WAKE_UP_REQ>(() => new MPEG2TS_WAKE_UP_REQ());
+public sealed partial class CAMERA_WAKE_UP_REQ : pb::IMessage<CAMERA_WAKE_UP_REQ> {
+  private static readonly pb::MessageParser<CAMERA_WAKE_UP_REQ> _parser = new pb::MessageParser<CAMERA_WAKE_UP_REQ>(() => new CAMERA_WAKE_UP_REQ());
   private pb::UnknownFieldSet _unknownFields;
   private int _hasBits0;
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  public static pb::MessageParser<MPEG2TS_WAKE_UP_REQ> Parser { get { return _parser; } }
+  public static pb::MessageParser<CAMERA_WAKE_UP_REQ> Parser { get { return _parser; } }
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public static pbr::MessageDescriptor Descriptor {
@@ -3574,14 +3543,14 @@ public sealed partial class MPEG2TS_WAKE_UP_REQ : pb::IMessage<MPEG2TS_WAKE_UP_R
   }
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  public MPEG2TS_WAKE_UP_REQ() {
+  public CAMERA_WAKE_UP_REQ() {
     OnConstruction();
   }
 
   partial void OnConstruction();
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  public MPEG2TS_WAKE_UP_REQ(MPEG2TS_WAKE_UP_REQ other) : this() {
+  public CAMERA_WAKE_UP_REQ(CAMERA_WAKE_UP_REQ other) : this() {
     _hasBits0 = other._hasBits0;
     id_ = other.id_;
     varType_ = other.varType_;
@@ -3590,13 +3559,13 @@ public sealed partial class MPEG2TS_WAKE_UP_REQ : pb::IMessage<MPEG2TS_WAKE_UP_R
   }
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  public MPEG2TS_WAKE_UP_REQ Clone() {
-    return new MPEG2TS_WAKE_UP_REQ(this);
+  public CAMERA_WAKE_UP_REQ Clone() {
+    return new CAMERA_WAKE_UP_REQ(this);
   }
 
   /// <summary>Field number for the "id" field.</summary>
   public const int IdFieldNumber = 1;
-  private readonly static global::PROTOCOL IdDefaultValue = global::PROTOCOL.IdPktMpeg2TsWakeUpReq;
+  private readonly static global::PROTOCOL IdDefaultValue = global::PROTOCOL.IdPktCameraWakeUpReq;
 
   private global::PROTOCOL id_;
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -3668,11 +3637,11 @@ public sealed partial class MPEG2TS_WAKE_UP_REQ : pb::IMessage<MPEG2TS_WAKE_UP_R
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public override bool Equals(object other) {
-    return Equals(other as MPEG2TS_WAKE_UP_REQ);
+    return Equals(other as CAMERA_WAKE_UP_REQ);
   }
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  public bool Equals(MPEG2TS_WAKE_UP_REQ other) {
+  public bool Equals(CAMERA_WAKE_UP_REQ other) {
     if (ReferenceEquals(other, null)) {
       return false;
     }
@@ -3740,7 +3709,7 @@ public sealed partial class MPEG2TS_WAKE_UP_REQ : pb::IMessage<MPEG2TS_WAKE_UP_R
   }
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  public void MergeFrom(MPEG2TS_WAKE_UP_REQ other) {
+  public void MergeFrom(CAMERA_WAKE_UP_REQ other) {
     if (other == null) {
       return;
     }
@@ -3774,6 +3743,559 @@ public sealed partial class MPEG2TS_WAKE_UP_REQ : pb::IMessage<MPEG2TS_WAKE_UP_R
         }
         case 24: {
           VarRoomNumber = input.ReadInt32();
+          break;
+        }
+      }
+    }
+  }
+
+}
+
+public sealed partial class REG_CAMERA_REQ : pb::IMessage<REG_CAMERA_REQ> {
+  private static readonly pb::MessageParser<REG_CAMERA_REQ> _parser = new pb::MessageParser<REG_CAMERA_REQ>(() => new REG_CAMERA_REQ());
+  private pb::UnknownFieldSet _unknownFields;
+  private int _hasBits0;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public static pb::MessageParser<REG_CAMERA_REQ> Parser { get { return _parser; } }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public static pbr::MessageDescriptor Descriptor {
+    get { return global::CLIGSReflection.Descriptor.MessageTypes[19]; }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  pbr::MessageDescriptor pb::IMessage.Descriptor {
+    get { return Descriptor; }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public REG_CAMERA_REQ() {
+    OnConstruction();
+  }
+
+  partial void OnConstruction();
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public REG_CAMERA_REQ(REG_CAMERA_REQ other) : this() {
+    _hasBits0 = other._hasBits0;
+    id_ = other.id_;
+    varCamName_ = other.varCamName_;
+    varMachineId_ = other.varMachineId_;
+    _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public REG_CAMERA_REQ Clone() {
+    return new REG_CAMERA_REQ(this);
+  }
+
+  /// <summary>Field number for the "id" field.</summary>
+  public const int IdFieldNumber = 1;
+  private readonly static global::PROTOCOL IdDefaultValue = global::PROTOCOL.IdPktRegCameraReq;
+
+  private global::PROTOCOL id_;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public global::PROTOCOL Id {
+    get { if ((_hasBits0 & 1) != 0) { return id_; } else { return IdDefaultValue; } }
+    set {
+      _hasBits0 |= 1;
+      id_ = value;
+    }
+  }
+  /// <summary>Gets whether the "id" field is set</summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public bool HasId {
+    get { return (_hasBits0 & 1) != 0; }
+  }
+  /// <summary>Clears the value of the "id" field</summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void ClearId() {
+    _hasBits0 &= ~1;
+  }
+
+  /// <summary>Field number for the "var_cam_name" field.</summary>
+  public const int VarCamNameFieldNumber = 2;
+  private readonly static string VarCamNameDefaultValue = "";
+
+  private string varCamName_;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public string VarCamName {
+    get { return varCamName_ ?? VarCamNameDefaultValue; }
+    set {
+      varCamName_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+    }
+  }
+  /// <summary>Gets whether the "var_cam_name" field is set</summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public bool HasVarCamName {
+    get { return varCamName_ != null; }
+  }
+  /// <summary>Clears the value of the "var_cam_name" field</summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void ClearVarCamName() {
+    varCamName_ = null;
+  }
+
+  /// <summary>Field number for the "var_machine_id" field.</summary>
+  public const int VarMachineIdFieldNumber = 3;
+  private readonly static string VarMachineIdDefaultValue = "";
+
+  private string varMachineId_;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public string VarMachineId {
+    get { return varMachineId_ ?? VarMachineIdDefaultValue; }
+    set {
+      varMachineId_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+    }
+  }
+  /// <summary>Gets whether the "var_machine_id" field is set</summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public bool HasVarMachineId {
+    get { return varMachineId_ != null; }
+  }
+  /// <summary>Clears the value of the "var_machine_id" field</summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void ClearVarMachineId() {
+    varMachineId_ = null;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public override bool Equals(object other) {
+    return Equals(other as REG_CAMERA_REQ);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public bool Equals(REG_CAMERA_REQ other) {
+    if (ReferenceEquals(other, null)) {
+      return false;
+    }
+    if (ReferenceEquals(other, this)) {
+      return true;
+    }
+    if (Id != other.Id) return false;
+    if (VarCamName != other.VarCamName) return false;
+    if (VarMachineId != other.VarMachineId) return false;
+    return Equals(_unknownFields, other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public override int GetHashCode() {
+    int hash = 1;
+    if (HasId) hash ^= Id.GetHashCode();
+    if (HasVarCamName) hash ^= VarCamName.GetHashCode();
+    if (HasVarMachineId) hash ^= VarMachineId.GetHashCode();
+    if (_unknownFields != null) {
+      hash ^= _unknownFields.GetHashCode();
+    }
+    return hash;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public override string ToString() {
+    return pb::JsonFormatter.ToDiagnosticString(this);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void WriteTo(pb::CodedOutputStream output) {
+    if (HasId) {
+      output.WriteRawTag(8);
+      output.WriteEnum((int) Id);
+    }
+    if (HasVarCamName) {
+      output.WriteRawTag(18);
+      output.WriteString(VarCamName);
+    }
+    if (HasVarMachineId) {
+      output.WriteRawTag(26);
+      output.WriteString(VarMachineId);
+    }
+    if (_unknownFields != null) {
+      _unknownFields.WriteTo(output);
+    }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public int CalculateSize() {
+    int size = 0;
+    if (HasId) {
+      size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Id);
+    }
+    if (HasVarCamName) {
+      size += 1 + pb::CodedOutputStream.ComputeStringSize(VarCamName);
+    }
+    if (HasVarMachineId) {
+      size += 1 + pb::CodedOutputStream.ComputeStringSize(VarMachineId);
+    }
+    if (_unknownFields != null) {
+      size += _unknownFields.CalculateSize();
+    }
+    return size;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void MergeFrom(REG_CAMERA_REQ other) {
+    if (other == null) {
+      return;
+    }
+    if (other.HasId) {
+      Id = other.Id;
+    }
+    if (other.HasVarCamName) {
+      VarCamName = other.VarCamName;
+    }
+    if (other.HasVarMachineId) {
+      VarMachineId = other.VarMachineId;
+    }
+    _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void MergeFrom(pb::CodedInputStream input) {
+    uint tag;
+    while ((tag = input.ReadTag()) != 0) {
+      switch(tag) {
+        default:
+          _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+          break;
+        case 8: {
+          Id = (global::PROTOCOL) input.ReadEnum();
+          break;
+        }
+        case 18: {
+          VarCamName = input.ReadString();
+          break;
+        }
+        case 26: {
+          VarMachineId = input.ReadString();
+          break;
+        }
+      }
+    }
+  }
+
+}
+
+public sealed partial class STOP_STREAM_REQ : pb::IMessage<STOP_STREAM_REQ> {
+  private static readonly pb::MessageParser<STOP_STREAM_REQ> _parser = new pb::MessageParser<STOP_STREAM_REQ>(() => new STOP_STREAM_REQ());
+  private pb::UnknownFieldSet _unknownFields;
+  private int _hasBits0;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public static pb::MessageParser<STOP_STREAM_REQ> Parser { get { return _parser; } }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public static pbr::MessageDescriptor Descriptor {
+    get { return global::CLIGSReflection.Descriptor.MessageTypes[20]; }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  pbr::MessageDescriptor pb::IMessage.Descriptor {
+    get { return Descriptor; }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public STOP_STREAM_REQ() {
+    OnConstruction();
+  }
+
+  partial void OnConstruction();
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public STOP_STREAM_REQ(STOP_STREAM_REQ other) : this() {
+    _hasBits0 = other._hasBits0;
+    id_ = other.id_;
+    varMachineId_ = other.varMachineId_;
+    _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public STOP_STREAM_REQ Clone() {
+    return new STOP_STREAM_REQ(this);
+  }
+
+  /// <summary>Field number for the "id" field.</summary>
+  public const int IdFieldNumber = 1;
+  private readonly static global::PROTOCOL IdDefaultValue = global::PROTOCOL.IdPktStopStreamReq;
+
+  private global::PROTOCOL id_;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public global::PROTOCOL Id {
+    get { if ((_hasBits0 & 1) != 0) { return id_; } else { return IdDefaultValue; } }
+    set {
+      _hasBits0 |= 1;
+      id_ = value;
+    }
+  }
+  /// <summary>Gets whether the "id" field is set</summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public bool HasId {
+    get { return (_hasBits0 & 1) != 0; }
+  }
+  /// <summary>Clears the value of the "id" field</summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void ClearId() {
+    _hasBits0 &= ~1;
+  }
+
+  /// <summary>Field number for the "var_machine_id" field.</summary>
+  public const int VarMachineIdFieldNumber = 2;
+  private readonly static long VarMachineIdDefaultValue = 0L;
+
+  private long varMachineId_;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public long VarMachineId {
+    get { if ((_hasBits0 & 2) != 0) { return varMachineId_; } else { return VarMachineIdDefaultValue; } }
+    set {
+      _hasBits0 |= 2;
+      varMachineId_ = value;
+    }
+  }
+  /// <summary>Gets whether the "var_machine_id" field is set</summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public bool HasVarMachineId {
+    get { return (_hasBits0 & 2) != 0; }
+  }
+  /// <summary>Clears the value of the "var_machine_id" field</summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void ClearVarMachineId() {
+    _hasBits0 &= ~2;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public override bool Equals(object other) {
+    return Equals(other as STOP_STREAM_REQ);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public bool Equals(STOP_STREAM_REQ other) {
+    if (ReferenceEquals(other, null)) {
+      return false;
+    }
+    if (ReferenceEquals(other, this)) {
+      return true;
+    }
+    if (Id != other.Id) return false;
+    if (VarMachineId != other.VarMachineId) return false;
+    return Equals(_unknownFields, other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public override int GetHashCode() {
+    int hash = 1;
+    if (HasId) hash ^= Id.GetHashCode();
+    if (HasVarMachineId) hash ^= VarMachineId.GetHashCode();
+    if (_unknownFields != null) {
+      hash ^= _unknownFields.GetHashCode();
+    }
+    return hash;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public override string ToString() {
+    return pb::JsonFormatter.ToDiagnosticString(this);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void WriteTo(pb::CodedOutputStream output) {
+    if (HasId) {
+      output.WriteRawTag(8);
+      output.WriteEnum((int) Id);
+    }
+    if (HasVarMachineId) {
+      output.WriteRawTag(16);
+      output.WriteInt64(VarMachineId);
+    }
+    if (_unknownFields != null) {
+      _unknownFields.WriteTo(output);
+    }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public int CalculateSize() {
+    int size = 0;
+    if (HasId) {
+      size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Id);
+    }
+    if (HasVarMachineId) {
+      size += 1 + pb::CodedOutputStream.ComputeInt64Size(VarMachineId);
+    }
+    if (_unknownFields != null) {
+      size += _unknownFields.CalculateSize();
+    }
+    return size;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void MergeFrom(STOP_STREAM_REQ other) {
+    if (other == null) {
+      return;
+    }
+    if (other.HasId) {
+      Id = other.Id;
+    }
+    if (other.HasVarMachineId) {
+      VarMachineId = other.VarMachineId;
+    }
+    _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void MergeFrom(pb::CodedInputStream input) {
+    uint tag;
+    while ((tag = input.ReadTag()) != 0) {
+      switch(tag) {
+        default:
+          _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+          break;
+        case 8: {
+          Id = (global::PROTOCOL) input.ReadEnum();
+          break;
+        }
+        case 16: {
+          VarMachineId = input.ReadInt64();
+          break;
+        }
+      }
+    }
+  }
+
+}
+
+public sealed partial class CAMERA_LIST_REQ : pb::IMessage<CAMERA_LIST_REQ> {
+  private static readonly pb::MessageParser<CAMERA_LIST_REQ> _parser = new pb::MessageParser<CAMERA_LIST_REQ>(() => new CAMERA_LIST_REQ());
+  private pb::UnknownFieldSet _unknownFields;
+  private int _hasBits0;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public static pb::MessageParser<CAMERA_LIST_REQ> Parser { get { return _parser; } }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public static pbr::MessageDescriptor Descriptor {
+    get { return global::CLIGSReflection.Descriptor.MessageTypes[21]; }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  pbr::MessageDescriptor pb::IMessage.Descriptor {
+    get { return Descriptor; }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public CAMERA_LIST_REQ() {
+    OnConstruction();
+  }
+
+  partial void OnConstruction();
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public CAMERA_LIST_REQ(CAMERA_LIST_REQ other) : this() {
+    _hasBits0 = other._hasBits0;
+    id_ = other.id_;
+    _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public CAMERA_LIST_REQ Clone() {
+    return new CAMERA_LIST_REQ(this);
+  }
+
+  /// <summary>Field number for the "id" field.</summary>
+  public const int IdFieldNumber = 1;
+  private readonly static global::PROTOCOL IdDefaultValue = global::PROTOCOL.IdPktCameraListReq;
+
+  private global::PROTOCOL id_;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public global::PROTOCOL Id {
+    get { if ((_hasBits0 & 1) != 0) { return id_; } else { return IdDefaultValue; } }
+    set {
+      _hasBits0 |= 1;
+      id_ = value;
+    }
+  }
+  /// <summary>Gets whether the "id" field is set</summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public bool HasId {
+    get { return (_hasBits0 & 1) != 0; }
+  }
+  /// <summary>Clears the value of the "id" field</summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void ClearId() {
+    _hasBits0 &= ~1;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public override bool Equals(object other) {
+    return Equals(other as CAMERA_LIST_REQ);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public bool Equals(CAMERA_LIST_REQ other) {
+    if (ReferenceEquals(other, null)) {
+      return false;
+    }
+    if (ReferenceEquals(other, this)) {
+      return true;
+    }
+    if (Id != other.Id) return false;
+    return Equals(_unknownFields, other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public override int GetHashCode() {
+    int hash = 1;
+    if (HasId) hash ^= Id.GetHashCode();
+    if (_unknownFields != null) {
+      hash ^= _unknownFields.GetHashCode();
+    }
+    return hash;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public override string ToString() {
+    return pb::JsonFormatter.ToDiagnosticString(this);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void WriteTo(pb::CodedOutputStream output) {
+    if (HasId) {
+      output.WriteRawTag(8);
+      output.WriteEnum((int) Id);
+    }
+    if (_unknownFields != null) {
+      _unknownFields.WriteTo(output);
+    }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public int CalculateSize() {
+    int size = 0;
+    if (HasId) {
+      size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Id);
+    }
+    if (_unknownFields != null) {
+      size += _unknownFields.CalculateSize();
+    }
+    return size;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void MergeFrom(CAMERA_LIST_REQ other) {
+    if (other == null) {
+      return;
+    }
+    if (other.HasId) {
+      Id = other.Id;
+    }
+    _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void MergeFrom(pb::CodedInputStream input) {
+    uint tag;
+    while ((tag = input.ReadTag()) != 0) {
+      switch(tag) {
+        default:
+          _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+          break;
+        case 8: {
+          Id = (global::PROTOCOL) input.ReadEnum();
           break;
         }
       }

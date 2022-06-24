@@ -11,11 +11,10 @@ namespace DependencyHelper
 
     }
 
-    public interface Toast
+    public interface MethodExt
     {
-        void Show(string message);
-
-        void StartRecord(object view);
+        string MachineId();
+        string MachineName();
 
         void Notification(string message);
 

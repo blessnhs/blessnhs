@@ -1,10 +1,14 @@
-﻿using System;
+﻿using CCA.Popup;
+using DependencyHelper;
+using Rg.Plugins.Popup.Services;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
+using Xamarin.Essentials;
 
 namespace CCA
 {
@@ -13,6 +17,10 @@ namespace CCA
         public MainPage()
         {
             InitializeComponent();
+
+            NetworkProcess();
+
+            PopupNavigation.Instance.PushAsync(new LoginPopup());
         }
 
         void OnTapped(object sender, EventArgs e)
@@ -24,7 +32,18 @@ namespace CCA
 
                 switch (sndObject.StyleId)
                 {
-                  
+                    case "RegCamera":
+                        {
+                            var machineid = DependencyService.Get<MethodExt>().MachineId();
+                            string Model = DeviceInfo.Model;
+                            NetProcess.SendRegCamera(Model,machineid);
+                        }
+                        break;
+                    case "MyCamera":
+                        {
+                            NetProcess.SendReqCameraList();
+                        }
+                        break;
                 }
             }
             catch (Exception)
@@ -32,5 +51,32 @@ namespace CCA
 
             }
         }
+
+        private void NetworkProcess()
+        {
+            //network
+            {
+
+                //network thread
+                Task.Run(() =>
+                {
+                    while (true)
+                    {
+                        try
+                        {
+                            NetProcess.start();
+                            NetProcess.client.PacketRecvSync();
+                            NetProcess.Loop();
+
+                        }
+                        catch (Exception e)
+                        {
+
+                        }
+                    }
+                });
+            }
+        }
+
     }
 }

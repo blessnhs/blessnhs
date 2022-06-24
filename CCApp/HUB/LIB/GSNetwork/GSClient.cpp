@@ -278,7 +278,7 @@ VOID GSClient::ProcPacket(boost::shared_ptr<GSClient> pClient)
 				return;
 			}
 
-			GetProcess()->Process(pBuffer->m_Buffer.GetBuffer(), pBuffer->Length, pBuffer->MainId, pBuffer->SubId, pBuffer->IsCompress, pClient);
+			GetProcess()->Process(pBuffer, pClient);
 		}
 	}
 	else if (GetCreateType() == UDP)
@@ -300,7 +300,7 @@ VOID GSClient::ProcPacket(boost::shared_ptr<GSClient> pClient)
 				return;			
 			}
 
-			GetProcess()->Process2(pBuffer->m_Buffer.GetBuffer(), pBuffer->Length, pBuffer->MainId, pBuffer->SubId, pClient, pBuffer->LemoteAddress, pBuffer->RemotePort);
+			GetProcess()->Process2(pBuffer, pClient, pBuffer->LemoteAddress, pBuffer->RemotePort);
 		}
 	}
 
@@ -380,9 +380,6 @@ void GSClient::OnRecv(DWORD Length, boost::shared_ptr<GSClient> client)
 {
 	CThreadSync Sync;
 
-	WORD  MainProtocol = 0,SubProtocol = 0;
-	DWORD dwPacketLength = 0;
-
 	if (client->GetCreateType() == TCP)
 	{
 		GetTCPSocket()->MakePacket(Length);
@@ -391,7 +388,7 @@ void GSClient::OnRecv(DWORD Length, boost::shared_ptr<GSClient> client)
 	}
 	else if (client->GetCreateType() == UDP)
 	{
-		GetUDPSocket()->MakePacket(Length, MainProtocol, SubProtocol, dwPacketLength);
+		GetUDPSocket()->MakePacket(Length);
 
 		//udp의 경우 속도가 중요하고 connectionless이기 때문에 로직 스레드로 던지지 않고 그냥 처리해본다.
 		//TakeMsg(client);

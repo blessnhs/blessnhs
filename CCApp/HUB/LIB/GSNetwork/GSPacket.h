@@ -20,7 +20,8 @@ struct XDATA
 	DWORD Length;
 	WORD MainId;
 	WORD SubId;
-	BOOL IsCompress;
+	BOOL IsCompress;//(Reserve1)
+	long long Reserve2;
 
 	//udp¸¸ ÇÊ¿ä
 	string LemoteAddress;

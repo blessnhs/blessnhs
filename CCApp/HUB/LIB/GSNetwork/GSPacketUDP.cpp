@@ -68,7 +68,7 @@ BOOL	GSPacketUDP::ReadFromPacketForEventSelect(LPSTR remoteAddress, USHORT &remo
 
 }
 
-VOID	GSPacketUDP::MakePacket(DWORD dwDataLength,WORD &Mainprotocol, WORD &Subprotocol,DWORD &dataLength)
+VOID	GSPacketUDP::MakePacket(DWORD dwDataLength)
 {
 	WORD  MainProtocol = 0,SubProtocol = 0;
 	DWORD dwPacketLength = 0;

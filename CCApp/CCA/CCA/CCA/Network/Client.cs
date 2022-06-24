@@ -130,13 +130,13 @@ namespace CCA
 
             if (PacketLength <= m_RemainLength)         //제대로된 패킷이 왔다
             {
-                dataLength = PacketLength - sizeof(Int32) - sizeof(Int16) - sizeof(Int16) - sizeof(Int32);
+                dataLength = PacketLength - sizeof(Int32) - sizeof(Int16) - sizeof(Int16) - sizeof(Int32) - sizeof(Byte) - sizeof(long);
                 packet = new byte[dataLength];
 
                 protocol = BitConverter.ToInt16(m_PacketBuffer, sizeof(Int32));
-                compressflag = BitConverter.ToInt32(m_PacketBuffer, sizeof(Int32) + sizeof(Int16) + sizeof(Int16));
+                compressflag = BitConverter.ToChar(m_PacketBuffer, sizeof(Int32) + sizeof(Int16) + sizeof(Int16) + sizeof(Int32));
 
-                Buffer.BlockCopy(m_PacketBuffer, sizeof(Int32) + sizeof(Int16) + sizeof(Int16) + sizeof(Int32), packet, 0, dataLength);
+                Buffer.BlockCopy(m_PacketBuffer, sizeof(Int32) + sizeof(Int16) + sizeof(Int16) + sizeof(Int32) + sizeof(Byte) + sizeof(long), packet, 0, dataLength);
 
                 if (m_RemainLength - PacketLength > 0)
                 {
@@ -278,7 +278,7 @@ namespace CCA
         }
 
         private const int CheckCompressSize = 750;
-        private int mCompressFlag = 0;
+        private byte mCompressFlag = 0;
 
         public bool WritePacket(int protocol, byte[] packet, int payloadsize)
         {
@@ -292,6 +292,8 @@ namespace CCA
                         sizeof(Int16) +
                         sizeof(Int16) +
                         sizeof(Int32) +
+                        sizeof(byte) +
+                        sizeof(long) +
                         compress.Length;
 
                     mCompressFlag = 1;
@@ -304,10 +306,10 @@ namespace CCA
                     byte[] bytesProtocol = BitConverter.GetBytes((Int16)protocol);
                     Buffer.BlockCopy(bytesProtocol, 0, TempBuffer, sizeof(Int32), sizeof(Int16));
 
-                    byte[] bytesPacketNumber = BitConverter.GetBytes((Int32)mCompressFlag);
-                    Buffer.BlockCopy(bytesPacketNumber, 0, TempBuffer, sizeof(Int32) + sizeof(Int16) + sizeof(Int16), sizeof(Int32));
+                    byte[] bytesPacketNumber = BitConverter.GetBytes((byte)mCompressFlag);
+                    Buffer.BlockCopy(bytesPacketNumber, 0, TempBuffer, sizeof(Int32) + sizeof(Int16) + sizeof(Int16) + sizeof(Int32), sizeof(byte));
 
-                    Buffer.BlockCopy(compress, 0, TempBuffer, sizeof(Int32) + sizeof(Int16) + sizeof(Int16) + sizeof(Int32), compress.Length);
+                    Buffer.BlockCopy(compress, 0, TempBuffer, sizeof(Int32) + sizeof(Int16) + sizeof(Int16) + sizeof(Int32) + sizeof(byte) + sizeof(long), compress.Length);
 
                     try
                     {
@@ -328,6 +330,8 @@ namespace CCA
                         sizeof(Int16) +
                         sizeof(Int16) +
                         sizeof(Int32) +
+                        sizeof(byte) +
+                        sizeof(long) +
                        payloadsize;
 
                     mCompressFlag = 0;
@@ -340,10 +344,13 @@ namespace CCA
                     byte[] bytesProtocol = BitConverter.GetBytes((Int16)protocol);
                     Buffer.BlockCopy(bytesProtocol, 0, TempBuffer, sizeof(Int32), sizeof(Int16));
 
-                    byte[] bytesPacketNumber = BitConverter.GetBytes((Int32)mCompressFlag);
-                    Buffer.BlockCopy(bytesPacketNumber, 0, TempBuffer, sizeof(Int32) + sizeof(Int16) + sizeof(Int16), sizeof(Int32));
+                    var ss = sizeof(byte);
+                    ss = sizeof(long);
 
-                    Buffer.BlockCopy(packet, 0, TempBuffer, sizeof(Int32) + sizeof(Int16) + sizeof(Int16) + sizeof(Int32), payloadsize);
+                    byte[] bytesPacketNumber = BitConverter.GetBytes((byte)mCompressFlag);
+                    Buffer.BlockCopy(bytesPacketNumber, 0, TempBuffer, sizeof(Int32) + sizeof(Int16) + sizeof(Int16) + sizeof(Int32), sizeof(byte));
+
+                    Buffer.BlockCopy(packet, 0, TempBuffer, sizeof(Int32) + sizeof(Int16) + sizeof(Int16) + sizeof(Int32) + sizeof(byte) + sizeof(long), payloadsize);
 
                     try
                     {

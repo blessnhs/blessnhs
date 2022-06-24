@@ -14,9 +14,7 @@ message LOGIN_REQ
 {
     optional PROTOCOL   id                  = 1 [default = ID_PKT_LOGIN_REQ ];
 
-    required string  var_id                = 2;
-    required string  var_pwd              = 3;
-   
+    required string  var_token                = 2;
 }
 
 message CREATE_ROOM_REQ
@@ -123,9 +121,31 @@ message MPEG2TS_MESSAGE_REQ
 }
 
 
-message MPEG2TS_WAKE_UP_REQ
+message CAMERA_WAKE_UP_REQ
 {
-    optional PROTOCOL   id                  = 1 [default = ID_PKT_MPEG2TS_WAKE_UP_REQ ];
+    optional PROTOCOL   id                  = 1 [default = ID_PKT_CAMERA_WAKE_UP_REQ ];
     required int32       var_type        = 2;	
     required int32       var_room_number        = 3;	
 }
+
+message REG_CAMERA_REQ
+{
+    optional PROTOCOL   id                  = 1 [default = ID_PKT_REG_CAMERA_REQ ];
+    required string     var_cam_name = 2;
+    required string     var_machine_id        = 3;	
+}
+
+message STOP_STREAM_REQ
+{
+    optional PROTOCOL   id                  = 1 [default = ID_PKT_STOP_STREAM_REQ ];
+    required int64       var_machine_id        = 2;
+}
+
+
+message CAMERA_LIST_REQ
+{
+    optional PROTOCOL   id                  = 1 [default = ID_PKT_CAMERA_LIST_REQ ];
+}
+
+
+

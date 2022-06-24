@@ -34,7 +34,7 @@ namespace CCA
 #endif
                 return btTemp;
             }
-            catch(Exception e)
+            catch(Exception)
             {
                 byte[] bytes = Encoding.ASCII.GetBytes(inStr);
                 return bytes;
