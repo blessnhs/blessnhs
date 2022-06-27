@@ -590,14 +590,10 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_GS_2eCLI_2eproto::offsets[] PR
   PROTOBUF_FIELD_OFFSET(::BITMAP_MESSAGE_RES, var_code_),
   PROTOBUF_FIELD_OFFSET(::BITMAP_MESSAGE_RES, var_message_),
   PROTOBUF_FIELD_OFFSET(::BITMAP_MESSAGE_RES, var_name_),
-  PROTOBUF_FIELD_OFFSET(::BITMAP_MESSAGE_RES, var_pos_),
-  PROTOBUF_FIELD_OFFSET(::BITMAP_MESSAGE_RES, var_type_),
-  4,
+  2,
   1,
   ~0u,
   0,
-  2,
-  3,
   PROTOBUF_FIELD_OFFSET(::AUDIO_MESSAGE_RES, _has_bits_),
   PROTOBUF_FIELD_OFFSET(::AUDIO_MESSAGE_RES, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -705,9 +701,11 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_GS_2eCLI_2eproto::offsets[] PR
   PROTOBUF_FIELD_OFFSET(::CAMERA_WAKE_UP_RES, id_),
   PROTOBUF_FIELD_OFFSET(::CAMERA_WAKE_UP_RES, var_type_),
   PROTOBUF_FIELD_OFFSET(::CAMERA_WAKE_UP_RES, var_room_number_),
-  2,
+  PROTOBUF_FIELD_OFFSET(::CAMERA_WAKE_UP_RES, var_to_player_id_),
+  3,
   0,
   1,
+  2,
   PROTOBUF_FIELD_OFFSET(::MPEG2TS_MESSAGE_RES, _has_bits_),
   PROTOBUF_FIELD_OFFSET(::MPEG2TS_MESSAGE_RES, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -729,9 +727,11 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_GS_2eCLI_2eproto::offsets[] PR
   PROTOBUF_FIELD_OFFSET(::REG_CAMERA_RES, id_),
   PROTOBUF_FIELD_OFFSET(::REG_CAMERA_RES, var_code_),
   PROTOBUF_FIELD_OFFSET(::REG_CAMERA_RES, var_cam_name_),
+  PROTOBUF_FIELD_OFFSET(::REG_CAMERA_RES, var_machine_id_),
+  3,
   2,
-  1,
   0,
+  1,
   PROTOBUF_FIELD_OFFSET(::STOP_STREAM_RES, _has_bits_),
   PROTOBUF_FIELD_OFFSET(::STOP_STREAM_RES, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -739,6 +739,8 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_GS_2eCLI_2eproto::offsets[] PR
   ~0u,  // no _weak_field_map_
   PROTOBUF_FIELD_OFFSET(::STOP_STREAM_RES, id_),
   PROTOBUF_FIELD_OFFSET(::STOP_STREAM_RES, var_code_),
+  PROTOBUF_FIELD_OFFSET(::STOP_STREAM_RES, var_to_player_id_),
+  2,
   1,
   0,
   PROTOBUF_FIELD_OFFSET(::CAMERA_LIST_RES, _has_bits_),
@@ -749,9 +751,11 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_GS_2eCLI_2eproto::offsets[] PR
   PROTOBUF_FIELD_OFFSET(::CAMERA_LIST_RES, id_),
   PROTOBUF_FIELD_OFFSET(::CAMERA_LIST_RES, var_code_),
   PROTOBUF_FIELD_OFFSET(::CAMERA_LIST_RES, var_camera_),
+  PROTOBUF_FIELD_OFFSET(::CAMERA_LIST_RES, var_player_id_),
+  2,
   1,
-  0,
   ~0u,
+  0,
 };
 static const ::PROTOBUF_NAMESPACE_ID::internal::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
   { 0, 8, sizeof(::VERSION_RES)},
@@ -763,21 +767,21 @@ static const ::PROTOBUF_NAMESPACE_ID::internal::MigrationSchema schemas[] PROTOB
   { 82, 90, sizeof(::ROOM_LIST_RES)},
   { 93, 102, sizeof(::ROOM_PASS_THROUGH_RES)},
   { 106, 113, sizeof(::NOTICE_RES)},
-  { 115, 126, sizeof(::BITMAP_MESSAGE_RES)},
-  { 132, 142, sizeof(::AUDIO_MESSAGE_RES)},
-  { 147, 155, sizeof(::PRAY_MESSAGE_RES)},
-  { 158, 167, sizeof(::PRAY_MESSAGE_REG_RES)},
-  { 171, 178, sizeof(::QNA_RES)},
-  { 180, 188, sizeof(::MAIL_LIST_RES)},
-  { 191, 198, sizeof(::REG_RES)},
-  { 200, 207, sizeof(::CLIENT_LOGOUT_RES)},
-  { 209, 216, sizeof(::CLIENT_KICK)},
-  { 218, 227, sizeof(::CAMERA_CONTROL_RES)},
-  { 231, 239, sizeof(::CAMERA_WAKE_UP_RES)},
-  { 242, 251, sizeof(::MPEG2TS_MESSAGE_RES)},
-  { 255, 263, sizeof(::REG_CAMERA_RES)},
-  { 266, 273, sizeof(::STOP_STREAM_RES)},
-  { 275, 283, sizeof(::CAMERA_LIST_RES)},
+  { 115, 124, sizeof(::BITMAP_MESSAGE_RES)},
+  { 128, 138, sizeof(::AUDIO_MESSAGE_RES)},
+  { 143, 151, sizeof(::PRAY_MESSAGE_RES)},
+  { 154, 163, sizeof(::PRAY_MESSAGE_REG_RES)},
+  { 167, 174, sizeof(::QNA_RES)},
+  { 176, 184, sizeof(::MAIL_LIST_RES)},
+  { 187, 194, sizeof(::REG_RES)},
+  { 196, 203, sizeof(::CLIENT_LOGOUT_RES)},
+  { 205, 212, sizeof(::CLIENT_KICK)},
+  { 214, 223, sizeof(::CAMERA_CONTROL_RES)},
+  { 227, 236, sizeof(::CAMERA_WAKE_UP_RES)},
+  { 240, 249, sizeof(::MPEG2TS_MESSAGE_RES)},
+  { 253, 262, sizeof(::REG_CAMERA_RES)},
+  { 266, 274, sizeof(::STOP_STREAM_RES)},
+  { 277, 286, sizeof(::CAMERA_LIST_RES)},
 };
 
 static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] = {
@@ -840,53 +844,54 @@ const char descriptor_table_protodef_GS_2eCLI_2eproto[] PROTOBUF_SECTION_VARIABL
   "var_messages\030\003 \003(\0132\014.RoomMessage\022\027\n\017var_"
   "room_number\030\004 \001(\005\"U\n\nNOTICE_RES\022(\n\002id\030\001 "
   "\001(\0162\t.PROTOCOL:\021ID_PKT_NOTICE_RES\022\035\n\010var"
-  "_list\030\002 \003(\0132\013.NotifyInfo\"\256\001\n\022BITMAP_MESS"
+  "_list\030\002 \003(\0132\013.NotifyInfo\"\213\001\n\022BITMAP_MESS"
   "AGE_RES\0220\n\002id\030\001 \001(\0162\t.PROTOCOL:\031ID_PKT_B"
   "ITMAP_MESSAGE_RES\022\034\n\010var_code\030\002 \001(\0162\n.Er"
   "rorCode\022\023\n\013var_message\030\003 \003(\014\022\020\n\010var_name"
-  "\030\004 \001(\014\022\017\n\007var_pos\030\005 \001(\005\022\020\n\010var_type\030\006 \001("
-  "\005\"\232\001\n\021AUDIO_MESSAGE_RES\022/\n\002id\030\001 \001(\0162\t.PR"
-  "OTOCOL:\030ID_PKT_AUDIO_MESSAGE_RES\022\034\n\010var_"
-  "code\030\002 \001(\0162\n.ErrorCode\022\023\n\013var_message\030\003 "
-  "\003(\014\022\020\n\010var_name\030\004 \001(\014\022\017\n\007var_pos\030\005 \001(\005\"}"
-  "\n\020PRAY_MESSAGE_RES\022.\n\002id\030\001 \001(\0162\t.PROTOCO"
-  "L:\027ID_PKT_PRAY_MESSAGE_RES\022\034\n\010var_code\030\002"
-  " \001(\0162\n.ErrorCode\022\033\n\010var_list\030\003 \003(\0132\t.Pra"
-  "yInfo\"\217\001\n\024PRAY_MESSAGE_REG_RES\0222\n\002id\030\001 \001"
-  "(\0162\t.PROTOCOL:\033ID_PKT_PRAY_MESSAGE_REG_R"
-  "ES\022\034\n\010var_code\030\002 \001(\0162\n.ErrorCode\022\023\n\013var_"
-  "message\030\003 \001(\t\022\020\n\010var_time\030\004 \001(\t\"N\n\007QNA_R"
-  "ES\022%\n\002id\030\001 \001(\0162\t.PROTOCOL:\016ID_PKT_QNA_RE"
-  "S\022\034\n\010var_code\030\002 \001(\0162\n.ErrorCode\"w\n\rMAIL_"
-  "LIST_RES\022+\n\002id\030\001 \001(\0162\t.PROTOCOL:\024ID_PKT_"
-  "MAIL_LIST_RES\022\034\n\010var_code\030\002 \001(\0162\n.ErrorC"
-  "ode\022\033\n\010var_list\030\003 \003(\0132\t.MailInfo\"N\n\007REG_"
-  "RES\022%\n\002id\030\001 \001(\0162\t.PROTOCOL:\016ID_PKT_REG_R"
-  "ES\022\034\n\010var_code\030\002 \001(\0162\n.ErrorCode\"b\n\021CLIE"
-  "NT_LOGOUT_RES\022/\n\002id\030\001 \001(\0162\t.PROTOCOL:\030ID"
-  "_PKT_CLIENT_LOGOUT_RES\022\034\n\010var_code\030\002 \001(\016"
-  "2\n.ErrorCode\"E\n\013CLIENT_KICK\022)\n\002id\030\001 \001(\0162"
-  "\t.PROTOCOL:\022ID_PKT_CLIENT_KICK\022\013\n\003sid\030\002 "
-  "\001(\005\"\227\001\n\022CAMERA_CONTROL_RES\022,\n\002id\030\001 \001(\0162\t"
-  ".PROTOCOL:\025ID_PKT_CAMERA_CONTROL\022\034\n\010var_"
-  "code\030\002 \001(\0162\n.ErrorCode\022$\n\010var_type\030\003 \001(\016"
-  "2\022.CameraControlType\022\017\n\007var_pos\030\004 \001(\005\"q\n"
-  "\022CAMERA_WAKE_UP_RES\0220\n\002id\030\001 \001(\0162\t.PROTOC"
-  "OL:\031ID_PKT_CAMERA_WAKE_UP_RES\022\020\n\010var_typ"
-  "e\030\002 \002(\005\022\027\n\017var_room_number\030\003 \002(\005\"\215\001\n\023MPE"
-  "G2TS_MESSAGE_RES\0221\n\002id\030\001 \001(\0162\t.PROTOCOL:"
-  "\032ID_PKT_MPEG2TS_MESSAGE_RES\022\034\n\010var_code\030"
-  "\002 \001(\0162\n.ErrorCode\022\023\n\013var_message\030\003 \003(\014\022\020"
-  "\n\010var_type\030\004 \001(\005\"r\n\016REG_CAMERA_RES\022,\n\002id"
-  "\030\001 \001(\0162\t.PROTOCOL:\025ID_PKT_REG_CAMERA_RES"
-  "\022\034\n\010var_code\030\002 \001(\0162\n.ErrorCode\022\024\n\014var_ca"
-  "m_name\030\003 \001(\t\"^\n\017STOP_STREAM_RES\022-\n\002id\030\001 "
-  "\001(\0162\t.PROTOCOL:\026ID_PKT_STOP_STREAM_RES\022\034"
-  "\n\010var_code\030\002 \001(\0162\n.ErrorCode\"\177\n\017CAMERA_L"
-  "IST_RES\022-\n\002id\030\001 \001(\0162\t.PROTOCOL:\026ID_PKT_C"
-  "AMERA_LIST_RES\022\034\n\010var_code\030\002 \001(\0162\n.Error"
-  "Code\022\037\n\nvar_camera\030\003 \003(\0132\013.CameraInfoB\002H"
-  "\001"
+  "\030\004 \001(\014\"\232\001\n\021AUDIO_MESSAGE_RES\022/\n\002id\030\001 \001(\016"
+  "2\t.PROTOCOL:\030ID_PKT_AUDIO_MESSAGE_RES\022\034\n"
+  "\010var_code\030\002 \001(\0162\n.ErrorCode\022\023\n\013var_messa"
+  "ge\030\003 \003(\014\022\020\n\010var_name\030\004 \001(\014\022\017\n\007var_pos\030\005 "
+  "\001(\005\"}\n\020PRAY_MESSAGE_RES\022.\n\002id\030\001 \001(\0162\t.PR"
+  "OTOCOL:\027ID_PKT_PRAY_MESSAGE_RES\022\034\n\010var_c"
+  "ode\030\002 \001(\0162\n.ErrorCode\022\033\n\010var_list\030\003 \003(\0132"
+  "\t.PrayInfo\"\217\001\n\024PRAY_MESSAGE_REG_RES\0222\n\002i"
+  "d\030\001 \001(\0162\t.PROTOCOL:\033ID_PKT_PRAY_MESSAGE_"
+  "REG_RES\022\034\n\010var_code\030\002 \001(\0162\n.ErrorCode\022\023\n"
+  "\013var_message\030\003 \001(\t\022\020\n\010var_time\030\004 \001(\t\"N\n\007"
+  "QNA_RES\022%\n\002id\030\001 \001(\0162\t.PROTOCOL:\016ID_PKT_Q"
+  "NA_RES\022\034\n\010var_code\030\002 \001(\0162\n.ErrorCode\"w\n\r"
+  "MAIL_LIST_RES\022+\n\002id\030\001 \001(\0162\t.PROTOCOL:\024ID"
+  "_PKT_MAIL_LIST_RES\022\034\n\010var_code\030\002 \001(\0162\n.E"
+  "rrorCode\022\033\n\010var_list\030\003 \003(\0132\t.MailInfo\"N\n"
+  "\007REG_RES\022%\n\002id\030\001 \001(\0162\t.PROTOCOL:\016ID_PKT_"
+  "REG_RES\022\034\n\010var_code\030\002 \001(\0162\n.ErrorCode\"b\n"
+  "\021CLIENT_LOGOUT_RES\022/\n\002id\030\001 \001(\0162\t.PROTOCO"
+  "L:\030ID_PKT_CLIENT_LOGOUT_RES\022\034\n\010var_code\030"
+  "\002 \001(\0162\n.ErrorCode\"E\n\013CLIENT_KICK\022)\n\002id\030\001"
+  " \001(\0162\t.PROTOCOL:\022ID_PKT_CLIENT_KICK\022\013\n\003s"
+  "id\030\002 \001(\005\"\227\001\n\022CAMERA_CONTROL_RES\022,\n\002id\030\001 "
+  "\001(\0162\t.PROTOCOL:\025ID_PKT_CAMERA_CONTROL\022\034\n"
+  "\010var_code\030\002 \001(\0162\n.ErrorCode\022$\n\010var_type\030"
+  "\003 \001(\0162\022.CameraControlType\022\017\n\007var_pos\030\004 \001"
+  "(\005\"\213\001\n\022CAMERA_WAKE_UP_RES\0220\n\002id\030\001 \001(\0162\t."
+  "PROTOCOL:\031ID_PKT_CAMERA_WAKE_UP_RES\022\020\n\010v"
+  "ar_type\030\002 \001(\005\022\027\n\017var_room_number\030\003 \001(\005\022\030"
+  "\n\020var_to_player_id\030\004 \001(\005\"\215\001\n\023MPEG2TS_MES"
+  "SAGE_RES\0221\n\002id\030\001 \001(\0162\t.PROTOCOL:\032ID_PKT_"
+  "MPEG2TS_MESSAGE_RES\022\034\n\010var_code\030\002 \001(\0162\n."
+  "ErrorCode\022\023\n\013var_message\030\003 \003(\014\022\020\n\010var_ty"
+  "pe\030\004 \001(\005\"\212\001\n\016REG_CAMERA_RES\022,\n\002id\030\001 \001(\0162"
+  "\t.PROTOCOL:\025ID_PKT_REG_CAMERA_RES\022\034\n\010var"
+  "_code\030\002 \001(\0162\n.ErrorCode\022\024\n\014var_cam_name\030"
+  "\003 \001(\t\022\026\n\016var_machine_id\030\004 \001(\t\"x\n\017STOP_ST"
+  "REAM_RES\022-\n\002id\030\001 \001(\0162\t.PROTOCOL:\026ID_PKT_"
+  "STOP_STREAM_RES\022\034\n\010var_code\030\002 \001(\0162\n.Erro"
+  "rCode\022\030\n\020var_to_player_id\030\003 \001(\003\"\226\001\n\017CAME"
+  "RA_LIST_RES\022-\n\002id\030\001 \001(\0162\t.PROTOCOL:\026ID_P"
+  "KT_CAMERA_LIST_RES\022\034\n\010var_code\030\002 \001(\0162\n.E"
+  "rrorCode\022\037\n\nvar_camera\030\003 \003(\0132\013.CameraInf"
+  "o\022\025\n\rvar_player_id\030\004 \001(\003B\002H\001"
   ;
 static const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable*const descriptor_table_GS_2eCLI_2eproto_deps[2] = {
   &::descriptor_table_Enum_2eproto,
@@ -921,7 +926,7 @@ static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_GS_
 static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_GS_2eCLI_2eproto_once;
 static bool descriptor_table_GS_2eCLI_2eproto_initialized = false;
 const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_GS_2eCLI_2eproto = {
-  &descriptor_table_GS_2eCLI_2eproto_initialized, descriptor_table_protodef_GS_2eCLI_2eproto, "GS.CLI.proto", 3121,
+  &descriptor_table_GS_2eCLI_2eproto_initialized, descriptor_table_protodef_GS_2eCLI_2eproto, "GS.CLI.proto", 3188,
   &descriptor_table_GS_2eCLI_2eproto_once, descriptor_table_GS_2eCLI_2eproto_sccs, descriptor_table_GS_2eCLI_2eproto_deps, 24, 2,
   schemas, file_default_instances, TableStruct_GS_2eCLI_2eproto::offsets,
   file_level_metadata_GS_2eCLI_2eproto, 24, file_level_enum_descriptors_GS_2eCLI_2eproto, file_level_service_descriptors_GS_2eCLI_2eproto,
@@ -3792,19 +3797,13 @@ class BITMAP_MESSAGE_RES::_Internal {
  public:
   using HasBits = decltype(std::declval<BITMAP_MESSAGE_RES>()._has_bits_);
   static void set_has_id(HasBits* has_bits) {
-    (*has_bits)[0] |= 16u;
+    (*has_bits)[0] |= 4u;
   }
   static void set_has_var_code(HasBits* has_bits) {
     (*has_bits)[0] |= 2u;
   }
   static void set_has_var_name(HasBits* has_bits) {
     (*has_bits)[0] |= 1u;
-  }
-  static void set_has_var_pos(HasBits* has_bits) {
-    (*has_bits)[0] |= 4u;
-  }
-  static void set_has_var_type(HasBits* has_bits) {
-    (*has_bits)[0] |= 8u;
   }
 };
 
@@ -3832,9 +3831,7 @@ BITMAP_MESSAGE_RES::BITMAP_MESSAGE_RES(const BITMAP_MESSAGE_RES& from)
 void BITMAP_MESSAGE_RES::SharedCtor() {
   ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&scc_info_BITMAP_MESSAGE_RES_GS_2eCLI_2eproto.base);
   var_name_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
-  ::memset(&var_code_, 0, static_cast<size_t>(
-      reinterpret_cast<char*>(&var_type_) -
-      reinterpret_cast<char*>(&var_code_)) + sizeof(var_type_));
+  var_code_ = 0;
   id_ = 11;
 }
 
@@ -3867,10 +3864,8 @@ void BITMAP_MESSAGE_RES::Clear() {
   if (cached_has_bits & 0x00000001u) {
     var_name_.ClearNonDefaultToEmptyNoArena();
   }
-  if (cached_has_bits & 0x0000001eu) {
-    ::memset(&var_code_, 0, static_cast<size_t>(
-        reinterpret_cast<char*>(&var_type_) -
-        reinterpret_cast<char*>(&var_code_)) + sizeof(var_type_));
+  if (cached_has_bits & 0x00000006u) {
+    var_code_ = 0;
     id_ = 11;
   }
   _has_bits_.Clear();
@@ -3930,22 +3925,6 @@ const char* BITMAP_MESSAGE_RES::_InternalParse(const char* ptr, ::PROTOBUF_NAMES
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
-      // optional int32 var_pos = 5;
-      case 5:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 40)) {
-          _Internal::set_has_var_pos(&has_bits);
-          var_pos_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
-          CHK_(ptr);
-        } else goto handle_unusual;
-        continue;
-      // optional int32 var_type = 6;
-      case 6:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 48)) {
-          _Internal::set_has_var_type(&has_bits);
-          var_type_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
-          CHK_(ptr);
-        } else goto handle_unusual;
-        continue;
       default: {
       handle_unusual:
         if ((tag & 7) == 4 || tag == 0) {
@@ -3975,7 +3954,7 @@ failure:
 
   cached_has_bits = _has_bits_[0];
   // optional .PROTOCOL id = 1 [default = ID_PKT_BITMAP_MESSAGE_RES];
-  if (cached_has_bits & 0x00000010u) {
+  if (cached_has_bits & 0x00000004u) {
     target = stream->EnsureSpace(target);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteEnumToArray(
       1, this->_internal_id(), target);
@@ -3998,18 +3977,6 @@ failure:
   if (cached_has_bits & 0x00000001u) {
     target = stream->WriteBytesMaybeAliased(
         4, this->_internal_var_name(), target);
-  }
-
-  // optional int32 var_pos = 5;
-  if (cached_has_bits & 0x00000004u) {
-    target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32ToArray(5, this->_internal_var_pos(), target);
-  }
-
-  // optional int32 var_type = 6;
-  if (cached_has_bits & 0x00000008u) {
-    target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32ToArray(6, this->_internal_var_type(), target);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
@@ -4037,7 +4004,7 @@ size_t BITMAP_MESSAGE_RES::ByteSizeLong() const {
   }
 
   cached_has_bits = _has_bits_[0];
-  if (cached_has_bits & 0x0000001fu) {
+  if (cached_has_bits & 0x00000007u) {
     // optional bytes var_name = 4;
     if (cached_has_bits & 0x00000001u) {
       total_size += 1 +
@@ -4051,22 +4018,8 @@ size_t BITMAP_MESSAGE_RES::ByteSizeLong() const {
         ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::EnumSize(this->_internal_var_code());
     }
 
-    // optional int32 var_pos = 5;
-    if (cached_has_bits & 0x00000004u) {
-      total_size += 1 +
-        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32Size(
-          this->_internal_var_pos());
-    }
-
-    // optional int32 var_type = 6;
-    if (cached_has_bits & 0x00000008u) {
-      total_size += 1 +
-        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32Size(
-          this->_internal_var_type());
-    }
-
     // optional .PROTOCOL id = 1 [default = ID_PKT_BITMAP_MESSAGE_RES];
-    if (cached_has_bits & 0x00000010u) {
+    if (cached_has_bits & 0x00000004u) {
       total_size += 1 +
         ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::EnumSize(this->_internal_id());
     }
@@ -4105,7 +4058,7 @@ void BITMAP_MESSAGE_RES::MergeFrom(const BITMAP_MESSAGE_RES& from) {
 
   var_message_.MergeFrom(from.var_message_);
   cached_has_bits = from._has_bits_[0];
-  if (cached_has_bits & 0x0000001fu) {
+  if (cached_has_bits & 0x00000007u) {
     if (cached_has_bits & 0x00000001u) {
       _has_bits_[0] |= 0x00000001u;
       var_name_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.var_name_);
@@ -4114,12 +4067,6 @@ void BITMAP_MESSAGE_RES::MergeFrom(const BITMAP_MESSAGE_RES& from) {
       var_code_ = from.var_code_;
     }
     if (cached_has_bits & 0x00000004u) {
-      var_pos_ = from.var_pos_;
-    }
-    if (cached_has_bits & 0x00000008u) {
-      var_type_ = from.var_type_;
-    }
-    if (cached_has_bits & 0x00000010u) {
       id_ = from.id_;
     }
     _has_bits_[0] |= cached_has_bits;
@@ -4152,8 +4099,6 @@ void BITMAP_MESSAGE_RES::InternalSwap(BITMAP_MESSAGE_RES* other) {
   var_name_.Swap(&other->var_name_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
     GetArenaNoVirtual());
   swap(var_code_, other->var_code_);
-  swap(var_pos_, other->var_pos_);
-  swap(var_type_, other->var_type_);
   swap(id_, other->id_);
 }
 
@@ -6721,13 +6666,16 @@ class CAMERA_WAKE_UP_RES::_Internal {
  public:
   using HasBits = decltype(std::declval<CAMERA_WAKE_UP_RES>()._has_bits_);
   static void set_has_id(HasBits* has_bits) {
-    (*has_bits)[0] |= 4u;
+    (*has_bits)[0] |= 8u;
   }
   static void set_has_var_type(HasBits* has_bits) {
     (*has_bits)[0] |= 1u;
   }
   static void set_has_var_room_number(HasBits* has_bits) {
     (*has_bits)[0] |= 2u;
+  }
+  static void set_has_var_to_player_id(HasBits* has_bits) {
+    (*has_bits)[0] |= 4u;
   }
 };
 
@@ -6749,8 +6697,8 @@ CAMERA_WAKE_UP_RES::CAMERA_WAKE_UP_RES(const CAMERA_WAKE_UP_RES& from)
 
 void CAMERA_WAKE_UP_RES::SharedCtor() {
   ::memset(&var_type_, 0, static_cast<size_t>(
-      reinterpret_cast<char*>(&var_room_number_) -
-      reinterpret_cast<char*>(&var_type_)) + sizeof(var_room_number_));
+      reinterpret_cast<char*>(&var_to_player_id_) -
+      reinterpret_cast<char*>(&var_type_)) + sizeof(var_to_player_id_));
   id_ = 46;
 }
 
@@ -6778,10 +6726,10 @@ void CAMERA_WAKE_UP_RES::Clear() {
   (void) cached_has_bits;
 
   cached_has_bits = _has_bits_[0];
-  if (cached_has_bits & 0x00000007u) {
+  if (cached_has_bits & 0x0000000fu) {
     ::memset(&var_type_, 0, static_cast<size_t>(
-        reinterpret_cast<char*>(&var_room_number_) -
-        reinterpret_cast<char*>(&var_type_)) + sizeof(var_room_number_));
+        reinterpret_cast<char*>(&var_to_player_id_) -
+        reinterpret_cast<char*>(&var_type_)) + sizeof(var_to_player_id_));
     id_ = 46;
   }
   _has_bits_.Clear();
@@ -6808,7 +6756,7 @@ const char* CAMERA_WAKE_UP_RES::_InternalParse(const char* ptr, ::PROTOBUF_NAMES
           }
         } else goto handle_unusual;
         continue;
-      // required int32 var_type = 2;
+      // optional int32 var_type = 2;
       case 2:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 16)) {
           _Internal::set_has_var_type(&has_bits);
@@ -6816,11 +6764,19 @@ const char* CAMERA_WAKE_UP_RES::_InternalParse(const char* ptr, ::PROTOBUF_NAMES
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
-      // required int32 var_room_number = 3;
+      // optional int32 var_room_number = 3;
       case 3:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 24)) {
           _Internal::set_has_var_room_number(&has_bits);
           var_room_number_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // optional int32 var_to_player_id = 4;
+      case 4:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 32)) {
+          _Internal::set_has_var_to_player_id(&has_bits);
+          var_to_player_id_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
@@ -6853,22 +6809,28 @@ failure:
 
   cached_has_bits = _has_bits_[0];
   // optional .PROTOCOL id = 1 [default = ID_PKT_CAMERA_WAKE_UP_RES];
-  if (cached_has_bits & 0x00000004u) {
+  if (cached_has_bits & 0x00000008u) {
     target = stream->EnsureSpace(target);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteEnumToArray(
       1, this->_internal_id(), target);
   }
 
-  // required int32 var_type = 2;
+  // optional int32 var_type = 2;
   if (cached_has_bits & 0x00000001u) {
     target = stream->EnsureSpace(target);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32ToArray(2, this->_internal_var_type(), target);
   }
 
-  // required int32 var_room_number = 3;
+  // optional int32 var_room_number = 3;
   if (cached_has_bits & 0x00000002u) {
     target = stream->EnsureSpace(target);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32ToArray(3, this->_internal_var_room_number(), target);
+  }
+
+  // optional int32 var_to_player_id = 4;
+  if (cached_has_bits & 0x00000004u) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32ToArray(4, this->_internal_var_to_player_id(), target);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
@@ -6879,55 +6841,44 @@ failure:
   return target;
 }
 
-size_t CAMERA_WAKE_UP_RES::RequiredFieldsByteSizeFallback() const {
-// @@protoc_insertion_point(required_fields_byte_size_fallback_start:CAMERA_WAKE_UP_RES)
-  size_t total_size = 0;
-
-  if (_internal_has_var_type()) {
-    // required int32 var_type = 2;
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32Size(
-        this->_internal_var_type());
-  }
-
-  if (_internal_has_var_room_number()) {
-    // required int32 var_room_number = 3;
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32Size(
-        this->_internal_var_room_number());
-  }
-
-  return total_size;
-}
 size_t CAMERA_WAKE_UP_RES::ByteSizeLong() const {
 // @@protoc_insertion_point(message_byte_size_start:CAMERA_WAKE_UP_RES)
   size_t total_size = 0;
 
-  if (((_has_bits_[0] & 0x00000003) ^ 0x00000003) == 0) {  // All required fields are present.
-    // required int32 var_type = 2;
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32Size(
-        this->_internal_var_type());
-
-    // required int32 var_room_number = 3;
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32Size(
-        this->_internal_var_room_number());
-
-  } else {
-    total_size += RequiredFieldsByteSizeFallback();
-  }
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  // optional .PROTOCOL id = 1 [default = ID_PKT_CAMERA_WAKE_UP_RES];
   cached_has_bits = _has_bits_[0];
-  if (cached_has_bits & 0x00000004u) {
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::EnumSize(this->_internal_id());
-  }
+  if (cached_has_bits & 0x0000000fu) {
+    // optional int32 var_type = 2;
+    if (cached_has_bits & 0x00000001u) {
+      total_size += 1 +
+        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32Size(
+          this->_internal_var_type());
+    }
 
+    // optional int32 var_room_number = 3;
+    if (cached_has_bits & 0x00000002u) {
+      total_size += 1 +
+        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32Size(
+          this->_internal_var_room_number());
+    }
+
+    // optional int32 var_to_player_id = 4;
+    if (cached_has_bits & 0x00000004u) {
+      total_size += 1 +
+        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32Size(
+          this->_internal_var_to_player_id());
+    }
+
+    // optional .PROTOCOL id = 1 [default = ID_PKT_CAMERA_WAKE_UP_RES];
+    if (cached_has_bits & 0x00000008u) {
+      total_size += 1 +
+        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::EnumSize(this->_internal_id());
+    }
+
+  }
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
     return ::PROTOBUF_NAMESPACE_ID::internal::ComputeUnknownFieldsSize(
         _internal_metadata_, total_size, &_cached_size_);
@@ -6960,7 +6911,7 @@ void CAMERA_WAKE_UP_RES::MergeFrom(const CAMERA_WAKE_UP_RES& from) {
   (void) cached_has_bits;
 
   cached_has_bits = from._has_bits_[0];
-  if (cached_has_bits & 0x00000007u) {
+  if (cached_has_bits & 0x0000000fu) {
     if (cached_has_bits & 0x00000001u) {
       var_type_ = from.var_type_;
     }
@@ -6968,6 +6919,9 @@ void CAMERA_WAKE_UP_RES::MergeFrom(const CAMERA_WAKE_UP_RES& from) {
       var_room_number_ = from.var_room_number_;
     }
     if (cached_has_bits & 0x00000004u) {
+      var_to_player_id_ = from.var_to_player_id_;
+    }
+    if (cached_has_bits & 0x00000008u) {
       id_ = from.id_;
     }
     _has_bits_[0] |= cached_has_bits;
@@ -6989,7 +6943,6 @@ void CAMERA_WAKE_UP_RES::CopyFrom(const CAMERA_WAKE_UP_RES& from) {
 }
 
 bool CAMERA_WAKE_UP_RES::IsInitialized() const {
-  if ((_has_bits_[0] & 0x00000003) != 0x00000003) return false;
   return true;
 }
 
@@ -6999,6 +6952,7 @@ void CAMERA_WAKE_UP_RES::InternalSwap(CAMERA_WAKE_UP_RES* other) {
   swap(_has_bits_[0], other->_has_bits_[0]);
   swap(var_type_, other->var_type_);
   swap(var_room_number_, other->var_room_number_);
+  swap(var_to_player_id_, other->var_to_player_id_);
   swap(id_, other->id_);
 }
 
@@ -7326,13 +7280,16 @@ class REG_CAMERA_RES::_Internal {
  public:
   using HasBits = decltype(std::declval<REG_CAMERA_RES>()._has_bits_);
   static void set_has_id(HasBits* has_bits) {
-    (*has_bits)[0] |= 4u;
+    (*has_bits)[0] |= 8u;
   }
   static void set_has_var_code(HasBits* has_bits) {
-    (*has_bits)[0] |= 2u;
+    (*has_bits)[0] |= 4u;
   }
   static void set_has_var_cam_name(HasBits* has_bits) {
     (*has_bits)[0] |= 1u;
+  }
+  static void set_has_var_machine_id(HasBits* has_bits) {
+    (*has_bits)[0] |= 2u;
   }
 };
 
@@ -7350,6 +7307,10 @@ REG_CAMERA_RES::REG_CAMERA_RES(const REG_CAMERA_RES& from)
   if (from._internal_has_var_cam_name()) {
     var_cam_name_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.var_cam_name_);
   }
+  var_machine_id_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  if (from._internal_has_var_machine_id()) {
+    var_machine_id_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.var_machine_id_);
+  }
   ::memcpy(&var_code_, &from.var_code_,
     static_cast<size_t>(reinterpret_cast<char*>(&id_) -
     reinterpret_cast<char*>(&var_code_)) + sizeof(id_));
@@ -7359,6 +7320,7 @@ REG_CAMERA_RES::REG_CAMERA_RES(const REG_CAMERA_RES& from)
 void REG_CAMERA_RES::SharedCtor() {
   ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&scc_info_REG_CAMERA_RES_GS_2eCLI_2eproto.base);
   var_cam_name_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  var_machine_id_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
   var_code_ = 0;
   id_ = 50;
 }
@@ -7370,6 +7332,7 @@ REG_CAMERA_RES::~REG_CAMERA_RES() {
 
 void REG_CAMERA_RES::SharedDtor() {
   var_cam_name_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  var_machine_id_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
 }
 
 void REG_CAMERA_RES::SetCachedSize(int size) const {
@@ -7388,10 +7351,15 @@ void REG_CAMERA_RES::Clear() {
   (void) cached_has_bits;
 
   cached_has_bits = _has_bits_[0];
-  if (cached_has_bits & 0x00000001u) {
-    var_cam_name_.ClearNonDefaultToEmptyNoArena();
+  if (cached_has_bits & 0x00000003u) {
+    if (cached_has_bits & 0x00000001u) {
+      var_cam_name_.ClearNonDefaultToEmptyNoArena();
+    }
+    if (cached_has_bits & 0x00000002u) {
+      var_machine_id_.ClearNonDefaultToEmptyNoArena();
+    }
   }
-  if (cached_has_bits & 0x00000006u) {
+  if (cached_has_bits & 0x0000000cu) {
     var_code_ = 0;
     id_ = 50;
   }
@@ -7442,6 +7410,17 @@ const char* REG_CAMERA_RES::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
+      // optional string var_machine_id = 4;
+      case 4:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 34)) {
+          auto str = _internal_mutable_var_machine_id();
+          ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
+          #ifndef NDEBUG
+          ::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "REG_CAMERA_RES.var_machine_id");
+          #endif  // !NDEBUG
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
       default: {
       handle_unusual:
         if ((tag & 7) == 4 || tag == 0) {
@@ -7471,14 +7450,14 @@ failure:
 
   cached_has_bits = _has_bits_[0];
   // optional .PROTOCOL id = 1 [default = ID_PKT_REG_CAMERA_RES];
-  if (cached_has_bits & 0x00000004u) {
+  if (cached_has_bits & 0x00000008u) {
     target = stream->EnsureSpace(target);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteEnumToArray(
       1, this->_internal_id(), target);
   }
 
   // optional .ErrorCode var_code = 2;
-  if (cached_has_bits & 0x00000002u) {
+  if (cached_has_bits & 0x00000004u) {
     target = stream->EnsureSpace(target);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteEnumToArray(
       2, this->_internal_var_code(), target);
@@ -7492,6 +7471,16 @@ failure:
       "REG_CAMERA_RES.var_cam_name");
     target = stream->WriteStringMaybeAliased(
         3, this->_internal_var_cam_name(), target);
+  }
+
+  // optional string var_machine_id = 4;
+  if (cached_has_bits & 0x00000002u) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->_internal_var_machine_id().data(), static_cast<int>(this->_internal_var_machine_id().length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SERIALIZE,
+      "REG_CAMERA_RES.var_machine_id");
+    target = stream->WriteStringMaybeAliased(
+        4, this->_internal_var_machine_id(), target);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
@@ -7511,7 +7500,7 @@ size_t REG_CAMERA_RES::ByteSizeLong() const {
   (void) cached_has_bits;
 
   cached_has_bits = _has_bits_[0];
-  if (cached_has_bits & 0x00000007u) {
+  if (cached_has_bits & 0x0000000fu) {
     // optional string var_cam_name = 3;
     if (cached_has_bits & 0x00000001u) {
       total_size += 1 +
@@ -7519,14 +7508,21 @@ size_t REG_CAMERA_RES::ByteSizeLong() const {
           this->_internal_var_cam_name());
     }
 
-    // optional .ErrorCode var_code = 2;
+    // optional string var_machine_id = 4;
     if (cached_has_bits & 0x00000002u) {
+      total_size += 1 +
+        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+          this->_internal_var_machine_id());
+    }
+
+    // optional .ErrorCode var_code = 2;
+    if (cached_has_bits & 0x00000004u) {
       total_size += 1 +
         ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::EnumSize(this->_internal_var_code());
     }
 
     // optional .PROTOCOL id = 1 [default = ID_PKT_REG_CAMERA_RES];
-    if (cached_has_bits & 0x00000004u) {
+    if (cached_has_bits & 0x00000008u) {
       total_size += 1 +
         ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::EnumSize(this->_internal_id());
     }
@@ -7564,15 +7560,19 @@ void REG_CAMERA_RES::MergeFrom(const REG_CAMERA_RES& from) {
   (void) cached_has_bits;
 
   cached_has_bits = from._has_bits_[0];
-  if (cached_has_bits & 0x00000007u) {
+  if (cached_has_bits & 0x0000000fu) {
     if (cached_has_bits & 0x00000001u) {
       _has_bits_[0] |= 0x00000001u;
       var_cam_name_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.var_cam_name_);
     }
     if (cached_has_bits & 0x00000002u) {
-      var_code_ = from.var_code_;
+      _has_bits_[0] |= 0x00000002u;
+      var_machine_id_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.var_machine_id_);
     }
     if (cached_has_bits & 0x00000004u) {
+      var_code_ = from.var_code_;
+    }
+    if (cached_has_bits & 0x00000008u) {
       id_ = from.id_;
     }
     _has_bits_[0] |= cached_has_bits;
@@ -7603,6 +7603,8 @@ void REG_CAMERA_RES::InternalSwap(REG_CAMERA_RES* other) {
   swap(_has_bits_[0], other->_has_bits_[0]);
   var_cam_name_.Swap(&other->var_cam_name_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
     GetArenaNoVirtual());
+  var_machine_id_.Swap(&other->var_machine_id_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+    GetArenaNoVirtual());
   swap(var_code_, other->var_code_);
   swap(id_, other->id_);
 }
@@ -7620,9 +7622,12 @@ class STOP_STREAM_RES::_Internal {
  public:
   using HasBits = decltype(std::declval<STOP_STREAM_RES>()._has_bits_);
   static void set_has_id(HasBits* has_bits) {
-    (*has_bits)[0] |= 2u;
+    (*has_bits)[0] |= 4u;
   }
   static void set_has_var_code(HasBits* has_bits) {
+    (*has_bits)[0] |= 2u;
+  }
+  static void set_has_var_to_player_id(HasBits* has_bits) {
     (*has_bits)[0] |= 1u;
   }
 };
@@ -7637,14 +7642,16 @@ STOP_STREAM_RES::STOP_STREAM_RES(const STOP_STREAM_RES& from)
       _internal_metadata_(nullptr),
       _has_bits_(from._has_bits_) {
   _internal_metadata_.MergeFrom(from._internal_metadata_);
-  ::memcpy(&var_code_, &from.var_code_,
+  ::memcpy(&var_to_player_id_, &from.var_to_player_id_,
     static_cast<size_t>(reinterpret_cast<char*>(&id_) -
-    reinterpret_cast<char*>(&var_code_)) + sizeof(id_));
+    reinterpret_cast<char*>(&var_to_player_id_)) + sizeof(id_));
   // @@protoc_insertion_point(copy_constructor:STOP_STREAM_RES)
 }
 
 void STOP_STREAM_RES::SharedCtor() {
-  var_code_ = 0;
+  ::memset(&var_to_player_id_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&var_code_) -
+      reinterpret_cast<char*>(&var_to_player_id_)) + sizeof(var_code_));
   id_ = 48;
 }
 
@@ -7672,8 +7679,10 @@ void STOP_STREAM_RES::Clear() {
   (void) cached_has_bits;
 
   cached_has_bits = _has_bits_[0];
-  if (cached_has_bits & 0x00000003u) {
-    var_code_ = 0;
+  if (cached_has_bits & 0x00000007u) {
+    ::memset(&var_to_player_id_, 0, static_cast<size_t>(
+        reinterpret_cast<char*>(&var_code_) -
+        reinterpret_cast<char*>(&var_to_player_id_)) + sizeof(var_code_));
     id_ = 48;
   }
   _has_bits_.Clear();
@@ -7712,6 +7721,14 @@ const char* STOP_STREAM_RES::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPAC
           }
         } else goto handle_unusual;
         continue;
+      // optional int64 var_to_player_id = 3;
+      case 3:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 24)) {
+          _Internal::set_has_var_to_player_id(&has_bits);
+          var_to_player_id_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
       default: {
       handle_unusual:
         if ((tag & 7) == 4 || tag == 0) {
@@ -7741,17 +7758,23 @@ failure:
 
   cached_has_bits = _has_bits_[0];
   // optional .PROTOCOL id = 1 [default = ID_PKT_STOP_STREAM_RES];
-  if (cached_has_bits & 0x00000002u) {
+  if (cached_has_bits & 0x00000004u) {
     target = stream->EnsureSpace(target);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteEnumToArray(
       1, this->_internal_id(), target);
   }
 
   // optional .ErrorCode var_code = 2;
-  if (cached_has_bits & 0x00000001u) {
+  if (cached_has_bits & 0x00000002u) {
     target = stream->EnsureSpace(target);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteEnumToArray(
       2, this->_internal_var_code(), target);
+  }
+
+  // optional int64 var_to_player_id = 3;
+  if (cached_has_bits & 0x00000001u) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt64ToArray(3, this->_internal_var_to_player_id(), target);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
@@ -7771,15 +7794,22 @@ size_t STOP_STREAM_RES::ByteSizeLong() const {
   (void) cached_has_bits;
 
   cached_has_bits = _has_bits_[0];
-  if (cached_has_bits & 0x00000003u) {
-    // optional .ErrorCode var_code = 2;
+  if (cached_has_bits & 0x00000007u) {
+    // optional int64 var_to_player_id = 3;
     if (cached_has_bits & 0x00000001u) {
+      total_size += 1 +
+        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int64Size(
+          this->_internal_var_to_player_id());
+    }
+
+    // optional .ErrorCode var_code = 2;
+    if (cached_has_bits & 0x00000002u) {
       total_size += 1 +
         ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::EnumSize(this->_internal_var_code());
     }
 
     // optional .PROTOCOL id = 1 [default = ID_PKT_STOP_STREAM_RES];
-    if (cached_has_bits & 0x00000002u) {
+    if (cached_has_bits & 0x00000004u) {
       total_size += 1 +
         ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::EnumSize(this->_internal_id());
     }
@@ -7817,11 +7847,14 @@ void STOP_STREAM_RES::MergeFrom(const STOP_STREAM_RES& from) {
   (void) cached_has_bits;
 
   cached_has_bits = from._has_bits_[0];
-  if (cached_has_bits & 0x00000003u) {
+  if (cached_has_bits & 0x00000007u) {
     if (cached_has_bits & 0x00000001u) {
-      var_code_ = from.var_code_;
+      var_to_player_id_ = from.var_to_player_id_;
     }
     if (cached_has_bits & 0x00000002u) {
+      var_code_ = from.var_code_;
+    }
+    if (cached_has_bits & 0x00000004u) {
       id_ = from.id_;
     }
     _has_bits_[0] |= cached_has_bits;
@@ -7850,6 +7883,7 @@ void STOP_STREAM_RES::InternalSwap(STOP_STREAM_RES* other) {
   using std::swap;
   _internal_metadata_.Swap(&other->_internal_metadata_);
   swap(_has_bits_[0], other->_has_bits_[0]);
+  swap(var_to_player_id_, other->var_to_player_id_);
   swap(var_code_, other->var_code_);
   swap(id_, other->id_);
 }
@@ -7867,9 +7901,12 @@ class CAMERA_LIST_RES::_Internal {
  public:
   using HasBits = decltype(std::declval<CAMERA_LIST_RES>()._has_bits_);
   static void set_has_id(HasBits* has_bits) {
-    (*has_bits)[0] |= 2u;
+    (*has_bits)[0] |= 4u;
   }
   static void set_has_var_code(HasBits* has_bits) {
+    (*has_bits)[0] |= 2u;
+  }
+  static void set_has_var_player_id(HasBits* has_bits) {
     (*has_bits)[0] |= 1u;
   }
 };
@@ -7888,15 +7925,17 @@ CAMERA_LIST_RES::CAMERA_LIST_RES(const CAMERA_LIST_RES& from)
       _has_bits_(from._has_bits_),
       var_camera_(from.var_camera_) {
   _internal_metadata_.MergeFrom(from._internal_metadata_);
-  ::memcpy(&var_code_, &from.var_code_,
+  ::memcpy(&var_player_id_, &from.var_player_id_,
     static_cast<size_t>(reinterpret_cast<char*>(&id_) -
-    reinterpret_cast<char*>(&var_code_)) + sizeof(id_));
+    reinterpret_cast<char*>(&var_player_id_)) + sizeof(id_));
   // @@protoc_insertion_point(copy_constructor:CAMERA_LIST_RES)
 }
 
 void CAMERA_LIST_RES::SharedCtor() {
   ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&scc_info_CAMERA_LIST_RES_GS_2eCLI_2eproto.base);
-  var_code_ = 0;
+  ::memset(&var_player_id_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&var_code_) -
+      reinterpret_cast<char*>(&var_player_id_)) + sizeof(var_code_));
   id_ = 52;
 }
 
@@ -7925,8 +7964,10 @@ void CAMERA_LIST_RES::Clear() {
 
   var_camera_.Clear();
   cached_has_bits = _has_bits_[0];
-  if (cached_has_bits & 0x00000003u) {
-    var_code_ = 0;
+  if (cached_has_bits & 0x00000007u) {
+    ::memset(&var_player_id_, 0, static_cast<size_t>(
+        reinterpret_cast<char*>(&var_code_) -
+        reinterpret_cast<char*>(&var_player_id_)) + sizeof(var_code_));
     id_ = 52;
   }
   _has_bits_.Clear();
@@ -7977,6 +8018,14 @@ const char* CAMERA_LIST_RES::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPAC
           } while (::PROTOBUF_NAMESPACE_ID::internal::ExpectTag<26>(ptr));
         } else goto handle_unusual;
         continue;
+      // optional int64 var_player_id = 4;
+      case 4:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 32)) {
+          _Internal::set_has_var_player_id(&has_bits);
+          var_player_id_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
       default: {
       handle_unusual:
         if ((tag & 7) == 4 || tag == 0) {
@@ -8006,14 +8055,14 @@ failure:
 
   cached_has_bits = _has_bits_[0];
   // optional .PROTOCOL id = 1 [default = ID_PKT_CAMERA_LIST_RES];
-  if (cached_has_bits & 0x00000002u) {
+  if (cached_has_bits & 0x00000004u) {
     target = stream->EnsureSpace(target);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteEnumToArray(
       1, this->_internal_id(), target);
   }
 
   // optional .ErrorCode var_code = 2;
-  if (cached_has_bits & 0x00000001u) {
+  if (cached_has_bits & 0x00000002u) {
     target = stream->EnsureSpace(target);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteEnumToArray(
       2, this->_internal_var_code(), target);
@@ -8025,6 +8074,12 @@ failure:
     target = stream->EnsureSpace(target);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
       InternalWriteMessage(3, this->_internal_var_camera(i), target, stream);
+  }
+
+  // optional int64 var_player_id = 4;
+  if (cached_has_bits & 0x00000001u) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt64ToArray(4, this->_internal_var_player_id(), target);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
@@ -8051,15 +8106,22 @@ size_t CAMERA_LIST_RES::ByteSizeLong() const {
   }
 
   cached_has_bits = _has_bits_[0];
-  if (cached_has_bits & 0x00000003u) {
-    // optional .ErrorCode var_code = 2;
+  if (cached_has_bits & 0x00000007u) {
+    // optional int64 var_player_id = 4;
     if (cached_has_bits & 0x00000001u) {
+      total_size += 1 +
+        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int64Size(
+          this->_internal_var_player_id());
+    }
+
+    // optional .ErrorCode var_code = 2;
+    if (cached_has_bits & 0x00000002u) {
       total_size += 1 +
         ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::EnumSize(this->_internal_var_code());
     }
 
     // optional .PROTOCOL id = 1 [default = ID_PKT_CAMERA_LIST_RES];
-    if (cached_has_bits & 0x00000002u) {
+    if (cached_has_bits & 0x00000004u) {
       total_size += 1 +
         ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::EnumSize(this->_internal_id());
     }
@@ -8098,11 +8160,14 @@ void CAMERA_LIST_RES::MergeFrom(const CAMERA_LIST_RES& from) {
 
   var_camera_.MergeFrom(from.var_camera_);
   cached_has_bits = from._has_bits_[0];
-  if (cached_has_bits & 0x00000003u) {
+  if (cached_has_bits & 0x00000007u) {
     if (cached_has_bits & 0x00000001u) {
-      var_code_ = from.var_code_;
+      var_player_id_ = from.var_player_id_;
     }
     if (cached_has_bits & 0x00000002u) {
+      var_code_ = from.var_code_;
+    }
+    if (cached_has_bits & 0x00000004u) {
       id_ = from.id_;
     }
     _has_bits_[0] |= cached_has_bits;
@@ -8132,6 +8197,7 @@ void CAMERA_LIST_RES::InternalSwap(CAMERA_LIST_RES* other) {
   _internal_metadata_.Swap(&other->_internal_metadata_);
   swap(_has_bits_[0], other->_has_bits_[0]);
   var_camera_.InternalSwap(&other->var_camera_);
+  swap(var_player_id_, other->var_player_id_);
   swap(var_code_, other->var_code_);
   swap(id_, other->id_);
 }

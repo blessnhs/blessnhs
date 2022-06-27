@@ -15,6 +15,9 @@ message LOGIN_REQ
     optional PROTOCOL   id                  = 1 [default = ID_PKT_LOGIN_REQ ];
 
     required string  var_token                = 2;
+
+    required string     var_cam_name = 3;
+    required string     var_machine_id        = 4;	
 }
 
 message CREATE_ROOM_REQ
@@ -57,19 +60,38 @@ message NOTICE_REQ
     optional PROTOCOL   id                        = 1 [default = ID_PKT_NOTICE_REQ    ];
 }
 
+//등록된 카메라가 전송요청한 유저에게 전송
 message BITMAP_MESSAGE_REQ
 {
     optional PROTOCOL   id                  = 1 [default = ID_PKT_BITMAP_MESSAGE_REQ ];
     repeated bytes     var_message         = 2;
     required int32       var_room_number        = 3;	
     required int32       var_type        = 4;	
+    repeated int64       var_to_player_id   = 5;
 }
-
+//등록된 카메라가 전송요청한 유저에게 전송
 message AUDIO_MESSAGE_REQ
 {
     optional PROTOCOL   id                  = 1 [default = ID_PKT_AUDIO_MESSAGE_REQ ];
     repeated bytes     var_message         = 2;
     required int32       var_room_number        = 3;
+    repeated int64       var_to_player_id   = 4;
+}
+
+//등록된 카메라에게 해당유저에게 전송 중지를 보낸다. 
+message STOP_STREAM_REQ
+{
+    optional PROTOCOL   id                  = 1 [default = ID_PKT_STOP_STREAM_REQ ];
+    required int64       var_to_player_id  = 2;
+}
+
+//뷰어가 등록된 카메라에게 스트림 전송을 요청한다.
+message CAMERA_WAKE_UP_REQ
+{
+    optional PROTOCOL   id                  = 1 [default = ID_PKT_CAMERA_WAKE_UP_REQ ];
+    required int32       var_type        = 2;	
+    required int32       var_room_number        = 3;	
+    required int64       var_to_player_id       = 4;	
 }
 
 message PRAY_MESSAGE_REQ
@@ -121,24 +143,11 @@ message MPEG2TS_MESSAGE_REQ
 }
 
 
-message CAMERA_WAKE_UP_REQ
-{
-    optional PROTOCOL   id                  = 1 [default = ID_PKT_CAMERA_WAKE_UP_REQ ];
-    required int32       var_type        = 2;	
-    required int32       var_room_number        = 3;	
-}
-
 message REG_CAMERA_REQ
 {
     optional PROTOCOL   id                  = 1 [default = ID_PKT_REG_CAMERA_REQ ];
     required string     var_cam_name = 2;
     required string     var_machine_id        = 3;	
-}
-
-message STOP_STREAM_REQ
-{
-    optional PROTOCOL   id                  = 1 [default = ID_PKT_STOP_STREAM_REQ ];
-    required int64       var_machine_id        = 2;
 }
 
 

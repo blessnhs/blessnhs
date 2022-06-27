@@ -85,12 +85,11 @@ message NOTICE_RES
 
 message BITMAP_MESSAGE_RES
 {
-    optional PROTOCOL   id                  = 1 [default = ID_PKT_BITMAP_MESSAGE_RES ];
-    optional  ErrorCode    var_code         = 2;
+    optional PROTOCOL   id                   = 1 [default = ID_PKT_BITMAP_MESSAGE_RES ];
+    optional  ErrorCode    var_code          = 2;
     repeated bytes     var_message          = 3;
     optional bytes     var_name	            = 4;
-    optional  int32    var_pos		             = 5;
-    optional int32       var_type        = 6;	
+
 }
 
 message AUDIO_MESSAGE_RES
@@ -158,8 +157,9 @@ message CAMERA_CONTROL_RES
 message CAMERA_WAKE_UP_RES
 {
     optional PROTOCOL   id                  = 1 [default = ID_PKT_CAMERA_WAKE_UP_RES ];
-    required int32       var_type        = 2;	
-    required int32       var_room_number        = 3;	
+    optional int32       var_type        		= 2;	
+    optional int32       var_room_number        	= 3;	
+    optional int32       var_to_player_id       	= 4;	
 }
 
 
@@ -176,20 +176,22 @@ message REG_CAMERA_RES
     optional PROTOCOL   id                  = 1 [default = ID_PKT_REG_CAMERA_RES ];
     optional  ErrorCode    var_code         = 2;
     optional string     var_cam_name = 3;
-    optional string     var_machine_id = 3;
+    optional string     var_machine_id = 4;
 }
 
 message STOP_STREAM_RES
 {
     optional PROTOCOL   id                  = 1 [default = ID_PKT_STOP_STREAM_RES ];
     optional  ErrorCode    var_code         = 2;
+    optional int64      var_to_player_id     = 3;
 }
 
 message CAMERA_LIST_RES
 {
-    optional PROTOCOL   id                  = 1 [default = ID_PKT_CAMERA_LIST_RES ];
+    optional PROTOCOL   id                   = 1 [default = ID_PKT_CAMERA_LIST_RES ];
     optional  ErrorCode    var_code         = 2;
-    repeated CameraInfo var_camera   = 3;		
+    repeated CameraInfo var_camera       = 3;	
+    optional int64       var_player_id       	= 4;	
 }
 
 

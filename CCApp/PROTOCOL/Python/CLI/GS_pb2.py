@@ -20,7 +20,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   package='',
   syntax='proto2',
   serialized_options=b'H\001',
-  serialized_pb=b'\n\x0c\x43LI.GS.proto\x1a\nEnum.proto\x1a\x0fStructure.proto\"8\n\x0bVERSION_REQ\x12)\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x12ID_PKT_VERSION_REQ\"G\n\tLOGIN_REQ\x12\'\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x10ID_PKT_LOGIN_REQ\x12\x11\n\tvar_token\x18\x02 \x02(\t\"R\n\x0f\x43REATE_ROOM_REQ\x12-\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x16ID_PKT_CREATE_ROOM_REQ\x12\x10\n\x08var_name\x18\x02 \x02(\t\"W\n\x0e\x45NTER_ROOM_REQ\x12,\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x15ID_PKT_ENTER_ROOM_REQ\x12\x17\n\x0fvar_room_number\x18\x02 \x02(\x05\"g\n\x0eLEAVE_ROOM_REQ\x12,\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x15ID_PKT_LEAVE_ROOM_REQ\x12\x0e\n\x06var_id\x18\x02 \x02(\x05\x12\x17\n\x0fvar_room_number\x18\x03 \x02(\x05\"<\n\rROOM_LIST_REQ\x12+\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x14ID_PKT_ROOM_LIST_REQ\"\xa5\x01\n\x15ROOM_PASS_THROUGH_REQ\x12\x33\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x1cID_PKT_ROOM_PASS_THROUGH_REQ\x12\x13\n\x0bvar_message\x18\x02 \x02(\t\x12\x17\n\x0fvar_message_int\x18\x03 \x02(\x05\x12\x17\n\x0fvar_room_number\x18\x04 \x02(\x05\x12\x10\n\x08var_time\x18\x05 \x02(\t\"6\n\nNOTICE_REQ\x12(\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x11ID_PKT_NOTICE_REQ\"\x86\x01\n\x12\x42ITMAP_MESSAGE_REQ\x12\x30\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x19ID_PKT_BITMAP_MESSAGE_REQ\x12\x13\n\x0bvar_message\x18\x02 \x03(\x0c\x12\x17\n\x0fvar_room_number\x18\x03 \x02(\x05\x12\x10\n\x08var_type\x18\x04 \x02(\x05\"r\n\x11\x41UDIO_MESSAGE_REQ\x12/\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x18ID_PKT_AUDIO_MESSAGE_REQ\x12\x13\n\x0bvar_message\x18\x02 \x03(\x0c\x12\x17\n\x0fvar_room_number\x18\x03 \x02(\x05\"B\n\x10PRAY_MESSAGE_REQ\x12.\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x17ID_PKT_PRAY_MESSAGE_REQ\"_\n\x14PRAY_MESSAGE_REG_REQ\x12\x32\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x1bID_PKT_PRAY_MESSAGE_REG_REQ\x12\x13\n\x0bvar_message\x18\x02 \x01(\t\"E\n\x07QNA_REQ\x12%\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x0eID_PKT_QNA_REQ\x12\x13\n\x0bvar_message\x18\x02 \x01(\t\"<\n\rMAIL_LIST_REQ\x12+\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x14ID_PKT_MAIL_LIST_REQ\"@\n\x07REG_REQ\x12%\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x0eID_PKT_REG_REQ\x12\x0e\n\x06var_id\x18\x02 \x02(\x05\"D\n\x11\x43LIENT_LOGOUT_REQ\x12/\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x18ID_PKT_CLIENT_LOGOUT_REQ\"y\n\x12\x43\x41MERA_CONTROL_REQ\x12,\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x15ID_PKT_CAMERA_CONTROL\x12$\n\x08var_type\x18\x02 \x02(\x0e\x32\x12.CameraControlType\x12\x0f\n\x07var_pos\x18\x03 \x02(\x05\"\x88\x01\n\x13MPEG2TS_MESSAGE_REQ\x12\x31\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x1aID_PKT_MPEG2TS_MESSAGE_REQ\x12\x13\n\x0bvar_message\x18\x02 \x03(\x0c\x12\x17\n\x0fvar_room_number\x18\x03 \x02(\x05\x12\x10\n\x08var_type\x18\x04 \x02(\x05\"q\n\x12\x43\x41MERA_WAKE_UP_REQ\x12\x30\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x19ID_PKT_CAMERA_WAKE_UP_REQ\x12\x10\n\x08var_type\x18\x02 \x02(\x05\x12\x17\n\x0fvar_room_number\x18\x03 \x02(\x05\"l\n\x0eREG_CAMERA_REQ\x12,\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x15ID_PKT_REG_CAMERA_REQ\x12\x14\n\x0cvar_cam_name\x18\x02 \x02(\t\x12\x16\n\x0evar_machine_id\x18\x03 \x02(\t\"X\n\x0fSTOP_STREAM_REQ\x12-\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x16ID_PKT_STOP_STREAM_REQ\x12\x16\n\x0evar_machine_id\x18\x02 \x02(\x03\"@\n\x0f\x43\x41MERA_LIST_REQ\x12-\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x16ID_PKT_CAMERA_LIST_REQB\x02H\x01'
+  serialized_pb=b'\n\x0c\x43LI.GS.proto\x1a\nEnum.proto\x1a\x0fStructure.proto\"8\n\x0bVERSION_REQ\x12)\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x12ID_PKT_VERSION_REQ\"u\n\tLOGIN_REQ\x12\'\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x10ID_PKT_LOGIN_REQ\x12\x11\n\tvar_token\x18\x02 \x02(\t\x12\x14\n\x0cvar_cam_name\x18\x03 \x02(\t\x12\x16\n\x0evar_machine_id\x18\x04 \x02(\t\"R\n\x0f\x43REATE_ROOM_REQ\x12-\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x16ID_PKT_CREATE_ROOM_REQ\x12\x10\n\x08var_name\x18\x02 \x02(\t\"W\n\x0e\x45NTER_ROOM_REQ\x12,\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x15ID_PKT_ENTER_ROOM_REQ\x12\x17\n\x0fvar_room_number\x18\x02 \x02(\x05\"g\n\x0eLEAVE_ROOM_REQ\x12,\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x15ID_PKT_LEAVE_ROOM_REQ\x12\x0e\n\x06var_id\x18\x02 \x02(\x05\x12\x17\n\x0fvar_room_number\x18\x03 \x02(\x05\"<\n\rROOM_LIST_REQ\x12+\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x14ID_PKT_ROOM_LIST_REQ\"\xa5\x01\n\x15ROOM_PASS_THROUGH_REQ\x12\x33\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x1cID_PKT_ROOM_PASS_THROUGH_REQ\x12\x13\n\x0bvar_message\x18\x02 \x02(\t\x12\x17\n\x0fvar_message_int\x18\x03 \x02(\x05\x12\x17\n\x0fvar_room_number\x18\x04 \x02(\x05\x12\x10\n\x08var_time\x18\x05 \x02(\t\"6\n\nNOTICE_REQ\x12(\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x11ID_PKT_NOTICE_REQ\"\xa0\x01\n\x12\x42ITMAP_MESSAGE_REQ\x12\x30\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x19ID_PKT_BITMAP_MESSAGE_REQ\x12\x13\n\x0bvar_message\x18\x02 \x03(\x0c\x12\x17\n\x0fvar_room_number\x18\x03 \x02(\x05\x12\x10\n\x08var_type\x18\x04 \x02(\x05\x12\x18\n\x10var_to_player_id\x18\x05 \x03(\x03\"\x8c\x01\n\x11\x41UDIO_MESSAGE_REQ\x12/\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x18ID_PKT_AUDIO_MESSAGE_REQ\x12\x13\n\x0bvar_message\x18\x02 \x03(\x0c\x12\x17\n\x0fvar_room_number\x18\x03 \x02(\x05\x12\x18\n\x10var_to_player_id\x18\x04 \x03(\x03\"Z\n\x0fSTOP_STREAM_REQ\x12-\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x16ID_PKT_STOP_STREAM_REQ\x12\x18\n\x10var_to_player_id\x18\x02 \x02(\x03\"\x8b\x01\n\x12\x43\x41MERA_WAKE_UP_REQ\x12\x30\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x19ID_PKT_CAMERA_WAKE_UP_REQ\x12\x10\n\x08var_type\x18\x02 \x02(\x05\x12\x17\n\x0fvar_room_number\x18\x03 \x02(\x05\x12\x18\n\x10var_to_player_id\x18\x04 \x02(\x03\"B\n\x10PRAY_MESSAGE_REQ\x12.\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x17ID_PKT_PRAY_MESSAGE_REQ\"_\n\x14PRAY_MESSAGE_REG_REQ\x12\x32\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x1bID_PKT_PRAY_MESSAGE_REG_REQ\x12\x13\n\x0bvar_message\x18\x02 \x01(\t\"E\n\x07QNA_REQ\x12%\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x0eID_PKT_QNA_REQ\x12\x13\n\x0bvar_message\x18\x02 \x01(\t\"<\n\rMAIL_LIST_REQ\x12+\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x14ID_PKT_MAIL_LIST_REQ\"@\n\x07REG_REQ\x12%\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x0eID_PKT_REG_REQ\x12\x0e\n\x06var_id\x18\x02 \x02(\x05\"D\n\x11\x43LIENT_LOGOUT_REQ\x12/\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x18ID_PKT_CLIENT_LOGOUT_REQ\"y\n\x12\x43\x41MERA_CONTROL_REQ\x12,\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x15ID_PKT_CAMERA_CONTROL\x12$\n\x08var_type\x18\x02 \x02(\x0e\x32\x12.CameraControlType\x12\x0f\n\x07var_pos\x18\x03 \x02(\x05\"\x88\x01\n\x13MPEG2TS_MESSAGE_REQ\x12\x31\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x1aID_PKT_MPEG2TS_MESSAGE_REQ\x12\x13\n\x0bvar_message\x18\x02 \x03(\x0c\x12\x17\n\x0fvar_room_number\x18\x03 \x02(\x05\x12\x10\n\x08var_type\x18\x04 \x02(\x05\"l\n\x0eREG_CAMERA_REQ\x12,\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x15ID_PKT_REG_CAMERA_REQ\x12\x14\n\x0cvar_cam_name\x18\x02 \x02(\t\x12\x16\n\x0evar_machine_id\x18\x03 \x02(\t\"@\n\x0f\x43\x41MERA_LIST_REQ\x12-\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x16ID_PKT_CAMERA_LIST_REQB\x02H\x01'
   ,
   dependencies=[Enum__pb2.DESCRIPTOR,Structure__pb2.DESCRIPTOR,])
 
@@ -79,6 +79,20 @@ _LOGIN_REQ = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='var_cam_name', full_name='LOGIN_REQ.var_cam_name', index=2,
+      number=3, type=9, cpp_type=9, label=2,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='var_machine_id', full_name='LOGIN_REQ.var_machine_id', index=3,
+      number=4, type=9, cpp_type=9, label=2,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
   ],
   extensions=[
   ],
@@ -92,7 +106,7 @@ _LOGIN_REQ = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=103,
-  serialized_end=174,
+  serialized_end=220,
 )
 
 
@@ -129,8 +143,8 @@ _CREATE_ROOM_REQ = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=176,
-  serialized_end=258,
+  serialized_start=222,
+  serialized_end=304,
 )
 
 
@@ -167,8 +181,8 @@ _ENTER_ROOM_REQ = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=260,
-  serialized_end=347,
+  serialized_start=306,
+  serialized_end=393,
 )
 
 
@@ -212,8 +226,8 @@ _LEAVE_ROOM_REQ = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=349,
-  serialized_end=452,
+  serialized_start=395,
+  serialized_end=498,
 )
 
 
@@ -243,8 +257,8 @@ _ROOM_LIST_REQ = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=454,
-  serialized_end=514,
+  serialized_start=500,
+  serialized_end=560,
 )
 
 
@@ -302,8 +316,8 @@ _ROOM_PASS_THROUGH_REQ = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=517,
-  serialized_end=682,
+  serialized_start=563,
+  serialized_end=728,
 )
 
 
@@ -333,8 +347,8 @@ _NOTICE_REQ = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=684,
-  serialized_end=738,
+  serialized_start=730,
+  serialized_end=784,
 )
 
 
@@ -373,6 +387,13 @@ _BITMAP_MESSAGE_REQ = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='var_to_player_id', full_name='BITMAP_MESSAGE_REQ.var_to_player_id', index=4,
+      number=5, type=3, cpp_type=2, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
   ],
   extensions=[
   ],
@@ -385,8 +406,8 @@ _BITMAP_MESSAGE_REQ = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=741,
-  serialized_end=875,
+  serialized_start=787,
+  serialized_end=947,
 )
 
 
@@ -418,6 +439,13 @@ _AUDIO_MESSAGE_REQ = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='var_to_player_id', full_name='AUDIO_MESSAGE_REQ.var_to_player_id', index=3,
+      number=4, type=3, cpp_type=2, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
   ],
   extensions=[
   ],
@@ -430,8 +458,98 @@ _AUDIO_MESSAGE_REQ = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=877,
-  serialized_end=991,
+  serialized_start=950,
+  serialized_end=1090,
+)
+
+
+_STOP_STREAM_REQ = _descriptor.Descriptor(
+  name='STOP_STREAM_REQ',
+  full_name='STOP_STREAM_REQ',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='id', full_name='STOP_STREAM_REQ.id', index=0,
+      number=1, type=14, cpp_type=8, label=1,
+      has_default_value=True, default_value=47,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='var_to_player_id', full_name='STOP_STREAM_REQ.var_to_player_id', index=1,
+      number=2, type=3, cpp_type=2, label=2,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto2',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=1092,
+  serialized_end=1182,
+)
+
+
+_CAMERA_WAKE_UP_REQ = _descriptor.Descriptor(
+  name='CAMERA_WAKE_UP_REQ',
+  full_name='CAMERA_WAKE_UP_REQ',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='id', full_name='CAMERA_WAKE_UP_REQ.id', index=0,
+      number=1, type=14, cpp_type=8, label=1,
+      has_default_value=True, default_value=45,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='var_type', full_name='CAMERA_WAKE_UP_REQ.var_type', index=1,
+      number=2, type=5, cpp_type=1, label=2,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='var_room_number', full_name='CAMERA_WAKE_UP_REQ.var_room_number', index=2,
+      number=3, type=5, cpp_type=1, label=2,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='var_to_player_id', full_name='CAMERA_WAKE_UP_REQ.var_to_player_id', index=3,
+      number=4, type=3, cpp_type=2, label=2,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto2',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=1185,
+  serialized_end=1324,
 )
 
 
@@ -461,8 +579,8 @@ _PRAY_MESSAGE_REQ = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=993,
-  serialized_end=1059,
+  serialized_start=1326,
+  serialized_end=1392,
 )
 
 
@@ -499,8 +617,8 @@ _PRAY_MESSAGE_REG_REQ = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1061,
-  serialized_end=1156,
+  serialized_start=1394,
+  serialized_end=1489,
 )
 
 
@@ -537,8 +655,8 @@ _QNA_REQ = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1158,
-  serialized_end=1227,
+  serialized_start=1491,
+  serialized_end=1560,
 )
 
 
@@ -568,8 +686,8 @@ _MAIL_LIST_REQ = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1229,
-  serialized_end=1289,
+  serialized_start=1562,
+  serialized_end=1622,
 )
 
 
@@ -606,8 +724,8 @@ _REG_REQ = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1291,
-  serialized_end=1355,
+  serialized_start=1624,
+  serialized_end=1688,
 )
 
 
@@ -637,8 +755,8 @@ _CLIENT_LOGOUT_REQ = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1357,
-  serialized_end=1425,
+  serialized_start=1690,
+  serialized_end=1758,
 )
 
 
@@ -682,8 +800,8 @@ _CAMERA_CONTROL_REQ = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1427,
-  serialized_end=1548,
+  serialized_start=1760,
+  serialized_end=1881,
 )
 
 
@@ -734,53 +852,8 @@ _MPEG2TS_MESSAGE_REQ = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1551,
-  serialized_end=1687,
-)
-
-
-_CAMERA_WAKE_UP_REQ = _descriptor.Descriptor(
-  name='CAMERA_WAKE_UP_REQ',
-  full_name='CAMERA_WAKE_UP_REQ',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='id', full_name='CAMERA_WAKE_UP_REQ.id', index=0,
-      number=1, type=14, cpp_type=8, label=1,
-      has_default_value=True, default_value=45,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='var_type', full_name='CAMERA_WAKE_UP_REQ.var_type', index=1,
-      number=2, type=5, cpp_type=1, label=2,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='var_room_number', full_name='CAMERA_WAKE_UP_REQ.var_room_number', index=2,
-      number=3, type=5, cpp_type=1, label=2,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto2',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=1689,
-  serialized_end=1802,
+  serialized_start=1884,
+  serialized_end=2020,
 )
 
 
@@ -824,46 +897,8 @@ _REG_CAMERA_REQ = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1804,
-  serialized_end=1912,
-)
-
-
-_STOP_STREAM_REQ = _descriptor.Descriptor(
-  name='STOP_STREAM_REQ',
-  full_name='STOP_STREAM_REQ',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  fields=[
-    _descriptor.FieldDescriptor(
-      name='id', full_name='STOP_STREAM_REQ.id', index=0,
-      number=1, type=14, cpp_type=8, label=1,
-      has_default_value=True, default_value=47,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-    _descriptor.FieldDescriptor(
-      name='var_machine_id', full_name='STOP_STREAM_REQ.var_machine_id', index=1,
-      number=2, type=3, cpp_type=2, label=2,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      serialized_options=None, file=DESCRIPTOR),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  serialized_options=None,
-  is_extendable=False,
-  syntax='proto2',
-  extension_ranges=[],
-  oneofs=[
-  ],
-  serialized_start=1914,
-  serialized_end=2002,
+  serialized_start=2022,
+  serialized_end=2130,
 )
 
 
@@ -893,8 +928,8 @@ _CAMERA_LIST_REQ = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=2004,
-  serialized_end=2068,
+  serialized_start=2132,
+  serialized_end=2196,
 )
 
 _VERSION_REQ.fields_by_name['id'].enum_type = Enum__pb2._PROTOCOL
@@ -907,6 +942,8 @@ _ROOM_PASS_THROUGH_REQ.fields_by_name['id'].enum_type = Enum__pb2._PROTOCOL
 _NOTICE_REQ.fields_by_name['id'].enum_type = Enum__pb2._PROTOCOL
 _BITMAP_MESSAGE_REQ.fields_by_name['id'].enum_type = Enum__pb2._PROTOCOL
 _AUDIO_MESSAGE_REQ.fields_by_name['id'].enum_type = Enum__pb2._PROTOCOL
+_STOP_STREAM_REQ.fields_by_name['id'].enum_type = Enum__pb2._PROTOCOL
+_CAMERA_WAKE_UP_REQ.fields_by_name['id'].enum_type = Enum__pb2._PROTOCOL
 _PRAY_MESSAGE_REQ.fields_by_name['id'].enum_type = Enum__pb2._PROTOCOL
 _PRAY_MESSAGE_REG_REQ.fields_by_name['id'].enum_type = Enum__pb2._PROTOCOL
 _QNA_REQ.fields_by_name['id'].enum_type = Enum__pb2._PROTOCOL
@@ -916,9 +953,7 @@ _CLIENT_LOGOUT_REQ.fields_by_name['id'].enum_type = Enum__pb2._PROTOCOL
 _CAMERA_CONTROL_REQ.fields_by_name['id'].enum_type = Enum__pb2._PROTOCOL
 _CAMERA_CONTROL_REQ.fields_by_name['var_type'].enum_type = Enum__pb2._CAMERACONTROLTYPE
 _MPEG2TS_MESSAGE_REQ.fields_by_name['id'].enum_type = Enum__pb2._PROTOCOL
-_CAMERA_WAKE_UP_REQ.fields_by_name['id'].enum_type = Enum__pb2._PROTOCOL
 _REG_CAMERA_REQ.fields_by_name['id'].enum_type = Enum__pb2._PROTOCOL
-_STOP_STREAM_REQ.fields_by_name['id'].enum_type = Enum__pb2._PROTOCOL
 _CAMERA_LIST_REQ.fields_by_name['id'].enum_type = Enum__pb2._PROTOCOL
 DESCRIPTOR.message_types_by_name['VERSION_REQ'] = _VERSION_REQ
 DESCRIPTOR.message_types_by_name['LOGIN_REQ'] = _LOGIN_REQ
@@ -930,6 +965,8 @@ DESCRIPTOR.message_types_by_name['ROOM_PASS_THROUGH_REQ'] = _ROOM_PASS_THROUGH_R
 DESCRIPTOR.message_types_by_name['NOTICE_REQ'] = _NOTICE_REQ
 DESCRIPTOR.message_types_by_name['BITMAP_MESSAGE_REQ'] = _BITMAP_MESSAGE_REQ
 DESCRIPTOR.message_types_by_name['AUDIO_MESSAGE_REQ'] = _AUDIO_MESSAGE_REQ
+DESCRIPTOR.message_types_by_name['STOP_STREAM_REQ'] = _STOP_STREAM_REQ
+DESCRIPTOR.message_types_by_name['CAMERA_WAKE_UP_REQ'] = _CAMERA_WAKE_UP_REQ
 DESCRIPTOR.message_types_by_name['PRAY_MESSAGE_REQ'] = _PRAY_MESSAGE_REQ
 DESCRIPTOR.message_types_by_name['PRAY_MESSAGE_REG_REQ'] = _PRAY_MESSAGE_REG_REQ
 DESCRIPTOR.message_types_by_name['QNA_REQ'] = _QNA_REQ
@@ -938,9 +975,7 @@ DESCRIPTOR.message_types_by_name['REG_REQ'] = _REG_REQ
 DESCRIPTOR.message_types_by_name['CLIENT_LOGOUT_REQ'] = _CLIENT_LOGOUT_REQ
 DESCRIPTOR.message_types_by_name['CAMERA_CONTROL_REQ'] = _CAMERA_CONTROL_REQ
 DESCRIPTOR.message_types_by_name['MPEG2TS_MESSAGE_REQ'] = _MPEG2TS_MESSAGE_REQ
-DESCRIPTOR.message_types_by_name['CAMERA_WAKE_UP_REQ'] = _CAMERA_WAKE_UP_REQ
 DESCRIPTOR.message_types_by_name['REG_CAMERA_REQ'] = _REG_CAMERA_REQ
-DESCRIPTOR.message_types_by_name['STOP_STREAM_REQ'] = _STOP_STREAM_REQ
 DESCRIPTOR.message_types_by_name['CAMERA_LIST_REQ'] = _CAMERA_LIST_REQ
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
@@ -1014,6 +1049,20 @@ AUDIO_MESSAGE_REQ = _reflection.GeneratedProtocolMessageType('AUDIO_MESSAGE_REQ'
   })
 _sym_db.RegisterMessage(AUDIO_MESSAGE_REQ)
 
+STOP_STREAM_REQ = _reflection.GeneratedProtocolMessageType('STOP_STREAM_REQ', (_message.Message,), {
+  'DESCRIPTOR' : _STOP_STREAM_REQ,
+  '__module__' : 'CLI.GS_pb2'
+  # @@protoc_insertion_point(class_scope:STOP_STREAM_REQ)
+  })
+_sym_db.RegisterMessage(STOP_STREAM_REQ)
+
+CAMERA_WAKE_UP_REQ = _reflection.GeneratedProtocolMessageType('CAMERA_WAKE_UP_REQ', (_message.Message,), {
+  'DESCRIPTOR' : _CAMERA_WAKE_UP_REQ,
+  '__module__' : 'CLI.GS_pb2'
+  # @@protoc_insertion_point(class_scope:CAMERA_WAKE_UP_REQ)
+  })
+_sym_db.RegisterMessage(CAMERA_WAKE_UP_REQ)
+
 PRAY_MESSAGE_REQ = _reflection.GeneratedProtocolMessageType('PRAY_MESSAGE_REQ', (_message.Message,), {
   'DESCRIPTOR' : _PRAY_MESSAGE_REQ,
   '__module__' : 'CLI.GS_pb2'
@@ -1070,26 +1119,12 @@ MPEG2TS_MESSAGE_REQ = _reflection.GeneratedProtocolMessageType('MPEG2TS_MESSAGE_
   })
 _sym_db.RegisterMessage(MPEG2TS_MESSAGE_REQ)
 
-CAMERA_WAKE_UP_REQ = _reflection.GeneratedProtocolMessageType('CAMERA_WAKE_UP_REQ', (_message.Message,), {
-  'DESCRIPTOR' : _CAMERA_WAKE_UP_REQ,
-  '__module__' : 'CLI.GS_pb2'
-  # @@protoc_insertion_point(class_scope:CAMERA_WAKE_UP_REQ)
-  })
-_sym_db.RegisterMessage(CAMERA_WAKE_UP_REQ)
-
 REG_CAMERA_REQ = _reflection.GeneratedProtocolMessageType('REG_CAMERA_REQ', (_message.Message,), {
   'DESCRIPTOR' : _REG_CAMERA_REQ,
   '__module__' : 'CLI.GS_pb2'
   # @@protoc_insertion_point(class_scope:REG_CAMERA_REQ)
   })
 _sym_db.RegisterMessage(REG_CAMERA_REQ)
-
-STOP_STREAM_REQ = _reflection.GeneratedProtocolMessageType('STOP_STREAM_REQ', (_message.Message,), {
-  'DESCRIPTOR' : _STOP_STREAM_REQ,
-  '__module__' : 'CLI.GS_pb2'
-  # @@protoc_insertion_point(class_scope:STOP_STREAM_REQ)
-  })
-_sym_db.RegisterMessage(STOP_STREAM_REQ)
 
 CAMERA_LIST_REQ = _reflection.GeneratedProtocolMessageType('CAMERA_LIST_REQ', (_message.Message,), {
   'DESCRIPTOR' : _CAMERA_LIST_REQ,

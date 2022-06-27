@@ -18,7 +18,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   package='',
   syntax='proto2',
   serialized_options=b'H\001',
-  serialized_pb=b'\n\x0fStructure.proto\"a\n\x0cRoomUserInfo\x12\x10\n\x08var_name\x18\x01 \x01(\t\x12\x11\n\tvar_index\x18\x02 \x01(\x03\x12\x13\n\x0bpicture_uri\x18\x03 \x01(\t\x12\x17\n\x0fvar_room_number\x18\x04 \x01(\x05\"_\n\tRoomInfo2\x12\x0e\n\x06var_id\x18\x01 \x01(\x05\x12\x10\n\x08var_name\x18\x02 \x01(\t\x12\x19\n\x11var_current_count\x18\x03 \x01(\x05\x12\x15\n\rvar_max_count\x18\x04 \x01(\x05\"C\n\x08PrayInfo\x12\x10\n\x08var_name\x18\x01 \x01(\t\x12\x13\n\x0bvar_message\x18\x02 \x01(\t\x12\x10\n\x08var_time\x18\x03 \x01(\t\"C\n\nNotifyInfo\x12\x0e\n\x06var_id\x18\x01 \x01(\x03\x12\x13\n\x0bvar_content\x18\x02 \x01(\t\x12\x10\n\x08var_date\x18\x03 \x01(\t\"f\n\x08MailInfo\x12\x0e\n\x06var_id\x18\x01 \x01(\x03\x12\x11\n\tvar_title\x18\x02 \x01(\t\x12\x13\n\x0bvar_content\x18\x03 \x01(\t\x12\x10\n\x08var_date\x18\x04 \x01(\t\x12\x10\n\x08var_name\x18\x05 \x01(\t\"_\n\x0bRoomMessage\x12\x10\n\x08var_name\x18\x01 \x01(\t\x12\x13\n\x0bvar_message\x18\x02 \x01(\t\x12\x17\n\x0fvar_message_int\x18\x03 \x01(\x05\x12\x10\n\x08var_time\x18\x04 \x01(\t\">\n\nCameraInfo\x12\x18\n\x10var_machine_name\x18\x01 \x01(\t\x12\x16\n\x0evar_machine_id\x18\x02 \x01(\x03\x42\x02H\x01'
+  serialized_pb=b'\n\x0fStructure.proto\"a\n\x0cRoomUserInfo\x12\x10\n\x08var_name\x18\x01 \x01(\t\x12\x11\n\tvar_index\x18\x02 \x01(\x03\x12\x13\n\x0bpicture_uri\x18\x03 \x01(\t\x12\x17\n\x0fvar_room_number\x18\x04 \x01(\x05\"_\n\tRoomInfo2\x12\x0e\n\x06var_id\x18\x01 \x01(\x05\x12\x10\n\x08var_name\x18\x02 \x01(\t\x12\x19\n\x11var_current_count\x18\x03 \x01(\x05\x12\x15\n\rvar_max_count\x18\x04 \x01(\x05\"C\n\x08PrayInfo\x12\x10\n\x08var_name\x18\x01 \x01(\t\x12\x13\n\x0bvar_message\x18\x02 \x01(\t\x12\x10\n\x08var_time\x18\x03 \x01(\t\"C\n\nNotifyInfo\x12\x0e\n\x06var_id\x18\x01 \x01(\x03\x12\x13\n\x0bvar_content\x18\x02 \x01(\t\x12\x10\n\x08var_date\x18\x03 \x01(\t\"f\n\x08MailInfo\x12\x0e\n\x06var_id\x18\x01 \x01(\x03\x12\x11\n\tvar_title\x18\x02 \x01(\t\x12\x13\n\x0bvar_content\x18\x03 \x01(\t\x12\x10\n\x08var_date\x18\x04 \x01(\t\x12\x10\n\x08var_name\x18\x05 \x01(\t\"_\n\x0bRoomMessage\x12\x10\n\x08var_name\x18\x01 \x01(\t\x12\x13\n\x0bvar_message\x18\x02 \x01(\t\x12\x17\n\x0fvar_message_int\x18\x03 \x01(\x05\x12\x10\n\x08var_time\x18\x04 \x01(\t\"U\n\nCameraInfo\x12\x18\n\x10var_machine_name\x18\x01 \x01(\t\x12\x16\n\x0evar_machine_id\x18\x02 \x01(\t\x12\x15\n\rvar_player_id\x18\x03 \x01(\x03\x42\x02H\x01'
 )
 
 
@@ -345,7 +345,14 @@ _CAMERAINFO = _descriptor.Descriptor(
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='var_machine_id', full_name='CameraInfo.var_machine_id', index=1,
-      number=2, type=3, cpp_type=2, label=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='var_player_id', full_name='CameraInfo.var_player_id', index=2,
+      number=3, type=3, cpp_type=2, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
@@ -363,7 +370,7 @@ _CAMERAINFO = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=554,
-  serialized_end=616,
+  serialized_end=639,
 )
 
 DESCRIPTOR.message_types_by_name['RoomUserInfo'] = _ROOMUSERINFO

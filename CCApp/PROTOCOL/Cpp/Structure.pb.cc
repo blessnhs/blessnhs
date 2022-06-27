@@ -228,8 +228,10 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_Structure_2eproto::offsets[] P
   ~0u,  // no _weak_field_map_
   PROTOBUF_FIELD_OFFSET(::CameraInfo, var_machine_name_),
   PROTOBUF_FIELD_OFFSET(::CameraInfo, var_machine_id_),
+  PROTOBUF_FIELD_OFFSET(::CameraInfo, var_player_id_),
   0,
   1,
+  2,
 };
 static const ::PROTOBUF_NAMESPACE_ID::internal::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
   { 0, 9, sizeof(::RoomUserInfo)},
@@ -238,7 +240,7 @@ static const ::PROTOBUF_NAMESPACE_ID::internal::MigrationSchema schemas[] PROTOB
   { 37, 45, sizeof(::NotifyInfo)},
   { 48, 58, sizeof(::MailInfo)},
   { 63, 72, sizeof(::RoomMessage)},
-  { 76, 83, sizeof(::CameraInfo)},
+  { 76, 84, sizeof(::CameraInfo)},
 };
 
 static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] = {
@@ -265,9 +267,10 @@ const char descriptor_table_protodef_Structure_2eproto[] PROTOBUF_SECTION_VARIAB
   "\n\013var_content\030\003 \001(\t\022\020\n\010var_date\030\004 \001(\t\022\020\n"
   "\010var_name\030\005 \001(\t\"_\n\013RoomMessage\022\020\n\010var_na"
   "me\030\001 \001(\t\022\023\n\013var_message\030\002 \001(\t\022\027\n\017var_mes"
-  "sage_int\030\003 \001(\005\022\020\n\010var_time\030\004 \001(\t\">\n\nCame"
+  "sage_int\030\003 \001(\005\022\020\n\010var_time\030\004 \001(\t\"U\n\nCame"
   "raInfo\022\030\n\020var_machine_name\030\001 \001(\t\022\026\n\016var_"
-  "machine_id\030\002 \001(\003B\002H\001"
+  "machine_id\030\002 \001(\t\022\025\n\rvar_player_id\030\003 \001(\003B"
+  "\002H\001"
   ;
 static const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable*const descriptor_table_Structure_2eproto_deps[1] = {
 };
@@ -283,7 +286,7 @@ static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_Str
 static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_Structure_2eproto_once;
 static bool descriptor_table_Structure_2eproto_initialized = false;
 const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_Structure_2eproto = {
-  &descriptor_table_Structure_2eproto_initialized, descriptor_table_protodef_Structure_2eproto, "Structure.proto", 620,
+  &descriptor_table_Structure_2eproto_initialized, descriptor_table_protodef_Structure_2eproto, "Structure.proto", 643,
   &descriptor_table_Structure_2eproto_once, descriptor_table_Structure_2eproto_sccs, descriptor_table_Structure_2eproto_deps, 7, 0,
   schemas, file_default_instances, TableStruct_Structure_2eproto::offsets,
   file_level_metadata_Structure_2eproto, 7, file_level_enum_descriptors_Structure_2eproto, file_level_service_descriptors_Structure_2eproto,
@@ -2309,6 +2312,9 @@ class CameraInfo::_Internal {
   static void set_has_var_machine_id(HasBits* has_bits) {
     (*has_bits)[0] |= 2u;
   }
+  static void set_has_var_player_id(HasBits* has_bits) {
+    (*has_bits)[0] |= 4u;
+  }
 };
 
 CameraInfo::CameraInfo()
@@ -2325,14 +2331,19 @@ CameraInfo::CameraInfo(const CameraInfo& from)
   if (from._internal_has_var_machine_name()) {
     var_machine_name_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.var_machine_name_);
   }
-  var_machine_id_ = from.var_machine_id_;
+  var_machine_id_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  if (from._internal_has_var_machine_id()) {
+    var_machine_id_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.var_machine_id_);
+  }
+  var_player_id_ = from.var_player_id_;
   // @@protoc_insertion_point(copy_constructor:CameraInfo)
 }
 
 void CameraInfo::SharedCtor() {
   ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&scc_info_CameraInfo_Structure_2eproto.base);
   var_machine_name_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
-  var_machine_id_ = PROTOBUF_LONGLONG(0);
+  var_machine_id_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  var_player_id_ = PROTOBUF_LONGLONG(0);
 }
 
 CameraInfo::~CameraInfo() {
@@ -2342,6 +2353,7 @@ CameraInfo::~CameraInfo() {
 
 void CameraInfo::SharedDtor() {
   var_machine_name_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  var_machine_id_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
 }
 
 void CameraInfo::SetCachedSize(int size) const {
@@ -2360,10 +2372,15 @@ void CameraInfo::Clear() {
   (void) cached_has_bits;
 
   cached_has_bits = _has_bits_[0];
-  if (cached_has_bits & 0x00000001u) {
-    var_machine_name_.ClearNonDefaultToEmptyNoArena();
+  if (cached_has_bits & 0x00000003u) {
+    if (cached_has_bits & 0x00000001u) {
+      var_machine_name_.ClearNonDefaultToEmptyNoArena();
+    }
+    if (cached_has_bits & 0x00000002u) {
+      var_machine_id_.ClearNonDefaultToEmptyNoArena();
+    }
   }
-  var_machine_id_ = PROTOBUF_LONGLONG(0);
+  var_player_id_ = PROTOBUF_LONGLONG(0);
   _has_bits_.Clear();
   _internal_metadata_.Clear();
 }
@@ -2387,11 +2404,22 @@ const char* CameraInfo::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID:
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
-      // optional int64 var_machine_id = 2;
+      // optional string var_machine_id = 2;
       case 2:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 16)) {
-          _Internal::set_has_var_machine_id(&has_bits);
-          var_machine_id_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 18)) {
+          auto str = _internal_mutable_var_machine_id();
+          ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
+          #ifndef NDEBUG
+          ::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "CameraInfo.var_machine_id");
+          #endif  // !NDEBUG
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // optional int64 var_player_id = 3;
+      case 3:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 24)) {
+          _Internal::set_has_var_player_id(&has_bits);
+          var_player_id_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
@@ -2433,10 +2461,20 @@ failure:
         1, this->_internal_var_machine_name(), target);
   }
 
-  // optional int64 var_machine_id = 2;
+  // optional string var_machine_id = 2;
   if (cached_has_bits & 0x00000002u) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->_internal_var_machine_id().data(), static_cast<int>(this->_internal_var_machine_id().length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SERIALIZE,
+      "CameraInfo.var_machine_id");
+    target = stream->WriteStringMaybeAliased(
+        2, this->_internal_var_machine_id(), target);
+  }
+
+  // optional int64 var_player_id = 3;
+  if (cached_has_bits & 0x00000004u) {
     target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt64ToArray(2, this->_internal_var_machine_id(), target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt64ToArray(3, this->_internal_var_player_id(), target);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
@@ -2456,7 +2494,7 @@ size_t CameraInfo::ByteSizeLong() const {
   (void) cached_has_bits;
 
   cached_has_bits = _has_bits_[0];
-  if (cached_has_bits & 0x00000003u) {
+  if (cached_has_bits & 0x00000007u) {
     // optional string var_machine_name = 1;
     if (cached_has_bits & 0x00000001u) {
       total_size += 1 +
@@ -2464,11 +2502,18 @@ size_t CameraInfo::ByteSizeLong() const {
           this->_internal_var_machine_name());
     }
 
-    // optional int64 var_machine_id = 2;
+    // optional string var_machine_id = 2;
     if (cached_has_bits & 0x00000002u) {
       total_size += 1 +
-        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int64Size(
+        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
           this->_internal_var_machine_id());
+    }
+
+    // optional int64 var_player_id = 3;
+    if (cached_has_bits & 0x00000004u) {
+      total_size += 1 +
+        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int64Size(
+          this->_internal_var_player_id());
     }
 
   }
@@ -2504,13 +2549,17 @@ void CameraInfo::MergeFrom(const CameraInfo& from) {
   (void) cached_has_bits;
 
   cached_has_bits = from._has_bits_[0];
-  if (cached_has_bits & 0x00000003u) {
+  if (cached_has_bits & 0x00000007u) {
     if (cached_has_bits & 0x00000001u) {
       _has_bits_[0] |= 0x00000001u;
       var_machine_name_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.var_machine_name_);
     }
     if (cached_has_bits & 0x00000002u) {
-      var_machine_id_ = from.var_machine_id_;
+      _has_bits_[0] |= 0x00000002u;
+      var_machine_id_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.var_machine_id_);
+    }
+    if (cached_has_bits & 0x00000004u) {
+      var_player_id_ = from.var_player_id_;
     }
     _has_bits_[0] |= cached_has_bits;
   }
@@ -2540,7 +2589,9 @@ void CameraInfo::InternalSwap(CameraInfo* other) {
   swap(_has_bits_[0], other->_has_bits_[0]);
   var_machine_name_.Swap(&other->var_machine_name_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
     GetArenaNoVirtual());
-  swap(var_machine_id_, other->var_machine_id_);
+  var_machine_id_.Swap(&other->var_machine_id_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+    GetArenaNoVirtual());
+  swap(var_player_id_, other->var_player_id_);
 }
 
 ::PROTOBUF_NAMESPACE_ID::Metadata CameraInfo::GetMetadata() const {
