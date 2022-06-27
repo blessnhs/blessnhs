@@ -98,7 +98,7 @@ void ProxyHubContainer::TryConnect()
 		if (pClient == NULL)
 			continue;
 
-		if (pClient->GetConnected() == true)
+		if (pClient->GetConnected() == TRUE)
 			continue;
 
 

@@ -11,6 +11,7 @@ using Android;
 using Xamarin.Forms;
 using Android.Widget;
 using DependencyHelper;
+using Android.Views;
 
 namespace CCA.Droid
 {
@@ -20,6 +21,11 @@ namespace CCA.Droid
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
+
+            Window.AddFlags(WindowManagerFlags.KeepScreenOn |
+                 WindowManagerFlags.DismissKeyguard |
+                 WindowManagerFlags.ShowWhenLocked |
+                 WindowManagerFlags.TurnScreenOn);
 
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);

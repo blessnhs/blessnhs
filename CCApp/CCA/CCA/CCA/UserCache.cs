@@ -4,7 +4,14 @@ using System.Text;
 
 namespace CCA
 {
-    internal static class User
+   public class RegCam
+    {
+        public string MachineId;
+        public string MachineModel;
+        public Int64 PlayerId;
+    }
+
+    public class User
     {
         static public UserCacheData CacheData = new UserCacheData();
 
@@ -18,5 +25,9 @@ namespace CCA
 
         static public bool OnceVersionNotify = false;
         static public bool OnceUpdate = false;
+
+        static public Dictionary<string, RegCam> CamDic = new Dictionary<string, RegCam>();
+
+
     }
 }

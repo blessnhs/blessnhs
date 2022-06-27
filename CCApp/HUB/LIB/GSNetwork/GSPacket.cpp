@@ -23,6 +23,7 @@ GSPacket::GSPacket(VOID)
 GSPacket::~GSPacket(VOID)
 {
 	delete m_PacketBuffer;
+	m_PacketBuffer = NULL;
 
 	m_PacketList.clear();
 	m_WrietQueue.clear();

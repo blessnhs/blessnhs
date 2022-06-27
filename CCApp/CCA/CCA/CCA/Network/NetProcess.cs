@@ -10,6 +10,8 @@ using Xamarin.Forms;
 using System.Linq;
 using DependencyHelper;
 using Rg.Plugins.Popup.Services;
+using CCA.Page;
+using System.Collections.Generic;
 
 namespace CCA
 {
@@ -54,11 +56,11 @@ namespace CCA
             if (notice_time < DateTime.Now)
             {
 
-                SendMailList();
+                //SendMailList();
 
-                SendAlaram();
+                //SendAlaram();
 
-                SendRoomList();
+                //SendRoomList();
 
                 notice_time = DateTime.Now.AddSeconds(10);
             }
@@ -68,6 +70,7 @@ namespace CCA
         public static ConcurrentQueue<StreamWrapper> AudioStream = new ConcurrentQueue<StreamWrapper>();
 
         public static ConcurrentQueue<StreamWrapper> Mpeg2Stream = new ConcurrentQueue<StreamWrapper>();
+        public static List<long> TargetPlayerId = new List<long>();
 
         static public void Loop()
         {
@@ -128,10 +131,12 @@ namespace CCA
                                     Xamarin.Forms.DependencyService.Register<MethodExt>();
 
                                     DependencyService.Get<MethodExt>().Notification("New Version Updated");
-                                    PopupNavigation.Instance.PopAsync();
+                             
                                     User.LoginSuccess = true;
                                     SQLLiteDB.Upsert(res.VarName,"");
 
+                                    if( PopupNavigation.Instance.PopupStack.Count > 0)
+                                        PopupNavigation.Instance.PopAsync();
                                 }
                                 else
                                 {
@@ -187,11 +192,16 @@ namespace CCA
                                 CAMERA_LIST_RES res = new CAMERA_LIST_RES();
                                 res = CAMERA_LIST_RES.Parser.ParseFrom(data.Data);
 
-                                Device.BeginInvokeOnMainThread(() =>
+                                if (res.VarCode == ErrorCode.Success)
                                 {
-                                    var mainpage = (MainPage)Application.Current.MainPage;
+                                    Device.BeginInvokeOnMainThread(() =>
+                                    {
+                                        var mainpage = (MainPage)Application.Current.MainPage;
 
-                                });
+                                        PopupNavigation.Instance.PushAsync(new CameraListPage(res.VarCamera));
+
+                                    });
+                                }
                             }
                             break;
                         case (int)PROTOCOL.IdPktMailListRes:
@@ -209,6 +219,26 @@ namespace CCA
                                
                             }
                             break;
+                        case (int)PROTOCOL.IdPktCameraWakeUpRes:
+                            {
+                                CAMERA_WAKE_UP_RES res = new CAMERA_WAKE_UP_RES();
+                                res = CAMERA_WAKE_UP_RES.Parser.ParseFrom(data.Data);
+
+                                TargetPlayerId.Add(res.VarToPlayerId);
+                               
+                            }
+                            break;
+
+                        case (int)PROTOCOL.IdPktStopStreamRes:
+                            {
+                                STOP_STREAM_RES res = new STOP_STREAM_RES();
+                                res = STOP_STREAM_RES.Parser.ParseFrom(data.Data);
+
+                                TargetPlayerId.Remove(res.VarToPlayerId);
+
+                            }
+                            break;
+
                         case (int)PROTOCOL.IdPktCreateRoomRes:
                             {
                                 CREATE_ROOM_RES res = new CREATE_ROOM_RES();
@@ -303,8 +333,6 @@ namespace CCA
                                 {
                                     StreamWrapper wra = new StreamWrapper();
                                     wra.stream = new MemoryStream(msg.ToByteArray());
-                                    wra.pos = res.VarPos;
-                                    wra.type = res.VarType;
                                     JpegStream.Enqueue(wra);
                                 }
 
@@ -370,6 +398,12 @@ namespace CCA
                 BITMAP_MESSAGE_REQ message = new BITMAP_MESSAGE_REQ();
                 message.VarRoomNumber = User.CurrentChatViewNumber;
                 message.VarType = type;
+
+                foreach (var playerid in TargetPlayerId)
+                {
+                    message.VarToPlayerId.Add(playerid);
+                };
+
                 foreach (var msg in list)
                 {
                     message.VarMessage.Add(ByteString.CopyFrom(msg.ToArray()));
@@ -427,9 +461,14 @@ namespace CCA
             if (token == null  || User.LoginSuccess == true)
                 return;
 
+            var machineid = DependencyService.Get<MethodExt>().MachineId();
+            string Model = DeviceInfo.Model;
+
             var data = new LOGIN_REQ
             {
                 VarToken = token,
+                VarCamName = Model,
+                VarMachineId = machineid
             };
             using (MemoryStream stream = new MemoryStream())
             {
@@ -526,6 +565,27 @@ namespace CCA
                 message.WriteTo(stream);
 
                 client.WritePacket((int)PROTOCOL.IdPktRegCameraReq, stream.ToArray(), stream.ToArray().Length);
+            }
+        }
+
+
+        static public void SendWakeUpCamera(long playerId)
+        {
+            if (client == null || client.socket == null || client.socket.Connected == false)
+                return;
+
+            CAMERA_WAKE_UP_REQ message = new CAMERA_WAKE_UP_REQ
+            {
+               VarType = 0,
+               VarRoomNumber = 0,
+               VarToPlayerId = playerId,
+
+            };
+            using (MemoryStream stream = new MemoryStream())
+            {
+                message.WriteTo(stream);
+
+                client.WritePacket((int)PROTOCOL.IdPktCameraWakeUpReq, stream.ToArray(), stream.ToArray().Length);
             }
         }
 

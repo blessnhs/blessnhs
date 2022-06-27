@@ -6,14 +6,12 @@ using Xamarin.Forms;
 
 namespace CCA
 {
-
     public class StreamWrapper
     {
         public MemoryStream stream = new MemoryStream();
         public int pos = 0;
         public int type = 0;
     }
-
 
     static class Helper
     {

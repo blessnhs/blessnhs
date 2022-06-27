@@ -9,12 +9,12 @@ using namespace web::http;
 using namespace web::http::client;
 using namespace web::json;
 
-namespace Hub	{
+namespace Hub {
 
 	class GSAllocator;
 
 	template<class T>
-	class MSG_PLAYER_QUERY ;
+	class MSG_PLAYER_QUERY;
 
 
 #define DECLARE_DB_CLASS_BEGIN(class_name) \
@@ -161,25 +161,25 @@ class MSG_PLAYER_QUERY<##class_name>:public IMESSAGE	\
 		void Undo() {}\
 }; 
 
-template<class T>
-class MSG_PLAYER_QUERY : public IMESSAGE
-{
-public:
-	MSG_PLAYER_QUERY() = default;
-	~MSG_PLAYER_QUERY() = default;
-
-	DBPROCESS_CER_PTR   pProcess;
-
-	boost::shared_ptr<T> pRequst;
-
-	void Execute(LPVOID Param) 
+	template<class T>
+	class MSG_PLAYER_QUERY : public IMESSAGE
 	{
-		printf("error MSG_PLAYER_QUERY Type Not Define \n");
-	}
+	public:
+		MSG_PLAYER_QUERY() = default;
+		~MSG_PLAYER_QUERY() = default;
+
+		DBPROCESS_CER_PTR   pProcess;
+
+		boost::shared_ptr<T> pRequst;
+
+		void Execute(LPVOID Param)
+		{
+			printf("error MSG_PLAYER_QUERY Type Not Define \n");
+		}
 
 
-	void Undo() {}
-};
+		void Undo() {}
+	};
 
 
 #pragma region RequestDeleteAllConcurrentUser
@@ -190,7 +190,7 @@ public:
 
 
 #pragma region CreateRooom
-	DECLARE_DB_CLASS_BEGIN_4(CreateRooom,string,INT64,string,PlayerPtr)
+	DECLARE_DB_CLASS_BEGIN_4(CreateRooom, string, INT64, string, PlayerPtr)
 	{
 		CREATE_ROOM_RES res;
 
@@ -205,7 +205,7 @@ public:
 		{
 			res.set_var_code(SystemError);
 			SEND_PROTO_BUFFER(res, pSession, pPlayerPtr->GetFrontSid())
-			return;
+				return;
 		}
 
 
@@ -220,7 +220,7 @@ public:
 		res.mutable_var_name()->assign(RoomPtr->m_Stock.Name);
 		SEND_PROTO_BUFFER(res, pSession, pPlayerPtr->GetFrontSid())
 
-		RoomPtr->SendNewUserInfo(std::get<3>(Request.m_args), RoomPtr->GetId());	//방에 있는 유저들에게 새로운 유저 정보전송f
+			RoomPtr->SendNewUserInfo(std::get<3>(Request.m_args), RoomPtr->GetId());	//방에 있는 유저들에게 새로운 유저 정보전송f
 	}
 	DECLARE_DB_CLASS_END
 #pragma endregion
@@ -242,16 +242,16 @@ public:
 		if (RoomPtr == NULL)
 		{
 			res.set_var_code(SystemError);
-			SEND_PROTO_BUFFER( res, pSession, pPlayerPtr->GetFrontSid())
-			return;
+			SEND_PROTO_BUFFER(res, pSession, pPlayerPtr->GetFrontSid())
+				return;
 		}
 
 		auto ret = pProcess->EnterRoom(std::get<0>(Request.m_args), std::get<1>(Request.m_args), std::get<2>(Request.m_args));
 		if (ret != 0)
 		{
 			res.set_var_code(SystemError);
-			SEND_PROTO_BUFFER( res, pSession, pPlayerPtr->GetFrontSid())
-			return;
+			SEND_PROTO_BUFFER(res, pSession, pPlayerPtr->GetFrontSid())
+				return;
 		}
 
 		RoomPtr->GetMessageList(res.mutable_var_messages());
@@ -260,7 +260,7 @@ public:
 
 		res.set_var_room_id(std::get<0>(Request.m_args));
 		res.set_var_name(RoomPtr->m_Stock.Name.c_str());
-		SEND_PROTO_BUFFER( res, pSession, pPlayerPtr->GetFrontSid())
+		SEND_PROTO_BUFFER(res, pSession, pPlayerPtr->GetFrontSid())
 
 			//새로 입장한 유저에게 방안의 유저 정보전송
 			for each (auto iter in RoomPtr->m_PlayerMap)
@@ -280,7 +280,7 @@ public:
 				if (pPair == NULL)
 					continue;
 
-				SEND_PROTO_BUFFER( nty, pPair, iter.second->GetFrontSid())
+				SEND_PROTO_BUFFER(nty, pPair, iter.second->GetFrontSid())
 			}
 
 
@@ -329,7 +329,7 @@ public:
 #pragma endregion
 
 #pragma region RoomPassThrou
-	DECLARE_DB_CLASS_BEGIN_4(RoomPassThrou, int, INT64, string,string)
+	DECLARE_DB_CLASS_BEGIN_4(RoomPassThrou, int, INT64, string, string)
 	{
 		std::time_t t = std::time(0);   // get time now
 		std::tm now;
@@ -408,7 +408,7 @@ public:
 
 		auto ret = pProcess->RegisterCamera(pPlayerPtr->GetDBIndex(), std::get<0>(Request.m_args), std::get<1>(Request.m_args));
 
-		SEND_PROTO_BUFFER( res, pSession, pPlayerPtr->GetFrontSid())
+		SEND_PROTO_BUFFER(res, pSession, pPlayerPtr->GetFrontSid())
 
 	}
 	DECLARE_DB_CLASS_END
@@ -430,22 +430,28 @@ public:
 
 		auto camList = pProcess->RegCameraList(pPlayerPtr->GetDBIndex());
 
-		for each (auto cam  in camList)
+		for each (auto& cam  in camList)
 		{
 			auto caminfo = res.add_var_camera();
 
-			caminfo->set_var_machine_name(std::get<1>(cam));
-			caminfo->set_var_machine_id(std::get<0>(cam));
+			caminfo->set_var_machine_name(std::get<2>(cam).c_str());
+			caminfo->set_var_machine_id(std::get<1>(cam).c_str());
+
+			auto player = PLAYERMGR.SearchByMachineId(std::get<1>(cam).c_str());
+			if (player != NULL)
+			{
+				caminfo->set_var_player_id(player->GetId());
+			}
 		}
 
-		SEND_PROTO_BUFFER( res, pSession, pPlayerPtr->GetFrontSid())
+		SEND_PROTO_BUFFER(res, pSession, pPlayerPtr->GetFrontSid())
 
 	}
 	DECLARE_DB_CLASS_END
 #pragma endregion
 
 #pragma region RequestLogout
-	DECLARE_DB_CLASS_BEGIN_1(RequestLogout,INT64)
+	DECLARE_DB_CLASS_BEGIN_1(RequestLogout, INT64)
 	{
 		pProcess->ProcedureUserLogout(std::get<0>(Request.m_args));
 	}
@@ -472,13 +478,13 @@ public:
 			info->mutable_var_message()->assign(std::get<1>(pray));
 			info->mutable_var_time()->assign(std::get<2>(pray));
 		}
-		SEND_PROTO_BUFFER( res, pSession, pPlayerPtr->GetFrontSid())
+		SEND_PROTO_BUFFER(res, pSession, pPlayerPtr->GetFrontSid())
 	}
 	DECLARE_DB_CLASS_END
 #pragma endregion
 
 #pragma region RequestRegPray
-	DECLARE_DB_CLASS_BEGIN_3(RequestRegPray,string,string, PlayerPtr)
+	DECLARE_DB_CLASS_BEGIN_3(RequestRegPray, string, string, PlayerPtr)
 	{
 		PlayerPtr pPlayerPtr = std::get<2>(Request.m_args);
 		if (pPlayerPtr == NULL)
@@ -490,7 +496,7 @@ public:
 		res.set_var_code(Success);
 
 
-		SEND_PROTO_BUFFER( res, pSession, pPlayerPtr->GetFrontSid())
+		SEND_PROTO_BUFFER(res, pSession, pPlayerPtr->GetFrontSid())
 	}
 	DECLARE_DB_CLASS_END
 #pragma endregion
@@ -511,7 +517,7 @@ public:
 		QNA_RES res;
 		res.set_var_code(code);
 
-		SEND_PROTO_BUFFER( res, pSession, pPlayerPtr->GetFrontSid())
+		SEND_PROTO_BUFFER(res, pSession, pPlayerPtr->GetFrontSid())
 	}
 	DECLARE_DB_CLASS_END
 #pragma endregion
@@ -536,7 +542,7 @@ public:
 			data->set_var_date(std::get<2>(notice));
 		}
 
-		SEND_PROTO_BUFFER( res, pSession, pPlayerPtr->GetFrontSid())
+		SEND_PROTO_BUFFER(res, pSession, pPlayerPtr->GetFrontSid())
 	}
 	DECLARE_DB_CLASS_END
 #pragma endregion
@@ -545,7 +551,7 @@ public:
 #pragma region CalcRank
 	DECLARE_DB_CLASS_BEGIN(CalcRank)
 	{
-		
+
 	}
 	DECLARE_DB_CLASS_END
 #pragma endregion
@@ -620,7 +626,7 @@ public:
 				return 0;
 
 			}
-			catch (const std::exception & e)
+			catch (const std::exception& e)
 			{
 				printf("Error exception:%s\n", e.what());
 				return -1;
@@ -641,7 +647,7 @@ public:
 					res.set_var_code(DataBaseError);
 
 					SEND_PROTO_BUFFER(res, pSession, pRequst.FrontSid)
-					return;
+						return;
 				}
 
 				DBPROCESS_CER_PTR pProcess = DBPROCESSCONTAINER_CER.Search(Type);
@@ -651,8 +657,8 @@ public:
 
 					res.set_var_code(DataBaseError);
 
-					SEND_PROTO_BUFFER( res, pSession, pRequst.FrontSid)
-					return;
+					SEND_PROTO_BUFFER(res, pSession, pRequst.FrontSid)
+						return;
 				}
 
 				if (pRequst.token.size() == 0 || pRequst.token.size() > 256)
@@ -661,15 +667,15 @@ public:
 
 					res.set_var_code(DataBaseError);
 
-					SEND_PROTO_BUFFER( res, pSession, pRequst.FrontSid)
+					SEND_PROTO_BUFFER(res, pSession, pRequst.FrontSid)
 
-					//pSession->Close();
+						//pSession->Close();
 
-					PLAYERMGR.Disconnect(pSession);
+						PLAYERMGR.Disconnect(pSession);
 
 					CLIENT_KICK kick;
-					SEND_PROTO_BUFFER( kick, pSession, pRequst.FrontSid)
-					return;
+					SEND_PROTO_BUFFER(kick, pSession, pRequst.FrontSid)
+						return;
 				}
 
 
@@ -691,14 +697,17 @@ public:
 			//	pNewPlayer->m_Account.SetName(pRequst.token);
 
 
+				pNewPlayer->SetMachineName(pRequst.MachineModel);
+				pNewPlayer->SetMachineId(pRequst.MachineId);
+
 				pNewPlayer->SetFront(pRequst.ForntId);
 				pNewPlayer->SetFrontSid(pRequst.FrontSid);
 
 				pNewPlayer->SetDBIndex(Index);
-				
-				
+
+
 				pNewPlayer->SetPair(pRequst.ForntId);
-			//	pSession->SetPair(Index);
+				//	pSession->SetPair(Index);
 
 				pNewPlayer->m_AliveTime = GetTickCount();
 
@@ -709,9 +718,9 @@ public:
 
 				res.set_var_name(pRequst.token);
 
-				SEND_PROTO_BUFFER( res, pSession, pRequst.FrontSid)
+				SEND_PROTO_BUFFER(res, pSession, pRequst.FrontSid)
 
-				pNewPlayer->SetChannel(pRequst.channel);
+					pNewPlayer->SetChannel(pRequst.channel);
 			}
 			catch (...)
 			{
@@ -723,7 +732,7 @@ public:
 		void Undo() {}
 	};
 
-}
+	}
 
 
 

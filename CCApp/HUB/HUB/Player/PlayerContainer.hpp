@@ -179,6 +179,24 @@ template<template<class T> class CreationPolicy> PlayerPtr PlayerContainer<Creat
 	return PlayerPtr(0);
 }
 
+template<template<class T> class CreationPolicy> PlayerPtr PlayerContainer<CreationPolicy>::SearchByMachineId(string Id)
+{
+	for each (auto iter in m_PlayerMap)
+	{
+		PlayerPtr pPlayer = iter.second;
+		if (pPlayer == NULL)
+			continue;
+
+		if (pPlayer->GetMachineId() == Id)
+		{
+			return pPlayer;
+		}
+	}
+
+	return PlayerPtr(0);
+}
+
+
 template<template<class T> class CreationPolicy> PlayerPtr PlayerContainer<CreationPolicy>:: Search(string flatformid)
 {
 	for each( auto iter in m_PlayerMap)

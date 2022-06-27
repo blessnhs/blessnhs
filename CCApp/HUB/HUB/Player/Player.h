@@ -72,6 +72,12 @@ public:
 	VOID SetDBIndex(DWORD _id);
 	DWORD GetDBIndex();
 
+	std::string& GetMachineName();
+	void SetMachineName(std::string& _MachineName);
+
+	std::string& GetMachineId();
+	void SetMachineId(std::string& _MachineId);
+
 	Account		m_Account;
 	DWORD		m_AliveTime;
 
@@ -89,6 +95,9 @@ private:
 	std::set<DWORD>		m_RoomNumbers;
 
 	std::string			m_Name;
+
+	std::string			m_MachineName;
+	std::string			m_MachineId;
 
 };
 

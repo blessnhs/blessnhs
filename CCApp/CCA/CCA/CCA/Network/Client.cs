@@ -61,7 +61,7 @@ namespace CCA
                 }
 
 
-                socket.ReceiveTimeout = 500;
+                socket.ReceiveTimeout = 200;
                 socket.SendTimeout = 2000;
 
                 User.LoginSuccess = false;
@@ -113,7 +113,7 @@ namespace CCA
         private int m_RemainLength = 0;
         private byte[] m_PacketBuffer = new byte[RecvPacketBuffer.MTU];
 
-        public bool GetPacket(ref int protocol, ref byte[] packet, ref int dataLength, ref int compressflag)
+        public bool GetPacket(ref int protocol, ref byte[] packet, ref int dataLength, ref byte compressflag)
         {
             compressflag = 0;
 
@@ -134,7 +134,7 @@ namespace CCA
                 packet = new byte[dataLength];
 
                 protocol = BitConverter.ToInt16(m_PacketBuffer, sizeof(Int32));
-                compressflag = BitConverter.ToChar(m_PacketBuffer, sizeof(Int32) + sizeof(Int16) + sizeof(Int16) + sizeof(Int32));
+                compressflag = (byte)BitConverter.ToChar(m_PacketBuffer, sizeof(Int32) + sizeof(Int16) + sizeof(Int16) + sizeof(Int32));
 
                 Buffer.BlockCopy(m_PacketBuffer, sizeof(Int32) + sizeof(Int16) + sizeof(Int16) + sizeof(Int32) + sizeof(Byte) + sizeof(long), packet, 0, dataLength);
 
@@ -245,7 +245,7 @@ namespace CCA
         {
             int Protocol = 0;
             int PacketLength = 0;
-            int compressflag = 0;
+            byte compressflag = 0;
             byte[] mCompletePacketBuffer = null;
 
             while (GetPacket(ref Protocol, ref mCompletePacketBuffer, ref PacketLength, ref compressflag))

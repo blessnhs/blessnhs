@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Essentials;
+using CCA.Page;
 
 namespace CCA
 {
@@ -21,6 +22,12 @@ namespace CCA
             NetworkProcess();
 
             PopupNavigation.Instance.PushAsync(new LoginPopup());
+        }
+
+        protected override bool OnBackButtonPressed()
+        {
+           
+            return true;
         }
 
         void OnTapped(object sender, EventArgs e)
@@ -37,6 +44,8 @@ namespace CCA
                             var machineid = DependencyService.Get<MethodExt>().MachineId();
                             string Model = DeviceInfo.Model;
                             NetProcess.SendRegCamera(Model,machineid);
+
+                            PopupNavigation.Instance.PushAsync(new CameraPage());
                         }
                         break;
                     case "MyCamera":

@@ -136,6 +136,8 @@ VOID HubProcess::LOGIN_PLAYER(boost::shared_ptr<XDATA> pBuffer, boost::shared_pt
 		PLAYER_MSG->pRequst.channel = 1;// login.var_channel();
 		PLAYER_MSG->pRequst.ForntId = Client->GetId();
 		PLAYER_MSG->pRequst.FrontSid = pBuffer->Reserve2;
+		PLAYER_MSG->pRequst.MachineId = login.var_machine_id();
+		PLAYER_MSG->pRequst.MachineModel = login.var_cam_name();
 	}
 
 	//로그인아웃 처리는 고정해야할 필요가 있다.
@@ -463,17 +465,15 @@ VOID HubProcess::ROOM_AUDIO_CHAT(boost::shared_ptr<XDATA> pBuffer, boost::shared
 
 	res.set_var_name(pPlayer->m_Account.GetName());
 
-	ROOM_PTR pPtr = ROOMMGR.Search(message.var_room_number());
-	if (pPtr != NULL)
+	for each (auto pid in message.var_to_player_id())
 	{
-		int pos = pPtr->FindPlayerPos(pPlayer);
-		res.set_var_pos(pos);
-
-		pPtr->SendToAll(res, pPlayer->GetId());
-	}
-	else
-	{
-		SEND_PROTO_BUFFER( res, Client, pBuffer->Reserve2)
+		PlayerPtr pPlayerTarget = PLAYERMGR.Search(pid);
+		if (pPlayerTarget != NULL)
+		{
+			GSCLIENT_PTR pSession = SERVER.GetClient(pPlayerTarget->GetPair());
+			if (pSession)
+				SEND_PROTO_BUFFER(res, pSession, pPlayerTarget->GetFrontSid())
+		}
 	}
 }
 
@@ -489,26 +489,22 @@ VOID HubProcess::ROOM_BITMAP_CHAT(boost::shared_ptr<XDATA> pBuffer, boost::share
 		return;
 	}
 
+	res.set_var_name(pPlayer->GetMachineName());
+
 	for each (auto msg  in message.var_message())
 	{
 		res.add_var_message(msg);
 	}
 
-
-	res.set_var_type(message.var_type());
-	res.set_var_name(pPlayer->m_Account.GetName());
-
-	ROOM_PTR pPtr = ROOMMGR.Search(message.var_room_number());
-	if (pPtr != NULL)
+	for each (auto pid in message.var_to_player_id())
 	{
-		int pos = pPtr->FindPlayerPos(pPlayer);
-		res.set_var_pos(pos);
-
-		pPtr->SendToAll(res, /*pPlayer->GetId()*/-1);
-	}
-	else
-	{
-		SEND_PROTO_BUFFER( res, Client, pBuffer->Reserve2)
+		PlayerPtr pPlayerTarget = PLAYERMGR.Search(pid);
+		if (pPlayerTarget != NULL)
+		{
+			GSCLIENT_PTR pSession = SERVER.GetClient(pPlayerTarget->GetPair());
+			if (pSession)
+				SEND_PROTO_BUFFER(res, pSession, pPlayerTarget->GetFrontSid())
+		}
 	}
 }
 
@@ -601,20 +597,21 @@ VOID HubProcess::CAMERA_WAKE_UP(boost::shared_ptr<XDATA> pBuffer, boost::shared_
 	{
 		return;
 	}
-	
+
+	PlayerPtr pTargetPlayer = PLAYERMGR.Search(message.var_to_player_id());
+	if (pTargetPlayer == NULL)
+	{
+		return;
+	}
+
+	res.set_var_to_player_id(pPlayer->GetId());
 	
 	res.set_var_type(message.var_type());
 
-	ROOM_PTR pPtr = ROOMMGR.Search(message.var_room_number());
-	if (pPtr != NULL)
+	GSCLIENT_PTR pSession = SERVER.GetClient(pTargetPlayer->GetPair());
+	if (pSession)
 	{
-		int pos = pPtr->FindPlayerPos(pPlayer);
-
-		pPtr->SendToAll(res, pPlayer->GetId());
-	}
-	else
-	{
-		SEND_PROTO_BUFFER( res, Client, pBuffer->Reserve2)
+		SEND_PROTO_BUFFER( res, pSession, pTargetPlayer->GetFrontSid())
 	}
 }
 

@@ -96,3 +96,23 @@ void Player::SetName(std::string& _Name)
 {
 	m_Name = _Name;
 }
+
+std::string& Player::GetMachineName()
+{
+	return m_MachineName;
+}
+
+void Player::SetMachineName(std::string& _Name)
+{
+	m_MachineName = _Name;
+}
+
+std::string& Player::GetMachineId()
+{
+	return m_MachineId;
+}
+
+void Player::SetMachineId(std::string& _Id)
+{
+	m_MachineId = _Id;
+}

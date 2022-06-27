@@ -32,6 +32,7 @@ public:
 	PlayerPtr Search(INT64 Id);
 	PlayerPtr Search(string flatformid);
 	PlayerPtr SearchBySocketId(DWORD Id);
+	PlayerPtr SearchByMachineId(string Id);
 
 
 	PlayerPtr Search(DWORD FrontId,DWORD FrontSid);
