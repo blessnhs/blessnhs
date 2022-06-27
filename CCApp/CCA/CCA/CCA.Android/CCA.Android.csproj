@@ -69,6 +69,7 @@
   <ItemGroup>
     <Compile Include="AudioManager.cs" />
     <Compile Include="CameraRenderer.cs" />
+    <Compile Include="CameraViewer.cs" />
     <Compile Include="Dependency.cs" />
     <Compile Include="ImageStreamingServer.cs" />
     <Compile Include="MainActivity.cs" />

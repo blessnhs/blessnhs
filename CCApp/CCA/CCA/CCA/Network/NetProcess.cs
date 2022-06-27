@@ -335,7 +335,6 @@ namespace CCA
                                     wra.stream = new MemoryStream(msg.ToByteArray());
                                     JpegStream.Enqueue(wra);
                                 }
-
                             }
                             break;
                         case (int)PROTOCOL.IdPktMpeg2TsMessageRes:

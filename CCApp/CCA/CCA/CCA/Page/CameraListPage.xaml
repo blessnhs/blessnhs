@@ -1,0 +1,55 @@
+﻿<rg1:PopupPage
+    xmlns:rg1="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+    x:Class="CCA.Page.CameraListPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:rg="http://rotorgames.com">
+    <rg:PopupPage.Resources>
+        <ResourceDictionary>
+            <Style x:Key="EntryStyle" TargetType="Entry">
+                <Setter Property="PlaceholderColor" Value="#9cdaf1" />
+                <Setter Property="TextColor" Value="#7dbbe6" />
+            </Style>
+        </ResourceDictionary>
+    </rg:PopupPage.Resources>
+    <rg:PopupPage.Animation>
+        <rg:ScaleAnimation
+            DurationIn="700"
+            EasingIn="BounceOut"
+            PositionIn="Bottom"
+            PositionOut="Center"
+            ScaleIn="1"
+            ScaleOut="0.7" />
+    </rg:PopupPage.Animation>
+
+    <Frame
+                x:Name="FrameContainer"
+                Margin="15"
+                BackgroundColor="White"
+                HorizontalOptions="Center">
+        <StackLayout
+                    Padding="10,5"
+                    IsClippedToBounds="True"
+                    Spacing="3">
+
+            <ListView x:Name="listView">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ImageCell Text="{Binding Name}" Detail="{Binding Status}" ImageSource="{Binding ImageUri}"></ImageCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            
+            <Button
+                        x:Name="closebtn"
+                        Margin="10,5"
+                        BackgroundColor="#7dbbe6"
+                        Clicked="OnClose"
+                        HorizontalOptions="Fill"
+                        Text="Close">
+
+            </Button>
+
+        </StackLayout>
+    </Frame>
+</rg1:PopupPage>

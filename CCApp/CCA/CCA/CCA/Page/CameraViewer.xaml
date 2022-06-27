@@ -1,0 +1,9 @@
+﻿
+<rg1:PopupPage xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:rg1="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+             x:Class="CCA.Page.CameraViewer">
+
+    <Image x:Name="image"></Image>
+
+</rg1:PopupPage>
