@@ -430,8 +430,11 @@ class MSG_PLAYER_QUERY<##class_name>:public IMESSAGE	\
 
 		auto camList = pProcess->RegCameraList(pPlayerPtr->GetDBIndex());
 
-		for each (auto& cam  in camList)
+		for each (auto & cam  in camList)
 		{
+			if (pPlayerPtr->GetMachineId() == std::get<1>(cam))
+				continue;
+
 			auto caminfo = res.add_var_camera();
 
 			caminfo->set_var_machine_name(std::get<2>(cam).c_str());
@@ -658,10 +661,12 @@ class MSG_PLAYER_QUERY<##class_name>:public IMESSAGE	\
 					res.set_var_code(DataBaseError);
 
 					SEND_PROTO_BUFFER(res, pSession, pRequst.FrontSid)
-						return;
+					return;
 				}
 
-				if (pRequst.token.size() == 0 || pRequst.token.size() > 256)
+				auto result = GetGoogleAuth(pRequst.token);
+
+				if (pRequst.token.size() == 0 || http_out.size() == 0)
 				{
 					BLOG("DBPROCESSCONTAINER_CER.Search token size error %d \n", pRequst.token.size());
 
@@ -669,13 +674,12 @@ class MSG_PLAYER_QUERY<##class_name>:public IMESSAGE	\
 
 					SEND_PROTO_BUFFER(res, pSession, pRequst.FrontSid)
 
-						//pSession->Close();
 
-						PLAYERMGR.Disconnect(pSession);
+					PLAYERMGR.Disconnect(pSession);
 
 					CLIENT_KICK kick;
 					SEND_PROTO_BUFFER(kick, pSession, pRequst.FrontSid)
-						return;
+					return;
 				}
 
 
@@ -684,17 +688,21 @@ class MSG_PLAYER_QUERY<##class_name>:public IMESSAGE	\
 				INT64 Index = 0;
 				int score = 0, level = 0;
 
-				auto result = GetGoogleAuth(pRequst.token);
+				std::string flatformid, google_name, picture_url, email, locale;
 
+				flatformid.assign(http_out[1].begin(), http_out[1].end());
+				email.assign(http_out[2].begin(), http_out[2].end());
+				picture_url.assign(http_out[4].begin(), http_out[4].end());
+				locale.assign(http_out[5].begin(), http_out[5].end());
 
-				int nRet = pProcess->ProcedureUserLogin(pRequst.token, "", authentickey, score, Index, level);
+				int nRet = pProcess->ProcedureUserLogin(flatformid, "", authentickey, score, Index, level);
 
 				PlayerPtr pNewPlayer = PLAYERMGR.Create();
 
 				pNewPlayer->Initialize();
 
 				//추후 수정
-			//	pNewPlayer->m_Account.SetName(pRequst.token);
+				pNewPlayer->SetName(google_name);
 
 
 				pNewPlayer->SetMachineName(pRequst.MachineModel);
@@ -720,7 +728,7 @@ class MSG_PLAYER_QUERY<##class_name>:public IMESSAGE	\
 
 				SEND_PROTO_BUFFER(res, pSession, pRequst.FrontSid)
 
-					pNewPlayer->SetChannel(pRequst.channel);
+				pNewPlayer->SetChannel(pRequst.channel);
 			}
 			catch (...)
 			{

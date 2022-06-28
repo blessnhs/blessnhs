@@ -20,8 +20,6 @@ namespace CCA
             InitializeComponent();
 
             NetworkProcess();
-
-            PopupNavigation.Instance.PushAsync(new LoginPopup());
         }
 
         protected override bool OnBackButtonPressed()

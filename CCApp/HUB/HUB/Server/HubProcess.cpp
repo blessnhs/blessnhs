@@ -125,9 +125,6 @@ VOID HubProcess::LOGIN_PLAYER(boost::shared_ptr<XDATA> pBuffer, boost::shared_pt
 	if (_result_, login.var_token().size() <= 0 )
 		return;
 
-	if (_result_, login.var_token().size() >= 256)
-		return;
-
 	boost::shared_ptr<Hub::MSG_PLAYER_QUERY<RequestPlayerAuth>>		PLAYER_MSG = ALLOCATOR.Create<Hub::MSG_PLAYER_QUERY<RequestPlayerAuth>>();
 	PLAYER_MSG->pSession = Client;
 

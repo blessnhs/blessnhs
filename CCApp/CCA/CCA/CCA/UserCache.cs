@@ -26,6 +26,12 @@ namespace CCA
         static public bool OnceVersionNotify = false;
         static public bool OnceUpdate = false;
 
+        static public string PhotoPath;
+        static public string Uid;
+        static public string Token;
+        static public string NickName;
+
+        //내가 등록한 카메라 리스트
         static public Dictionary<string, RegCam> CamDic = new Dictionary<string, RegCam>();
 
 

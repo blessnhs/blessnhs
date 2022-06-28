@@ -28,7 +28,7 @@ namespace CCA.Popup
         {
            // await PopupNavigation.Instance.PopAsync();
 
-            NetProcess.SendLogin("1");
+        
         }
     }
 }

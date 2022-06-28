@@ -115,8 +115,8 @@ namespace CCA
                                 }
 
                                 SQLLiteDB.LoadCacheData();
-                                if (User.CacheData.UserName != null)
-                                    NetProcess.SendLogin(User.CacheData.UserName);
+                                if (User.NickName != null)
+                                    NetProcess.SendLogin(User.Uid,User.Token);
                             }
                             break;
                         case (int)PROTOCOL.IdPktLoginRes:
@@ -452,7 +452,7 @@ namespace CCA
 
         }
 
-        static public void SendLogin(string token)
+        static public void SendLogin(string uid,string token)
         {
             if (client == null || client.socket == null || client.socket.Connected == false)
                 return;
@@ -465,6 +465,7 @@ namespace CCA
 
             var data = new LOGIN_REQ
             {
+                VarUid = uid,
                 VarToken = token,
                 VarCamName = Model,
                 VarMachineId = machineid
