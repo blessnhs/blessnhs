@@ -1,0 +1,85 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:AdFire="clr-namespace:OMOK.CustomAdMobView" xmlns:control="clr-namespace:OMOK.Control"
+             x:Class="OMOK.Views.Lobby">
+    <ContentPage.Content>
+        <StackLayout>
+
+            <Grid x:Name="main_grid">
+                <Grid.RowDefinitions BackgroundColor="White">
+                    <RowDefinition Height="1*" />
+                    <RowDefinition Height="1*" />
+                    <RowDefinition Height="30" />
+                    <RowDefinition Height="6*" />
+                    <RowDefinition Height="auto" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+
+                <!--1row ad banner-->
+                <Frame BorderColor="Gray" Grid.Column="0" Grid.Row="0"  Grid.ColumnSpan="6" Padding="0,5,5,0">
+                    <AdFire:CtBannerView eBannerSize="Standardbanner"   BackgroundColor="White" x:Name="banner"/>
+                </Frame>
+
+                
+                <!--2row 1번째 내 사진 정보 -->
+                <Image  x:Name="mypicture" Grid.Column="0" Grid.Row="1" >
+                    <Image.Source>
+                        <UriImageSource Uri="{Binding SomeImage}"/>
+                    </Image.Source>
+                </Image>
+
+                <!--2row 2번째 매칭 버튼 -->
+                <control:GradientButton  Margin="10,0,00,40" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="3"   Grid.RowSpan="2"  StartColor="#71c4d1" EndColor="#ab90f4" x:Name="MatchButton" Text="실시간 매칭" Clicked="OnMatchClicked" FontSize="Subtitle"/>
+            
+                <!--2row 3번째 ai 버튼 -->
+                <control:GradientButton  Margin="0,0,5,40" Grid.Column="4" Grid.Row="1" Grid.ColumnSpan="2"   Grid.RowSpan="2"  StartColor="#71c4d1" EndColor="#ab90f4" x:Name="AIMatchButton" Text="AI Match" Clicked="OnSingleMatchClicked" FontSize="Subtitle"/>
+
+                <!--5row 0번째 이름 -->
+                <Frame Grid.Column="0"  Grid.Row="2"  Grid.ColumnSpan="6" Padding="0,5,0,0" BackgroundColor="#D9D4D4">
+                    <Label x:Name="NoticeLabel" Text="Server maintenance time is every Thursday at 4am."  FontSize="Default" TextColor="Black" WidthRequest="256" MaxLines="20" LineBreakMode="CharacterWrap"/>
+                </Frame>
+
+                <!--4row 0번째 방리스트 -->
+                <Frame BorderColor="Gray"   Grid.Column="0"  Grid.Row="3" CornerRadius="5"   Grid.ColumnSpan="6" Padding="0,0,0,0">
+                    <StackLayout BackgroundColor="DimGray">
+
+                        <ListView x:Name="listView" ItemSelected="Handle_ItemSelected"   ItemsSource="{Binding CommunityRoomInfo}" IsVisible="True">
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <TextCell Text="{Binding Name}" TextColor="White"/>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                        
+                    </StackLayout>
+                </Frame>
+
+                <!--5row 0번째 이름 -->
+                <control:GradientButton Grid.Column="0"  Grid.Row="4"  Grid.ColumnSpan="2" StartColor="#71c4d1" EndColor="#77bfd4" x:Name="NameButton" Text="이름" Clicked="OnProfileClicked"  BackgroundColor="White"/>
+           
+                <!--5row 1번째 기보 -->
+                <control:GradientButton  Grid.Column="2" Grid.Row="4"  StartColor="#7dbad8" EndColor="#82b4db" x:Name="HistroyButton" Text="기록" Clicked="OnHistoryClicked" BackgroundColor="White"/>
+           
+                <!--5row 2번째 랭킹 -->
+                <control:GradientButton Grid.Column="3"  Grid.Row="4" StartColor="#88afdf" EndColor="#8eaae3" x:Name="RankButton" Text="랭킹" Clicked="OnRankClicked"  BackgroundColor="White"/>
+           
+                <!--5row 3번째 설정 -->
+                <control:GradientButton  Grid.Column="4" Grid.Row="4"  StartColor="#94a4e6" EndColor="#94a4e6" x:Name="Shop" Text="Shop" Clicked="OnShopClicked" BackgroundColor="White"/>
+                
+                <!--5row 3번째 설정 -->
+                <control:GradientButton  Grid.Column="5" Grid.Row="4" StartColor="#a09aed" EndColor="#a09aed" x:Name="SettingButton" Text="설정" Clicked="OnSettingClicked" BackgroundColor="White"/>
+           
+              </Grid>
+
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

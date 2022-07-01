@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:AdFire="clr-namespace:OMOK.CustomAdMobView"
+             mc:Ignorable="d"
+             x:Class="OMOK.Views.Rank">
+    <ContentPage.Content>
+
+        <ScrollView>
+        <StackLayout Margin="20,20,20,20">
+            <!--1row ad banner-->
+            <Frame  Padding="5,5,5,0" HeightRequest="60" BorderColor="White">
+                <AdFire:CtBannerView eBannerSize="Standardbanner"   BackgroundColor="White" x:Name="banner"/>
+            </Frame>
+
+            <Grid x:Name="main_grid">
+                <Grid.RowDefinitions BackgroundColor="White">
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*" />
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="6*" />
+                </Grid.ColumnDefinitions>
+
+                <Label Text="R a n k Top 100" FontSize="Large" Grid.Column="1" Grid.ColumnSpan="5" VerticalOptions="Center" HorizontalOptions="Center"></Label>
+            </Grid>
+
+        </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

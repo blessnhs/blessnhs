@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:AdFire="clr-namespace:OMOK.CustomAdMobView"
+             mc:Ignorable="d"
+             x:Class="OMOK.Views.Setting">
+    <ScrollView>
+
+        <StackLayout>
+            <Frame  Padding="5,5,5,0" HeightRequest="60" BorderColor="White">
+                <AdFire:CtBannerView eBannerSize="Standardbanner"   BackgroundColor="White" x:Name="banner"/>
+            </Frame>
+
+            <Grid x:Name="mainGrid" ColumnSpacing="0" RowSpacing="1" Margin="20,20,20,20" IsClippedToBounds="True">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="1*" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition Width="auto" />
+                </Grid.ColumnDefinitions>
+
+                <Image  x:Name="Profile" Grid.Row="0" Grid.RowSpan="2" Grid.Column="0" Margin="10,5,5,5" />
+
+                <Label x:Name="RankLabel" TextColor="Black" VerticalOptions="CenterAndExpand" HorizontalTextAlignment="Start" Grid.Row="0" Grid.Column="1" Padding="1,1,1,1" Margin="10,10,0,0"/>
+
+                <Label x:Name="RecordLabel" TextColor="Black" VerticalOptions="CenterAndExpand" HorizontalTextAlignment="Start"  Grid.Row="1" Grid.Column="1" Padding="1,1,1,1" Margin="10,0,0,0"/>
+
+                <Label  x:Name="QNSLabel" Text="문의 사항 및 버그 제보"  TextColor="Black" Grid.Row="2" Grid.Column="0" Padding="1,30,1,1" Margin="10,10,0,0"/>
+
+                <StackLayout VerticalOptions="StartAndExpand" Grid.Row="3" Grid.Column="0" Padding="1,10,1,1" Margin="10,10,0,0" Grid.ColumnSpan="4">
+                    <Editor x:Name="contents" Text="" HeightRequest="400"  BackgroundColor="Gray"/>
+                    <Button  x:Name="sendbutton" Text="전송" Clicked="OnSendButtonClicked"/>
+                    <Button  x:Name="closebutton" Text="닫기" Clicked="OnCloseButtonClicked" />
+                </StackLayout>
+            </Grid>
+        </StackLayout>
+
+    </ScrollView>
+</ContentPage>

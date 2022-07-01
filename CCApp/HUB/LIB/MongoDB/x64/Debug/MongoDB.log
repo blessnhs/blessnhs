@@ -1,1 +1,46 @@
-﻿C:\Program Files (x86)\Microsoft Visual Studio\2017\Professional\Common7\IDE\VC\VCTargets\Microsoft.Cpp.Platform.targets(67,5): error MSB8020: The build tools for v142 (Platform Toolset = 'v142') cannot be found. To build using the v142 build tools, please install v142 build tools.  Alternatively, you may upgrade to the current Visual Studio tools by selecting the Project menu or right-click the solution, and then selecting "Retarget solution".
+﻿  pch.cpp
+C:\work\vcpkg\installed\x64-windows\include\mongocxx\options\index.hpp(1,1): warning C4819: The file contains a character that cannot be represented in the current code page (949). Save the file in Unicode format to prevent data loss
+C:\work\vcpkg\installed\x64-windows\include\mongocxx\options\change_stream.hpp(1,1): warning C4819: The file contains a character that cannot be represented in the current code page (949). Save the file in Unicode format to prevent data loss
+C:\work\vcpkg\installed\x64-windows\include\mongocxx\events\command_failed_event.hpp(1,1): warning C4819: The file contains a character that cannot be represented in the current code page (949). Save the file in Unicode format to prevent data loss
+  MongoDB.cpp
+C:\work\blessnhs2\CCApp\HUB\LIB\MongoDB\MongoDB.cpp(679,10): warning C4244: 'return': conversion from 'int64_t' to 'int', possible loss of data
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\VC\Tools\MSVC\14.29.30133\include\tuple(170,47): warning C4244: 'initializing': conversion from 'int64_t' to '_Ty', possible loss of data
+          with
+          [
+              _Ty=int
+          ]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\VC\Tools\MSVC\14.29.30133\include\tuple(258): message : see reference to function template instantiation 'std::_Tuple_val<_This>::_Tuple_val<int64_t&>(_Other)' being compiled
+          with
+          [
+              _This=int,
+              _Other=int64_t &
+          ]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\VC\Tools\MSVC\14.29.30133\include\tuple(258): message : see reference to function template instantiation 'std::_Tuple_val<_This>::_Tuple_val<int64_t&>(_Other)' being compiled
+          with
+          [
+              _This=int,
+              _Other=int64_t &
+          ]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\VC\Tools\MSVC\14.29.30133\include\tuple(340): message : see reference to function template instantiation 'std::tuple<int,std::string,std::string>::tuple<std::_Exact_args_t,int64_t&,boost::string_view&,boost::string_view&,0>(_Tag,_This2,boost::string_view &,boost::string_view &)' being compiled
+          with
+          [
+              _Tag=std::_Exact_args_t,
+              _This2=int64_t &
+          ]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\VC\Tools\MSVC\14.29.30133\include\tuple(340): message : see reference to function template instantiation 'std::tuple<int,std::string,std::string>::tuple<std::_Exact_args_t,int64_t&,boost::string_view&,boost::string_view&,0>(_Tag,_This2,boost::string_view &,boost::string_view &)' being compiled
+          with
+          [
+              _Tag=std::_Exact_args_t,
+              _This2=int64_t &
+          ]
+C:\work\blessnhs2\CCApp\HUB\LIB\MongoDB\MongoDB.cpp(913): message : see reference to function template instantiation 'std::tuple<int,std::string,std::string>::tuple<int64_t&,boost::string_view&,boost::string_view&,0>(_This2,boost::string_view &,boost::string_view &) noexcept(false)' being compiled
+          with
+          [
+              _This2=int64_t &
+          ]
+C:\work\blessnhs2\CCApp\HUB\LIB\MongoDB\MongoDB.cpp(913): message : see reference to function template instantiation 'std::tuple<int,std::string,std::string>::tuple<int64_t&,boost::string_view&,boost::string_view&,0>(_This2,boost::string_view &,boost::string_view &) noexcept(false)' being compiled
+          with
+          [
+              _This2=int64_t &
+          ]
+  MongoDB.vcxproj -> C:\work\blessnhs2\CCApp\HUB\LIB\Common\MongoDB\MongoDB_d.lib

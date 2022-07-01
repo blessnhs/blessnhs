@@ -1,0 +1,82 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:AdFire="clr-namespace:OMOK.CustomAdMobView" xmlns:control="clr-namespace:OMOK.Control"
+             x:Class="OMOK.Room">
+    <RelativeLayout >
+
+        <Grid x:Name="mainGrid" ColumnSpacing="0" RowSpacing="0" VerticalOptions="StartAndExpand" HorizontalOptions="StartAndExpand">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="20*"/>
+                <ColumnDefinition Width="20*"/>
+                <ColumnDefinition Width="20*"/>
+                <ColumnDefinition Width="20*"/>
+                <ColumnDefinition Width="20*"/>
+            </Grid.ColumnDefinitions>
+
+            <Label Text="00" x:Name="timeLabel" FontSize="Large" Grid.Row="0" Grid.Column="0" HorizontalOptions="Center" VerticalOptions="Center" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"/>
+    
+            <ProgressBar x:Name="ProgressRoom" Progress="0.0"  Grid.Row="0" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center"/>
+            
+            <!--<Frame  Padding="5,5,5,0" BorderColor="White" Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="2">
+                <AdFire:CtBannerView eBannerSize="Standardbanner"   BackgroundColor="White" x:Name="banner"/>
+            </Frame>-->
+            <control:GradientButton  x:Name="PutStoneBtn" Text="착수"   Grid.Row="0" Grid.Column="2" Clicked="OnPutStone" StartColor="#71c4d1" EndColor="#77bfd4" Margin="4" ContentLayout="Top" />
+            <control:GradientButton  x:Name="Chatting" Text="화상채팅" IsEnabled="false"  Grid.Row="0" Grid.Column="3" Clicked="OnChatting" StartColor="#71c4d1" EndColor="#77bfd4" Margin="4" ContentLayout="Top" />
+
+
+            <control:GradientButton x:Name="LeaveRoom" StartColor="#71c4d1" EndColor="#77bfd4" Text="나가기"  Grid.Row="0" Grid.Column="4" Clicked="OnLeaveClicked" BackgroundColor="#E6DEDE"/>
+
+            <AbsoluteLayout  x:Name="absoluteLayout"  BackgroundColor="#43343E"  Grid.Row="1" Grid.Column="0"   Grid.ColumnSpan="5">
+            </AbsoluteLayout>
+
+            <BoxView Grid.Row="2" Grid.Column="0"   Grid.ColumnSpan="5" />
+
+            <Label Text="흑" x:Name="black" Grid.Row="3" Grid.Column="0" BackgroundColor="Black" VerticalOptions="CenterAndExpand" HorizontalTextAlignment="Center" FontSize="Large" TextColor="White" />
+
+            <Label Text="백" x:Name="white" Grid.Row="3" Grid.Column="4" BackgroundColor="White" VerticalOptions="CenterAndExpand" HorizontalTextAlignment="Center"  FontSize="Large" TextColor="Black"/>
+
+            <Image  x:Name="bottom1picture" Grid.Row="4" Grid.ColumnSpan="1" Grid.Column="0">
+                <Image.Source>
+                    <UriImageSource Uri="{Binding SomeImage}"/>
+                </Image.Source>
+            </Image>
+
+            <Image  x:Name="bottom2picture" Grid.Row="4" Grid.ColumnSpan="1" Grid.Column="4">
+                <Image.Source>
+                    <UriImageSource Uri="{Binding SomeImage}"/>
+                </Image.Source>
+            </Image>
+
+            <Label x:Name="blackLabel" Text=""  Grid.Row="5" Grid.Column="0" VerticalOptions="CenterAndExpand" HorizontalTextAlignment="Center" />
+
+            <Label x:Name="whiteLabel" Text="" Grid.Row="5" Grid.Column="4" VerticalOptions="CenterAndExpand" HorizontalTextAlignment="Center"  FontAttributes="Bold"/>
+
+
+            <Button x:Name="LeftButton" Text="왼쪽" BackgroundColor="Gray" Clicked="OnClickedLeft" Grid.Row="4" Grid.Column="1"  Grid.RowSpan="1"/>
+
+            <Button x:Name="UPButton" Text="위"  BackgroundColor="Gray"  Clicked="OnClickedUp" Grid.Row="3" Grid.Column="2"/>
+
+            <Button x:Name="Clicked" Text="착수"  BackgroundColor="#9530A0"  Clicked="OnPutStone" Grid.Row="4" Grid.Column="2" Padding="5,5,5,5"/>
+
+            <Button x:Name="DownButton" Text="아래" BackgroundColor="Gray" Clicked="OnClickedDown" Grid.Row="5" Grid.Column="2"/>
+
+            <Button x:Name="RightButton" Text="오른쪽" BackgroundColor="Gray" Clicked="OnClickedRight" Grid.Row="4" Grid.Column="3" Grid.RowSpan="1" />
+
+            <Frame  Padding="5,5,5,0" BorderColor="White" Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="5">
+                <AdFire:CtBannerView eBannerSize="Standardbanner"   BackgroundColor="White" x:Name="banner2"/>
+            </Frame>
+            
+        </Grid>
+
+
+    </RelativeLayout>
+</ContentPage>    

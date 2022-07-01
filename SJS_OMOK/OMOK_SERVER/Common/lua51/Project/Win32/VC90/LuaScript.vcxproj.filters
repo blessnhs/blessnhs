@@ -1,0 +1,182 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Src_5_1_4">
+      <UniqueIdentifier>{d2a7f7a3-9473-47c3-baf0-391ca6fb75c9}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\Package\lapi.c">
+      <Filter>Src_5_1_4</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Package\lauxlib.c">
+      <Filter>Src_5_1_4</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Package\lbaselib.c">
+      <Filter>Src_5_1_4</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Package\lcode.c">
+      <Filter>Src_5_1_4</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Package\ldblib.c">
+      <Filter>Src_5_1_4</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Package\ldebug.c">
+      <Filter>Src_5_1_4</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Package\ldo.c">
+      <Filter>Src_5_1_4</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Package\ldump.c">
+      <Filter>Src_5_1_4</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Package\lfunc.c">
+      <Filter>Src_5_1_4</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Package\lgc.c">
+      <Filter>Src_5_1_4</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Package\linit.c">
+      <Filter>Src_5_1_4</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Package\liolib.c">
+      <Filter>Src_5_1_4</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Package\llex.c">
+      <Filter>Src_5_1_4</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Package\lmathlib.c">
+      <Filter>Src_5_1_4</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Package\lmem.c">
+      <Filter>Src_5_1_4</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Package\loadlib.c">
+      <Filter>Src_5_1_4</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Package\lobject.c">
+      <Filter>Src_5_1_4</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Package\lopcodes.c">
+      <Filter>Src_5_1_4</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Package\loslib.c">
+      <Filter>Src_5_1_4</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Package\lparser.c">
+      <Filter>Src_5_1_4</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Package\lstate.c">
+      <Filter>Src_5_1_4</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Package\lstring.c">
+      <Filter>Src_5_1_4</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Package\lstrlib.c">
+      <Filter>Src_5_1_4</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Package\ltable.c">
+      <Filter>Src_5_1_4</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Package\ltablib.c">
+      <Filter>Src_5_1_4</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Package\ltm.c">
+      <Filter>Src_5_1_4</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Package\lua.c">
+      <Filter>Src_5_1_4</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Package\luac.c">
+      <Filter>Src_5_1_4</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Package\lundump.c">
+      <Filter>Src_5_1_4</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Package\lvm.c">
+      <Filter>Src_5_1_4</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Package\lzio.c">
+      <Filter>Src_5_1_4</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Package\print.c">
+      <Filter>Src_5_1_4</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\Package\lapi.h">
+      <Filter>Src_5_1_4</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Package\lauxlib.h">
+      <Filter>Src_5_1_4</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Package\lcode.h">
+      <Filter>Src_5_1_4</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Package\ldebug.h">
+      <Filter>Src_5_1_4</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Package\ldo.h">
+      <Filter>Src_5_1_4</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Package\lfunc.h">
+      <Filter>Src_5_1_4</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Package\lgc.h">
+      <Filter>Src_5_1_4</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Package\llex.h">
+      <Filter>Src_5_1_4</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Package\llimits.h">
+      <Filter>Src_5_1_4</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Package\lmem.h">
+      <Filter>Src_5_1_4</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Package\lobject.h">
+      <Filter>Src_5_1_4</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Package\lopcodes.h">
+      <Filter>Src_5_1_4</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Package\lparser.h">
+      <Filter>Src_5_1_4</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Package\lstate.h">
+      <Filter>Src_5_1_4</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Package\lstring.h">
+      <Filter>Src_5_1_4</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Package\ltable.h">
+      <Filter>Src_5_1_4</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Package\ltm.h">
+      <Filter>Src_5_1_4</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Package\lua.h">
+      <Filter>Src_5_1_4</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Package\luaconf.h">
+      <Filter>Src_5_1_4</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Package\lualib.h">
+      <Filter>Src_5_1_4</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Package\lundump.h">
+      <Filter>Src_5_1_4</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Package\lvm.h">
+      <Filter>Src_5_1_4</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Package\lzio.h">
+      <Filter>Src_5_1_4</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\..\Package\Makefile">
+      <Filter>Src_5_1_4</Filter>
+    </None>
+  </ItemGroup>
+</Project>

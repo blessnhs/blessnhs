@@ -138,6 +138,8 @@ keytool.exe -list -v -keystore "%LocalAppData%\Xamarin\Mono for Android\keystore
 
 이제 비쥬얼 스튜디오로 와서, 아까 받은 google-services.json을 프로젝트에 포함시킵니다.
 
+이때 vs를 재시작해야합니다.
+
 그리고 속성 창을 엽니다. 여기서 google-services.json에 대한 '빌드 작업'을 GoogleServicesJson으로 변경합니다.
 
 ​

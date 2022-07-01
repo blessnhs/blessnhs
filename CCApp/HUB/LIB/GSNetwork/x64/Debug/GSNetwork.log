@@ -1,1 +1,6 @@
-﻿C:\Program Files (x86)\Microsoft Visual Studio\2017\Professional\Common7\IDE\VC\VCTargets\Microsoft.Cpp.Platform.targets(67,5): error MSB8020: The build tools for v142 (Platform Toolset = 'v142') cannot be found. To build using the v142 build tools, please install v142 build tools.  Alternatively, you may upgrade to the current Visual Studio tools by selecting the Project menu or right-click the solution, and then selecting "Retarget solution".
+﻿  GSPacketTCP.cpp
+C:\work\vcpkg\installed\x64-windows\include\boost\bind.hpp(41): message : The practice of declaring the Bind placeholders (_1, _2, ...) in the global namespace is deprecated. Please use <boost/bind/bind.hpp> + using namespace boost::placeholders, or define BOOST_BIND_GLOBAL_PLACEHOLDERS to retain the current behavior.
+C:\work\blessnhs2\CCApp\HUB\LIB\GSNetwork\GSPacketTCP.cpp(308,13): warning C4267: 'initializing': conversion from 'size_t' to 'DWORD', possible loss of data
+C:\work\blessnhs2\CCApp\HUB\LIB\GSNetwork\GSPacketTCP.cpp(469,44): warning C4805: '==': unsafe mix of type 'BOOL' and type 'bool' in operation
+C:\work\blessnhs2\CCApp\HUB\LIB\GSNetwork\GSPacketTCP.cpp(475,63): warning C4267: 'argument': conversion from 'size_t' to 'INT', possible loss of data
+  GSNetwork.vcxproj -> C:\work\blessnhs2\CCApp\HUB\LIB\Common\GSCore\GSNetwork_d.lib

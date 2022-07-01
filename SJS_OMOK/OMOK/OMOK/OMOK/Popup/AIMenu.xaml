@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<pages:PopupPage  xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+             xmlns:animations="clr-namespace:Rg.Plugins.Popup.Animations;assembly=Rg.Plugins.Popup"
+             mc:Ignorable="d"
+             x:Class="OMOK.AISelect">
+   
+    <!--You can use any elements here which are extended from Xamarin.Forms.View-->
+    <Frame  VerticalOptions="Center"  HorizontalOptions="Center" >
+        <StackLayout Padding="20, 20, 20, 20">
+
+            <Label Text="Rule" FontSize="Large" Padding="0,0,0,0"  TextColor="Black"/>
+
+            <!--<Frame OutlineColor="Black" Padding="0,0,10,10">
+                <StackLayout VerticalOptions="Center" HorizontalOptions="Start">
+                    <RadioButton x:Name="gomoku"  Text="고 모 쿠"  CheckedChanged="Gomoku_CheckedChanged" GroupName="rule"/>
+                    <RadioButton x:Name="normal" Text="일  반" CheckedChanged="Normal_CheckedChanged" GroupName="rule"/>
+                    <RadioButton x:Name="renju" Text="렌  주 (3 x 3 금지)" CheckedChanged="Renju_CheckedChanged" GroupName="rule"/>
+                </StackLayout>
+            </Frame>-->
+
+            <Frame OutlineColor="Black" Padding="0,0,10,15">
+                <StackLayout VerticalOptions="Center" HorizontalOptions="Center">
+                    <RadioButton x:Name="ai1" Text="흑 AI vs 백 유저" CheckedChanged="mode1_CheckedChanged" GroupName="mode"/>
+                    <RadioButton x:Name="ai2" Text="흑 유저 vs 백 AI" CheckedChanged="mode2_CheckedChanged" GroupName="mode"/>
+                </StackLayout>
+            </Frame>
+            
+            <Button Text="Ok" Clicked="CloseButtonClicked"></Button>
+
+        </StackLayout>
+    </Frame>
+</pages:PopupPage>

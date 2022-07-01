@@ -1,0 +1,98 @@
+﻿syntax = "proto2";
+
+import "Enum.proto";
+import "Structure.proto";
+
+option optimize_for = SPEED;
+
+message VERSION_REQ
+{
+    optional PROTOCOL   id                  = 1 [default = ID_PKT_VERSION_REQ  ];
+}
+
+message LOGIN_REQ
+{
+    optional PROTOCOL   id                  = 1 [default = ID_PKT_LOGIN_REQ ];
+
+    required string  var_uid                = 2;
+    required string  var_token              = 3;
+   
+}
+
+message CREATE_ROOM_REQ
+{
+    optional PROTOCOL   id                  = 1 [default = ID_PKT_CREATE_ROOM_REQ ];
+    required bytes var_name                  = 2;
+   
+}
+
+message ENTER_ROOM_REQ
+{
+    optional PROTOCOL   id                  = 1 [default = ID_PKT_ENTER_ROOM_REQ ];
+    required int32      var_id                  = 2;
+   
+}
+
+message LEAVE_ROOM_REQ
+{
+    optional PROTOCOL   id                  = 1 [default = ID_PKT_LEAVE_ROOM_REQ ];
+    required int32      var_id                  = 2;
+}
+
+message ROOM_LIST_REQ
+{
+    optional PROTOCOL   id                  = 1 [default = ID_PKT_ROOM_LIST_REQ ];
+}
+
+message MATCH_REQ
+{
+    optional PROTOCOL   id                  = 1 [default = ID_PKT_MATCH_REQ ];
+}
+
+
+message RANK_REQ
+{
+    optional PROTOCOL   id                        = 1 [default = ID_PKT_RANK_REQ  ];
+}
+
+message QNS_REQ
+{
+    optional PROTOCOL   id                        = 1 [default = ID_PKT_QNS_REQ   ];
+    required bytes     var_message         = 2;
+}
+
+message ROOM_PASS_THROUGH_REQ
+{
+    optional PROTOCOL   id                        = 1 [default = ID_PKT_ROOM_PASS_THROUGH_REQ    ];
+    required bytes     var_message    	     = 2;
+    required int32       var_message_int         = 3;
+}
+
+
+message CANCEL_MATCH_REQ
+{
+    optional PROTOCOL   id                        = 1 [default = ID_PKT_CANCEL_MATCH_REQ    ];
+}
+
+message NOTICE_REQ
+{
+    optional PROTOCOL   id                        = 1 [default = ID_PKT_NOTICE_REQ    ];
+}
+
+message CHECK_NICKNAME_REQ
+{
+    optional PROTOCOL   id                        = 1 [default = ID_PKT_CHECK_NICKNAME_REQ    ];
+    required bytes     var_name    	              = 2;
+}
+
+message BITMAP_MESSAGE_REQ
+{
+    optional PROTOCOL   id                  = 1 [default = ID_PKT_BITMAP_MESSAGE_REQ ];
+    repeated bytes     var_message         = 2;
+}
+
+message AUDIO_MESSAGE_REQ
+{
+    optional PROTOCOL   id                  = 1 [default = ID_PKT_AUDIO_MESSAGE_REQ ];
+    repeated bytes     var_message         = 2;
+}

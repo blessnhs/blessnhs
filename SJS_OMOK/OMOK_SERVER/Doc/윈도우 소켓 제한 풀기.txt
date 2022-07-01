@@ -1,0 +1,44 @@
+MaxUserPort
+
+서버에 연결되는 Port의 숫자가 5000개 이상 (Exchange 60000) 될 경우 서버에서 네트워크 장애가 발생될 수 있음.
+
+일반적으로 WAS와 연결되는 Windows 서버나 Exchange 서버에서 주로 발생됨.
+
+레지스트리 위치: HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters
+
+유효한 범위: 5000~65534
+
+값 이름 : MaxUserPort
+
+값 종류: DWORD
+
+기본값: 5000
+
+추천 값: 65534
+
+MaxFreeTcbs
+
+시스템이 TCP 연결 유지를 위해 생성하는 TCP Control Blocks(TCBs)의 숫자를 결정한다. 하나의 연결은 하나의 블록을 요구하기 때문에, 이 값은 TCP가 동시에 몇 개의 연결을 처리할 수 있느냐를 결정하게 된다. 모든 블록이 사용 중인 상황에서 새로운 연결이 들어오게 되면, TCP는 TIME_WAIT 상태인 연결 중에 하나를 강제로 끊어버리고, 블록을 해제한 후, 그 블록을 새로운 연결에 사용하게 된다.
+
+보통 TCP는 TcpTimedWaitDelay에 지정되어 있는 시간이 지나지 않은 경우, 연결을 해제하지도 않고, 그 연결에 사용된 자원을 재사용하지도 않는다. 이 시간은 보통 TIME_WAIT 또는 2MSL (2 x maximum segment lifetime) 상태라고 불린다. 하지만 시스템이 매우 많은 연결을 받아들여 자원이 바닥날 상황에 이르면, TcpTimedWaitDelay에 지정된 시간이 아직 남아있는 경우에도 연결에 할당되어 있는 자원을 해제하게 된다.
+
+레지스트리 위치: HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters
+
+유효한 범위: 1–0xFFFFFFFF
+
+값 이름 : MaxFreeTcbs
+
+값 종류: DWORD
+
+기본값: 0x1388 (십진값으로 5000)
+
+추천 값: 2000
+
+
+TcpTimedWaitDelay 
+
+ 30
+
+
+
+출처: https://nic2hong.tistory.com/entry/TCP-파라미터-튜닝을-통한-접속-증가-방법 [Sungho's Blog]
