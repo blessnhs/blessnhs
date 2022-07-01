@@ -27,20 +27,18 @@
                 Margin="15"
                 BackgroundColor="White"
                 HorizontalOptions="Center">
-        <StackLayout
-                    Padding="10,5"
-                    IsClippedToBounds="True"
-                    Spacing="3">
+        <ScrollView x:Name="scrollView">
 
-            <ListView x:Name="listView">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <ImageCell Text="{Binding Name}" Detail="{Binding Status}" ImageSource="{Binding ImageUri}"></ImageCell>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-            
-            <Button
+            <StackLayout x:Name="stacklayout">
+                <ListView x:Name="listView">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <TextCell Text="{Binding Content}" Detail="{Binding Status}" TextColor="Black"/>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+
+                <Button
                         x:Name="closebtn"
                         Margin="10,5"
                         BackgroundColor="#7dbbe6"
@@ -48,8 +46,8 @@
                         HorizontalOptions="Fill"
                         Text="Close">
 
-            </Button>
-
-        </StackLayout>
+                </Button>
+            </StackLayout>
+        </ScrollView>
     </Frame>
 </rg1:PopupPage>

@@ -33,6 +33,10 @@ HubProcess::HubProcess(void)
 
 	ADD_NET_FUNC(HubProcess, ID_PKT_CAMERA_LIST_REQ, CAMERA_LIST);
 
+	ADD_NET_FUNC(HubProcess, ID_PKT_STOP_STREAM_REQ, STOP_STREAM);
+	
+
+
 }
 
 
@@ -502,6 +506,14 @@ VOID HubProcess::ROOM_BITMAP_CHAT(boost::shared_ptr<XDATA> pBuffer, boost::share
 			if (pSession)
 				SEND_PROTO_BUFFER(res, pSession, pPlayerTarget->GetFrontSid())
 		}
+		else
+		{
+			//없으면 중지 요청
+			STOP_STREAM_RES res;
+			res.set_var_code(Success);
+			res.set_var_to_player_id(pid);
+			SEND_PROTO_BUFFER(res, Client, pPlayer->GetFrontSid())
+		}
 	}
 }
 
@@ -632,6 +644,27 @@ VOID HubProcess::ROOM_LIST(boost::shared_ptr<XDATA> pBuffer, boost::shared_ptr<G
 
 VOID HubProcess::MATCH(boost::shared_ptr<XDATA> pBuffer, boost::shared_ptr<GSClient> Client)
 {
+}
+
+VOID HubProcess::STOP_STREAM(boost::shared_ptr<XDATA> pBuffer, boost::shared_ptr<GSClient> Client)
+{
+	DECLARE_RECV_TYPE(STOP_STREAM_REQ, message)
+
+
+	STOP_STREAM_RES res;
+
+	PlayerPtr pPlayer = PLAYERMGR.SearchByFrontSid(pBuffer->Reserve2);
+	if (pPlayer == NULL)
+	{
+		return;
+	}
+
+	res.set_var_code(Success);
+	res.set_var_to_player_id(pPlayer->GetId());
+
+	PLAYERMGR.BroadCast(res, pPlayer->GetDBIndex());
+
+
 }
 
 

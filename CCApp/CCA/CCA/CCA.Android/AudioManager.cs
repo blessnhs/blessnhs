@@ -103,7 +103,9 @@ namespace CCA.Droid
 
                     if (Frames.Count > 0)
                     {
-                        NetProcess.SendAudioMessage(Frames);
+                        if(NetProcess.TargetPlayerId.Count > 0)
+                            NetProcess.SendAudioMessage(Frames);
+
                         Frames.Clear();
                     }
                 }

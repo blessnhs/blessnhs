@@ -354,17 +354,17 @@ template<template<class T> class CreationPolicy> void PlayerContainer<CreationPo
 	printf("Total Count %d\n", m_PlayerMapForLoop.size());
 }
 
-template<template<class T> class CreationPolicy> void PlayerContainer<CreationPolicy>::BroadCast(DWORD MainId,DWORD SudbId,byte *Message,WORD Length)
+template<template<class T> class CreationPolicy> template<class TYPE> void PlayerContainer<CreationPolicy>::BroadCast(TYPE MSG, INT64 INDEX)
 {
 	auto iter = m_PlayerMapForLoop.begin();
-	while(iter != m_PlayerMapForLoop.end())
+	while (iter != m_PlayerMapForLoop.end())
 	{
-		if(iter->second != NULL)
+		if (iter->second != NULL && iter->second->GetDBIndex() == INDEX)
 		{
-			GSCLIENT *pPair = SERVER.GetClient(iter->second->GetPair());
-			if(pPair != NULL)
+			auto pPair = SERVER.GetClient(iter->second->GetPair());
+			if (pPair != NULL)
 			{
-				pPair->GetTCPSocket()->WritePacket(MainId,SudbId,Message,Length);
+				SEND_PROTO_BUFFER(MSG, pPair, iter->second->GetFrontSid())
 			}
 		}
 		++iter;
@@ -382,7 +382,7 @@ template<template<class T> class CreationPolicy> template<class TYPE> void Playe
 			GSCLIENT* pPair = SERVER.GetClient(iter->second->GetPair());
 			if(pPair != NULL)
 			{
-				Sender::Send(pPair,MSG);
+				SEND_PROTO_BUFFER(MSG, pPair, iter->second->GetFrontSid())
 			}
 		}
 		++iter;

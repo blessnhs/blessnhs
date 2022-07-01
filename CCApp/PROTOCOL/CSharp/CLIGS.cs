@@ -24,58 +24,59 @@ public static partial class CLIGSReflection {
         string.Concat(
           "CgxDTEkuR1MucHJvdG8aCkVudW0ucHJvdG8aD1N0cnVjdHVyZS5wcm90byI4",
           "CgtWRVJTSU9OX1JFURIpCgJpZBgBIAEoDjIJLlBST1RPQ09MOhJJRF9QS1Rf",
-          "VkVSU0lPTl9SRVEidQoJTE9HSU5fUkVREicKAmlkGAEgASgOMgkuUFJPVE9D",
-          "T0w6EElEX1BLVF9MT0dJTl9SRVESEQoJdmFyX3Rva2VuGAIgAigJEhQKDHZh",
-          "cl9jYW1fbmFtZRgDIAIoCRIWCg52YXJfbWFjaGluZV9pZBgEIAIoCSJSCg9D",
-          "UkVBVEVfUk9PTV9SRVESLQoCaWQYASABKA4yCS5QUk9UT0NPTDoWSURfUEtU",
-          "X0NSRUFURV9ST09NX1JFURIQCgh2YXJfbmFtZRgCIAIoCSJXCg5FTlRFUl9S",
-          "T09NX1JFURIsCgJpZBgBIAEoDjIJLlBST1RPQ09MOhVJRF9QS1RfRU5URVJf",
-          "Uk9PTV9SRVESFwoPdmFyX3Jvb21fbnVtYmVyGAIgAigFImcKDkxFQVZFX1JP",
-          "T01fUkVREiwKAmlkGAEgASgOMgkuUFJPVE9DT0w6FUlEX1BLVF9MRUFWRV9S",
-          "T09NX1JFURIOCgZ2YXJfaWQYAiACKAUSFwoPdmFyX3Jvb21fbnVtYmVyGAMg",
-          "AigFIjwKDVJPT01fTElTVF9SRVESKwoCaWQYASABKA4yCS5QUk9UT0NPTDoU",
-          "SURfUEtUX1JPT01fTElTVF9SRVEipQEKFVJPT01fUEFTU19USFJPVUdIX1JF",
-          "URIzCgJpZBgBIAEoDjIJLlBST1RPQ09MOhxJRF9QS1RfUk9PTV9QQVNTX1RI",
-          "Uk9VR0hfUkVREhMKC3Zhcl9tZXNzYWdlGAIgAigJEhcKD3Zhcl9tZXNzYWdl",
-          "X2ludBgDIAIoBRIXCg92YXJfcm9vbV9udW1iZXIYBCACKAUSEAoIdmFyX3Rp",
-          "bWUYBSACKAkiNgoKTk9USUNFX1JFURIoCgJpZBgBIAEoDjIJLlBST1RPQ09M",
-          "OhFJRF9QS1RfTk9USUNFX1JFUSKgAQoSQklUTUFQX01FU1NBR0VfUkVREjAK",
-          "AmlkGAEgASgOMgkuUFJPVE9DT0w6GUlEX1BLVF9CSVRNQVBfTUVTU0FHRV9S",
-          "RVESEwoLdmFyX21lc3NhZ2UYAiADKAwSFwoPdmFyX3Jvb21fbnVtYmVyGAMg",
-          "AigFEhAKCHZhcl90eXBlGAQgAigFEhgKEHZhcl90b19wbGF5ZXJfaWQYBSAD",
-          "KAMijAEKEUFVRElPX01FU1NBR0VfUkVREi8KAmlkGAEgASgOMgkuUFJPVE9D",
-          "T0w6GElEX1BLVF9BVURJT19NRVNTQUdFX1JFURITCgt2YXJfbWVzc2FnZRgC",
-          "IAMoDBIXCg92YXJfcm9vbV9udW1iZXIYAyACKAUSGAoQdmFyX3RvX3BsYXll",
-          "cl9pZBgEIAMoAyJaCg9TVE9QX1NUUkVBTV9SRVESLQoCaWQYASABKA4yCS5Q",
-          "Uk9UT0NPTDoWSURfUEtUX1NUT1BfU1RSRUFNX1JFURIYChB2YXJfdG9fcGxh",
-          "eWVyX2lkGAIgAigDIosBChJDQU1FUkFfV0FLRV9VUF9SRVESMAoCaWQYASAB",
-          "KA4yCS5QUk9UT0NPTDoZSURfUEtUX0NBTUVSQV9XQUtFX1VQX1JFURIQCgh2",
-          "YXJfdHlwZRgCIAIoBRIXCg92YXJfcm9vbV9udW1iZXIYAyACKAUSGAoQdmFy",
-          "X3RvX3BsYXllcl9pZBgEIAIoAyJCChBQUkFZX01FU1NBR0VfUkVREi4KAmlk",
-          "GAEgASgOMgkuUFJPVE9DT0w6F0lEX1BLVF9QUkFZX01FU1NBR0VfUkVRIl8K",
-          "FFBSQVlfTUVTU0FHRV9SRUdfUkVREjIKAmlkGAEgASgOMgkuUFJPVE9DT0w6",
-          "G0lEX1BLVF9QUkFZX01FU1NBR0VfUkVHX1JFURITCgt2YXJfbWVzc2FnZRgC",
-          "IAEoCSJFCgdRTkFfUkVREiUKAmlkGAEgASgOMgkuUFJPVE9DT0w6DklEX1BL",
-          "VF9RTkFfUkVREhMKC3Zhcl9tZXNzYWdlGAIgASgJIjwKDU1BSUxfTElTVF9S",
-          "RVESKwoCaWQYASABKA4yCS5QUk9UT0NPTDoUSURfUEtUX01BSUxfTElTVF9S",
-          "RVEiQAoHUkVHX1JFURIlCgJpZBgBIAEoDjIJLlBST1RPQ09MOg5JRF9QS1Rf",
-          "UkVHX1JFURIOCgZ2YXJfaWQYAiACKAUiRAoRQ0xJRU5UX0xPR09VVF9SRVES",
-          "LwoCaWQYASABKA4yCS5QUk9UT0NPTDoYSURfUEtUX0NMSUVOVF9MT0dPVVRf",
-          "UkVRInkKEkNBTUVSQV9DT05UUk9MX1JFURIsCgJpZBgBIAEoDjIJLlBST1RP",
-          "Q09MOhVJRF9QS1RfQ0FNRVJBX0NPTlRST0wSJAoIdmFyX3R5cGUYAiACKA4y",
-          "Ei5DYW1lcmFDb250cm9sVHlwZRIPCgd2YXJfcG9zGAMgAigFIogBChNNUEVH",
-          "MlRTX01FU1NBR0VfUkVREjEKAmlkGAEgASgOMgkuUFJPVE9DT0w6GklEX1BL",
-          "VF9NUEVHMlRTX01FU1NBR0VfUkVREhMKC3Zhcl9tZXNzYWdlGAIgAygMEhcK",
-          "D3Zhcl9yb29tX251bWJlchgDIAIoBRIQCgh2YXJfdHlwZRgEIAIoBSJsCg5S",
-          "RUdfQ0FNRVJBX1JFURIsCgJpZBgBIAEoDjIJLlBST1RPQ09MOhVJRF9QS1Rf",
-          "UkVHX0NBTUVSQV9SRVESFAoMdmFyX2NhbV9uYW1lGAIgAigJEhYKDnZhcl9t",
-          "YWNoaW5lX2lkGAMgAigJIkAKD0NBTUVSQV9MSVNUX1JFURItCgJpZBgBIAEo",
-          "DjIJLlBST1RPQ09MOhZJRF9QS1RfQ0FNRVJBX0xJU1RfUkVRQgJIAQ=="));
+          "VkVSU0lPTl9SRVEihgEKCUxPR0lOX1JFURInCgJpZBgBIAEoDjIJLlBST1RP",
+          "Q09MOhBJRF9QS1RfTE9HSU5fUkVREg8KB3Zhcl91aWQYAiACKAkSEQoJdmFy",
+          "X3Rva2VuGAMgAigJEhQKDHZhcl9jYW1fbmFtZRgEIAIoCRIWCg52YXJfbWFj",
+          "aGluZV9pZBgFIAIoCSJSCg9DUkVBVEVfUk9PTV9SRVESLQoCaWQYASABKA4y",
+          "CS5QUk9UT0NPTDoWSURfUEtUX0NSRUFURV9ST09NX1JFURIQCgh2YXJfbmFt",
+          "ZRgCIAIoCSJXCg5FTlRFUl9ST09NX1JFURIsCgJpZBgBIAEoDjIJLlBST1RP",
+          "Q09MOhVJRF9QS1RfRU5URVJfUk9PTV9SRVESFwoPdmFyX3Jvb21fbnVtYmVy",
+          "GAIgAigFImcKDkxFQVZFX1JPT01fUkVREiwKAmlkGAEgASgOMgkuUFJPVE9D",
+          "T0w6FUlEX1BLVF9MRUFWRV9ST09NX1JFURIOCgZ2YXJfaWQYAiACKAUSFwoP",
+          "dmFyX3Jvb21fbnVtYmVyGAMgAigFIjwKDVJPT01fTElTVF9SRVESKwoCaWQY",
+          "ASABKA4yCS5QUk9UT0NPTDoUSURfUEtUX1JPT01fTElTVF9SRVEipQEKFVJP",
+          "T01fUEFTU19USFJPVUdIX1JFURIzCgJpZBgBIAEoDjIJLlBST1RPQ09MOhxJ",
+          "RF9QS1RfUk9PTV9QQVNTX1RIUk9VR0hfUkVREhMKC3Zhcl9tZXNzYWdlGAIg",
+          "AigJEhcKD3Zhcl9tZXNzYWdlX2ludBgDIAIoBRIXCg92YXJfcm9vbV9udW1i",
+          "ZXIYBCACKAUSEAoIdmFyX3RpbWUYBSACKAkiNgoKTk9USUNFX1JFURIoCgJp",
+          "ZBgBIAEoDjIJLlBST1RPQ09MOhFJRF9QS1RfTk9USUNFX1JFUSKgAQoSQklU",
+          "TUFQX01FU1NBR0VfUkVREjAKAmlkGAEgASgOMgkuUFJPVE9DT0w6GUlEX1BL",
+          "VF9CSVRNQVBfTUVTU0FHRV9SRVESEwoLdmFyX21lc3NhZ2UYAiADKAwSFwoP",
+          "dmFyX3Jvb21fbnVtYmVyGAMgAigFEhAKCHZhcl90eXBlGAQgAigFEhgKEHZh",
+          "cl90b19wbGF5ZXJfaWQYBSADKAMijAEKEUFVRElPX01FU1NBR0VfUkVREi8K",
+          "AmlkGAEgASgOMgkuUFJPVE9DT0w6GElEX1BLVF9BVURJT19NRVNTQUdFX1JF",
+          "URITCgt2YXJfbWVzc2FnZRgCIAMoDBIXCg92YXJfcm9vbV9udW1iZXIYAyAC",
+          "KAUSGAoQdmFyX3RvX3BsYXllcl9pZBgEIAMoAyJaCg9TVE9QX1NUUkVBTV9S",
+          "RVESLQoCaWQYASABKA4yCS5QUk9UT0NPTDoWSURfUEtUX1NUT1BfU1RSRUFN",
+          "X1JFURIYChB2YXJfdG9fcGxheWVyX2lkGAIgAigDIosBChJDQU1FUkFfV0FL",
+          "RV9VUF9SRVESMAoCaWQYASABKA4yCS5QUk9UT0NPTDoZSURfUEtUX0NBTUVS",
+          "QV9XQUtFX1VQX1JFURIQCgh2YXJfdHlwZRgCIAIoBRIXCg92YXJfcm9vbV9u",
+          "dW1iZXIYAyACKAUSGAoQdmFyX3RvX3BsYXllcl9pZBgEIAIoAyJCChBQUkFZ",
+          "X01FU1NBR0VfUkVREi4KAmlkGAEgASgOMgkuUFJPVE9DT0w6F0lEX1BLVF9Q",
+          "UkFZX01FU1NBR0VfUkVRIl8KFFBSQVlfTUVTU0FHRV9SRUdfUkVREjIKAmlk",
+          "GAEgASgOMgkuUFJPVE9DT0w6G0lEX1BLVF9QUkFZX01FU1NBR0VfUkVHX1JF",
+          "URITCgt2YXJfbWVzc2FnZRgCIAEoCSJFCgdRTkFfUkVREiUKAmlkGAEgASgO",
+          "MgkuUFJPVE9DT0w6DklEX1BLVF9RTkFfUkVREhMKC3Zhcl9tZXNzYWdlGAIg",
+          "ASgJIjwKDU1BSUxfTElTVF9SRVESKwoCaWQYASABKA4yCS5QUk9UT0NPTDoU",
+          "SURfUEtUX01BSUxfTElTVF9SRVEiQAoHUkVHX1JFURIlCgJpZBgBIAEoDjIJ",
+          "LlBST1RPQ09MOg5JRF9QS1RfUkVHX1JFURIOCgZ2YXJfaWQYAiACKAUiRAoR",
+          "Q0xJRU5UX0xPR09VVF9SRVESLwoCaWQYASABKA4yCS5QUk9UT0NPTDoYSURf",
+          "UEtUX0NMSUVOVF9MT0dPVVRfUkVRInkKEkNBTUVSQV9DT05UUk9MX1JFURIs",
+          "CgJpZBgBIAEoDjIJLlBST1RPQ09MOhVJRF9QS1RfQ0FNRVJBX0NPTlRST0wS",
+          "JAoIdmFyX3R5cGUYAiACKA4yEi5DYW1lcmFDb250cm9sVHlwZRIPCgd2YXJf",
+          "cG9zGAMgAigFIogBChNNUEVHMlRTX01FU1NBR0VfUkVREjEKAmlkGAEgASgO",
+          "MgkuUFJPVE9DT0w6GklEX1BLVF9NUEVHMlRTX01FU1NBR0VfUkVREhMKC3Zh",
+          "cl9tZXNzYWdlGAIgAygMEhcKD3Zhcl9yb29tX251bWJlchgDIAIoBRIQCgh2",
+          "YXJfdHlwZRgEIAIoBSJsCg5SRUdfQ0FNRVJBX1JFURIsCgJpZBgBIAEoDjIJ",
+          "LlBST1RPQ09MOhVJRF9QS1RfUkVHX0NBTUVSQV9SRVESFAoMdmFyX2NhbV9u",
+          "YW1lGAIgAigJEhYKDnZhcl9tYWNoaW5lX2lkGAMgAigJIkAKD0NBTUVSQV9M",
+          "SVNUX1JFURItCgJpZBgBIAEoDjIJLlBST1RPQ09MOhZJRF9QS1RfQ0FNRVJB",
+          "X0xJU1RfUkVRQgJIAQ=="));
     descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
         new pbr::FileDescriptor[] { global::EnumReflection.Descriptor, global::StructureReflection.Descriptor, },
         new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
           new pbr::GeneratedClrTypeInfo(typeof(global::VERSION_REQ), global::VERSION_REQ.Parser, new[]{ "Id" }, null, null, null, null),
-          new pbr::GeneratedClrTypeInfo(typeof(global::LOGIN_REQ), global::LOGIN_REQ.Parser, new[]{ "Id", "VarToken", "VarCamName", "VarMachineId" }, null, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::LOGIN_REQ), global::LOGIN_REQ.Parser, new[]{ "Id", "VarUid", "VarToken", "VarCamName", "VarMachineId" }, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::CREATE_ROOM_REQ), global::CREATE_ROOM_REQ.Parser, new[]{ "Id", "VarName" }, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::ENTER_ROOM_REQ), global::ENTER_ROOM_REQ.Parser, new[]{ "Id", "VarRoomNumber" }, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::LEAVE_ROOM_REQ), global::LEAVE_ROOM_REQ.Parser, new[]{ "Id", "VarId", "VarRoomNumber" }, null, null, null, null),
@@ -274,6 +275,7 @@ public sealed partial class LOGIN_REQ : pb::IMessage<LOGIN_REQ> {
   public LOGIN_REQ(LOGIN_REQ other) : this() {
     _hasBits0 = other._hasBits0;
     id_ = other.id_;
+    varUid_ = other.varUid_;
     varToken_ = other.varToken_;
     varCamName_ = other.varCamName_;
     varMachineId_ = other.varMachineId_;
@@ -309,8 +311,31 @@ public sealed partial class LOGIN_REQ : pb::IMessage<LOGIN_REQ> {
     _hasBits0 &= ~1;
   }
 
+  /// <summary>Field number for the "var_uid" field.</summary>
+  public const int VarUidFieldNumber = 2;
+  private readonly static string VarUidDefaultValue = "";
+
+  private string varUid_;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public string VarUid {
+    get { return varUid_ ?? VarUidDefaultValue; }
+    set {
+      varUid_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+    }
+  }
+  /// <summary>Gets whether the "var_uid" field is set</summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public bool HasVarUid {
+    get { return varUid_ != null; }
+  }
+  /// <summary>Clears the value of the "var_uid" field</summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void ClearVarUid() {
+    varUid_ = null;
+  }
+
   /// <summary>Field number for the "var_token" field.</summary>
-  public const int VarTokenFieldNumber = 2;
+  public const int VarTokenFieldNumber = 3;
   private readonly static string VarTokenDefaultValue = "";
 
   private string varToken_;
@@ -333,7 +358,7 @@ public sealed partial class LOGIN_REQ : pb::IMessage<LOGIN_REQ> {
   }
 
   /// <summary>Field number for the "var_cam_name" field.</summary>
-  public const int VarCamNameFieldNumber = 3;
+  public const int VarCamNameFieldNumber = 4;
   private readonly static string VarCamNameDefaultValue = "";
 
   private string varCamName_;
@@ -356,7 +381,7 @@ public sealed partial class LOGIN_REQ : pb::IMessage<LOGIN_REQ> {
   }
 
   /// <summary>Field number for the "var_machine_id" field.</summary>
-  public const int VarMachineIdFieldNumber = 4;
+  public const int VarMachineIdFieldNumber = 5;
   private readonly static string VarMachineIdDefaultValue = "";
 
   private string varMachineId_;
@@ -392,6 +417,7 @@ public sealed partial class LOGIN_REQ : pb::IMessage<LOGIN_REQ> {
       return true;
     }
     if (Id != other.Id) return false;
+    if (VarUid != other.VarUid) return false;
     if (VarToken != other.VarToken) return false;
     if (VarCamName != other.VarCamName) return false;
     if (VarMachineId != other.VarMachineId) return false;
@@ -402,6 +428,7 @@ public sealed partial class LOGIN_REQ : pb::IMessage<LOGIN_REQ> {
   public override int GetHashCode() {
     int hash = 1;
     if (HasId) hash ^= Id.GetHashCode();
+    if (HasVarUid) hash ^= VarUid.GetHashCode();
     if (HasVarToken) hash ^= VarToken.GetHashCode();
     if (HasVarCamName) hash ^= VarCamName.GetHashCode();
     if (HasVarMachineId) hash ^= VarMachineId.GetHashCode();
@@ -422,16 +449,20 @@ public sealed partial class LOGIN_REQ : pb::IMessage<LOGIN_REQ> {
       output.WriteRawTag(8);
       output.WriteEnum((int) Id);
     }
-    if (HasVarToken) {
+    if (HasVarUid) {
       output.WriteRawTag(18);
+      output.WriteString(VarUid);
+    }
+    if (HasVarToken) {
+      output.WriteRawTag(26);
       output.WriteString(VarToken);
     }
     if (HasVarCamName) {
-      output.WriteRawTag(26);
+      output.WriteRawTag(34);
       output.WriteString(VarCamName);
     }
     if (HasVarMachineId) {
-      output.WriteRawTag(34);
+      output.WriteRawTag(42);
       output.WriteString(VarMachineId);
     }
     if (_unknownFields != null) {
@@ -444,6 +475,9 @@ public sealed partial class LOGIN_REQ : pb::IMessage<LOGIN_REQ> {
     int size = 0;
     if (HasId) {
       size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Id);
+    }
+    if (HasVarUid) {
+      size += 1 + pb::CodedOutputStream.ComputeStringSize(VarUid);
     }
     if (HasVarToken) {
       size += 1 + pb::CodedOutputStream.ComputeStringSize(VarToken);
@@ -467,6 +501,9 @@ public sealed partial class LOGIN_REQ : pb::IMessage<LOGIN_REQ> {
     }
     if (other.HasId) {
       Id = other.Id;
+    }
+    if (other.HasVarUid) {
+      VarUid = other.VarUid;
     }
     if (other.HasVarToken) {
       VarToken = other.VarToken;
@@ -493,14 +530,18 @@ public sealed partial class LOGIN_REQ : pb::IMessage<LOGIN_REQ> {
           break;
         }
         case 18: {
-          VarToken = input.ReadString();
+          VarUid = input.ReadString();
           break;
         }
         case 26: {
-          VarCamName = input.ReadString();
+          VarToken = input.ReadString();
           break;
         }
         case 34: {
+          VarCamName = input.ReadString();
+          break;
+        }
+        case 42: {
           VarMachineId = input.ReadString();
           break;
         }

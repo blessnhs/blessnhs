@@ -14,10 +14,11 @@ message LOGIN_REQ
 {
     optional PROTOCOL   id                  = 1 [default = ID_PKT_LOGIN_REQ ];
 
-    required string  var_token                = 2;
+    required string  var_uid                = 2;
+    required string  var_token              = 3;
 
-    required string     var_cam_name = 3;
-    required string     var_machine_id        = 4;	
+    required string     var_cam_name = 4;
+    required string     var_machine_id        = 5;	
 }
 
 message CREATE_ROOM_REQ

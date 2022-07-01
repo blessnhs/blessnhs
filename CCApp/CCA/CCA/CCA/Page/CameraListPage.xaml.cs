@@ -20,6 +20,8 @@ namespace CCA.Page
             public string Name { get; set; }
             public string Status { get; set; }
             public string MachineId { get; set; }
+
+            public string Content { get; set; }
         }
 
         public CameraListPage(RepeatedField<global::CameraInfo> recvCamList)
@@ -28,11 +30,17 @@ namespace CCA.Page
 
             var list = new List<Contact>();
 
+        
+
             foreach (var cam in recvCamList)
             {
-                string state = cam.VarPlayerId == 0 ? "off" : "on";
+                string state = cam.VarPlayerId == 0 ? "off line" : "on line";
 
-                list.Add(new Contact { Name = cam.VarMachineName, Status = state, MachineId = cam.VarMachineId });
+                list.Add(new Contact { Name = cam.VarMachineName, 
+                    Status = state, 
+                    MachineId = cam.VarMachineId,
+                    Content = "Name " + cam.VarMachineName + " "+ state
+                });
 
                 User.CamDic[cam.VarMachineId] = new RegCam() { MachineId = cam.VarMachineId, MachineModel = cam.VarMachineName,PlayerId = cam.VarPlayerId };
             }
@@ -40,6 +48,9 @@ namespace CCA.Page
             listView.ItemsSource = list;
             listView.ItemSelected += (object sender, SelectedItemChangedEventArgs e) =>
             {
+                if (listView.SelectedItem == null)
+                    return;
+
                 Contact item = (Contact)e.SelectedItem;
                 var MachinId = item.MachineId;
 
@@ -53,6 +64,8 @@ namespace CCA.Page
                         PopupNavigation.Instance.PushAsync(new CameraViewer());
                     }
                 }
+
+                listView.SelectedItem = null;
             };
         }
 

@@ -17,5 +17,17 @@ namespace CCA.Page
         {
             InitializeComponent();
         }
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+        }
+
+        protected override void OnDisappearing()
+        {
+            base.OnDisappearing();
+
+            NetProcess.SendStopStream();
+        }
     }
 }

@@ -56,7 +56,7 @@ namespace CCA
             if (notice_time < DateTime.Now)
             {
 
-                //SendMailList();
+                SendMailList();
 
                 //SendAlaram();
 
@@ -450,6 +450,20 @@ namespace CCA
 
             }
 
+        }
+
+        static public void SendStopStream()
+        {
+
+            if (client == null || client.socket == null || client.socket.Connected == false)
+                return;
+            {
+                STOP_STREAM_REQ message = new STOP_STREAM_REQ();
+                message.VarToPlayerId = 0;
+              
+
+                client.WritePacket((int)PROTOCOL.IdPktStopStreamReq, message.ToByteArray(), message.ToByteArray().Length);
+            }
         }
 
         static public void SendLogin(string uid,string token)

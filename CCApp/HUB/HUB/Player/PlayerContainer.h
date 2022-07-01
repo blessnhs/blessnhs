@@ -49,7 +49,8 @@ public:
 	template<class TYPE>
 	VOID BroadCast(TYPE MSG);
 
-	VOID BroadCast(DWORD MainId,DWORD SudbId,byte *Message,WORD Length);
+	template<class TYPE>
+	VOID BroadCast(TYPE MSG,INT64 INDEX);
 
 	VOID OnResponse(LPVOID Data);
 

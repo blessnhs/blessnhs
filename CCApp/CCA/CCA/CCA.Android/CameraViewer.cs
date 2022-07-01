@@ -111,7 +111,7 @@ namespace FullCameraApp.Droid
 
             /////////////////////////////////////////////////////////////////////////////////
             //중앙 스크린
-            AddImageView(metrics.WidthPixels, half_height * 2);
+            AddImageView(metrics.WidthPixels, metrics.HeightPixels);
 
             ///////////////////////////////////////////////////////////////////////////////
             textViewMain = new TextView(Context);

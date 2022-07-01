@@ -53,6 +53,8 @@ public:
 
 	VOID CAMERA_REGISTER(boost::shared_ptr<XDATA> pBuffer, boost::shared_ptr<GSClient> Client);
 
+	VOID STOP_STREAM(boost::shared_ptr<XDATA> pBuffer, boost::shared_ptr<GSClient> Client);
+
 protected:
 
 	DECLARE_MSG_MAP2(HubProcess)

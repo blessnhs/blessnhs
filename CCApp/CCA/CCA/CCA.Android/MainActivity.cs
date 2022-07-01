@@ -101,6 +101,8 @@ namespace CCA.Droid
         protected override void OnDestroy()
         {
             FirebaseAuth_.SignOut();
+
+            NetProcess.SendStopStream();
         }
 
         async void ProcessSignInResult(Intent data)

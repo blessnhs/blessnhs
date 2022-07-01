@@ -402,12 +402,33 @@ class LOGIN_REQ :
   // accessors -------------------------------------------------------
 
   enum : int {
-    kVarTokenFieldNumber = 2,
-    kVarCamNameFieldNumber = 3,
-    kVarMachineIdFieldNumber = 4,
+    kVarUidFieldNumber = 2,
+    kVarTokenFieldNumber = 3,
+    kVarCamNameFieldNumber = 4,
+    kVarMachineIdFieldNumber = 5,
     kIdFieldNumber = 1,
   };
-  // required string var_token = 2;
+  // required string var_uid = 2;
+  bool has_var_uid() const;
+  private:
+  bool _internal_has_var_uid() const;
+  public:
+  void clear_var_uid();
+  const std::string& var_uid() const;
+  void set_var_uid(const std::string& value);
+  void set_var_uid(std::string&& value);
+  void set_var_uid(const char* value);
+  void set_var_uid(const char* value, size_t size);
+  std::string* mutable_var_uid();
+  std::string* release_var_uid();
+  void set_allocated_var_uid(std::string* var_uid);
+  private:
+  const std::string& _internal_var_uid() const;
+  void _internal_set_var_uid(const std::string& value);
+  std::string* _internal_mutable_var_uid();
+  public:
+
+  // required string var_token = 3;
   bool has_var_token() const;
   private:
   bool _internal_has_var_token() const;
@@ -427,7 +448,7 @@ class LOGIN_REQ :
   std::string* _internal_mutable_var_token();
   public:
 
-  // required string var_cam_name = 3;
+  // required string var_cam_name = 4;
   bool has_var_cam_name() const;
   private:
   bool _internal_has_var_cam_name() const;
@@ -447,7 +468,7 @@ class LOGIN_REQ :
   std::string* _internal_mutable_var_cam_name();
   public:
 
-  // required string var_machine_id = 4;
+  // required string var_machine_id = 5;
   bool has_var_machine_id() const;
   private:
   bool _internal_has_var_machine_id() const;
@@ -490,6 +511,7 @@ class LOGIN_REQ :
   ::PROTOBUF_NAMESPACE_ID::internal::InternalMetadataWithArena _internal_metadata_;
   ::PROTOBUF_NAMESPACE_ID::internal::HasBits<1> _has_bits_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr var_uid_;
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr var_token_;
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr var_cam_name_;
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr var_machine_id_;
@@ -3898,7 +3920,7 @@ inline void VERSION_REQ::set_id(::PROTOCOL value) {
 
 // optional .PROTOCOL id = 1 [default = ID_PKT_LOGIN_REQ];
 inline bool LOGIN_REQ::_internal_has_id() const {
-  bool value = (_has_bits_[0] & 0x00000008u) != 0;
+  bool value = (_has_bits_[0] & 0x00000010u) != 0;
   return value;
 }
 inline bool LOGIN_REQ::has_id() const {
@@ -3906,7 +3928,7 @@ inline bool LOGIN_REQ::has_id() const {
 }
 inline void LOGIN_REQ::clear_id() {
   id_ = 2;
-  _has_bits_[0] &= ~0x00000008u;
+  _has_bits_[0] &= ~0x00000010u;
 }
 inline ::PROTOCOL LOGIN_REQ::_internal_id() const {
   return static_cast< ::PROTOCOL >(id_);
@@ -3917,7 +3939,7 @@ inline ::PROTOCOL LOGIN_REQ::id() const {
 }
 inline void LOGIN_REQ::_internal_set_id(::PROTOCOL value) {
   assert(::PROTOCOL_IsValid(value));
-  _has_bits_[0] |= 0x00000008u;
+  _has_bits_[0] |= 0x00000010u;
   id_ = value;
 }
 inline void LOGIN_REQ::set_id(::PROTOCOL value) {
@@ -3925,9 +3947,80 @@ inline void LOGIN_REQ::set_id(::PROTOCOL value) {
   // @@protoc_insertion_point(field_set:LOGIN_REQ.id)
 }
 
-// required string var_token = 2;
-inline bool LOGIN_REQ::_internal_has_var_token() const {
+// required string var_uid = 2;
+inline bool LOGIN_REQ::_internal_has_var_uid() const {
   bool value = (_has_bits_[0] & 0x00000001u) != 0;
+  return value;
+}
+inline bool LOGIN_REQ::has_var_uid() const {
+  return _internal_has_var_uid();
+}
+inline void LOGIN_REQ::clear_var_uid() {
+  var_uid_.ClearToEmptyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline const std::string& LOGIN_REQ::var_uid() const {
+  // @@protoc_insertion_point(field_get:LOGIN_REQ.var_uid)
+  return _internal_var_uid();
+}
+inline void LOGIN_REQ::set_var_uid(const std::string& value) {
+  _internal_set_var_uid(value);
+  // @@protoc_insertion_point(field_set:LOGIN_REQ.var_uid)
+}
+inline std::string* LOGIN_REQ::mutable_var_uid() {
+  // @@protoc_insertion_point(field_mutable:LOGIN_REQ.var_uid)
+  return _internal_mutable_var_uid();
+}
+inline const std::string& LOGIN_REQ::_internal_var_uid() const {
+  return var_uid_.GetNoArena();
+}
+inline void LOGIN_REQ::_internal_set_var_uid(const std::string& value) {
+  _has_bits_[0] |= 0x00000001u;
+  var_uid_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), value);
+}
+inline void LOGIN_REQ::set_var_uid(std::string&& value) {
+  _has_bits_[0] |= 0x00000001u;
+  var_uid_.SetNoArena(
+    &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:LOGIN_REQ.var_uid)
+}
+inline void LOGIN_REQ::set_var_uid(const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  _has_bits_[0] |= 0x00000001u;
+  var_uid_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:LOGIN_REQ.var_uid)
+}
+inline void LOGIN_REQ::set_var_uid(const char* value, size_t size) {
+  _has_bits_[0] |= 0x00000001u;
+  var_uid_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:LOGIN_REQ.var_uid)
+}
+inline std::string* LOGIN_REQ::_internal_mutable_var_uid() {
+  _has_bits_[0] |= 0x00000001u;
+  return var_uid_.MutableNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline std::string* LOGIN_REQ::release_var_uid() {
+  // @@protoc_insertion_point(field_release:LOGIN_REQ.var_uid)
+  if (!_internal_has_var_uid()) {
+    return nullptr;
+  }
+  _has_bits_[0] &= ~0x00000001u;
+  return var_uid_.ReleaseNonDefaultNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline void LOGIN_REQ::set_allocated_var_uid(std::string* var_uid) {
+  if (var_uid != nullptr) {
+    _has_bits_[0] |= 0x00000001u;
+  } else {
+    _has_bits_[0] &= ~0x00000001u;
+  }
+  var_uid_.SetAllocatedNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), var_uid);
+  // @@protoc_insertion_point(field_set_allocated:LOGIN_REQ.var_uid)
+}
+
+// required string var_token = 3;
+inline bool LOGIN_REQ::_internal_has_var_token() const {
+  bool value = (_has_bits_[0] & 0x00000002u) != 0;
   return value;
 }
 inline bool LOGIN_REQ::has_var_token() const {
@@ -3935,7 +4028,7 @@ inline bool LOGIN_REQ::has_var_token() const {
 }
 inline void LOGIN_REQ::clear_var_token() {
   var_token_.ClearToEmptyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
-  _has_bits_[0] &= ~0x00000001u;
+  _has_bits_[0] &= ~0x00000002u;
 }
 inline const std::string& LOGIN_REQ::var_token() const {
   // @@protoc_insertion_point(field_get:LOGIN_REQ.var_token)
@@ -3953,29 +4046,29 @@ inline const std::string& LOGIN_REQ::_internal_var_token() const {
   return var_token_.GetNoArena();
 }
 inline void LOGIN_REQ::_internal_set_var_token(const std::string& value) {
-  _has_bits_[0] |= 0x00000001u;
+  _has_bits_[0] |= 0x00000002u;
   var_token_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), value);
 }
 inline void LOGIN_REQ::set_var_token(std::string&& value) {
-  _has_bits_[0] |= 0x00000001u;
+  _has_bits_[0] |= 0x00000002u;
   var_token_.SetNoArena(
     &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
   // @@protoc_insertion_point(field_set_rvalue:LOGIN_REQ.var_token)
 }
 inline void LOGIN_REQ::set_var_token(const char* value) {
   GOOGLE_DCHECK(value != nullptr);
-  _has_bits_[0] |= 0x00000001u;
+  _has_bits_[0] |= 0x00000002u;
   var_token_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
   // @@protoc_insertion_point(field_set_char:LOGIN_REQ.var_token)
 }
 inline void LOGIN_REQ::set_var_token(const char* value, size_t size) {
-  _has_bits_[0] |= 0x00000001u;
+  _has_bits_[0] |= 0x00000002u;
   var_token_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
   // @@protoc_insertion_point(field_set_pointer:LOGIN_REQ.var_token)
 }
 inline std::string* LOGIN_REQ::_internal_mutable_var_token() {
-  _has_bits_[0] |= 0x00000001u;
+  _has_bits_[0] |= 0x00000002u;
   return var_token_.MutableNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
 }
 inline std::string* LOGIN_REQ::release_var_token() {
@@ -3983,22 +4076,22 @@ inline std::string* LOGIN_REQ::release_var_token() {
   if (!_internal_has_var_token()) {
     return nullptr;
   }
-  _has_bits_[0] &= ~0x00000001u;
+  _has_bits_[0] &= ~0x00000002u;
   return var_token_.ReleaseNonDefaultNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
 }
 inline void LOGIN_REQ::set_allocated_var_token(std::string* var_token) {
   if (var_token != nullptr) {
-    _has_bits_[0] |= 0x00000001u;
+    _has_bits_[0] |= 0x00000002u;
   } else {
-    _has_bits_[0] &= ~0x00000001u;
+    _has_bits_[0] &= ~0x00000002u;
   }
   var_token_.SetAllocatedNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), var_token);
   // @@protoc_insertion_point(field_set_allocated:LOGIN_REQ.var_token)
 }
 
-// required string var_cam_name = 3;
+// required string var_cam_name = 4;
 inline bool LOGIN_REQ::_internal_has_var_cam_name() const {
-  bool value = (_has_bits_[0] & 0x00000002u) != 0;
+  bool value = (_has_bits_[0] & 0x00000004u) != 0;
   return value;
 }
 inline bool LOGIN_REQ::has_var_cam_name() const {
@@ -4006,7 +4099,7 @@ inline bool LOGIN_REQ::has_var_cam_name() const {
 }
 inline void LOGIN_REQ::clear_var_cam_name() {
   var_cam_name_.ClearToEmptyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
-  _has_bits_[0] &= ~0x00000002u;
+  _has_bits_[0] &= ~0x00000004u;
 }
 inline const std::string& LOGIN_REQ::var_cam_name() const {
   // @@protoc_insertion_point(field_get:LOGIN_REQ.var_cam_name)
@@ -4024,29 +4117,29 @@ inline const std::string& LOGIN_REQ::_internal_var_cam_name() const {
   return var_cam_name_.GetNoArena();
 }
 inline void LOGIN_REQ::_internal_set_var_cam_name(const std::string& value) {
-  _has_bits_[0] |= 0x00000002u;
+  _has_bits_[0] |= 0x00000004u;
   var_cam_name_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), value);
 }
 inline void LOGIN_REQ::set_var_cam_name(std::string&& value) {
-  _has_bits_[0] |= 0x00000002u;
+  _has_bits_[0] |= 0x00000004u;
   var_cam_name_.SetNoArena(
     &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
   // @@protoc_insertion_point(field_set_rvalue:LOGIN_REQ.var_cam_name)
 }
 inline void LOGIN_REQ::set_var_cam_name(const char* value) {
   GOOGLE_DCHECK(value != nullptr);
-  _has_bits_[0] |= 0x00000002u;
+  _has_bits_[0] |= 0x00000004u;
   var_cam_name_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
   // @@protoc_insertion_point(field_set_char:LOGIN_REQ.var_cam_name)
 }
 inline void LOGIN_REQ::set_var_cam_name(const char* value, size_t size) {
-  _has_bits_[0] |= 0x00000002u;
+  _has_bits_[0] |= 0x00000004u;
   var_cam_name_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
   // @@protoc_insertion_point(field_set_pointer:LOGIN_REQ.var_cam_name)
 }
 inline std::string* LOGIN_REQ::_internal_mutable_var_cam_name() {
-  _has_bits_[0] |= 0x00000002u;
+  _has_bits_[0] |= 0x00000004u;
   return var_cam_name_.MutableNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
 }
 inline std::string* LOGIN_REQ::release_var_cam_name() {
@@ -4054,22 +4147,22 @@ inline std::string* LOGIN_REQ::release_var_cam_name() {
   if (!_internal_has_var_cam_name()) {
     return nullptr;
   }
-  _has_bits_[0] &= ~0x00000002u;
+  _has_bits_[0] &= ~0x00000004u;
   return var_cam_name_.ReleaseNonDefaultNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
 }
 inline void LOGIN_REQ::set_allocated_var_cam_name(std::string* var_cam_name) {
   if (var_cam_name != nullptr) {
-    _has_bits_[0] |= 0x00000002u;
+    _has_bits_[0] |= 0x00000004u;
   } else {
-    _has_bits_[0] &= ~0x00000002u;
+    _has_bits_[0] &= ~0x00000004u;
   }
   var_cam_name_.SetAllocatedNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), var_cam_name);
   // @@protoc_insertion_point(field_set_allocated:LOGIN_REQ.var_cam_name)
 }
 
-// required string var_machine_id = 4;
+// required string var_machine_id = 5;
 inline bool LOGIN_REQ::_internal_has_var_machine_id() const {
-  bool value = (_has_bits_[0] & 0x00000004u) != 0;
+  bool value = (_has_bits_[0] & 0x00000008u) != 0;
   return value;
 }
 inline bool LOGIN_REQ::has_var_machine_id() const {
@@ -4077,7 +4170,7 @@ inline bool LOGIN_REQ::has_var_machine_id() const {
 }
 inline void LOGIN_REQ::clear_var_machine_id() {
   var_machine_id_.ClearToEmptyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
-  _has_bits_[0] &= ~0x00000004u;
+  _has_bits_[0] &= ~0x00000008u;
 }
 inline const std::string& LOGIN_REQ::var_machine_id() const {
   // @@protoc_insertion_point(field_get:LOGIN_REQ.var_machine_id)
@@ -4095,29 +4188,29 @@ inline const std::string& LOGIN_REQ::_internal_var_machine_id() const {
   return var_machine_id_.GetNoArena();
 }
 inline void LOGIN_REQ::_internal_set_var_machine_id(const std::string& value) {
-  _has_bits_[0] |= 0x00000004u;
+  _has_bits_[0] |= 0x00000008u;
   var_machine_id_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), value);
 }
 inline void LOGIN_REQ::set_var_machine_id(std::string&& value) {
-  _has_bits_[0] |= 0x00000004u;
+  _has_bits_[0] |= 0x00000008u;
   var_machine_id_.SetNoArena(
     &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
   // @@protoc_insertion_point(field_set_rvalue:LOGIN_REQ.var_machine_id)
 }
 inline void LOGIN_REQ::set_var_machine_id(const char* value) {
   GOOGLE_DCHECK(value != nullptr);
-  _has_bits_[0] |= 0x00000004u;
+  _has_bits_[0] |= 0x00000008u;
   var_machine_id_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
   // @@protoc_insertion_point(field_set_char:LOGIN_REQ.var_machine_id)
 }
 inline void LOGIN_REQ::set_var_machine_id(const char* value, size_t size) {
-  _has_bits_[0] |= 0x00000004u;
+  _has_bits_[0] |= 0x00000008u;
   var_machine_id_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
   // @@protoc_insertion_point(field_set_pointer:LOGIN_REQ.var_machine_id)
 }
 inline std::string* LOGIN_REQ::_internal_mutable_var_machine_id() {
-  _has_bits_[0] |= 0x00000004u;
+  _has_bits_[0] |= 0x00000008u;
   return var_machine_id_.MutableNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
 }
 inline std::string* LOGIN_REQ::release_var_machine_id() {
@@ -4125,14 +4218,14 @@ inline std::string* LOGIN_REQ::release_var_machine_id() {
   if (!_internal_has_var_machine_id()) {
     return nullptr;
   }
-  _has_bits_[0] &= ~0x00000004u;
+  _has_bits_[0] &= ~0x00000008u;
   return var_machine_id_.ReleaseNonDefaultNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
 }
 inline void LOGIN_REQ::set_allocated_var_machine_id(std::string* var_machine_id) {
   if (var_machine_id != nullptr) {
-    _has_bits_[0] |= 0x00000004u;
+    _has_bits_[0] |= 0x00000008u;
   } else {
-    _has_bits_[0] &= ~0x00000004u;
+    _has_bits_[0] &= ~0x00000008u;
   }
   var_machine_id_.SetAllocatedNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), var_machine_id);
   // @@protoc_insertion_point(field_set_allocated:LOGIN_REQ.var_machine_id)
