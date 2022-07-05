@@ -225,7 +225,18 @@ namespace CCA
                                 res = CAMERA_WAKE_UP_RES.Parser.ParseFrom(data.Data);
 
                                 TargetPlayerId.Add(res.VarToPlayerId);
-                               
+
+                                if (PopupNavigation.Instance.PopupStack.Count == 0)
+                                    PopupNavigation.Instance.PushAsync(new CameraPage());
+                                else
+                                {
+                                    if(PopupNavigation.Instance.PopupStack[0].GetType() != typeof(CameraPage))
+                                    {
+                                        PopupNavigation.Instance.PopAsync();
+                                        PopupNavigation.Instance.PushAsync(new CameraPage());
+                                    }
+                                }
+
                             }
                             break;
 

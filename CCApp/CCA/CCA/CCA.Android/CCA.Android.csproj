@@ -39,6 +39,7 @@
     <BundleAssemblies>false</BundleAssemblies>
     <MandroidI18n>CJK</MandroidI18n>
     <MonoDroidExtraArgs>MONO_GC_PARAMS=bridge-implementation=new,nursery-size=128‌​m,soft-heap-limit=51‌​2m</MonoDroidExtraArgs>
+    <AndroidEnableMultiDex>true</AndroidEnableMultiDex>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -75,6 +76,9 @@
     </PackageReference>
     <PackageReference Include="Xamarin.Forms" Version="5.0.0.2478" />
     <PackageReference Include="Xamarin.Essentials" Version="1.6.1" />
+    <PackageReference Include="Xamarin.GooglePlayServices.Ads">
+      <Version>71.1720.4</Version>
+    </PackageReference>
     <PackageReference Include="Xamarin.GooglePlayServices.Auth">
       <Version>71.1600.1</Version>
     </PackageReference>
@@ -83,6 +87,9 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ads_mob\BannerAd_ViewRenderer.cs" />
+    <Compile Include="ads_mob\InterstitiaAd_lViewRenderer.cs" />
+    <Compile Include="ads_mob\RewardVideoAd_ViewRenderer.cs" />
     <Compile Include="AudioManager.cs" />
     <Compile Include="CameraRenderer.cs" />
     <Compile Include="CameraViewer.cs" />

@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:AdFire="clr-namespace:CCA.CustomAdMobView"
              x:Class="CCA.MainPage">
     <Grid x:Name="main_grid" Padding="10,20,20,20">
         <Grid.RowDefinitions BackgroundColor="White">
@@ -16,10 +16,9 @@
         </Grid.ColumnDefinitions>
 
 
-        <Frame BorderColor="Gray"  CornerRadius="5"  Grid.Row="0" Grid.ColumnSpan="2"  BackgroundColor="White" Padding="0,0,0,0">
-            <Image x:Name="banner_top_image" Aspect="Fill" Source="Antioch.Resource.Image.banner.png"/>
+        <Frame BorderColor="Gray" Grid.Column="0" Grid.Row="0"  Grid.ColumnSpan="2" Padding="0,5,5,0">
+            <AdFire:CtBannerView eBannerSize="Standardbanner"   BackgroundColor="White" x:Name="banner"/>
         </Frame>
-
 
         <Frame BorderColor="Gray" Grid.Row="1" Grid.Column="0" BackgroundColor="#D77186">
             <StackLayout x:Name="Notice">
@@ -82,9 +81,8 @@
             </StackLayout>
         </Frame>
 
-        <Frame BorderColor="Gray"  CornerRadius="5"  Grid.Row="4" Grid.ColumnSpan="2"  BackgroundColor="White" Padding="0,0,0,0">
-            <Image x:Name="banner_bottom_image" Aspect="Fill" Source="Antioch.Resource.Image.banner.png"/>
+        <Frame BorderColor="Gray" Grid.Column="0" Grid.Row="4"  Grid.ColumnSpan="2" Padding="0,5,5,0">
+            <AdFire:CtBannerView eBannerSize="Standardbanner"   BackgroundColor="White" x:Name="banner2"/>
         </Frame>
-
     </Grid>
 </ContentPage>

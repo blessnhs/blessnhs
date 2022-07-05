@@ -10,16 +10,25 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Essentials;
 using CCA.Page;
+using CCA.CustomAdMobView;
 
 namespace CCA
 {
     public partial class MainPage : ContentPage
     {
+        //전면광고
+        iAd_IterstitialView iIterstitia;
+
+        //보상광고
+        iAd_RewardVideoView rewardVideo;
         public MainPage()
         {
             InitializeComponent();
 
             NetworkProcess();
+
+            iIterstitia = DependencyService.Get<iAd_IterstitialView>();
+            rewardVideo = DependencyService.Get<iAd_RewardVideoView>();
         }
 
         protected override bool OnBackButtonPressed()
@@ -48,13 +57,27 @@ namespace CCA
                         break;
                     case "MyCamera":
                         {
+                            rewardVideo.ShowAd();
                             NetProcess.SendReqCameraList();
+                        }
+                        break;
+                    case "Qna":
+                        {
+                            iIterstitia.ShowAd();
+                            PopupNavigation.Instance.PushAsync(new QnAPage());
+                         
+                        }
+                        break;
+                    case "Setting":
+                        {
+                            PopupNavigation.Instance.PushAsync(new SettingPage());
                         }
                         break;
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+               string str =  ex.Message;
 
             }
         }

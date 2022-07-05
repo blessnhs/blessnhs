@@ -30,6 +30,15 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Page\QnAPage.xaml.cs">
+      <DependentUpon>QnAPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Page\SettingPage.xaml.cs">
+      <DependentUpon>SettingPage.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
     <EmbeddedResource Update="Page\CameraListPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>

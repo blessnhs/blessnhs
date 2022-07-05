@@ -65,7 +65,8 @@ template<template<class T> class CreationPolicy> bool PlayerContainer<CreationPo
 
 template<template<class T> class CreationPolicy> bool PlayerContainer<CreationPolicy>::Add(PlayerPtr &pObj)
 {
-	pObj->SetId(GetIncId());
+	DWORD id = GetIncId();
+	pObj->SetId(id);
 
 	m_PlayerMap[pObj->GetId()] = pObj;
 

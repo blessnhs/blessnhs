@@ -20,6 +20,8 @@ using Android.Gms.Auth.Api.SignIn;
 using Android.Gms.Auth.Api;
 using Android.Content;
 using Android.Gms.Common.Api.Internal;
+using Rg.Plugins.Popup.Services;
+using Android.Gms.Ads;
 
 namespace CCA.Droid
 {
@@ -42,6 +44,8 @@ namespace CCA.Droid
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
 
             Rg.Plugins.Popup.Popup.Init(this);
+
+            MobileAds.Initialize(ApplicationContext, /*"YOUR ANDROID APP ID HERE"*/"ca-app-pub-9541028236702321~7685624496");
 
             UnlockScreen();
 
@@ -95,6 +99,18 @@ namespace CCA.Droid
                 case SignInRequestCode:
                     ProcessSignInResult(data);
                     break;
+            }
+        }
+
+        public async override void OnBackPressed()
+        {
+            if (Rg.Plugins.Popup.Popup.SendBackPressed(base.OnBackPressed))
+            {
+                await PopupNavigation.Instance.PopAsync();
+            }
+            else
+            {
+                // Do something if there are not any pages in the `PopupStack`
             }
         }
 

@@ -22,32 +22,23 @@
             ScaleOut="0.7" />
     </rg:PopupPage.Animation>
 
-    <Frame
-                x:Name="FrameContainer"
-                Margin="15"
-                BackgroundColor="White"
-                HorizontalOptions="Center">
-        <ScrollView x:Name="scrollView">
+    <StackLayout x:Name="stacklayout" VerticalOptions="Center" HorizontalOptions="Center" BackgroundColor="white">
+        <ListView x:Name="listView">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <TextCell Text="{Binding Content}" Detail="{Binding Status}" TextColor="Black"/>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
 
-            <StackLayout x:Name="stacklayout">
-                <ListView x:Name="listView">
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <TextCell Text="{Binding Content}" Detail="{Binding Status}" TextColor="Black"/>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
+        <Button
+               x:Name="closebtn"
+               Margin="10,5"
+               BackgroundColor="#7dbbe6"
+               Clicked="OnClose"
+               HorizontalOptions="Fill"
+               Text="Close">
 
-                <Button
-                        x:Name="closebtn"
-                        Margin="10,5"
-                        BackgroundColor="#7dbbe6"
-                        Clicked="OnClose"
-                        HorizontalOptions="Fill"
-                        Text="Close">
-
-                </Button>
-            </StackLayout>
-        </ScrollView>
-    </Frame>
+        </Button>
+    </StackLayout>
 </rg1:PopupPage>
