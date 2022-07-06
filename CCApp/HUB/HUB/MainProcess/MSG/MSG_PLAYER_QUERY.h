@@ -692,8 +692,8 @@ class MSG_PLAYER_QUERY<##class_name>:public IMESSAGE	\
 
 				flatformid.assign(http_out[1].begin(), http_out[1].end());
 				email.assign(http_out[2].begin(), http_out[2].end());
-				picture_url.assign(http_out[4].begin(), http_out[4].end());
-				locale.assign(http_out[5].begin(), http_out[5].end());
+				picture_url.assign(http_out[3].begin(), http_out[3].end());
+				locale.assign(http_out[4].begin(), http_out[4].end());
 
 				int nRet = pProcess->ProcedureUserLogin(flatformid, "", authentickey, score, Index, level);
 

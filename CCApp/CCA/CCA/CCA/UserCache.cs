@@ -13,7 +13,20 @@ namespace CCA
 
     public class User
     {
-        static public UserCacheData CacheData = new UserCacheData();
+
+        static public void Clear()
+        {
+            LoginSuccess = false;
+            CacheData = new UserCacheData();
+            RoomIdList.Clear();
+
+            PhotoPath = null;
+            Uid = null;
+            Token = null;
+            NickName = null;
+        }
+
+       static public UserCacheData CacheData = new UserCacheData();
 
         static public bool LoginSuccess = false;
 

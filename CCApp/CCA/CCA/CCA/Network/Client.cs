@@ -25,6 +25,10 @@ namespace CCA
 
     public class Client
     {
+        public void ClearSocket()
+        {
+            socket.Close();
+        }
 
         public Socket socket = null;
 
@@ -282,6 +286,9 @@ namespace CCA
 
         public bool WritePacket(int protocol, byte[] packet, int payloadsize)
         {
+            if (socket == null || socket.Connected == false)
+                return false;
+
             lock (this)
             {
                 if (payloadsize > CheckCompressSize)

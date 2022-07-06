@@ -18,5 +18,7 @@ namespace DependencyHelper
 
         void Notification(string message);
 
+        void Logout();
+
     }
 }

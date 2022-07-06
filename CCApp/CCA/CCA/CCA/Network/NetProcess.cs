@@ -49,8 +49,6 @@ namespace CCA
                 client.StartClient(ip, 20000);
 
                 check_time = DateTime.Now.AddSeconds(5);
-
-
             }
 
             if (notice_time < DateTime.Now)

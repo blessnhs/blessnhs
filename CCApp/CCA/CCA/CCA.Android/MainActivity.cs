@@ -22,6 +22,9 @@ using Android.Content;
 using Android.Gms.Common.Api.Internal;
 using Rg.Plugins.Popup.Services;
 using Android.Gms.Ads;
+using System.Threading.Tasks;
+using Android.Gms.Common;
+using Android.Gms.Auth;
 
 namespace CCA.Droid
 {
@@ -29,12 +32,13 @@ namespace CCA.Droid
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {
         public static Context context;
+        public static MainActivity activity;
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
 
             context = this;
-
+            activity = this;
             Window.AddFlags(WindowManagerFlags.KeepScreenOn |
                  WindowManagerFlags.DismissKeyguard |
                  WindowManagerFlags.ShowWhenLocked |
@@ -71,22 +75,35 @@ namespace CCA.Droid
             GoogleSignInOptions signInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DefaultSignIn)
                 .RequestIdToken("926850429943-envuu4ga9i133mbaq5hd77g1b9bdcrj5.apps.googleusercontent.com")
                 .RequestEmail()
+                .RequestId()
                 .Build();
             GoogleApiClient = new GoogleApiClient.Builder(this)
-        //        .EnableAutoManage(this, null)
                 .AddApi(Auth.GOOGLE_SIGN_IN_API, signInOptions)
                 .Build();
 
+
+            GoogleApiClient.Connect();
+
             GoogleSignIn();
             LoadApplication(new App());
-
         }
-
 
         const int SignInRequestCode = 9001;
 
         public void GoogleSignIn()
         {
+            Intent signInIntent = Auth.GoogleSignInApi.GetSignInIntent(GoogleApiClient);
+            StartActivityForResult(signInIntent, SignInRequestCode);
+        }
+
+        public void GoolgeLogout()
+        {
+            NetProcess.client.ClearSocket();
+
+            User.Clear();
+
+            FirebaseAuth_.SignOut();
+            Auth.GoogleSignInApi.SignOut(GoogleApiClient);
             Intent signInIntent = Auth.GoogleSignInApi.GetSignInIntent(GoogleApiClient);
             StartActivityForResult(signInIntent, SignInRequestCode);
         }
@@ -102,6 +119,11 @@ namespace CCA.Droid
             }
         }
 
+        public override void OnActivityReenter(int resultCode, Intent data)
+        {
+            base.OnActivityReenter(resultCode, data);
+        }
+        
         public async override void OnBackPressed()
         {
             if (Rg.Plugins.Popup.Popup.SendBackPressed(base.OnBackPressed))
@@ -116,9 +138,11 @@ namespace CCA.Droid
 
         protected override void OnDestroy()
         {
+            base.OnDestroy();
+
             FirebaseAuth_.SignOut();
 
-            NetProcess.SendStopStream();
+ //           NetProcess.SendStopStream();
         }
 
         async void ProcessSignInResult(Intent data)

@@ -12,6 +12,7 @@ using Android.Content;
 using Android.Support.V4.App;
 using AndroidApp = Android.App.Application;
 using Android.Runtime;
+using CCA.Droid;
 
 [assembly: Xamarin.Forms.Dependency(typeof(Method_Android))]
 
@@ -34,9 +35,12 @@ namespace DependencyHelper.Droid
         }
         public string MachineName()
         {
-           
-
             return "";
+        }
+
+        public void Logout()
+        {
+            MainActivity.activity.GoolgeLogout();
         }
 
         public void Notification(string message)
