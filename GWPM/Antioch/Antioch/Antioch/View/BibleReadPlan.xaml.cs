@@ -65,6 +65,8 @@ namespace Antioch.View
             {
                 ReadChapterCount.Text = plan.Count.ToString();
 
+                BeginChapter.Text = plan.BeginChapter.ToString();
+
                 var search = LoadInfo.Find(e => e.Name == plan.BibleName);
                 if (search != null)
                 {
@@ -118,6 +120,10 @@ namespace Antioch.View
             }
             else
             {
+                var searchBible = BibleInfo.List.Find(e => e.Name == SelBibleName);
+                if (searchBible == null)
+                    return;
+
                 var CountText = ReadChapterCount.Text;
 
                 if (CountText == null)
@@ -137,10 +143,28 @@ namespace Antioch.View
                     return;
                 }
 
+
+                var ChapterStart = BeginChapter.Text;
+                if (Helper.IsNumber(ChapterStart) == false)
+                {
+                    await App.Current.MainPage.DisplayAlert("", "Please write begin chapter number ", "OK");
+                    return;
+                }
+
+                int Chapter_Start = Convert.ToInt16(ChapterStart);
+
+                if (searchBible.MaxChapterSize < Chapter_Start || 0 >= Chapter_Start)
+                {
+                    await App.Current.MainPage.DisplayAlert("", "Please write chapter number Range.", "OK");
+                    return;
+                }
+
+                int Chapter  = Convert.ToInt16(CountText);
+
                 bool answer = await App.Current.MainPage.DisplayAlert("info", SelBibleName + " from " + "each day " + CountText  , "yes", "no");
                 if (answer == true)
                 {
-                    SQLLiteDB.InsertBibleReadPlan(StartTime.Date, SelBibleName, Count);
+                    SQLLiteDB.InsertBibleReadPlan(StartTime.Date, SelBibleName, Count, Chapter_Start);
 
                     ShowInfomation(StartTime.Date, Count);
                 }

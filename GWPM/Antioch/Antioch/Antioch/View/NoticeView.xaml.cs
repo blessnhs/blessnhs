@@ -127,13 +127,16 @@ namespace Antioch.View
                 int chapter = BibleInfo.GetChapterSize(bible.Name);
 
                 int currChapter = DiffDay * data.Count;
+                currChapter += data.BeginChapter;
+
+
                 accChapterSize += chapter;
 
 
-                if (currChapter + 1 <= accChapterSize)
+                if (currChapter <= accChapterSize)
                 {
                     readpos.begin_bibleName = bible.Name;
-                    readpos.begin_chapter = Math.Abs((accChapterSize - currChapter) - chapter) + 1;
+                    readpos.begin_chapter = Math.Abs((accChapterSize - currChapter) - chapter);
 
                     string outbible = "";
                     int outchapter = 1;

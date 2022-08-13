@@ -33,15 +33,21 @@
                         </StackLayout>
                     </Frame>
 
-
                     <Frame BorderColor="Gray" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="1">
+                        <StackLayout VerticalOptions="StartAndExpand">
+                            <Label Text="Begin Chapter" HorizontalOptions="Center" HorizontalTextAlignment="Center"  />
+                            <Entry x:Name="BeginChapter" Placeholder="1" />
+                        </StackLayout>
+                    </Frame>
+                    
+                    <Frame BorderColor="Gray" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="1">
                         <StackLayout VerticalOptions="StartAndExpand">
                             <Label Text="Chapter Count " HorizontalOptions="Center" HorizontalTextAlignment="Center"  />
                             <Entry x:Name="ReadChapterCount" Placeholder="3" />
                         </StackLayout>
                     </Frame>
 
-                    <Frame BorderColor="Gray" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="1">
+                    <Frame BorderColor="Gray" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="3">
 
                         <Button x:Name="ScheduleSaveButton" Text="Start"  Clicked="OnButtonClicked" BackgroundColor="White"/>
 
@@ -57,7 +63,7 @@
                         </ListView>
                     </Frame>
 
-                    <Frame BorderColor="Gray" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2">
+                    <Frame BorderColor="Gray" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2">
                         <Label  x:Name="Info" Text="Total Chapter  " HorizontalOptions="Start" HorizontalTextAlignment="Start"  />
                     </Frame>
 

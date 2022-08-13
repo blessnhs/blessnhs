@@ -1,0 +1,69 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<rg1:PopupPage
+    xmlns:rg1="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+    x:Class="CCA.Page.SettingPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:rg="http://rotorgames.com">
+    <rg:PopupPage.Animation>
+        <rg:ScaleAnimation
+            DurationIn="700"
+            EasingIn="BounceOut"
+            PositionIn="Bottom"
+            PositionOut="Center"
+            ScaleIn="1"
+            ScaleOut="0.9" />
+    </rg:PopupPage.Animation>
+    <StackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" BackgroundColor="White">
+        <Grid>
+            <Grid.RowDefinitions BackgroundColor="White">
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*" />
+                <ColumnDefinition Width="4*" />
+                <ColumnDefinition Width="4*" />
+            </Grid.ColumnDefinitions>
+
+            <!--1번로우-->
+            <Frame BorderColor="Gray" Grid.Row="0" Grid.Column="0" Grid.RowSpan="2">
+                <Image x:Name="ImagePR" Source="{Binding ImageUrl}"/>
+            </Frame>
+            <Frame BorderColor="Gray" Grid.Row="0" Grid.Column="1">
+                <Label  x:Name="Name" Text="{Binding Name}" />
+            </Frame>
+            <Frame BorderColor="Gray" Grid.Row="0" Grid.Column="2">
+                <Label  x:Name="State" Text="{Binding State}"/>
+            </Frame>
+            
+
+            <!--2번로우-->
+            <Frame BorderColor="Gray" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2">
+                <Label  x:Name="EMail" Text="{Binding EMail}"/>
+            </Frame>
+            
+
+            <!--3번로우-->
+            <Frame BorderColor="Gray" Grid.Row="2" Grid.Column="0">
+                <Label  x:Name="Version" Text="{Binding Version}"/>
+            </Frame>
+            <Frame BorderColor="Gray" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" >
+                <Label  x:Name="UID" Text="{Binding UID}"/>
+            </Frame>
+
+            <!--4번로우-->
+            <Frame BorderColor="Gray" Grid.Row="3" Grid.Column="1">
+                <Button  x:Name="logout" Text="계정변경" Clicked="OnLogoutButtonClicked" Style="{StaticResource buttonStyle4}"/>
+               
+            </Frame>
+            <Frame BorderColor="Gray" Grid.Row="3" Grid.Column="2">
+                <Button  x:Name="close" Text="닫기" Clicked="OnCloseButtonClicked" Style="{StaticResource buttonStyle4}"/>
+            </Frame>
+
+        </Grid>
+
+    </StackLayout>
+</rg1:PopupPage>

@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<rg1:PopupPage
+    xmlns:rg1="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+    x:Class="CCA.Page.QnAPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:rg="http://rotorgames.com">
+    <rg:PopupPage.Animation>
+        <rg:ScaleAnimation
+            DurationIn="700"
+            EasingIn="BounceOut"
+            PositionIn="Bottom"
+            PositionOut="Center"
+            ScaleIn="1"
+            ScaleOut="0.9" />
+    </rg:PopupPage.Animation>
+    <Grid x:Name="mainGrid" BackgroundColor="AliceBlue" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="8*" />
+            <RowDefinition Height="1*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="3*" />
+            <ColumnDefinition Width="3*" />
+            <ColumnDefinition Width="3*" />
+        </Grid.ColumnDefinitions>
+
+        <Label  x:Name="QNSLabel" Text="Any Question" FontSize="Large" TextColor="Black" Grid.ColumnSpan="3" VerticalOptions="Center" HorizontalOptions="Center" Grid.Row="0" Grid.Column="0"/>
+
+        <Editor x:Name="Contents" Text=""  BackgroundColor="Gray"  Grid.ColumnSpan="3" Grid.Row="1" Grid.Column="0" />
+
+        <Button  x:Name="sendbutton" Text="Send" Clicked="OnSendButtonClicked"  Grid.Row="2" Grid.Column="0" Style="{StaticResource buttonStyle2}" Padding="20,20,20,20"/>
+        <Button  x:Name="closebutton" Text="Close" Clicked="OnCloseButtonClicked"  Grid.Row="2" Grid.Column="2" Style="{StaticResource buttonStyle2}" Padding="20,20,20,20"/>
+      
+    </Grid>
+
+</rg1:PopupPage>

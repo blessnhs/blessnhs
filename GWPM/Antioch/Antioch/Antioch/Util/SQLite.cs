@@ -83,6 +83,8 @@ namespace Antioch
 
         public int Count { get; set; }
 
+        public int BeginChapter { get; set; }
+
         public DateTime StartTime { get; set; }
     }
 
@@ -189,13 +191,14 @@ namespace Antioch
             return list;
         }
 
-        static public bool InsertBibleReadPlan(DateTime Time, string Name, int Count)
+        static public bool InsertBibleReadPlan(DateTime Time, string Name, int Count,int BeginChapter)
         {
             BibleReadPlan Data = new BibleReadPlan();
             Data.Id = 1;
             Data.StartTime = Time;
             Data.BibleName = Name;
             Data.Count = Count;
+            Data.BeginChapter = BeginChapter;
 
             string DBPath = GetPath();
 
