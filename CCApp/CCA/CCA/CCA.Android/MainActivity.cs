@@ -25,6 +25,7 @@ using Android.Gms.Ads;
 using System.Threading.Tasks;
 using Android.Gms.Common;
 using Android.Gms.Auth;
+using Plugin.InAppBilling;
 
 namespace CCA.Droid
 {
@@ -35,6 +36,7 @@ namespace CCA.Droid
         public static MainActivity activity;
         protected override void OnCreate(Bundle savedInstanceState)
         {
+            
             base.OnCreate(savedInstanceState);
 
             context = this;
@@ -111,6 +113,7 @@ namespace CCA.Droid
         protected override void OnActivityResult(int requestCode, Result resultCode, Intent data)
         {
             base.OnActivityResult(requestCode, resultCode, data);
+
             switch (requestCode)
             {
                 case SignInRequestCode:
@@ -153,11 +156,12 @@ namespace CCA.Droid
                 AuthCredential credential = GoogleAuthProvider.GetCredential(signInResult.SignInAccount.IdToken, null);
                 try
                 {
-                    User.PhotoPath = signInResult.SignInAccount.PhotoUrl.ToString();
+                    User.ProfileUrl = signInResult.SignInAccount.PhotoUrl.ToString();
 
                     User.Uid = signInResult.SignInAccount.Id;
                     User.Token = signInResult.SignInAccount.IdToken;
-                    User.NickName = signInResult.SignInAccount.DisplayName;
+                    User.Name = signInResult.SignInAccount.DisplayName;
+                    User.EMail = signInResult.SignInAccount.Email;
 
                     IAuthResult authResult = await FirebaseAuth_.SignInWithCredentialAsync(credential);
                     FirebaseUser user = authResult.User;
@@ -215,7 +219,27 @@ namespace CCA.Droid
             }
             catch (Exception ex)
             {
+                FirebaseApp.InitializeApp(context);
 
+                FirebaseAuth_ = FirebaseAuth.Instance;
+
+                if (FirebaseAuth_ == null)
+                    FirebaseAuth_ = new FirebaseAuth(FirebaseApp.Instance);
+
+                GoogleSignInOptions signInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DefaultSignIn)
+                    .RequestIdToken("926850429943-envuu4ga9i133mbaq5hd77g1b9bdcrj5.apps.googleusercontent.com")
+                    .RequestEmail()
+                    .RequestId()
+                    .Build();
+                GoogleApiClient = new GoogleApiClient.Builder(this)
+                    .AddApi(Auth.GOOGLE_SIGN_IN_API, signInOptions)
+                    .Build();
+
+
+                GoogleApiClient.Connect();
+
+                GoogleSignIn();
+                LoadApplication(new App());
             }
         }
     }

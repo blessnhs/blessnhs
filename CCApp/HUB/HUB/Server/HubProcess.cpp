@@ -34,7 +34,7 @@ HubProcess::HubProcess(void)
 	ADD_NET_FUNC(HubProcess, ID_PKT_CAMERA_LIST_REQ, CAMERA_LIST);
 
 	ADD_NET_FUNC(HubProcess, ID_PKT_STOP_STREAM_REQ, STOP_STREAM);
-	
+
 
 
 }
@@ -55,7 +55,7 @@ VOID HubProcess::Process(boost::shared_ptr<XDATA> pBuffer, boost::shared_ptr<GSC
 		{
 			pPlayer->m_AliveTime = GetTickCount();
 		}
-		
+
 		//로그인 하지 않은 유저가 패킷을 요청 했을때
 		// 버전이나 로그인 패킷이 아닌 경우 처리하지 않는다.
 		if (pBuffer->MainId != ID_PKT_VERSION_REQ && pBuffer->MainId != ID_PKT_LOGIN_REQ)
@@ -64,7 +64,7 @@ VOID HubProcess::Process(boost::shared_ptr<XDATA> pBuffer, boost::shared_ptr<GSC
 			{
 #ifdef _DEBUG
 #else
-			//	return;
+				//	return;
 #endif
 			}
 		}
@@ -73,10 +73,10 @@ VOID HubProcess::Process(boost::shared_ptr<XDATA> pBuffer, boost::shared_ptr<GSC
 		const google::protobuf::EnumDescriptor* descriptor = PROTOCOL_descriptor();
 		std::string name = descriptor->FindValueByNumber(pBuffer->MainId)->name();
 
-		if(pBuffer->MainId != ID_PKT_ROOM_LIST_REQ && pBuffer->MainId != ID_PKT_PRAY_MESSAGE_REQ)
-			BLOG("%s MainProtocol %s Length %d\n", __FUNCTION__, name.c_str(), pBuffer->Length);
+	//	if (pBuffer->MainId != ID_PKT_ROOM_LIST_REQ && pBuffer->MainId != ID_PKT_PRAY_MESSAGE_REQ)
+	//		BLOG("%s MainProtocol %s Length %d\n", __FUNCTION__, name.c_str(), pBuffer->Length);
 #endif
-	
+
 		NET_FUNC_EXE2(pBuffer, Client);
 	}
 	catch (int exception)
@@ -91,12 +91,22 @@ VOID HubProcess::CHECK_NICKNAME(boost::shared_ptr<XDATA> pBuffer, boost::shared_
 
 VOID HubProcess::NOTICE(boost::shared_ptr<XDATA> pBuffer, boost::shared_ptr<GSClient> Client)
 {
-	DECLARE_RECV_TYPE(NOTICE_REQ, version)	
-	
+	PlayerPtr pPlayer = PLAYERMGR.SearchByFrontSid(pBuffer->Reserve2);
+	if (pPlayer == NULL)
+	{
+		return;
+	}
+	DECLARE_RECV_TYPE(NOTICE_REQ, version)
+
 	boost::shared_ptr<Hub::MSG_PLAYER_QUERY<Hub::RequestNotice>>		PLAYER_MSG = ALLOCATOR.Create<Hub::MSG_PLAYER_QUERY<Hub::RequestNotice>>();
 	PLAYER_MSG->pSession = Client;
 	PLAYER_MSG->Type = Client->GetMyDBTP();
 	PLAYER_MSG->SubType = ONQUERY;
+
+	{
+		PLAYER_MSG->Request.m_args = std::tuple<PlayerPtr>(pPlayer);;
+	}
+
 	MAINPROC.RegisterCommand(PLAYER_MSG);
 }
 
@@ -126,7 +136,7 @@ VOID HubProcess::LOGIN_PLAYER(boost::shared_ptr<XDATA> pBuffer, boost::shared_pt
 {
 	DECLARE_RECV_TYPE(LOGIN_REQ, login)
 
-	if (_result_, login.var_token().size() <= 0 )
+	if (_result_, login.var_token().size() <= 0)
 		return;
 
 	boost::shared_ptr<Hub::MSG_PLAYER_QUERY<RequestPlayerAuth>>		PLAYER_MSG = ALLOCATOR.Create<Hub::MSG_PLAYER_QUERY<RequestPlayerAuth>>();
@@ -158,15 +168,15 @@ VOID HubProcess::ROOM_CREATE(boost::shared_ptr<XDATA> pBuffer, boost::shared_ptr
 	if (pPlayer == NULL)
 	{
 		res.set_var_code(SystemError);
-		SEND_PROTO_BUFFER( res, Client, pBuffer->Reserve2)
+		SEND_PROTO_BUFFER(res, Client, pBuffer->Reserve2)
 			return;
 	}
 
 	if (createroom.var_name().size() == 0)
 	{
 		res.set_var_code(SystemError);
-		SEND_PROTO_BUFFER( res, Client, pBuffer->Reserve2)
-		return;
+		SEND_PROTO_BUFFER(res, Client, pBuffer->Reserve2)
+			return;
 	}
 
 	//디비에 먼저 기록을 남긴다.
@@ -216,12 +226,12 @@ VOID HubProcess::REG_PRAY(boost::shared_ptr<XDATA> pBuffer, boost::shared_ptr<GS
 	{
 		return;
 	}
-	
+
 	boost::shared_ptr<Hub::MSG_PLAYER_QUERY<Hub::RequestRegPray>>		PLAYER_MSG = ALLOCATOR.Create<Hub::MSG_PLAYER_QUERY<Hub::RequestRegPray>>();
 	PLAYER_MSG->pSession = Client;
 
 	{
-		PLAYER_MSG->Request.m_args = std::tuple<string,string, PlayerPtr>(message.var_message(), pPlayer->GetName(), pPlayer);
+		PLAYER_MSG->Request.m_args = std::tuple<string, string, PlayerPtr>(message.var_message(), pPlayer->GetName(), pPlayer);
 	}
 
 	PLAYER_MSG->Type = Client->GetMyDBTP();
@@ -308,7 +318,7 @@ VOID HubProcess::ROOM_PASSTHROUGH(boost::shared_ptr<XDATA> pBuffer, boost::share
 	PLAYER_MSG->SubType = ONQUERY;
 	MAINPROC.RegisterCommand(PLAYER_MSG);
 
-	
+
 }
 
 VOID HubProcess::RANK(boost::shared_ptr<XDATA> pBuffer, boost::shared_ptr<GSClient> Client)
@@ -332,8 +342,8 @@ VOID HubProcess::ROOM_ENTER(boost::shared_ptr<XDATA> pBuffer, boost::shared_ptr<
 	if (RoomPtr == NULL)
 	{
 		res.set_var_code(SystemError);
-		SEND_PROTO_BUFFER( res, Client, pBuffer->Reserve2)
-		return;
+		SEND_PROTO_BUFFER(res, Client, pBuffer->Reserve2)
+			return;
 	}
 
 	//이미 입장 해 있다면 
@@ -342,7 +352,7 @@ VOID HubProcess::ROOM_ENTER(boost::shared_ptr<XDATA> pBuffer, boost::shared_ptr<
 		res.set_var_room_id(RoomPtr->GetId());
 		res.set_var_name(RoomPtr->m_Stock.Name.c_str());
 		res.set_var_code(Duplicate_Enter_Room);
-		SEND_PROTO_BUFFER( res, Client, pBuffer->Reserve2)
+		SEND_PROTO_BUFFER(res, Client, pBuffer->Reserve2)
 			return;
 	}
 
@@ -357,7 +367,7 @@ VOID HubProcess::ROOM_ENTER(boost::shared_ptr<XDATA> pBuffer, boost::shared_ptr<
 	PLAYER_MSG->SubType = ONQUERY;
 	MAINPROC.RegisterCommand(PLAYER_MSG);
 
-	
+
 }
 
 VOID HubProcess::ROOM_LEAVE(boost::shared_ptr<XDATA> pBuffer, boost::shared_ptr<GSClient> Client)
@@ -547,7 +557,7 @@ VOID HubProcess::MPEG2TS_MESSAGE(boost::shared_ptr<XDATA> pBuffer, boost::shared
 	}
 	else
 	{
-		SEND_PROTO_BUFFER( res, Client, pBuffer->Reserve2)
+		SEND_PROTO_BUFFER(res, Client, pBuffer->Reserve2)
 	}
 }
 
@@ -565,7 +575,7 @@ VOID HubProcess::CAMERA_LIST(boost::shared_ptr<XDATA> pBuffer, boost::shared_ptr
 	PLAYER_MSG->pSession = Client;
 
 	{
-		PLAYER_MSG->Request.m_args = std::tuple< PlayerPtr>( pPlayer);;
+		PLAYER_MSG->Request.m_args = std::tuple< PlayerPtr>(pPlayer);;
 	}
 
 	PLAYER_MSG->Type = Client->GetMyDBTP();
@@ -587,7 +597,7 @@ VOID HubProcess::CAMERA_REGISTER(boost::shared_ptr<XDATA> pBuffer, boost::shared
 	PLAYER_MSG->pSession = Client;
 
 	{
-		PLAYER_MSG->Request.m_args = std::tuple<string, string, PlayerPtr>(message.var_machine_id(),message.var_cam_name(), pPlayer);;
+		PLAYER_MSG->Request.m_args = std::tuple<string, string, PlayerPtr>(message.var_machine_id(), message.var_cam_name(), pPlayer);;
 	}
 
 	PLAYER_MSG->Type = Client->GetMyDBTP();
@@ -614,13 +624,13 @@ VOID HubProcess::CAMERA_WAKE_UP(boost::shared_ptr<XDATA> pBuffer, boost::shared_
 	}
 
 	res.set_var_to_player_id(pPlayer->GetId());
-	
+
 	res.set_var_type(message.var_type());
 
 	GSCLIENT_PTR pSession = SERVER.GetClient(pTargetPlayer->GetPair());
 	if (pSession)
 	{
-		SEND_PROTO_BUFFER( res, pSession, pTargetPlayer->GetFrontSid())
+		SEND_PROTO_BUFFER(res, pSession, pTargetPlayer->GetFrontSid())
 	}
 }
 
@@ -755,7 +765,7 @@ VOID HubProcess::LOGOUT_CLIENT(boost::shared_ptr<XDATA> pBuffer, boost::shared_p
 		}
 
 
-//		pPlayer->SetPair(ULONG_MAX);
+		//		pPlayer->SetPair(ULONG_MAX);
 		PLAYERMGR.Del(pPlayer);
 	}
 

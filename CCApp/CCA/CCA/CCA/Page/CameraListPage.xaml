@@ -22,7 +22,20 @@
             ScaleOut="0.7" />
     </rg:PopupPage.Animation>
 
+   
+
     <StackLayout x:Name="stacklayout" VerticalOptions="Center" HorizontalOptions="Center" BackgroundColor="white">
+
+        <Button
+               x:Name="limited"
+               Margin="10,5"
+               BackgroundColor="#7dbbe6"
+               Clicked="OnBuy"
+               HorizontalOptions="Fill"
+               Text="무제한등록구입">
+
+        </Button>
+
         <ListView x:Name="listView">
             <ListView.ItemTemplate>
                 <DataTemplate>

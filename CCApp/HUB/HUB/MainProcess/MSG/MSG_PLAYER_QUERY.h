@@ -682,6 +682,21 @@ class MSG_PLAYER_QUERY<##class_name>:public IMESSAGE	\
 					return;
 				}
 
+				//해당 구글계정으로는 중복접속이 허용되지만 머신아이디가 동일한 것은 안된다 이전껏을 내보낸다.
+				auto existClient = PLAYERMGR.SearchByMachineId(pRequst.MachineId);
+				if (existClient != NULL)
+				{
+					GSCLIENT_PTR pPair = SERVER.GetClient(existClient->GetFront());
+					if (pPair != NULL)
+					{
+						BLOG("2.Login Fail Exist player %s and session close\n", pRequst.MachineId.c_str());
+
+						PLAYERMGR.Disconnect(existClient);
+
+						CLIENT_KICK kick;
+						SEND_PROTO_BUFFER(kick, pPair, pRequst.FrontSid)
+					}
+				}
 
 				// 로그인 절차 : 아이디의 접속확인 및 인증키값을 가져온다.
 				std::string authentickey;

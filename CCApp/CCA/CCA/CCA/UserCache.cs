@@ -20,10 +20,11 @@ namespace CCA
             CacheData = new UserCacheData();
             RoomIdList.Clear();
 
-            PhotoPath = null;
+            ProfileUrl = null;
             Uid = null;
             Token = null;
-            NickName = null;
+            Name = null;
+            EMail = null;
         }
 
        static public UserCacheData CacheData = new UserCacheData();
@@ -39,10 +40,11 @@ namespace CCA
         static public bool OnceVersionNotify = false;
         static public bool OnceUpdate = false;
 
-        static public string PhotoPath;
+        static public string ProfileUrl;
         static public string Uid;
         static public string Token;
-        static public string NickName;
+        static public string Name;
+        static public string EMail;
 
         //내가 등록한 카메라 리스트
         static public Dictionary<string, RegCam> CamDic = new Dictionary<string, RegCam>();

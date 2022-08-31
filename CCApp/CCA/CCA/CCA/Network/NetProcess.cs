@@ -113,7 +113,7 @@ namespace CCA
                                 }
 
                                 SQLLiteDB.LoadCacheData();
-                                if (User.NickName != null)
+                                if (User.Name != null)
                                     NetProcess.SendLogin(User.Uid,User.Token);
                             }
                             break;
@@ -166,7 +166,10 @@ namespace CCA
 
                                 Device.BeginInvokeOnMainThread(() =>
                                 {
-                                    var mainpage = (MainPage)Application.Current.MainPage;
+                                    var page = new NoticePage();
+                                    page.LoadList(res);
+                                    PopupNavigation.Instance.PushAsync(page);
+
 
                                 });
                             }
@@ -179,7 +182,14 @@ namespace CCA
 
                                 Device.BeginInvokeOnMainThread(() =>
                                 {
-                                    var mainpage = (MainPage)Application.Current.MainPage;
+                                    if (res.VarCode == ErrorCode.Success)
+                                    {
+                                        App.Current.MainPage.DisplayAlert("성공", "카메라 등록에 성공했습니다.", "ok");
+                                    }
+                                    else
+                                    {
+                                        App.Current.MainPage.DisplayAlert("실패", "카메라 등록에 실패했습니다.", "ok");
+                                    }
 
                                 });
                             }
@@ -379,6 +389,9 @@ namespace CCA
                     Console.Write(ex.ToString());
                 }
             }
+
+
+            data = null;
         }
 
         static public void SendVersion()
@@ -665,7 +678,7 @@ namespace CCA
             }
         }
 
-        static public void SendAlaram()
+        static public void SendNOTICE()
         {
             if (client == null || client.socket == null || client.socket.Connected == false)
                 return;

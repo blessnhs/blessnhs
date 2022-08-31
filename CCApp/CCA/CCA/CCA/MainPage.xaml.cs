@@ -57,7 +57,7 @@ namespace CCA
                         break;
                     case "MyCamera":
                         {
-                            rewardVideo.ShowAd();
+                      //      rewardVideo.ShowAd();
                             NetProcess.SendReqCameraList();
                         }
                         break;
@@ -73,6 +73,12 @@ namespace CCA
                             PopupNavigation.Instance.PushAsync(new SettingPage());
                         }
                         break;
+                    case "Notice":
+                        {
+                            NetProcess.SendNOTICE();
+                        }
+                        break;
+                        
                 }
             }
             catch (Exception ex)

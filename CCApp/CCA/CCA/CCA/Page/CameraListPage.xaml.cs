@@ -1,4 +1,5 @@
-﻿using Google.Protobuf.Collections;
+﻿using DependencyHelper;
+using Google.Protobuf.Collections;
 using Rg.Plugins.Popup.Pages;
 using Rg.Plugins.Popup.Services;
 using System;
@@ -78,5 +79,14 @@ namespace CCA.Page
         {
             await PopupNavigation.Instance.PopAsync();
         }
+        private async void OnBuy(object sender, EventArgs e)
+        {
+            DependencyService.Get<MethodExt>().Purchase("cameraunlimtedlist3");
+
+            await PopupNavigation.Instance.PopAsync();
+        }
+
+
+        
     }
 }

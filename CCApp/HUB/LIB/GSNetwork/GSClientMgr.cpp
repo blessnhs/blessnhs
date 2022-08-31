@@ -121,7 +121,7 @@ VOID GSClientMgr::CheckAliveTime()
 			connection_cnt, DebugCount.fetch_add(0), m_Remove_Queue.unsafe_size(), ConnectCount.fetch_add(0), NewConnectount.fetch_add(0), DisConnectCount.fetch_add(0), debug_null_cnt);
 		//	pServer->TotalRecvBytes.fetch_add(0)/1024/1024,pServer->TotalSendBytes.fetch_add(0) / 1024 / 1024);
 
-		ConsoleHelper::DebugConsoleString(0, msg);
+	//	ConsoleHelper::DebugConsoleString(0, msg);
 
 	}
 }

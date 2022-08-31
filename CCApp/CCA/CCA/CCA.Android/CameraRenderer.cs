@@ -55,62 +55,75 @@ namespace FullCameraApp.Droid
                     case ImageFormatType.Yv12:
                         {
 
+
+
+                            using (YuvImage img = new YuvImage(data, imageformat, paras.PreviewSize.Width, paras.PreviewSize.Height, null))
                             {
 
-                                YuvImage img = new YuvImage(data, imageformat, paras.PreviewSize.Width, paras.PreviewSize.Height, null);
-
-                                System.IO.MemoryStream outStream = new System.IO.MemoryStream();
-
-                                if (img.CompressToJpeg(new Rect(0, 0, paras.PreviewSize.Width, paras.PreviewSize.Height), renderer.quality, outStream) == false)
-                                    return;
-
-                                var frameToStream = outStream.ToArray();
-                                var bitmap = BitmapFactory.DecodeByteArray(frameToStream, 0, frameToStream.Length);
-                                if (bitmap == null)
-                                    return;
-
-                                var sbitmap = Bitmap.CreateScaledBitmap(bitmap, 320, 240, true);
-
-                                var mat = new Matrix();
-
-                                if (renderer.currentFacing == Android.Hardware.CameraFacing.Front)
-                                    mat.PostRotate(-90);
-                                else
-                                    mat.PostRotate(90);
-
-                                var rbitmap = Bitmap.CreateBitmap(sbitmap, 0, 0, sbitmap.Width, sbitmap.Height, mat, true);
-                                if (rbitmap == null)
-                                    return;
-
-                                var soutStream = new System.IO.MemoryStream();
-                                if (rbitmap.Compress(Bitmap.CompressFormat.Jpeg, renderer.quality, soutStream) == false)
-                                    return;
-
-                                Frames.Enqueue(soutStream);
-
-
-                                renderer.textViewMain.Text = outStream.Length.ToString();
-
-                                //서버쪽은 임시 주석
-                                if (renderer.server.ImagesSource.Count > 100)
-                                    renderer.server.ImagesSource.Clear();
-                                if (renderer.server._Clients.Count > 0)
-                                    renderer.server.ImagesSource.Enqueue(outStream);
-
-                                if (Frames.Count > 0)
+                                using (System.IO.MemoryStream outStream = new System.IO.MemoryStream())
                                 {
-                                    Task.Run(() =>
+
+                                    if (img.CompressToJpeg(new Rect(0, 0, paras.PreviewSize.Width, paras.PreviewSize.Height), renderer.quality, outStream) == false)
+                                        return;
+
+                                    var frameToStream = outStream.ToArray();
+                                    using (var bitmap = BitmapFactory.DecodeByteArray(frameToStream, 0, frameToStream.Length))
                                     {
-                                        total_bytes_sent += outStream.Length;
-                                        
-                                        if(NetProcess.TargetPlayerId.Count > 0)
-                                            NetProcess.SendRoomBITMAPMessage(Frames, 0);
+                                        if (bitmap == null)
+                                            return;
 
-                                        Frames.Clear();
-                                    });
+                                        using (var sbitmap = Bitmap.CreateScaledBitmap(bitmap, 320, 240, true))
+                                        {
 
+                                            using (var mat = new Matrix())
+                                            {
+
+                                                if (renderer.currentFacing == Android.Hardware.CameraFacing.Front)
+                                                    mat.PostRotate(-90);
+                                                else
+                                                    mat.PostRotate(90);
+
+                                                using (var rbitmap = Bitmap.CreateBitmap(sbitmap, 0, 0, sbitmap.Width, sbitmap.Height, mat, true))
+                                                {
+                                                    if (rbitmap == null)
+                                                        return;
+
+                                                    using (var soutStream = new System.IO.MemoryStream())
+                                                    {
+                                                        if (rbitmap.Compress(Bitmap.CompressFormat.Jpeg, renderer.quality, soutStream) == false)
+                                                            return;
+
+                                                        Frames.Enqueue(soutStream);
+
+
+                                                        renderer.textViewMain.Text = outStream.Length.ToString();
+
+                                                        //서버쪽은 임시 주석
+                                                        if (renderer.server.ImagesSource.Count > 100)
+                                                            renderer.server.ImagesSource.Clear();
+                                                        if (renderer.server._Clients.Count > 0)
+                                                            renderer.server.ImagesSource.Enqueue(outStream);
+
+                                                        if (Frames.Count > 0)
+                                                        {
+                                                         //   Task.Run(() =>
+                                                         //   {
+                                                                total_bytes_sent += outStream.Length;
+
+                                                                if (NetProcess.TargetPlayerId.Count > 0)
+                                                                    NetProcess.SendRoomBITMAPMessage(Frames, 0);
+
+                                                                Frames.Clear();
+                                                        //    });
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
                                 }
                             }
+                            
                         }
                         break;
                     case ImageFormatType.Jpeg:
