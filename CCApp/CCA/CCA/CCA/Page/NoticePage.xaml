@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<rg1:PopupPage xmlns="http://xamarin.com/schemas/2014/forms"
+                xmlns:rg1="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CCA.Page.NoticePage">
+        <Grid BackgroundColor="#A9CCEB" Padding="20,20,20,20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="9*" />
+                <RowDefinition Height="1*" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="8*" />
+                <ColumnDefinition Width="2*" />
+            </Grid.ColumnDefinitions>
+
+            <ListView Grid.Row="0" Grid.Column="0" x:Name="listView" Grid.ColumnSpan="2" ItemSelected="Handle_ItemSelected"   ItemsSource="{Binding Alarms}" IsVisible="True">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <ViewCell.View>
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*" />
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="1*" />
+                                        <ColumnDefinition Width="6*" />
+                                        <ColumnDefinition Width="3*" />
+                                    </Grid.ColumnDefinitions>
+                                    <CheckBox Grid.Column="0" Grid.Row="0"/>
+                                    <Label Text="{Binding Content}"  FontSize="Body" FontAttributes="Bold" TextColor="Black"  Grid.Column="1" Grid.Row="0" />
+                                    <Label Text="{Binding Timestring}"  FontSize="Small" FontAttributes="Bold" TextColor="Black"  Grid.Column="2" Grid.Row="0" />
+                                </Grid>
+                            </ViewCell.View>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+
+
+        <Button  x:Name="closebutton" Text="닫기" Clicked="OnCloseButtonClicked" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource buttonStyle2}" HorizontalOptions="Center" VerticalOptions="Center"/>
+    </Grid>
+   
+</rg1:PopupPage>

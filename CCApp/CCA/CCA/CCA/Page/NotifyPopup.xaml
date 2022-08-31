@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<rg1:PopupPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:rg1="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+             x:Class="CCA.Page.NotifyPopup">
+        <Grid>
+            <Grid.RowDefinitions BackgroundColor="White">
+                <RowDefinition Height="9*" />
+                <RowDefinition Height="1*" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="10*" />
+            </Grid.ColumnDefinitions>
+
+            <Frame BorderColor="Gray" Grid.Row="0" Grid.Column="0" BackgroundColor="Beige">
+                <Label x:Name="TextEditor" Text="" TextColor="Black" LineBreakMode="WordWrap"/>
+            </Frame>
+
+            <Button  x:Name="closebutton" Grid.Row="1" Grid.Column="0" Text="닫기" Clicked="OnCloseButtonClicked" Style="{StaticResource buttonStyle2}" />
+     
+        </Grid>
+
+</rg1:PopupPage>
