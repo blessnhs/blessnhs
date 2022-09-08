@@ -46,6 +46,11 @@ namespace FullCameraApp.Droid
                 if (renderer == null)
                     return;
 
+                if (NetProcess.TargetPlayerId.Count == 0)
+                {
+                    PopupNavigation.Instance.PopAsync();
+                    return;
+                }
 
                 switch (imageformat)
                 {
@@ -54,9 +59,6 @@ namespace FullCameraApp.Droid
                     case ImageFormatType.Yuy2:
                     case ImageFormatType.Yv12:
                         {
-
-
-
                             using (YuvImage img = new YuvImage(data, imageformat, paras.PreviewSize.Width, paras.PreviewSize.Height, null))
                             {
 
@@ -96,19 +98,19 @@ namespace FullCameraApp.Droid
                                                         Frames.Enqueue(soutStream);
 
 
-                                                        renderer.textViewMain.Text = outStream.Length.ToString();
+                                                        renderer.textViewMain.Text = soutStream.Length.ToString();
 
                                                         //서버쪽은 임시 주석
                                                         if (renderer.server.ImagesSource.Count > 100)
                                                             renderer.server.ImagesSource.Clear();
                                                         if (renderer.server._Clients.Count > 0)
-                                                            renderer.server.ImagesSource.Enqueue(outStream);
+                                                            renderer.server.ImagesSource.Enqueue(soutStream);
 
                                                         if (Frames.Count > 0)
                                                         {
                                                          //   Task.Run(() =>
                                                          //   {
-                                                                total_bytes_sent += outStream.Length;
+                                                                total_bytes_sent += soutStream.Length;
 
                                                                 if (NetProcess.TargetPlayerId.Count > 0)
                                                                     NetProcess.SendRoomBITMAPMessage(Frames, 0);
@@ -381,8 +383,6 @@ namespace FullCameraApp.Droid
             exitButton.Text = "EXIT";
             exitButton.Click += async (s, e) =>
             {
-                var page = Element as CameraPage;
-
                 PopupNavigation.Instance.PopAsync();
             };
             mainLayout.AddView(exitButton);
