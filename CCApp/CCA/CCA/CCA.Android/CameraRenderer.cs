@@ -108,7 +108,7 @@ namespace FullCameraApp.Droid
 
                                                         if (Frames.Count > 0)
                                                         {
-                                                         //   Task.Run(() =>
+                                                         //   Task.Run(() =>e
                                                          //   {
                                                                 total_bytes_sent += soutStream.Length;
 

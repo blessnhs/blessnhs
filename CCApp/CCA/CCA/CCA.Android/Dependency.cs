@@ -75,6 +75,19 @@ namespace DependencyHelper.Droid
             }
         }
 
+        public void RestartApp()
+        {
+            var intent = new Intent(MainActivity.activity, typeof(MainActivity));
+            intent.PutExtra("crash", true);
+            intent.AddFlags(ActivityFlags.ClearTop | ActivityFlags.ClearTask | ActivityFlags.NewTask);
+
+            var pendingIntent = PendingIntent.GetActivity(MainActivity.context, 32514, intent, PendingIntentFlags.OneShot);
+
+            MainActivity.activity.Finish();
+            MainActivity.context.StartActivity(intent);
+            
+        }
+
         public void Notification(string message)
         {
             try

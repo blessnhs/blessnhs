@@ -135,15 +135,24 @@ namespace CCA
 
                                     if( PopupNavigation.Instance.PopupStack.Count > 0)
                                         PopupNavigation.Instance.PopAsync();
-                                }
+
+                                    TargetPlayerId.Clear();
+                                    JpegStream = new ConcurrentQueue<StreamWrapper>();
+                                    AudioStream = new ConcurrentQueue<StreamWrapper>();
+                                }   
                                 else
-                                {
+                                {  
+                                    Mpeg2Stream = new ConcurrentQueue<StreamWrapper>();
                                     Device.BeginInvokeOnMainThread(() =>
                                     {
                                     });
 
+
+                                    DependencyService.Get<MethodExt>().RestartApp();
+
                                     User.LoginSuccess = false;
                                 }
+
                             }
                             break;
                         case (int)PROTOCOL.IdPktRoomListRes:

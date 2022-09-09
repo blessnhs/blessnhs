@@ -21,5 +21,7 @@ namespace DependencyHelper
         void Logout();
 
         void Purchase(string purchaseid);
+
+        void RestartApp();
     }
 }
