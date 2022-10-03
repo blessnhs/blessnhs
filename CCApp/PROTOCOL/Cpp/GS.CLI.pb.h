@@ -3567,11 +3567,32 @@ class CAMERA_CONTROL_RES :
   // accessors -------------------------------------------------------
 
   enum : int {
+    kVarMachineIdFieldNumber = 4,
     kVarCodeFieldNumber = 2,
     kVarTypeFieldNumber = 3,
-    kVarPosFieldNumber = 4,
+    kVarPlayerIdFieldNumber = 5,
     kIdFieldNumber = 1,
   };
+  // optional string var_machine_id = 4;
+  bool has_var_machine_id() const;
+  private:
+  bool _internal_has_var_machine_id() const;
+  public:
+  void clear_var_machine_id();
+  const std::string& var_machine_id() const;
+  void set_var_machine_id(const std::string& value);
+  void set_var_machine_id(std::string&& value);
+  void set_var_machine_id(const char* value);
+  void set_var_machine_id(const char* value, size_t size);
+  std::string* mutable_var_machine_id();
+  std::string* release_var_machine_id();
+  void set_allocated_var_machine_id(std::string* var_machine_id);
+  private:
+  const std::string& _internal_var_machine_id() const;
+  void _internal_set_var_machine_id(const std::string& value);
+  std::string* _internal_mutable_var_machine_id();
+  public:
+
   // optional .ErrorCode var_code = 2;
   bool has_var_code() const;
   private:
@@ -3598,20 +3619,20 @@ class CAMERA_CONTROL_RES :
   void _internal_set_var_type(::CameraControlType value);
   public:
 
-  // optional int32 var_pos = 4;
-  bool has_var_pos() const;
+  // optional int64 var_player_id = 5;
+  bool has_var_player_id() const;
   private:
-  bool _internal_has_var_pos() const;
+  bool _internal_has_var_player_id() const;
   public:
-  void clear_var_pos();
-  ::PROTOBUF_NAMESPACE_ID::int32 var_pos() const;
-  void set_var_pos(::PROTOBUF_NAMESPACE_ID::int32 value);
+  void clear_var_player_id();
+  ::PROTOBUF_NAMESPACE_ID::int64 var_player_id() const;
+  void set_var_player_id(::PROTOBUF_NAMESPACE_ID::int64 value);
   private:
-  ::PROTOBUF_NAMESPACE_ID::int32 _internal_var_pos() const;
-  void _internal_set_var_pos(::PROTOBUF_NAMESPACE_ID::int32 value);
+  ::PROTOBUF_NAMESPACE_ID::int64 _internal_var_player_id() const;
+  void _internal_set_var_player_id(::PROTOBUF_NAMESPACE_ID::int64 value);
   public:
 
-  // optional .PROTOCOL id = 1 [default = ID_PKT_CAMERA_CONTROL];
+  // optional .PROTOCOL id = 1 [default = ID_PKT_CAMERA_CONTROL_RES];
   bool has_id() const;
   private:
   bool _internal_has_id() const;
@@ -3631,9 +3652,10 @@ class CAMERA_CONTROL_RES :
   ::PROTOBUF_NAMESPACE_ID::internal::InternalMetadataWithArena _internal_metadata_;
   ::PROTOBUF_NAMESPACE_ID::internal::HasBits<1> _has_bits_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr var_machine_id_;
   int var_code_;
   int var_type_;
-  ::PROTOBUF_NAMESPACE_ID::int32 var_pos_;
+  ::PROTOBUF_NAMESPACE_ID::int64 var_player_id_;
   int id_;
   friend struct ::TableStruct_GS_2eCLI_2eproto;
 };
@@ -6985,17 +7007,17 @@ inline void CLIENT_KICK::set_sid(::PROTOBUF_NAMESPACE_ID::int32 value) {
 
 // CAMERA_CONTROL_RES
 
-// optional .PROTOCOL id = 1 [default = ID_PKT_CAMERA_CONTROL];
+// optional .PROTOCOL id = 1 [default = ID_PKT_CAMERA_CONTROL_RES];
 inline bool CAMERA_CONTROL_RES::_internal_has_id() const {
-  bool value = (_has_bits_[0] & 0x00000008u) != 0;
+  bool value = (_has_bits_[0] & 0x00000010u) != 0;
   return value;
 }
 inline bool CAMERA_CONTROL_RES::has_id() const {
   return _internal_has_id();
 }
 inline void CAMERA_CONTROL_RES::clear_id() {
-  id_ = 42;
-  _has_bits_[0] &= ~0x00000008u;
+  id_ = 43;
+  _has_bits_[0] &= ~0x00000010u;
 }
 inline ::PROTOCOL CAMERA_CONTROL_RES::_internal_id() const {
   return static_cast< ::PROTOCOL >(id_);
@@ -7006,7 +7028,7 @@ inline ::PROTOCOL CAMERA_CONTROL_RES::id() const {
 }
 inline void CAMERA_CONTROL_RES::_internal_set_id(::PROTOCOL value) {
   assert(::PROTOCOL_IsValid(value));
-  _has_bits_[0] |= 0x00000008u;
+  _has_bits_[0] |= 0x00000010u;
   id_ = value;
 }
 inline void CAMERA_CONTROL_RES::set_id(::PROTOCOL value) {
@@ -7016,7 +7038,7 @@ inline void CAMERA_CONTROL_RES::set_id(::PROTOCOL value) {
 
 // optional .ErrorCode var_code = 2;
 inline bool CAMERA_CONTROL_RES::_internal_has_var_code() const {
-  bool value = (_has_bits_[0] & 0x00000001u) != 0;
+  bool value = (_has_bits_[0] & 0x00000002u) != 0;
   return value;
 }
 inline bool CAMERA_CONTROL_RES::has_var_code() const {
@@ -7024,7 +7046,7 @@ inline bool CAMERA_CONTROL_RES::has_var_code() const {
 }
 inline void CAMERA_CONTROL_RES::clear_var_code() {
   var_code_ = 0;
-  _has_bits_[0] &= ~0x00000001u;
+  _has_bits_[0] &= ~0x00000002u;
 }
 inline ::ErrorCode CAMERA_CONTROL_RES::_internal_var_code() const {
   return static_cast< ::ErrorCode >(var_code_);
@@ -7035,7 +7057,7 @@ inline ::ErrorCode CAMERA_CONTROL_RES::var_code() const {
 }
 inline void CAMERA_CONTROL_RES::_internal_set_var_code(::ErrorCode value) {
   assert(::ErrorCode_IsValid(value));
-  _has_bits_[0] |= 0x00000001u;
+  _has_bits_[0] |= 0x00000002u;
   var_code_ = value;
 }
 inline void CAMERA_CONTROL_RES::set_var_code(::ErrorCode value) {
@@ -7045,7 +7067,7 @@ inline void CAMERA_CONTROL_RES::set_var_code(::ErrorCode value) {
 
 // optional .CameraControlType var_type = 3;
 inline bool CAMERA_CONTROL_RES::_internal_has_var_type() const {
-  bool value = (_has_bits_[0] & 0x00000002u) != 0;
+  bool value = (_has_bits_[0] & 0x00000004u) != 0;
   return value;
 }
 inline bool CAMERA_CONTROL_RES::has_var_type() const {
@@ -7053,7 +7075,7 @@ inline bool CAMERA_CONTROL_RES::has_var_type() const {
 }
 inline void CAMERA_CONTROL_RES::clear_var_type() {
   var_type_ = 0;
-  _has_bits_[0] &= ~0x00000002u;
+  _has_bits_[0] &= ~0x00000004u;
 }
 inline ::CameraControlType CAMERA_CONTROL_RES::_internal_var_type() const {
   return static_cast< ::CameraControlType >(var_type_);
@@ -7064,7 +7086,7 @@ inline ::CameraControlType CAMERA_CONTROL_RES::var_type() const {
 }
 inline void CAMERA_CONTROL_RES::_internal_set_var_type(::CameraControlType value) {
   assert(::CameraControlType_IsValid(value));
-  _has_bits_[0] |= 0x00000002u;
+  _has_bits_[0] |= 0x00000004u;
   var_type_ = value;
 }
 inline void CAMERA_CONTROL_RES::set_var_type(::CameraControlType value) {
@@ -7072,32 +7094,103 @@ inline void CAMERA_CONTROL_RES::set_var_type(::CameraControlType value) {
   // @@protoc_insertion_point(field_set:CAMERA_CONTROL_RES.var_type)
 }
 
-// optional int32 var_pos = 4;
-inline bool CAMERA_CONTROL_RES::_internal_has_var_pos() const {
-  bool value = (_has_bits_[0] & 0x00000004u) != 0;
+// optional string var_machine_id = 4;
+inline bool CAMERA_CONTROL_RES::_internal_has_var_machine_id() const {
+  bool value = (_has_bits_[0] & 0x00000001u) != 0;
   return value;
 }
-inline bool CAMERA_CONTROL_RES::has_var_pos() const {
-  return _internal_has_var_pos();
+inline bool CAMERA_CONTROL_RES::has_var_machine_id() const {
+  return _internal_has_var_machine_id();
 }
-inline void CAMERA_CONTROL_RES::clear_var_pos() {
-  var_pos_ = 0;
-  _has_bits_[0] &= ~0x00000004u;
+inline void CAMERA_CONTROL_RES::clear_var_machine_id() {
+  var_machine_id_.ClearToEmptyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  _has_bits_[0] &= ~0x00000001u;
 }
-inline ::PROTOBUF_NAMESPACE_ID::int32 CAMERA_CONTROL_RES::_internal_var_pos() const {
-  return var_pos_;
+inline const std::string& CAMERA_CONTROL_RES::var_machine_id() const {
+  // @@protoc_insertion_point(field_get:CAMERA_CONTROL_RES.var_machine_id)
+  return _internal_var_machine_id();
 }
-inline ::PROTOBUF_NAMESPACE_ID::int32 CAMERA_CONTROL_RES::var_pos() const {
-  // @@protoc_insertion_point(field_get:CAMERA_CONTROL_RES.var_pos)
-  return _internal_var_pos();
+inline void CAMERA_CONTROL_RES::set_var_machine_id(const std::string& value) {
+  _internal_set_var_machine_id(value);
+  // @@protoc_insertion_point(field_set:CAMERA_CONTROL_RES.var_machine_id)
 }
-inline void CAMERA_CONTROL_RES::_internal_set_var_pos(::PROTOBUF_NAMESPACE_ID::int32 value) {
-  _has_bits_[0] |= 0x00000004u;
-  var_pos_ = value;
+inline std::string* CAMERA_CONTROL_RES::mutable_var_machine_id() {
+  // @@protoc_insertion_point(field_mutable:CAMERA_CONTROL_RES.var_machine_id)
+  return _internal_mutable_var_machine_id();
 }
-inline void CAMERA_CONTROL_RES::set_var_pos(::PROTOBUF_NAMESPACE_ID::int32 value) {
-  _internal_set_var_pos(value);
-  // @@protoc_insertion_point(field_set:CAMERA_CONTROL_RES.var_pos)
+inline const std::string& CAMERA_CONTROL_RES::_internal_var_machine_id() const {
+  return var_machine_id_.GetNoArena();
+}
+inline void CAMERA_CONTROL_RES::_internal_set_var_machine_id(const std::string& value) {
+  _has_bits_[0] |= 0x00000001u;
+  var_machine_id_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), value);
+}
+inline void CAMERA_CONTROL_RES::set_var_machine_id(std::string&& value) {
+  _has_bits_[0] |= 0x00000001u;
+  var_machine_id_.SetNoArena(
+    &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:CAMERA_CONTROL_RES.var_machine_id)
+}
+inline void CAMERA_CONTROL_RES::set_var_machine_id(const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  _has_bits_[0] |= 0x00000001u;
+  var_machine_id_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:CAMERA_CONTROL_RES.var_machine_id)
+}
+inline void CAMERA_CONTROL_RES::set_var_machine_id(const char* value, size_t size) {
+  _has_bits_[0] |= 0x00000001u;
+  var_machine_id_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:CAMERA_CONTROL_RES.var_machine_id)
+}
+inline std::string* CAMERA_CONTROL_RES::_internal_mutable_var_machine_id() {
+  _has_bits_[0] |= 0x00000001u;
+  return var_machine_id_.MutableNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline std::string* CAMERA_CONTROL_RES::release_var_machine_id() {
+  // @@protoc_insertion_point(field_release:CAMERA_CONTROL_RES.var_machine_id)
+  if (!_internal_has_var_machine_id()) {
+    return nullptr;
+  }
+  _has_bits_[0] &= ~0x00000001u;
+  return var_machine_id_.ReleaseNonDefaultNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline void CAMERA_CONTROL_RES::set_allocated_var_machine_id(std::string* var_machine_id) {
+  if (var_machine_id != nullptr) {
+    _has_bits_[0] |= 0x00000001u;
+  } else {
+    _has_bits_[0] &= ~0x00000001u;
+  }
+  var_machine_id_.SetAllocatedNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), var_machine_id);
+  // @@protoc_insertion_point(field_set_allocated:CAMERA_CONTROL_RES.var_machine_id)
+}
+
+// optional int64 var_player_id = 5;
+inline bool CAMERA_CONTROL_RES::_internal_has_var_player_id() const {
+  bool value = (_has_bits_[0] & 0x00000008u) != 0;
+  return value;
+}
+inline bool CAMERA_CONTROL_RES::has_var_player_id() const {
+  return _internal_has_var_player_id();
+}
+inline void CAMERA_CONTROL_RES::clear_var_player_id() {
+  var_player_id_ = PROTOBUF_LONGLONG(0);
+  _has_bits_[0] &= ~0x00000008u;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int64 CAMERA_CONTROL_RES::_internal_var_player_id() const {
+  return var_player_id_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int64 CAMERA_CONTROL_RES::var_player_id() const {
+  // @@protoc_insertion_point(field_get:CAMERA_CONTROL_RES.var_player_id)
+  return _internal_var_player_id();
+}
+inline void CAMERA_CONTROL_RES::_internal_set_var_player_id(::PROTOBUF_NAMESPACE_ID::int64 value) {
+  _has_bits_[0] |= 0x00000008u;
+  var_player_id_ = value;
+}
+inline void CAMERA_CONTROL_RES::set_var_player_id(::PROTOBUF_NAMESPACE_ID::int64 value) {
+  _internal_set_var_player_id(value);
+  // @@protoc_insertion_point(field_set:CAMERA_CONTROL_RES.var_player_id)
 }
 
 // -------------------------------------------------------------------
@@ -7113,7 +7206,7 @@ inline bool CAMERA_WAKE_UP_RES::has_id() const {
   return _internal_has_id();
 }
 inline void CAMERA_WAKE_UP_RES::clear_id() {
-  id_ = 46;
+  id_ = 47;
   _has_bits_[0] &= ~0x00000008u;
 }
 inline ::PROTOCOL CAMERA_WAKE_UP_RES::_internal_id() const {
@@ -7230,7 +7323,7 @@ inline bool MPEG2TS_MESSAGE_RES::has_id() const {
   return _internal_has_id();
 }
 inline void MPEG2TS_MESSAGE_RES::clear_id() {
-  id_ = 44;
+  id_ = 45;
   _has_bits_[0] &= ~0x00000004u;
 }
 inline ::PROTOCOL MPEG2TS_MESSAGE_RES::_internal_id() const {
@@ -7394,7 +7487,7 @@ inline bool REG_CAMERA_RES::has_id() const {
   return _internal_has_id();
 }
 inline void REG_CAMERA_RES::clear_id() {
-  id_ = 50;
+  id_ = 51;
   _has_bits_[0] &= ~0x00000008u;
 }
 inline ::PROTOCOL REG_CAMERA_RES::_internal_id() const {
@@ -7598,7 +7691,7 @@ inline bool STOP_STREAM_RES::has_id() const {
   return _internal_has_id();
 }
 inline void STOP_STREAM_RES::clear_id() {
-  id_ = 48;
+  id_ = 49;
   _has_bits_[0] &= ~0x00000004u;
 }
 inline ::PROTOCOL STOP_STREAM_RES::_internal_id() const {
@@ -7688,7 +7781,7 @@ inline bool CAMERA_LIST_RES::has_id() const {
   return _internal_has_id();
 }
 inline void CAMERA_LIST_RES::clear_id() {
-  id_ = 52;
+  id_ = 53;
   _has_bits_[0] &= ~0x00000004u;
 }
 inline ::PROTOCOL CAMERA_LIST_RES::_internal_id() const {

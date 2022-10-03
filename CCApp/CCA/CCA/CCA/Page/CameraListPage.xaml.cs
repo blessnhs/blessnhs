@@ -62,7 +62,7 @@ namespace CCA.Page
                     {
                         NetProcess.SendWakeUpCamera(camera.PlayerId);
 
-                        PopupNavigation.Instance.PushAsync(new CameraViewer());
+                        PopupNavigation.Instance.PushAsync(new CameraViewer(MachinId, camera.PlayerId));
                     }
                 }
 

@@ -227,6 +227,9 @@ namespace CCA.Droid
                 if (ContextCompat.CheckSelfPermission(this, Manifest.Permission.Internet) != Permission.Granted)
                     _permission.Add(Manifest.Permission.Internet);
 
+                if (ContextCompat.CheckSelfPermission(this, Manifest.Permission.RequestIgnoreBatteryOptimizations) != Permission.Granted)
+                    _permission.Add(Manifest.Permission.RequestIgnoreBatteryOptimizations);
+
                 if (_permission.Count > 0)
                 {
                     string[] array = _permission.ToArray();

@@ -55,6 +55,8 @@ public:
 
 	VOID STOP_STREAM(boost::shared_ptr<XDATA> pBuffer, boost::shared_ptr<GSClient> Client);
 
+	VOID CAMERA_CONTROL(boost::shared_ptr<XDATA> pBuffer, boost::shared_ptr<GSClient> Client);
+
 protected:
 
 	DECLARE_MSG_MAP2(HubProcess)

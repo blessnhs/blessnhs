@@ -148,10 +148,11 @@ message CLIENT_KICK
 
 message CAMERA_CONTROL_RES
 {
-    optional PROTOCOL   id                  = 1 [default = ID_PKT_CAMERA_CONTROL ];
+    optional PROTOCOL   id                  = 1 [default = ID_PKT_CAMERA_CONTROL_RES ];
     optional ErrorCode    var_code         = 2;
     optional CameraControlType       var_type        = 3;
-    optional int32     var_pos         = 4;	
+    optional string     var_machine_id = 4;
+    optional int64     var_player_id         = 5;	
 }
 
 message CAMERA_WAKE_UP_RES

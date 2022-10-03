@@ -130,9 +130,10 @@ message CLIENT_LOGOUT_REQ
 
 message CAMERA_CONTROL_REQ
 {
-    optional PROTOCOL   id                  = 1 [default = ID_PKT_CAMERA_CONTROL ];
+    optional PROTOCOL   id                  = 1 [default = ID_PKT_CAMERA_CONTROL_REQ ];
     required CameraControlType       var_type        = 2	;
-    required int32     var_pos         = 3;	
+    required string     var_machine_id         = 3;	
+    required int64     var_player_id         = 4;	
 }
 
 message MPEG2TS_MESSAGE_REQ

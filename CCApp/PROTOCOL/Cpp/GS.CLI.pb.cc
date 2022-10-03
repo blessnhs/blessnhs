@@ -688,11 +688,13 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_GS_2eCLI_2eproto::offsets[] PR
   PROTOBUF_FIELD_OFFSET(::CAMERA_CONTROL_RES, id_),
   PROTOBUF_FIELD_OFFSET(::CAMERA_CONTROL_RES, var_code_),
   PROTOBUF_FIELD_OFFSET(::CAMERA_CONTROL_RES, var_type_),
-  PROTOBUF_FIELD_OFFSET(::CAMERA_CONTROL_RES, var_pos_),
-  3,
-  0,
+  PROTOBUF_FIELD_OFFSET(::CAMERA_CONTROL_RES, var_machine_id_),
+  PROTOBUF_FIELD_OFFSET(::CAMERA_CONTROL_RES, var_player_id_),
+  4,
   1,
   2,
+  0,
+  3,
   PROTOBUF_FIELD_OFFSET(::CAMERA_WAKE_UP_RES, _has_bits_),
   PROTOBUF_FIELD_OFFSET(::CAMERA_WAKE_UP_RES, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -776,12 +778,12 @@ static const ::PROTOBUF_NAMESPACE_ID::internal::MigrationSchema schemas[] PROTOB
   { 187, 194, sizeof(::REG_RES)},
   { 196, 203, sizeof(::CLIENT_LOGOUT_RES)},
   { 205, 212, sizeof(::CLIENT_KICK)},
-  { 214, 223, sizeof(::CAMERA_CONTROL_RES)},
-  { 227, 236, sizeof(::CAMERA_WAKE_UP_RES)},
-  { 240, 249, sizeof(::MPEG2TS_MESSAGE_RES)},
-  { 253, 262, sizeof(::REG_CAMERA_RES)},
-  { 266, 274, sizeof(::STOP_STREAM_RES)},
-  { 277, 286, sizeof(::CAMERA_LIST_RES)},
+  { 214, 224, sizeof(::CAMERA_CONTROL_RES)},
+  { 229, 238, sizeof(::CAMERA_WAKE_UP_RES)},
+  { 242, 251, sizeof(::MPEG2TS_MESSAGE_RES)},
+  { 255, 264, sizeof(::REG_CAMERA_RES)},
+  { 268, 276, sizeof(::STOP_STREAM_RES)},
+  { 279, 288, sizeof(::CAMERA_LIST_RES)},
 };
 
 static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] = {
@@ -870,28 +872,29 @@ const char descriptor_table_protodef_GS_2eCLI_2eproto[] PROTOBUF_SECTION_VARIABL
   "L:\030ID_PKT_CLIENT_LOGOUT_RES\022\034\n\010var_code\030"
   "\002 \001(\0162\n.ErrorCode\"E\n\013CLIENT_KICK\022)\n\002id\030\001"
   " \001(\0162\t.PROTOCOL:\022ID_PKT_CLIENT_KICK\022\013\n\003s"
-  "id\030\002 \001(\005\"\227\001\n\022CAMERA_CONTROL_RES\022,\n\002id\030\001 "
-  "\001(\0162\t.PROTOCOL:\025ID_PKT_CAMERA_CONTROL\022\034\n"
-  "\010var_code\030\002 \001(\0162\n.ErrorCode\022$\n\010var_type\030"
-  "\003 \001(\0162\022.CameraControlType\022\017\n\007var_pos\030\004 \001"
-  "(\005\"\213\001\n\022CAMERA_WAKE_UP_RES\0220\n\002id\030\001 \001(\0162\t."
-  "PROTOCOL:\031ID_PKT_CAMERA_WAKE_UP_RES\022\020\n\010v"
-  "ar_type\030\002 \001(\005\022\027\n\017var_room_number\030\003 \001(\005\022\030"
-  "\n\020var_to_player_id\030\004 \001(\005\"\215\001\n\023MPEG2TS_MES"
-  "SAGE_RES\0221\n\002id\030\001 \001(\0162\t.PROTOCOL:\032ID_PKT_"
-  "MPEG2TS_MESSAGE_RES\022\034\n\010var_code\030\002 \001(\0162\n."
-  "ErrorCode\022\023\n\013var_message\030\003 \003(\014\022\020\n\010var_ty"
-  "pe\030\004 \001(\005\"\212\001\n\016REG_CAMERA_RES\022,\n\002id\030\001 \001(\0162"
-  "\t.PROTOCOL:\025ID_PKT_REG_CAMERA_RES\022\034\n\010var"
-  "_code\030\002 \001(\0162\n.ErrorCode\022\024\n\014var_cam_name\030"
-  "\003 \001(\t\022\026\n\016var_machine_id\030\004 \001(\t\"x\n\017STOP_ST"
-  "REAM_RES\022-\n\002id\030\001 \001(\0162\t.PROTOCOL:\026ID_PKT_"
-  "STOP_STREAM_RES\022\034\n\010var_code\030\002 \001(\0162\n.Erro"
-  "rCode\022\030\n\020var_to_player_id\030\003 \001(\003\"\226\001\n\017CAME"
-  "RA_LIST_RES\022-\n\002id\030\001 \001(\0162\t.PROTOCOL:\026ID_P"
-  "KT_CAMERA_LIST_RES\022\034\n\010var_code\030\002 \001(\0162\n.E"
-  "rrorCode\022\037\n\nvar_camera\030\003 \003(\0132\013.CameraInf"
-  "o\022\025\n\rvar_player_id\030\004 \001(\003B\002H\001"
+  "id\030\002 \001(\005\"\271\001\n\022CAMERA_CONTROL_RES\0220\n\002id\030\001 "
+  "\001(\0162\t.PROTOCOL:\031ID_PKT_CAMERA_CONTROL_RE"
+  "S\022\034\n\010var_code\030\002 \001(\0162\n.ErrorCode\022$\n\010var_t"
+  "ype\030\003 \001(\0162\022.CameraControlType\022\026\n\016var_mac"
+  "hine_id\030\004 \001(\t\022\025\n\rvar_player_id\030\005 \001(\003\"\213\001\n"
+  "\022CAMERA_WAKE_UP_RES\0220\n\002id\030\001 \001(\0162\t.PROTOC"
+  "OL:\031ID_PKT_CAMERA_WAKE_UP_RES\022\020\n\010var_typ"
+  "e\030\002 \001(\005\022\027\n\017var_room_number\030\003 \001(\005\022\030\n\020var_"
+  "to_player_id\030\004 \001(\005\"\215\001\n\023MPEG2TS_MESSAGE_R"
+  "ES\0221\n\002id\030\001 \001(\0162\t.PROTOCOL:\032ID_PKT_MPEG2T"
+  "S_MESSAGE_RES\022\034\n\010var_code\030\002 \001(\0162\n.ErrorC"
+  "ode\022\023\n\013var_message\030\003 \003(\014\022\020\n\010var_type\030\004 \001"
+  "(\005\"\212\001\n\016REG_CAMERA_RES\022,\n\002id\030\001 \001(\0162\t.PROT"
+  "OCOL:\025ID_PKT_REG_CAMERA_RES\022\034\n\010var_code\030"
+  "\002 \001(\0162\n.ErrorCode\022\024\n\014var_cam_name\030\003 \001(\t\022"
+  "\026\n\016var_machine_id\030\004 \001(\t\"x\n\017STOP_STREAM_R"
+  "ES\022-\n\002id\030\001 \001(\0162\t.PROTOCOL:\026ID_PKT_STOP_S"
+  "TREAM_RES\022\034\n\010var_code\030\002 \001(\0162\n.ErrorCode\022"
+  "\030\n\020var_to_player_id\030\003 \001(\003\"\226\001\n\017CAMERA_LIS"
+  "T_RES\022-\n\002id\030\001 \001(\0162\t.PROTOCOL:\026ID_PKT_CAM"
+  "ERA_LIST_RES\022\034\n\010var_code\030\002 \001(\0162\n.ErrorCo"
+  "de\022\037\n\nvar_camera\030\003 \003(\0132\013.CameraInfo\022\025\n\rv"
+  "ar_player_id\030\004 \001(\003B\002H\001"
   ;
 static const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable*const descriptor_table_GS_2eCLI_2eproto_deps[2] = {
   &::descriptor_table_Enum_2eproto,
@@ -926,7 +929,7 @@ static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_GS_
 static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_GS_2eCLI_2eproto_once;
 static bool descriptor_table_GS_2eCLI_2eproto_initialized = false;
 const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_GS_2eCLI_2eproto = {
-  &descriptor_table_GS_2eCLI_2eproto_initialized, descriptor_table_protodef_GS_2eCLI_2eproto, "GS.CLI.proto", 3188,
+  &descriptor_table_GS_2eCLI_2eproto_initialized, descriptor_table_protodef_GS_2eCLI_2eproto, "GS.CLI.proto", 3222,
   &descriptor_table_GS_2eCLI_2eproto_once, descriptor_table_GS_2eCLI_2eproto_sccs, descriptor_table_GS_2eCLI_2eproto_deps, 24, 2,
   schemas, file_default_instances, TableStruct_GS_2eCLI_2eproto::offsets,
   file_level_metadata_GS_2eCLI_2eproto, 24, file_level_enum_descriptors_GS_2eCLI_2eproto, file_level_service_descriptors_GS_2eCLI_2eproto,
@@ -6355,16 +6358,19 @@ class CAMERA_CONTROL_RES::_Internal {
  public:
   using HasBits = decltype(std::declval<CAMERA_CONTROL_RES>()._has_bits_);
   static void set_has_id(HasBits* has_bits) {
-    (*has_bits)[0] |= 8u;
+    (*has_bits)[0] |= 16u;
   }
   static void set_has_var_code(HasBits* has_bits) {
-    (*has_bits)[0] |= 1u;
-  }
-  static void set_has_var_type(HasBits* has_bits) {
     (*has_bits)[0] |= 2u;
   }
-  static void set_has_var_pos(HasBits* has_bits) {
+  static void set_has_var_type(HasBits* has_bits) {
     (*has_bits)[0] |= 4u;
+  }
+  static void set_has_var_machine_id(HasBits* has_bits) {
+    (*has_bits)[0] |= 1u;
+  }
+  static void set_has_var_player_id(HasBits* has_bits) {
+    (*has_bits)[0] |= 8u;
   }
 };
 
@@ -6378,6 +6384,10 @@ CAMERA_CONTROL_RES::CAMERA_CONTROL_RES(const CAMERA_CONTROL_RES& from)
       _internal_metadata_(nullptr),
       _has_bits_(from._has_bits_) {
   _internal_metadata_.MergeFrom(from._internal_metadata_);
+  var_machine_id_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  if (from._internal_has_var_machine_id()) {
+    var_machine_id_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.var_machine_id_);
+  }
   ::memcpy(&var_code_, &from.var_code_,
     static_cast<size_t>(reinterpret_cast<char*>(&id_) -
     reinterpret_cast<char*>(&var_code_)) + sizeof(id_));
@@ -6385,10 +6395,12 @@ CAMERA_CONTROL_RES::CAMERA_CONTROL_RES(const CAMERA_CONTROL_RES& from)
 }
 
 void CAMERA_CONTROL_RES::SharedCtor() {
+  ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&scc_info_CAMERA_CONTROL_RES_GS_2eCLI_2eproto.base);
+  var_machine_id_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
   ::memset(&var_code_, 0, static_cast<size_t>(
-      reinterpret_cast<char*>(&var_pos_) -
-      reinterpret_cast<char*>(&var_code_)) + sizeof(var_pos_));
-  id_ = 42;
+      reinterpret_cast<char*>(&var_player_id_) -
+      reinterpret_cast<char*>(&var_code_)) + sizeof(var_player_id_));
+  id_ = 43;
 }
 
 CAMERA_CONTROL_RES::~CAMERA_CONTROL_RES() {
@@ -6397,6 +6409,7 @@ CAMERA_CONTROL_RES::~CAMERA_CONTROL_RES() {
 }
 
 void CAMERA_CONTROL_RES::SharedDtor() {
+  var_machine_id_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
 }
 
 void CAMERA_CONTROL_RES::SetCachedSize(int size) const {
@@ -6415,11 +6428,14 @@ void CAMERA_CONTROL_RES::Clear() {
   (void) cached_has_bits;
 
   cached_has_bits = _has_bits_[0];
-  if (cached_has_bits & 0x0000000fu) {
+  if (cached_has_bits & 0x00000001u) {
+    var_machine_id_.ClearNonDefaultToEmptyNoArena();
+  }
+  if (cached_has_bits & 0x0000001eu) {
     ::memset(&var_code_, 0, static_cast<size_t>(
-        reinterpret_cast<char*>(&var_pos_) -
-        reinterpret_cast<char*>(&var_code_)) + sizeof(var_pos_));
-    id_ = 42;
+        reinterpret_cast<char*>(&var_player_id_) -
+        reinterpret_cast<char*>(&var_code_)) + sizeof(var_player_id_));
+    id_ = 43;
   }
   _has_bits_.Clear();
   _internal_metadata_.Clear();
@@ -6433,7 +6449,7 @@ const char* CAMERA_CONTROL_RES::_InternalParse(const char* ptr, ::PROTOBUF_NAMES
     ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
     CHK_(ptr);
     switch (tag >> 3) {
-      // optional .PROTOCOL id = 1 [default = ID_PKT_CAMERA_CONTROL];
+      // optional .PROTOCOL id = 1 [default = ID_PKT_CAMERA_CONTROL_RES];
       case 1:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 8)) {
           ::PROTOBUF_NAMESPACE_ID::uint64 val = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
@@ -6469,11 +6485,22 @@ const char* CAMERA_CONTROL_RES::_InternalParse(const char* ptr, ::PROTOBUF_NAMES
           }
         } else goto handle_unusual;
         continue;
-      // optional int32 var_pos = 4;
+      // optional string var_machine_id = 4;
       case 4:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 32)) {
-          _Internal::set_has_var_pos(&has_bits);
-          var_pos_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 34)) {
+          auto str = _internal_mutable_var_machine_id();
+          ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
+          #ifndef NDEBUG
+          ::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "CAMERA_CONTROL_RES.var_machine_id");
+          #endif  // !NDEBUG
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // optional int64 var_player_id = 5;
+      case 5:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 40)) {
+          _Internal::set_has_var_player_id(&has_bits);
+          var_player_id_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
@@ -6505,31 +6532,41 @@ failure:
   (void) cached_has_bits;
 
   cached_has_bits = _has_bits_[0];
-  // optional .PROTOCOL id = 1 [default = ID_PKT_CAMERA_CONTROL];
-  if (cached_has_bits & 0x00000008u) {
+  // optional .PROTOCOL id = 1 [default = ID_PKT_CAMERA_CONTROL_RES];
+  if (cached_has_bits & 0x00000010u) {
     target = stream->EnsureSpace(target);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteEnumToArray(
       1, this->_internal_id(), target);
   }
 
   // optional .ErrorCode var_code = 2;
-  if (cached_has_bits & 0x00000001u) {
+  if (cached_has_bits & 0x00000002u) {
     target = stream->EnsureSpace(target);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteEnumToArray(
       2, this->_internal_var_code(), target);
   }
 
   // optional .CameraControlType var_type = 3;
-  if (cached_has_bits & 0x00000002u) {
+  if (cached_has_bits & 0x00000004u) {
     target = stream->EnsureSpace(target);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteEnumToArray(
       3, this->_internal_var_type(), target);
   }
 
-  // optional int32 var_pos = 4;
-  if (cached_has_bits & 0x00000004u) {
+  // optional string var_machine_id = 4;
+  if (cached_has_bits & 0x00000001u) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->_internal_var_machine_id().data(), static_cast<int>(this->_internal_var_machine_id().length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SERIALIZE,
+      "CAMERA_CONTROL_RES.var_machine_id");
+    target = stream->WriteStringMaybeAliased(
+        4, this->_internal_var_machine_id(), target);
+  }
+
+  // optional int64 var_player_id = 5;
+  if (cached_has_bits & 0x00000008u) {
     target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32ToArray(4, this->_internal_var_pos(), target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt64ToArray(5, this->_internal_var_player_id(), target);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
@@ -6549,28 +6586,35 @@ size_t CAMERA_CONTROL_RES::ByteSizeLong() const {
   (void) cached_has_bits;
 
   cached_has_bits = _has_bits_[0];
-  if (cached_has_bits & 0x0000000fu) {
-    // optional .ErrorCode var_code = 2;
+  if (cached_has_bits & 0x0000001fu) {
+    // optional string var_machine_id = 4;
     if (cached_has_bits & 0x00000001u) {
+      total_size += 1 +
+        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+          this->_internal_var_machine_id());
+    }
+
+    // optional .ErrorCode var_code = 2;
+    if (cached_has_bits & 0x00000002u) {
       total_size += 1 +
         ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::EnumSize(this->_internal_var_code());
     }
 
     // optional .CameraControlType var_type = 3;
-    if (cached_has_bits & 0x00000002u) {
+    if (cached_has_bits & 0x00000004u) {
       total_size += 1 +
         ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::EnumSize(this->_internal_var_type());
     }
 
-    // optional int32 var_pos = 4;
-    if (cached_has_bits & 0x00000004u) {
+    // optional int64 var_player_id = 5;
+    if (cached_has_bits & 0x00000008u) {
       total_size += 1 +
-        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32Size(
-          this->_internal_var_pos());
+        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int64Size(
+          this->_internal_var_player_id());
     }
 
-    // optional .PROTOCOL id = 1 [default = ID_PKT_CAMERA_CONTROL];
-    if (cached_has_bits & 0x00000008u) {
+    // optional .PROTOCOL id = 1 [default = ID_PKT_CAMERA_CONTROL_RES];
+    if (cached_has_bits & 0x00000010u) {
       total_size += 1 +
         ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::EnumSize(this->_internal_id());
     }
@@ -6608,17 +6652,21 @@ void CAMERA_CONTROL_RES::MergeFrom(const CAMERA_CONTROL_RES& from) {
   (void) cached_has_bits;
 
   cached_has_bits = from._has_bits_[0];
-  if (cached_has_bits & 0x0000000fu) {
+  if (cached_has_bits & 0x0000001fu) {
     if (cached_has_bits & 0x00000001u) {
-      var_code_ = from.var_code_;
+      _has_bits_[0] |= 0x00000001u;
+      var_machine_id_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.var_machine_id_);
     }
     if (cached_has_bits & 0x00000002u) {
-      var_type_ = from.var_type_;
+      var_code_ = from.var_code_;
     }
     if (cached_has_bits & 0x00000004u) {
-      var_pos_ = from.var_pos_;
+      var_type_ = from.var_type_;
     }
     if (cached_has_bits & 0x00000008u) {
+      var_player_id_ = from.var_player_id_;
+    }
+    if (cached_has_bits & 0x00000010u) {
       id_ = from.id_;
     }
     _has_bits_[0] |= cached_has_bits;
@@ -6647,9 +6695,11 @@ void CAMERA_CONTROL_RES::InternalSwap(CAMERA_CONTROL_RES* other) {
   using std::swap;
   _internal_metadata_.Swap(&other->_internal_metadata_);
   swap(_has_bits_[0], other->_has_bits_[0]);
+  var_machine_id_.Swap(&other->var_machine_id_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+    GetArenaNoVirtual());
   swap(var_code_, other->var_code_);
   swap(var_type_, other->var_type_);
-  swap(var_pos_, other->var_pos_);
+  swap(var_player_id_, other->var_player_id_);
   swap(id_, other->id_);
 }
 
@@ -6699,7 +6749,7 @@ void CAMERA_WAKE_UP_RES::SharedCtor() {
   ::memset(&var_type_, 0, static_cast<size_t>(
       reinterpret_cast<char*>(&var_to_player_id_) -
       reinterpret_cast<char*>(&var_type_)) + sizeof(var_to_player_id_));
-  id_ = 46;
+  id_ = 47;
 }
 
 CAMERA_WAKE_UP_RES::~CAMERA_WAKE_UP_RES() {
@@ -6730,7 +6780,7 @@ void CAMERA_WAKE_UP_RES::Clear() {
     ::memset(&var_type_, 0, static_cast<size_t>(
         reinterpret_cast<char*>(&var_to_player_id_) -
         reinterpret_cast<char*>(&var_type_)) + sizeof(var_to_player_id_));
-    id_ = 46;
+    id_ = 47;
   }
   _has_bits_.Clear();
   _internal_metadata_.Clear();
@@ -7001,7 +7051,7 @@ void MPEG2TS_MESSAGE_RES::SharedCtor() {
   ::memset(&var_code_, 0, static_cast<size_t>(
       reinterpret_cast<char*>(&var_type_) -
       reinterpret_cast<char*>(&var_code_)) + sizeof(var_type_));
-  id_ = 44;
+  id_ = 45;
 }
 
 MPEG2TS_MESSAGE_RES::~MPEG2TS_MESSAGE_RES() {
@@ -7033,7 +7083,7 @@ void MPEG2TS_MESSAGE_RES::Clear() {
     ::memset(&var_code_, 0, static_cast<size_t>(
         reinterpret_cast<char*>(&var_type_) -
         reinterpret_cast<char*>(&var_code_)) + sizeof(var_type_));
-    id_ = 44;
+    id_ = 45;
   }
   _has_bits_.Clear();
   _internal_metadata_.Clear();
@@ -7322,7 +7372,7 @@ void REG_CAMERA_RES::SharedCtor() {
   var_cam_name_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
   var_machine_id_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
   var_code_ = 0;
-  id_ = 50;
+  id_ = 51;
 }
 
 REG_CAMERA_RES::~REG_CAMERA_RES() {
@@ -7361,7 +7411,7 @@ void REG_CAMERA_RES::Clear() {
   }
   if (cached_has_bits & 0x0000000cu) {
     var_code_ = 0;
-    id_ = 50;
+    id_ = 51;
   }
   _has_bits_.Clear();
   _internal_metadata_.Clear();
@@ -7652,7 +7702,7 @@ void STOP_STREAM_RES::SharedCtor() {
   ::memset(&var_to_player_id_, 0, static_cast<size_t>(
       reinterpret_cast<char*>(&var_code_) -
       reinterpret_cast<char*>(&var_to_player_id_)) + sizeof(var_code_));
-  id_ = 48;
+  id_ = 49;
 }
 
 STOP_STREAM_RES::~STOP_STREAM_RES() {
@@ -7683,7 +7733,7 @@ void STOP_STREAM_RES::Clear() {
     ::memset(&var_to_player_id_, 0, static_cast<size_t>(
         reinterpret_cast<char*>(&var_code_) -
         reinterpret_cast<char*>(&var_to_player_id_)) + sizeof(var_code_));
-    id_ = 48;
+    id_ = 49;
   }
   _has_bits_.Clear();
   _internal_metadata_.Clear();
@@ -7936,7 +7986,7 @@ void CAMERA_LIST_RES::SharedCtor() {
   ::memset(&var_player_id_, 0, static_cast<size_t>(
       reinterpret_cast<char*>(&var_code_) -
       reinterpret_cast<char*>(&var_player_id_)) + sizeof(var_code_));
-  id_ = 52;
+  id_ = 53;
 }
 
 CAMERA_LIST_RES::~CAMERA_LIST_RES() {
@@ -7968,7 +8018,7 @@ void CAMERA_LIST_RES::Clear() {
     ::memset(&var_player_id_, 0, static_cast<size_t>(
         reinterpret_cast<char*>(&var_code_) -
         reinterpret_cast<char*>(&var_player_id_)) + sizeof(var_code_));
-    id_ = 52;
+    id_ = 53;
   }
   _has_bits_.Clear();
   _internal_metadata_.Clear();

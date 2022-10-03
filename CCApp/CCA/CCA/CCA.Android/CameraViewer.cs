@@ -34,6 +34,13 @@ namespace FullCameraApp.Droid
         //퇴장버튼
         Button exitButton;
 
+        //카메라 변환
+        Button switchButton;
+
+        //카메라 변환
+        Button flashButton;
+
+
         public TextView textViewMain;
 
         AudioManagerM audiomgr = new AudioManagerM();
@@ -50,6 +57,7 @@ namespace FullCameraApp.Droid
             base.OnElementChanged(e);
 
             page = (CameraViewer)e.NewElement;
+
 
             SetupUserInterface();
             SetUpPlayTask();
@@ -138,15 +146,32 @@ namespace FullCameraApp.Droid
             exitButton.Text = "EXIT";
             exitButton.Click += async (s, e) =>
             {
-                var page = Element as CameraPage;
-
                 PopupNavigation.Instance.PopAsync();
             };
             mainLayout.AddView(exitButton);
             ////////////////////////////////////////////////////////////DrawLayout///////////////////
+            ///////////////////////////////////////////////////////////////////////////////
+            switchButton = new Button(Context);
+            switchButton.LayoutParameters = ButtonParams;
+            switchButton.Text = "Switch";
+            switchButton.Click += async (s, e) =>
+            {
+                NetProcess.SendCameraControl(page.MachinId, page.PlayerId, CameraControlType.SwitchCamera);
+            };
+            mainLayout.AddView(switchButton);
+            ////////////////////////////////////////////////////////////DrawLayout///////////////////           
+            ///////////////////////////////////////////////////////////////////////////////
+            flashButton = new Button(Context);
+            flashButton.LayoutParameters = ButtonParams;
+            flashButton.Text = "Flash";
+            flashButton.Click += async (s, e) =>
+            {
+                NetProcess.SendCameraControl(page.MachinId, page.PlayerId, CameraControlType.Flash);
+            };
+            mainLayout.AddView(flashButton);
+            ////////////////////////////////////////////////////////////DrawLayout///////////////////           
             AddView(mainLayout);
         }
-
 
 
 
@@ -167,9 +192,39 @@ namespace FullCameraApp.Droid
             textViewMain.SetX(half_width);
             textViewMain.SetY(metrics.HeightPixels - 70);
 
+            int width = half_width + half_width;
 
-            exitButton.SetX(half_width);
-            exitButton.SetY(metrics.HeightPixels - 200);
+            int button_width = exitButton.Width;
+
+            int pos3 = (int)width / 3;
+            double remain = Math.Abs(pos3 - button_width) * 3;
+
+
+            int xaddspace = (int)(remain / 3);
+            int ypoisition = metrics.HeightPixels - 100;
+
+     
+            {
+                int i = 0;
+                int current_position = (pos3 * i) + xaddspace;
+
+                exitButton.SetX(current_position);
+                exitButton.SetY(ypoisition);
+
+                i = 1;
+                current_position = (pos3 * i) + xaddspace;
+
+                switchButton.SetX(current_position);
+                switchButton.SetY(ypoisition);
+
+                i = 2;
+                current_position = (pos3 * i) + xaddspace;
+
+                flashButton.SetX(current_position);
+                flashButton.SetY(ypoisition);
+            }
+
+          
         }
 
         public override bool OnKeyDown(Keycode keyCode, KeyEvent e)

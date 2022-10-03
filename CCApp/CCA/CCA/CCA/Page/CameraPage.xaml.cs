@@ -13,9 +13,23 @@ namespace CCA.Page
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class CameraPage : PopupPage
     {
+
+        public delegate void DoSomeDelegate(string parameter, Action<string> callback);
+        public DoSomeDelegate OnControl;
+
         public CameraPage()
         {
             InitializeComponent();
+        }
+
+
+        public void ControlCamera(string command)
+        {
+            // Call the method registered in the custom renderer
+            OnControl?.Invoke(command, (args) =>
+            {
+                // Acquire the value from custom renderer
+            });
         }
     }
 }

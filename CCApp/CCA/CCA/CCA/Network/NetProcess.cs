@@ -390,7 +390,39 @@ namespace CCA
 
                             }
                             break;
+                        case (int)PROTOCOL.IdPktCameraControlRes:
+                            {
+                                CAMERA_CONTROL_RES res = new CAMERA_CONTROL_RES();
+                                res = CAMERA_CONTROL_RES.Parser.ParseFrom(data.Data);
 
+                                var machineid = DependencyService.Get<MethodExt>().MachineId();
+
+                                if (res.VarMachineId != machineid)
+                                    break;
+
+
+                                if (PopupNavigation.Instance.PopupStack.Count > 0)
+                                {
+                                    if (PopupNavigation.Instance.PopupStack[0].GetType() == typeof(CameraPage))
+                                    {
+                                        var page = PopupNavigation.Instance.PopupStack[0];
+
+                                        CameraPage camera_page = (CameraPage)page;
+
+                                        switch(res.VarType)
+                                        {
+                                            case CameraControlType.SwitchCamera:
+                                                camera_page.ControlCamera("switch_camera");
+                                                break;
+                                            case CameraControlType.Flash:
+                                                camera_page.ControlCamera("Flash"); 
+                                                break;
+
+                                        }
+                                    }
+                                }
+                            }
+                            break;
                     }
                 }
                 catch (Exception ex)
@@ -758,6 +790,30 @@ namespace CCA
                 message.WriteTo(stream);
 
                 client.WritePacket((int)PROTOCOL.IdPktRoomPassThroughReq, stream.ToArray(), stream.ToArray().Length);
+            }
+        }
+
+        static public void SendCameraControl(string machin_id, Int64 player_id,CameraControlType type)
+        {
+            if (client == null || client.socket == null || client.socket.Connected == false)
+                return;
+
+            // var bytearray = System.Text.Encoding.GetEncoding(949).GetBytes(msg);
+
+            // var bytearray = System.Text.Encoding.UTF8.GetBytes(msg);
+
+            CAMERA_CONTROL_REQ message = new CAMERA_CONTROL_REQ
+            {
+                VarType = type,
+                VarPlayerId = player_id,
+                VarMachineId = machin_id,
+            };
+
+            using (MemoryStream stream = new MemoryStream())
+            {
+                message.WriteTo(stream);
+
+                client.WritePacket((int)PROTOCOL.IdPktCameraControlReq, stream.ToArray(), stream.ToArray().Length);
             }
         }
     }

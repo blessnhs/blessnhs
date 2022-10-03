@@ -22,7 +22,7 @@ static constexpr ::PROTOBUF_NAMESPACE_ID::internal::MigrationSchema* schemas = n
 static constexpr ::PROTOBUF_NAMESPACE_ID::Message* const* file_default_instances = nullptr;
 
 const char descriptor_table_protodef_Enum_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
-  "\n\nEnum.proto*\257\013\n\010PROTOCOL\022\026\n\022ID_PKT_VERS"
+  "\n\nEnum.proto*\322\013\n\010PROTOCOL\022\026\n\022ID_PKT_VERS"
   "ION_REQ\020\000\022\026\n\022ID_PKT_VERSION_RES\020\001\022\024\n\020ID_"
   "PKT_LOGIN_REQ\020\002\022\024\n\020ID_PKT_LOGIN_RES\020\003\022\032\n"
   "\026ID_PKT_CREATE_ROOM_REQ\020\004\022\032\n\026ID_PKT_CREA"
@@ -50,20 +50,22 @@ const char descriptor_table_protodef_Enum_2eproto[] PROTOBUF_SECTION_VARIABLE(pr
   "#\022\030\n\024ID_PKT_MAIL_READ_RES\020$\022\022\n\016ID_PKT_RE"
   "G_REQ\020%\022\022\n\016ID_PKT_REG_RES\020&\022\034\n\030ID_PKT_CL"
   "IENT_LOGOUT_REQ\020\'\022\034\n\030ID_PKT_CLIENT_LOGOU"
-  "T_RES\020(\022\026\n\022ID_PKT_CLIENT_KICK\020)\022\031\n\025ID_PK"
-  "T_CAMERA_CONTROL\020*\022\036\n\032ID_PKT_MPEG2TS_MES"
-  "SAGE_REQ\020+\022\036\n\032ID_PKT_MPEG2TS_MESSAGE_RES"
-  "\020,\022\035\n\031ID_PKT_CAMERA_WAKE_UP_REQ\020-\022\035\n\031ID_"
-  "PKT_CAMERA_WAKE_UP_RES\020.\022\032\n\026ID_PKT_STOP_"
-  "STREAM_REQ\020/\022\032\n\026ID_PKT_STOP_STREAM_RES\0200"
-  "\022\031\n\025ID_PKT_REG_CAMERA_REQ\0201\022\031\n\025ID_PKT_RE"
-  "G_CAMERA_RES\0202\022\032\n\026ID_PKT_CAMERA_LIST_REQ"
-  "\0203\022\032\n\026ID_PKT_CAMERA_LIST_RES\0204*{\n\tErrorC"
-  "ode\022\013\n\007Success\020\000\022\021\n\rDataBaseError\020\001\022\022\n\016L"
-  "oginDuplicate\020\002\022\017\n\013SystemError\020\003\022\017\n\013Logi"
-  "nFailed\020\004\022\030\n\024Duplicate_Enter_Room\020\005*@\n\021C"
-  "ameraControlType\022\020\n\014SwitchCamera\020\000\022\013\n\007Qu"
-  "ality\020\001\022\014\n\010SaveFile\020\002B\002H\001b\006proto3"
+  "T_RES\020(\022\026\n\022ID_PKT_CLIENT_KICK\020)\022\035\n\031ID_PK"
+  "T_CAMERA_CONTROL_REQ\020*\022\035\n\031ID_PKT_CAMERA_"
+  "CONTROL_RES\020+\022\036\n\032ID_PKT_MPEG2TS_MESSAGE_"
+  "REQ\020,\022\036\n\032ID_PKT_MPEG2TS_MESSAGE_RES\020-\022\035\n"
+  "\031ID_PKT_CAMERA_WAKE_UP_REQ\020.\022\035\n\031ID_PKT_C"
+  "AMERA_WAKE_UP_RES\020/\022\032\n\026ID_PKT_STOP_STREA"
+  "M_REQ\0200\022\032\n\026ID_PKT_STOP_STREAM_RES\0201\022\031\n\025I"
+  "D_PKT_REG_CAMERA_REQ\0202\022\031\n\025ID_PKT_REG_CAM"
+  "ERA_RES\0203\022\032\n\026ID_PKT_CAMERA_LIST_REQ\0204\022\032\n"
+  "\026ID_PKT_CAMERA_LIST_RES\0205*{\n\tErrorCode\022\013"
+  "\n\007Success\020\000\022\021\n\rDataBaseError\020\001\022\022\n\016LoginD"
+  "uplicate\020\002\022\017\n\013SystemError\020\003\022\017\n\013LoginFail"
+  "ed\020\004\022\030\n\024Duplicate_Enter_Room\020\005*^\n\021Camera"
+  "ControlType\022\020\n\014SwitchCamera\020\000\022\r\n\tQuality"
+  "Up\020\001\022\017\n\013QualityDown\020\002\022\t\n\005Flash\020\003\022\014\n\010Save"
+  "File\020\004B\002H\001b\006proto3"
   ;
 static const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable*const descriptor_table_Enum_2eproto_deps[1] = {
 };
@@ -72,7 +74,7 @@ static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_Enu
 static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_Enum_2eproto_once;
 static bool descriptor_table_Enum_2eproto_initialized = false;
 const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_Enum_2eproto = {
-  &descriptor_table_Enum_2eproto_initialized, descriptor_table_protodef_Enum_2eproto, "Enum.proto", 1673,
+  &descriptor_table_Enum_2eproto_initialized, descriptor_table_protodef_Enum_2eproto, "Enum.proto", 1738,
   &descriptor_table_Enum_2eproto_once, descriptor_table_Enum_2eproto_sccs, descriptor_table_Enum_2eproto_deps, 0, 0,
   schemas, file_default_instances, TableStruct_Enum_2eproto::offsets,
   file_level_metadata_Enum_2eproto, 0, file_level_enum_descriptors_Enum_2eproto, file_level_service_descriptors_Enum_2eproto,
@@ -139,6 +141,7 @@ bool PROTOCOL_IsValid(int value) {
     case 50:
     case 51:
     case 52:
+    case 53:
       return true;
     default:
       return false;
@@ -172,6 +175,8 @@ bool CameraControlType_IsValid(int value) {
     case 0:
     case 1:
     case 2:
+    case 3:
+    case 4:
       return true;
     default:
       return false;

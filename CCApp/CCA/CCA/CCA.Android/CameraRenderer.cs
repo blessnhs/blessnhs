@@ -215,6 +215,10 @@ namespace FullCameraApp.Droid
 
             page = (CameraPage)e.NewElement;
 
+
+            page.OnControl += Element_OnControl;
+
+
             SetupUserInterface();
             SetupEventHandlers();
         }
@@ -246,6 +250,84 @@ namespace FullCameraApp.Droid
             ///////////////////////////////////////////////////////////////////////////////
         }
 
+        static bool isOn = false;
+
+        public async void Flash()
+        {
+            //if (isOn == false)
+            //{
+            //    await Flashlight.TurnOnAsync();
+            //    isOn = true;
+            //}
+            //else
+            //{
+            //    await Flashlight.TurnOffAsync();
+            //    isOn = false;
+            //}
+        }
+
+        public void SiwtchCamera()
+        {
+            StopCamera();
+
+            if (currentFacing == Android.Hardware.CameraFacing.Front)
+                currentFacing = Android.Hardware.CameraFacing.Back;
+            else
+                currentFacing = Android.Hardware.CameraFacing.Front;
+
+            {
+                int cameraCount = Android.Hardware.Camera.NumberOfCameras;
+                int cameraId = 0;
+                Android.Hardware.Camera.CameraInfo cameraInfo = new Android.Hardware.Camera.CameraInfo();
+                for (int camIdx = 0; camIdx < cameraCount; camIdx++)
+                {
+                    Android.Hardware.Camera.GetCameraInfo(camIdx, cameraInfo);
+                    if (cameraInfo.Facing == currentFacing)
+                    {
+                        camera = Android.Hardware.Camera.Open(camIdx);
+                        cameraId = camIdx;
+                        break;
+                    }
+                }
+
+                if (camera == null)
+                    camera = Android.Hardware.Camera.Open();
+
+                var parameters = camera.GetParameters();
+
+                // Find the preview aspect ratio that is closest to the surface aspect
+                //var previewSize = parameters.SupportedPreviewSizes
+                //                            .OrderBy(s => Math.Abs(s.Width / (decimal)s.Height - aspect))
+                //                            .First();
+
+                var previewSize = parameters.SupportedPreviewSizes[2];
+                //     mainLayout.LayoutParameters.Height = previewSize.Height;
+                //     mainLayout.LayoutParameters.Width = previewSize.Width;
+
+                parameters.SetPreviewSize(previewSize.Width, previewSize.Height);
+                camera.SetParameters(parameters);
+                camera.SetPreviewTexture(_surface);
+                StartCamera();
+            }
+        }
+
+        public void QualityUp()
+        {
+            quality += 10;
+            if (quality > 100)
+                quality = 100;
+
+            qualityUp.Text = quality.ToString();
+        }
+
+        public void QualityDown()
+        {
+            quality -= 10;
+            if (quality < 0)
+                quality = 0;
+
+            qualityUp.Text = quality.ToString();
+        }
 
         void AddImageView(int pos, int width, int height)
         {
@@ -265,6 +347,8 @@ namespace FullCameraApp.Droid
             imageViewDic.Add(pos, imageView);
             ///////////////////////////////////////////////////////////////////////////////
         }
+
+        bool disable_button = true;
 
         void SetupUserInterface()
         {
@@ -321,7 +405,9 @@ namespace FullCameraApp.Droid
             {
                 textViewMain.Text = "";
             };
-            mainLayout.AddView(textViewMain);
+
+            if(disable_button == false)
+                mainLayout.AddView(textViewMain);
             ///////////////////////////////////////////////////////////////////////////////
             ///
 
@@ -349,7 +435,8 @@ namespace FullCameraApp.Droid
                     }
                 }
             };
-            mainLayout.AddView(mainScreenButton);
+            if (disable_button == false)
+                mainLayout.AddView(mainScreenButton);
 
             ///////////////////////////////////////////////////////////////////////////////
             qualityUp = new Button(Context);
@@ -357,26 +444,21 @@ namespace FullCameraApp.Droid
             qualityUp.Text = "Up";
             qualityUp.Click += async (s, e) =>
             {
-                quality+= 10;
-                if (quality > 100)
-                    quality = 100;
-
-                qualityUp.Text = quality.ToString();
+                QualityUp();
+                
             };
-            mainLayout.AddView(qualityUp);
+            if (disable_button == false)
+                mainLayout.AddView(qualityUp);
             ///////////////////////////////////////////////////////////////////////////////
             qualityDown = new Button(Context);
             qualityDown.LayoutParameters = ButtonParams;
             qualityDown.Text = "Down";
             qualityDown.Click += async (s, e) =>
             {
-                quality -= 10;
-                if (quality < 0)
-                    quality = 0;
-
-                qualityUp.Text = quality.ToString();
+                QualityDown();
             };
-            mainLayout.AddView(qualityDown);
+            if (disable_button == false)
+                mainLayout.AddView(qualityDown);
             ///////////////////////////////////////////////////////////////////////////////
             exitButton = new Button(Context);
             exitButton.LayoutParameters = ButtonParams;
@@ -385,56 +467,18 @@ namespace FullCameraApp.Droid
             {
                 PopupNavigation.Instance.PopAsync();
             };
-            mainLayout.AddView(exitButton);
+            if (disable_button == false)
+                mainLayout.AddView(exitButton);
             ////////////////////////////////////////////////////////////DrawLayout///////////////////
             switchButton = new Button(Context);
             switchButton.LayoutParameters = ButtonParams;
             switchButton.Text = "Switch";
             switchButton.Click += async (s, e) =>
             {
-                StopCamera();
-
-                if (currentFacing == Android.Hardware.CameraFacing.Front)
-                    currentFacing = Android.Hardware.CameraFacing.Back;
-                else
-                    currentFacing = Android.Hardware.CameraFacing.Front;
-
-                {
-                    int cameraCount = Android.Hardware.Camera.NumberOfCameras;
-                    int cameraId = 0;
-                    Android.Hardware.Camera.CameraInfo cameraInfo = new Android.Hardware.Camera.CameraInfo();
-                    for (int camIdx = 0; camIdx < cameraCount; camIdx++)
-                    {
-                        Android.Hardware.Camera.GetCameraInfo(camIdx, cameraInfo);
-                        if (cameraInfo.Facing == currentFacing)
-                        {
-                            camera = Android.Hardware.Camera.Open(camIdx);
-                            cameraId = camIdx;
-                            break;
-                        }
-                    }
-
-                    if (camera == null)
-                        camera = Android.Hardware.Camera.Open();
-
-                    var parameters = camera.GetParameters();
-
-                    // Find the preview aspect ratio that is closest to the surface aspect
-                    //var previewSize = parameters.SupportedPreviewSizes
-                    //                            .OrderBy(s => Math.Abs(s.Width / (decimal)s.Height - aspect))
-                    //                            .First();
-
-                    var previewSize = parameters.SupportedPreviewSizes[2];
-                    //     mainLayout.LayoutParameters.Height = previewSize.Height;
-                    //     mainLayout.LayoutParameters.Width = previewSize.Width;
-
-                    parameters.SetPreviewSize(previewSize.Width, previewSize.Height);
-                    camera.SetParameters(parameters);
-                    camera.SetPreviewTexture(_surface);
-                    StartCamera();
-                }
+                SiwtchCamera();
             };
-            mainLayout.AddView(switchButton);
+            if (disable_button == false)
+                mainLayout.AddView(switchButton);
 
             ////////////////////////////////////////////////////////////DrawLayout///////////////////
 
@@ -479,6 +523,7 @@ namespace FullCameraApp.Droid
                 posy = posx / 2;
             }
 
+
             textViewMain.SetX(half_width);
             textViewMain.SetY(metrics.HeightPixels - 70);
 
@@ -491,11 +536,27 @@ namespace FullCameraApp.Droid
             mainScreenButton.SetX(half_width - 200);
             mainScreenButton.SetY(metrics.HeightPixels - 200);
 
-            exitButton.SetX(half_width);
-            exitButton.SetY(metrics.HeightPixels - 200);
+            exitButton.SetX(0);
+            exitButton.SetY(metrics.HeightPixels - 100);
 
             switchButton.SetX(half_width + 250);
             switchButton.SetY(metrics.HeightPixels - 200);
+        }
+
+
+        async void  Element_OnControl(string parameter, Action<string> action)
+        {
+
+            switch (parameter)
+            {
+                case "switch_camera":
+                    SiwtchCamera();
+                    break;
+                case "Flash":
+                    Flash();
+                    break;
+            }
+
         }
 
         public void SetupEventHandlers()
@@ -702,8 +763,6 @@ namespace FullCameraApp.Droid
         // used to marshal back to UI thread
         private SynchronizationContext _context;
 
-
-
         public bool OnSurfaceTextureDestroyed(Android.Graphics.SurfaceTexture surface)
         {
             isDestroy = true;
@@ -713,6 +772,7 @@ namespace FullCameraApp.Droid
             StopCamera();
             audiomgr.Clear();
 
+            Flashlight.TurnOffAsync();
 
             return true;
         }

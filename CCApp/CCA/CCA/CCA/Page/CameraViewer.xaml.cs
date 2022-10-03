@@ -13,9 +13,15 @@ namespace CCA.Page
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class CameraViewer : PopupPage
     {
-        public CameraViewer()
+
+        public string MachinId;
+        public Int64 PlayerId;
+        public CameraViewer(string _MachinId,Int64 playerId)
         {
             InitializeComponent();
+
+            MachinId = _MachinId;
+            PlayerId = playerId;
         }
 
         protected override void OnAppearing()
@@ -29,5 +35,6 @@ namespace CCA.Page
 
             NetProcess.SendStopStream();
         }
+
     }
 }

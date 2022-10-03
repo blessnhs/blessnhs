@@ -35,7 +35,7 @@ HubProcess::HubProcess(void)
 
 	ADD_NET_FUNC(HubProcess, ID_PKT_STOP_STREAM_REQ, STOP_STREAM);
 
-
+	ADD_NET_FUNC(HubProcess, ID_PKT_CAMERA_CONTROL_REQ, CAMERA_CONTROL);
 
 }
 
@@ -603,6 +603,38 @@ VOID HubProcess::CAMERA_REGISTER(boost::shared_ptr<XDATA> pBuffer, boost::shared
 	PLAYER_MSG->Type = Client->GetMyDBTP();
 	PLAYER_MSG->SubType = ONQUERY;
 	MAINPROC.RegisterCommand(PLAYER_MSG);
+}
+
+VOID HubProcess::CAMERA_CONTROL(boost::shared_ptr<XDATA> pBuffer, boost::shared_ptr<GSClient> Client)
+{
+	DECLARE_RECV_TYPE(CAMERA_CONTROL_REQ, message)
+
+	CAMERA_CONTROL_RES res;
+	res.set_var_code(Success);
+
+
+	PlayerPtr pPlayer = PLAYERMGR.SearchByFrontSid(pBuffer->Reserve2);
+	if (pPlayer == NULL)
+	{
+		return;
+	}
+
+	PlayerPtr pTargetPlayer = PLAYERMGR.Search(message.var_player_id());
+	if (pTargetPlayer == NULL)
+	{
+		return;
+	}
+
+	res.set_var_type(message.var_type());
+
+	res.set_var_machine_id(message.var_machine_id());
+	res.set_var_player_id(message.var_player_id());
+
+	GSCLIENT_PTR pSession = SERVER.GetClient(pTargetPlayer->GetPair());
+	if (pSession)
+	{
+		SEND_PROTO_BUFFER(res, pSession, pTargetPlayer->GetFrontSid())
+	}
 }
 
 VOID HubProcess::CAMERA_WAKE_UP(boost::shared_ptr<XDATA> pBuffer, boost::shared_ptr<GSClient> Client)
