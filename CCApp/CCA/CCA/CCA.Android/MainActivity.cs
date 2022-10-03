@@ -42,9 +42,27 @@ namespace CCA.Droid
             context = this;
             activity = this;
             Window.AddFlags(WindowManagerFlags.KeepScreenOn |
-                 WindowManagerFlags.DismissKeyguard |
-                 WindowManagerFlags.ShowWhenLocked |
-                 WindowManagerFlags.TurnScreenOn);
+                WindowManagerFlags.DismissKeyguard |
+                WindowManagerFlags.ShowWhenLocked |
+                WindowManagerFlags.TurnScreenOn);
+
+            
+            PowerManager pm = (PowerManager)GetSystemService(Context.PowerService);
+            PowerManager.WakeLock wl = pm.NewWakeLock(WakeLockFlags.Full | WakeLockFlags.AcquireCausesWakeup, "");
+            wl.Acquire();
+            
+
+            //string packageName = "com.blessnhs.cca";
+            //PowerManager pm = (PowerManager)GetSystemService(Context.PowerService);
+         
+            //if(pm.IsIgnoringBatteryOptimizations(packageName))
+            //{
+            //    Intent i = new Intent();
+            //    i.SetAction(Android.Provider.Settings.ActionRequestIgnoreBatteryOptimizations);
+            //    i.SetData(Android.Net.Uri.Parse("package:" + packageName));
+
+            //    StartActivity(i);
+            //}
 
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);

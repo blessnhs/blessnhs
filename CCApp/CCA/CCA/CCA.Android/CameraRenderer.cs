@@ -163,7 +163,7 @@ namespace FullCameraApp.Droid
     {
         public ImageStreamingServer server = new ImageStreamingServer();
 
-        public int quality = 20;
+        public int quality = 50;
         public int target_pos = 0;
 
         public CameraPageRenderer(Context context) : base(context)
@@ -357,7 +357,7 @@ namespace FullCameraApp.Droid
             qualityUp.Text = "Up";
             qualityUp.Click += async (s, e) =>
             {
-                quality++;
+                quality+= 10;
                 if (quality > 100)
                     quality = 100;
 
@@ -370,7 +370,7 @@ namespace FullCameraApp.Droid
             qualityDown.Text = "Down";
             qualityDown.Click += async (s, e) =>
             {
-                quality--;
+                quality -= 10;
                 if (quality < 0)
                     quality = 0;
 

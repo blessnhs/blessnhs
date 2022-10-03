@@ -52,7 +52,7 @@ namespace CCA
                             string Model = DeviceInfo.Model;
                             NetProcess.SendRegCamera(Model,machineid);
 
-                            PopupNavigation.Instance.PushAsync(new CameraPage());
+ //                           PopupNavigation.Instance.PushAsync(new CameraPage());
                         }
                         break;
                     case "MyCamera":

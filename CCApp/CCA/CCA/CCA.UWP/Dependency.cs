@@ -45,6 +45,11 @@ namespace DependencyHelper.UWP
             
         }
 
+        public void RestartApp()
+        {
+
+        }
+
         public string MachineId()
         {
             try
