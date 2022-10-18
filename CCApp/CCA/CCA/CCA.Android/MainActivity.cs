@@ -34,6 +34,9 @@ namespace CCA.Droid
     {
         public static Context context;
         public static MainActivity activity;
+
+        public static int BatteryLevel;
+
         protected override void OnCreate(Bundle savedInstanceState)
         {
             
@@ -74,6 +77,25 @@ namespace CCA.Droid
             UnlockScreen();
 
             RequestPermissionsManually();
+
+
+            BatteryCheckReg();
+        }
+
+        private void BatteryCheckReg()
+        {
+            //battery refresh check
+            Device.StartTimer(TimeSpan.FromSeconds(10), () =>
+            {
+                var filter = new IntentFilter(Intent.ActionBatteryChanged);
+                var battery = RegisterReceiver(null, filter);
+                int level = battery.GetIntExtra(BatteryManager.ExtraLevel, -1);
+                int scale = battery.GetIntExtra(BatteryManager.ExtraScale, -1);
+
+                BatteryLevel = (int)System.Math.Floor(level * 100D / scale);
+
+                return true; // return true to repeat counting, false to stop timer
+            });
         }
 
         public FirebaseAuth FirebaseAuth_ { get; private set; }
@@ -228,6 +250,9 @@ namespace CCA.Droid
                     _permission.Add(Manifest.Permission.Internet);
 
                 if (ContextCompat.CheckSelfPermission(this, Manifest.Permission.RequestIgnoreBatteryOptimizations) != Permission.Granted)
+                    _permission.Add(Manifest.Permission.RequestIgnoreBatteryOptimizations);
+
+                if (ContextCompat.CheckSelfPermission(this, Manifest.Permission.BatteryStats) != Permission.Granted)
                     _permission.Add(Manifest.Permission.RequestIgnoreBatteryOptimizations);
 
                 if (_permission.Count > 0)

@@ -15,6 +15,7 @@ using Android.Runtime;
 using CCA.Droid;
 using Plugin.InAppBilling;
 using Xamarin.Essentials;
+using CCA;
 
 [assembly: Xamarin.Forms.Dependency(typeof(Method_Android))]
 
@@ -134,6 +135,52 @@ namespace DependencyHelper.Droid
             catch (Exception e)
             {
 
+            }
+
+        }
+
+
+        static public void NotificationException(string message)
+        {
+            try
+            {
+                var manager = (NotificationManager)AndroidApp.Context.GetSystemService(AndroidApp.NotificationService);
+
+                if (Build.VERSION.SdkInt >= Android.OS.BuildVersionCodes.O)
+                {
+
+                    var notification = new Notification.Builder(AndroidApp.Context, "DE")
+                        .SetContentTitle(DateTime.Now.ToString() + " Notify!")
+                        .SetContentText(message)
+                        .SetSmallIcon(CCA.Droid.Resource.Drawable.xamagonBlue)
+                        .SetLargeIcon(BitmapFactory.DecodeResource(AndroidApp.Context.Resources, CCA.Droid.Resource.Drawable.xamagonBlue))
+                        .SetSmallIcon(CCA.Droid.Resource.Drawable.xamagonBlue)
+                        .Build();
+
+                    manager.Notify(1, notification);
+                }
+                else
+                {
+                    var notification = new Notification.Builder(Android.App.Application.Context)
+                                                 .SetContentTitle(DateTime.Now.ToString() + " Notify!")
+                                                 .SetContentText(message)
+                                                 .SetSmallIcon(CCA.Droid.Resource.Drawable.xamagonBlue)
+                                                 .SetLargeIcon(BitmapFactory.DecodeResource(AndroidApp.Context.Resources, CCA.Droid.Resource.Drawable.xamagonBlue))
+                                                 .SetSmallIcon(CCA.Droid.Resource.Drawable.xamagonBlue)
+                                                 .Build();
+
+                    manager.Notify(1, notification);
+                }
+
+               
+            }
+            catch (Exception e)
+            {
+
+            }
+            finally
+            {
+                NetProcess.SendQNS(message);
             }
 
         }

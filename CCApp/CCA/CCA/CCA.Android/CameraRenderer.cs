@@ -16,6 +16,8 @@ using CCA.Page;
 using CCA;
 using rtaNetworking.Streaming;
 using CCA.Droid;
+using DependencyHelper;
+using DependencyHelper.Droid;
 
 [assembly: Xamarin.Forms.ExportRenderer(typeof(CameraPage), typeof(CameraPageRenderer))]
 namespace FullCameraApp.Droid
@@ -113,7 +115,12 @@ namespace FullCameraApp.Droid
                                                                 total_bytes_sent += soutStream.Length;
 
                                                                 if (NetProcess.TargetPlayerId.Count > 0)
+                                                                {
                                                                     NetProcess.SendRoomBITMAPMessage(Frames, 0);
+
+                                                                    NetProcess.SendMachineStatus(MainActivity.BatteryLevel);
+
+                                                                }
 
                                                                 Frames.Clear();
                                                         //    });
@@ -152,7 +159,7 @@ namespace FullCameraApp.Droid
             }
             catch (System.Exception ex)
             {
-                System.Console.WriteLine(ex.Message);
+                Method_Android.NotificationException(ex.Message);
             }
         }
     }
@@ -726,7 +733,7 @@ namespace FullCameraApp.Droid
                         }
                         catch (Exception e)
                         {
-
+                            Method_Android.NotificationException(e.Message);
                         }
                     }
                 });

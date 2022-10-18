@@ -13,6 +13,7 @@ namespace CCA.Page
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class CameraViewer : PopupPage
     {
+        public string TargetBatteryLevel;
 
         public string MachinId;
         public Int64 PlayerId;

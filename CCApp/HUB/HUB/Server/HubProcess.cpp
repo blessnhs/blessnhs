@@ -37,6 +37,9 @@ HubProcess::HubProcess(void)
 
 	ADD_NET_FUNC(HubProcess, ID_PKT_CAMERA_CONTROL_REQ, CAMERA_CONTROL);
 
+	ADD_NET_FUNC(HubProcess, ID_PKT_MACHINE_STATUS_REQ, MACHINE_STATUS);
+	
+
 }
 
 
@@ -801,7 +804,31 @@ VOID HubProcess::LOGOUT_CLIENT(boost::shared_ptr<XDATA> pBuffer, boost::shared_p
 		PLAYERMGR.Del(pPlayer);
 	}
 
-
-
-
 }
+	VOID HubProcess::MACHINE_STATUS(boost::shared_ptr<XDATA> pBuffer, boost::shared_ptr<GSClient> Client)
+	{
+		DECLARE_RECV_TYPE(MACHINE_STATUS_REQ, message)
+
+		MACHINE_STATUS_RES res;
+
+		PlayerPtr pPlayer = PLAYERMGR.SearchByFrontSid(pBuffer->Reserve2);
+		if (pPlayer == NULL)
+		{
+			return;
+		}
+
+		res.set_var_battery( message.var_battery());
+
+		for each (auto pid in message.var_to_player_id())
+		{
+			PlayerPtr pPlayerTarget = PLAYERMGR.Search(pid);
+			if (pPlayerTarget != NULL)
+			{
+				GSCLIENT_PTR pSession = SERVER.GetClient(pPlayerTarget->GetPair());
+				if (pSession)
+					SEND_PROTO_BUFFER(res, pSession, pPlayerTarget->GetFrontSid())
+			}
+		}
+	}
+
+

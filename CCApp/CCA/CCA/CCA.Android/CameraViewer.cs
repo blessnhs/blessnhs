@@ -16,6 +16,7 @@ using CCA.Page;
 using CCA;
 using rtaNetworking.Streaming;
 using CCA.Droid;
+using DependencyHelper.Droid;
 
 [assembly: Xamarin.Forms.ExportRenderer(typeof(CameraViewer), typeof(CameraViewerRenderer))]
 namespace FullCameraApp.Droid
@@ -40,8 +41,8 @@ namespace FullCameraApp.Droid
         //카메라 변환
         Button flashButton;
 
-
-        public TextView textViewMain;
+        //배터리 게이지
+        Button textViewBattery;
 
         AudioManagerM audiomgr = new AudioManagerM();
         ImageView imageView;
@@ -122,18 +123,16 @@ namespace FullCameraApp.Droid
             AddImageView(metrics.WidthPixels, metrics.HeightPixels);
 
             ///////////////////////////////////////////////////////////////////////////////
-            textViewMain = new TextView(Context);
+            textViewBattery = new Button(Context);
             RelativeLayout.LayoutParams TextViewParams = new RelativeLayout.LayoutParams(
             RelativeLayout.LayoutParams.WrapContent,
             RelativeLayout.LayoutParams.WrapContent);
-            textViewMain.LayoutParameters = TextViewParams;
-            textViewMain.Text = "123124";
-            textViewMain.SetTextColor(Color.White);
-            textViewMain.Click += async (s, e) =>
+            textViewBattery.LayoutParameters = TextViewParams;
+            textViewBattery.Text = "0%";
+            textViewBattery.Click += async (s, e) =>
             {
-                textViewMain.Text = "";
             };
-            mainLayout.AddView(textViewMain);
+            mainLayout.AddView(textViewBattery);
             ///////////////////////////////////////////////////////////////////////////////
             ///
 
@@ -189,18 +188,18 @@ namespace FullCameraApp.Droid
             var metrics = Resources.DisplayMetrics;
 
 
-            textViewMain.SetX(half_width);
-            textViewMain.SetY(metrics.HeightPixels - 70);
 
             int width = half_width + half_width;
 
             int button_width = exitButton.Width;
 
-            int pos3 = (int)width / 3;
-            double remain = Math.Abs(pos3 - button_width) * 3;
+            int displayObjectCount = 4;
+
+            int pos3 = (int)width / displayObjectCount;
+            double remain = Math.Abs(pos3 - button_width) * displayObjectCount;
 
 
-            int xaddspace = (int)(remain / 3);
+            int xaddspace = (int)(remain / displayObjectCount);
             int ypoisition = metrics.HeightPixels - 100;
 
      
@@ -222,9 +221,18 @@ namespace FullCameraApp.Droid
 
                 flashButton.SetX(current_position);
                 flashButton.SetY(ypoisition);
+
+
+                i = 3;
+                current_position = (pos3 * i) + xaddspace;
+
+
+                textViewBattery.SetX(current_position);
+                textViewBattery.SetY(ypoisition);
+
             }
 
-          
+
         }
 
         public override bool OnKeyDown(Keycode keyCode, KeyEvent e)
@@ -272,13 +280,16 @@ namespace FullCameraApp.Droid
                                 var bitmap = BitmapFactory.DecodeByteArray(ms?.stream.ToArray(), 0, ms.stream.ToArray().Length);
 
                                 imageView?.SetImageBitmap(bitmap);
+
+
+                                textViewBattery.Text = page.TargetBatteryLevel + "%";
                             }
                         });
 
                     }
                     catch (Exception e)
                     {
-
+                        Method_Android.NotificationException(e.Message);
                     }
                 }
             });

@@ -69,6 +69,7 @@ namespace CCA
 
         public static ConcurrentQueue<StreamWrapper> Mpeg2Stream = new ConcurrentQueue<StreamWrapper>();
         public static List<long> TargetPlayerId = new List<long>();
+        public static int TargetBatteryGage;
 
         static public void Loop()
         {
@@ -392,6 +393,30 @@ namespace CCA
 
                             }
                             break;
+
+                        case (int)PROTOCOL.IdPktMachineStatusRes:
+                            {
+                                MACHINE_STATUS_RES res = new MACHINE_STATUS_RES();
+                                res = MACHINE_STATUS_RES.Parser.ParseFrom(data.Data);
+
+                                if (PopupNavigation.Instance.PopupStack.Count > 0)
+                                {
+                                    for (int i = 0; i < PopupNavigation.Instance.PopupStack.Count; i++)
+                                    {
+                                        if (PopupNavigation.Instance.PopupStack[i].GetType() == typeof(CameraViewer))
+                                        {
+                                            var page = PopupNavigation.Instance.PopupStack[i];
+
+                                            CameraViewer camera_view = (CameraViewer)page;
+                                            camera_view.TargetBatteryLevel = res.VarBattery.ToString();
+                                            break;
+                                        }
+                                    }
+                                }
+                            }
+                            break;
+
+
                         case (int)PROTOCOL.IdPktCameraControlRes:
                             {
                                 CAMERA_CONTROL_RES res = new CAMERA_CONTROL_RES();
@@ -480,6 +505,26 @@ namespace CCA
 
         }
 
+        static public void SendMachineStatus(int battery)
+        {
+
+            if (client == null || client.socket == null || client.socket.Connected == false)
+                return;
+            {
+                MACHINE_STATUS_REQ message = new MACHINE_STATUS_REQ();
+           
+                foreach (var playerid in TargetPlayerId)
+                {
+                    message.VarToPlayerId.Add(playerid);
+                };
+
+                message.VarBattery = battery;
+
+                client.WritePacket((int)PROTOCOL.IdPktMachineStatusReq, message.ToByteArray(), message.ToByteArray().Length);
+
+            }
+
+        }
 
         static public void SendRoomMPEG2TSMessage(System.IO.MemoryStream stream, int type)
         {
