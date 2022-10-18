@@ -261,16 +261,26 @@ namespace FullCameraApp.Droid
 
         public async void Flash()
         {
-            //if (isOn == false)
-            //{
-            //    await Flashlight.TurnOnAsync();
-            //    isOn = true;
-            //}
-            //else
-            //{
-            //    await Flashlight.TurnOffAsync();
-            //    isOn = false;
-            //}
+            try
+            {
+                // Turn On
+                await Flashlight.TurnOnAsync();
+
+                // Turn Off
+                await Flashlight.TurnOffAsync();
+            }
+            catch (FeatureNotSupportedException fnsEx)
+            {
+                Method_Android.NotificationException(fnsEx.Message);
+            }
+            catch (PermissionException pEx)
+            {
+                Method_Android.NotificationException(pEx.Message);
+            }
+            catch (Exception ex)
+            {
+                Method_Android.NotificationException(ex.Message);
+            }
         }
 
         public void SiwtchCamera()

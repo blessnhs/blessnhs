@@ -78,7 +78,6 @@ namespace CCA.Droid
 
             RequestPermissionsManually();
 
-
             BatteryCheckReg();
         }
 
@@ -253,7 +252,10 @@ namespace CCA.Droid
                     _permission.Add(Manifest.Permission.RequestIgnoreBatteryOptimizations);
 
                 if (ContextCompat.CheckSelfPermission(this, Manifest.Permission.BatteryStats) != Permission.Granted)
-                    _permission.Add(Manifest.Permission.RequestIgnoreBatteryOptimizations);
+                    _permission.Add(Manifest.Permission.BatteryStats);
+
+                if (ContextCompat.CheckSelfPermission(this, Manifest.Permission.ForegroundService) != Permission.Granted)
+                    _permission.Add(Manifest.Permission.ForegroundService);
 
                 if (_permission.Count > 0)
                 {

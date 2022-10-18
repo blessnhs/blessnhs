@@ -42,7 +42,7 @@ namespace FullCameraApp.Droid
         Button flashButton;
 
         //배터리 게이지
-        Button textViewBattery;
+        Button batteryGageButton;
 
         AudioManagerM audiomgr = new AudioManagerM();
         ImageView imageView;
@@ -123,16 +123,16 @@ namespace FullCameraApp.Droid
             AddImageView(metrics.WidthPixels, metrics.HeightPixels);
 
             ///////////////////////////////////////////////////////////////////////////////
-            textViewBattery = new Button(Context);
+            batteryGageButton = new Button(Context);
             RelativeLayout.LayoutParams TextViewParams = new RelativeLayout.LayoutParams(
             RelativeLayout.LayoutParams.WrapContent,
             RelativeLayout.LayoutParams.WrapContent);
-            textViewBattery.LayoutParameters = TextViewParams;
-            textViewBattery.Text = "0%";
-            textViewBattery.Click += async (s, e) =>
+            batteryGageButton.LayoutParameters = TextViewParams;
+            batteryGageButton.Text = "0%";
+            batteryGageButton.Click += async (s, e) =>
             {
             };
-            mainLayout.AddView(textViewBattery);
+            mainLayout.AddView(batteryGageButton);
             ///////////////////////////////////////////////////////////////////////////////
             ///
 
@@ -227,8 +227,8 @@ namespace FullCameraApp.Droid
                 current_position = (pos3 * i) + xaddspace;
 
 
-                textViewBattery.SetX(current_position);
-                textViewBattery.SetY(ypoisition);
+                batteryGageButton.SetX(current_position);
+                batteryGageButton.SetY(ypoisition);
 
             }
 
@@ -282,7 +282,7 @@ namespace FullCameraApp.Droid
                                 imageView?.SetImageBitmap(bitmap);
 
 
-                                textViewBattery.Text = page.TargetBatteryLevel + "%";
+                                batteryGageButton.Text = page.TargetBatteryLevel + "%";
                             }
                         });
 

@@ -23,6 +23,31 @@ namespace DependencyHelper.Droid
 {
     public class Method_Android : MethodExt
     {
+        async public void Flash()
+        {
+            try
+            {
+                // Turn On
+                await Flashlight.TurnOnAsync();
+
+                // Turn Off
+                await Flashlight.TurnOffAsync();
+            }
+            catch (FeatureNotSupportedException fnsEx)
+            {
+                // Handle not supported on device exception
+            }
+            catch (PermissionException pEx)
+            {
+                // Handle permission exception
+            }
+            catch (Exception ex)
+            {
+                // Unable to turn on/off flashlight
+            }
+        }
+
+
         public void ShowToast(string message)
         {
             MainThread.BeginInvokeOnMainThread(() =>

@@ -13,6 +13,7 @@ namespace DependencyHelper
 
     public interface MethodExt
     {
+        void Flash();
         string MachineId();
         string MachineName();
 

@@ -14,6 +14,10 @@ namespace DependencyHelper.UWP
 
         }
 
+        public void Flash()
+        {
+
+        }
 
         public async void Purchase(string purchaseid)
         {
