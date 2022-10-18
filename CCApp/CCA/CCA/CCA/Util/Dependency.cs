@@ -16,6 +16,9 @@ namespace DependencyHelper
         string MachineId();
         string MachineName();
 
+        void ShowToast(string message);
+
+
         void Notification(string message);
 
         void Logout();

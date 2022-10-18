@@ -9,6 +9,12 @@ namespace DependencyHelper.UWP
 {
     public class Toast_UWP : MethodExt
     {
+        public void ShowToast(string message)
+        {
+
+        }
+
+
         public async void Purchase(string purchaseid)
         {
             try

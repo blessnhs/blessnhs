@@ -139,6 +139,8 @@ namespace CCA
                                     TargetPlayerId.Clear();
                                     JpegStream = new ConcurrentQueue<StreamWrapper>();
                                     AudioStream = new ConcurrentQueue<StreamWrapper>();
+
+                                    DependencyService.Get<MethodExt>().ShowToast("로그인 하셨습니다.");
                                 }   
                                 else
                                 {  
@@ -193,11 +195,11 @@ namespace CCA
                                 {
                                     if (res.VarCode == ErrorCode.Success)
                                     {
-                                        App.Current.MainPage.DisplayAlert("성공", "카메라 등록에 성공했습니다.", "ok");
+                                        DependencyService.Get<MethodExt>().ShowToast("카메라 등록에 성공했습니다.");
                                     }
                                     else
                                     {
-                                        App.Current.MainPage.DisplayAlert("실패", "카메라 등록에 실패했습니다.", "ok");
+                                        DependencyService.Get<MethodExt>().ShowToast("카메라 등록에 실패했습니다.");
                                     }
 
                                 });

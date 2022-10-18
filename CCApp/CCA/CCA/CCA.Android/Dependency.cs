@@ -14,6 +14,7 @@ using AndroidApp = Android.App.Application;
 using Android.Runtime;
 using CCA.Droid;
 using Plugin.InAppBilling;
+using Xamarin.Essentials;
 
 [assembly: Xamarin.Forms.Dependency(typeof(Method_Android))]
 
@@ -21,6 +22,16 @@ namespace DependencyHelper.Droid
 {
     public class Method_Android : MethodExt
     {
+        public void ShowToast(string message)
+        {
+            MainThread.BeginInvokeOnMainThread(() =>
+            {
+                var toast = Android.Widget.Toast.MakeText(Android.App.Application.Context, message, ToastLength.Short);
+                toast.SetGravity(GravityFlags.Center | GravityFlags.Center, 0, 5);
+                toast.Show();
+            });
+        }
+
         public string MachineId()
         {
             try

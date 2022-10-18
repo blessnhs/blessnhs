@@ -107,7 +107,7 @@ namespace CCA
                         }
                         catch (Exception e)
                         {
-
+                            DependencyService.Get<MethodExt>().Notification(e.Message);
                         }
                     }
                 });
