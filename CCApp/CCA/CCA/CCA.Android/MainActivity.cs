@@ -26,6 +26,7 @@ using System.Threading.Tasks;
 using Android.Gms.Common;
 using Android.Gms.Auth;
 using Plugin.InAppBilling;
+using DependencyHelper.Droid;
 
 namespace CCA.Droid
 {
@@ -37,10 +38,15 @@ namespace CCA.Droid
 
         public static int BatteryLevel;
 
+        Intent startServiceIntent;
+        Intent stopServiceIntent;
+        bool isStarted = false;
+
         protected override void OnCreate(Bundle savedInstanceState)
         {
             
             base.OnCreate(savedInstanceState);
+       
 
             context = this;
             activity = this;
@@ -49,15 +55,10 @@ namespace CCA.Droid
                 WindowManagerFlags.ShowWhenLocked |
                 WindowManagerFlags.TurnScreenOn);
 
-            
-            PowerManager pm = (PowerManager)GetSystemService(Context.PowerService);
-            PowerManager.WakeLock wl = pm.NewWakeLock(WakeLockFlags.Full | WakeLockFlags.AcquireCausesWakeup, "");
-            wl.Acquire();
-            
-
+        
             //string packageName = "com.blessnhs.cca";
             //PowerManager pm = (PowerManager)GetSystemService(Context.PowerService);
-         
+
             //if(pm.IsIgnoringBatteryOptimizations(packageName))
             //{
             //    Intent i = new Intent();
@@ -79,6 +80,8 @@ namespace CCA.Droid
             RequestPermissionsManually();
 
             BatteryCheckReg();
+
+            CreateService();
         }
 
         private void BatteryCheckReg()
@@ -184,17 +187,26 @@ namespace CCA.Droid
 
             FirebaseAuth_.SignOut();
 
- //           NetProcess.SendStopStream();
+            //           NetProcess.SendStopStream();
+
+            //EndService();
         }
 
         async void ProcessSignInResult(Intent data)
         {
-            GoogleSignInResult signInResult = Auth.GoogleSignInApi.GetSignInResultFromIntent(data);
-            if (signInResult.IsSuccess)
+            try
             {
-                AuthCredential credential = GoogleAuthProvider.GetCredential(signInResult.SignInAccount.IdToken, null);
-                try
+                GoogleSignInResult signInResult = Auth.GoogleSignInApi.GetSignInResultFromIntent(data);
+
+                int statusCode = signInResult.Status.StatusCode;
+
+
+                Method_Android.NotificationException(statusCode.ToString());
+
+                if (signInResult.IsSuccess)
                 {
+                    AuthCredential credential = GoogleAuthProvider.GetCredential(signInResult.SignInAccount.IdToken, null);
+
                     User.ProfileUrl = signInResult.SignInAccount.PhotoUrl.ToString();
 
                     User.Uid = signInResult.SignInAccount.Id;
@@ -204,18 +216,14 @@ namespace CCA.Droid
 
                     IAuthResult authResult = await FirebaseAuth_.SignInWithCredentialAsync(credential);
                     FirebaseUser user = authResult.User;
-
                 }
-                catch (Exception ex)
+                else
                 {
-                    //                    new Handler(MainLooper).Post(() => new AlertDialog.Builder(this).SetMessage("파이어베이스 등록 실패\n\n" + ex).Show());
                 }
-
             }
-            else
+            catch (Exception ex)
             {
-
-
+                Method_Android.NotificationException(ex.Message);
             }
         }
 
@@ -257,6 +265,9 @@ namespace CCA.Droid
                 if (ContextCompat.CheckSelfPermission(this, Manifest.Permission.ForegroundService) != Permission.Granted)
                     _permission.Add(Manifest.Permission.ForegroundService);
 
+                if (ContextCompat.CheckSelfPermission(this, Manifest.Permission.WakeLock) != Permission.Granted)
+                    _permission.Add(Manifest.Permission.WakeLock);
+
                 if (_permission.Count > 0)
                 {
                     string[] array = _permission.ToArray();
@@ -290,5 +301,34 @@ namespace CCA.Droid
                 LoadApplication(new App());
             }
         }
+
+        private void CreateService()
+        {
+
+            OnNewIntent(this.Intent);
+
+            startServiceIntent = new Intent(this, typeof(ServiceCamera));
+            startServiceIntent.SetAction(Constants.ACTION_START_SERVICE);
+
+            stopServiceIntent = new Intent(this, typeof(ServiceCamera));
+            stopServiceIntent.SetAction(Constants.ACTION_STOP_SERVICE);
+     
+            if (Build.VERSION.SdkInt >= Android.OS.BuildVersionCodes.O)
+            {
+                StartForegroundService(startServiceIntent);
+            }
+            else
+            {
+                StartService(startServiceIntent);
+            }
+
+        }
+
+        private void EndService()
+        {
+            StopService(stopServiceIntent);
+
+        }
+
     }
 }

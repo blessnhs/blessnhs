@@ -44,11 +44,12 @@ namespace CCA
             if (check_time < DateTime.Now)
             {
                 //string ip = "192.168.0.9";
+
                 string ip = GetIPAddress("blessnhs.iptime.org");
 
                 client.StartClient(ip, 20000);
 
-                check_time = DateTime.Now.AddSeconds(5);
+                check_time = DateTime.Now.AddSeconds(3);
             }
 
             if (notice_time < DateTime.Now)
@@ -60,7 +61,7 @@ namespace CCA
 
                 //SendRoomList();
 
-                notice_time = DateTime.Now.AddSeconds(10);
+                notice_time = DateTime.Now.AddSeconds(60 * 1);
             }
         }
 
@@ -114,8 +115,11 @@ namespace CCA
                                 }
 
                                 SQLLiteDB.LoadCacheData();
+
+
                                 if (User.Name != null)
                                     NetProcess.SendLogin(User.Uid,User.Token);
+                             
                             }
                             break;
                         case (int)PROTOCOL.IdPktLoginRes:
@@ -128,20 +132,23 @@ namespace CCA
                                 if (res.VarCode == ErrorCode.Success)
                                 {
                                     Xamarin.Forms.DependencyService.Register<MethodExt>();
+                                    Device.BeginInvokeOnMainThread(() =>
+                                    {
+                                        DependencyService.Get<MethodExt>().Notification("New Version Updated");
+                                        DependencyService.Get<MethodExt>().ShowToast("로그인 하셨습니다.");
 
-                                    DependencyService.Get<MethodExt>().Notification("New Version Updated");
-                             
+                                        if (PopupNavigation.Instance.PopupStack.Count > 0)
+                                            PopupNavigation.Instance.PopAsync();
+                                    });
+
                                     User.LoginSuccess = true;
                                     SQLLiteDB.Upsert(res.VarName,"");
-
-                                    if( PopupNavigation.Instance.PopupStack.Count > 0)
-                                        PopupNavigation.Instance.PopAsync();
 
                                     TargetPlayerId.Clear();
                                     JpegStream = new ConcurrentQueue<StreamWrapper>();
                                     AudioStream = new ConcurrentQueue<StreamWrapper>();
 
-                                    DependencyService.Get<MethodExt>().ShowToast("로그인 하셨습니다.");
+                                   
                                 }   
                                 else
                                 {  
@@ -246,17 +253,19 @@ namespace CCA
 
                                 TargetPlayerId.Add(res.VarToPlayerId);
 
-                                if (PopupNavigation.Instance.PopupStack.Count == 0)
-                                    PopupNavigation.Instance.PushAsync(new CameraPage());
-                                else
+                                Device.BeginInvokeOnMainThread(() =>
                                 {
-                                    if(PopupNavigation.Instance.PopupStack[0].GetType() != typeof(CameraPage))
-                                    {
-                                        PopupNavigation.Instance.PopAsync();
+                                    if (PopupNavigation.Instance.PopupStack.Count == 0)
                                         PopupNavigation.Instance.PushAsync(new CameraPage());
+                                    else
+                                    {
+                                        if (PopupNavigation.Instance.PopupStack[0].GetType() != typeof(CameraPage))
+                                        {
+                                            PopupNavigation.Instance.PopAsync();
+                                            PopupNavigation.Instance.PushAsync(new CameraPage());
+                                        }
                                     }
-                                }
-
+                                });
                             }
                             break;
 
@@ -280,16 +289,9 @@ namespace CCA
 
                                 Device.BeginInvokeOnMainThread(() =>
                                 {
-
                                     var mainpage = (MainPage)Application.Current.MainPage;
 
-
                                     User.RoomIdList.Add(res.VarRoomId);
-
-                                    {
-                                    }
-
-
                                 });
 
                             }
@@ -399,20 +401,23 @@ namespace CCA
                                 MACHINE_STATUS_RES res = new MACHINE_STATUS_RES();
                                 res = MACHINE_STATUS_RES.Parser.ParseFrom(data.Data);
 
-                                if (PopupNavigation.Instance.PopupStack.Count > 0)
+                                Device.BeginInvokeOnMainThread(() =>
                                 {
-                                    for (int i = 0; i < PopupNavigation.Instance.PopupStack.Count; i++)
+                                    if (PopupNavigation.Instance.PopupStack.Count > 0)
                                     {
-                                        if (PopupNavigation.Instance.PopupStack[i].GetType() == typeof(CameraViewer))
+                                        for (int i = 0; i < PopupNavigation.Instance.PopupStack.Count; i++)
                                         {
-                                            var page = PopupNavigation.Instance.PopupStack[i];
+                                            if (PopupNavigation.Instance.PopupStack[i].GetType() == typeof(CameraViewer))
+                                            {
+                                                var page = PopupNavigation.Instance.PopupStack[i];
 
-                                            CameraViewer camera_view = (CameraViewer)page;
-                                            camera_view.TargetBatteryLevel = res.VarBattery.ToString();
-                                            break;
+                                                CameraViewer camera_view = (CameraViewer)page;
+                                                camera_view.TargetBatteryLevel = res.VarBattery.ToString();
+                                                break;
+                                            }
                                         }
                                     }
-                                }
+                                });
                             }
                             break;
 
@@ -427,27 +432,29 @@ namespace CCA
                                 if (res.VarMachineId != machineid)
                                     break;
 
-
-                                if (PopupNavigation.Instance.PopupStack.Count > 0)
+                                Device.BeginInvokeOnMainThread(() =>
                                 {
-                                    if (PopupNavigation.Instance.PopupStack[0].GetType() == typeof(CameraPage))
+                                    if (PopupNavigation.Instance.PopupStack.Count > 0)
                                     {
-                                        var page = PopupNavigation.Instance.PopupStack[0];
-
-                                        CameraPage camera_page = (CameraPage)page;
-
-                                        switch(res.VarType)
+                                        if (PopupNavigation.Instance.PopupStack[0].GetType() == typeof(CameraPage))
                                         {
-                                            case CameraControlType.SwitchCamera:
-                                                camera_page.ControlCamera("switch_camera");
-                                                break;
-                                            case CameraControlType.Flash:
-                                                camera_page.ControlCamera("Flash"); 
-                                                break;
+                                            var page = PopupNavigation.Instance.PopupStack[0];
 
+                                            CameraPage camera_page = (CameraPage)page;
+
+                                            switch (res.VarType)
+                                            {
+                                                case CameraControlType.SwitchCamera:
+                                                    camera_page.ControlCamera("switch_camera");
+                                                    break;
+                                                case CameraControlType.Flash:
+                                                    camera_page.ControlCamera("Flash");
+                                                    break;
+
+                                            }
                                         }
                                     }
-                                }
+                                });
                             }
                             break;
                     }
