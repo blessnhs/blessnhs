@@ -252,15 +252,19 @@ VOID HubProcess::QNS(boost::shared_ptr<XDATA> pBuffer, boost::shared_ptr<GSClien
 		return;
 	}
 
+	INT64 PID = 0;
+
 	PlayerPtr pPlayer = PLAYERMGR.SearchByFrontSid(pBuffer->Reserve2);
 	if (pPlayer == NULL)
 	{
-		return;
+		PID = 0;
 	}
+	else
+		PID = pPlayer->GetId();
 
 	boost::shared_ptr<Hub::MSG_PLAYER_QUERY<Hub::RequestQNS>>		PLAYER_MSG = ALLOCATOR.Create<Hub::MSG_PLAYER_QUERY<Hub::RequestQNS>>();
 	{
-		PLAYER_MSG->Request.m_args = std::tuple<string, INT64, PlayerPtr>(message.var_message(), pPlayer->GetId(), pPlayer);
+		PLAYER_MSG->Request.m_args = std::tuple<string, INT64, PlayerPtr>(message.var_message(), PID, pPlayer);
 	}
 	PLAYER_MSG->Type = Client->GetMyDBTP();
 	PLAYER_MSG->SubType = ONQUERY;
