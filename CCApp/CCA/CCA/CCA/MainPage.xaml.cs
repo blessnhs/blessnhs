@@ -51,8 +51,6 @@ namespace CCA
                             var machineid = DependencyService.Get<MethodExt>().MachineId();
                             string Model = DeviceInfo.Model;
                             NetProcess.SendRegCamera(Model,machineid);
-
- //                           PopupNavigation.Instance.PushAsync(new CameraPage());
                         }
                         break;
                     case "MyCamera":
@@ -83,8 +81,7 @@ namespace CCA
             }
             catch (Exception ex)
             {
-               string str =  ex.Message;
-
+                DependencyService.Get<MethodExt>().ShowToast(ex.Message);
             }
         }
     }

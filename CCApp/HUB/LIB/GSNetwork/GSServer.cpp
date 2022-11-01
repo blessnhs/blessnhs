@@ -205,7 +205,7 @@ VOID GSServer::OnDisconnected2(int client_id, int type)
 	boost::shared_ptr<GSClient> pClient = GetClient(client_id);
 	if (pClient == NULL)
 	{
-		SYSLOG().Write("!!!alert cant find OnDisconnected2222 client id\n");
+		SYSLOG().Write("!!!alert cant find OnDisconnected2222 client id %d\n", client_id);
 		return;
 	}
 

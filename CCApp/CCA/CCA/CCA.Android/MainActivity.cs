@@ -10,7 +10,7 @@ using AndroidX.Core.Content;
 using Android;
 using Xamarin.Forms;
 using System;
-
+using Android.Net.Wifi;
 using Android.Runtime;
 using Android.Views;
 using Firebase.Auth;
@@ -75,7 +75,7 @@ namespace CCA.Droid
 
             MobileAds.Initialize(ApplicationContext, /*"YOUR ANDROID APP ID HERE"*/"ca-app-pub-9541028236702321~7685624496");
 
-            UnlockScreen();
+            UnlockCPU_WIFI();
 
             RequestPermissionsManually();
 
@@ -227,10 +227,19 @@ namespace CCA.Droid
             }
         }
 
-        private void UnlockScreen()
+        private void UnlockCPU_WIFI()
         {
-            WakeLock screenLock = ((PowerManager)GetSystemService(Android.Content.Context.PowerService)).NewWakeLock(WakeLockFlags.ScreenBright | WakeLockFlags.AcquireCausesWakeup, "tag");
-            screenLock.Acquire();
+            //cpu가 저절전 모드로 들어가지 않게한다.
+            WakeLock lockctl = ((PowerManager)GetSystemService(Android.Content.Context.PowerService)).NewWakeLock(
+               WakeLockFlags.Partial, "tag"); //cpu 항상 on 저절전 모드 해제 화면은 꺼짐 키보드 꺼짐
+            lockctl.Acquire();
+
+            //와이파이가 저절전 모드로 들어가지 않게한다.
+            WifiManager wifi = ((WifiManager)GetSystemService(Android.Content.Context.WifiService));
+            var lockwifi = wifi.CreateWifiLock(Android.Net.WifiMode.Full, "wifilock");
+            lockwifi.SetReferenceCounted(true);
+            lockwifi.Acquire();
+
         }
 
         List<string> _permission = new List<string>();
@@ -267,6 +276,9 @@ namespace CCA.Droid
 
                 if (ContextCompat.CheckSelfPermission(this, Manifest.Permission.WakeLock) != Permission.Granted)
                     _permission.Add(Manifest.Permission.WakeLock);
+
+                if (ContextCompat.CheckSelfPermission(this, Manifest.Permission.AccessWifiState) != Permission.Granted)
+                    _permission.Add(Manifest.Permission.AccessWifiState);
 
                 if (_permission.Count > 0)
                 {

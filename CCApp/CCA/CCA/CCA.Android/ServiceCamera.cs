@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 using AndroidApp = Android.App.Application;
@@ -48,10 +49,6 @@ namespace CCA.Droid
 				//network thread
 				Task.Run(() =>
 				{
-					PowerManager powerManager = (PowerManager)GetSystemService(Context.PowerService);
-					PowerManager.WakeLock clsLock = powerManager.NewWakeLock(WakeLockFlags.Partial, "App::Lock");
-					clsLock.Acquire();
-
 					while (true)
 					{
 						try
@@ -65,9 +62,9 @@ namespace CCA.Droid
 						{
 							DependencyService.Get<MethodExt>().Notification(e.Message);
 						}
-					}
 
-					clsLock.Release();
+						Thread.Sleep(10);
+					}
 				});
 			}
 		}

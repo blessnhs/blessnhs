@@ -253,7 +253,7 @@ template<template<class T> class CreationPolicy> void PlayerContainer<CreationPo
 			PlayerPtr pPlayer = iter->second;
 			if (pPlayer != NULL)
 			{
-				printf("Player Client %lld AliveTime Check \n", pPlayer->GetId());
+				BLOG("Player Client %lld AliveTime Check \n", pPlayer->GetId());
 
 				for each (auto room in pPlayer->GetRoom())
 				{
@@ -290,7 +290,7 @@ template<template<class T> class CreationPolicy> void PlayerContainer<CreationPo
 			PlayerPtr pPlayer = iter->second;
 			if (pPlayer != NULL)
 			{
-				printf("Player Client %lld Session mia\n",pPlayer->GetId());			
+				BLOG("Player Client %lld Session mia\n",pPlayer->GetId());
 
 				for each (auto room in pPlayer->GetRoom())
 				{

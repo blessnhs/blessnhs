@@ -50,7 +50,10 @@ namespace FullCameraApp.Droid
 
                 if (NetProcess.TargetPlayerId.Count == 0)
                 {
-                    PopupNavigation.Instance.PopAsync();
+                    MainThread.BeginInvokeOnMainThread(() =>
+                    {
+                        PopupNavigation.Instance.PopAsync();
+                    });
                     return;
                 }
 
@@ -482,7 +485,10 @@ namespace FullCameraApp.Droid
             exitButton.Text = "EXIT";
             exitButton.Click += async (s, e) =>
             {
-                PopupNavigation.Instance.PopAsync();
+                MainThread.BeginInvokeOnMainThread(() =>
+                {
+                    PopupNavigation.Instance.PopAsync();
+                });
             };
             if (disable_button == false)
                 mainLayout.AddView(exitButton);
@@ -752,7 +758,9 @@ namespace FullCameraApp.Droid
                 //caemra page render
                 Task.Run(() =>
                 {
-                    audiomgr?.record();
+                    //오디오는 임시 주석 처리
+                    //2022-10-24
+                //    audiomgr?.record();
                 });
 
 
@@ -788,8 +796,6 @@ namespace FullCameraApp.Droid
 
             StopCamera();
             audiomgr.Clear();
-
-            Flashlight.TurnOffAsync();
 
             return true;
         }

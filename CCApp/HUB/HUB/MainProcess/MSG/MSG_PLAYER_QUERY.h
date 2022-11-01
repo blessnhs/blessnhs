@@ -507,9 +507,7 @@ class MSG_PLAYER_QUERY<##class_name>:public IMESSAGE	\
 #pragma region RequestQNS
 	DECLARE_DB_CLASS_BEGIN_3(RequestQNS, string, INT64, PlayerPtr)
 	{
-		PlayerPtr pPlayerPtr = std::get<2>(Request.m_args);
-		if (pPlayerPtr == NULL)
-			return;
+		
 
 		boost::replace_all(std::get<0>(Request.m_args), "'", "''");
 
@@ -520,6 +518,9 @@ class MSG_PLAYER_QUERY<##class_name>:public IMESSAGE	\
 		QNA_RES res;
 		res.set_var_code(code);
 
+		PlayerPtr pPlayerPtr = std::get<2>(Request.m_args);
+		if (pPlayerPtr == NULL)
+			return;
 		SEND_PROTO_BUFFER(res, pSession, pPlayerPtr->GetFrontSid())
 	}
 	DECLARE_DB_CLASS_END

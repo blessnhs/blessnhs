@@ -134,7 +134,6 @@ namespace CCA
                                     Xamarin.Forms.DependencyService.Register<MethodExt>();
                                     Device.BeginInvokeOnMainThread(() =>
                                     {
-                                        DependencyService.Get<MethodExt>().Notification("New Version Updated");
                                         DependencyService.Get<MethodExt>().ShowToast("로그인 하셨습니다.");
 
                                         if (PopupNavigation.Instance.PopupStack.Count > 0)
