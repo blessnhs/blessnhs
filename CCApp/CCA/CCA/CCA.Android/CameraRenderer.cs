@@ -18,6 +18,7 @@ using rtaNetworking.Streaming;
 using CCA.Droid;
 using DependencyHelper;
 using DependencyHelper.Droid;
+using Android.Content.PM;
 
 [assembly: Xamarin.Forms.ExportRenderer(typeof(CameraPage), typeof(CameraPageRenderer))]
 namespace FullCameraApp.Droid
@@ -218,6 +219,7 @@ namespace FullCameraApp.Droid
         CameraPage page;
 
         bool isDestroy = false;
+        bool isFlashOn = true;
 
         protected override void OnElementChanged(ElementChangedEventArgs<Xamarin.Forms.Page> e)
         {
@@ -260,29 +262,46 @@ namespace FullCameraApp.Droid
             ///////////////////////////////////////////////////////////////////////////////
         }
 
-        static bool isOn = false;
 
-        public async void Flash()
+        public void Torch(bool on)
         {
-            try
-            {
-                // Turn On
-                await Flashlight.TurnOnAsync();
+           if (!this.Context.PackageManager.HasSystemFeature(PackageManager.FeatureCameraFlash))
+           {
+               Android.Util.Log.Info("ZXING", "Flash not supported on this device");
+               return;
+           }
 
-                // Turn Off
-                await Flashlight.TurnOffAsync();
-            }
-            catch (FeatureNotSupportedException fnsEx)
+            if (camera == null)
             {
-                Method_Android.NotificationException(fnsEx.Message);
+                Android.Util.Log.Info("ZXING", "NULL Camera");
+                return;
             }
-            catch (PermissionException pEx)
+
+            var p = camera.GetParameters();
+            var supportedFlashModes = p.SupportedFlashModes;
+
+            if (supportedFlashModes == null)
+                supportedFlashModes = new List<string>();
+
+            var flashMode = string.Empty;
+
+            if (on)
             {
-                Method_Android.NotificationException(pEx.Message);
+                if (supportedFlashModes.Contains(Android.Hardware.Camera.Parameters.FlashModeTorch))
+                    flashMode = Android.Hardware.Camera.Parameters.FlashModeTorch;
+                else if (supportedFlashModes.Contains(Android.Hardware.Camera.Parameters.FlashModeOn))
+                    flashMode = Android.Hardware.Camera.Parameters.FlashModeOn;
             }
-            catch (Exception ex)
+            else
             {
-                Method_Android.NotificationException(ex.Message);
+                if (supportedFlashModes.Contains(Android.Hardware.Camera.Parameters.FlashModeOff))
+                    flashMode = Android.Hardware.Camera.Parameters.FlashModeOff;
+            }
+
+            if (!string.IsNullOrEmpty(flashMode))
+            {
+                p.FlashMode = flashMode;
+                camera.SetParameters(p);
             }
         }
 
@@ -312,6 +331,7 @@ namespace FullCameraApp.Droid
 
                 if (camera == null)
                     camera = Android.Hardware.Camera.Open();
+
 
                 var parameters = camera.GetParameters();
 
@@ -576,7 +596,14 @@ namespace FullCameraApp.Droid
                     SiwtchCamera();
                     break;
                 case "Flash":
-                    Flash();
+                    {
+                        Torch(isFlashOn);
+
+                        isFlashOn = (isFlashOn == true ? false : true);
+                    }
+                    break;
+                case "MIC":
+                    audiomgr.isOn = true;
                     break;
             }
 
@@ -746,6 +773,8 @@ namespace FullCameraApp.Droid
                                 }
                             });
 
+                            Thread.Sleep(1);
+
                         }
                         catch (Exception e)
                         {
@@ -760,7 +789,7 @@ namespace FullCameraApp.Droid
                 {
                     //오디오는 임시 주석 처리
                     //2022-10-24
-                //    audiomgr?.record();
+                    audiomgr?.record();
                 });
 
 
@@ -777,6 +806,8 @@ namespace FullCameraApp.Droid
                             audiomgr?.play(ms.stream.ToArray());
 
                         }
+
+                        Thread.Sleep(1);
                     }
 
                 });
@@ -796,6 +827,8 @@ namespace FullCameraApp.Droid
 
             StopCamera();
             audiomgr.Clear();
+
+            Torch(false);
 
             return true;
         }

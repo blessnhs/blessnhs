@@ -209,6 +209,8 @@ namespace CCA
                                         DependencyService.Get<MethodExt>().ShowToast("카메라 등록에 실패했습니다.");
                                     }
 
+                                   
+
                                 });
                             }
                             break;
@@ -449,7 +451,9 @@ namespace CCA
                                                 case CameraControlType.Flash:
                                                     camera_page.ControlCamera("Flash");
                                                     break;
-
+                                                case CameraControlType.Mic:
+                                                    camera_page.ControlCamera("MIC");
+                                                    break;
                                             }
                                         }
                                     }

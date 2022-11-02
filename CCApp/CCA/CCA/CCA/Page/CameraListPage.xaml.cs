@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -70,13 +70,9 @@ namespace CCA.Page
             };
         }
 
-        private async void OnCloseButtonTapped(object sender, EventArgs e)
-        {
-            await PopupNavigation.Instance.PopAsync();
-        }
-
         private async void OnClose(object sender, EventArgs e)
         {
+           
             await PopupNavigation.Instance.PopAsync();
         }
         private async void OnBuy(object sender, EventArgs e)

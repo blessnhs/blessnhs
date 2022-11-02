@@ -2,6 +2,7 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading;
 using Android.Media;
 
 
@@ -17,6 +18,8 @@ namespace CCA.Droid
 
          AudioRecord recorder;
          AudioTrack audioTrack;
+
+        public bool isOn = false;
 
         public void Clear()
         {
@@ -97,6 +100,9 @@ namespace CCA.Droid
                     if (recorder == null)
                         return;
 
+                    if (isOn == false)
+                        continue;
+
                     minBufSize = recorder.Read(buffer, 0, buffer.Length);
 
                     Frames.Enqueue(new MemoryStream(buffer));
@@ -108,6 +114,8 @@ namespace CCA.Droid
 
                         Frames.Clear();
                     }
+
+                    Thread.Sleep(3);
                 }
             }
             catch (Exception e)

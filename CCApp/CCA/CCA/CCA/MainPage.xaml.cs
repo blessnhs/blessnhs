@@ -63,7 +63,6 @@ namespace CCA
                         {
                             iIterstitia.ShowAd();
                             PopupNavigation.Instance.PushAsync(new QnAPage());
-                         
                         }
                         break;
                     case "Setting":
@@ -76,7 +75,15 @@ namespace CCA
                             NetProcess.SendNOTICE();
                         }
                         break;
-                        
+                    case "Network":
+                        {
+                            DependencyService.Get<MethodExt>().ShowToast("곧 업데이트될 예정입니다.");
+                            Flashlight.TurnOffAsync();
+
+                        }
+                        break;
+
+
                 }
             }
             catch (Exception ex)

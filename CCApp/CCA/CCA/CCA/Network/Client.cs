@@ -53,7 +53,9 @@ namespace CCA
                         }
                     }
 
+                    socket.Close();
                     socket.Dispose();
+                        
                     socket = null;
                     socket = new Socket(AddressFamily.InterNetwork,
                                 SocketType.Stream, ProtocolType.Tcp);
@@ -65,7 +67,7 @@ namespace CCA
                 }
 
 
-                socket.ReceiveTimeout = 200;
+                socket.ReceiveTimeout = 500;
                 socket.SendTimeout = 2000;
 
                 User.LoginSuccess = false;

@@ -32,17 +32,7 @@ namespace FullCameraApp.Droid
 
         RelativeLayout mainLayout;
 
-        //퇴장버튼
-        Button exitButton;
-
-        //카메라 변환
-        Button switchButton;
-
-        //카메라 변환
-        Button flashButton;
-
-        //배터리 게이지
-        Button batteryGageButton;
+        List<Button> alignList = new List<Button>();
 
         AudioManagerM audiomgr = new AudioManagerM();
         ImageView imageView;
@@ -109,67 +99,85 @@ namespace FullCameraApp.Droid
 
         void SetupUserInterface()
         {
-            var metrics = Resources.DisplayMetrics;
+            try
+            {                var metrics = Resources.DisplayMetrics;
 
-            half_width = metrics.WidthPixels / 2;
-            half_height = metrics.HeightPixels / 4;
+                half_width = metrics.WidthPixels / 2;
+                half_height = metrics.HeightPixels / 4;
 
 
-            mainLayout = new RelativeLayout(Context);
-            mainLayout.SetBackgroundColor(Color.Black);
+                mainLayout = new RelativeLayout(Context);
+                mainLayout.SetBackgroundColor(Color.Black);
 
-            /////////////////////////////////////////////////////////////////////////////////
-            //중앙 스크린
-            AddImageView(metrics.WidthPixels, metrics.HeightPixels);
+                /////////////////////////////////////////////////////////////////////////////////
+                //중앙 스크린
+                AddImageView(metrics.WidthPixels, metrics.HeightPixels);
 
-            ///////////////////////////////////////////////////////////////////////////////
-            batteryGageButton = new Button(Context);
-            RelativeLayout.LayoutParams TextViewParams = new RelativeLayout.LayoutParams(
-            RelativeLayout.LayoutParams.WrapContent,
-            RelativeLayout.LayoutParams.WrapContent);
-            batteryGageButton.LayoutParameters = TextViewParams;
-            batteryGageButton.Text = "0%";
-            batteryGageButton.Click += async (s, e) =>
+                ///////////////////////////////////////////////////////////////////////////////
+                Button batteryGageButton = new Button(Context);
+                RelativeLayout.LayoutParams ViewParams = new RelativeLayout.LayoutParams(
+                RelativeLayout.LayoutParams.WrapContent,
+                RelativeLayout.LayoutParams.WrapContent);
+                batteryGageButton.LayoutParameters = ViewParams;
+                batteryGageButton.Text = "0%";
+                batteryGageButton.Click += async (s, e) =>
+                {
+                };
+                mainLayout.AddView(batteryGageButton);
+                alignList.Add(batteryGageButton);
+                ///////////////////////////////////////////////////////////////////////////////
+                ///////////////////////////////////////////////////////////////////////////////
+                Button MICButton = new Button(Context);
+                MICButton.LayoutParameters = new RelativeLayout.LayoutParams(
+                RelativeLayout.LayoutParams.WrapContent,
+                RelativeLayout.LayoutParams.WrapContent);
+                MICButton.Text = "MIC";
+                MICButton.Click += async (s, e) =>
+                {
+                    MICButton.Text = (MICButton.Text == "OFF" ? "ON" : "OFF");
+                    NetProcess.SendCameraControl(page.MachinId, page.PlayerId, CameraControlType.Mic);
+                };
+                alignList.Add(MICButton);
+                mainLayout.AddView(MICButton);
+                ///////////////////////////////////////////////////////////////////////////////            ///
+                Button switchButton = new Button(Context); ;
+                switchButton.Text = "Switch";
+                switchButton.Click += async (s, e) =>
+                {
+                    NetProcess.SendCameraControl(page.MachinId, page.PlayerId, CameraControlType.SwitchCamera);
+                };
+                alignList.Add(switchButton);
+                mainLayout.AddView(switchButton);
+                ///////////////////////////////////////////////////////////////////////////////
+                Button flashButton = new Button(Context);
+                flashButton.Text = "Flash";
+                flashButton.Click += async (s, e) =>
+                {
+                    NetProcess.SendCameraControl(page.MachinId, page.PlayerId, CameraControlType.Flash);
+                };
+
+                alignList.Add(flashButton);
+                mainLayout.AddView(flashButton);
+                ///////////////////////////////////////////////////////////////////////////////
+                Button exitButton = new Button(Context);
+                exitButton.LayoutParameters = new RelativeLayout.LayoutParams(
+                RelativeLayout.LayoutParams.WrapContent,
+                RelativeLayout.LayoutParams.WrapContent);
+                exitButton.Text = "EXIT";
+                exitButton.Click += async (s, e) =>
+                {
+                    PopupNavigation.Instance.PopAsync();
+                };
+
+                alignList.Add(exitButton);
+                mainLayout.AddView(exitButton);
+                ////////////////////////////////////////////////////////////DrawLayout///////////////////
+                AddView(mainLayout);
+            }
+            catch(Exception e)
             {
-            };
-            mainLayout.AddView(batteryGageButton);
-            ///////////////////////////////////////////////////////////////////////////////
-            ///
 
-            ///////////////////////////////////////////////////////////////////////////////
-            RelativeLayout.LayoutParams ButtonParams = new RelativeLayout.LayoutParams(
-            RelativeLayout.LayoutParams.WrapContent, RelativeLayout.LayoutParams.WrapContent);
-            ///////////////////////////////////////////////////////////////////////////////
-            exitButton = new Button(Context);
-            exitButton.LayoutParameters = ButtonParams;
-            exitButton.Text = "EXIT";
-            exitButton.Click += async (s, e) =>
-            {
-                PopupNavigation.Instance.PopAsync();
-            };
-            mainLayout.AddView(exitButton);
-            ////////////////////////////////////////////////////////////DrawLayout///////////////////
-            ///////////////////////////////////////////////////////////////////////////////
-            switchButton = new Button(Context);
-            switchButton.LayoutParameters = ButtonParams;
-            switchButton.Text = "Switch";
-            switchButton.Click += async (s, e) =>
-            {
-                NetProcess.SendCameraControl(page.MachinId, page.PlayerId, CameraControlType.SwitchCamera);
-            };
-            mainLayout.AddView(switchButton);
-            ////////////////////////////////////////////////////////////DrawLayout///////////////////           
-            ///////////////////////////////////////////////////////////////////////////////
-            flashButton = new Button(Context);
-            flashButton.LayoutParameters = ButtonParams;
-            flashButton.Text = "Flash";
-            flashButton.Click += async (s, e) =>
-            {
-                NetProcess.SendCameraControl(page.MachinId, page.PlayerId, CameraControlType.Flash);
-            };
-            mainLayout.AddView(flashButton);
-            ////////////////////////////////////////////////////////////DrawLayout///////////////////           
-            AddView(mainLayout);
+            }
         }
 
 
@@ -187,51 +195,27 @@ namespace FullCameraApp.Droid
 
             var metrics = Resources.DisplayMetrics;
 
+            int screen_width = half_width + half_width;
 
+            //한줄에 몇개 보여줄지
+            int displayObjectCount = alignList.Count;
 
-            int width = half_width + half_width;
+            //스크린을 나눈 크기
+            int divide_screen_by_button_count = (int)screen_width / displayObjectCount;
+            int button_width = divide_screen_by_button_count;
 
-            int button_width = exitButton.Width;
-
-            int displayObjectCount = 4;
-
-            int pos3 = (int)width / displayObjectCount;
-            double remain = Math.Abs(pos3 - button_width) * displayObjectCount;
-
-
-            int xaddspace = (int)(remain / displayObjectCount);
             int ypoisition = metrics.HeightPixels - 100;
 
-     
+            int i = 0;
+            foreach (var button in alignList)
             {
-                int i = 0;
-                int current_position = (pos3 * i) + xaddspace;
+                int current_position = (divide_screen_by_button_count * i);
+                button.SetX(current_position);
+                button.SetY(ypoisition);
+                button.SetWidth(divide_screen_by_button_count);
 
-                exitButton.SetX(current_position);
-                exitButton.SetY(ypoisition);
-
-                i = 1;
-                current_position = (pos3 * i) + xaddspace;
-
-                switchButton.SetX(current_position);
-                switchButton.SetY(ypoisition);
-
-                i = 2;
-                current_position = (pos3 * i) + xaddspace;
-
-                flashButton.SetX(current_position);
-                flashButton.SetY(ypoisition);
-
-
-                i = 3;
-                current_position = (pos3 * i) + xaddspace;
-
-
-                batteryGageButton.SetX(current_position);
-                batteryGageButton.SetY(ypoisition);
-
+                i++;
             }
-
 
         }
 
@@ -261,14 +245,6 @@ namespace FullCameraApp.Droid
                         if (NetProcess.JpegStream.Count == 0)
                             continue;
 
-                        if (chk < DateTime.Now)
-                        {
-                            exitButton.Text = "exit";
-
-                            chk = DateTime.Now.AddSeconds(3);
-                        }
-
-
                         MainThread.BeginInvokeOnMainThread(() =>
                         {
                             StreamWrapper ms;
@@ -282,7 +258,7 @@ namespace FullCameraApp.Droid
                                 imageView?.SetImageBitmap(bitmap);
 
 
-                                batteryGageButton.Text = page.TargetBatteryLevel + "%";
+                                alignList[0].Text = page.TargetBatteryLevel + "%";
                             }
                         });
 
@@ -291,6 +267,8 @@ namespace FullCameraApp.Droid
                     {
                         Method_Android.NotificationException(e.Message);
                     }
+
+                    Thread.Sleep(1);
                 }
             });
 
@@ -307,6 +285,8 @@ namespace FullCameraApp.Droid
                         audiomgr?.play(ms.stream.ToArray());
 
                     }
+
+                    Thread.Sleep(1);
                 }
 
             });

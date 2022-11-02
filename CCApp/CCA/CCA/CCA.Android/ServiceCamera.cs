@@ -20,16 +20,11 @@ namespace CCA.Droid
 {
 	public static class Constants
 	{
-		public const int DELAY_BETWEEN_LOG_MESSAGES = 5000; // milliseconds
 		public const int SERVICE_RUNNING_NOTIFICATION_ID = 10000;
-		public const string SERVICE_STARTED_KEY = "has_service_been_started";
-		public const string BROADCAST_MESSAGE_KEY = "broadcast_message";
-		public const string NOTIFICATION_BROADCAST_ACTION = "ServicesDemo3.Notification.Action";
 
 		public const string ACTION_START_SERVICE = "ServicesDemo3.action.START_SERVICE";
 		public const string ACTION_STOP_SERVICE = "ServicesDemo3.action.STOP_SERVICE";
 		public const string ACTION_RESTART_TIMER = "ServicesDemo3.action.RESTART_TIMER";
-		public const string ACTION_MAIN_ACTIVITY = "ServicesDemo3.action.MAIN_ACTIVITY";
 	}
 
 	[Service]
@@ -63,7 +58,7 @@ namespace CCA.Droid
 							DependencyService.Get<MethodExt>().Notification(e.Message);
 						}
 
-						Thread.Sleep(10);
+						Thread.Sleep(20);
 					}
 				});
 			}
@@ -149,7 +144,7 @@ namespace CCA.Droid
 
 				notification = new Notification.Builder(AndroidApp.Context, "DE")
 					.SetContentTitle(DateTime.Now.ToString() + " Notify!")
-					.SetContentText("message")
+					.SetContentText("CCA")
 					.SetSmallIcon(CCA.Droid.Resource.Drawable.xamagonBlue)
 					.SetLargeIcon(BitmapFactory.DecodeResource(AndroidApp.Context.Resources, CCA.Droid.Resource.Drawable.xamagonBlue))
 					.SetSmallIcon(CCA.Droid.Resource.Drawable.xamagonBlue)
@@ -161,7 +156,7 @@ namespace CCA.Droid
 			{
 				notification = new Notification.Builder(Android.App.Application.Context)
 											 .SetContentTitle(DateTime.Now.ToString() + " Notify!")
-											 .SetContentText("message")
+											 .SetContentText("CCA")
 											 .SetSmallIcon(CCA.Droid.Resource.Drawable.xamagonBlue)
 											 .SetLargeIcon(BitmapFactory.DecodeResource(AndroidApp.Context.Resources, CCA.Droid.Resource.Drawable.xamagonBlue))
 											 .SetSmallIcon(CCA.Droid.Resource.Drawable.xamagonBlue)

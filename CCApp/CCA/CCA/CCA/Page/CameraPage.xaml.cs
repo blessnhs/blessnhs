@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using Rg.Plugins.Popup.Pages;
+using Xamarin.Essentials;
+using System.Threading;
 
 namespace CCA.Page
 {
@@ -22,6 +24,7 @@ namespace CCA.Page
             InitializeComponent();
         }
 
+     
 
         public void ControlCamera(string command)
         {

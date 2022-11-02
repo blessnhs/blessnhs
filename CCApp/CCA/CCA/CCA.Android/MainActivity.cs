@@ -55,18 +55,8 @@ namespace CCA.Droid
                 WindowManagerFlags.ShowWhenLocked |
                 WindowManagerFlags.TurnScreenOn);
 
-        
-            //string packageName = "com.blessnhs.cca";
-            //PowerManager pm = (PowerManager)GetSystemService(Context.PowerService);
+            CrossInAppBilling.Current.InTestingMode = true;
 
-            //if(pm.IsIgnoringBatteryOptimizations(packageName))
-            //{
-            //    Intent i = new Intent();
-            //    i.SetAction(Android.Provider.Settings.ActionRequestIgnoreBatteryOptimizations);
-            //    i.SetData(Android.Net.Uri.Parse("package:" + packageName));
-
-            //    StartActivity(i);
-            //}
 
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
@@ -279,6 +269,9 @@ namespace CCA.Droid
 
                 if (ContextCompat.CheckSelfPermission(this, Manifest.Permission.AccessWifiState) != Permission.Granted)
                     _permission.Add(Manifest.Permission.AccessWifiState);
+
+                if (ContextCompat.CheckSelfPermission(this, Manifest.Permission.Flashlight) != Permission.Granted)
+                    _permission.Add(Manifest.Permission.Flashlight);
 
                 if (_permission.Count > 0)
                 {
