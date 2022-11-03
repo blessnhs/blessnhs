@@ -49,7 +49,7 @@ namespace CCA.Droid
                 byte[] buffer = new byte[minBufSize];
                 //     DatagramPacket packet;
                 //     InetAddress destination = InetAddress.GetByName(serverAddress);
-                recorder = new AudioRecord(AudioSource.VoiceCommunication, sampleRate, channelIn, encoding, minBufSize*4);
+                recorder = new AudioRecord(AudioSource.VoiceCommunication, sampleRate, channelIn, encoding, minBufSize);
 
                 if (recorder.State != Android.Media.State.Initialized)
                 {
@@ -148,7 +148,7 @@ namespace CCA.Droid
                                   // Audio encoding
                                   encoding,
                                    // Length of the audio clip.
-                                   minBufSize * 4,
+                                   minBufSize,
                                   // Mode. Stream or static.
                                   AudioTrackMode.Stream);        
         }
@@ -170,7 +170,7 @@ namespace CCA.Droid
 
             overallBytes += bytes;
 
-            if(overallBytes >= minBufSize*4)
+            if(overallBytes >= minBufSize)
             {
                 overallBytes = 0;
                 audioTrack.Play();

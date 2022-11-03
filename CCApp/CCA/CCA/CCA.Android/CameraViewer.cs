@@ -283,8 +283,6 @@ namespace FullCameraApp.Droid
                         audiomgr?.play(ms.stream.ToArray());
 
                     }
-
-                    Thread.Sleep(1);
                 }
 
             });

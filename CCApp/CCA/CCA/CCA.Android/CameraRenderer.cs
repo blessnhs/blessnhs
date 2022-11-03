@@ -33,6 +33,8 @@ namespace FullCameraApp.Droid
         public ConcurrentQueue<System.IO.MemoryStream> Frames = new ConcurrentQueue<System.IO.MemoryStream>();
 
         DateTime checktime = DateTime.Now;
+        //그냥 놔두면 0~100ms 단위로 호출이 되기 때문에 부하가 심하다
+        
         public void OnPreviewFrame(byte[] data, Android.Hardware.Camera camera)
         {
             try
@@ -48,6 +50,13 @@ namespace FullCameraApp.Droid
 
                 if (renderer == null)
                     return;
+
+                if (checktime > DateTime.Now)
+                {
+                    return;
+                }
+
+                checktime = checktime.AddMilliseconds(100);
 
                 if (NetProcess.TargetPlayerId.Count == 0)
                 {
@@ -194,7 +203,7 @@ namespace FullCameraApp.Droid
         Dictionary<int, ImageView> imageViewDic = new Dictionary<int, ImageView>();
 
         //퇴장버튼
-        Button exitButton;
+        public Button exitButton;
 
         //카메라 스위치
         Button switchButton;
@@ -388,6 +397,7 @@ namespace FullCameraApp.Droid
             ///////////////////////////////////////////////////////////////////////////////
         }
 
+        //버튼 안보이게 하기
         bool disable_button = true;
 
         void SetupUserInterface()
