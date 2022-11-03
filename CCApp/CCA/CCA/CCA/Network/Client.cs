@@ -67,14 +67,10 @@ namespace CCA
                 }
 
 
-                socket.ReceiveTimeout = 500;
+                socket.ReceiveTimeout = 10;
                 socket.SendTimeout = 2000;
 
                 User.LoginSuccess = false;
-
-                var mainpage = (MainPage)Application.Current.MainPage;
-
-
                 var result = socket.BeginConnect(remoteEP, null, null);
 
                 bool success = result.AsyncWaitHandle.WaitOne(500, true);

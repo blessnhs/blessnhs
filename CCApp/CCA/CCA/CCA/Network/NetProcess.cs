@@ -55,7 +55,7 @@ namespace CCA
             if (notice_time < DateTime.Now)
             {
 
-                SendMailList();
+                  SendMailList();
 
                 //SendAlaram();
 
@@ -561,6 +561,12 @@ namespace CCA
             {
                 AUDIO_MESSAGE_REQ message = new AUDIO_MESSAGE_REQ();
                 message.VarRoomNumber = User.CurrentChatViewNumber;
+
+                foreach (var playerid in TargetPlayerId)
+                {
+                    message.VarToPlayerId.Add(playerid);
+                };
+
                 foreach (var msg in list)
                 {
                     message.VarMessage.Add(ByteString.CopyFrom(msg.ToArray()));

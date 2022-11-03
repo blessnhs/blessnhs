@@ -28,6 +28,7 @@ namespace FullCameraApp.Droid
         public CameraViewerRenderer(Context context) : base(context)
         {
             NetProcess.JpegStream.Clear();
+            NetProcess.AudioStream.Clear();
         }
 
         RelativeLayout mainLayout;
@@ -128,14 +129,11 @@ namespace FullCameraApp.Droid
                 ///////////////////////////////////////////////////////////////////////////////
                 ///////////////////////////////////////////////////////////////////////////////
                 Button MICButton = new Button(Context);
-                MICButton.LayoutParameters = new RelativeLayout.LayoutParams(
-                RelativeLayout.LayoutParams.WrapContent,
-                RelativeLayout.LayoutParams.WrapContent);
                 MICButton.Text = "MIC";
                 MICButton.Click += async (s, e) =>
                 {
-                    MICButton.Text = (MICButton.Text == "OFF" ? "ON" : "OFF");
                     NetProcess.SendCameraControl(page.MachinId, page.PlayerId, CameraControlType.Mic);
+                    MICButton.Text = (MICButton.Text == "OFF" ? "ON" : "OFF");
                 };
                 alignList.Add(MICButton);
                 mainLayout.AddView(MICButton);

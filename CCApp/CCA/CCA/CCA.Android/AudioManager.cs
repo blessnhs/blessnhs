@@ -114,8 +114,6 @@ namespace CCA.Droid
 
                         Frames.Clear();
                     }
-
-                    Thread.Sleep(3);
                 }
             }
             catch (Exception e)
