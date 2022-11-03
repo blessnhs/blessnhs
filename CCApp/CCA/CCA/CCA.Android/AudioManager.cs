@@ -148,7 +148,7 @@ namespace CCA.Droid
                                   // Audio encoding
                                   encoding,
                                    // Length of the audio clip.
-                                   minBufSize,
+                                   minBufSize * 2,
                                   // Mode. Stream or static.
                                   AudioTrackMode.Stream);        
         }
@@ -170,7 +170,7 @@ namespace CCA.Droid
 
             overallBytes += bytes;
 
-            if(overallBytes >= minBufSize)
+            if(overallBytes >= minBufSize * 2)
             {
                 overallBytes = 0;
                 audioTrack.Play();
