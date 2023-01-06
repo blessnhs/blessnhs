@@ -11,6 +11,7 @@ using Xamarin.Forms;
 using Xamarin.Essentials;
 using CCA.Page;
 using CCA.CustomAdMobView;
+using System.Threading;
 
 namespace CCA
 {
@@ -25,7 +26,7 @@ namespace CCA
         {
             InitializeComponent();
 
-        //    NetworkProcess();
+            //NetworkProcess();
 
             iIterstitia = DependencyService.Get<iAd_IterstitialView>();
             rewardVideo = DependencyService.Get<iAd_RewardVideoView>();
@@ -35,6 +36,34 @@ namespace CCA
         {
            
             return true;
+        }
+
+        private void NetworkProcess()
+        {
+            //network
+            {
+
+                //network thread
+                Task.Run(() =>
+                {
+                    while (true)
+                    {
+                        try
+                        {
+
+                            NetProcess.start();
+                            NetProcess.client.PacketRecvSync();
+                            NetProcess.Loop();
+                        }
+                        catch (Exception e)
+                        {
+                            DependencyService.Get<MethodExt>().Notification(e.Message);
+                        }
+
+                        Thread.Sleep(5);
+                    }
+                });
+            }
         }
 
         void OnTapped(object sender, EventArgs e)

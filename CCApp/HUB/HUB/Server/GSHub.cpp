@@ -90,15 +90,17 @@ BOOL GSHub::Initialize()
 
 	DBPROCESSCONTAINER_CER.Initialize(_arg.m_DBThreadCnt);
 
-	Create(_arg);
-
-	//default
-	//
 	SetHandler<HubProcess>();
 
 	DeleteAllConcurrentUser();
 
 	ROOMMGR.CreateDBRoomList();
+
+	Create(_arg);
+
+	//default
+	//
+	
 
 
 	

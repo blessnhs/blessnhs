@@ -49,7 +49,7 @@ namespace CCA
 
                 client.StartClient(ip, 20000);
 
-                check_time = DateTime.Now.AddSeconds(3);
+                check_time = DateTime.Now.AddSeconds(5);
             }
 
             if (notice_time < DateTime.Now)
@@ -154,12 +154,10 @@ namespace CCA
                                     Mpeg2Stream = new ConcurrentQueue<StreamWrapper>();
                                     Device.BeginInvokeOnMainThread(() =>
                                     {
+                                        DependencyService.Get<MethodExt>().RestartApp();
+
+                                        User.LoginSuccess = false;
                                     });
-
-
-                                    DependencyService.Get<MethodExt>().RestartApp();
-
-                                    User.LoginSuccess = false;
                                 }
 
                             }

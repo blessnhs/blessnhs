@@ -27,12 +27,17 @@ using Android.Gms.Common;
 using Android.Gms.Auth;
 using Plugin.InAppBilling;
 using DependencyHelper.Droid;
+using Xamarin.Essentials;
 
 namespace CCA.Droid
 {
-    [Activity(Label = "CCA", Icon = "@mipmap/icon", Theme = "@style/MainTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation | ConfigChanges.UiMode | ConfigChanges.ScreenLayout | ConfigChanges.SmallestScreenSize )]
+   
+    [Activity(Label = "CCA", Icon = "@mipmap/icon", Theme = "@style/MainTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation | ConfigChanges.UiMode | ConfigChanges.ScreenLayout | ConfigChanges.SmallestScreenSize ,ScreenOrientation = ScreenOrientation.UserPortrait)]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {
+        static WakeLock lockctl;
+        static WifiManager.WifiLock lockwifi;
+
         public static Context context;
         public static MainActivity activity;
 
@@ -46,16 +51,32 @@ namespace CCA.Droid
         {
             
             base.OnCreate(savedInstanceState);
-       
+
+            if (savedInstanceState != null)
+            {
+                isStarted = savedInstanceState.GetBoolean(Constants.SERVICE_STARTED_KEY, false);
+            }
+
 
             context = this;
             activity = this;
-            Window.AddFlags(WindowManagerFlags.KeepScreenOn |
-                WindowManagerFlags.DismissKeyguard |
-                WindowManagerFlags.ShowWhenLocked |
-                WindowManagerFlags.TurnScreenOn);
 
-            CrossInAppBilling.Current.InTestingMode = true;
+            Window.AddFlags(WindowManagerFlags.KeepScreenOn |
+             WindowManagerFlags.DismissKeyguard |
+             WindowManagerFlags.ShowWhenLocked |
+             WindowManagerFlags.TurnScreenOn
+             );
+
+            if (Build.VERSION.SdkInt >= Android.OS.BuildVersionCodes.OMr1)
+            {
+                SetShowWhenLocked(true);
+                SetTurnScreenOn(true);
+            }
+            else 
+            {
+            }
+ 
+            //CrossInAppBilling.Current.InTestingMode = true;
 
 
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
@@ -72,6 +93,8 @@ namespace CCA.Droid
             BatteryCheckReg();
 
             CreateService();
+
+            DeviceDisplay.KeepScreenOn = true;
         }
 
         private void BatteryCheckReg()
@@ -95,39 +118,53 @@ namespace CCA.Droid
 
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
         {
-            Xamarin.Essentials.Platform.OnRequestPermissionsResult(requestCode, permissions, grantResults);
+            try
+            {
+                Xamarin.Essentials.Platform.OnRequestPermissionsResult(requestCode, permissions, grantResults);
 
-            base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
+                base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
 
-            FirebaseApp.InitializeApp(context);
+                FirebaseApp.InitializeApp(context);
 
-            FirebaseAuth_ = FirebaseAuth.Instance;
+                FirebaseAuth_ = FirebaseAuth.Instance;
 
-            if (FirebaseAuth_ == null)
-                FirebaseAuth_ = new FirebaseAuth(FirebaseApp.Instance);
+                if (FirebaseAuth_ == null)
+                    FirebaseAuth_ = new FirebaseAuth(FirebaseApp.Instance);
 
-            GoogleSignInOptions signInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DefaultSignIn)
-                .RequestIdToken("926850429943-envuu4ga9i133mbaq5hd77g1b9bdcrj5.apps.googleusercontent.com")
-                .RequestEmail()
-                .RequestId()
-                .Build();
-            GoogleApiClient = new GoogleApiClient.Builder(this)
-                .AddApi(Auth.GOOGLE_SIGN_IN_API, signInOptions)
-                .Build();
+                GoogleSignInOptions signInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DefaultSignIn)
+                    .RequestIdToken("926850429943-envuu4ga9i133mbaq5hd77g1b9bdcrj5.apps.googleusercontent.com")
+                    .RequestEmail()
+                    .RequestId()
+                    .Build();
+                GoogleApiClient = new GoogleApiClient.Builder(this)
+                    .AddApi(Auth.GOOGLE_SIGN_IN_API, signInOptions)
+                    .Build();
 
 
-            GoogleApiClient.Connect();
+                GoogleApiClient.Connect();
 
-            GoogleSignIn();
-            LoadApplication(new App());
+                GoogleSignIn();
+                LoadApplication(new App());
+            }
+            catch(Exception ex)
+            {
+                Method_Android.NotificationException(ex.Message);
+            }
         }
 
         const int SignInRequestCode = 9001;
 
         public void GoogleSignIn()
         {
-            Intent signInIntent = Auth.GoogleSignInApi.GetSignInIntent(GoogleApiClient);
-            StartActivityForResult(signInIntent, SignInRequestCode);
+            try
+            {
+                Intent signInIntent = Auth.GoogleSignInApi.GetSignInIntent(GoogleApiClient);
+                StartActivityForResult(signInIntent, SignInRequestCode);
+            }
+            catch (Exception ex)
+            {
+                Method_Android.NotificationException(ex.Message);
+            }
         }
 
         public void GoolgeLogout()
@@ -175,7 +212,12 @@ namespace CCA.Droid
         {
             base.OnDestroy();
 
-            FirebaseAuth_.SignOut();
+            FirebaseAuth_?.SignOut();
+
+            lockctl?.Release();
+            lockctl = null;
+            lockwifi?.Release();
+            lockwifi = null;
 
             //           NetProcess.SendStopStream();
 
@@ -220,16 +262,15 @@ namespace CCA.Droid
         private void UnlockCPU_WIFI()
         {
             //cpu가 저절전 모드로 들어가지 않게한다.
-            WakeLock lockctl = ((PowerManager)GetSystemService(Android.Content.Context.PowerService)).NewWakeLock(
+            lockctl = ((PowerManager)GetSystemService(Android.Content.Context.PowerService)).NewWakeLock(
                WakeLockFlags.Partial, "tag"); //cpu 항상 on 저절전 모드 해제 화면은 꺼짐 키보드 꺼짐
             lockctl.Acquire();
 
             //와이파이가 저절전 모드로 들어가지 않게한다.
             WifiManager wifi = ((WifiManager)GetSystemService(Android.Content.Context.WifiService));
-            var lockwifi = wifi.CreateWifiLock(Android.Net.WifiMode.Full, "wifilock");
+            lockwifi = wifi.CreateWifiLock(Android.Net.WifiMode.Full, "wifilock");
             lockwifi.SetReferenceCounted(true);
             lockwifi.Acquire();
-
         }
 
         List<string> _permission = new List<string>();
@@ -310,7 +351,7 @@ namespace CCA.Droid
         private void CreateService()
         {
 
-            OnNewIntent(this.Intent);
+  //          OnNewIntent(this.Intent);
 
             startServiceIntent = new Intent(this, typeof(ServiceCamera));
             startServiceIntent.SetAction(Constants.ACTION_START_SERVICE);

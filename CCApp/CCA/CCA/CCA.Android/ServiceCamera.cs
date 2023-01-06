@@ -25,6 +25,9 @@ namespace CCA.Droid
 		public const string ACTION_START_SERVICE = "ServicesDemo3.action.START_SERVICE";
 		public const string ACTION_STOP_SERVICE = "ServicesDemo3.action.STOP_SERVICE";
 		public const string ACTION_RESTART_TIMER = "ServicesDemo3.action.RESTART_TIMER";
+
+		public const string SERVICE_STARTED_KEY = "has_service_been_started";
+
 	}
 
 	[Service]

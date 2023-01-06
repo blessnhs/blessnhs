@@ -39,9 +39,10 @@ VOID HubProcess::Process(boost::shared_ptr<XDATA> pBuffer, boost::shared_ptr<GSC
 
 			if (pBuffer->MainId == ID_PKT_CLIENT_KICK)
 			{
-				CLIENT_KICK kick;
-				SEND_PROTO_BUFFER(kick, pPair,0)
-//				SERVER.Close(pPair->GetTCPSocket()->GetSocket());
+			//	CLIENT_KICK kick;
+			//	SEND_PROTO_BUFFER(kick, pPair,0)
+
+				SERVER.Close(pPair->GetTCPSocket()->GetSocket());
 			}
 			else //그냥 전달만 한다.
 				pPair->GetTCPSocket()->RelayPacket(pBuffer->MainId, pBuffer->SubId, pBuffer->IsCompress,(BYTE*)pBuffer->m_Buffer.GetBuffer(), pBuffer->m_Buffer.GetLength(), pBuffer->Reserve2);
