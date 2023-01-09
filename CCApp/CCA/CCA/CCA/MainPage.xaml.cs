@@ -26,7 +26,7 @@ namespace CCA
         {
             InitializeComponent();
 
-            //NetworkProcess();
+            NetworkProcess();
 
             iIterstitia = DependencyService.Get<iAd_IterstitialView>();
             rewardVideo = DependencyService.Get<iAd_RewardVideoView>();

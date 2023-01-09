@@ -221,7 +221,7 @@ namespace CCA.Droid
 
             //           NetProcess.SendStopStream();
 
-            //EndService();
+            EndService();
         }
 
         async void ProcessSignInResult(Intent data)

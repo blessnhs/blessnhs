@@ -6,6 +6,7 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using DependencyHelper;
+using DependencyHelper.Droid;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -80,31 +81,39 @@ namespace CCA.Droid
 
 		public override StartCommandResult OnStartCommand(Intent intent, StartCommandFlags flags, int startId)
 		{
-			if (intent.Action.Equals(Constants.ACTION_START_SERVICE))
+			try
 			{
-				if (isStarted)
-				{
-					//Log.Info(TAG, "OnStartCommand: The service is already running.");
-				}
-				else
-				{
-					NetworkProcess();
 
-					RegisterForegroundService();
-			
-					isStarted = true;
+				if (intent.Action.Equals(Constants.ACTION_START_SERVICE))
+				{
+					if (isStarted)
+					{
+						//Log.Info(TAG, "OnStartCommand: The service is already running.");
+					}
+					else
+					{
+						//	NetworkProcess();
+
+						RegisterForegroundService();
+
+						isStarted = true;
+					}
+				}
+				else if (intent.Action.Equals(Constants.ACTION_STOP_SERVICE))
+				{
+
+					StopForeground(true);
+					StopSelf();
+					isStarted = false;
+
+				}
+				else if (intent.Action.Equals(Constants.ACTION_RESTART_TIMER))
+				{
 				}
 			}
-			else if (intent.Action.Equals(Constants.ACTION_STOP_SERVICE))
-			{
-			
-				StopForeground(true);
-				StopSelf();
-				isStarted = false;
-
-			}
-			else if (intent.Action.Equals(Constants.ACTION_RESTART_TIMER))
-			{
+			catch(Exception ex)
+            {
+				Method_Android.NotificationException(ex.Message);
 			}
 
 			// This tells Android not to restart the service if it is killed to reclaim resources.
