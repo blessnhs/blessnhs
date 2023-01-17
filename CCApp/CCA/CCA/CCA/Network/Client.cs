@@ -59,6 +59,7 @@ namespace CCA
                     socket = null;
                     socket = new Socket(AddressFamily.InterNetwork,
                                 SocketType.Stream, ProtocolType.Tcp);
+
                 }
                 else
                 {

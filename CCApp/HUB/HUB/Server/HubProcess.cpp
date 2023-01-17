@@ -74,7 +74,10 @@ VOID HubProcess::Process(boost::shared_ptr<XDATA> pBuffer, boost::shared_ptr<GSC
 
 #ifdef _DEBUG
 		const google::protobuf::EnumDescriptor* descriptor = PROTOCOL_descriptor();
-		std::string name = descriptor->FindValueByNumber(pBuffer->MainId)->name();
+
+		std::string name;
+		if(descriptor->FindValueByNumber(pBuffer->MainId) != NULL)
+			name = descriptor->FindValueByNumber(pBuffer->MainId)->name();
 
 	//	if (pBuffer->MainId != ID_PKT_ROOM_LIST_REQ && pBuffer->MainId != ID_PKT_PRAY_MESSAGE_REQ)
 			BLOG("%s MainProtocol %s Length %d\n", __FUNCTION__, name.c_str(), pBuffer->Length);
