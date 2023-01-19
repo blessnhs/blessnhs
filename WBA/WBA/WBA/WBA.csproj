@@ -1297,7 +1297,7 @@
     <PackageReference Include="Google.Apis.Auth" Version="1.43.0" />
     <PackageReference Include="Google.Apis.Drive.v2" Version="1.43.0.1841" />
     <PackageReference Include="Google.Apis.Storage.v1" Version="1.43.0.1791" />
-    <PackageReference Include="Google.Protobuf" Version="3.11.4" />
+    <PackageReference Include="Google.Protobuf" Version="3.15.0" />
     <PackageReference Include="sqlite-net-pcl" Version="1.6.292" />
     <PackageReference Include="Xamarin.Forms" Version="4.4.0.991537" />
     <PackageReference Include="Xamarin.Essentials" Version="1.1.0" />
