@@ -107,8 +107,7 @@ namespace CCA
                     case "Network":
                         {
                             DependencyService.Get<MethodExt>().ShowToast("곧 업데이트될 예정입니다.");
-                            Flashlight.TurnOffAsync();
-
+                            DependencyService.Get<MethodExt>().Purchase("cameraunlimtedlist3");
                         }
                         break;
 

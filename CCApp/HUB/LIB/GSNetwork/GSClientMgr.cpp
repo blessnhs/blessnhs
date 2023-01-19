@@ -208,6 +208,10 @@ BOOL GSClientMgr::DelClient(int id)
 
 int GSClientMgr::PopRecycleId()
 {
+	//만번부터 
+	if (m_Reycle_Id_Queue.unsafe_size() < 10000)
+		return -1;
+
 	int id;
 	if (m_Reycle_Id_Queue.try_pop(id) == true)
 		return id;
