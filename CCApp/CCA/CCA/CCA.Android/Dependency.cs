@@ -103,7 +103,7 @@ namespace DependencyHelper.Droid
             }
             catch (Exception ex)
             {
-                //Something bad has occurred, alert user
+                NotificationException(ex.Message + "_" + ex.Source + "_" + ex.StackTrace);
             }
             finally
             {

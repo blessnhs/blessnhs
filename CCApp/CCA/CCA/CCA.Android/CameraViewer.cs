@@ -263,7 +263,7 @@ namespace FullCameraApp.Droid
                     }
                     catch (Exception e)
                     {
-                        Method_Android.NotificationException(e.Message);
+                        Method_Android.NotificationException(e.Message + e.Source);
                     }
 
                     Thread.Sleep(1);

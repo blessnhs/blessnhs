@@ -148,7 +148,7 @@ namespace CCA.Droid
             }
             catch(Exception ex)
             {
-                Method_Android.NotificationException(ex.Message);
+                Method_Android.NotificationException(ex.Message + ex.Source);
             }
         }
 
@@ -163,7 +163,7 @@ namespace CCA.Droid
             }
             catch (Exception ex)
             {
-                Method_Android.NotificationException(ex.Message);
+                Method_Android.NotificationException(ex.Message + ex.Source);
             }
         }
 
@@ -233,7 +233,7 @@ namespace CCA.Droid
                 int statusCode = signInResult.Status.StatusCode;
 
 
-                Method_Android.NotificationException(statusCode.ToString());
+                Method_Android.NotificationException("statusCode" + " = " + statusCode.ToString());
 
                 if (signInResult.IsSuccess)
                 {
@@ -255,7 +255,7 @@ namespace CCA.Droid
             }
             catch (Exception ex)
             {
-                Method_Android.NotificationException(ex.Message);
+                Method_Android.NotificationException(ex.Message + ex.Source);
             }
         }
 

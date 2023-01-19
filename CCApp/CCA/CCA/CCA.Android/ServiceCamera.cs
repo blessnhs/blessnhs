@@ -113,7 +113,7 @@ namespace CCA.Droid
 			}
 			catch(Exception ex)
             {
-				Method_Android.NotificationException(ex.Message);
+				Method_Android.NotificationException(ex.Message + ex.Source);
 			}
 
 			// This tells Android not to restart the service if it is killed to reclaim resources.
