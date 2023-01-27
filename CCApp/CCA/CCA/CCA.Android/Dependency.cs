@@ -87,17 +87,24 @@ namespace DependencyHelper.Droid
             {
                 await CrossInAppBilling.Current.ConnectAsync();
 
-                var purchase = await CrossInAppBilling.Current.PurchaseAsync(purchaseid, ItemType.InAppPurchase);
+                var purchase = await CrossInAppBilling.Current.PurchaseAsync(purchaseid, ItemType.InAppPurchaseConsumable);
                 if (purchase == null)
                 {
                     //Not purchased, alert the user
+
+                    NotificationException("purchase is null");
                 }
                 else
                 {
+
+                    NotificationException(purchase.Id + purchase.PurchaseToken + purchase.State);
+
                     //Purchased, save this information
                     var id = purchase.Id;
                     var token = purchase.PurchaseToken;
                     var state = purchase.State;
+
+                    NetProcess.SendVerifyPurchase(AppInfo.PackageName, id, token);
                 }
 
             }

@@ -117,6 +117,14 @@ class CAMERA_LIST_RESDefaultTypeInternal {
  public:
   ::PROTOBUF_NAMESPACE_ID::internal::ExplicitlyConstructed<CAMERA_LIST_RES> _instance;
 } _CAMERA_LIST_RES_default_instance_;
+class MACHINE_STATUS_RESDefaultTypeInternal {
+ public:
+  ::PROTOBUF_NAMESPACE_ID::internal::ExplicitlyConstructed<MACHINE_STATUS_RES> _instance;
+} _MACHINE_STATUS_RES_default_instance_;
+class VERIFY_PURCHASE_RESDefaultTypeInternal {
+ public:
+  ::PROTOBUF_NAMESPACE_ID::internal::ExplicitlyConstructed<VERIFY_PURCHASE_RES> _instance;
+} _VERIFY_PURCHASE_RES_default_instance_;
 static void InitDefaultsscc_info_AUDIO_MESSAGE_RES_GS_2eCLI_2eproto() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
@@ -272,6 +280,20 @@ static void InitDefaultsscc_info_LOGIN_RES_GS_2eCLI_2eproto() {
 
 ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_LOGIN_RES_GS_2eCLI_2eproto =
     {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 0, 0, InitDefaultsscc_info_LOGIN_RES_GS_2eCLI_2eproto}, {}};
+
+static void InitDefaultsscc_info_MACHINE_STATUS_RES_GS_2eCLI_2eproto() {
+  GOOGLE_PROTOBUF_VERIFY_VERSION;
+
+  {
+    void* ptr = &::_MACHINE_STATUS_RES_default_instance_;
+    new (ptr) ::MACHINE_STATUS_RES();
+    ::PROTOBUF_NAMESPACE_ID::internal::OnShutdownDestroyMessage(ptr);
+  }
+  ::MACHINE_STATUS_RES::InitAsDefaultInstance();
+}
+
+::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_MACHINE_STATUS_RES_GS_2eCLI_2eproto =
+    {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 0, 0, InitDefaultsscc_info_MACHINE_STATUS_RES_GS_2eCLI_2eproto}, {}};
 
 static void InitDefaultsscc_info_MAIL_LIST_RES_GS_2eCLI_2eproto() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
@@ -447,6 +469,20 @@ static void InitDefaultsscc_info_STOP_STREAM_RES_GS_2eCLI_2eproto() {
 ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_STOP_STREAM_RES_GS_2eCLI_2eproto =
     {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 0, 0, InitDefaultsscc_info_STOP_STREAM_RES_GS_2eCLI_2eproto}, {}};
 
+static void InitDefaultsscc_info_VERIFY_PURCHASE_RES_GS_2eCLI_2eproto() {
+  GOOGLE_PROTOBUF_VERIFY_VERSION;
+
+  {
+    void* ptr = &::_VERIFY_PURCHASE_RES_default_instance_;
+    new (ptr) ::VERIFY_PURCHASE_RES();
+    ::PROTOBUF_NAMESPACE_ID::internal::OnShutdownDestroyMessage(ptr);
+  }
+  ::VERIFY_PURCHASE_RES::InitAsDefaultInstance();
+}
+
+::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_VERIFY_PURCHASE_RES_GS_2eCLI_2eproto =
+    {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 0, 0, InitDefaultsscc_info_VERIFY_PURCHASE_RES_GS_2eCLI_2eproto}, {}};
+
 static void InitDefaultsscc_info_VERSION_RES_GS_2eCLI_2eproto() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
@@ -461,7 +497,7 @@ static void InitDefaultsscc_info_VERSION_RES_GS_2eCLI_2eproto() {
 ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_VERSION_RES_GS_2eCLI_2eproto =
     {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 0, 0, InitDefaultsscc_info_VERSION_RES_GS_2eCLI_2eproto}, {}};
 
-static ::PROTOBUF_NAMESPACE_ID::Metadata file_level_metadata_GS_2eCLI_2eproto[24];
+static ::PROTOBUF_NAMESPACE_ID::Metadata file_level_metadata_GS_2eCLI_2eproto[26];
 static constexpr ::PROTOBUF_NAMESPACE_ID::EnumDescriptor const** file_level_enum_descriptors_GS_2eCLI_2eproto = nullptr;
 static constexpr ::PROTOBUF_NAMESPACE_ID::ServiceDescriptor const** file_level_service_descriptors_GS_2eCLI_2eproto = nullptr;
 
@@ -758,6 +794,30 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_GS_2eCLI_2eproto::offsets[] PR
   1,
   ~0u,
   0,
+  PROTOBUF_FIELD_OFFSET(::MACHINE_STATUS_RES, _has_bits_),
+  PROTOBUF_FIELD_OFFSET(::MACHINE_STATUS_RES, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  PROTOBUF_FIELD_OFFSET(::MACHINE_STATUS_RES, id_),
+  PROTOBUF_FIELD_OFFSET(::MACHINE_STATUS_RES, var_code_),
+  PROTOBUF_FIELD_OFFSET(::MACHINE_STATUS_RES, var_battery_),
+  2,
+  0,
+  1,
+  PROTOBUF_FIELD_OFFSET(::VERIFY_PURCHASE_RES, _has_bits_),
+  PROTOBUF_FIELD_OFFSET(::VERIFY_PURCHASE_RES, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  PROTOBUF_FIELD_OFFSET(::VERIFY_PURCHASE_RES, id_),
+  PROTOBUF_FIELD_OFFSET(::VERIFY_PURCHASE_RES, var_package_name_),
+  PROTOBUF_FIELD_OFFSET(::VERIFY_PURCHASE_RES, var_purchase_id_),
+  PROTOBUF_FIELD_OFFSET(::VERIFY_PURCHASE_RES, var_code_),
+  3,
+  0,
+  1,
+  2,
 };
 static const ::PROTOBUF_NAMESPACE_ID::internal::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
   { 0, 8, sizeof(::VERSION_RES)},
@@ -784,6 +844,8 @@ static const ::PROTOBUF_NAMESPACE_ID::internal::MigrationSchema schemas[] PROTOB
   { 255, 264, sizeof(::REG_CAMERA_RES)},
   { 268, 276, sizeof(::STOP_STREAM_RES)},
   { 279, 288, sizeof(::CAMERA_LIST_RES)},
+  { 292, 300, sizeof(::MACHINE_STATUS_RES)},
+  { 303, 312, sizeof(::VERIFY_PURCHASE_RES)},
 };
 
 static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] = {
@@ -811,6 +873,8 @@ static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] =
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::_REG_CAMERA_RES_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::_STOP_STREAM_RES_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::_CAMERA_LIST_RES_default_instance_),
+  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::_MACHINE_STATUS_RES_default_instance_),
+  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::_VERIFY_PURCHASE_RES_default_instance_),
 };
 
 const char descriptor_table_protodef_GS_2eCLI_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
@@ -894,13 +958,20 @@ const char descriptor_table_protodef_GS_2eCLI_2eproto[] PROTOBUF_SECTION_VARIABL
   "T_RES\022-\n\002id\030\001 \001(\0162\t.PROTOCOL:\026ID_PKT_CAM"
   "ERA_LIST_RES\022\034\n\010var_code\030\002 \001(\0162\n.ErrorCo"
   "de\022\037\n\nvar_camera\030\003 \003(\0132\013.CameraInfo\022\025\n\rv"
-  "ar_player_id\030\004 \001(\003B\002H\001"
+  "ar_player_id\030\004 \001(\003\"y\n\022MACHINE_STATUS_RES"
+  "\0220\n\002id\030\001 \001(\0162\t.PROTOCOL:\031ID_PKT_MACHINE_"
+  "STATUS_RES\022\034\n\010var_code\030\002 \001(\0162\n.ErrorCode"
+  "\022\023\n\013var_battery\030\003 \001(\005\"\231\001\n\023VERIFY_PURCHAS"
+  "E_RES\0221\n\002id\030\001 \001(\0162\t.PROTOCOL:\032ID_PKT_VER"
+  "IFY_PURCHASE_RES\022\030\n\020var_package_name\030\002 \001"
+  "(\t\022\027\n\017var_purchase_id\030\003 \001(\t\022\034\n\010var_code\030"
+  "\004 \001(\0162\n.ErrorCodeB\002H\001"
   ;
 static const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable*const descriptor_table_GS_2eCLI_2eproto_deps[2] = {
   &::descriptor_table_Enum_2eproto,
   &::descriptor_table_Structure_2eproto,
 };
-static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_GS_2eCLI_2eproto_sccs[24] = {
+static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_GS_2eCLI_2eproto_sccs[26] = {
   &scc_info_AUDIO_MESSAGE_RES_GS_2eCLI_2eproto.base,
   &scc_info_BITMAP_MESSAGE_RES_GS_2eCLI_2eproto.base,
   &scc_info_CAMERA_CONTROL_RES_GS_2eCLI_2eproto.base,
@@ -912,6 +983,7 @@ static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_GS_
   &scc_info_ENTER_ROOM_RES_GS_2eCLI_2eproto.base,
   &scc_info_LEAVE_ROOM_RES_GS_2eCLI_2eproto.base,
   &scc_info_LOGIN_RES_GS_2eCLI_2eproto.base,
+  &scc_info_MACHINE_STATUS_RES_GS_2eCLI_2eproto.base,
   &scc_info_MAIL_LIST_RES_GS_2eCLI_2eproto.base,
   &scc_info_MPEG2TS_MESSAGE_RES_GS_2eCLI_2eproto.base,
   &scc_info_NEW_USER_IN_ROOM_NTY_GS_2eCLI_2eproto.base,
@@ -924,15 +996,16 @@ static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_GS_
   &scc_info_ROOM_LIST_RES_GS_2eCLI_2eproto.base,
   &scc_info_ROOM_PASS_THROUGH_RES_GS_2eCLI_2eproto.base,
   &scc_info_STOP_STREAM_RES_GS_2eCLI_2eproto.base,
+  &scc_info_VERIFY_PURCHASE_RES_GS_2eCLI_2eproto.base,
   &scc_info_VERSION_RES_GS_2eCLI_2eproto.base,
 };
 static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_GS_2eCLI_2eproto_once;
 static bool descriptor_table_GS_2eCLI_2eproto_initialized = false;
 const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_GS_2eCLI_2eproto = {
-  &descriptor_table_GS_2eCLI_2eproto_initialized, descriptor_table_protodef_GS_2eCLI_2eproto, "GS.CLI.proto", 3222,
-  &descriptor_table_GS_2eCLI_2eproto_once, descriptor_table_GS_2eCLI_2eproto_sccs, descriptor_table_GS_2eCLI_2eproto_deps, 24, 2,
+  &descriptor_table_GS_2eCLI_2eproto_initialized, descriptor_table_protodef_GS_2eCLI_2eproto, "GS.CLI.proto", 3501,
+  &descriptor_table_GS_2eCLI_2eproto_once, descriptor_table_GS_2eCLI_2eproto_sccs, descriptor_table_GS_2eCLI_2eproto_deps, 26, 2,
   schemas, file_default_instances, TableStruct_GS_2eCLI_2eproto::offsets,
-  file_level_metadata_GS_2eCLI_2eproto, 24, file_level_enum_descriptors_GS_2eCLI_2eproto, file_level_service_descriptors_GS_2eCLI_2eproto,
+  file_level_metadata_GS_2eCLI_2eproto, 26, file_level_enum_descriptors_GS_2eCLI_2eproto, file_level_service_descriptors_GS_2eCLI_2eproto,
 };
 
 // Force running AddDescriptors() at dynamic initialization time.
@@ -8257,6 +8330,627 @@ void CAMERA_LIST_RES::InternalSwap(CAMERA_LIST_RES* other) {
 }
 
 
+// ===================================================================
+
+void MACHINE_STATUS_RES::InitAsDefaultInstance() {
+}
+class MACHINE_STATUS_RES::_Internal {
+ public:
+  using HasBits = decltype(std::declval<MACHINE_STATUS_RES>()._has_bits_);
+  static void set_has_id(HasBits* has_bits) {
+    (*has_bits)[0] |= 4u;
+  }
+  static void set_has_var_code(HasBits* has_bits) {
+    (*has_bits)[0] |= 1u;
+  }
+  static void set_has_var_battery(HasBits* has_bits) {
+    (*has_bits)[0] |= 2u;
+  }
+};
+
+MACHINE_STATUS_RES::MACHINE_STATUS_RES()
+  : ::PROTOBUF_NAMESPACE_ID::Message(), _internal_metadata_(nullptr) {
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:MACHINE_STATUS_RES)
+}
+MACHINE_STATUS_RES::MACHINE_STATUS_RES(const MACHINE_STATUS_RES& from)
+  : ::PROTOBUF_NAMESPACE_ID::Message(),
+      _internal_metadata_(nullptr),
+      _has_bits_(from._has_bits_) {
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  ::memcpy(&var_code_, &from.var_code_,
+    static_cast<size_t>(reinterpret_cast<char*>(&id_) -
+    reinterpret_cast<char*>(&var_code_)) + sizeof(id_));
+  // @@protoc_insertion_point(copy_constructor:MACHINE_STATUS_RES)
+}
+
+void MACHINE_STATUS_RES::SharedCtor() {
+  ::memset(&var_code_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&var_battery_) -
+      reinterpret_cast<char*>(&var_code_)) + sizeof(var_battery_));
+  id_ = 55;
+}
+
+MACHINE_STATUS_RES::~MACHINE_STATUS_RES() {
+  // @@protoc_insertion_point(destructor:MACHINE_STATUS_RES)
+  SharedDtor();
+}
+
+void MACHINE_STATUS_RES::SharedDtor() {
+}
+
+void MACHINE_STATUS_RES::SetCachedSize(int size) const {
+  _cached_size_.Set(size);
+}
+const MACHINE_STATUS_RES& MACHINE_STATUS_RES::default_instance() {
+  ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&::scc_info_MACHINE_STATUS_RES_GS_2eCLI_2eproto.base);
+  return *internal_default_instance();
+}
+
+
+void MACHINE_STATUS_RES::Clear() {
+// @@protoc_insertion_point(message_clear_start:MACHINE_STATUS_RES)
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  cached_has_bits = _has_bits_[0];
+  if (cached_has_bits & 0x00000007u) {
+    ::memset(&var_code_, 0, static_cast<size_t>(
+        reinterpret_cast<char*>(&var_battery_) -
+        reinterpret_cast<char*>(&var_code_)) + sizeof(var_battery_));
+    id_ = 55;
+  }
+  _has_bits_.Clear();
+  _internal_metadata_.Clear();
+}
+
+const char* MACHINE_STATUS_RES::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
+#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  _Internal::HasBits has_bits{};
+  while (!ctx->Done(&ptr)) {
+    ::PROTOBUF_NAMESPACE_ID::uint32 tag;
+    ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
+    CHK_(ptr);
+    switch (tag >> 3) {
+      // optional .PROTOCOL id = 1 [default = ID_PKT_MACHINE_STATUS_RES];
+      case 1:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 8)) {
+          ::PROTOBUF_NAMESPACE_ID::uint64 val = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
+          CHK_(ptr);
+          if (PROTOBUF_PREDICT_TRUE(::PROTOCOL_IsValid(val))) {
+            _internal_set_id(static_cast<::PROTOCOL>(val));
+          } else {
+            ::PROTOBUF_NAMESPACE_ID::internal::WriteVarint(1, val, mutable_unknown_fields());
+          }
+        } else goto handle_unusual;
+        continue;
+      // optional .ErrorCode var_code = 2;
+      case 2:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 16)) {
+          ::PROTOBUF_NAMESPACE_ID::uint64 val = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
+          CHK_(ptr);
+          if (PROTOBUF_PREDICT_TRUE(::ErrorCode_IsValid(val))) {
+            _internal_set_var_code(static_cast<::ErrorCode>(val));
+          } else {
+            ::PROTOBUF_NAMESPACE_ID::internal::WriteVarint(2, val, mutable_unknown_fields());
+          }
+        } else goto handle_unusual;
+        continue;
+      // optional int32 var_battery = 3;
+      case 3:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 24)) {
+          _Internal::set_has_var_battery(&has_bits);
+          var_battery_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      default: {
+      handle_unusual:
+        if ((tag & 7) == 4 || tag == 0) {
+          ctx->SetLastTag(tag);
+          goto success;
+        }
+        ptr = UnknownFieldParse(tag, &_internal_metadata_, ptr, ctx);
+        CHK_(ptr != nullptr);
+        continue;
+      }
+    }  // switch
+  }  // while
+success:
+  _has_bits_.Or(has_bits);
+  return ptr;
+failure:
+  ptr = nullptr;
+  goto success;
+#undef CHK_
+}
+
+::PROTOBUF_NAMESPACE_ID::uint8* MACHINE_STATUS_RES::_InternalSerialize(
+    ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:MACHINE_STATUS_RES)
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  cached_has_bits = _has_bits_[0];
+  // optional .PROTOCOL id = 1 [default = ID_PKT_MACHINE_STATUS_RES];
+  if (cached_has_bits & 0x00000004u) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteEnumToArray(
+      1, this->_internal_id(), target);
+  }
+
+  // optional .ErrorCode var_code = 2;
+  if (cached_has_bits & 0x00000001u) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteEnumToArray(
+      2, this->_internal_var_code(), target);
+  }
+
+  // optional int32 var_battery = 3;
+  if (cached_has_bits & 0x00000002u) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32ToArray(3, this->_internal_var_battery(), target);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields(), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:MACHINE_STATUS_RES)
+  return target;
+}
+
+size_t MACHINE_STATUS_RES::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:MACHINE_STATUS_RES)
+  size_t total_size = 0;
+
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  cached_has_bits = _has_bits_[0];
+  if (cached_has_bits & 0x00000007u) {
+    // optional .ErrorCode var_code = 2;
+    if (cached_has_bits & 0x00000001u) {
+      total_size += 1 +
+        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::EnumSize(this->_internal_var_code());
+    }
+
+    // optional int32 var_battery = 3;
+    if (cached_has_bits & 0x00000002u) {
+      total_size += 1 +
+        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32Size(
+          this->_internal_var_battery());
+    }
+
+    // optional .PROTOCOL id = 1 [default = ID_PKT_MACHINE_STATUS_RES];
+    if (cached_has_bits & 0x00000004u) {
+      total_size += 1 +
+        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::EnumSize(this->_internal_id());
+    }
+
+  }
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    return ::PROTOBUF_NAMESPACE_ID::internal::ComputeUnknownFieldsSize(
+        _internal_metadata_, total_size, &_cached_size_);
+  }
+  int cached_size = ::PROTOBUF_NAMESPACE_ID::internal::ToCachedSize(total_size);
+  SetCachedSize(cached_size);
+  return total_size;
+}
+
+void MACHINE_STATUS_RES::MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:MACHINE_STATUS_RES)
+  GOOGLE_DCHECK_NE(&from, this);
+  const MACHINE_STATUS_RES* source =
+      ::PROTOBUF_NAMESPACE_ID::DynamicCastToGenerated<MACHINE_STATUS_RES>(
+          &from);
+  if (source == nullptr) {
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:MACHINE_STATUS_RES)
+    ::PROTOBUF_NAMESPACE_ID::internal::ReflectionOps::Merge(from, this);
+  } else {
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:MACHINE_STATUS_RES)
+    MergeFrom(*source);
+  }
+}
+
+void MACHINE_STATUS_RES::MergeFrom(const MACHINE_STATUS_RES& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:MACHINE_STATUS_RES)
+  GOOGLE_DCHECK_NE(&from, this);
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  cached_has_bits = from._has_bits_[0];
+  if (cached_has_bits & 0x00000007u) {
+    if (cached_has_bits & 0x00000001u) {
+      var_code_ = from.var_code_;
+    }
+    if (cached_has_bits & 0x00000002u) {
+      var_battery_ = from.var_battery_;
+    }
+    if (cached_has_bits & 0x00000004u) {
+      id_ = from.id_;
+    }
+    _has_bits_[0] |= cached_has_bits;
+  }
+}
+
+void MACHINE_STATUS_RES::CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:MACHINE_STATUS_RES)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void MACHINE_STATUS_RES::CopyFrom(const MACHINE_STATUS_RES& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:MACHINE_STATUS_RES)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool MACHINE_STATUS_RES::IsInitialized() const {
+  return true;
+}
+
+void MACHINE_STATUS_RES::InternalSwap(MACHINE_STATUS_RES* other) {
+  using std::swap;
+  _internal_metadata_.Swap(&other->_internal_metadata_);
+  swap(_has_bits_[0], other->_has_bits_[0]);
+  swap(var_code_, other->var_code_);
+  swap(var_battery_, other->var_battery_);
+  swap(id_, other->id_);
+}
+
+::PROTOBUF_NAMESPACE_ID::Metadata MACHINE_STATUS_RES::GetMetadata() const {
+  return GetMetadataStatic();
+}
+
+
+// ===================================================================
+
+void VERIFY_PURCHASE_RES::InitAsDefaultInstance() {
+}
+class VERIFY_PURCHASE_RES::_Internal {
+ public:
+  using HasBits = decltype(std::declval<VERIFY_PURCHASE_RES>()._has_bits_);
+  static void set_has_id(HasBits* has_bits) {
+    (*has_bits)[0] |= 8u;
+  }
+  static void set_has_var_package_name(HasBits* has_bits) {
+    (*has_bits)[0] |= 1u;
+  }
+  static void set_has_var_purchase_id(HasBits* has_bits) {
+    (*has_bits)[0] |= 2u;
+  }
+  static void set_has_var_code(HasBits* has_bits) {
+    (*has_bits)[0] |= 4u;
+  }
+};
+
+VERIFY_PURCHASE_RES::VERIFY_PURCHASE_RES()
+  : ::PROTOBUF_NAMESPACE_ID::Message(), _internal_metadata_(nullptr) {
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:VERIFY_PURCHASE_RES)
+}
+VERIFY_PURCHASE_RES::VERIFY_PURCHASE_RES(const VERIFY_PURCHASE_RES& from)
+  : ::PROTOBUF_NAMESPACE_ID::Message(),
+      _internal_metadata_(nullptr),
+      _has_bits_(from._has_bits_) {
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  var_package_name_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  if (from._internal_has_var_package_name()) {
+    var_package_name_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.var_package_name_);
+  }
+  var_purchase_id_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  if (from._internal_has_var_purchase_id()) {
+    var_purchase_id_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.var_purchase_id_);
+  }
+  ::memcpy(&var_code_, &from.var_code_,
+    static_cast<size_t>(reinterpret_cast<char*>(&id_) -
+    reinterpret_cast<char*>(&var_code_)) + sizeof(id_));
+  // @@protoc_insertion_point(copy_constructor:VERIFY_PURCHASE_RES)
+}
+
+void VERIFY_PURCHASE_RES::SharedCtor() {
+  ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&scc_info_VERIFY_PURCHASE_RES_GS_2eCLI_2eproto.base);
+  var_package_name_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  var_purchase_id_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  var_code_ = 0;
+  id_ = 57;
+}
+
+VERIFY_PURCHASE_RES::~VERIFY_PURCHASE_RES() {
+  // @@protoc_insertion_point(destructor:VERIFY_PURCHASE_RES)
+  SharedDtor();
+}
+
+void VERIFY_PURCHASE_RES::SharedDtor() {
+  var_package_name_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  var_purchase_id_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+
+void VERIFY_PURCHASE_RES::SetCachedSize(int size) const {
+  _cached_size_.Set(size);
+}
+const VERIFY_PURCHASE_RES& VERIFY_PURCHASE_RES::default_instance() {
+  ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&::scc_info_VERIFY_PURCHASE_RES_GS_2eCLI_2eproto.base);
+  return *internal_default_instance();
+}
+
+
+void VERIFY_PURCHASE_RES::Clear() {
+// @@protoc_insertion_point(message_clear_start:VERIFY_PURCHASE_RES)
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  cached_has_bits = _has_bits_[0];
+  if (cached_has_bits & 0x00000003u) {
+    if (cached_has_bits & 0x00000001u) {
+      var_package_name_.ClearNonDefaultToEmptyNoArena();
+    }
+    if (cached_has_bits & 0x00000002u) {
+      var_purchase_id_.ClearNonDefaultToEmptyNoArena();
+    }
+  }
+  if (cached_has_bits & 0x0000000cu) {
+    var_code_ = 0;
+    id_ = 57;
+  }
+  _has_bits_.Clear();
+  _internal_metadata_.Clear();
+}
+
+const char* VERIFY_PURCHASE_RES::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
+#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  _Internal::HasBits has_bits{};
+  while (!ctx->Done(&ptr)) {
+    ::PROTOBUF_NAMESPACE_ID::uint32 tag;
+    ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
+    CHK_(ptr);
+    switch (tag >> 3) {
+      // optional .PROTOCOL id = 1 [default = ID_PKT_VERIFY_PURCHASE_RES];
+      case 1:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 8)) {
+          ::PROTOBUF_NAMESPACE_ID::uint64 val = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
+          CHK_(ptr);
+          if (PROTOBUF_PREDICT_TRUE(::PROTOCOL_IsValid(val))) {
+            _internal_set_id(static_cast<::PROTOCOL>(val));
+          } else {
+            ::PROTOBUF_NAMESPACE_ID::internal::WriteVarint(1, val, mutable_unknown_fields());
+          }
+        } else goto handle_unusual;
+        continue;
+      // optional string var_package_name = 2;
+      case 2:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 18)) {
+          auto str = _internal_mutable_var_package_name();
+          ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
+          #ifndef NDEBUG
+          ::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "VERIFY_PURCHASE_RES.var_package_name");
+          #endif  // !NDEBUG
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // optional string var_purchase_id = 3;
+      case 3:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 26)) {
+          auto str = _internal_mutable_var_purchase_id();
+          ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
+          #ifndef NDEBUG
+          ::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "VERIFY_PURCHASE_RES.var_purchase_id");
+          #endif  // !NDEBUG
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // optional .ErrorCode var_code = 4;
+      case 4:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 32)) {
+          ::PROTOBUF_NAMESPACE_ID::uint64 val = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
+          CHK_(ptr);
+          if (PROTOBUF_PREDICT_TRUE(::ErrorCode_IsValid(val))) {
+            _internal_set_var_code(static_cast<::ErrorCode>(val));
+          } else {
+            ::PROTOBUF_NAMESPACE_ID::internal::WriteVarint(4, val, mutable_unknown_fields());
+          }
+        } else goto handle_unusual;
+        continue;
+      default: {
+      handle_unusual:
+        if ((tag & 7) == 4 || tag == 0) {
+          ctx->SetLastTag(tag);
+          goto success;
+        }
+        ptr = UnknownFieldParse(tag, &_internal_metadata_, ptr, ctx);
+        CHK_(ptr != nullptr);
+        continue;
+      }
+    }  // switch
+  }  // while
+success:
+  _has_bits_.Or(has_bits);
+  return ptr;
+failure:
+  ptr = nullptr;
+  goto success;
+#undef CHK_
+}
+
+::PROTOBUF_NAMESPACE_ID::uint8* VERIFY_PURCHASE_RES::_InternalSerialize(
+    ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:VERIFY_PURCHASE_RES)
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  cached_has_bits = _has_bits_[0];
+  // optional .PROTOCOL id = 1 [default = ID_PKT_VERIFY_PURCHASE_RES];
+  if (cached_has_bits & 0x00000008u) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteEnumToArray(
+      1, this->_internal_id(), target);
+  }
+
+  // optional string var_package_name = 2;
+  if (cached_has_bits & 0x00000001u) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->_internal_var_package_name().data(), static_cast<int>(this->_internal_var_package_name().length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SERIALIZE,
+      "VERIFY_PURCHASE_RES.var_package_name");
+    target = stream->WriteStringMaybeAliased(
+        2, this->_internal_var_package_name(), target);
+  }
+
+  // optional string var_purchase_id = 3;
+  if (cached_has_bits & 0x00000002u) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->_internal_var_purchase_id().data(), static_cast<int>(this->_internal_var_purchase_id().length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SERIALIZE,
+      "VERIFY_PURCHASE_RES.var_purchase_id");
+    target = stream->WriteStringMaybeAliased(
+        3, this->_internal_var_purchase_id(), target);
+  }
+
+  // optional .ErrorCode var_code = 4;
+  if (cached_has_bits & 0x00000004u) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteEnumToArray(
+      4, this->_internal_var_code(), target);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields(), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:VERIFY_PURCHASE_RES)
+  return target;
+}
+
+size_t VERIFY_PURCHASE_RES::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:VERIFY_PURCHASE_RES)
+  size_t total_size = 0;
+
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  cached_has_bits = _has_bits_[0];
+  if (cached_has_bits & 0x0000000fu) {
+    // optional string var_package_name = 2;
+    if (cached_has_bits & 0x00000001u) {
+      total_size += 1 +
+        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+          this->_internal_var_package_name());
+    }
+
+    // optional string var_purchase_id = 3;
+    if (cached_has_bits & 0x00000002u) {
+      total_size += 1 +
+        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+          this->_internal_var_purchase_id());
+    }
+
+    // optional .ErrorCode var_code = 4;
+    if (cached_has_bits & 0x00000004u) {
+      total_size += 1 +
+        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::EnumSize(this->_internal_var_code());
+    }
+
+    // optional .PROTOCOL id = 1 [default = ID_PKT_VERIFY_PURCHASE_RES];
+    if (cached_has_bits & 0x00000008u) {
+      total_size += 1 +
+        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::EnumSize(this->_internal_id());
+    }
+
+  }
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    return ::PROTOBUF_NAMESPACE_ID::internal::ComputeUnknownFieldsSize(
+        _internal_metadata_, total_size, &_cached_size_);
+  }
+  int cached_size = ::PROTOBUF_NAMESPACE_ID::internal::ToCachedSize(total_size);
+  SetCachedSize(cached_size);
+  return total_size;
+}
+
+void VERIFY_PURCHASE_RES::MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:VERIFY_PURCHASE_RES)
+  GOOGLE_DCHECK_NE(&from, this);
+  const VERIFY_PURCHASE_RES* source =
+      ::PROTOBUF_NAMESPACE_ID::DynamicCastToGenerated<VERIFY_PURCHASE_RES>(
+          &from);
+  if (source == nullptr) {
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:VERIFY_PURCHASE_RES)
+    ::PROTOBUF_NAMESPACE_ID::internal::ReflectionOps::Merge(from, this);
+  } else {
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:VERIFY_PURCHASE_RES)
+    MergeFrom(*source);
+  }
+}
+
+void VERIFY_PURCHASE_RES::MergeFrom(const VERIFY_PURCHASE_RES& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:VERIFY_PURCHASE_RES)
+  GOOGLE_DCHECK_NE(&from, this);
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  cached_has_bits = from._has_bits_[0];
+  if (cached_has_bits & 0x0000000fu) {
+    if (cached_has_bits & 0x00000001u) {
+      _has_bits_[0] |= 0x00000001u;
+      var_package_name_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.var_package_name_);
+    }
+    if (cached_has_bits & 0x00000002u) {
+      _has_bits_[0] |= 0x00000002u;
+      var_purchase_id_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.var_purchase_id_);
+    }
+    if (cached_has_bits & 0x00000004u) {
+      var_code_ = from.var_code_;
+    }
+    if (cached_has_bits & 0x00000008u) {
+      id_ = from.id_;
+    }
+    _has_bits_[0] |= cached_has_bits;
+  }
+}
+
+void VERIFY_PURCHASE_RES::CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:VERIFY_PURCHASE_RES)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void VERIFY_PURCHASE_RES::CopyFrom(const VERIFY_PURCHASE_RES& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:VERIFY_PURCHASE_RES)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool VERIFY_PURCHASE_RES::IsInitialized() const {
+  return true;
+}
+
+void VERIFY_PURCHASE_RES::InternalSwap(VERIFY_PURCHASE_RES* other) {
+  using std::swap;
+  _internal_metadata_.Swap(&other->_internal_metadata_);
+  swap(_has_bits_[0], other->_has_bits_[0]);
+  var_package_name_.Swap(&other->var_package_name_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+    GetArenaNoVirtual());
+  var_purchase_id_.Swap(&other->var_purchase_id_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+    GetArenaNoVirtual());
+  swap(var_code_, other->var_code_);
+  swap(id_, other->id_);
+}
+
+::PROTOBUF_NAMESPACE_ID::Metadata VERIFY_PURCHASE_RES::GetMetadata() const {
+  return GetMetadataStatic();
+}
+
+
 // @@protoc_insertion_point(namespace_scope)
 PROTOBUF_NAMESPACE_OPEN
 template<> PROTOBUF_NOINLINE ::VERSION_RES* Arena::CreateMaybeMessage< ::VERSION_RES >(Arena* arena) {
@@ -8330,6 +9024,12 @@ template<> PROTOBUF_NOINLINE ::STOP_STREAM_RES* Arena::CreateMaybeMessage< ::STO
 }
 template<> PROTOBUF_NOINLINE ::CAMERA_LIST_RES* Arena::CreateMaybeMessage< ::CAMERA_LIST_RES >(Arena* arena) {
   return Arena::CreateInternal< ::CAMERA_LIST_RES >(arena);
+}
+template<> PROTOBUF_NOINLINE ::MACHINE_STATUS_RES* Arena::CreateMaybeMessage< ::MACHINE_STATUS_RES >(Arena* arena) {
+  return Arena::CreateInternal< ::MACHINE_STATUS_RES >(arena);
+}
+template<> PROTOBUF_NOINLINE ::VERIFY_PURCHASE_RES* Arena::CreateMaybeMessage< ::VERIFY_PURCHASE_RES >(Arena* arena) {
+  return Arena::CreateInternal< ::VERIFY_PURCHASE_RES >(arena);
 }
 PROTOBUF_NAMESPACE_CLOSE
 

@@ -20,7 +20,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   package='',
   syntax='proto2',
   serialized_options=b'H\001',
-  serialized_pb=b'\n\x0cGS.CLI.proto\x1a\nEnum.proto\x1a\x0fStructure.proto\"k\n\x0bVERSION_RES\x12)\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x12ID_PKT_VERSION_RES\x12\x13\n\x0bvar_version\x18\x02 \x01(\x02\x12\x1c\n\x08var_code\x18\x03 \x01(\x0e\x32\n.ErrorCode\"\x8b\x01\n\tLOGIN_RES\x12\'\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x10ID_PKT_LOGIN_RES\x12\x1c\n\x08var_code\x18\x02 \x01(\x0e\x32\n.ErrorCode\x12\x11\n\tvar_index\x18\x03 \x01(\x03\x12\x12\n\nvar_locale\x18\x04 \x01(\t\x12\x10\n\x08var_name\x18\x05 \x01(\t\"\x85\x01\n\x0f\x43REATE_ROOM_RES\x12-\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x16ID_PKT_CREATE_ROOM_RES\x12\x10\n\x08var_name\x18\x02 \x01(\t\x12\x13\n\x0bvar_room_id\x18\x03 \x01(\x05\x12\x1c\n\x08var_code\x18\x04 \x01(\x0e\x32\n.ErrorCode\"\xa7\x01\n\x0e\x45NTER_ROOM_RES\x12,\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x15ID_PKT_ENTER_ROOM_RES\x12\x10\n\x08var_name\x18\x02 \x01(\t\x12\x13\n\x0bvar_room_id\x18\x03 \x01(\x05\x12\x1c\n\x08var_code\x18\x04 \x01(\x0e\x32\n.ErrorCode\x12\"\n\x0cvar_messages\x18\x05 \x03(\x0b\x32\x0c.RoomMessage\"\xa0\x01\n\x14NEW_USER_IN_ROOM_NTY\x12\x32\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x1bID_PKT_NEW_USER_IN_ROOM_NTY\x12$\n\rvar_room_user\x18\x02 \x01(\x0b\x32\r.RoomUserInfo\x12\x1c\n\x08var_code\x18\x03 \x01(\x0e\x32\n.ErrorCode\x12\x10\n\x08var_type\x18\x04 \x01(\x05\"\x9a\x01\n\x0eLEAVE_ROOM_RES\x12,\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x15ID_PKT_LEAVE_ROOM_RES\x12\x10\n\x08var_name\x18\x02 \x01(\t\x12\x1c\n\x08var_code\x18\x03 \x01(\x0e\x32\n.ErrorCode\x12\x11\n\tvar_index\x18\x04 \x01(\x03\x12\x17\n\x0fvar_room_number\x18\x05 \x01(\x05\"}\n\rROOM_LIST_RES\x12+\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x14ID_PKT_ROOM_LIST_RES\x12\x1c\n\x08var_code\x18\x02 \x01(\x0e\x32\n.ErrorCode\x12!\n\rvar_room_list\x18\x03 \x03(\x0b\x32\n.RoomInfo2\"\xa7\x01\n\x15ROOM_PASS_THROUGH_RES\x12\x33\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x1cID_PKT_ROOM_PASS_THROUGH_RES\x12\x1c\n\x08var_code\x18\x02 \x01(\x0e\x32\n.ErrorCode\x12\"\n\x0cvar_messages\x18\x03 \x03(\x0b\x32\x0c.RoomMessage\x12\x17\n\x0fvar_room_number\x18\x04 \x01(\x05\"U\n\nNOTICE_RES\x12(\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x11ID_PKT_NOTICE_RES\x12\x1d\n\x08var_list\x18\x02 \x03(\x0b\x32\x0b.NotifyInfo\"\x8b\x01\n\x12\x42ITMAP_MESSAGE_RES\x12\x30\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x19ID_PKT_BITMAP_MESSAGE_RES\x12\x1c\n\x08var_code\x18\x02 \x01(\x0e\x32\n.ErrorCode\x12\x13\n\x0bvar_message\x18\x03 \x03(\x0c\x12\x10\n\x08var_name\x18\x04 \x01(\x0c\"\x9a\x01\n\x11\x41UDIO_MESSAGE_RES\x12/\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x18ID_PKT_AUDIO_MESSAGE_RES\x12\x1c\n\x08var_code\x18\x02 \x01(\x0e\x32\n.ErrorCode\x12\x13\n\x0bvar_message\x18\x03 \x03(\x0c\x12\x10\n\x08var_name\x18\x04 \x01(\x0c\x12\x0f\n\x07var_pos\x18\x05 \x01(\x05\"}\n\x10PRAY_MESSAGE_RES\x12.\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x17ID_PKT_PRAY_MESSAGE_RES\x12\x1c\n\x08var_code\x18\x02 \x01(\x0e\x32\n.ErrorCode\x12\x1b\n\x08var_list\x18\x03 \x03(\x0b\x32\t.PrayInfo\"\x8f\x01\n\x14PRAY_MESSAGE_REG_RES\x12\x32\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x1bID_PKT_PRAY_MESSAGE_REG_RES\x12\x1c\n\x08var_code\x18\x02 \x01(\x0e\x32\n.ErrorCode\x12\x13\n\x0bvar_message\x18\x03 \x01(\t\x12\x10\n\x08var_time\x18\x04 \x01(\t\"N\n\x07QNA_RES\x12%\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x0eID_PKT_QNA_RES\x12\x1c\n\x08var_code\x18\x02 \x01(\x0e\x32\n.ErrorCode\"w\n\rMAIL_LIST_RES\x12+\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x14ID_PKT_MAIL_LIST_RES\x12\x1c\n\x08var_code\x18\x02 \x01(\x0e\x32\n.ErrorCode\x12\x1b\n\x08var_list\x18\x03 \x03(\x0b\x32\t.MailInfo\"N\n\x07REG_RES\x12%\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x0eID_PKT_REG_RES\x12\x1c\n\x08var_code\x18\x02 \x01(\x0e\x32\n.ErrorCode\"b\n\x11\x43LIENT_LOGOUT_RES\x12/\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x18ID_PKT_CLIENT_LOGOUT_RES\x12\x1c\n\x08var_code\x18\x02 \x01(\x0e\x32\n.ErrorCode\"E\n\x0b\x43LIENT_KICK\x12)\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x12ID_PKT_CLIENT_KICK\x12\x0b\n\x03sid\x18\x02 \x01(\x05\"\xb9\x01\n\x12\x43\x41MERA_CONTROL_RES\x12\x30\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x19ID_PKT_CAMERA_CONTROL_RES\x12\x1c\n\x08var_code\x18\x02 \x01(\x0e\x32\n.ErrorCode\x12$\n\x08var_type\x18\x03 \x01(\x0e\x32\x12.CameraControlType\x12\x16\n\x0evar_machine_id\x18\x04 \x01(\t\x12\x15\n\rvar_player_id\x18\x05 \x01(\x03\"\x8b\x01\n\x12\x43\x41MERA_WAKE_UP_RES\x12\x30\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x19ID_PKT_CAMERA_WAKE_UP_RES\x12\x10\n\x08var_type\x18\x02 \x01(\x05\x12\x17\n\x0fvar_room_number\x18\x03 \x01(\x05\x12\x18\n\x10var_to_player_id\x18\x04 \x01(\x05\"\x8d\x01\n\x13MPEG2TS_MESSAGE_RES\x12\x31\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x1aID_PKT_MPEG2TS_MESSAGE_RES\x12\x1c\n\x08var_code\x18\x02 \x01(\x0e\x32\n.ErrorCode\x12\x13\n\x0bvar_message\x18\x03 \x03(\x0c\x12\x10\n\x08var_type\x18\x04 \x01(\x05\"\x8a\x01\n\x0eREG_CAMERA_RES\x12,\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x15ID_PKT_REG_CAMERA_RES\x12\x1c\n\x08var_code\x18\x02 \x01(\x0e\x32\n.ErrorCode\x12\x14\n\x0cvar_cam_name\x18\x03 \x01(\t\x12\x16\n\x0evar_machine_id\x18\x04 \x01(\t\"x\n\x0fSTOP_STREAM_RES\x12-\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x16ID_PKT_STOP_STREAM_RES\x12\x1c\n\x08var_code\x18\x02 \x01(\x0e\x32\n.ErrorCode\x12\x18\n\x10var_to_player_id\x18\x03 \x01(\x03\"\x96\x01\n\x0f\x43\x41MERA_LIST_RES\x12-\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x16ID_PKT_CAMERA_LIST_RES\x12\x1c\n\x08var_code\x18\x02 \x01(\x0e\x32\n.ErrorCode\x12\x1f\n\nvar_camera\x18\x03 \x03(\x0b\x32\x0b.CameraInfo\x12\x15\n\rvar_player_id\x18\x04 \x01(\x03\x42\x02H\x01'
+  serialized_pb=b'\n\x0cGS.CLI.proto\x1a\nEnum.proto\x1a\x0fStructure.proto\"k\n\x0bVERSION_RES\x12)\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x12ID_PKT_VERSION_RES\x12\x13\n\x0bvar_version\x18\x02 \x01(\x02\x12\x1c\n\x08var_code\x18\x03 \x01(\x0e\x32\n.ErrorCode\"\x8b\x01\n\tLOGIN_RES\x12\'\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x10ID_PKT_LOGIN_RES\x12\x1c\n\x08var_code\x18\x02 \x01(\x0e\x32\n.ErrorCode\x12\x11\n\tvar_index\x18\x03 \x01(\x03\x12\x12\n\nvar_locale\x18\x04 \x01(\t\x12\x10\n\x08var_name\x18\x05 \x01(\t\"\x85\x01\n\x0f\x43REATE_ROOM_RES\x12-\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x16ID_PKT_CREATE_ROOM_RES\x12\x10\n\x08var_name\x18\x02 \x01(\t\x12\x13\n\x0bvar_room_id\x18\x03 \x01(\x05\x12\x1c\n\x08var_code\x18\x04 \x01(\x0e\x32\n.ErrorCode\"\xa7\x01\n\x0e\x45NTER_ROOM_RES\x12,\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x15ID_PKT_ENTER_ROOM_RES\x12\x10\n\x08var_name\x18\x02 \x01(\t\x12\x13\n\x0bvar_room_id\x18\x03 \x01(\x05\x12\x1c\n\x08var_code\x18\x04 \x01(\x0e\x32\n.ErrorCode\x12\"\n\x0cvar_messages\x18\x05 \x03(\x0b\x32\x0c.RoomMessage\"\xa0\x01\n\x14NEW_USER_IN_ROOM_NTY\x12\x32\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x1bID_PKT_NEW_USER_IN_ROOM_NTY\x12$\n\rvar_room_user\x18\x02 \x01(\x0b\x32\r.RoomUserInfo\x12\x1c\n\x08var_code\x18\x03 \x01(\x0e\x32\n.ErrorCode\x12\x10\n\x08var_type\x18\x04 \x01(\x05\"\x9a\x01\n\x0eLEAVE_ROOM_RES\x12,\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x15ID_PKT_LEAVE_ROOM_RES\x12\x10\n\x08var_name\x18\x02 \x01(\t\x12\x1c\n\x08var_code\x18\x03 \x01(\x0e\x32\n.ErrorCode\x12\x11\n\tvar_index\x18\x04 \x01(\x03\x12\x17\n\x0fvar_room_number\x18\x05 \x01(\x05\"}\n\rROOM_LIST_RES\x12+\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x14ID_PKT_ROOM_LIST_RES\x12\x1c\n\x08var_code\x18\x02 \x01(\x0e\x32\n.ErrorCode\x12!\n\rvar_room_list\x18\x03 \x03(\x0b\x32\n.RoomInfo2\"\xa7\x01\n\x15ROOM_PASS_THROUGH_RES\x12\x33\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x1cID_PKT_ROOM_PASS_THROUGH_RES\x12\x1c\n\x08var_code\x18\x02 \x01(\x0e\x32\n.ErrorCode\x12\"\n\x0cvar_messages\x18\x03 \x03(\x0b\x32\x0c.RoomMessage\x12\x17\n\x0fvar_room_number\x18\x04 \x01(\x05\"U\n\nNOTICE_RES\x12(\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x11ID_PKT_NOTICE_RES\x12\x1d\n\x08var_list\x18\x02 \x03(\x0b\x32\x0b.NotifyInfo\"\x8b\x01\n\x12\x42ITMAP_MESSAGE_RES\x12\x30\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x19ID_PKT_BITMAP_MESSAGE_RES\x12\x1c\n\x08var_code\x18\x02 \x01(\x0e\x32\n.ErrorCode\x12\x13\n\x0bvar_message\x18\x03 \x03(\x0c\x12\x10\n\x08var_name\x18\x04 \x01(\x0c\"\x9a\x01\n\x11\x41UDIO_MESSAGE_RES\x12/\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x18ID_PKT_AUDIO_MESSAGE_RES\x12\x1c\n\x08var_code\x18\x02 \x01(\x0e\x32\n.ErrorCode\x12\x13\n\x0bvar_message\x18\x03 \x03(\x0c\x12\x10\n\x08var_name\x18\x04 \x01(\x0c\x12\x0f\n\x07var_pos\x18\x05 \x01(\x05\"}\n\x10PRAY_MESSAGE_RES\x12.\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x17ID_PKT_PRAY_MESSAGE_RES\x12\x1c\n\x08var_code\x18\x02 \x01(\x0e\x32\n.ErrorCode\x12\x1b\n\x08var_list\x18\x03 \x03(\x0b\x32\t.PrayInfo\"\x8f\x01\n\x14PRAY_MESSAGE_REG_RES\x12\x32\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x1bID_PKT_PRAY_MESSAGE_REG_RES\x12\x1c\n\x08var_code\x18\x02 \x01(\x0e\x32\n.ErrorCode\x12\x13\n\x0bvar_message\x18\x03 \x01(\t\x12\x10\n\x08var_time\x18\x04 \x01(\t\"N\n\x07QNA_RES\x12%\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x0eID_PKT_QNA_RES\x12\x1c\n\x08var_code\x18\x02 \x01(\x0e\x32\n.ErrorCode\"w\n\rMAIL_LIST_RES\x12+\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x14ID_PKT_MAIL_LIST_RES\x12\x1c\n\x08var_code\x18\x02 \x01(\x0e\x32\n.ErrorCode\x12\x1b\n\x08var_list\x18\x03 \x03(\x0b\x32\t.MailInfo\"N\n\x07REG_RES\x12%\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x0eID_PKT_REG_RES\x12\x1c\n\x08var_code\x18\x02 \x01(\x0e\x32\n.ErrorCode\"b\n\x11\x43LIENT_LOGOUT_RES\x12/\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x18ID_PKT_CLIENT_LOGOUT_RES\x12\x1c\n\x08var_code\x18\x02 \x01(\x0e\x32\n.ErrorCode\"E\n\x0b\x43LIENT_KICK\x12)\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x12ID_PKT_CLIENT_KICK\x12\x0b\n\x03sid\x18\x02 \x01(\x05\"\xb9\x01\n\x12\x43\x41MERA_CONTROL_RES\x12\x30\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x19ID_PKT_CAMERA_CONTROL_RES\x12\x1c\n\x08var_code\x18\x02 \x01(\x0e\x32\n.ErrorCode\x12$\n\x08var_type\x18\x03 \x01(\x0e\x32\x12.CameraControlType\x12\x16\n\x0evar_machine_id\x18\x04 \x01(\t\x12\x15\n\rvar_player_id\x18\x05 \x01(\x03\"\x8b\x01\n\x12\x43\x41MERA_WAKE_UP_RES\x12\x30\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x19ID_PKT_CAMERA_WAKE_UP_RES\x12\x10\n\x08var_type\x18\x02 \x01(\x05\x12\x17\n\x0fvar_room_number\x18\x03 \x01(\x05\x12\x18\n\x10var_to_player_id\x18\x04 \x01(\x05\"\x8d\x01\n\x13MPEG2TS_MESSAGE_RES\x12\x31\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x1aID_PKT_MPEG2TS_MESSAGE_RES\x12\x1c\n\x08var_code\x18\x02 \x01(\x0e\x32\n.ErrorCode\x12\x13\n\x0bvar_message\x18\x03 \x03(\x0c\x12\x10\n\x08var_type\x18\x04 \x01(\x05\"\x8a\x01\n\x0eREG_CAMERA_RES\x12,\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x15ID_PKT_REG_CAMERA_RES\x12\x1c\n\x08var_code\x18\x02 \x01(\x0e\x32\n.ErrorCode\x12\x14\n\x0cvar_cam_name\x18\x03 \x01(\t\x12\x16\n\x0evar_machine_id\x18\x04 \x01(\t\"x\n\x0fSTOP_STREAM_RES\x12-\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x16ID_PKT_STOP_STREAM_RES\x12\x1c\n\x08var_code\x18\x02 \x01(\x0e\x32\n.ErrorCode\x12\x18\n\x10var_to_player_id\x18\x03 \x01(\x03\"\x96\x01\n\x0f\x43\x41MERA_LIST_RES\x12-\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x16ID_PKT_CAMERA_LIST_RES\x12\x1c\n\x08var_code\x18\x02 \x01(\x0e\x32\n.ErrorCode\x12\x1f\n\nvar_camera\x18\x03 \x03(\x0b\x32\x0b.CameraInfo\x12\x15\n\rvar_player_id\x18\x04 \x01(\x03\"y\n\x12MACHINE_STATUS_RES\x12\x30\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x19ID_PKT_MACHINE_STATUS_RES\x12\x1c\n\x08var_code\x18\x02 \x01(\x0e\x32\n.ErrorCode\x12\x13\n\x0bvar_battery\x18\x03 \x01(\x05\"\x99\x01\n\x13VERIFY_PURCHASE_RES\x12\x31\n\x02id\x18\x01 \x01(\x0e\x32\t.PROTOCOL:\x1aID_PKT_VERIFY_PURCHASE_RES\x12\x18\n\x10var_package_name\x18\x02 \x01(\t\x12\x17\n\x0fvar_purchase_id\x18\x03 \x01(\t\x12\x1c\n\x08var_code\x18\x04 \x01(\x0e\x32\n.ErrorCodeB\x02H\x01'
   ,
   dependencies=[Enum__pb2.DESCRIPTOR,Structure__pb2.DESCRIPTOR,])
 
@@ -1204,6 +1204,103 @@ _CAMERA_LIST_RES = _descriptor.Descriptor(
   serialized_end=3218,
 )
 
+
+_MACHINE_STATUS_RES = _descriptor.Descriptor(
+  name='MACHINE_STATUS_RES',
+  full_name='MACHINE_STATUS_RES',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='id', full_name='MACHINE_STATUS_RES.id', index=0,
+      number=1, type=14, cpp_type=8, label=1,
+      has_default_value=True, default_value=55,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='var_code', full_name='MACHINE_STATUS_RES.var_code', index=1,
+      number=2, type=14, cpp_type=8, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='var_battery', full_name='MACHINE_STATUS_RES.var_battery', index=2,
+      number=3, type=5, cpp_type=1, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto2',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=3220,
+  serialized_end=3341,
+)
+
+
+_VERIFY_PURCHASE_RES = _descriptor.Descriptor(
+  name='VERIFY_PURCHASE_RES',
+  full_name='VERIFY_PURCHASE_RES',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='id', full_name='VERIFY_PURCHASE_RES.id', index=0,
+      number=1, type=14, cpp_type=8, label=1,
+      has_default_value=True, default_value=57,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='var_package_name', full_name='VERIFY_PURCHASE_RES.var_package_name', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='var_purchase_id', full_name='VERIFY_PURCHASE_RES.var_purchase_id', index=2,
+      number=3, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='var_code', full_name='VERIFY_PURCHASE_RES.var_code', index=3,
+      number=4, type=14, cpp_type=8, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto2',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=3344,
+  serialized_end=3497,
+)
+
 _VERSION_RES.fields_by_name['id'].enum_type = Enum__pb2._PROTOCOL
 _VERSION_RES.fields_by_name['var_code'].enum_type = Enum__pb2._ERRORCODE
 _LOGIN_RES.fields_by_name['id'].enum_type = Enum__pb2._PROTOCOL
@@ -1258,6 +1355,10 @@ _STOP_STREAM_RES.fields_by_name['var_code'].enum_type = Enum__pb2._ERRORCODE
 _CAMERA_LIST_RES.fields_by_name['id'].enum_type = Enum__pb2._PROTOCOL
 _CAMERA_LIST_RES.fields_by_name['var_code'].enum_type = Enum__pb2._ERRORCODE
 _CAMERA_LIST_RES.fields_by_name['var_camera'].message_type = Structure__pb2._CAMERAINFO
+_MACHINE_STATUS_RES.fields_by_name['id'].enum_type = Enum__pb2._PROTOCOL
+_MACHINE_STATUS_RES.fields_by_name['var_code'].enum_type = Enum__pb2._ERRORCODE
+_VERIFY_PURCHASE_RES.fields_by_name['id'].enum_type = Enum__pb2._PROTOCOL
+_VERIFY_PURCHASE_RES.fields_by_name['var_code'].enum_type = Enum__pb2._ERRORCODE
 DESCRIPTOR.message_types_by_name['VERSION_RES'] = _VERSION_RES
 DESCRIPTOR.message_types_by_name['LOGIN_RES'] = _LOGIN_RES
 DESCRIPTOR.message_types_by_name['CREATE_ROOM_RES'] = _CREATE_ROOM_RES
@@ -1282,6 +1383,8 @@ DESCRIPTOR.message_types_by_name['MPEG2TS_MESSAGE_RES'] = _MPEG2TS_MESSAGE_RES
 DESCRIPTOR.message_types_by_name['REG_CAMERA_RES'] = _REG_CAMERA_RES
 DESCRIPTOR.message_types_by_name['STOP_STREAM_RES'] = _STOP_STREAM_RES
 DESCRIPTOR.message_types_by_name['CAMERA_LIST_RES'] = _CAMERA_LIST_RES
+DESCRIPTOR.message_types_by_name['MACHINE_STATUS_RES'] = _MACHINE_STATUS_RES
+DESCRIPTOR.message_types_by_name['VERIFY_PURCHASE_RES'] = _VERIFY_PURCHASE_RES
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 VERSION_RES = _reflection.GeneratedProtocolMessageType('VERSION_RES', (_message.Message,), {
@@ -1451,6 +1554,20 @@ CAMERA_LIST_RES = _reflection.GeneratedProtocolMessageType('CAMERA_LIST_RES', (_
   # @@protoc_insertion_point(class_scope:CAMERA_LIST_RES)
   })
 _sym_db.RegisterMessage(CAMERA_LIST_RES)
+
+MACHINE_STATUS_RES = _reflection.GeneratedProtocolMessageType('MACHINE_STATUS_RES', (_message.Message,), {
+  'DESCRIPTOR' : _MACHINE_STATUS_RES,
+  '__module__' : 'GS.CLI_pb2'
+  # @@protoc_insertion_point(class_scope:MACHINE_STATUS_RES)
+  })
+_sym_db.RegisterMessage(MACHINE_STATUS_RES)
+
+VERIFY_PURCHASE_RES = _reflection.GeneratedProtocolMessageType('VERIFY_PURCHASE_RES', (_message.Message,), {
+  'DESCRIPTOR' : _VERIFY_PURCHASE_RES,
+  '__module__' : 'GS.CLI_pb2'
+  # @@protoc_insertion_point(class_scope:VERIFY_PURCHASE_RES)
+  })
+_sym_db.RegisterMessage(VERIFY_PURCHASE_RES)
 
 
 DESCRIPTOR._options = None

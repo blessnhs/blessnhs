@@ -79,12 +79,16 @@ enum PROTOCOL
 	ID_PKT_CAMERA_LIST_REQ =52;
 	ID_PKT_CAMERA_LIST_RES = 53;
 
+	ID_PKT_MACHINE_STATUS_REQ =54;
+	ID_PKT_MACHINE_STATUS_RES = 55;
+
+	ID_PKT_VERIFY_PURCHASE_REQ =56;
+	ID_PKT_VERIFY_PURCHASE_RES = 57;
 
 };
 
 enum ErrorCode
 {
-
 	Success = 0;
 	DataBaseError = 1;
 	LoginDuplicate = 2;
@@ -100,4 +104,5 @@ enum CameraControlType
 	QualityDown = 2;
 	Flash = 3;
 	SaveFile = 4;
+	MIC = 5;
 };

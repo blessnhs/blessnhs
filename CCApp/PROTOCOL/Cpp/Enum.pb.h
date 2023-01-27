@@ -111,12 +111,16 @@ enum PROTOCOL : int {
   ID_PKT_REG_CAMERA_RES = 51,
   ID_PKT_CAMERA_LIST_REQ = 52,
   ID_PKT_CAMERA_LIST_RES = 53,
+  ID_PKT_MACHINE_STATUS_REQ = 54,
+  ID_PKT_MACHINE_STATUS_RES = 55,
+  ID_PKT_VERIFY_PURCHASE_REQ = 56,
+  ID_PKT_VERIFY_PURCHASE_RES = 57,
   PROTOCOL_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<::PROTOBUF_NAMESPACE_ID::int32>::min(),
   PROTOCOL_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<::PROTOBUF_NAMESPACE_ID::int32>::max()
 };
 bool PROTOCOL_IsValid(int value);
 constexpr PROTOCOL PROTOCOL_MIN = ID_PKT_VERSION_REQ;
-constexpr PROTOCOL PROTOCOL_MAX = ID_PKT_CAMERA_LIST_RES;
+constexpr PROTOCOL PROTOCOL_MAX = ID_PKT_VERIFY_PURCHASE_RES;
 constexpr int PROTOCOL_ARRAYSIZE = PROTOCOL_MAX + 1;
 
 const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* PROTOCOL_descriptor();
@@ -168,12 +172,13 @@ enum CameraControlType : int {
   QualityDown = 2,
   Flash = 3,
   SaveFile = 4,
+  MIC = 5,
   CameraControlType_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<::PROTOBUF_NAMESPACE_ID::int32>::min(),
   CameraControlType_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<::PROTOBUF_NAMESPACE_ID::int32>::max()
 };
 bool CameraControlType_IsValid(int value);
 constexpr CameraControlType CameraControlType_MIN = SwitchCamera;
-constexpr CameraControlType CameraControlType_MAX = SaveFile;
+constexpr CameraControlType CameraControlType_MAX = MIC;
 constexpr int CameraControlType_ARRAYSIZE = CameraControlType_MAX + 1;
 
 const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* CameraControlType_descriptor();

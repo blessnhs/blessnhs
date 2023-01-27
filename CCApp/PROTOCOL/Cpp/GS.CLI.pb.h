@@ -49,7 +49,7 @@ struct TableStruct_GS_2eCLI_2eproto {
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::PROTOBUF_NAMESPACE_ID::internal::AuxillaryParseTableField aux[]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
-  static const ::PROTOBUF_NAMESPACE_ID::internal::ParseTable schema[24]
+  static const ::PROTOBUF_NAMESPACE_ID::internal::ParseTable schema[26]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::PROTOBUF_NAMESPACE_ID::internal::FieldMetadata field_metadata[];
   static const ::PROTOBUF_NAMESPACE_ID::internal::SerializationTable serialization_table[];
@@ -89,6 +89,9 @@ extern LEAVE_ROOM_RESDefaultTypeInternal _LEAVE_ROOM_RES_default_instance_;
 class LOGIN_RES;
 class LOGIN_RESDefaultTypeInternal;
 extern LOGIN_RESDefaultTypeInternal _LOGIN_RES_default_instance_;
+class MACHINE_STATUS_RES;
+class MACHINE_STATUS_RESDefaultTypeInternal;
+extern MACHINE_STATUS_RESDefaultTypeInternal _MACHINE_STATUS_RES_default_instance_;
 class MAIL_LIST_RES;
 class MAIL_LIST_RESDefaultTypeInternal;
 extern MAIL_LIST_RESDefaultTypeInternal _MAIL_LIST_RES_default_instance_;
@@ -125,6 +128,9 @@ extern ROOM_PASS_THROUGH_RESDefaultTypeInternal _ROOM_PASS_THROUGH_RES_default_i
 class STOP_STREAM_RES;
 class STOP_STREAM_RESDefaultTypeInternal;
 extern STOP_STREAM_RESDefaultTypeInternal _STOP_STREAM_RES_default_instance_;
+class VERIFY_PURCHASE_RES;
+class VERIFY_PURCHASE_RESDefaultTypeInternal;
+extern VERIFY_PURCHASE_RESDefaultTypeInternal _VERIFY_PURCHASE_RES_default_instance_;
 class VERSION_RES;
 class VERSION_RESDefaultTypeInternal;
 extern VERSION_RESDefaultTypeInternal _VERSION_RES_default_instance_;
@@ -140,6 +146,7 @@ template<> ::CREATE_ROOM_RES* Arena::CreateMaybeMessage<::CREATE_ROOM_RES>(Arena
 template<> ::ENTER_ROOM_RES* Arena::CreateMaybeMessage<::ENTER_ROOM_RES>(Arena*);
 template<> ::LEAVE_ROOM_RES* Arena::CreateMaybeMessage<::LEAVE_ROOM_RES>(Arena*);
 template<> ::LOGIN_RES* Arena::CreateMaybeMessage<::LOGIN_RES>(Arena*);
+template<> ::MACHINE_STATUS_RES* Arena::CreateMaybeMessage<::MACHINE_STATUS_RES>(Arena*);
 template<> ::MAIL_LIST_RES* Arena::CreateMaybeMessage<::MAIL_LIST_RES>(Arena*);
 template<> ::MPEG2TS_MESSAGE_RES* Arena::CreateMaybeMessage<::MPEG2TS_MESSAGE_RES>(Arena*);
 template<> ::NEW_USER_IN_ROOM_NTY* Arena::CreateMaybeMessage<::NEW_USER_IN_ROOM_NTY>(Arena*);
@@ -152,6 +159,7 @@ template<> ::REG_RES* Arena::CreateMaybeMessage<::REG_RES>(Arena*);
 template<> ::ROOM_LIST_RES* Arena::CreateMaybeMessage<::ROOM_LIST_RES>(Arena*);
 template<> ::ROOM_PASS_THROUGH_RES* Arena::CreateMaybeMessage<::ROOM_PASS_THROUGH_RES>(Arena*);
 template<> ::STOP_STREAM_RES* Arena::CreateMaybeMessage<::STOP_STREAM_RES>(Arena*);
+template<> ::VERIFY_PURCHASE_RES* Arena::CreateMaybeMessage<::VERIFY_PURCHASE_RES>(Arena*);
 template<> ::VERSION_RES* Arena::CreateMaybeMessage<::VERSION_RES>(Arena*);
 PROTOBUF_NAMESPACE_CLOSE
 
@@ -4599,6 +4607,375 @@ class CAMERA_LIST_RES :
   int id_;
   friend struct ::TableStruct_GS_2eCLI_2eproto;
 };
+// -------------------------------------------------------------------
+
+class MACHINE_STATUS_RES :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:MACHINE_STATUS_RES) */ {
+ public:
+  MACHINE_STATUS_RES();
+  virtual ~MACHINE_STATUS_RES();
+
+  MACHINE_STATUS_RES(const MACHINE_STATUS_RES& from);
+  MACHINE_STATUS_RES(MACHINE_STATUS_RES&& from) noexcept
+    : MACHINE_STATUS_RES() {
+    *this = ::std::move(from);
+  }
+
+  inline MACHINE_STATUS_RES& operator=(const MACHINE_STATUS_RES& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline MACHINE_STATUS_RES& operator=(MACHINE_STATUS_RES&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  inline const ::PROTOBUF_NAMESPACE_ID::UnknownFieldSet& unknown_fields() const {
+    return _internal_metadata_.unknown_fields();
+  }
+  inline ::PROTOBUF_NAMESPACE_ID::UnknownFieldSet* mutable_unknown_fields() {
+    return _internal_metadata_.mutable_unknown_fields();
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return GetMetadataStatic().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return GetMetadataStatic().reflection;
+  }
+  static const MACHINE_STATUS_RES& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const MACHINE_STATUS_RES* internal_default_instance() {
+    return reinterpret_cast<const MACHINE_STATUS_RES*>(
+               &_MACHINE_STATUS_RES_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    24;
+
+  friend void swap(MACHINE_STATUS_RES& a, MACHINE_STATUS_RES& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(MACHINE_STATUS_RES* other) {
+    if (other == this) return;
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline MACHINE_STATUS_RES* New() const final {
+    return CreateMaybeMessage<MACHINE_STATUS_RES>(nullptr);
+  }
+
+  MACHINE_STATUS_RES* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
+    return CreateMaybeMessage<MACHINE_STATUS_RES>(arena);
+  }
+  void CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void CopyFrom(const MACHINE_STATUS_RES& from);
+  void MergeFrom(const MACHINE_STATUS_RES& from);
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  ::PROTOBUF_NAMESPACE_ID::uint8* _InternalSerialize(
+      ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  inline void SharedCtor();
+  inline void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(MACHINE_STATUS_RES* other);
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "MACHINE_STATUS_RES";
+  }
+  private:
+  inline ::PROTOBUF_NAMESPACE_ID::Arena* GetArenaNoVirtual() const {
+    return nullptr;
+  }
+  inline void* MaybeArenaPtr() const {
+    return nullptr;
+  }
+  public:
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+  private:
+  static ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadataStatic() {
+    ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&::descriptor_table_GS_2eCLI_2eproto);
+    return ::descriptor_table_GS_2eCLI_2eproto.file_level_metadata[kIndexInFileMessages];
+  }
+
+  public:
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kVarCodeFieldNumber = 2,
+    kVarBatteryFieldNumber = 3,
+    kIdFieldNumber = 1,
+  };
+  // optional .ErrorCode var_code = 2;
+  bool has_var_code() const;
+  private:
+  bool _internal_has_var_code() const;
+  public:
+  void clear_var_code();
+  ::ErrorCode var_code() const;
+  void set_var_code(::ErrorCode value);
+  private:
+  ::ErrorCode _internal_var_code() const;
+  void _internal_set_var_code(::ErrorCode value);
+  public:
+
+  // optional int32 var_battery = 3;
+  bool has_var_battery() const;
+  private:
+  bool _internal_has_var_battery() const;
+  public:
+  void clear_var_battery();
+  ::PROTOBUF_NAMESPACE_ID::int32 var_battery() const;
+  void set_var_battery(::PROTOBUF_NAMESPACE_ID::int32 value);
+  private:
+  ::PROTOBUF_NAMESPACE_ID::int32 _internal_var_battery() const;
+  void _internal_set_var_battery(::PROTOBUF_NAMESPACE_ID::int32 value);
+  public:
+
+  // optional .PROTOCOL id = 1 [default = ID_PKT_MACHINE_STATUS_RES];
+  bool has_id() const;
+  private:
+  bool _internal_has_id() const;
+  public:
+  void clear_id();
+  ::PROTOCOL id() const;
+  void set_id(::PROTOCOL value);
+  private:
+  ::PROTOCOL _internal_id() const;
+  void _internal_set_id(::PROTOCOL value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:MACHINE_STATUS_RES)
+ private:
+  class _Internal;
+
+  ::PROTOBUF_NAMESPACE_ID::internal::InternalMetadataWithArena _internal_metadata_;
+  ::PROTOBUF_NAMESPACE_ID::internal::HasBits<1> _has_bits_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  int var_code_;
+  ::PROTOBUF_NAMESPACE_ID::int32 var_battery_;
+  int id_;
+  friend struct ::TableStruct_GS_2eCLI_2eproto;
+};
+// -------------------------------------------------------------------
+
+class VERIFY_PURCHASE_RES :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:VERIFY_PURCHASE_RES) */ {
+ public:
+  VERIFY_PURCHASE_RES();
+  virtual ~VERIFY_PURCHASE_RES();
+
+  VERIFY_PURCHASE_RES(const VERIFY_PURCHASE_RES& from);
+  VERIFY_PURCHASE_RES(VERIFY_PURCHASE_RES&& from) noexcept
+    : VERIFY_PURCHASE_RES() {
+    *this = ::std::move(from);
+  }
+
+  inline VERIFY_PURCHASE_RES& operator=(const VERIFY_PURCHASE_RES& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline VERIFY_PURCHASE_RES& operator=(VERIFY_PURCHASE_RES&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  inline const ::PROTOBUF_NAMESPACE_ID::UnknownFieldSet& unknown_fields() const {
+    return _internal_metadata_.unknown_fields();
+  }
+  inline ::PROTOBUF_NAMESPACE_ID::UnknownFieldSet* mutable_unknown_fields() {
+    return _internal_metadata_.mutable_unknown_fields();
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return GetMetadataStatic().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return GetMetadataStatic().reflection;
+  }
+  static const VERIFY_PURCHASE_RES& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const VERIFY_PURCHASE_RES* internal_default_instance() {
+    return reinterpret_cast<const VERIFY_PURCHASE_RES*>(
+               &_VERIFY_PURCHASE_RES_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    25;
+
+  friend void swap(VERIFY_PURCHASE_RES& a, VERIFY_PURCHASE_RES& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(VERIFY_PURCHASE_RES* other) {
+    if (other == this) return;
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline VERIFY_PURCHASE_RES* New() const final {
+    return CreateMaybeMessage<VERIFY_PURCHASE_RES>(nullptr);
+  }
+
+  VERIFY_PURCHASE_RES* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
+    return CreateMaybeMessage<VERIFY_PURCHASE_RES>(arena);
+  }
+  void CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void CopyFrom(const VERIFY_PURCHASE_RES& from);
+  void MergeFrom(const VERIFY_PURCHASE_RES& from);
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  ::PROTOBUF_NAMESPACE_ID::uint8* _InternalSerialize(
+      ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  inline void SharedCtor();
+  inline void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(VERIFY_PURCHASE_RES* other);
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "VERIFY_PURCHASE_RES";
+  }
+  private:
+  inline ::PROTOBUF_NAMESPACE_ID::Arena* GetArenaNoVirtual() const {
+    return nullptr;
+  }
+  inline void* MaybeArenaPtr() const {
+    return nullptr;
+  }
+  public:
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+  private:
+  static ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadataStatic() {
+    ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&::descriptor_table_GS_2eCLI_2eproto);
+    return ::descriptor_table_GS_2eCLI_2eproto.file_level_metadata[kIndexInFileMessages];
+  }
+
+  public:
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kVarPackageNameFieldNumber = 2,
+    kVarPurchaseIdFieldNumber = 3,
+    kVarCodeFieldNumber = 4,
+    kIdFieldNumber = 1,
+  };
+  // optional string var_package_name = 2;
+  bool has_var_package_name() const;
+  private:
+  bool _internal_has_var_package_name() const;
+  public:
+  void clear_var_package_name();
+  const std::string& var_package_name() const;
+  void set_var_package_name(const std::string& value);
+  void set_var_package_name(std::string&& value);
+  void set_var_package_name(const char* value);
+  void set_var_package_name(const char* value, size_t size);
+  std::string* mutable_var_package_name();
+  std::string* release_var_package_name();
+  void set_allocated_var_package_name(std::string* var_package_name);
+  private:
+  const std::string& _internal_var_package_name() const;
+  void _internal_set_var_package_name(const std::string& value);
+  std::string* _internal_mutable_var_package_name();
+  public:
+
+  // optional string var_purchase_id = 3;
+  bool has_var_purchase_id() const;
+  private:
+  bool _internal_has_var_purchase_id() const;
+  public:
+  void clear_var_purchase_id();
+  const std::string& var_purchase_id() const;
+  void set_var_purchase_id(const std::string& value);
+  void set_var_purchase_id(std::string&& value);
+  void set_var_purchase_id(const char* value);
+  void set_var_purchase_id(const char* value, size_t size);
+  std::string* mutable_var_purchase_id();
+  std::string* release_var_purchase_id();
+  void set_allocated_var_purchase_id(std::string* var_purchase_id);
+  private:
+  const std::string& _internal_var_purchase_id() const;
+  void _internal_set_var_purchase_id(const std::string& value);
+  std::string* _internal_mutable_var_purchase_id();
+  public:
+
+  // optional .ErrorCode var_code = 4;
+  bool has_var_code() const;
+  private:
+  bool _internal_has_var_code() const;
+  public:
+  void clear_var_code();
+  ::ErrorCode var_code() const;
+  void set_var_code(::ErrorCode value);
+  private:
+  ::ErrorCode _internal_var_code() const;
+  void _internal_set_var_code(::ErrorCode value);
+  public:
+
+  // optional .PROTOCOL id = 1 [default = ID_PKT_VERIFY_PURCHASE_RES];
+  bool has_id() const;
+  private:
+  bool _internal_has_id() const;
+  public:
+  void clear_id();
+  ::PROTOCOL id() const;
+  void set_id(::PROTOCOL value);
+  private:
+  ::PROTOCOL _internal_id() const;
+  void _internal_set_id(::PROTOCOL value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:VERIFY_PURCHASE_RES)
+ private:
+  class _Internal;
+
+  ::PROTOBUF_NAMESPACE_ID::internal::InternalMetadataWithArena _internal_metadata_;
+  ::PROTOBUF_NAMESPACE_ID::internal::HasBits<1> _has_bits_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr var_package_name_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr var_purchase_id_;
+  int var_code_;
+  int id_;
+  friend struct ::TableStruct_GS_2eCLI_2eproto;
+};
 // ===================================================================
 
 
@@ -7894,9 +8271,307 @@ inline void CAMERA_LIST_RES::set_var_player_id(::PROTOBUF_NAMESPACE_ID::int64 va
   // @@protoc_insertion_point(field_set:CAMERA_LIST_RES.var_player_id)
 }
 
+// -------------------------------------------------------------------
+
+// MACHINE_STATUS_RES
+
+// optional .PROTOCOL id = 1 [default = ID_PKT_MACHINE_STATUS_RES];
+inline bool MACHINE_STATUS_RES::_internal_has_id() const {
+  bool value = (_has_bits_[0] & 0x00000004u) != 0;
+  return value;
+}
+inline bool MACHINE_STATUS_RES::has_id() const {
+  return _internal_has_id();
+}
+inline void MACHINE_STATUS_RES::clear_id() {
+  id_ = 55;
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline ::PROTOCOL MACHINE_STATUS_RES::_internal_id() const {
+  return static_cast< ::PROTOCOL >(id_);
+}
+inline ::PROTOCOL MACHINE_STATUS_RES::id() const {
+  // @@protoc_insertion_point(field_get:MACHINE_STATUS_RES.id)
+  return _internal_id();
+}
+inline void MACHINE_STATUS_RES::_internal_set_id(::PROTOCOL value) {
+  assert(::PROTOCOL_IsValid(value));
+  _has_bits_[0] |= 0x00000004u;
+  id_ = value;
+}
+inline void MACHINE_STATUS_RES::set_id(::PROTOCOL value) {
+  _internal_set_id(value);
+  // @@protoc_insertion_point(field_set:MACHINE_STATUS_RES.id)
+}
+
+// optional .ErrorCode var_code = 2;
+inline bool MACHINE_STATUS_RES::_internal_has_var_code() const {
+  bool value = (_has_bits_[0] & 0x00000001u) != 0;
+  return value;
+}
+inline bool MACHINE_STATUS_RES::has_var_code() const {
+  return _internal_has_var_code();
+}
+inline void MACHINE_STATUS_RES::clear_var_code() {
+  var_code_ = 0;
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline ::ErrorCode MACHINE_STATUS_RES::_internal_var_code() const {
+  return static_cast< ::ErrorCode >(var_code_);
+}
+inline ::ErrorCode MACHINE_STATUS_RES::var_code() const {
+  // @@protoc_insertion_point(field_get:MACHINE_STATUS_RES.var_code)
+  return _internal_var_code();
+}
+inline void MACHINE_STATUS_RES::_internal_set_var_code(::ErrorCode value) {
+  assert(::ErrorCode_IsValid(value));
+  _has_bits_[0] |= 0x00000001u;
+  var_code_ = value;
+}
+inline void MACHINE_STATUS_RES::set_var_code(::ErrorCode value) {
+  _internal_set_var_code(value);
+  // @@protoc_insertion_point(field_set:MACHINE_STATUS_RES.var_code)
+}
+
+// optional int32 var_battery = 3;
+inline bool MACHINE_STATUS_RES::_internal_has_var_battery() const {
+  bool value = (_has_bits_[0] & 0x00000002u) != 0;
+  return value;
+}
+inline bool MACHINE_STATUS_RES::has_var_battery() const {
+  return _internal_has_var_battery();
+}
+inline void MACHINE_STATUS_RES::clear_var_battery() {
+  var_battery_ = 0;
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 MACHINE_STATUS_RES::_internal_var_battery() const {
+  return var_battery_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 MACHINE_STATUS_RES::var_battery() const {
+  // @@protoc_insertion_point(field_get:MACHINE_STATUS_RES.var_battery)
+  return _internal_var_battery();
+}
+inline void MACHINE_STATUS_RES::_internal_set_var_battery(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  _has_bits_[0] |= 0x00000002u;
+  var_battery_ = value;
+}
+inline void MACHINE_STATUS_RES::set_var_battery(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  _internal_set_var_battery(value);
+  // @@protoc_insertion_point(field_set:MACHINE_STATUS_RES.var_battery)
+}
+
+// -------------------------------------------------------------------
+
+// VERIFY_PURCHASE_RES
+
+// optional .PROTOCOL id = 1 [default = ID_PKT_VERIFY_PURCHASE_RES];
+inline bool VERIFY_PURCHASE_RES::_internal_has_id() const {
+  bool value = (_has_bits_[0] & 0x00000008u) != 0;
+  return value;
+}
+inline bool VERIFY_PURCHASE_RES::has_id() const {
+  return _internal_has_id();
+}
+inline void VERIFY_PURCHASE_RES::clear_id() {
+  id_ = 57;
+  _has_bits_[0] &= ~0x00000008u;
+}
+inline ::PROTOCOL VERIFY_PURCHASE_RES::_internal_id() const {
+  return static_cast< ::PROTOCOL >(id_);
+}
+inline ::PROTOCOL VERIFY_PURCHASE_RES::id() const {
+  // @@protoc_insertion_point(field_get:VERIFY_PURCHASE_RES.id)
+  return _internal_id();
+}
+inline void VERIFY_PURCHASE_RES::_internal_set_id(::PROTOCOL value) {
+  assert(::PROTOCOL_IsValid(value));
+  _has_bits_[0] |= 0x00000008u;
+  id_ = value;
+}
+inline void VERIFY_PURCHASE_RES::set_id(::PROTOCOL value) {
+  _internal_set_id(value);
+  // @@protoc_insertion_point(field_set:VERIFY_PURCHASE_RES.id)
+}
+
+// optional string var_package_name = 2;
+inline bool VERIFY_PURCHASE_RES::_internal_has_var_package_name() const {
+  bool value = (_has_bits_[0] & 0x00000001u) != 0;
+  return value;
+}
+inline bool VERIFY_PURCHASE_RES::has_var_package_name() const {
+  return _internal_has_var_package_name();
+}
+inline void VERIFY_PURCHASE_RES::clear_var_package_name() {
+  var_package_name_.ClearToEmptyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline const std::string& VERIFY_PURCHASE_RES::var_package_name() const {
+  // @@protoc_insertion_point(field_get:VERIFY_PURCHASE_RES.var_package_name)
+  return _internal_var_package_name();
+}
+inline void VERIFY_PURCHASE_RES::set_var_package_name(const std::string& value) {
+  _internal_set_var_package_name(value);
+  // @@protoc_insertion_point(field_set:VERIFY_PURCHASE_RES.var_package_name)
+}
+inline std::string* VERIFY_PURCHASE_RES::mutable_var_package_name() {
+  // @@protoc_insertion_point(field_mutable:VERIFY_PURCHASE_RES.var_package_name)
+  return _internal_mutable_var_package_name();
+}
+inline const std::string& VERIFY_PURCHASE_RES::_internal_var_package_name() const {
+  return var_package_name_.GetNoArena();
+}
+inline void VERIFY_PURCHASE_RES::_internal_set_var_package_name(const std::string& value) {
+  _has_bits_[0] |= 0x00000001u;
+  var_package_name_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), value);
+}
+inline void VERIFY_PURCHASE_RES::set_var_package_name(std::string&& value) {
+  _has_bits_[0] |= 0x00000001u;
+  var_package_name_.SetNoArena(
+    &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:VERIFY_PURCHASE_RES.var_package_name)
+}
+inline void VERIFY_PURCHASE_RES::set_var_package_name(const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  _has_bits_[0] |= 0x00000001u;
+  var_package_name_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:VERIFY_PURCHASE_RES.var_package_name)
+}
+inline void VERIFY_PURCHASE_RES::set_var_package_name(const char* value, size_t size) {
+  _has_bits_[0] |= 0x00000001u;
+  var_package_name_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:VERIFY_PURCHASE_RES.var_package_name)
+}
+inline std::string* VERIFY_PURCHASE_RES::_internal_mutable_var_package_name() {
+  _has_bits_[0] |= 0x00000001u;
+  return var_package_name_.MutableNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline std::string* VERIFY_PURCHASE_RES::release_var_package_name() {
+  // @@protoc_insertion_point(field_release:VERIFY_PURCHASE_RES.var_package_name)
+  if (!_internal_has_var_package_name()) {
+    return nullptr;
+  }
+  _has_bits_[0] &= ~0x00000001u;
+  return var_package_name_.ReleaseNonDefaultNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline void VERIFY_PURCHASE_RES::set_allocated_var_package_name(std::string* var_package_name) {
+  if (var_package_name != nullptr) {
+    _has_bits_[0] |= 0x00000001u;
+  } else {
+    _has_bits_[0] &= ~0x00000001u;
+  }
+  var_package_name_.SetAllocatedNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), var_package_name);
+  // @@protoc_insertion_point(field_set_allocated:VERIFY_PURCHASE_RES.var_package_name)
+}
+
+// optional string var_purchase_id = 3;
+inline bool VERIFY_PURCHASE_RES::_internal_has_var_purchase_id() const {
+  bool value = (_has_bits_[0] & 0x00000002u) != 0;
+  return value;
+}
+inline bool VERIFY_PURCHASE_RES::has_var_purchase_id() const {
+  return _internal_has_var_purchase_id();
+}
+inline void VERIFY_PURCHASE_RES::clear_var_purchase_id() {
+  var_purchase_id_.ClearToEmptyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline const std::string& VERIFY_PURCHASE_RES::var_purchase_id() const {
+  // @@protoc_insertion_point(field_get:VERIFY_PURCHASE_RES.var_purchase_id)
+  return _internal_var_purchase_id();
+}
+inline void VERIFY_PURCHASE_RES::set_var_purchase_id(const std::string& value) {
+  _internal_set_var_purchase_id(value);
+  // @@protoc_insertion_point(field_set:VERIFY_PURCHASE_RES.var_purchase_id)
+}
+inline std::string* VERIFY_PURCHASE_RES::mutable_var_purchase_id() {
+  // @@protoc_insertion_point(field_mutable:VERIFY_PURCHASE_RES.var_purchase_id)
+  return _internal_mutable_var_purchase_id();
+}
+inline const std::string& VERIFY_PURCHASE_RES::_internal_var_purchase_id() const {
+  return var_purchase_id_.GetNoArena();
+}
+inline void VERIFY_PURCHASE_RES::_internal_set_var_purchase_id(const std::string& value) {
+  _has_bits_[0] |= 0x00000002u;
+  var_purchase_id_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), value);
+}
+inline void VERIFY_PURCHASE_RES::set_var_purchase_id(std::string&& value) {
+  _has_bits_[0] |= 0x00000002u;
+  var_purchase_id_.SetNoArena(
+    &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:VERIFY_PURCHASE_RES.var_purchase_id)
+}
+inline void VERIFY_PURCHASE_RES::set_var_purchase_id(const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  _has_bits_[0] |= 0x00000002u;
+  var_purchase_id_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:VERIFY_PURCHASE_RES.var_purchase_id)
+}
+inline void VERIFY_PURCHASE_RES::set_var_purchase_id(const char* value, size_t size) {
+  _has_bits_[0] |= 0x00000002u;
+  var_purchase_id_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:VERIFY_PURCHASE_RES.var_purchase_id)
+}
+inline std::string* VERIFY_PURCHASE_RES::_internal_mutable_var_purchase_id() {
+  _has_bits_[0] |= 0x00000002u;
+  return var_purchase_id_.MutableNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline std::string* VERIFY_PURCHASE_RES::release_var_purchase_id() {
+  // @@protoc_insertion_point(field_release:VERIFY_PURCHASE_RES.var_purchase_id)
+  if (!_internal_has_var_purchase_id()) {
+    return nullptr;
+  }
+  _has_bits_[0] &= ~0x00000002u;
+  return var_purchase_id_.ReleaseNonDefaultNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline void VERIFY_PURCHASE_RES::set_allocated_var_purchase_id(std::string* var_purchase_id) {
+  if (var_purchase_id != nullptr) {
+    _has_bits_[0] |= 0x00000002u;
+  } else {
+    _has_bits_[0] &= ~0x00000002u;
+  }
+  var_purchase_id_.SetAllocatedNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), var_purchase_id);
+  // @@protoc_insertion_point(field_set_allocated:VERIFY_PURCHASE_RES.var_purchase_id)
+}
+
+// optional .ErrorCode var_code = 4;
+inline bool VERIFY_PURCHASE_RES::_internal_has_var_code() const {
+  bool value = (_has_bits_[0] & 0x00000004u) != 0;
+  return value;
+}
+inline bool VERIFY_PURCHASE_RES::has_var_code() const {
+  return _internal_has_var_code();
+}
+inline void VERIFY_PURCHASE_RES::clear_var_code() {
+  var_code_ = 0;
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline ::ErrorCode VERIFY_PURCHASE_RES::_internal_var_code() const {
+  return static_cast< ::ErrorCode >(var_code_);
+}
+inline ::ErrorCode VERIFY_PURCHASE_RES::var_code() const {
+  // @@protoc_insertion_point(field_get:VERIFY_PURCHASE_RES.var_code)
+  return _internal_var_code();
+}
+inline void VERIFY_PURCHASE_RES::_internal_set_var_code(::ErrorCode value) {
+  assert(::ErrorCode_IsValid(value));
+  _has_bits_[0] |= 0x00000004u;
+  var_code_ = value;
+}
+inline void VERIFY_PURCHASE_RES::set_var_code(::ErrorCode value) {
+  _internal_set_var_code(value);
+  // @@protoc_insertion_point(field_set:VERIFY_PURCHASE_RES.var_code)
+}
+
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

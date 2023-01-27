@@ -571,6 +571,8 @@ class MSG_PLAYER_QUERY<##class_name>:public IMESSAGE	\
 
 		RequestPlayerAuth pRequst;
 
+		PlayerPtr pPlayer;
+
 		std::vector<std::wstring> http_out;
 
 		int GetGoogleAuth(string token)
@@ -735,6 +737,9 @@ class MSG_PLAYER_QUERY<##class_name>:public IMESSAGE	\
 
 				pNewPlayer->m_AliveTime = GetTickCount();
 
+				pNewPlayer->m_Email = email;
+				pNewPlayer->m_Token = pRequst.token;
+
 				PLAYERMGR.Add(pNewPlayer);
 
 				res.set_var_code(Success);
@@ -749,6 +754,172 @@ class MSG_PLAYER_QUERY<##class_name>:public IMESSAGE	\
 			catch (...)
 			{
 				printf("RequestPlayerAuth try catch \n");
+			}
+		}
+
+
+		void Undo() {}
+	};
+
+
+	template<>
+	class MSG_PLAYER_QUERY<RequestVerifyPurchase> : public IMESSAGE
+	{
+	public:
+		MSG_PLAYER_QUERY() { }
+		~MSG_PLAYER_QUERY() {}
+
+		GSCLIENT_PTR pSession;
+
+		RequestVerifyPurchase pRequst;
+
+		std::vector<std::wstring> http_out;
+
+		int GetGoogleVerifyPurchase(string token,string packageid,string purchaseid, PlayerPtr pPlayer)
+		{
+			//https://androidpublisher.googleapis.com/androidpublisher/v3/applications/{packageName}/purchases/products/{productId}/tokens/{token}
+
+			//매개변수
+			//	packageName
+			//	string
+
+			//	인앱 제품이 판매된 애플리케이션의 패키지 이름입니다(예: 'com.some.thing').
+
+			//	productId
+			//	string
+
+			//	인앱 상품 SKU(예: 'com.some.thing.inapp1')
+
+			//	token
+			//	string
+
+			//	인앱 상품을 구매할 때 사용자 기기에 제공되는 토큰입니다.
+
+			wstring w_token;
+			w_token.assign(token.begin(),token.end());
+			wstring w_packageid;
+			w_packageid.assign(packageid.begin(), packageid.end());
+
+			wstring w_purchaseid;
+			w_purchaseid.assign(purchaseid.begin(), purchaseid.end());
+
+			try
+			{
+				//// make uri
+			
+				credentials cred(U("929558927071-k7l4k7rm35rbrrpli6s6v8jbajo9be6m.apps.googleusercontent.com"), U("IEt_xlZUH8cfUz--zmvQbQHW"));
+
+
+
+				http_client_config config;
+				config.set_credentials(cred);
+
+
+				http_client client(U("https://androidpublisher.googleapis.com/androidpublisher/v3/"), config);
+
+		
+
+				uri_builder builder;
+				builder.append_query(U("/applications/"), w_packageid.c_str());
+				builder.append_query(U("/purchases/products/"), w_purchaseid.c_str());
+				builder.append_query(U("/tokens/"), w_token.c_str());
+
+				//request.headers().add(L"Authorization", L"Basic am9obi5kb2VAZ21haWwuY29tOmFiYzEyMw==");
+
+				auto requestTask = client.request(methods::GET, builder.to_string());
+				requestTask.wait();
+			
+
+				http_response response = requestTask.get();
+				if (response.status_code() == status_codes::OK)
+				{
+					auto V = response.extract_json().get();
+
+					//web::json::value _iss = V[U("iss")];
+					//if (_iss.is_string())
+					//{
+					//	http_out.push_back(_iss.as_string());
+					//}
+
+					//web::json::value _sub = V[U("sub")];
+					//if (_sub.is_string())
+					//{
+					//	http_out.push_back(_sub.as_string());
+					//}
+
+					//web::json::value _email = V[U("email")];
+					//if (_email.is_string())
+					//{
+					//	http_out.push_back(_email.as_string());
+					//}
+
+					//web::json::value _name = V[U("name")];
+					//if (_name.is_string())
+					//{
+					//	http_out.push_back(_T(_name.as_string()));
+					//}
+
+					//web::json::value _picture = V[U("picture")];
+					//if (_picture.is_string())
+					//{
+					//	http_out.push_back(_picture.as_string());
+					//}
+					//web::json::value _locale = V[U("locale")];
+					//if (_locale.is_string())
+					//{
+					//	http_out.push_back(_locale.as_string());
+					//}
+				}
+
+				return 0;
+
+			}
+			catch (const std::exception& e)
+			{
+				printf("Error exception:%s\n", e.what());
+				return -1;
+			}
+
+			return 0;
+		}
+
+		void Execute(LPVOID Param)
+		{
+			try
+			{
+
+				VERIFY_PURCHASE_RES res;
+
+				if (pSession == NULL || pSession->GetConnected() == false)
+				{
+					res.set_var_code(DataBaseError);
+
+					SEND_PROTO_BUFFER(res, pSession, pRequst.FrontSid)
+						return;
+				}
+
+				DBPROCESS_CER_PTR pProcess = DBPROCESSCONTAINER_CER.Search(Type);
+				if (pProcess == NULL || pProcess->m_IsOpen == false)
+				{
+					BLOG("DBPROCESSCONTAINER_CER.Search wong %d \n", pSession->GetMyDBTP());
+
+					res.set_var_code(DataBaseError);
+
+					SEND_PROTO_BUFFER(res, pSession, pRequst.FrontSid)
+						return;
+				}
+
+				auto result = GetGoogleVerifyPurchase(pRequst.token, pRequst.PacketId,pRequst.PurchaseId, pRequst.pPlayer);
+
+			
+				res.set_var_code(Success);
+		
+				SEND_PROTO_BUFFER(res, pSession, pRequst.FrontSid)
+
+			}
+			catch (...)
+			{
+				printf("RequestVerifyPurchase try catch \n");
 			}
 		}
 

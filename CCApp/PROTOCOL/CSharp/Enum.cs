@@ -22,7 +22,7 @@ public static partial class EnumReflection {
   static EnumReflection() {
     byte[] descriptorData = global::System.Convert.FromBase64String(
         string.Concat(
-          "CgpFbnVtLnByb3RvKtILCghQUk9UT0NPTBIWChJJRF9QS1RfVkVSU0lPTl9S",
+          "CgpFbnVtLnByb3RvKtAMCghQUk9UT0NPTBIWChJJRF9QS1RfVkVSU0lPTl9S",
           "RVEQABIWChJJRF9QS1RfVkVSU0lPTl9SRVMQARIUChBJRF9QS1RfTE9HSU5f",
           "UkVREAISFAoQSURfUEtUX0xPR0lOX1JFUxADEhoKFklEX1BLVF9DUkVBVEVf",
           "Uk9PTV9SRVEQBBIaChZJRF9QS1RfQ1JFQVRFX1JPT01fUkVTEAUSGQoVSURf",
@@ -55,12 +55,15 @@ public static partial class EnumReflection {
           "U1RPUF9TVFJFQU1fUkVREDASGgoWSURfUEtUX1NUT1BfU1RSRUFNX1JFUxAx",
           "EhkKFUlEX1BLVF9SRUdfQ0FNRVJBX1JFURAyEhkKFUlEX1BLVF9SRUdfQ0FN",
           "RVJBX1JFUxAzEhoKFklEX1BLVF9DQU1FUkFfTElTVF9SRVEQNBIaChZJRF9Q",
-          "S1RfQ0FNRVJBX0xJU1RfUkVTEDUqewoJRXJyb3JDb2RlEgsKB1N1Y2Nlc3MQ",
-          "ABIRCg1EYXRhQmFzZUVycm9yEAESEgoOTG9naW5EdXBsaWNhdGUQAhIPCgtT",
-          "eXN0ZW1FcnJvchADEg8KC0xvZ2luRmFpbGVkEAQSGAoURHVwbGljYXRlX0Vu",
-          "dGVyX1Jvb20QBSpeChFDYW1lcmFDb250cm9sVHlwZRIQCgxTd2l0Y2hDYW1l",
-          "cmEQABINCglRdWFsaXR5VXAQARIPCgtRdWFsaXR5RG93bhACEgkKBUZsYXNo",
-          "EAMSDAoIU2F2ZUZpbGUQBEICSAFiBnByb3RvMw=="));
+          "S1RfQ0FNRVJBX0xJU1RfUkVTEDUSHQoZSURfUEtUX01BQ0hJTkVfU1RBVFVT",
+          "X1JFURA2Eh0KGUlEX1BLVF9NQUNISU5FX1NUQVRVU19SRVMQNxIeChpJRF9Q",
+          "S1RfVkVSSUZZX1BVUkNIQVNFX1JFURA4Eh4KGklEX1BLVF9WRVJJRllfUFVS",
+          "Q0hBU0VfUkVTEDkqewoJRXJyb3JDb2RlEgsKB1N1Y2Nlc3MQABIRCg1EYXRh",
+          "QmFzZUVycm9yEAESEgoOTG9naW5EdXBsaWNhdGUQAhIPCgtTeXN0ZW1FcnJv",
+          "chADEg8KC0xvZ2luRmFpbGVkEAQSGAoURHVwbGljYXRlX0VudGVyX1Jvb20Q",
+          "BSpnChFDYW1lcmFDb250cm9sVHlwZRIQCgxTd2l0Y2hDYW1lcmEQABINCglR",
+          "dWFsaXR5VXAQARIPCgtRdWFsaXR5RG93bhACEgkKBUZsYXNoEAMSDAoIU2F2",
+          "ZUZpbGUQBBIHCgNNSUMQBUICSAFiBnByb3RvMw=="));
     descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
         new pbr::FileDescriptor[] { },
         new pbr::GeneratedClrTypeInfo(new[] {typeof(global::PROTOCOL), typeof(global::ErrorCode), typeof(global::CameraControlType), }, null, null));
@@ -124,6 +127,10 @@ public enum PROTOCOL {
   [pbr::OriginalName("ID_PKT_REG_CAMERA_RES")] IdPktRegCameraRes = 51,
   [pbr::OriginalName("ID_PKT_CAMERA_LIST_REQ")] IdPktCameraListReq = 52,
   [pbr::OriginalName("ID_PKT_CAMERA_LIST_RES")] IdPktCameraListRes = 53,
+  [pbr::OriginalName("ID_PKT_MACHINE_STATUS_REQ")] IdPktMachineStatusReq = 54,
+  [pbr::OriginalName("ID_PKT_MACHINE_STATUS_RES")] IdPktMachineStatusRes = 55,
+  [pbr::OriginalName("ID_PKT_VERIFY_PURCHASE_REQ")] IdPktVerifyPurchaseReq = 56,
+  [pbr::OriginalName("ID_PKT_VERIFY_PURCHASE_RES")] IdPktVerifyPurchaseRes = 57,
 }
 
 public enum ErrorCode {
@@ -141,6 +148,7 @@ public enum CameraControlType {
   [pbr::OriginalName("QualityDown")] QualityDown = 2,
   [pbr::OriginalName("Flash")] Flash = 3,
   [pbr::OriginalName("SaveFile")] SaveFile = 4,
+  [pbr::OriginalName("MIC")] Mic = 5,
 }
 
 #endregion

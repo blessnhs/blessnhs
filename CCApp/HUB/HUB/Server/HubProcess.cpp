@@ -38,6 +38,9 @@ HubProcess::HubProcess(void)
 	ADD_NET_FUNC(HubProcess, ID_PKT_CAMERA_CONTROL_REQ, CAMERA_CONTROL);
 
 	ADD_NET_FUNC(HubProcess, ID_PKT_MACHINE_STATUS_REQ, MACHINE_STATUS);
+
+	ADD_NET_FUNC(HubProcess, ID_PKT_VERIFY_PURCHASE_REQ, PURCHASE_VERIFY);
+	
 	
 
 }
@@ -780,6 +783,33 @@ VOID HubProcess::ALL_COMPLETE(boost::shared_ptr<XDATA> pBuffer, boost::shared_pt
 	//		pPtr->SendToAll(ID_FC_PKT_ALL_COMPLETE, (BYTE *)outputConfig.c_str(), outputConfig.size());
 	//	}
 	//}
+}
+
+VOID HubProcess::PURCHASE_VERIFY(boost::shared_ptr<XDATA> pBuffer, boost::shared_ptr<GSClient> Client)
+{
+	DECLARE_RECV_TYPE(VERIFY_PURCHASE_REQ, message)
+
+	PlayerPtr pPlayer = PLAYERMGR.SearchByFrontSid(pBuffer->Reserve2);
+	if (pPlayer == NULL)
+		return;
+
+	boost::shared_ptr<Hub::MSG_PLAYER_QUERY<RequestVerifyPurchase>>		PLAYER_MSG = ALLOCATOR.Create<Hub::MSG_PLAYER_QUERY<RequestVerifyPurchase>>();
+	PLAYER_MSG->pSession = Client;
+
+	{
+		PLAYER_MSG->pRequst.token.assign(message.var_token().begin(), message.var_token().end());
+		PLAYER_MSG->pRequst.PacketId.assign(message.var_package_name().begin(), message.var_package_name().end());
+		PLAYER_MSG->pRequst.PurchaseId.assign(message.var_purchase_id().begin(), message.var_purchase_id().end());
+		PLAYER_MSG->pRequst.ForntId = Client->GetId();
+		PLAYER_MSG->pRequst.FrontSid = pBuffer->Reserve2;
+		PLAYER_MSG->pRequst.pPlayer = pPlayer;
+	}
+
+	//로그인아웃 처리는 고정해야할 필요가 있다.
+	//id에 의해 분할되면 멀티 쓰레드 동기화 문제가 발생할 가능성이 존재한다.
+	PLAYER_MSG->Type = Client->GetMyDBTP();
+	PLAYER_MSG->SubType = ONQUERY;
+	MAINPROC.RegisterCommand(PLAYER_MSG);
 }
 
 VOID HubProcess::LOGOUT_CLIENT(boost::shared_ptr<XDATA> pBuffer, boost::shared_ptr<GSClient> Client)

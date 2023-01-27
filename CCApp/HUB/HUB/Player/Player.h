@@ -99,6 +99,10 @@ private:
 	std::string			m_MachineName;
 	std::string			m_MachineId;
 
+public:
+	std::string			m_Email;
+	std::string			m_Token;
+
 };
 
 typedef boost::shared_ptr<Player> PlayerPtr;

@@ -195,4 +195,19 @@ message CAMERA_LIST_RES
     optional int64       var_player_id       	= 4;	
 }
 
+message MACHINE_STATUS_RES
+{
+    optional PROTOCOL   id                   = 1 [default =ID_PKT_MACHINE_STATUS_RES ];
+    optional  ErrorCode    var_code          = 2;
+   
+    optional int32     var_battery              = 3;
 
+}
+
+message VERIFY_PURCHASE_RES
+{
+    optional PROTOCOL   id                  = 1 [default = ID_PKT_VERIFY_PURCHASE_RES ];
+    optional string     var_package_name = 2;
+    optional string     var_purchase_id        = 3;	
+      optional  ErrorCode    var_code         = 4;
+}

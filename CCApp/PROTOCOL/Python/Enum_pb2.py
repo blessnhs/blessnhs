@@ -19,7 +19,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   package='',
   syntax='proto3',
   serialized_options=b'H\001',
-  serialized_pb=b'\n\nEnum.proto*\xd2\x0b\n\x08PROTOCOL\x12\x16\n\x12ID_PKT_VERSION_REQ\x10\x00\x12\x16\n\x12ID_PKT_VERSION_RES\x10\x01\x12\x14\n\x10ID_PKT_LOGIN_REQ\x10\x02\x12\x14\n\x10ID_PKT_LOGIN_RES\x10\x03\x12\x1a\n\x16ID_PKT_CREATE_ROOM_REQ\x10\x04\x12\x1a\n\x16ID_PKT_CREATE_ROOM_RES\x10\x05\x12\x19\n\x15ID_PKT_ENTER_ROOM_REQ\x10\x06\x12\x19\n\x15ID_PKT_ENTER_ROOM_RES\x10\x07\x12\x19\n\x15ID_PKT_LEAVE_ROOM_REQ\x10\x08\x12\x19\n\x15ID_PKT_LEAVE_ROOM_RES\x10\t\x12\x1d\n\x19ID_PKT_BITMAP_MESSAGE_REQ\x10\n\x12\x1d\n\x19ID_PKT_BITMAP_MESSAGE_RES\x10\x0b\x12\x1f\n\x1bID_PKT_NEW_USER_IN_ROOM_NTY\x10\x0c\x12\x18\n\x14ID_PKT_ROOM_LIST_REQ\x10\r\x12\x18\n\x14ID_PKT_ROOM_LIST_RES\x10\x0e\x12\x19\n\x15ID_PKT_GAME_START_NTY\x10\x0f\x12\x1a\n\x16ID_PKT_GAME_RESULT_NTY\x10\x10\x12 \n\x1cID_PKT_ROOM_PASS_THROUGH_REQ\x10\x11\x12 \n\x1cID_PKT_ROOM_PASS_THROUGH_RES\x10\x12\x12\x15\n\x11ID_PKT_NOTICE_REQ\x10\x13\x12\x15\n\x11ID_PKT_NOTICE_RES\x10\x14\x12\x1c\n\x18ID_PKT_AUDIO_MESSAGE_REQ\x10\x15\x12\x1c\n\x18ID_PKT_AUDIO_MESSAGE_RES\x10\x16\x12\x1b\n\x17ID_PKT_PRAY_MESSAGE_REQ\x10\x17\x12\x1b\n\x17ID_PKT_PRAY_MESSAGE_RES\x10\x18\x12\x1f\n\x1bID_PKT_PRAY_MESSAGE_REG_REQ\x10\x19\x12\x1f\n\x1bID_PKT_PRAY_MESSAGE_REG_RES\x10\x1a\x12\x12\n\x0eID_PKT_QNA_REQ\x10\x1b\x12\x12\n\x0eID_PKT_QNA_RES\x10\x1c\x12\x18\n\x14ID_PKT_MAIL_LIST_REQ\x10\x1d\x12\x18\n\x14ID_PKT_MAIL_LIST_RES\x10\x1e\x12\x18\n\x14ID_PKT_MAIL_SEND_REQ\x10\x1f\x12\x18\n\x14ID_PKT_MAIL_SEND_RES\x10 \x12\x17\n\x13ID_PKT_MAIL_DEL_REQ\x10!\x12\x17\n\x13ID_PKT_MAIL_DEL_RES\x10\"\x12\x18\n\x14ID_PKT_MAIL_READ_REQ\x10#\x12\x18\n\x14ID_PKT_MAIL_READ_RES\x10$\x12\x12\n\x0eID_PKT_REG_REQ\x10%\x12\x12\n\x0eID_PKT_REG_RES\x10&\x12\x1c\n\x18ID_PKT_CLIENT_LOGOUT_REQ\x10\'\x12\x1c\n\x18ID_PKT_CLIENT_LOGOUT_RES\x10(\x12\x16\n\x12ID_PKT_CLIENT_KICK\x10)\x12\x1d\n\x19ID_PKT_CAMERA_CONTROL_REQ\x10*\x12\x1d\n\x19ID_PKT_CAMERA_CONTROL_RES\x10+\x12\x1e\n\x1aID_PKT_MPEG2TS_MESSAGE_REQ\x10,\x12\x1e\n\x1aID_PKT_MPEG2TS_MESSAGE_RES\x10-\x12\x1d\n\x19ID_PKT_CAMERA_WAKE_UP_REQ\x10.\x12\x1d\n\x19ID_PKT_CAMERA_WAKE_UP_RES\x10/\x12\x1a\n\x16ID_PKT_STOP_STREAM_REQ\x10\x30\x12\x1a\n\x16ID_PKT_STOP_STREAM_RES\x10\x31\x12\x19\n\x15ID_PKT_REG_CAMERA_REQ\x10\x32\x12\x19\n\x15ID_PKT_REG_CAMERA_RES\x10\x33\x12\x1a\n\x16ID_PKT_CAMERA_LIST_REQ\x10\x34\x12\x1a\n\x16ID_PKT_CAMERA_LIST_RES\x10\x35*{\n\tErrorCode\x12\x0b\n\x07Success\x10\x00\x12\x11\n\rDataBaseError\x10\x01\x12\x12\n\x0eLoginDuplicate\x10\x02\x12\x0f\n\x0bSystemError\x10\x03\x12\x0f\n\x0bLoginFailed\x10\x04\x12\x18\n\x14\x44uplicate_Enter_Room\x10\x05*^\n\x11\x43\x61meraControlType\x12\x10\n\x0cSwitchCamera\x10\x00\x12\r\n\tQualityUp\x10\x01\x12\x0f\n\x0bQualityDown\x10\x02\x12\t\n\x05\x46lash\x10\x03\x12\x0c\n\x08SaveFile\x10\x04\x42\x02H\x01\x62\x06proto3'
+  serialized_pb=b'\n\nEnum.proto*\xd0\x0c\n\x08PROTOCOL\x12\x16\n\x12ID_PKT_VERSION_REQ\x10\x00\x12\x16\n\x12ID_PKT_VERSION_RES\x10\x01\x12\x14\n\x10ID_PKT_LOGIN_REQ\x10\x02\x12\x14\n\x10ID_PKT_LOGIN_RES\x10\x03\x12\x1a\n\x16ID_PKT_CREATE_ROOM_REQ\x10\x04\x12\x1a\n\x16ID_PKT_CREATE_ROOM_RES\x10\x05\x12\x19\n\x15ID_PKT_ENTER_ROOM_REQ\x10\x06\x12\x19\n\x15ID_PKT_ENTER_ROOM_RES\x10\x07\x12\x19\n\x15ID_PKT_LEAVE_ROOM_REQ\x10\x08\x12\x19\n\x15ID_PKT_LEAVE_ROOM_RES\x10\t\x12\x1d\n\x19ID_PKT_BITMAP_MESSAGE_REQ\x10\n\x12\x1d\n\x19ID_PKT_BITMAP_MESSAGE_RES\x10\x0b\x12\x1f\n\x1bID_PKT_NEW_USER_IN_ROOM_NTY\x10\x0c\x12\x18\n\x14ID_PKT_ROOM_LIST_REQ\x10\r\x12\x18\n\x14ID_PKT_ROOM_LIST_RES\x10\x0e\x12\x19\n\x15ID_PKT_GAME_START_NTY\x10\x0f\x12\x1a\n\x16ID_PKT_GAME_RESULT_NTY\x10\x10\x12 \n\x1cID_PKT_ROOM_PASS_THROUGH_REQ\x10\x11\x12 \n\x1cID_PKT_ROOM_PASS_THROUGH_RES\x10\x12\x12\x15\n\x11ID_PKT_NOTICE_REQ\x10\x13\x12\x15\n\x11ID_PKT_NOTICE_RES\x10\x14\x12\x1c\n\x18ID_PKT_AUDIO_MESSAGE_REQ\x10\x15\x12\x1c\n\x18ID_PKT_AUDIO_MESSAGE_RES\x10\x16\x12\x1b\n\x17ID_PKT_PRAY_MESSAGE_REQ\x10\x17\x12\x1b\n\x17ID_PKT_PRAY_MESSAGE_RES\x10\x18\x12\x1f\n\x1bID_PKT_PRAY_MESSAGE_REG_REQ\x10\x19\x12\x1f\n\x1bID_PKT_PRAY_MESSAGE_REG_RES\x10\x1a\x12\x12\n\x0eID_PKT_QNA_REQ\x10\x1b\x12\x12\n\x0eID_PKT_QNA_RES\x10\x1c\x12\x18\n\x14ID_PKT_MAIL_LIST_REQ\x10\x1d\x12\x18\n\x14ID_PKT_MAIL_LIST_RES\x10\x1e\x12\x18\n\x14ID_PKT_MAIL_SEND_REQ\x10\x1f\x12\x18\n\x14ID_PKT_MAIL_SEND_RES\x10 \x12\x17\n\x13ID_PKT_MAIL_DEL_REQ\x10!\x12\x17\n\x13ID_PKT_MAIL_DEL_RES\x10\"\x12\x18\n\x14ID_PKT_MAIL_READ_REQ\x10#\x12\x18\n\x14ID_PKT_MAIL_READ_RES\x10$\x12\x12\n\x0eID_PKT_REG_REQ\x10%\x12\x12\n\x0eID_PKT_REG_RES\x10&\x12\x1c\n\x18ID_PKT_CLIENT_LOGOUT_REQ\x10\'\x12\x1c\n\x18ID_PKT_CLIENT_LOGOUT_RES\x10(\x12\x16\n\x12ID_PKT_CLIENT_KICK\x10)\x12\x1d\n\x19ID_PKT_CAMERA_CONTROL_REQ\x10*\x12\x1d\n\x19ID_PKT_CAMERA_CONTROL_RES\x10+\x12\x1e\n\x1aID_PKT_MPEG2TS_MESSAGE_REQ\x10,\x12\x1e\n\x1aID_PKT_MPEG2TS_MESSAGE_RES\x10-\x12\x1d\n\x19ID_PKT_CAMERA_WAKE_UP_REQ\x10.\x12\x1d\n\x19ID_PKT_CAMERA_WAKE_UP_RES\x10/\x12\x1a\n\x16ID_PKT_STOP_STREAM_REQ\x10\x30\x12\x1a\n\x16ID_PKT_STOP_STREAM_RES\x10\x31\x12\x19\n\x15ID_PKT_REG_CAMERA_REQ\x10\x32\x12\x19\n\x15ID_PKT_REG_CAMERA_RES\x10\x33\x12\x1a\n\x16ID_PKT_CAMERA_LIST_REQ\x10\x34\x12\x1a\n\x16ID_PKT_CAMERA_LIST_RES\x10\x35\x12\x1d\n\x19ID_PKT_MACHINE_STATUS_REQ\x10\x36\x12\x1d\n\x19ID_PKT_MACHINE_STATUS_RES\x10\x37\x12\x1e\n\x1aID_PKT_VERIFY_PURCHASE_REQ\x10\x38\x12\x1e\n\x1aID_PKT_VERIFY_PURCHASE_RES\x10\x39*{\n\tErrorCode\x12\x0b\n\x07Success\x10\x00\x12\x11\n\rDataBaseError\x10\x01\x12\x12\n\x0eLoginDuplicate\x10\x02\x12\x0f\n\x0bSystemError\x10\x03\x12\x0f\n\x0bLoginFailed\x10\x04\x12\x18\n\x14\x44uplicate_Enter_Room\x10\x05*g\n\x11\x43\x61meraControlType\x12\x10\n\x0cSwitchCamera\x10\x00\x12\r\n\tQualityUp\x10\x01\x12\x0f\n\x0bQualityDown\x10\x02\x12\t\n\x05\x46lash\x10\x03\x12\x0c\n\x08SaveFile\x10\x04\x12\x07\n\x03MIC\x10\x05\x42\x02H\x01\x62\x06proto3'
 )
 
 _PROTOCOL = _descriptor.EnumDescriptor(
@@ -244,11 +244,27 @@ _PROTOCOL = _descriptor.EnumDescriptor(
       name='ID_PKT_CAMERA_LIST_RES', index=53, number=53,
       serialized_options=None,
       type=None),
+    _descriptor.EnumValueDescriptor(
+      name='ID_PKT_MACHINE_STATUS_REQ', index=54, number=54,
+      serialized_options=None,
+      type=None),
+    _descriptor.EnumValueDescriptor(
+      name='ID_PKT_MACHINE_STATUS_RES', index=55, number=55,
+      serialized_options=None,
+      type=None),
+    _descriptor.EnumValueDescriptor(
+      name='ID_PKT_VERIFY_PURCHASE_REQ', index=56, number=56,
+      serialized_options=None,
+      type=None),
+    _descriptor.EnumValueDescriptor(
+      name='ID_PKT_VERIFY_PURCHASE_RES', index=57, number=57,
+      serialized_options=None,
+      type=None),
   ],
   containing_type=None,
   serialized_options=None,
   serialized_start=15,
-  serialized_end=1505,
+  serialized_end=1631,
 )
 _sym_db.RegisterEnumDescriptor(_PROTOCOL)
 
@@ -286,8 +302,8 @@ _ERRORCODE = _descriptor.EnumDescriptor(
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=1507,
-  serialized_end=1630,
+  serialized_start=1633,
+  serialized_end=1756,
 )
 _sym_db.RegisterEnumDescriptor(_ERRORCODE)
 
@@ -318,11 +334,15 @@ _CAMERACONTROLTYPE = _descriptor.EnumDescriptor(
       name='SaveFile', index=4, number=4,
       serialized_options=None,
       type=None),
+    _descriptor.EnumValueDescriptor(
+      name='MIC', index=5, number=5,
+      serialized_options=None,
+      type=None),
   ],
   containing_type=None,
   serialized_options=None,
-  serialized_start=1632,
-  serialized_end=1726,
+  serialized_start=1758,
+  serialized_end=1861,
 )
 _sym_db.RegisterEnumDescriptor(_CAMERACONTROLTYPE)
 
@@ -381,6 +401,10 @@ ID_PKT_REG_CAMERA_REQ = 50
 ID_PKT_REG_CAMERA_RES = 51
 ID_PKT_CAMERA_LIST_REQ = 52
 ID_PKT_CAMERA_LIST_RES = 53
+ID_PKT_MACHINE_STATUS_REQ = 54
+ID_PKT_MACHINE_STATUS_RES = 55
+ID_PKT_VERIFY_PURCHASE_REQ = 56
+ID_PKT_VERIFY_PURCHASE_RES = 57
 Success = 0
 DataBaseError = 1
 LoginDuplicate = 2
@@ -392,6 +416,7 @@ QualityUp = 1
 QualityDown = 2
 Flash = 3
 SaveFile = 4
+MIC = 5
 
 
 DESCRIPTOR.enum_types_by_name['PROTOCOL'] = _PROTOCOL

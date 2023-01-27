@@ -616,6 +616,28 @@ namespace CCA
             }
         }
 
+        static public void SendVerifyPurchase(string packageid,string purchaseid, string token)
+        {
+            if (client == null || client.socket == null || client.socket.Connected == false)
+                return;
+
+            if (token == null || User.LoginSuccess == false)
+                return;
+         
+            var data = new VERIFY_PURCHASE_REQ
+            {
+                VarToken = token,
+                VarPackageName = packageid,
+                VarPurchaseId = purchaseid
+            };
+            using (MemoryStream stream = new MemoryStream())
+            {
+                data.WriteTo(stream);
+
+                client.WritePacket((int)PROTOCOL.IdPktVerifyPurchaseReq, stream.ToArray(), stream.ToArray().Length);
+            }
+        }
+
         static public void SendRoomList()
         {
             if (client == null || client.socket == null || client.socket.Connected == false)

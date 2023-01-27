@@ -158,5 +158,22 @@ message CAMERA_LIST_REQ
     optional PROTOCOL   id                  = 1 [default = ID_PKT_CAMERA_LIST_REQ ];
 }
 
+message MACHINE_STATUS_REQ
+{
+    optional PROTOCOL   id                  = 1 [default = ID_PKT_MACHINE_STATUS_REQ ];
+    repeated int64       var_to_player_id   = 5;
+    required int32       var_battery        = 4;	
+}
+
+
+message VERIFY_PURCHASE_REQ
+{
+    optional PROTOCOL   id                  = 1 [default = ID_PKT_VERIFY_PURCHASE_REQ ];
+    required string     var_package_name = 2;
+    required string     var_purchase_id        = 3;	
+    required string     var_token        = 4;	
+}
+
+
 
 

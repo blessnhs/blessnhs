@@ -77,7 +77,7 @@ namespace CCA.Page
         }
         private async void OnBuy(object sender, EventArgs e)
         {
-            DependencyService.Get<MethodExt>().Purchase("cameraunlimtedlist3");
+            DependencyService.Get<MethodExt>().Purchase("camera_unlimited");
 
             await PopupNavigation.Instance.PopAsync();
         }

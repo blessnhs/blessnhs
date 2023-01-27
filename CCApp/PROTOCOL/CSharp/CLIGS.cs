@@ -71,8 +71,13 @@ public static partial class CLIGSReflection {
           "AigFImwKDlJFR19DQU1FUkFfUkVREiwKAmlkGAEgASgOMgkuUFJPVE9DT0w6",
           "FUlEX1BLVF9SRUdfQ0FNRVJBX1JFURIUCgx2YXJfY2FtX25hbWUYAiACKAkS",
           "FgoOdmFyX21hY2hpbmVfaWQYAyACKAkiQAoPQ0FNRVJBX0xJU1RfUkVREi0K",
-          "AmlkGAEgASgOMgkuUFJPVE9DT0w6FklEX1BLVF9DQU1FUkFfTElTVF9SRVFC",
-          "AkgB"));
+          "AmlkGAEgASgOMgkuUFJPVE9DT0w6FklEX1BLVF9DQU1FUkFfTElTVF9SRVEi",
+          "dQoSTUFDSElORV9TVEFUVVNfUkVREjAKAmlkGAEgASgOMgkuUFJPVE9DT0w6",
+          "GUlEX1BLVF9NQUNISU5FX1NUQVRVU19SRVESGAoQdmFyX3RvX3BsYXllcl9p",
+          "ZBgFIAMoAxITCgt2YXJfYmF0dGVyeRgEIAIoBSKOAQoTVkVSSUZZX1BVUkNI",
+          "QVNFX1JFURIxCgJpZBgBIAEoDjIJLlBST1RPQ09MOhpJRF9QS1RfVkVSSUZZ",
+          "X1BVUkNIQVNFX1JFURIYChB2YXJfcGFja2FnZV9uYW1lGAIgAigJEhcKD3Zh",
+          "cl9wdXJjaGFzZV9pZBgDIAIoCRIRCgl2YXJfdG9rZW4YBCACKAlCAkgB"));
     descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
         new pbr::FileDescriptor[] { global::EnumReflection.Descriptor, global::StructureReflection.Descriptor, },
         new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
@@ -97,7 +102,9 @@ public static partial class CLIGSReflection {
           new pbr::GeneratedClrTypeInfo(typeof(global::CAMERA_CONTROL_REQ), global::CAMERA_CONTROL_REQ.Parser, new[]{ "Id", "VarType", "VarMachineId", "VarPlayerId" }, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::MPEG2TS_MESSAGE_REQ), global::MPEG2TS_MESSAGE_REQ.Parser, new[]{ "Id", "VarMessage", "VarRoomNumber", "VarType" }, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::REG_CAMERA_REQ), global::REG_CAMERA_REQ.Parser, new[]{ "Id", "VarCamName", "VarMachineId" }, null, null, null, null),
-          new pbr::GeneratedClrTypeInfo(typeof(global::CAMERA_LIST_REQ), global::CAMERA_LIST_REQ.Parser, new[]{ "Id" }, null, null, null, null)
+          new pbr::GeneratedClrTypeInfo(typeof(global::CAMERA_LIST_REQ), global::CAMERA_LIST_REQ.Parser, new[]{ "Id" }, null, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::MACHINE_STATUS_REQ), global::MACHINE_STATUS_REQ.Parser, new[]{ "Id", "VarToPlayerId", "VarBattery" }, null, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::VERIFY_PURCHASE_REQ), global::VERIFY_PURCHASE_REQ.Parser, new[]{ "Id", "VarPackageName", "VarPurchaseId", "VarToken" }, null, null, null, null)
         }));
   }
   #endregion
@@ -4555,6 +4562,476 @@ public sealed partial class CAMERA_LIST_REQ : pb::IMessage<CAMERA_LIST_REQ> {
           break;
         case 8: {
           Id = (global::PROTOCOL) input.ReadEnum();
+          break;
+        }
+      }
+    }
+  }
+
+}
+
+public sealed partial class MACHINE_STATUS_REQ : pb::IMessage<MACHINE_STATUS_REQ> {
+  private static readonly pb::MessageParser<MACHINE_STATUS_REQ> _parser = new pb::MessageParser<MACHINE_STATUS_REQ>(() => new MACHINE_STATUS_REQ());
+  private pb::UnknownFieldSet _unknownFields;
+  private int _hasBits0;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public static pb::MessageParser<MACHINE_STATUS_REQ> Parser { get { return _parser; } }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public static pbr::MessageDescriptor Descriptor {
+    get { return global::CLIGSReflection.Descriptor.MessageTypes[22]; }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  pbr::MessageDescriptor pb::IMessage.Descriptor {
+    get { return Descriptor; }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public MACHINE_STATUS_REQ() {
+    OnConstruction();
+  }
+
+  partial void OnConstruction();
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public MACHINE_STATUS_REQ(MACHINE_STATUS_REQ other) : this() {
+    _hasBits0 = other._hasBits0;
+    id_ = other.id_;
+    varToPlayerId_ = other.varToPlayerId_.Clone();
+    varBattery_ = other.varBattery_;
+    _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public MACHINE_STATUS_REQ Clone() {
+    return new MACHINE_STATUS_REQ(this);
+  }
+
+  /// <summary>Field number for the "id" field.</summary>
+  public const int IdFieldNumber = 1;
+  private readonly static global::PROTOCOL IdDefaultValue = global::PROTOCOL.IdPktMachineStatusReq;
+
+  private global::PROTOCOL id_;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public global::PROTOCOL Id {
+    get { if ((_hasBits0 & 1) != 0) { return id_; } else { return IdDefaultValue; } }
+    set {
+      _hasBits0 |= 1;
+      id_ = value;
+    }
+  }
+  /// <summary>Gets whether the "id" field is set</summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public bool HasId {
+    get { return (_hasBits0 & 1) != 0; }
+  }
+  /// <summary>Clears the value of the "id" field</summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void ClearId() {
+    _hasBits0 &= ~1;
+  }
+
+  /// <summary>Field number for the "var_to_player_id" field.</summary>
+  public const int VarToPlayerIdFieldNumber = 5;
+  private static readonly pb::FieldCodec<long> _repeated_varToPlayerId_codec
+      = pb::FieldCodec.ForInt64(40);
+  private readonly pbc::RepeatedField<long> varToPlayerId_ = new pbc::RepeatedField<long>();
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public pbc::RepeatedField<long> VarToPlayerId {
+    get { return varToPlayerId_; }
+  }
+
+  /// <summary>Field number for the "var_battery" field.</summary>
+  public const int VarBatteryFieldNumber = 4;
+  private readonly static int VarBatteryDefaultValue = 0;
+
+  private int varBattery_;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public int VarBattery {
+    get { if ((_hasBits0 & 2) != 0) { return varBattery_; } else { return VarBatteryDefaultValue; } }
+    set {
+      _hasBits0 |= 2;
+      varBattery_ = value;
+    }
+  }
+  /// <summary>Gets whether the "var_battery" field is set</summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public bool HasVarBattery {
+    get { return (_hasBits0 & 2) != 0; }
+  }
+  /// <summary>Clears the value of the "var_battery" field</summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void ClearVarBattery() {
+    _hasBits0 &= ~2;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public override bool Equals(object other) {
+    return Equals(other as MACHINE_STATUS_REQ);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public bool Equals(MACHINE_STATUS_REQ other) {
+    if (ReferenceEquals(other, null)) {
+      return false;
+    }
+    if (ReferenceEquals(other, this)) {
+      return true;
+    }
+    if (Id != other.Id) return false;
+    if(!varToPlayerId_.Equals(other.varToPlayerId_)) return false;
+    if (VarBattery != other.VarBattery) return false;
+    return Equals(_unknownFields, other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public override int GetHashCode() {
+    int hash = 1;
+    if (HasId) hash ^= Id.GetHashCode();
+    hash ^= varToPlayerId_.GetHashCode();
+    if (HasVarBattery) hash ^= VarBattery.GetHashCode();
+    if (_unknownFields != null) {
+      hash ^= _unknownFields.GetHashCode();
+    }
+    return hash;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public override string ToString() {
+    return pb::JsonFormatter.ToDiagnosticString(this);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void WriteTo(pb::CodedOutputStream output) {
+    if (HasId) {
+      output.WriteRawTag(8);
+      output.WriteEnum((int) Id);
+    }
+    if (HasVarBattery) {
+      output.WriteRawTag(32);
+      output.WriteInt32(VarBattery);
+    }
+    varToPlayerId_.WriteTo(output, _repeated_varToPlayerId_codec);
+    if (_unknownFields != null) {
+      _unknownFields.WriteTo(output);
+    }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public int CalculateSize() {
+    int size = 0;
+    if (HasId) {
+      size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Id);
+    }
+    size += varToPlayerId_.CalculateSize(_repeated_varToPlayerId_codec);
+    if (HasVarBattery) {
+      size += 1 + pb::CodedOutputStream.ComputeInt32Size(VarBattery);
+    }
+    if (_unknownFields != null) {
+      size += _unknownFields.CalculateSize();
+    }
+    return size;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void MergeFrom(MACHINE_STATUS_REQ other) {
+    if (other == null) {
+      return;
+    }
+    if (other.HasId) {
+      Id = other.Id;
+    }
+    varToPlayerId_.Add(other.varToPlayerId_);
+    if (other.HasVarBattery) {
+      VarBattery = other.VarBattery;
+    }
+    _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void MergeFrom(pb::CodedInputStream input) {
+    uint tag;
+    while ((tag = input.ReadTag()) != 0) {
+      switch(tag) {
+        default:
+          _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+          break;
+        case 8: {
+          Id = (global::PROTOCOL) input.ReadEnum();
+          break;
+        }
+        case 32: {
+          VarBattery = input.ReadInt32();
+          break;
+        }
+        case 42:
+        case 40: {
+          varToPlayerId_.AddEntriesFrom(input, _repeated_varToPlayerId_codec);
+          break;
+        }
+      }
+    }
+  }
+
+}
+
+public sealed partial class VERIFY_PURCHASE_REQ : pb::IMessage<VERIFY_PURCHASE_REQ> {
+  private static readonly pb::MessageParser<VERIFY_PURCHASE_REQ> _parser = new pb::MessageParser<VERIFY_PURCHASE_REQ>(() => new VERIFY_PURCHASE_REQ());
+  private pb::UnknownFieldSet _unknownFields;
+  private int _hasBits0;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public static pb::MessageParser<VERIFY_PURCHASE_REQ> Parser { get { return _parser; } }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public static pbr::MessageDescriptor Descriptor {
+    get { return global::CLIGSReflection.Descriptor.MessageTypes[23]; }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  pbr::MessageDescriptor pb::IMessage.Descriptor {
+    get { return Descriptor; }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public VERIFY_PURCHASE_REQ() {
+    OnConstruction();
+  }
+
+  partial void OnConstruction();
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public VERIFY_PURCHASE_REQ(VERIFY_PURCHASE_REQ other) : this() {
+    _hasBits0 = other._hasBits0;
+    id_ = other.id_;
+    varPackageName_ = other.varPackageName_;
+    varPurchaseId_ = other.varPurchaseId_;
+    varToken_ = other.varToken_;
+    _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public VERIFY_PURCHASE_REQ Clone() {
+    return new VERIFY_PURCHASE_REQ(this);
+  }
+
+  /// <summary>Field number for the "id" field.</summary>
+  public const int IdFieldNumber = 1;
+  private readonly static global::PROTOCOL IdDefaultValue = global::PROTOCOL.IdPktVerifyPurchaseReq;
+
+  private global::PROTOCOL id_;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public global::PROTOCOL Id {
+    get { if ((_hasBits0 & 1) != 0) { return id_; } else { return IdDefaultValue; } }
+    set {
+      _hasBits0 |= 1;
+      id_ = value;
+    }
+  }
+  /// <summary>Gets whether the "id" field is set</summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public bool HasId {
+    get { return (_hasBits0 & 1) != 0; }
+  }
+  /// <summary>Clears the value of the "id" field</summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void ClearId() {
+    _hasBits0 &= ~1;
+  }
+
+  /// <summary>Field number for the "var_package_name" field.</summary>
+  public const int VarPackageNameFieldNumber = 2;
+  private readonly static string VarPackageNameDefaultValue = "";
+
+  private string varPackageName_;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public string VarPackageName {
+    get { return varPackageName_ ?? VarPackageNameDefaultValue; }
+    set {
+      varPackageName_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+    }
+  }
+  /// <summary>Gets whether the "var_package_name" field is set</summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public bool HasVarPackageName {
+    get { return varPackageName_ != null; }
+  }
+  /// <summary>Clears the value of the "var_package_name" field</summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void ClearVarPackageName() {
+    varPackageName_ = null;
+  }
+
+  /// <summary>Field number for the "var_purchase_id" field.</summary>
+  public const int VarPurchaseIdFieldNumber = 3;
+  private readonly static string VarPurchaseIdDefaultValue = "";
+
+  private string varPurchaseId_;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public string VarPurchaseId {
+    get { return varPurchaseId_ ?? VarPurchaseIdDefaultValue; }
+    set {
+      varPurchaseId_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+    }
+  }
+  /// <summary>Gets whether the "var_purchase_id" field is set</summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public bool HasVarPurchaseId {
+    get { return varPurchaseId_ != null; }
+  }
+  /// <summary>Clears the value of the "var_purchase_id" field</summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void ClearVarPurchaseId() {
+    varPurchaseId_ = null;
+  }
+
+  /// <summary>Field number for the "var_token" field.</summary>
+  public const int VarTokenFieldNumber = 4;
+  private readonly static string VarTokenDefaultValue = "";
+
+  private string varToken_;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public string VarToken {
+    get { return varToken_ ?? VarTokenDefaultValue; }
+    set {
+      varToken_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+    }
+  }
+  /// <summary>Gets whether the "var_token" field is set</summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public bool HasVarToken {
+    get { return varToken_ != null; }
+  }
+  /// <summary>Clears the value of the "var_token" field</summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void ClearVarToken() {
+    varToken_ = null;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public override bool Equals(object other) {
+    return Equals(other as VERIFY_PURCHASE_REQ);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public bool Equals(VERIFY_PURCHASE_REQ other) {
+    if (ReferenceEquals(other, null)) {
+      return false;
+    }
+    if (ReferenceEquals(other, this)) {
+      return true;
+    }
+    if (Id != other.Id) return false;
+    if (VarPackageName != other.VarPackageName) return false;
+    if (VarPurchaseId != other.VarPurchaseId) return false;
+    if (VarToken != other.VarToken) return false;
+    return Equals(_unknownFields, other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public override int GetHashCode() {
+    int hash = 1;
+    if (HasId) hash ^= Id.GetHashCode();
+    if (HasVarPackageName) hash ^= VarPackageName.GetHashCode();
+    if (HasVarPurchaseId) hash ^= VarPurchaseId.GetHashCode();
+    if (HasVarToken) hash ^= VarToken.GetHashCode();
+    if (_unknownFields != null) {
+      hash ^= _unknownFields.GetHashCode();
+    }
+    return hash;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public override string ToString() {
+    return pb::JsonFormatter.ToDiagnosticString(this);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void WriteTo(pb::CodedOutputStream output) {
+    if (HasId) {
+      output.WriteRawTag(8);
+      output.WriteEnum((int) Id);
+    }
+    if (HasVarPackageName) {
+      output.WriteRawTag(18);
+      output.WriteString(VarPackageName);
+    }
+    if (HasVarPurchaseId) {
+      output.WriteRawTag(26);
+      output.WriteString(VarPurchaseId);
+    }
+    if (HasVarToken) {
+      output.WriteRawTag(34);
+      output.WriteString(VarToken);
+    }
+    if (_unknownFields != null) {
+      _unknownFields.WriteTo(output);
+    }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public int CalculateSize() {
+    int size = 0;
+    if (HasId) {
+      size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Id);
+    }
+    if (HasVarPackageName) {
+      size += 1 + pb::CodedOutputStream.ComputeStringSize(VarPackageName);
+    }
+    if (HasVarPurchaseId) {
+      size += 1 + pb::CodedOutputStream.ComputeStringSize(VarPurchaseId);
+    }
+    if (HasVarToken) {
+      size += 1 + pb::CodedOutputStream.ComputeStringSize(VarToken);
+    }
+    if (_unknownFields != null) {
+      size += _unknownFields.CalculateSize();
+    }
+    return size;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void MergeFrom(VERIFY_PURCHASE_REQ other) {
+    if (other == null) {
+      return;
+    }
+    if (other.HasId) {
+      Id = other.Id;
+    }
+    if (other.HasVarPackageName) {
+      VarPackageName = other.VarPackageName;
+    }
+    if (other.HasVarPurchaseId) {
+      VarPurchaseId = other.VarPurchaseId;
+    }
+    if (other.HasVarToken) {
+      VarToken = other.VarToken;
+    }
+    _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void MergeFrom(pb::CodedInputStream input) {
+    uint tag;
+    while ((tag = input.ReadTag()) != 0) {
+      switch(tag) {
+        default:
+          _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+          break;
+        case 8: {
+          Id = (global::PROTOCOL) input.ReadEnum();
+          break;
+        }
+        case 18: {
+          VarPackageName = input.ReadString();
+          break;
+        }
+        case 26: {
+          VarPurchaseId = input.ReadString();
+          break;
+        }
+        case 34: {
+          VarToken = input.ReadString();
           break;
         }
       }

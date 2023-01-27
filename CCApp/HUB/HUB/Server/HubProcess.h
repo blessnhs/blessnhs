@@ -59,6 +59,8 @@ public:
 
 	VOID MACHINE_STATUS(boost::shared_ptr<XDATA> pBuffer, boost::shared_ptr<GSClient> Client);
 
+	VOID PURCHASE_VERIFY(boost::shared_ptr<XDATA> pBuffer, boost::shared_ptr<GSClient> Client);
+
 protected:
 
 	DECLARE_MSG_MAP2(HubProcess)
