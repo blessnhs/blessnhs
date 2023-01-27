@@ -1,18 +1,24 @@
 const chk = require('./chk.js');
-var http = require("http");
+const http = require("http");
+const router= require("router");
+const express = require("express");
 
+const app = express();
 
-var ret = chk.checkReceipt('camera_unlimited','ejehaaiidbgecokgbcdibfne.AO-J1OwjId4laUSSVwIoTDB0KfK-UH3RTp2rJObFt5MsAwXfvLuupFjDXoVpsmxOcA0iwXdXMSfO0ExyN6rX_7jHvUyliEl7GA','com.blessnhs.cca');
+////http://127.0.0.1?token=_token&purchase_name=_purchase_name&package_name=_package_name
+app.get('/', function (req, res, next) {
 
-console.log(ret);
+    var token = req.query.token;
+    var purchase_name = req.query.purchase_name;
+    var package_name = req.query.package_name;
 
-// Create HTTP server and listen on port 8000 for requests
-http.createServer(function(request, response) {
+    console.log(token);
+    console.log(purchase_name);
+    console.log(package_name);
 
-   // Set the response HTTP header with HTTP status and Content type
-   response.writeHead(200, {'Content-Type': 'text/plain'});
+    chk.checkReceipt(purchase_name,token,package_name,res);
 
-   // Send the response body "Hello World"
-   response.end('Hello World\n');
-   
-}).listen(8080);
+  
+});
+
+app.listen(8080, () => {});

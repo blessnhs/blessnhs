@@ -41,7 +41,7 @@ function getAccessToken(email, scope, tokenURL, pem) {
 module.exports = {
     
     // 구글 영수증 조회
-    checkReceipt: (productId, token,packageName) => getAccessToken(
+    checkReceipt: (productId, token,packageName,res) => getAccessToken(
       'pubsub@pc-api-7836911650284524444-981.iam.gserviceaccount.com', // 서비스 계정 이메일
       'https://www.googleapis.com/auth/androidpublisher', // scope
       'https://accounts.google.com/o/oauth2/token', // 토큰 URL
@@ -52,20 +52,17 @@ module.exports = {
         const url = `https://androidpublisher.googleapis.com/androidpublisher/v3/applications/${packageName}/purchases/products/${productId}/tokens/${token}`;
         const headers = { Authorization: `Bearer ${access_token}` };
 
-        return axios.get(url, {
-	 headers : { Authorization : `Bearer ${access_token}` }
-	}).then(result => {
+        return axios.get(url, { headers : { Authorization : `Bearer ${access_token}` } })
+	.then(result => {
 
-	console.log(result);
+	res.setHeader('Content-Type', 'application/json');
+    	res.end(JSON.stringify(result.data));
 
-            if (!result || result.developerPayload === undefined) throw new Error('Billing google Response error : ' + JSON.stringify(result));
-            if (result.purchaseState !== 0) throw new Error('Billing google invalid receipt purchaseState : ' + result.purchaseState);
-            if (result.consumptionState !== 1) throw new Error('Billing google invalid receipt consumptionState : ' + result.consumptionState);
-
-
-            return result;
-
-        });
+	return result;
+        }).catch( error => {
+   	res.setHeader('Content-Type', 'application/json');
+    	res.end(JSON.stringify({'code' : error.code}));
+       });
     })
 
 };
