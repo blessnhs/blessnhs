@@ -840,6 +840,8 @@ namespace FullCameraApp.Droid
 
             Torch(false);
 
+            Interlocked.Decrement(ref NetProcess.CameraUsingCount); 
+
             return true;
         }
 

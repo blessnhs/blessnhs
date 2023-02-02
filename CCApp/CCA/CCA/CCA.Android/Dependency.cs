@@ -100,7 +100,7 @@ namespace DependencyHelper.Droid
                     NotificationException(purchase.Id + purchase.PurchaseToken + purchase.State);
 
                     //Purchased, save this information
-                    var id = purchase.Id;
+                    var id = purchase.ProductId;
                     var token = purchase.PurchaseToken;
                     var state = purchase.State;
 

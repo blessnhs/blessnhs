@@ -72,6 +72,9 @@ namespace CCA
         public static List<long> TargetPlayerId = new List<long>();
         public static int TargetBatteryGage;
 
+        public static int CameraUsingCount = 0;
+        public static int CameraControlCount = 0;
+
         static public void Loop()
         {
 
@@ -255,12 +258,21 @@ namespace CCA
                                 Device.BeginInvokeOnMainThread(() =>
                                 {
                                     if (PopupNavigation.Instance.PopupStack.Count == 0)
+                                    {
+                                        if (CameraUsingCount > 0) return;
+
+                                        Interlocked.Increment(ref CameraUsingCount);
                                         PopupNavigation.Instance.PushAsync(new CameraPage());
+                                    }
                                     else
                                     {
                                         if (PopupNavigation.Instance.PopupStack[0].GetType() != typeof(CameraPage))
                                         {
                                             PopupNavigation.Instance.PopAsync();
+
+                                            if (CameraUsingCount > 0) return;
+
+                                            Interlocked.Increment(ref CameraUsingCount);
                                             PopupNavigation.Instance.PushAsync(new CameraPage());
                                         }
                                     }
@@ -441,6 +453,10 @@ namespace CCA
 
                                             CameraPage camera_page = (CameraPage)page;
 
+
+                                            if (CameraControlCount > 0) return;
+                                            Interlocked.Increment(ref CameraControlCount);
+                                  
                                             switch (res.VarType)
                                             {
                                                 case CameraControlType.SwitchCamera:
@@ -453,6 +469,8 @@ namespace CCA
                                                     camera_page.ControlCamera("MIC");
                                                     break;
                                             }
+
+                                            Interlocked.Decrement(ref CameraControlCount);
                                         }
                                     }
                                 });
