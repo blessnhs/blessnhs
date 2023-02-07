@@ -71,7 +71,10 @@ namespace CCA
                 socket.ReceiveTimeout = 10;
                 socket.SendTimeout = 2000;
 
-                User.LoginSuccess = false;
+                //이미 로그인했다가 풀렸다 이때는 초기화
+                if (User.LoginSuccess == true)
+                    User.Clear();
+
                 var result = socket.BeginConnect(remoteEP, null, null);
 
                 bool success = result.AsyncWaitHandle.WaitOne(500, true);

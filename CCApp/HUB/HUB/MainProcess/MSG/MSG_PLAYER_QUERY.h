@@ -671,8 +671,6 @@ class MSG_PLAYER_QUERY<##class_name>:public IMESSAGE	\
 
 				if (pRequst.token.size() == 0 || http_out.size() == 0)
 				{
-					BLOG("DBPROCESSCONTAINER_CER.Search token size error %d \n", pRequst.token.size());
-
 					res.set_var_code(DataBaseError);
 
 					SEND_PROTO_BUFFER(res, pSession, pRequst.FrontSid)

@@ -38,6 +38,8 @@ public:
 	PlayerPtr Search(DWORD FrontId,DWORD FrontSid);
 	PlayerPtr SearchByFrontSid(DWORD FrontSid);
 
+	void DelPlayerByFrontId(DWORD FrontId);
+
 	void Print();
 
 	VOID CheckUserList();

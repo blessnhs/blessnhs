@@ -52,6 +52,8 @@ namespace CCA.Droid
 					{
 						try
 						{
+							if (NetProcess.IsActivate == false)
+								continue;
 
 							NetProcess.start();
 							NetProcess.client.PacketRecvSync();
@@ -59,10 +61,10 @@ namespace CCA.Droid
 						}
 						catch (Exception e)
 						{
-							DependencyService.Get<MethodExt>().Notification(e.Message);
+							//DependencyService.Get<MethodExt>().Notification(e.Message);
 						}
 
-						Thread.Sleep(20);
+						Thread.Sleep(500);
 					}
 				});
 			}

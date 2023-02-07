@@ -17,6 +17,9 @@ namespace CCA
 {
     public static class NetProcess
     {
+
+        static public bool IsActivate = false;
+
         static public Client client = new Client();
 
         public static string GetIPAddress(string hostname)
@@ -49,7 +52,7 @@ namespace CCA
 
                 client.StartClient(ip, 20000);
 
-                check_time = DateTime.Now.AddSeconds(5);
+                check_time = DateTime.Now.AddSeconds(15);
             }
 
             if (notice_time < DateTime.Now)
@@ -71,9 +74,6 @@ namespace CCA
         public static ConcurrentQueue<StreamWrapper> Mpeg2Stream = new ConcurrentQueue<StreamWrapper>();
         public static List<long> TargetPlayerId = new List<long>();
         public static int TargetBatteryGage;
-
-        public static int CameraUsingCount = 0;
-        public static int CameraControlCount = 0;
 
         static public void Loop()
         {
@@ -122,6 +122,13 @@ namespace CCA
 
                                 if (User.Name != null)
                                     NetProcess.SendLogin(User.Uid,User.Token);
+                                else
+                                {
+                                    Device.BeginInvokeOnMainThread(() =>
+                                    {
+                                        DependencyService.Get<MethodExt>().RestartApp();
+                                    });
+                                }
                              
                             }
                             break;
@@ -158,8 +165,6 @@ namespace CCA
                                     Device.BeginInvokeOnMainThread(() =>
                                     {
                                         DependencyService.Get<MethodExt>().RestartApp();
-
-                                        User.LoginSuccess = false;
                                     });
                                 }
 
@@ -259,9 +264,6 @@ namespace CCA
                                 {
                                     if (PopupNavigation.Instance.PopupStack.Count == 0)
                                     {
-                                        if (CameraUsingCount > 0) return;
-
-                                        Interlocked.Increment(ref CameraUsingCount);
                                         PopupNavigation.Instance.PushAsync(new CameraPage());
                                     }
                                     else
@@ -270,9 +272,6 @@ namespace CCA
                                         {
                                             PopupNavigation.Instance.PopAsync();
 
-                                            if (CameraUsingCount > 0) return;
-
-                                            Interlocked.Increment(ref CameraUsingCount);
                                             PopupNavigation.Instance.PushAsync(new CameraPage());
                                         }
                                     }
@@ -452,10 +451,6 @@ namespace CCA
                                             var page = PopupNavigation.Instance.PopupStack[0];
 
                                             CameraPage camera_page = (CameraPage)page;
-
-
-                                            if (CameraControlCount > 0) return;
-                                            Interlocked.Increment(ref CameraControlCount);
                                   
                                             switch (res.VarType)
                                             {
@@ -470,7 +465,6 @@ namespace CCA
                                                     break;
                                             }
 
-                                            Interlocked.Decrement(ref CameraControlCount);
                                         }
                                     }
                                 });

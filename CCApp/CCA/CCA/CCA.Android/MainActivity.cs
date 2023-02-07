@@ -230,6 +230,8 @@ namespace CCA.Droid
             {
                 GoogleSignInResult signInResult = Auth.GoogleSignInApi.GetSignInResultFromIntent(data);
 
+                if (signInResult == null) return;
+
                 int statusCode = signInResult.Status.StatusCode;
 
 
@@ -241,10 +243,14 @@ namespace CCA.Droid
 
                     User.ProfileUrl = signInResult.SignInAccount.PhotoUrl.ToString();
 
+                    User.Clear();
+
                     User.Uid = signInResult.SignInAccount.Id;
                     User.Token = signInResult.SignInAccount.IdToken;
                     User.Name = signInResult.SignInAccount.DisplayName;
                     User.EMail = signInResult.SignInAccount.Email;
+
+                    NetProcess.IsActivate = true;
 
                     IAuthResult authResult = await FirebaseAuth_.SignInWithCredentialAsync(credential);
                     FirebaseUser user = authResult.User;

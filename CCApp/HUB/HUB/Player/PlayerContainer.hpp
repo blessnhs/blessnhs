@@ -118,6 +118,20 @@ template<template<class T> class CreationPolicy> bool PlayerContainer<CreationPo
 	return false;
 }
 
+template<template<class T> class CreationPolicy> void PlayerContainer<CreationPolicy>::DelPlayerByFrontId(DWORD FrontId)
+{
+	for each (auto player in m_PlayerMap)
+	{
+		if (player.second == NULL)
+			continue;
+
+		if (player.second->GetFront() == FrontId)
+		{
+			Del(player.second);
+		}
+	}
+}
+
 template<template<class T> class CreationPolicy> PlayerPtr PlayerContainer<CreationPolicy>::Search(DWORD FrontId, DWORD FrontSid)
 {
 	for each (auto player in m_PlayerMap)

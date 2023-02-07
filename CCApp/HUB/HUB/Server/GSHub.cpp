@@ -20,7 +20,12 @@ GSHub::~GSHub(void)
 
 BOOL GSHub::Disconnect(GSCLIENT_PTR pSession)
 {
-	//PlayerPtr pPlayer = PLAYERMGR.Search(pSession->GetPair());
+
+
+	//해당 프론트가 떨어졌기 때문에 그 프론트에 유저는 날린다.
+	//어차피 그 프론트가 죽었기 때문에 따로 kick 패킷도 필요 없다.
+	PLAYERMGR.DelPlayerByFrontId(pSession->GetId());
+
 	//if (pPlayer != NULL)
 	//{
 	//	

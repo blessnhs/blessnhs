@@ -50,6 +50,7 @@ namespace CCA
                     {
                         try
                         {
+                            if (NetProcess.IsActivate == false) continue;
 
                             NetProcess.start();
                             NetProcess.client.PacketRecvSync();
@@ -60,7 +61,7 @@ namespace CCA
                             DependencyService.Get<MethodExt>().Notification(e.Message);
                         }
 
-                        Thread.Sleep(5);
+                        Thread.Sleep(1000);
                     }
                 });
             }

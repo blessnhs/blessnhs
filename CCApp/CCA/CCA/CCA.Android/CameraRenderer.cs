@@ -51,6 +51,9 @@ namespace FullCameraApp.Droid
                 if (renderer == null)
                     return;
 
+                if (renderer.isDestroy == true)
+                    return;
+
                 if (checktime > DateTime.Now)
                 {
                     return;
@@ -62,6 +65,8 @@ namespace FullCameraApp.Droid
                 {
                     MainThread.BeginInvokeOnMainThread(() =>
                     {
+                        renderer.isDestroy = true;
+
                         PopupNavigation.Instance.PopAsync();
                     });
                     return;
@@ -227,7 +232,7 @@ namespace FullCameraApp.Droid
 
         CameraPage page;
 
-        bool isDestroy = false;
+        public bool isDestroy = false;
         bool isFlashOn = true;
 
         protected override void OnElementChanged(ElementChangedEventArgs<Xamarin.Forms.Page> e)
@@ -654,9 +659,9 @@ namespace FullCameraApp.Droid
         private void StopCamera()
         {
 
-            camera.SetPreviewCallback(null);
-            camera.StopPreview();
-            camera.Release();
+            camera?.SetPreviewCallback(null);
+            camera?.StopPreview();
+            camera?.Release();
             camera = null;
         }
 
@@ -829,18 +834,18 @@ namespace FullCameraApp.Droid
         // used to marshal back to UI thread
         private SynchronizationContext _context;
 
+
         public bool OnSurfaceTextureDestroyed(Android.Graphics.SurfaceTexture surface)
         {
+
             isDestroy = true;
 
             Thread.Sleep(1000);
 
             StopCamera();
-            audiomgr.Clear();
+            audiomgr?.Clear();
 
             Torch(false);
-
-            Interlocked.Decrement(ref NetProcess.CameraUsingCount); 
 
             return true;
         }
