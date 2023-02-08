@@ -82,8 +82,10 @@ namespace CCA
                 return;
 
             CompletePacket data;
-            if (client.PacketQueue.TryDequeue(out data) == true)
+            while (client.PacketQueue.TryDequeue(out data) == true)
             {
+                if (data == null) return;
+
                 try
                 {
                     switch (data.Protocol)
@@ -476,6 +478,8 @@ namespace CCA
                 {
                     Console.Write(ex.ToString());
                 }
+
+                data = null;
             }
 
 
