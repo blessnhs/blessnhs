@@ -64,7 +64,7 @@ namespace CCA.Droid
 							//DependencyService.Get<MethodExt>().Notification(e.Message);
 						}
 
-						Thread.Sleep(500);
+						Thread.Sleep(200);
 					}
 				});
 			}

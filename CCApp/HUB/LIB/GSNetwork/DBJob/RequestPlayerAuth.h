@@ -26,6 +26,7 @@ public:
 
 };
 
+
 }
 #define  RequestPlayerAuthPtr boost::shared_ptr<RequestPlayerAuth>
 

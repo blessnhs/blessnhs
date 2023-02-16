@@ -44,6 +44,8 @@ namespace FullCameraApp.Droid
 
         bool isDestroy = false;
 
+        int Rotate = 0;
+
         protected override void OnElementChanged(ElementChangedEventArgs<Xamarin.Forms.Page> e)
         {
             base.OnElementChanged(e);
@@ -169,7 +171,33 @@ namespace FullCameraApp.Droid
 
                 alignList.Add(exitButton);
                 mainLayout.AddView(exitButton);
-                ////////////////////////////////////////////////////////////DrawLayout///////////////////
+                ///////////////////////////////////////////////////////////////////////////////
+                Button RotateRButton = new Button(Context);
+                RotateRButton.LayoutParameters = new RelativeLayout.LayoutParams(
+                RelativeLayout.LayoutParams.WrapContent,
+                RelativeLayout.LayoutParams.WrapContent);
+                RotateRButton.Text = "90";
+                RotateRButton.Click += async (s, e) =>
+                {
+                    Rotate += 90;
+                };
+
+                alignList.Add(RotateRButton);
+                mainLayout.AddView(RotateRButton);
+                ///////////////////////////////////////////////////////////////////////////////
+                Button RotateLButton = new Button(Context);
+                RotateLButton.LayoutParameters = new RelativeLayout.LayoutParams(
+                RelativeLayout.LayoutParams.WrapContent,
+                RelativeLayout.LayoutParams.WrapContent);
+                RotateLButton.Text = "-90";
+                RotateLButton.Click += async (s, e) =>
+                {
+                    Rotate -= 90;
+                };
+
+                alignList.Add(RotateLButton);
+                mainLayout.AddView(RotateLButton);
+                ////////////////////////////////////////////////////////////DrawLayout///////////////////               ////////////////////////////////////////////////////////////DrawLayout///////////////////
                 AddView(mainLayout);
             }
             catch(Exception e)
@@ -196,10 +224,10 @@ namespace FullCameraApp.Droid
             int screen_width = half_width + half_width;
 
             //한줄에 몇개 보여줄지
-            int displayObjectCount = alignList.Count;
+            int displayLineObjectCount = 4;
 
             //스크린을 나눈 크기
-            int divide_screen_by_button_count = (int)screen_width / displayObjectCount;
+            int divide_screen_by_button_count = (int)screen_width / displayLineObjectCount;
             int button_width = divide_screen_by_button_count;
 
             int ypoisition = metrics.HeightPixels - 100;
@@ -207,12 +235,18 @@ namespace FullCameraApp.Droid
             int i = 0;
             foreach (var button in alignList)
             {
-                int current_position = (divide_screen_by_button_count * i);
-                button.SetX(current_position);
+                int current_x_position = (divide_screen_by_button_count * i);
+                button.SetX(current_x_position);
                 button.SetY(ypoisition);
                 button.SetWidth(divide_screen_by_button_count);
 
                 i++;
+
+                if((i % displayLineObjectCount) == 0)
+                {
+                    ypoisition -= 100;
+                    i = 0;
+                }
             }
 
         }
@@ -230,6 +264,8 @@ namespace FullCameraApp.Droid
 
         public void SetUpPlayTask()
         {
+            Rotate = 0;
+
             //caemra page render
             Task.Run(() =>
             {
@@ -243,22 +279,43 @@ namespace FullCameraApp.Droid
                         if (NetProcess.JpegStream.Count == 0)
                             continue;
 
-                        MainThread.BeginInvokeOnMainThread(() =>
-                        {
+                            int rate = 100;
+                       
                             StreamWrapper ms;
                             while (NetProcess.JpegStream.TryDequeue(out ms) == true)
                             {
                                 if (ms == null)
                                     continue;
 
-                                var bitmap = BitmapFactory.DecodeByteArray(ms?.stream.ToArray(), 0, ms.stream.ToArray().Length);
+                                if(NetProcess.JpegStream.Count > 500)
+                                {
+                                    NetProcess.JpegStream.Clear();
+                                    continue;
+                                }
 
-                                imageView?.SetImageBitmap(bitmap);
+                                int checkcount = (NetProcess.JpegStream.Count / 10);
 
 
-                                alignList[0].Text = page.TargetBatteryLevel + "%";
+                                MainThread.BeginInvokeOnMainThread(() =>
+                                {
+                                    StreamWrapper cms = ms;
+                                    if(cms != null)
+                                    {
+                                        var bitmap = BitmapFactory.DecodeByteArray(cms?.stream.ToArray(), 0, cms.stream.ToArray().Length);
+                                        if (bitmap != null)
+                                        {
+                                            imageView?.SetImageBitmap(bitmap);
+                                            imageView.Rotation = Rotate;
+                                        }
+                                    }
+                                    
+                                });
+
+                                alignList[0].Text = /*page.TargetBatteryLevel*/NetProcess.JpegStream.Count + "%";
+
+                                Thread.Sleep(rate - checkcount);
                             }
-                        });
+                       
 
                     }
                     catch (Exception e)
@@ -266,7 +323,7 @@ namespace FullCameraApp.Droid
                         Method_Android.NotificationException(e.Message + e.Source);
                     }
 
-                    Thread.Sleep(1);
+                    Thread.Sleep(10);
                 }
             });
 

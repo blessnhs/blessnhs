@@ -31,8 +31,6 @@ namespace CCA.Page
 
             var list = new List<Contact>();
 
-        
-
             foreach (var cam in recvCamList)
             {
                 string state = cam.VarPlayerId == 0 ? "off line" : "on line";
@@ -45,6 +43,8 @@ namespace CCA.Page
 
                 User.CamDic[cam.VarMachineId] = new RegCam() { MachineId = cam.VarMachineId, MachineModel = cam.VarMachineName,PlayerId = cam.VarPlayerId };
             }
+
+            list.Sort((a, b) => a.Status.CompareTo(b.Status));
 
             listView.ItemsSource = list;
             listView.ItemSelected += (object sender, SelectedItemChangedEventArgs e) =>

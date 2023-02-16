@@ -464,7 +464,6 @@ void GSClient::OnConnect(boost::shared_ptr<GSClient> pClient)
 	printf("connected ip %s port %d\n",ip.c_str(),port);
 #endif
 
-	printf("connected ip %s port %d\n", ip.c_str(), port);
 	/*
 	GSServer::GSServer *pServer = (GSServer::GSServer *)m_GSServer;
 

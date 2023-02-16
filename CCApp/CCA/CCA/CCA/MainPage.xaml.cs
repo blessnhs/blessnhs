@@ -58,10 +58,10 @@ namespace CCA
                         }
                         catch (Exception e)
                         {
-                            DependencyService.Get<MethodExt>().Notification(e.Message);
+                            //DependencyService.Get<MethodExt>().Notification(e.Message);
                         }
 
-                        Thread.Sleep(1000);
+                        Thread.Sleep(500);
                     }
                 });
             }
