@@ -103,7 +103,8 @@ namespace FullCameraApp.Droid
         void SetupUserInterface()
         {
             try
-            {                var metrics = Resources.DisplayMetrics;
+            {
+                var metrics = Resources.DisplayMetrics;
 
                 half_width = metrics.WidthPixels / 2;
                 half_height = metrics.HeightPixels / 4;
@@ -200,7 +201,7 @@ namespace FullCameraApp.Droid
                 ////////////////////////////////////////////////////////////DrawLayout///////////////////               ////////////////////////////////////////////////////////////DrawLayout///////////////////
                 AddView(mainLayout);
             }
-            catch(Exception e)
+            catch (Exception e)
             {
 
             }
@@ -242,7 +243,7 @@ namespace FullCameraApp.Droid
 
                 i++;
 
-                if((i % displayLineObjectCount) == 0)
+                if ((i % displayLineObjectCount) == 0)
                 {
                     ypoisition -= 100;
                     i = 0;
@@ -276,46 +277,47 @@ namespace FullCameraApp.Droid
                 {
                     try
                     {
-                        if (NetProcess.JpegStream.Count == 0)
+                        if (NetProcess.JpegStream.Count < 20)
                             continue;
 
-                            int rate = 100;
-                       
-                            StreamWrapper ms;
-                            while (NetProcess.JpegStream.TryDequeue(out ms) == true)
-                            {
-                                if (ms == null)
-                                    continue;
+                        int rate = 100;
 
-                                if(NetProcess.JpegStream.Count > 500)
+                        StreamWrapper ms;
+                        while (NetProcess.JpegStream.TryDequeue(out ms) == true)
+                        {
+                            if (ms == null)
+                                continue;
+
+                            //너무 많이 쌓이면 날린다.  메모리 부족
+                            if (NetProcess.JpegStream.Count > 500)
+                            {
+                                NetProcess.JpegStream.Clear();
+                                continue;
+                            }
+
+                            int checkcount = (NetProcess.JpegStream.Count / 10);
+
+
+                            MainThread.BeginInvokeOnMainThread(() =>
+                            {
+                                StreamWrapper cms = ms;
+                                if (cms != null)
                                 {
-                                    NetProcess.JpegStream.Clear();
-                                    continue;
+                                    var bitmap = BitmapFactory.DecodeByteArray(cms?.stream.ToArray(), 0, cms.stream.ToArray().Length);
+                                    if (bitmap != null)
+                                    {
+                                        imageView?.SetImageBitmap(bitmap);
+                                        imageView.Rotation = Rotate;
+                                    }
                                 }
 
-                                int checkcount = (NetProcess.JpegStream.Count / 10);
+                            });
 
+                            alignList[0].Text = /*page.TargetBatteryLevel*/NetProcess.JpegStream.Count + "%";
 
-                                MainThread.BeginInvokeOnMainThread(() =>
-                                {
-                                    StreamWrapper cms = ms;
-                                    if(cms != null)
-                                    {
-                                        var bitmap = BitmapFactory.DecodeByteArray(cms?.stream.ToArray(), 0, cms.stream.ToArray().Length);
-                                        if (bitmap != null)
-                                        {
-                                            imageView?.SetImageBitmap(bitmap);
-                                            imageView.Rotation = Rotate;
-                                        }
-                                    }
-                                    
-                                });
+                            Thread.Sleep(rate - checkcount);
+                        }
 
-                                alignList[0].Text = /*page.TargetBatteryLevel*/NetProcess.JpegStream.Count + "%";
-
-                                Thread.Sleep(rate - checkcount);
-                            }
-                       
 
                     }
                     catch (Exception e)

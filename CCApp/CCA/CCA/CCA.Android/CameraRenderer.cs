@@ -61,7 +61,7 @@ namespace FullCameraApp.Droid
                     return;
                 }
 
-                checktime = checktime.AddMilliseconds(150);
+                checktime = checktime.AddMilliseconds(100);
 
 
                 if (checktimeBattery < DateTime.Now)
