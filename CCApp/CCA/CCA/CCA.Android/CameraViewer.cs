@@ -295,8 +295,7 @@ namespace FullCameraApp.Droid
                                 continue;
                             }
 
-                            int checkcount = (NetProcess.JpegStream.Count / 10);
-
+                            int checkcount = (NetProcess.JpegStream.Count / 3);
 
                             MainThread.BeginInvokeOnMainThread(() =>
                             {
@@ -315,7 +314,12 @@ namespace FullCameraApp.Droid
 
                             alignList[0].Text = /*page.TargetBatteryLevel*/NetProcess.JpegStream.Count + "%";
 
-                            Thread.Sleep(rate - checkcount);
+
+                            int frate = (rate - checkcount) < 30 ? 30 : (rate - checkcount);
+                            alignList[1].Text = frate.ToString();
+
+
+                            Thread.Sleep(frate);
                         }
 
 

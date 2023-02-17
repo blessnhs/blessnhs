@@ -61,7 +61,7 @@ namespace FullCameraApp.Droid
                     return;
                 }
 
-                checktime = checktime.AddMilliseconds(100);
+                checktime = checktime.AddMilliseconds(80);
 
 
                 if (checktimeBattery < DateTime.Now)
@@ -784,32 +784,32 @@ namespace FullCameraApp.Droid
 
 
                 //caemra page render
-                Task.Run(() =>
-                {
-                    //오디오는 임시 주석 처리
-                    //2022-10-24
-                    audiomgr?.record();
-                });
+                //Task.Run(() =>
+                //{
+                //    //오디오는 임시 주석 처리
+                //    //2022-10-24
+                //    audiomgr?.record();
+                //});
 
 
-                Task.Run(() =>
-                {
-                    while (isDestroy == false)
-                    {
-                        StreamWrapper ms;
-                        if (NetProcess.AudioStream.TryDequeue(out ms) == true)
-                        {
-                            if (ms == null)
-                                continue;
+                //Task.Run(() =>
+                //{
+                //    while (isDestroy == false)
+                //    {
+                //        StreamWrapper ms;
+                //        if (NetProcess.AudioStream.TryDequeue(out ms) == true)
+                //        {
+                //            if (ms == null)
+                //                continue;
 
-                            audiomgr?.play(ms.stream.ToArray());
+                //            audiomgr?.play(ms.stream.ToArray());
 
-                        }
+                //        }
 
-                        Thread.Sleep(1);
-                    }
+                //        Thread.Sleep(1);
+                //    }
 
-                });
+                //});
 
             }
 
