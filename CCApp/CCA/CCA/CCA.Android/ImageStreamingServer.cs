@@ -4,6 +4,7 @@
 // e-Mail       : ragheedemail@gmail.com
 // Date         : April 2012
 // -------------------------------------------------
+using System;
 using System.Collections.Concurrent;
 using System.IO;
 using System.Threading;
@@ -75,12 +76,18 @@ namespace rtaNetworking.Streaming
         /// <param name="port"></param>
         public void Start(int port)
         {
-
-            lock (this)
+            try
             {
-                _Thread = new System.Threading.Thread(new System.Threading.ParameterizedThreadStart(ServerThread));
-                _Thread.IsBackground = true;
-                _Thread.Start(port);
+                lock (this)
+                {
+                    _Thread = new System.Threading.Thread(new System.Threading.ParameterizedThreadStart(ServerThread));
+                    _Thread.IsBackground = true;
+                    _Thread.Start(port);
+                }
+            }
+            catch(Exception e)
+            {
+                e.Message.ToString();
             }
 
         }

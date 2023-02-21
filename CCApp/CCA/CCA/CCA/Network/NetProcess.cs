@@ -216,9 +216,6 @@ namespace CCA
                                     {
                                         DependencyService.Get<MethodExt>().ShowToast("카메라 등록에 실패했습니다.");
                                     }
-
-                                   
-
                                 });
                             }
                             break;

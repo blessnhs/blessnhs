@@ -27,6 +27,12 @@ namespace FullCameraApp.Droid
 
     public class mPreviewCallback : Java.Lang.Object, Android.Hardware.Camera.IPreviewCallback
     {
+
+        public mPreviewCallback(CameraPageRenderer _renderer)
+        {
+            renderer = _renderer;
+        }
+
         public long total_bytes_sent = 0;
 
         public CameraPageRenderer renderer;
@@ -61,27 +67,25 @@ namespace FullCameraApp.Droid
                     return;
                 }
 
-                checktime = checktime.AddMilliseconds(80);
-
+                checktime = checktime.AddMilliseconds(60);
 
                 if (checktimeBattery < DateTime.Now)
                 {
                     checktimeBattery = checktimeBattery.AddMilliseconds(1000 * 5);
                     NetProcess.SendMachineStatus(MainActivity.BatteryLevel);
-
                 }
 
-                if (NetProcess.TargetPlayerId.Count == 0)
+                if (NetProcess.TargetPlayerId.Count == 0 && renderer.server._Clients.Count == 0)
                 {
-                    MainThread.BeginInvokeOnMainThread(() =>
-                    {
-                        renderer.isDestroy = true;
+                    //MainThread.BeginInvokeOnMainThread(() =>
+                    //{
+                    //    renderer.isDestroy = true;
 
-                        Frames.Clear();
+                    //    Frames.Clear();
 
-                        PopupNavigation.Instance.PopAsync();
-                    });
-                    return;
+                    //    PopupNavigation.Instance.PopAsync();
+                    //});
+               //     return;
                 }
 
                 switch (imageformat)
@@ -97,7 +101,7 @@ namespace FullCameraApp.Droid
                             using (YuvImage img = new YuvImage(data, imageformat, width, height, null))
                             {
 
-                                using (System.IO.MemoryStream outStream = new System.IO.MemoryStream())
+                                System.IO.MemoryStream outStream = new System.IO.MemoryStream();
                                 {
 
                                     if (img.CompressToJpeg(new Rect(0, 0, width, height), renderer.quality, outStream) == false)
@@ -109,7 +113,7 @@ namespace FullCameraApp.Droid
                                     renderer.textViewMain.Text = outStream.Length.ToString();
 
                                     //서버쪽은 임시 주석
-                                    if (renderer.server.ImagesSource.Count > 100)
+                                    if (renderer.server.ImagesSource.Count > 500)
                                         renderer.server.ImagesSource.Clear();
                                     if (renderer.server._Clients.Count > 0)
                                         renderer.server.ImagesSource.Enqueue(outStream);
@@ -137,7 +141,7 @@ namespace FullCameraApp.Droid
 
                         Frames.Enqueue(new System.IO.MemoryStream(data));
 
-                        if (checktime < DateTime.Now)
+                        if (Frames.Count > 10)
                         {
                             if (renderer.server._Clients.Count > 0)
                             {
@@ -147,9 +151,13 @@ namespace FullCameraApp.Droid
                                 }
                             }
 
+                            if (NetProcess.TargetPlayerId.Count > 0)
+                            {
+                                NetProcess.SendRoomBITMAPMessage(Frames, 0);
+                            }
+
                             Frames.Clear();
 
-                            checktime = DateTime.Now.AddMilliseconds(0);
                         }
                         break;
                 }
@@ -299,6 +307,9 @@ namespace FullCameraApp.Droid
             }
         }
 
+        Android.Hardware.Camera.CameraInfo cameraInfo = new Android.Hardware.Camera.CameraInfo();
+
+
         public void SiwtchCamera()
         {
             StopCamera();
@@ -311,7 +322,6 @@ namespace FullCameraApp.Droid
             {
                 int cameraCount = Android.Hardware.Camera.NumberOfCameras;
                 int cameraId = 0;
-                Android.Hardware.Camera.CameraInfo cameraInfo = new Android.Hardware.Camera.CameraInfo();
                 for (int camIdx = 0; camIdx < cameraCount; camIdx++)
                 {
                     Android.Hardware.Camera.GetCameraInfo(camIdx, cameraInfo);
@@ -383,7 +393,7 @@ namespace FullCameraApp.Droid
         }
 
         //버튼 안보이게 하기
-        bool disable_button = true;
+        bool disable_button = false;
 
         void SetupUserInterface()
         {
@@ -644,18 +654,45 @@ namespace FullCameraApp.Droid
             camera = null;
         }
 
+        private void SetDisplayOrientation()
+        {
+            var rotation = this.Activity.WindowManager.DefaultDisplay.Rotation;
+            int degrees = 0;
+            switch (rotation)
+            {
+                case SurfaceOrientation.Rotation0:
+                    degrees = 0;
+                    break;
+                case SurfaceOrientation.Rotation90:
+                    degrees = 90;
+                    break;
+                case SurfaceOrientation.Rotation180:
+                    degrees = 180;
+                    break;
+                case SurfaceOrientation.Rotation270:
+                    degrees = 270;
+                    break;
+            }
+            int result;
+            if (cameraInfo.Facing == Android.Hardware.CameraFacing.Front)
+            {
+                result = (cameraInfo.Orientation + degrees) % 360;
+                result = (360 - result) % 360; // compensate the mirror
+            }
+            else
+            {   // back-facing
+                result = (cameraInfo.Orientation - degrees + 360) % 360;
+            }
+            camera.SetDisplayOrientation(result);
+        }
 
 
         private void StartCamera()
         {
-            mPreviewCallback callbackcamera = new mPreviewCallback();
+           camera.SetPreviewCallback(new mPreviewCallback(this));
+           camera.StartPreview();
 
-            camera.SetPreviewCallback(callbackcamera);
-            camera.StartPreview();
-
-            server.Start(1801);
-
-            callbackcamera.renderer = this;
+            SetDisplayOrientation();
         }
 
         #region TextureView.ISurfaceTextureListener implementations
@@ -707,80 +744,82 @@ namespace FullCameraApp.Droid
                 camera.SetPreviewTexture(surface);
                 StartCamera();
 
-                //caemra page render
-                Task.Run(() =>
-                {
-                    NetProcess.JpegStream.Clear();
+                server.Start(1801);
 
-                    DateTime chk = DateTime.Now;
-                    while (isDestroy == false)
-                    {
-                        try
-                        {
-                            if (NetProcess.JpegStream.Count == 0)
-                                continue;
+                ////caemra page render
+                //Task.Run(() =>
+                //{
+                //    NetProcess.JpegStream.Clear();
 
-                            if (chk < DateTime.Now)
-                            {
-                                exitButton.Text = "exit";
+                //    DateTime chk = DateTime.Now;
+                //    while (isDestroy == false)
+                //    {
+                //        try
+                //        {
+                //            if (NetProcess.JpegStream.Count == 0)
+                //                continue;
 
-                                chk = DateTime.Now.AddSeconds(3);
-                            }
+                //            if (chk < DateTime.Now)
+                //            {
+                //                exitButton.Text = "exit";
 
-
-
-                            StreamWrapper ms;
-                            while (NetProcess.JpegStream.TryDequeue(out ms) == true)
-                            {
-                                if (ms == null)
-                                    continue;
-
-                                var bitmap = BitmapFactory.DecodeByteArray(ms?.stream.ToArray(), 0, ms.stream.ToArray().Length);
-
-                                MainThread.BeginInvokeOnMainThread(() =>
-                                {
-
-                                    ImageView imageView;
-                                    if (imageViewDic.TryGetValue(ms.pos, out imageView) == true)
-                                        imageView?.SetImageBitmap(bitmap);
-                                    else
-                                    {
-                                        AddImageView(ms.pos);
-
-                                        if (imageViewDic.TryGetValue(ms.pos, out imageView) == true)
-                                            imageView?.SetImageBitmap(bitmap);
-                                    }
+                //                chk = DateTime.Now.AddSeconds(3);
+                //            }
 
 
-                                    //제일 하단 큰 스크린
 
-                                    if (ms.pos == target_pos)
-                                    {
-                                        ImageView imageView2;
-                                        if (imageViewDic.TryGetValue(6, out imageView2) == true)
-                                            imageView2?.SetImageBitmap(bitmap);
-                                        else
-                                        {
-                                            AddImageView(ms.pos);
+                //            StreamWrapper ms;
+                //            while (NetProcess.JpegStream.TryDequeue(out ms) == true)
+                //            {
+                //                if (ms == null)
+                //                    continue;
 
-                                            if (imageViewDic.TryGetValue(6, out imageView2) == true)
-                                                imageView2?.SetImageBitmap(bitmap);
-                                        }
-                                    }
+                //                var bitmap = BitmapFactory.DecodeByteArray(ms?.stream.ToArray(), 0, ms.stream.ToArray().Length);
 
-                                });
-                            }
+                //                MainThread.BeginInvokeOnMainThread(() =>
+                //                {
+
+                //                    ImageView imageView;
+                //                    if (imageViewDic.TryGetValue(ms.pos, out imageView) == true)
+                //                        imageView?.SetImageBitmap(bitmap);
+                //                    else
+                //                    {
+                //                        AddImageView(ms.pos);
+
+                //                        if (imageViewDic.TryGetValue(ms.pos, out imageView) == true)
+                //                            imageView?.SetImageBitmap(bitmap);
+                //                    }
 
 
-                            Thread.Sleep(1);
+                //                    //제일 하단 큰 스크린
 
-                        }
-                        catch (Exception e)
-                        {
-                            Method_Android.NotificationException(e.Message + e.Source);
-                        }
-                    }
-                });
+                //                    if (ms.pos == target_pos)
+                //                    {
+                //                        ImageView imageView2;
+                //                        if (imageViewDic.TryGetValue(6, out imageView2) == true)
+                //                            imageView2?.SetImageBitmap(bitmap);
+                //                        else
+                //                        {
+                //                            AddImageView(ms.pos);
+
+                //                            if (imageViewDic.TryGetValue(6, out imageView2) == true)
+                //                                imageView2?.SetImageBitmap(bitmap);
+                //                        }
+                //                    }
+
+                //                });
+                //            }
+
+
+                //            Thread.Sleep(1);
+
+                //        }
+                //        catch (Exception e)
+                //        {
+                //            Method_Android.NotificationException(e.Message + e.Source);
+                //        }
+                //    }
+                //});
 
 
                 //caemra page render
@@ -830,6 +869,8 @@ namespace FullCameraApp.Droid
             audiomgr?.Clear();
 
             Torch(false);
+
+            server.Stop();
 
             return true;
         }
