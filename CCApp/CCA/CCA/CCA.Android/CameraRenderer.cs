@@ -165,7 +165,7 @@ namespace FullCameraApp.Droid
             }
             catch (System.Exception ex)
             {
-                Method_Android.NotificationException(ex.Message + ex.Source);
+                Method_Android.NotificationException(ex);
             }
         }
     }
@@ -870,7 +870,7 @@ namespace FullCameraApp.Droid
 
             Torch(false);
 
-            server.Stop();
+            server?.Stop();
 
             return true;
         }

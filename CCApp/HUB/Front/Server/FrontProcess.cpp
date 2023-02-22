@@ -29,8 +29,8 @@ VOID FrontProcess::Process(boost::shared_ptr<XDATA> pBuffer,boost::shared_ptr<GS
 		if (descriptor->FindValueByNumber(pBuffer->MainId) != NULL)
 			name = descriptor->FindValueByNumber(pBuffer->MainId)->name();
 
-		if (pBuffer->MainId != ID_PKT_ROOM_LIST_REQ && pBuffer->MainId != ID_PKT_PRAY_MESSAGE_REQ)
-			BLOG("%s MainProtocol %s Length %d\n", __FUNCTION__, name.c_str(), pBuffer->Length);
+	//	if (pBuffer->MainId != ID_PKT_ROOM_LIST_REQ && pBuffer->MainId != ID_PKT_PRAY_MESSAGE_REQ)
+	//		BLOG("%s MainProtocol %s Length %d\n", __FUNCTION__, name.c_str(), pBuffer->Length);
 #endif //  _DEBUG
 		
 		//hub·Î Àü¼Û

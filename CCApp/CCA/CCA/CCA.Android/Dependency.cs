@@ -92,13 +92,9 @@ namespace DependencyHelper.Droid
                 {
                     //Not purchased, alert the user
 
-                    NotificationException("purchase is null");
                 }
                 else
                 {
-
-                    NotificationException(purchase.Id + purchase.PurchaseToken + purchase.State);
-
                     //Purchased, save this information
                     var id = purchase.ProductId;
                     var token = purchase.PurchaseToken;
@@ -110,7 +106,7 @@ namespace DependencyHelper.Droid
             }
             catch (Exception ex)
             {
-                NotificationException(ex.Message + "_" + ex.Source + "_" + ex.StackTrace);
+                NotificationException(ex);
             }
             finally
             {
@@ -136,6 +132,10 @@ namespace DependencyHelper.Droid
         {
             try
             {
+                var fileName = System.IO.Path.Combine(Android.OS.Environment.GetExternalStoragePublicDirectory(Android.OS.Environment.DirectoryDownloads).AbsolutePath, "notification.txt");
+                System.IO.File.AppendAllText(fileName, message);
+
+
                 var manager = (NotificationManager)AndroidApp.Context.GetSystemService(AndroidApp.NotificationService);
 
                 if (Build.VERSION.SdkInt >= Android.OS.BuildVersionCodes.O)
@@ -169,42 +169,19 @@ namespace DependencyHelper.Droid
 
             }
 
+ 
         }
 
 
-        static public void NotificationException(string message)
+        static public void NotificationException(Exception ex)
         {
+            string message = DateTime.Now.ToString() + " : " + ex.Message + "_" + ex.StackTrace + "_" + ex.Source;
+
             try
             {
-                var manager = (NotificationManager)AndroidApp.Context.GetSystemService(AndroidApp.NotificationService);
+                var fileName = System.IO.Path.Combine(Android.OS.Environment.GetExternalStoragePublicDirectory(Android.OS.Environment.DirectoryDownloads).AbsolutePath, "exception.txt");
+                System.IO.File.AppendAllText(fileName, message);
 
-                if (Build.VERSION.SdkInt >= Android.OS.BuildVersionCodes.O)
-                {
-
-                    var notification = new Notification.Builder(AndroidApp.Context, "DE")
-                        .SetContentTitle(DateTime.Now.ToString() + " Notify!")
-                        .SetContentText(message)
-                        .SetSmallIcon(CCA.Droid.Resource.Drawable.xamagonBlue)
-                        .SetLargeIcon(BitmapFactory.DecodeResource(AndroidApp.Context.Resources, CCA.Droid.Resource.Drawable.xamagonBlue))
-                        .SetSmallIcon(CCA.Droid.Resource.Drawable.xamagonBlue)
-                        .Build();
-
-                    manager.Notify(1, notification);
-                }
-                else
-                {
-                    var notification = new Notification.Builder(Android.App.Application.Context)
-                                                 .SetContentTitle(DateTime.Now.ToString() + " Notify!")
-                                                 .SetContentText(message)
-                                                 .SetSmallIcon(CCA.Droid.Resource.Drawable.xamagonBlue)
-                                                 .SetLargeIcon(BitmapFactory.DecodeResource(AndroidApp.Context.Resources, CCA.Droid.Resource.Drawable.xamagonBlue))
-                                                 .SetSmallIcon(CCA.Droid.Resource.Drawable.xamagonBlue)
-                                                 .Build();
-
-                    manager.Notify(1, notification);
-                }
-
-               
             }
             catch (Exception e)
             {

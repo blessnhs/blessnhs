@@ -148,7 +148,7 @@ namespace CCA.Droid
             }
             catch(Exception ex)
             {
-                Method_Android.NotificationException(ex.Message + ex.Source);
+                Method_Android.NotificationException(ex);
             }
         }
 
@@ -163,7 +163,7 @@ namespace CCA.Droid
             }
             catch (Exception ex)
             {
-                Method_Android.NotificationException(ex.Message + ex.Source);
+                Method_Android.NotificationException(ex);
             }
         }
 
@@ -234,9 +234,6 @@ namespace CCA.Droid
 
                 int statusCode = signInResult.Status.StatusCode;
 
-
-                Method_Android.NotificationException("statusCode" + " = " + statusCode.ToString());
-
                 if (signInResult.IsSuccess)
                 {
                     AuthCredential credential = GoogleAuthProvider.GetCredential(signInResult.SignInAccount.IdToken, null);
@@ -261,7 +258,7 @@ namespace CCA.Droid
             }
             catch (Exception ex)
             {
-                Method_Android.NotificationException(ex.Message + ex.Source);
+                Method_Android.NotificationException(ex);
             }
         }
 

@@ -473,7 +473,7 @@ namespace CCA
                 }
                 catch (Exception ex)
                 {
-                    Console.Write(ex.ToString());
+                    DependencyService.Get<MethodExt>().Notification(ex.StackTrace.ToString());
                 }
 
                 data = null;

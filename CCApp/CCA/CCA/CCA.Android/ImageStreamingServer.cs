@@ -123,6 +123,8 @@ namespace rtaNetworking.Streaming
                     _Thread = null;
                 }
             }
+
+            ImagesSource.Clear();
         }
 
 

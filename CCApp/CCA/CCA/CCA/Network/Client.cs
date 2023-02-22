@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DependencyHelper;
+using System;
 using System.Collections.Concurrent;
 using System.Net;
 using System.Net.Sockets;
@@ -121,45 +122,53 @@ namespace CCA
 
         public bool GetPacket(ref int protocol, ref byte[] packet, ref int dataLength, ref byte compressflag)
         {
-            compressflag = 0;
-
-            if (m_RemainLength <= 4)
-                return false;
-
-            Int32 PacketLength = BitConverter.ToInt32(m_PacketBuffer, 0);
-
-            if (PacketLength > RecvPacketBuffer.MTU || PacketLength <= 0) // Invalid Packet
+            try
             {
-                m_RemainLength = 0;
-                return false;
-            }
+                compressflag = 0;
 
-            if (PacketLength <= m_RemainLength)         //제대로된 패킷이 왔다
-            {
-                dataLength = PacketLength - sizeof(Int32) - sizeof(Int16) - sizeof(Int16) - sizeof(Int32) - sizeof(Byte) - sizeof(long);
-                packet = new byte[dataLength];
+                if (m_RemainLength <= 4)
+                    return false;
 
-                protocol = BitConverter.ToInt16(m_PacketBuffer, sizeof(Int32));
-                compressflag = (byte)BitConverter.ToChar(m_PacketBuffer, sizeof(Int32) + sizeof(Int16) + sizeof(Int16) + sizeof(Int32));
+                Int32 PacketLength = BitConverter.ToInt32(m_PacketBuffer, 0);
 
-                Buffer.BlockCopy(m_PacketBuffer, sizeof(Int32) + sizeof(Int16) + sizeof(Int16) + sizeof(Int32) + sizeof(Byte) + sizeof(long), packet, 0, dataLength);
-
-                if (m_RemainLength - PacketLength > 0)
-                {
-                    Buffer.BlockCopy(m_PacketBuffer, PacketLength, m_PacketBuffer,
-                        0, m_RemainLength - PacketLength);
-                }
-                m_RemainLength -= PacketLength;
-
-                if (m_RemainLength <= 0)
+                if (PacketLength > RecvPacketBuffer.MTU || PacketLength <= 0) // Invalid Packet
                 {
                     m_RemainLength = 0;
-                    //memset(m_PacketBuffer, 0, sizeof(m_PacketBuffer));
+                    return false;
                 }
-                return true;
+
+                if (PacketLength <= m_RemainLength)         //제대로된 패킷이 왔다
+                {
+                    dataLength = PacketLength - sizeof(Int32) - sizeof(Int16) - sizeof(Int16) - sizeof(Int32) - sizeof(Byte) - sizeof(long);
+                    packet = new byte[dataLength];
+
+                    protocol = BitConverter.ToInt16(m_PacketBuffer, sizeof(Int32));
+                    compressflag = (byte)BitConverter.ToChar(m_PacketBuffer, sizeof(Int32) + sizeof(Int16) + sizeof(Int16) + sizeof(Int32));
+
+                    Buffer.BlockCopy(m_PacketBuffer, sizeof(Int32) + sizeof(Int16) + sizeof(Int16) + sizeof(Int32) + sizeof(Byte) + sizeof(long), packet, 0, dataLength);
+
+                    if (m_RemainLength - PacketLength > 0)
+                    {
+                        Buffer.BlockCopy(m_PacketBuffer, PacketLength, m_PacketBuffer,
+                            0, m_RemainLength - PacketLength);
+                    }
+                    m_RemainLength -= PacketLength;
+
+                    if (m_RemainLength <= 0)
+                    {
+                        m_RemainLength = 0;
+                        //memset(m_PacketBuffer, 0, sizeof(m_PacketBuffer));
+                    }
+                    return true;
+                }
+                else
+                    return false;
             }
-            else
+            catch(Exception e)
+            {
+                DependencyService.Get<MethodExt>().Notification(e.StackTrace.ToString());
                 return false;
+            }
         }
 
         public void PacketRecvSync()
@@ -182,7 +191,7 @@ namespace CCA
             }
             catch (Exception e)
             {
-                Console.WriteLine(e.ToString());
+               
             }
         }
 
@@ -249,37 +258,44 @@ namespace CCA
 
         public void OnRecvPacketProc()
         {
-            int Protocol = 0;
-            int PacketLength = 0;
-            byte compressflag = 0;
-            byte[] mCompletePacketBuffer = null;
-
-            while (GetPacket(ref Protocol, ref mCompletePacketBuffer, ref PacketLength, ref compressflag))
+            try
             {
-                if (compressflag == 1)
+                int Protocol = 0;
+                int PacketLength = 0;
+                byte compressflag = 0;
+                byte[] mCompletePacketBuffer = null;
+
+                while (GetPacket(ref Protocol, ref mCompletePacketBuffer, ref PacketLength, ref compressflag))
                 {
-                    var byteout = GZip.Decompress(mCompletePacketBuffer);
+                    if (compressflag == 1)
+                    {
+                        var byteout = GZip.Decompress(mCompletePacketBuffer);
 
-                    CompletePacket complete = new CompletePacket();
-                    complete.Protocol = Protocol;
-                    complete.Length = byteout.Length;
-                    complete.Data = new byte[byteout.Length];
+                        CompletePacket complete = new CompletePacket();
+                        complete.Protocol = Protocol;
+                        complete.Length = byteout.Length;
+                        complete.Data = new byte[byteout.Length];
 
-                    Buffer.BlockCopy(byteout, 0, complete.Data, 0, byteout.Length);
+                        Buffer.BlockCopy(byteout, 0, complete.Data, 0, byteout.Length);
 
-                    PacketQueue.Enqueue(complete);
+                        PacketQueue.Enqueue(complete);
+                    }
+                    else
+                    {
+                        CompletePacket complete = new CompletePacket();
+                        complete.Protocol = Protocol;
+                        complete.Length = PacketLength;
+                        complete.Data = new byte[PacketLength];
+
+                        Buffer.BlockCopy(mCompletePacketBuffer, 0, complete.Data, 0, PacketLength);
+
+                        PacketQueue.Enqueue(complete);
+                    }
                 }
-                else
-                {
-                    CompletePacket complete = new CompletePacket();
-                    complete.Protocol = Protocol;
-                    complete.Length = PacketLength;
-                    complete.Data = new byte[PacketLength];
-
-                    Buffer.BlockCopy(mCompletePacketBuffer, 0, complete.Data, 0, PacketLength);
-
-                    PacketQueue.Enqueue(complete);
-                }
+            }
+            catch(Exception e)
+            {
+                DependencyService.Get<MethodExt>().Notification(e.StackTrace.ToString());
             }
         }
 

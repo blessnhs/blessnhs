@@ -85,6 +85,8 @@ namespace CCA.Droid
 		{
 			try
 			{
+				if (intent == null || intent.Action == null)
+					return StartCommandResult.Sticky; ;
 
 				if (intent.Action.Equals(Constants.ACTION_START_SERVICE))
 				{
@@ -115,7 +117,7 @@ namespace CCA.Droid
 			}
 			catch(Exception ex)
             {
-				Method_Android.NotificationException(ex.Message + ex.Source);
+				Method_Android.NotificationException(ex);
 			}
 
 			// This tells Android not to restart the service if it is killed to reclaim resources.

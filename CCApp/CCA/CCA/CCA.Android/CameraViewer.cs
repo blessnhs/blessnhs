@@ -314,6 +314,9 @@ namespace FullCameraApp.Droid
 
 
                             int frate = (rate - checkcount) < 30 ? 30 : (rate - checkcount);
+
+                            if (checkcount < 10) frate = 200;
+
                             alignList[1].Text = frate.ToString();
 
 
@@ -322,9 +325,9 @@ namespace FullCameraApp.Droid
 
 
                     }
-                    catch (Exception e)
+                    catch (Exception ex)
                     {
-                        Method_Android.NotificationException(e.Message + e.Source);
+                        Method_Android.NotificationException(ex);
                     }
 
                     Thread.Sleep(10);
