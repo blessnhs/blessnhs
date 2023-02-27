@@ -444,6 +444,7 @@ class MSG_PLAYER_QUERY<##class_name>:public IMESSAGE	\
 			if (player != NULL)
 			{
 				caminfo->set_var_player_id(player->GetId());
+				caminfo->set_var_ip(player->m_Ip.c_str());
 			}
 		}
 
@@ -737,6 +738,7 @@ class MSG_PLAYER_QUERY<##class_name>:public IMESSAGE	\
 
 				pNewPlayer->m_Email = email;
 				pNewPlayer->m_Token = pRequst.token;
+				pNewPlayer->m_Ip = pRequst.Ip;
 
 				PLAYERMGR.Add(pNewPlayer);
 

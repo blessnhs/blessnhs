@@ -1402,6 +1402,7 @@ class CameraInfo :
   enum : int {
     kVarMachineNameFieldNumber = 1,
     kVarMachineIdFieldNumber = 2,
+    kVarIpFieldNumber = 4,
     kVarPlayerIdFieldNumber = 3,
   };
   // optional string var_machine_name = 1;
@@ -1444,6 +1445,26 @@ class CameraInfo :
   std::string* _internal_mutable_var_machine_id();
   public:
 
+  // optional string var_ip = 4;
+  bool has_var_ip() const;
+  private:
+  bool _internal_has_var_ip() const;
+  public:
+  void clear_var_ip();
+  const std::string& var_ip() const;
+  void set_var_ip(const std::string& value);
+  void set_var_ip(std::string&& value);
+  void set_var_ip(const char* value);
+  void set_var_ip(const char* value, size_t size);
+  std::string* mutable_var_ip();
+  std::string* release_var_ip();
+  void set_allocated_var_ip(std::string* var_ip);
+  private:
+  const std::string& _internal_var_ip() const;
+  void _internal_set_var_ip(const std::string& value);
+  std::string* _internal_mutable_var_ip();
+  public:
+
   // optional int64 var_player_id = 3;
   bool has_var_player_id() const;
   private:
@@ -1466,6 +1487,7 @@ class CameraInfo :
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr var_machine_name_;
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr var_machine_id_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr var_ip_;
   ::PROTOBUF_NAMESPACE_ID::int64 var_player_id_;
   friend struct ::TableStruct_Structure_2eproto;
 };
@@ -2937,7 +2959,7 @@ inline void CameraInfo::set_allocated_var_machine_id(std::string* var_machine_id
 
 // optional int64 var_player_id = 3;
 inline bool CameraInfo::_internal_has_var_player_id() const {
-  bool value = (_has_bits_[0] & 0x00000004u) != 0;
+  bool value = (_has_bits_[0] & 0x00000008u) != 0;
   return value;
 }
 inline bool CameraInfo::has_var_player_id() const {
@@ -2945,7 +2967,7 @@ inline bool CameraInfo::has_var_player_id() const {
 }
 inline void CameraInfo::clear_var_player_id() {
   var_player_id_ = PROTOBUF_LONGLONG(0);
-  _has_bits_[0] &= ~0x00000004u;
+  _has_bits_[0] &= ~0x00000008u;
 }
 inline ::PROTOBUF_NAMESPACE_ID::int64 CameraInfo::_internal_var_player_id() const {
   return var_player_id_;
@@ -2955,12 +2977,83 @@ inline ::PROTOBUF_NAMESPACE_ID::int64 CameraInfo::var_player_id() const {
   return _internal_var_player_id();
 }
 inline void CameraInfo::_internal_set_var_player_id(::PROTOBUF_NAMESPACE_ID::int64 value) {
-  _has_bits_[0] |= 0x00000004u;
+  _has_bits_[0] |= 0x00000008u;
   var_player_id_ = value;
 }
 inline void CameraInfo::set_var_player_id(::PROTOBUF_NAMESPACE_ID::int64 value) {
   _internal_set_var_player_id(value);
   // @@protoc_insertion_point(field_set:CameraInfo.var_player_id)
+}
+
+// optional string var_ip = 4;
+inline bool CameraInfo::_internal_has_var_ip() const {
+  bool value = (_has_bits_[0] & 0x00000004u) != 0;
+  return value;
+}
+inline bool CameraInfo::has_var_ip() const {
+  return _internal_has_var_ip();
+}
+inline void CameraInfo::clear_var_ip() {
+  var_ip_.ClearToEmptyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline const std::string& CameraInfo::var_ip() const {
+  // @@protoc_insertion_point(field_get:CameraInfo.var_ip)
+  return _internal_var_ip();
+}
+inline void CameraInfo::set_var_ip(const std::string& value) {
+  _internal_set_var_ip(value);
+  // @@protoc_insertion_point(field_set:CameraInfo.var_ip)
+}
+inline std::string* CameraInfo::mutable_var_ip() {
+  // @@protoc_insertion_point(field_mutable:CameraInfo.var_ip)
+  return _internal_mutable_var_ip();
+}
+inline const std::string& CameraInfo::_internal_var_ip() const {
+  return var_ip_.GetNoArena();
+}
+inline void CameraInfo::_internal_set_var_ip(const std::string& value) {
+  _has_bits_[0] |= 0x00000004u;
+  var_ip_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), value);
+}
+inline void CameraInfo::set_var_ip(std::string&& value) {
+  _has_bits_[0] |= 0x00000004u;
+  var_ip_.SetNoArena(
+    &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:CameraInfo.var_ip)
+}
+inline void CameraInfo::set_var_ip(const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  _has_bits_[0] |= 0x00000004u;
+  var_ip_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:CameraInfo.var_ip)
+}
+inline void CameraInfo::set_var_ip(const char* value, size_t size) {
+  _has_bits_[0] |= 0x00000004u;
+  var_ip_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:CameraInfo.var_ip)
+}
+inline std::string* CameraInfo::_internal_mutable_var_ip() {
+  _has_bits_[0] |= 0x00000004u;
+  return var_ip_.MutableNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline std::string* CameraInfo::release_var_ip() {
+  // @@protoc_insertion_point(field_release:CameraInfo.var_ip)
+  if (!_internal_has_var_ip()) {
+    return nullptr;
+  }
+  _has_bits_[0] &= ~0x00000004u;
+  return var_ip_.ReleaseNonDefaultNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline void CameraInfo::set_allocated_var_ip(std::string* var_ip) {
+  if (var_ip != nullptr) {
+    _has_bits_[0] |= 0x00000004u;
+  } else {
+    _has_bits_[0] &= ~0x00000004u;
+  }
+  var_ip_.SetAllocatedNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), var_ip);
+  // @@protoc_insertion_point(field_set_allocated:CameraInfo.var_ip)
 }
 
 #ifdef __GNUC__

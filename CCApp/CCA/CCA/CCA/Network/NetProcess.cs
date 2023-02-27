@@ -50,7 +50,7 @@ namespace CCA
 
                 string ip = GetIPAddress("blessnhs.iptime.org");
 
-                client.StartClient(ip, 20000);
+                client.StartClient(ip, 20001);
 
                 check_time = DateTime.Now.AddSeconds(15);
             }
@@ -148,8 +148,10 @@ namespace CCA
                                     {
                                         DependencyService.Get<MethodExt>().ShowToast("로그인 하셨습니다.");
 
-                                        if (PopupNavigation.Instance.PopupStack.Count > 0)
+                                        while (PopupNavigation.Instance.PopupStack.Count > 0)
+                                        {
                                             PopupNavigation.Instance.PopAsync();
+                                        }
                                     });
 
                                     User.LoginSuccess = true;
@@ -225,6 +227,11 @@ namespace CCA
                                 CAMERA_LIST_RES res = new CAMERA_LIST_RES();
                                 res = CAMERA_LIST_RES.Parser.ParseFrom(data.Data);
 
+                                while (PopupNavigation.Instance.PopupStack.Count > 0)
+                                {
+                                    PopupNavigation.Instance.PopAsync();
+                                }
+
                                 if (res.VarCode == ErrorCode.Success)
                                 {
                                     Device.BeginInvokeOnMainThread(() =>
@@ -257,24 +264,34 @@ namespace CCA
                                 CAMERA_WAKE_UP_RES res = new CAMERA_WAKE_UP_RES();
                                 res = CAMERA_WAKE_UP_RES.Parser.ParseFrom(data.Data);
 
-                                TargetPlayerId.Add(res.VarToPlayerId);
+                                var machineid = DependencyService.Get<MethodExt>().MachineId();
 
-                                Device.BeginInvokeOnMainThread(() =>
+                                if (res.VarMachineId == machineid)
                                 {
-                                    if (PopupNavigation.Instance.PopupStack.Count == 0)
-                                    {
-                                        PopupNavigation.Instance.PushAsync(new CameraPage());
-                                    }
-                                    else
-                                    {
-                                        if (PopupNavigation.Instance.PopupStack[0].GetType() != typeof(CameraPage))
-                                        {
-                                            PopupNavigation.Instance.PopAsync();
 
+                                    TargetPlayerId.Add(res.VarToPlayerId);
+
+                                    Device.BeginInvokeOnMainThread(() =>
+                                    {
+                                        if (PopupNavigation.Instance.PopupStack.Count == 0)
+                                        {
                                             PopupNavigation.Instance.PushAsync(new CameraPage());
                                         }
-                                    }
-                                });
+                                        else
+                                        {
+                                            if (PopupNavigation.Instance.PopupStack[0].GetType() != typeof(CameraPage))
+                                            {
+                                                PopupNavigation.Instance.PopAsync();
+
+                                                PopupNavigation.Instance.PushAsync(new CameraPage());
+                                            }
+                                        }
+                                    });
+                                }
+                                else
+                                {
+                                    PopupNavigation.Instance.PushAsync(new CameraViewer(res.VarMachineId, res.VarToPlayerId,null));
+                                }
                             }
                             break;
 
@@ -619,7 +636,8 @@ namespace CCA
                 VarUid = uid,
                 VarToken = token,
                 VarCamName = Model,
-                VarMachineId = machineid
+                VarMachineId = machineid,
+                VarIp = client.IPCheck()
             };
             using (MemoryStream stream = new MemoryStream())
             {
@@ -742,7 +760,7 @@ namespace CCA
         }
 
 
-        static public void SendWakeUpCamera(long playerId)
+        static public void SendWakeUpCamera(long playerId,string machineid)
         {
             if (client == null || client.socket == null || client.socket.Connected == false)
                 return;
@@ -752,6 +770,7 @@ namespace CCA
                VarType = 0,
                VarRoomNumber = 0,
                VarToPlayerId = playerId,
+               VarMachineId = machineid,
 
             };
             using (MemoryStream stream = new MemoryStream())

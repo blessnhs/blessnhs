@@ -315,7 +315,7 @@ namespace FullCameraApp.Droid
 
                             int frate = (rate - checkcount) < 30 ? 30 : (rate - checkcount);
 
-                            if (checkcount < 10) frate = 200;
+                            if (checkcount < 10) frate = 400;
 
                             alignList[1].Text = frate.ToString();
 

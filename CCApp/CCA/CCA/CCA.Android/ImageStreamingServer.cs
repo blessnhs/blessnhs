@@ -4,10 +4,13 @@
 // e-Mail       : ragheedemail@gmail.com
 // Date         : April 2012
 // -------------------------------------------------
+using CCA.Page;
+using Rg.Plugins.Popup.Services;
 using System;
 using System.Collections.Concurrent;
 using System.IO;
 using System.Threading;
+using Xamarin.Essentials;
 
 namespace rtaNetworking.Streaming
 {
@@ -99,7 +102,7 @@ namespace rtaNetworking.Streaming
             {
                 try
                 {
-                    _Thread.Join();
+                    _Thread.Join(300);
                     _Thread.Abort();
                 }
                 finally
@@ -148,6 +151,25 @@ namespace rtaNetworking.Streaming
                 foreach (System.Net.Sockets.Socket client in Server.IncommingConnectoins())
                 {
                     System.Threading.ThreadPool.QueueUserWorkItem(new System.Threading.WaitCallback(ClientThread), client);
+
+
+                    MainThread.BeginInvokeOnMainThread(() =>
+                    {
+                        if (PopupNavigation.Instance.PopupStack.Count == 0)
+                        {
+                            PopupNavigation.Instance.PushAsync(new CameraPage());
+                        }
+                        else
+                        {
+                            if (PopupNavigation.Instance.PopupStack[0].GetType() != typeof(CameraPage))
+                            {
+                                PopupNavigation.Instance.PopAsync();
+
+                                PopupNavigation.Instance.PushAsync(new CameraPage());
+                            }
+                        }
+                    });
+
                 } // Next client 
 
             }
@@ -190,7 +212,7 @@ namespace rtaNetworking.Streaming
                             if (this.Interval > 0)
                                 System.Threading.Thread.Sleep(this.Interval);
 
-                            wr.Write(img);
+                            wr.Write(img,_Clients);
                         }
 
                         ImagesSource.Clear();

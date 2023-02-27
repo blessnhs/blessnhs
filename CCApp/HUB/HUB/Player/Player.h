@@ -102,6 +102,7 @@ private:
 public:
 	std::string			m_Email;
 	std::string			m_Token;
+	std::string			m_Ip;
 
 };
 

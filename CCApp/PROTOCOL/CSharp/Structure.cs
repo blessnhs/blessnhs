@@ -34,9 +34,9 @@ public static partial class StructureReflection {
           "X2NvbnRlbnQYAyABKAkSEAoIdmFyX2RhdGUYBCABKAkSEAoIdmFyX25hbWUY",
           "BSABKAkiXwoLUm9vbU1lc3NhZ2USEAoIdmFyX25hbWUYASABKAkSEwoLdmFy",
           "X21lc3NhZ2UYAiABKAkSFwoPdmFyX21lc3NhZ2VfaW50GAMgASgFEhAKCHZh",
-          "cl90aW1lGAQgASgJIlUKCkNhbWVyYUluZm8SGAoQdmFyX21hY2hpbmVfbmFt",
+          "cl90aW1lGAQgASgJImUKCkNhbWVyYUluZm8SGAoQdmFyX21hY2hpbmVfbmFt",
           "ZRgBIAEoCRIWCg52YXJfbWFjaGluZV9pZBgCIAEoCRIVCg12YXJfcGxheWVy",
-          "X2lkGAMgASgDQgJIAQ=="));
+          "X2lkGAMgASgDEg4KBnZhcl9pcBgEIAEoCUICSAE="));
     descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
         new pbr::FileDescriptor[] { },
         new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
@@ -46,7 +46,7 @@ public static partial class StructureReflection {
           new pbr::GeneratedClrTypeInfo(typeof(global::NotifyInfo), global::NotifyInfo.Parser, new[]{ "VarId", "VarContent", "VarDate" }, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::MailInfo), global::MailInfo.Parser, new[]{ "VarId", "VarTitle", "VarContent", "VarDate", "VarName" }, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::RoomMessage), global::RoomMessage.Parser, new[]{ "VarName", "VarMessage", "VarMessageInt", "VarTime" }, null, null, null, null),
-          new pbr::GeneratedClrTypeInfo(typeof(global::CameraInfo), global::CameraInfo.Parser, new[]{ "VarMachineName", "VarMachineId", "VarPlayerId" }, null, null, null, null)
+          new pbr::GeneratedClrTypeInfo(typeof(global::CameraInfo), global::CameraInfo.Parser, new[]{ "VarMachineName", "VarMachineId", "VarPlayerId", "VarIp" }, null, null, null, null)
         }));
   }
   #endregion
@@ -1627,6 +1627,7 @@ public sealed partial class CameraInfo : pb::IMessage<CameraInfo> {
     varMachineName_ = other.varMachineName_;
     varMachineId_ = other.varMachineId_;
     varPlayerId_ = other.varPlayerId_;
+    varIp_ = other.varIp_;
     _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
   }
 
@@ -1705,6 +1706,29 @@ public sealed partial class CameraInfo : pb::IMessage<CameraInfo> {
     _hasBits0 &= ~1;
   }
 
+  /// <summary>Field number for the "var_ip" field.</summary>
+  public const int VarIpFieldNumber = 4;
+  private readonly static string VarIpDefaultValue = "";
+
+  private string varIp_;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public string VarIp {
+    get { return varIp_ ?? VarIpDefaultValue; }
+    set {
+      varIp_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+    }
+  }
+  /// <summary>Gets whether the "var_ip" field is set</summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public bool HasVarIp {
+    get { return varIp_ != null; }
+  }
+  /// <summary>Clears the value of the "var_ip" field</summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void ClearVarIp() {
+    varIp_ = null;
+  }
+
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public override bool Equals(object other) {
     return Equals(other as CameraInfo);
@@ -1721,6 +1745,7 @@ public sealed partial class CameraInfo : pb::IMessage<CameraInfo> {
     if (VarMachineName != other.VarMachineName) return false;
     if (VarMachineId != other.VarMachineId) return false;
     if (VarPlayerId != other.VarPlayerId) return false;
+    if (VarIp != other.VarIp) return false;
     return Equals(_unknownFields, other._unknownFields);
   }
 
@@ -1730,6 +1755,7 @@ public sealed partial class CameraInfo : pb::IMessage<CameraInfo> {
     if (HasVarMachineName) hash ^= VarMachineName.GetHashCode();
     if (HasVarMachineId) hash ^= VarMachineId.GetHashCode();
     if (HasVarPlayerId) hash ^= VarPlayerId.GetHashCode();
+    if (HasVarIp) hash ^= VarIp.GetHashCode();
     if (_unknownFields != null) {
       hash ^= _unknownFields.GetHashCode();
     }
@@ -1755,6 +1781,10 @@ public sealed partial class CameraInfo : pb::IMessage<CameraInfo> {
       output.WriteRawTag(24);
       output.WriteInt64(VarPlayerId);
     }
+    if (HasVarIp) {
+      output.WriteRawTag(34);
+      output.WriteString(VarIp);
+    }
     if (_unknownFields != null) {
       _unknownFields.WriteTo(output);
     }
@@ -1771,6 +1801,9 @@ public sealed partial class CameraInfo : pb::IMessage<CameraInfo> {
     }
     if (HasVarPlayerId) {
       size += 1 + pb::CodedOutputStream.ComputeInt64Size(VarPlayerId);
+    }
+    if (HasVarIp) {
+      size += 1 + pb::CodedOutputStream.ComputeStringSize(VarIp);
     }
     if (_unknownFields != null) {
       size += _unknownFields.CalculateSize();
@@ -1791,6 +1824,9 @@ public sealed partial class CameraInfo : pb::IMessage<CameraInfo> {
     }
     if (other.HasVarPlayerId) {
       VarPlayerId = other.VarPlayerId;
+    }
+    if (other.HasVarIp) {
+      VarIp = other.VarIp;
     }
     _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
   }
@@ -1813,6 +1849,10 @@ public sealed partial class CameraInfo : pb::IMessage<CameraInfo> {
         }
         case 24: {
           VarPlayerId = input.ReadInt64();
+          break;
+        }
+        case 34: {
+          VarIp = input.ReadString();
           break;
         }
       }

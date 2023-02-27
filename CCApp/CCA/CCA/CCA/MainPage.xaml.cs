@@ -22,6 +22,7 @@ namespace CCA
 
         //보상광고
         iAd_RewardVideoView rewardVideo;
+
         public MainPage()
         {
             InitializeComponent();
@@ -53,7 +54,7 @@ namespace CCA
                             if (NetProcess.IsActivate == false) continue;
 
                             NetProcess.start();
-                            NetProcess.client.PacketRecvSync();
+                            NetProcess.client.PacketRecvSync2();
                             NetProcess.Loop();
                         }
                         catch (Exception e)
@@ -61,7 +62,7 @@ namespace CCA
                         //    DependencyService.Get<MethodExt>().Notification(e.StackTrace.ToString());
                         }
 
-                        Thread.Sleep(800);
+                        Thread.Sleep(100);
                     }
                 });
             }

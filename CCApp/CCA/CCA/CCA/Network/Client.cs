@@ -16,16 +16,35 @@ namespace CCA
         public int Length { get; set; }
     }
 
-    public class RecvPacketBuffer
+    static public class RecvPacketBuffer
     {
         public static int MTU = 1024 * 1024 * 5;
 
         // Receive buffer.
-        public byte[] buffer = new byte[MTU];
+        public static byte[] buffer = new byte[MTU];
     }
+
+   
 
     public class Client
     {
+        public string IPCheck()
+        {
+            IPHostEntry host = Dns.GetHostEntry(Dns.GetHostName());
+
+            string getIP = string.Empty;
+            for (int i = 0; i < host.AddressList.Length; i++)
+            {
+                if (host.AddressList[i].AddressFamily == AddressFamily.InterNetwork)
+                {
+                    getIP = host.AddressList[i].ToString();
+               //     break;  //볼일끝나면 바로 순환문을 나가게 해야 최적화에 도움이 되요.
+                }
+            }
+            return getIP;
+
+        }
+
         public void ClearSocket()
         {
             socket.Close();
@@ -38,6 +57,7 @@ namespace CCA
             // Connect to a remote device.
             try
             {
+
                 IPAddress ip = IPAddress.Parse(address);
 
                 IPEndPoint remoteEP = new IPEndPoint(ip, port);
@@ -56,7 +76,7 @@ namespace CCA
 
                     socket.Close();
                     socket.Dispose();
-                        
+                      
                     socket = null;
                     socket = new Socket(AddressFamily.InterNetwork,
                                 SocketType.Stream, ProtocolType.Tcp);
@@ -68,26 +88,7 @@ namespace CCA
                          SocketType.Stream, ProtocolType.Tcp);
                 }
 
-
-                socket.ReceiveTimeout = 10;
-                socket.SendTimeout = 2000;
-
-                //이미 로그인했다가 풀렸다 이때는 초기화
-                if (User.LoginSuccess == true)
-                    User.Clear();
-
-                var result = socket.BeginConnect(remoteEP, null, null);
-
-                bool success = result.AsyncWaitHandle.WaitOne(500, true);
-                if (success)
-                {
-                    socket.EndConnect(result);
-                }
-
-                if (socket.Connected == true)
-                {
-                    NetProcess.SendVersion();
-                }
+                socket.BeginConnect(ip, port, ConnectCallback, socket);
 
             }
             catch (Exception e)
@@ -96,24 +97,94 @@ namespace CCA
             }
         }
 
-        private void ConnectCallback(IAsyncResult ar)
+
+        public void StartClient2(string address, int port)
         {
+            // Connect to a remote device.
             try
             {
 
-                // Retrieve the socket from the state object.
-                Socket client = (Socket)ar.AsyncState;
+                var ii = IPCheck();
 
-                // Complete the connection.
-                client.EndConnect(ar);
+                IPAddress ip = IPAddress.Parse(address);
 
-                // Signal that the connection has been made.
-                //   NetProcess.SendVersion();
+                IPEndPoint remoteEP = new IPEndPoint(ip, port);
 
+                if (socket != null)
+                // Create a TCP/IP socket.
+                {
+                    if (socket.Connected == true)
+                    {
+                        //이미 접속은 했는데 로그인 실패면 다시 한다.
+                        if (User.LoginSuccess == true)
+                        {
+                            return;
+                        }
+                    }
+
+                    socket.Close();
+                    socket.Dispose();
+
+                    socket = null;
+                    socket = new Socket(AddressFamily.InterNetwork,
+                                SocketType.Stream, ProtocolType.Tcp);
+
+                }
+                else
+                {
+                    socket = new Socket(AddressFamily.InterNetwork,
+                         SocketType.Stream, ProtocolType.Tcp);
+                }
+
+                socket.ReceiveTimeout = 500;
+                socket.SendTimeout = 2000;
+
+             
+                var result = socket.BeginConnect(remoteEP, null, null);
+
+                bool success = result.AsyncWaitHandle.WaitOne(500, true);
+                if (success)
+                {
+                    socket.EndConnect(result);
+                }
             }
             catch (Exception e)
             {
                 Console.WriteLine(e.ToString());
+            }
+        }
+
+        private void ConnectCallback(IAsyncResult IAR)
+        {
+            try
+            {
+
+                Socket tempSocket = (Socket)IAR.AsyncState;
+
+                if (tempSocket == null || tempSocket.Connected == false)
+                    return;
+
+                tempSocket.EndConnect(IAR);
+
+                //이미 로그인했다가 풀렸다 이때는 초기화
+                if (User.LoginSuccess == true)
+                    User.Clear();
+
+                if (socket.Connected == true)
+                {
+                    NetProcess.SendVersion();
+                }
+
+
+               tempSocket.BeginReceive(RecvPacketBuffer.buffer, 0, RecvPacketBuffer.buffer.Length, SocketFlags.None,
+               new AsyncCallback(recieveArgs_Completed), socket);
+            }
+            catch (SocketException se)
+            {
+                if (se.SocketErrorCode == SocketError.NotConnected)
+                {
+                   
+                }
             }
         }
 
@@ -178,11 +249,11 @@ namespace CCA
                 if (socket == null || socket.Connected == false)
                     return;
 
-                int bytesRead = socket.Receive(state.buffer);
+                int bytesRead = socket.Receive(RecvPacketBuffer.buffer);
 
                 if (bytesRead > 0)
                 {
-                    Buffer.BlockCopy(state.buffer, 0, m_PacketBuffer, m_RemainLength, bytesRead);
+                    Buffer.BlockCopy(RecvPacketBuffer.buffer, 0, m_PacketBuffer, m_RemainLength, bytesRead);
 
                     m_RemainLength += bytesRead;
 
@@ -203,23 +274,10 @@ namespace CCA
                 if (socket == null || socket.Connected == false)
                     return;
 
-                var readEvent = new AutoResetEvent(false);
-                var recieveArgs = new SocketAsyncEventArgs()
-                {
-                    UserToken = readEvent
-                };
+               socket?.BeginReceive(RecvPacketBuffer.buffer, 0, RecvPacketBuffer.buffer.Length, SocketFlags.None,
+               new AsyncCallback(recieveArgs_Completed), socket);
 
-
-                recieveArgs.SetBuffer(state.buffer, 0, RecvPacketBuffer.MTU);
-                recieveArgs.Completed += recieveArgs_Completed;
-                socket.ReceiveAsync(recieveArgs);
-
-                if (recieveArgs.BytesTransferred == 0)
-                {
-                    if (recieveArgs.SocketError != SocketError.Success)
-                        throw new SocketException((int)recieveArgs.SocketError);
-                    //        throw new CommunicationException();
-                }
+            
             }
             catch (Exception e)
             {
@@ -227,22 +285,21 @@ namespace CCA
             }
         }
 
-        void recieveArgs_Completed(object sender, SocketAsyncEventArgs e)
+        void recieveArgs_Completed(IAsyncResult IAR)
         {
             try
             {
-                lock (this)
+                Socket tempSock = (Socket)IAR.AsyncState;
+                int nReadSize = tempSock.EndReceive(IAR);
+                if (nReadSize > 0)
                 {
-                    var are = (AutoResetEvent)e.UserToken;
+                    Buffer.BlockCopy(RecvPacketBuffer.buffer, 0, m_PacketBuffer, m_RemainLength, nReadSize);
 
-                    Buffer.BlockCopy(state.buffer, 0, m_PacketBuffer, m_RemainLength, e.BytesTransferred);
-
-                    m_RemainLength += e.BytesTransferred;
+                    m_RemainLength += nReadSize;
 
                     OnRecvPacketProc();
-
-                    are.Set();
                 }
+                  
             }
             catch (Exception ee)
             {
@@ -250,9 +307,6 @@ namespace CCA
             }
 
         }
-
-
-        RecvPacketBuffer state = new RecvPacketBuffer();
 
         public ConcurrentQueue<CompletePacket> PacketQueue = new ConcurrentQueue<CompletePacket>();
 
@@ -307,8 +361,6 @@ namespace CCA
             if (socket == null || socket.Connected == false)
                 return false;
 
-
-
             if (payloadsize > CheckCompressSize)
             {
                 var compress = GZip.Compress(packet);
@@ -347,7 +399,7 @@ namespace CCA
                         Console.Write("Disconnected: error code :" + e.NativeErrorCode + "(" + e.Message + ")");
                 }
 
-                TempBuffer = null;
+                TempBuffer = compress = byteslegnth = bytesProtocol = null;
             }
             else
             {
@@ -368,9 +420,6 @@ namespace CCA
 
                 byte[] bytesProtocol = BitConverter.GetBytes((Int16)protocol);
                 Buffer.BlockCopy(bytesProtocol, 0, TempBuffer, sizeof(Int32), sizeof(Int16));
-
-                var ss = sizeof(byte);
-                ss = sizeof(long);
 
                 byte[] bytesPacketNumber = BitConverter.GetBytes((byte)mCompressFlag);
                 Buffer.BlockCopy(bytesPacketNumber, 0, TempBuffer, sizeof(Int32) + sizeof(Int16) + sizeof(Int16) + sizeof(Int32), sizeof(byte));

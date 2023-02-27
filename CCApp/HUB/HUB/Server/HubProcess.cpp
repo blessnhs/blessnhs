@@ -158,6 +158,7 @@ VOID HubProcess::LOGIN_PLAYER(boost::shared_ptr<XDATA> pBuffer, boost::shared_pt
 		PLAYER_MSG->pRequst.FrontSid = pBuffer->Reserve2;
 		PLAYER_MSG->pRequst.MachineId = login.var_machine_id();
 		PLAYER_MSG->pRequst.MachineModel = login.var_cam_name();
+		PLAYER_MSG->pRequst.Ip = login.var_ip();
 	}
 
 	//로그인아웃 처리는 고정해야할 필요가 있다.
@@ -668,15 +669,22 @@ VOID HubProcess::CAMERA_WAKE_UP(boost::shared_ptr<XDATA> pBuffer, boost::shared_
 		return;
 	}
 
+	res.set_var_machine_id(message.var_machine_id());
 	res.set_var_to_player_id(pPlayer->GetId());
 
 	res.set_var_type(message.var_type());
 
+
+	//요청을 받은 대상
 	GSCLIENT_PTR pSession = SERVER.GetClient(pTargetPlayer->GetPair());
 	if (pSession)
 	{
 		SEND_PROTO_BUFFER(res, pSession, pTargetPlayer->GetFrontSid())
 	}
+
+
+	//요청한 대상 창을 띄울 타이밍
+	SEND_PROTO_BUFFER(res, Client, pPlayer->GetFrontSid())
 }
 
 

@@ -4,6 +4,11 @@
 // e-Mail       : ragheedemail@gmail.com
 // Date         : April 2012
 // -------------------------------------------------
+using CCA;
+using Google.Protobuf;
+using System;
+using System.Net.Sockets;
+
 namespace rtaNetworking.Streaming
 {
 
@@ -80,7 +85,68 @@ namespace rtaNetworking.Streaming
         //    aviManager.Close();
         //}
 
+        public void Write(System.IO.MemoryStream imageStream, System.Collections.Generic.List<System.Net.Sockets.Socket> _Clients)
+        {
+            BITMAP_MESSAGE_REQ message = new BITMAP_MESSAGE_REQ();
+            message.VarRoomNumber = User.CurrentChatViewNumber;
+            message.VarType = 0;
 
+            message.VarMessage.Add(ByteString.CopyFrom(imageStream.ToArray()));
+
+            foreach (var cli in _Clients)
+            {
+                WritePacket(cli,(int)PROTOCOL.IdPktBitmapMessageReq, message.ToByteArray(), message.ToByteArray().Length);
+            }
+        }
+
+        public bool WritePacket(System.Net.Sockets.Socket socket,int protocol, byte[] packet, int payloadsize)
+        {
+            if (socket == null || socket.Connected == false)
+                return false;
+
+         
+            {
+                Int32 PacketLength = sizeof(Int32) +
+                    sizeof(Int16) +
+                    sizeof(Int16) +
+                    sizeof(Int32) +
+                    sizeof(byte) +
+                    sizeof(long) +
+                   payloadsize;
+
+                int mCompressFlag = 0;
+
+                byte[] TempBuffer = new byte[PacketLength];
+
+                byte[] byteslegnth = BitConverter.GetBytes((Int32)PacketLength);
+                Buffer.BlockCopy(byteslegnth, 0, TempBuffer, 0, sizeof(Int32));
+
+                byte[] bytesProtocol = BitConverter.GetBytes((Int16)protocol);
+                Buffer.BlockCopy(bytesProtocol, 0, TempBuffer, sizeof(Int32), sizeof(Int16));
+
+                byte[] bytesPacketNumber = BitConverter.GetBytes((byte)mCompressFlag);
+                Buffer.BlockCopy(bytesPacketNumber, 0, TempBuffer, sizeof(Int32) + sizeof(Int16) + sizeof(Int16) + sizeof(Int32), sizeof(byte));
+
+                Buffer.BlockCopy(packet, 0, TempBuffer, sizeof(Int32) + sizeof(Int16) + sizeof(Int16) + sizeof(Int32) + sizeof(byte) + sizeof(long), payloadsize);
+
+                try
+                {
+                    socket.Send(TempBuffer);
+                }
+                catch (SocketException e)
+                {
+                    // 10035 == WSAEWOULDBLOCK
+                    if (!e.NativeErrorCode.Equals(10035))
+                        Console.Write("Disconnected: error code :" + e.NativeErrorCode + "(" + e.Message + ")");
+                }
+
+                TempBuffer = null;
+            }
+
+            packet = null;
+
+            return true;
+        }
 
         public void Write(System.IO.MemoryStream imageStream)
         {

@@ -28,6 +28,7 @@ using Android.Gms.Auth;
 using Plugin.InAppBilling;
 using DependencyHelper.Droid;
 using Xamarin.Essentials;
+using rtaNetworking.Streaming;
 
 namespace CCA.Droid
 {
@@ -47,6 +48,10 @@ namespace CCA.Droid
         Intent stopServiceIntent;
         bool isStarted = false;
 
+
+        public static ImageStreamingServer server = new ImageStreamingServer();
+
+
         protected override void OnCreate(Bundle savedInstanceState)
         {
             
@@ -60,6 +65,8 @@ namespace CCA.Droid
 
             context = this;
             activity = this;
+
+            server.Start(1801);
 
             Window.AddFlags(WindowManagerFlags.KeepScreenOn |
              WindowManagerFlags.DismissKeyguard |
@@ -222,6 +229,8 @@ namespace CCA.Droid
             //           NetProcess.SendStopStream();
 
             EndService();
+
+            server?.Stop();
         }
 
         async void ProcessSignInResult(Intent data)
@@ -354,7 +363,7 @@ namespace CCA.Droid
         private void CreateService()
         {
 
-  //          OnNewIntent(this.Intent);
+            OnNewIntent(this.Intent);
 
             startServiceIntent = new Intent(this, typeof(ServiceCamera));
             startServiceIntent.SetAction(Constants.ACTION_START_SERVICE);

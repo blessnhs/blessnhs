@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using Rg.Plugins.Popup.Pages;
+using System.IO;
 
 namespace CCA.Page
 {
@@ -17,21 +18,69 @@ namespace CCA.Page
 
         public string MachinId;
         public Int64 PlayerId;
-        public CameraViewer(string _MachinId,Int64 playerId)
+
+        Client _client;
+        public CameraViewer(string _MachinId,Int64 playerId, Client client)
         {
             InitializeComponent();
 
             MachinId = _MachinId;
             PlayerId = playerId;
+
+            _client = client;
+
+            if (client != null)
+            {
+                //연결 성공
+                Task.Run(() =>
+                {
+                    while (client.socket.Connected == true)
+                    {
+
+                        client.PacketRecvSync();
+
+                        CompletePacket data;
+                        while (client.PacketQueue.TryDequeue(out data) == true)
+                        {
+                            {
+                                BITMAP_MESSAGE_REQ res = new BITMAP_MESSAGE_REQ();
+                                res = BITMAP_MESSAGE_REQ.Parser.ParseFrom(data.Data);
+
+                                foreach (var msg in res.VarMessage)
+                                {
+                                    StreamWrapper wra = new StreamWrapper();
+                                    wra.stream = new MemoryStream(msg.ToByteArray());
+                                    NetProcess.JpegStream.Enqueue(wra);
+                                }
+                            }
+                        }
+
+
+                    }
+
+                 
+
+                });
+            }
+
         }
 
         protected override void OnAppearing()
         {
             base.OnAppearing();
+
         }
 
         protected override void OnDisappearing()
         {
+            if(_client != null)
+            {
+                _client.socket?.Dispose();
+                _client.socket = null;
+                _client = null;
+
+            }
+
             base.OnDisappearing();
 
             NetProcess.SendStopStream();

@@ -161,6 +161,7 @@ message CAMERA_WAKE_UP_RES
     optional int32       var_type        		= 2;	
     optional int32       var_room_number        	= 3;	
     optional int32       var_to_player_id       	= 4;	
+    optional string       var_machine_id       	= 5;	
 }
 
 

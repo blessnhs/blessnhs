@@ -19,6 +19,8 @@ message LOGIN_REQ
 
     required string     var_cam_name = 4;
     required string     var_machine_id        = 5;	
+
+    required string     var_ip        = 6;	
 }
 
 message CREATE_ROOM_REQ
@@ -93,6 +95,7 @@ message CAMERA_WAKE_UP_REQ
     required int32       var_type        = 2;	
     required int32       var_room_number        = 3;	
     required int64       var_to_player_id       = 4;	
+    required string       var_machine_id       = 5;	
 }
 
 message PRAY_MESSAGE_REQ
