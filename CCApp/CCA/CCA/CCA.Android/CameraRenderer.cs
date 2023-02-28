@@ -70,7 +70,7 @@ namespace FullCameraApp.Droid
                     return;
                 }
 
-                checktime = checktime.AddMilliseconds(50);
+                checktime = checktime.AddMilliseconds(20);
 
                 if (checktimeBattery < DateTime.Now)
                 {
@@ -358,12 +358,6 @@ namespace FullCameraApp.Droid
                 var previewSize = parameters.SupportedPreviewSizes
                                          .OrderBy(s => Math.Abs(s.Width * s.Height))
                                          .First();
-
-
-                int idx = (camera_preview_pos++ % parameters.SupportedPreviewSizes.Count);
-
-                previewSize = parameters.SupportedPreviewSizes[idx];
-
                 camera_buffer = null;
                 camera_buffer = new byte[previewSize.Width * previewSize.Height * 2];
 

@@ -7,6 +7,7 @@
 using CCA;
 using Google.Protobuf;
 using System;
+using System.Collections.Concurrent;
 using System.Net.Sockets;
 
 namespace rtaNetworking.Streaming
@@ -85,13 +86,16 @@ namespace rtaNetworking.Streaming
         //    aviManager.Close();
         //}
 
-        public void Write(System.IO.MemoryStream imageStream, System.Collections.Generic.List<System.Net.Sockets.Socket> _Clients)
+        public void Write(ConcurrentQueue<System.IO.MemoryStream> Frames, System.Collections.Generic.List<System.Net.Sockets.Socket> _Clients)
         {
             BITMAP_MESSAGE_REQ message = new BITMAP_MESSAGE_REQ();
             message.VarRoomNumber = User.CurrentChatViewNumber;
             message.VarType = 0;
 
-            message.VarMessage.Add(ByteString.CopyFrom(imageStream.ToArray()));
+            foreach (var img in Frames)
+            {
+                message.VarMessage.Add(ByteString.CopyFrom(img.ToArray()));
+            }
 
             foreach (var cli in _Clients)
             {

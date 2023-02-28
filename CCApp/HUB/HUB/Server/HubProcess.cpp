@@ -82,8 +82,8 @@ VOID HubProcess::Process(boost::shared_ptr<XDATA> pBuffer, boost::shared_ptr<GSC
 		if(descriptor->FindValueByNumber(pBuffer->MainId) != NULL)
 			name = descriptor->FindValueByNumber(pBuffer->MainId)->name();
 
-	//	if (pBuffer->MainId != ID_PKT_ROOM_LIST_REQ && pBuffer->MainId != ID_PKT_PRAY_MESSAGE_REQ)
-		//	BLOG("%s MainProtocol %s Length %d\n", __FUNCTION__, name.c_str(), pBuffer->Length);
+		if (pBuffer->MainId != ID_PKT_ROOM_LIST_REQ && pBuffer->MainId != ID_PKT_PRAY_MESSAGE_REQ)
+			BLOG("%s MainProtocol %s Length %d\n", __FUNCTION__, name.c_str(), pBuffer->Length);
 #endif
 
 		NET_FUNC_EXE2(pBuffer, Client);
@@ -682,6 +682,10 @@ VOID HubProcess::CAMERA_WAKE_UP(boost::shared_ptr<XDATA> pBuffer, boost::shared_
 		SEND_PROTO_BUFFER(res, pSession, pTargetPlayer->GetFrontSid())
 	}
 
+
+	//이번엔 바꾼다.
+	res.set_var_machine_id(message.var_machine_id());
+	res.set_var_to_player_id(pTargetPlayer->GetId());
 
 	//요청한 대상 창을 띄울 타이밍
 	SEND_PROTO_BUFFER(res, Client, pPlayer->GetFrontSid())

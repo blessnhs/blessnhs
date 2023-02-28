@@ -136,7 +136,7 @@ namespace CCA
                          SocketType.Stream, ProtocolType.Tcp);
                 }
 
-                socket.ReceiveTimeout = 500;
+                socket.ReceiveTimeout = 10;
                 socket.SendTimeout = 2000;
 
              

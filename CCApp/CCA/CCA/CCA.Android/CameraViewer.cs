@@ -155,7 +155,7 @@ namespace FullCameraApp.Droid
                 flashButton.Click += async (s, e) =>
                 {
                     NetProcess.SendCameraControl(page.MachinId, page.PlayerId, CameraControlType.Flash);
-                };
+                };      
 
                 alignList.Add(flashButton);
                 mainLayout.AddView(flashButton);

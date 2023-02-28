@@ -742,6 +742,8 @@ class MSG_PLAYER_QUERY<##class_name>:public IMESSAGE	\
 
 				PLAYERMGR.Add(pNewPlayer);
 
+	
+
 				res.set_var_code(Success);
 				res.set_var_index(Index);
 
