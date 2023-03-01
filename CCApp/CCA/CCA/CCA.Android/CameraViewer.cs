@@ -152,6 +152,11 @@ namespace FullCameraApp.Droid
                 ///////////////////////////////////////////////////////////////////////////////
                 Button flashButton = new Button(Context);
                 flashButton.Text = "Flash";
+                if (page.IsP2P == true)
+                    flashButton.Text = "P_Flash";
+                else
+                    flashButton.Text = "R_Flash";
+
                 flashButton.Click += async (s, e) =>
                 {
                     NetProcess.SendCameraControl(page.MachinId, page.PlayerId, CameraControlType.Flash);

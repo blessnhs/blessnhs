@@ -86,29 +86,24 @@ namespace rtaNetworking.Streaming
         //    aviManager.Close();
         //}
 
-        public void Write(ConcurrentQueue<System.IO.MemoryStream> Frames, System.Collections.Generic.List<System.Net.Sockets.Socket> _Clients)
+        public int Write(System.IO.MemoryStream Frame,System.Net.Sockets.Socket _Client)
         {
             BITMAP_MESSAGE_REQ message = new BITMAP_MESSAGE_REQ();
             message.VarRoomNumber = User.CurrentChatViewNumber;
             message.VarType = 0;
+           
+            message.VarMessage.Add(ByteString.CopyFrom(Frame.ToArray()));
 
-            foreach (var img in Frames)
-            {
-                message.VarMessage.Add(ByteString.CopyFrom(img.ToArray()));
-            }
-
-            foreach (var cli in _Clients)
-            {
-                WritePacket(cli,(int)PROTOCOL.IdPktBitmapMessageReq, message.ToByteArray(), message.ToByteArray().Length);
-            }
+            return WritePacket(_Client, (int)PROTOCOL.IdPktBitmapMessageReq, message.ToByteArray(), message.ToByteArray().Length);
         }
 
-        public bool WritePacket(System.Net.Sockets.Socket socket,int protocol, byte[] packet, int payloadsize)
+        public int WritePacket(System.Net.Sockets.Socket socket,int protocol, byte[] packet, int payloadsize)
         {
             if (socket == null || socket.Connected == false)
-                return false;
+                return 0;
 
-         
+            int sendconut = 0;
+
             {
                 Int32 PacketLength = sizeof(Int32) +
                     sizeof(Int16) +
@@ -135,7 +130,7 @@ namespace rtaNetworking.Streaming
 
                 try
                 {
-                    socket.Send(TempBuffer);
+                    sendconut = socket.Send(TempBuffer);
                 }
                 catch (SocketException e)
                 {
@@ -149,7 +144,7 @@ namespace rtaNetworking.Streaming
 
             packet = null;
 
-            return true;
+            return sendconut;
         }
 
         public void Write(System.IO.MemoryStream imageStream)

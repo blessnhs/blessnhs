@@ -50,7 +50,7 @@ namespace CCA
 
                 string ip = GetIPAddress("blessnhs.iptime.org");
 
-                client.StartClient(ip, 20001);
+                client.StartClient(ip, 20000);
 
                 check_time = DateTime.Now.AddSeconds(15);
             }

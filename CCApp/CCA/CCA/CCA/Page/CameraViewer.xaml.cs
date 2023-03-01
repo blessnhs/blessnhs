@@ -20,6 +20,7 @@ namespace CCA.Page
         public Int64 PlayerId;
 
         Client _client;
+        public bool IsP2P = false;
         public CameraViewer(string _MachinId,Int64 playerId, Client client)
         {
             InitializeComponent();
@@ -31,6 +32,8 @@ namespace CCA.Page
 
             if (client != null)
             {
+                if (client.socket.Connected == true)
+                    IsP2P = true;
                 //연결 성공
                 Task.Run(() =>
                 {
@@ -75,6 +78,7 @@ namespace CCA.Page
         {
             if(_client != null)
             {
+                _client.socket?.Close();
                 _client.socket?.Dispose();
                 _client.socket = null;
                 _client = null;

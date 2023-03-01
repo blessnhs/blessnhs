@@ -46,14 +46,14 @@ namespace FullCameraApp.Droid
         {
             try
             {
-                var paras = camera.GetParameters();
-                var imageformat = paras.PreviewFormat;
-
+ 
                 if (data == null)
                     return;
 
                 if (camera == null || camera.GetParameters() == null)
                     return;
+
+                var imageformat = camera.GetParameters()?.PreviewFormat;
 
                 if (renderer == null)
                     return;
@@ -97,10 +97,10 @@ namespace FullCameraApp.Droid
                     case ImageFormatType.Yuy2:
                     case ImageFormatType.Yv12:
                         {
-                            int width = paras.PreviewSize.Width;
-                            int height = paras.PreviewSize.Height;
+                            int width = camera.GetParameters().PreviewSize.Width;
+                            int height = camera.GetParameters().PreviewSize.Height;
 
-                            using (YuvImage img = new YuvImage(data, imageformat, width, height, null))
+                            using (YuvImage img = new YuvImage(data, camera.GetParameters().PreviewFormat, width, height, null))
                             {
 
                                 System.IO.MemoryStream outStream = new System.IO.MemoryStream();
@@ -358,8 +358,13 @@ namespace FullCameraApp.Droid
                 var previewSize = parameters.SupportedPreviewSizes
                                          .OrderBy(s => Math.Abs(s.Width * s.Height))
                                          .First();
+
+                int bitsperpixel = ImageFormat.GetBitsPerPixel(parameters.PreviewFormat);
+                int byteperpixel = bitsperpixel / 8;
+
+
                 camera_buffer = null;
-                camera_buffer = new byte[previewSize.Width * previewSize.Height * 2];
+                camera_buffer = new byte[(previewSize.Width * previewSize.Height) * 2];
 
                 parameters.SetPreviewSize(previewSize.Width, previewSize.Height);
                 camera.SetParameters(parameters);
@@ -711,7 +716,7 @@ namespace FullCameraApp.Droid
                 camera.SetPreviewCallbackWithBuffer(new mPreviewCallback(this));
                 camera.StartPreview();
 
-                SetDisplayOrientation();
+                //SetDisplayOrientation();
             }
             catch (Exception e)
             { 
@@ -747,8 +752,17 @@ namespace FullCameraApp.Droid
                         camera = Android.Hardware.Camera.Open();
                 }
 
+                if(camera == null)
+                {
+                    return;
+                }
+
 
                 var parameters = camera.GetParameters();
+                if (parameters == null)
+                    return;
+
+
                 var aspect = ((decimal)height) / ((decimal)width);
 
                 // Find the preview aspect ratio that is closest to the surface aspect
@@ -760,9 +774,12 @@ namespace FullCameraApp.Droid
                 //     mainLayout.LayoutParameters.Height = previewSize.Height;
                 //     mainLayout.LayoutParameters.Width = previewSize.Width;
 
+                int bitsperpixel = ImageFormat.GetBitsPerPixel(parameters.PreviewFormat);
+                float byteperpixel = bitsperpixel / 8;
 
+          
                 camera_buffer = null;
-                camera_buffer = new byte[previewSize.Width * previewSize.Height * 2];
+                camera_buffer = new byte[(previewSize.Width * previewSize.Height) * 2];
 
                 parameters.SetPreviewSize(previewSize.Width, previewSize.Height);
                 camera.SetParameters(parameters);
@@ -888,9 +905,9 @@ namespace FullCameraApp.Droid
             {
                 isDestroy = true;
 
+                StopCamera();
                 Thread.Sleep(500);
 
-                StopCamera();
                 audiomgr?.Clear();
 
                 Torch(false);

@@ -195,9 +195,6 @@ namespace rtaNetworking.Streaming
             lock (_Clients)
                 _Clients.Add(socket);
 
-            ConcurrentQueue<System.IO.MemoryStream> Frames = new ConcurrentQueue<System.IO.MemoryStream>();
-
-
             try
             {
                 using (MjpegWriter wr = new MjpegWriter(new System.Net.Sockets.NetworkStream(socket, true)))
@@ -210,23 +207,22 @@ namespace rtaNetworking.Streaming
 
                     while (socket.Connected == true)
                     {
-                        foreach (var img in ImagesSource)
+                        MemoryStream out_s;
+                        while (ImagesSource.TryDequeue(out out_s) == true)
                         {
 
                             if (this.Interval > 0)
                                 System.Threading.Thread.Sleep(this.Interval);
 
 
-                            Frames.Enqueue(img);
+                            int count = wr.Write(out_s, socket);
 
-
-                            if (Frames.Count > 10)
+                            if (count == 0)
                             {
-                                wr.Write(Frames, _Clients);
-
-                                Frames.Clear();
-
+                                socket.Close();
+                                break;
                             }
+
                         }
 
                         ImagesSource.Clear();
@@ -240,7 +236,6 @@ namespace rtaNetworking.Streaming
             }
             finally
             {
-				Frames.Clear();
                 lock (_Clients)
                     _Clients.Remove(socket);
             }

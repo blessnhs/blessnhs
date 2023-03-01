@@ -99,7 +99,7 @@ namespace CCA.Droid
 
             BatteryCheckReg();
 
-            CreateService();
+//            CreateService();
 
             DeviceDisplay.KeepScreenOn = true;
         }
