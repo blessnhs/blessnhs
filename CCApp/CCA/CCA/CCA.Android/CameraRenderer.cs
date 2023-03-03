@@ -274,43 +274,50 @@ namespace FullCameraApp.Droid
 
         public void Torch(bool on)
         {
-            if (!this.Context.PackageManager.HasSystemFeature(PackageManager.FeatureCameraFlash))
+            try
             {
-                Android.Util.Log.Info("ZXING", "Flash not supported on this device");
-                return;
+                if (!this.Context.PackageManager.HasSystemFeature(PackageManager.FeatureCameraFlash))
+                {
+                    Android.Util.Log.Info("ZXING", "Flash not supported on this device");
+                    return;
+                }
+
+                if (camera == null)
+                {
+                    Android.Util.Log.Info("ZXING", "NULL Camera");
+                    return;
+                }
+
+                var p = camera.GetParameters();
+                var supportedFlashModes = p.SupportedFlashModes;
+
+                if (supportedFlashModes == null)
+                    supportedFlashModes = new List<string>();
+
+                var flashMode = string.Empty;
+
+                if (on)
+                {
+                    if (supportedFlashModes.Contains(Android.Hardware.Camera.Parameters.FlashModeTorch))
+                        flashMode = Android.Hardware.Camera.Parameters.FlashModeTorch;
+                    else if (supportedFlashModes.Contains(Android.Hardware.Camera.Parameters.FlashModeOn))
+                        flashMode = Android.Hardware.Camera.Parameters.FlashModeOn;
+                }
+                else
+                {
+                    if (supportedFlashModes.Contains(Android.Hardware.Camera.Parameters.FlashModeOff))
+                        flashMode = Android.Hardware.Camera.Parameters.FlashModeOff;
+                }
+
+                if (!string.IsNullOrEmpty(flashMode))
+                {
+                    p.FlashMode = flashMode;
+                    camera.SetParameters(p);
+                }
             }
-
-            if (camera == null)
+            catch(Exception ex)
             {
-                Android.Util.Log.Info("ZXING", "NULL Camera");
-                return;
-            }
-
-            var p = camera.GetParameters();
-            var supportedFlashModes = p.SupportedFlashModes;
-
-            if (supportedFlashModes == null)
-                supportedFlashModes = new List<string>();
-
-            var flashMode = string.Empty;
-
-            if (on)
-            {
-                if (supportedFlashModes.Contains(Android.Hardware.Camera.Parameters.FlashModeTorch))
-                    flashMode = Android.Hardware.Camera.Parameters.FlashModeTorch;
-                else if (supportedFlashModes.Contains(Android.Hardware.Camera.Parameters.FlashModeOn))
-                    flashMode = Android.Hardware.Camera.Parameters.FlashModeOn;
-            }
-            else
-            {
-                if (supportedFlashModes.Contains(Android.Hardware.Camera.Parameters.FlashModeOff))
-                    flashMode = Android.Hardware.Camera.Parameters.FlashModeOff;
-            }
-
-            if (!string.IsNullOrEmpty(flashMode))
-            {
-                p.FlashMode = flashMode;
-                camera.SetParameters(p);
+                Method_Android.NotificationException(ex); 
             }
         }
 
@@ -322,54 +329,61 @@ namespace FullCameraApp.Droid
 
         public void SiwtchCamera()
         {
-            StopCamera();
-
-            if (currentFacing == Android.Hardware.CameraFacing.Front)
-                currentFacing = Android.Hardware.CameraFacing.Back;
-            else
-                currentFacing = Android.Hardware.CameraFacing.Front;
-
+            try
             {
-                int cameraCount = Android.Hardware.Camera.NumberOfCameras;
-                int cameraId = 0;
-                for (int camIdx = 0; camIdx < cameraCount; camIdx++)
+                StopCamera();
+
+                if (currentFacing == Android.Hardware.CameraFacing.Front)
+                    currentFacing = Android.Hardware.CameraFacing.Back;
+                else
+                    currentFacing = Android.Hardware.CameraFacing.Front;
+
                 {
-                    Android.Hardware.Camera.GetCameraInfo(camIdx, cameraInfo);
-                    if (cameraInfo.Facing == currentFacing)
+                    int cameraCount = Android.Hardware.Camera.NumberOfCameras;
+                    int cameraId = 0;
+                    for (int camIdx = 0; camIdx < cameraCount; camIdx++)
                     {
-                        camera = Android.Hardware.Camera.Open(camIdx);
-                        cameraId = camIdx;
-                        break;
+                        Android.Hardware.Camera.GetCameraInfo(camIdx, cameraInfo);
+                        if (cameraInfo.Facing == currentFacing)
+                        {
+                            camera = Android.Hardware.Camera.Open(camIdx);
+                            cameraId = camIdx;
+                            break;
+                        }
                     }
+
+                    if (camera == null)
+                        camera = Android.Hardware.Camera.Open();
+
+
+                    var parameters = camera.GetParameters();
+
+                    // Find the preview aspect ratio that is closest to the surface aspect
+                    //var previewSize = parameters.SupportedPreviewSizes
+                    //                            .OrderBy(s => Math.Abs(s.Width / (decimal)s.Height - aspect))
+                    //                            .First();
+
+
+                    var previewSize = parameters.SupportedPreviewSizes
+                                             .OrderBy(s => Math.Abs(s.Width * s.Height))
+                                             .First();
+
+                    int bitsperpixel = ImageFormat.GetBitsPerPixel(parameters.PreviewFormat);
+                    int byteperpixel = bitsperpixel / 8;
+
+
+                    camera_buffer = null;
+                    camera_buffer = new byte[(previewSize.Width * previewSize.Height) * 2];
+
+                    parameters.SetPreviewSize(previewSize.Width, previewSize.Height);
+                    camera.SetParameters(parameters);
+                    camera.SetPreviewTexture(_surface);
+                    StartCamera();
                 }
-
-                if (camera == null)
-                    camera = Android.Hardware.Camera.Open();
-
-
-                var parameters = camera.GetParameters();
-
-                // Find the preview aspect ratio that is closest to the surface aspect
-                //var previewSize = parameters.SupportedPreviewSizes
-                //                            .OrderBy(s => Math.Abs(s.Width / (decimal)s.Height - aspect))
-                //                            .First();
-
-               
-                var previewSize = parameters.SupportedPreviewSizes
-                                         .OrderBy(s => Math.Abs(s.Width * s.Height))
-                                         .First();
-
-                int bitsperpixel = ImageFormat.GetBitsPerPixel(parameters.PreviewFormat);
-                int byteperpixel = bitsperpixel / 8;
-
-
-                camera_buffer = null;
-                camera_buffer = new byte[(previewSize.Width * previewSize.Height) * 2];
-
-                parameters.SetPreviewSize(previewSize.Width, previewSize.Height);
-                camera.SetParameters(parameters);
-                camera.SetPreviewTexture(_surface);
-                StartCamera();
+            }
+            catch(Exception ex)
+            {
+                Method_Android.NotificationException(ex);
             }
         }
 
@@ -415,139 +429,146 @@ namespace FullCameraApp.Droid
 
         void SetupUserInterface()
         {
-            var metrics = Resources.DisplayMetrics;
-
-            half_width = metrics.WidthPixels / 2;
-            half_height = metrics.HeightPixels / 4;
-
-
-            mainLayout = new RelativeLayout(Context);
-            mainLayout.SetBackgroundColor(Color.Black);
-
-            /////////////////////////////////////////////////////////////////////////////////
-            liveView = new TextureView(Context);
-
-            RelativeLayout.LayoutParams liveViewParams = new RelativeLayout.LayoutParams(
-                RelativeLayout.LayoutParams.MatchParent,
-                RelativeLayout.LayoutParams.MatchParent);
-
-            liveViewParams.Height = half_height;
-            liveViewParams.Width = half_width;
-            liveView.LayoutParameters = liveViewParams;
-            mainLayout.AddView(liveView);
-
-            //TextView textview1 = new TextView(Context);
-            //textview1.Text = "";
-            //textview1.SetX(half_width / 2);
-            //textview1.SetY(half_height + 10);
-            //textview1.SetTextColor(Color.White);
-            //mainLayout.AddView(textview1);
-            ///////////////////////////////////////////////////////////////////////////////
-
-            ///////////////////////////////////////////////////////////////////////////////
-            AddImageView(0);
-            AddImageView(1);
-            AddImageView(2);
-            AddImageView(3);
-            AddImageView(4);
-            AddImageView(5);
-
-            //중앙 스크린
-            AddImageView(6, metrics.WidthPixels, half_height * 2);
-
-            ///////////////////////////////////////////////////////////////////////////////
-            textViewMain = new TextView(Context);
-            RelativeLayout.LayoutParams TextViewParams = new RelativeLayout.LayoutParams(
-            RelativeLayout.LayoutParams.WrapContent,
-            RelativeLayout.LayoutParams.WrapContent);
-            textViewMain.LayoutParameters = TextViewParams;
-            textViewMain.Text = "123124";
-            textViewMain.SetTextColor(Color.White);
-            textViewMain.Click += async (s, e) =>
+            try
             {
-                textViewMain.Text = "";
-            };
+                var metrics = Resources.DisplayMetrics;
 
-            if (disable_button == false)
-                mainLayout.AddView(textViewMain);
-            ///////////////////////////////////////////////////////////////////////////////
-            ///
+                half_width = metrics.WidthPixels / 2;
+                half_height = metrics.HeightPixels / 4;
 
-            ///////////////////////////////////////////////////////////////////////////////
-            mainScreenButton = new Button(Context);
-            RelativeLayout.LayoutParams ButtonParams = new RelativeLayout.LayoutParams(
-            RelativeLayout.LayoutParams.WrapContent,
-             RelativeLayout.LayoutParams.WrapContent);
-            mainScreenButton.LayoutParameters = ButtonParams;
-            mainScreenButton.Text = "Hide";
-            mainScreenButton.Click += async (s, e) =>
-            {
-                ImageView view;
-                if (imageViewDic.TryGetValue(6, out view) == true)
+
+                mainLayout = new RelativeLayout(Context);
+                mainLayout.SetBackgroundColor(Color.Black);
+
+                /////////////////////////////////////////////////////////////////////////////////
+                liveView = new TextureView(Context);
+
+                RelativeLayout.LayoutParams liveViewParams = new RelativeLayout.LayoutParams(
+                    RelativeLayout.LayoutParams.MatchParent,
+                    RelativeLayout.LayoutParams.MatchParent);
+
+                liveViewParams.Height = half_height;
+                liveViewParams.Width = half_width;
+                liveView.LayoutParameters = liveViewParams;
+                mainLayout.AddView(liveView);
+
+                //TextView textview1 = new TextView(Context);
+                //textview1.Text = "";
+                //textview1.SetX(half_width / 2);
+                //textview1.SetY(half_height + 10);
+                //textview1.SetTextColor(Color.White);
+                //mainLayout.AddView(textview1);
+                ///////////////////////////////////////////////////////////////////////////////
+
+                ///////////////////////////////////////////////////////////////////////////////
+                AddImageView(0);
+                AddImageView(1);
+                AddImageView(2);
+                AddImageView(3);
+                AddImageView(4);
+                AddImageView(5);
+
+                //중앙 스크린
+                AddImageView(6, metrics.WidthPixels, half_height * 2);
+
+                ///////////////////////////////////////////////////////////////////////////////
+                textViewMain = new TextView(Context);
+                RelativeLayout.LayoutParams TextViewParams = new RelativeLayout.LayoutParams(
+                RelativeLayout.LayoutParams.WrapContent,
+                RelativeLayout.LayoutParams.WrapContent);
+                textViewMain.LayoutParameters = TextViewParams;
+                textViewMain.Text = "123124";
+                textViewMain.SetTextColor(Color.White);
+                textViewMain.Click += async (s, e) =>
                 {
-                    if (view.Visibility == ViewStates.Visible)
-                    {
-                        view.Visibility = ViewStates.Invisible;
-                        mainScreenButton.Text = "Show";
-                    }
-                    else
-                    {
-                        view.Visibility = ViewStates.Visible;
-                        mainScreenButton.Text = "Hide";
-                    }
-                }
-            };
-            if (disable_button == false)
-                mainLayout.AddView(mainScreenButton);
+                    textViewMain.Text = "";
+                };
 
-            ///////////////////////////////////////////////////////////////////////////////
-            qualityUp = new Button(Context);
-            qualityUp.LayoutParameters = ButtonParams;
-            qualityUp.Text = "Up";
-            qualityUp.Click += async (s, e) =>
-            {
-                QualityUp();
+                if (disable_button == false)
+                    mainLayout.AddView(textViewMain);
+                ///////////////////////////////////////////////////////////////////////////////
+                ///
 
-            };
-            if (disable_button == false)
-                mainLayout.AddView(qualityUp);
-            ///////////////////////////////////////////////////////////////////////////////
-            qualityDown = new Button(Context);
-            qualityDown.LayoutParameters = ButtonParams;
-            qualityDown.Text = "Down";
-            qualityDown.Click += async (s, e) =>
-            {
-                QualityDown();
-            };
-            if (disable_button == false)
-                mainLayout.AddView(qualityDown);
-            ///////////////////////////////////////////////////////////////////////////////
-            exitButton = new Button(Context);
-            exitButton.LayoutParameters = ButtonParams;
-            exitButton.Text = "EXIT";
-            exitButton.Click += async (s, e) =>
-            {
-                MainThread.BeginInvokeOnMainThread(() =>
+                ///////////////////////////////////////////////////////////////////////////////
+                mainScreenButton = new Button(Context);
+                RelativeLayout.LayoutParams ButtonParams = new RelativeLayout.LayoutParams(
+                RelativeLayout.LayoutParams.WrapContent,
+                 RelativeLayout.LayoutParams.WrapContent);
+                mainScreenButton.LayoutParameters = ButtonParams;
+                mainScreenButton.Text = "Hide";
+                mainScreenButton.Click += async (s, e) =>
                 {
-                    PopupNavigation.Instance.PopAsync();
-                });
-            };
-            if (disable_button == false)
-                mainLayout.AddView(exitButton);
-            ////////////////////////////////////////////////////////////DrawLayout///////////////////
-            switchButton = new Button(Context);
-            switchButton.LayoutParameters = ButtonParams;
-            switchButton.Text = "Switch";
-            switchButton.Click += async (s, e) =>
+                    ImageView view;
+                    if (imageViewDic.TryGetValue(6, out view) == true)
+                    {
+                        if (view.Visibility == ViewStates.Visible)
+                        {
+                            view.Visibility = ViewStates.Invisible;
+                            mainScreenButton.Text = "Show";
+                        }
+                        else
+                        {
+                            view.Visibility = ViewStates.Visible;
+                            mainScreenButton.Text = "Hide";
+                        }
+                    }
+                };
+                if (disable_button == false)
+                    mainLayout.AddView(mainScreenButton);
+
+                ///////////////////////////////////////////////////////////////////////////////
+                qualityUp = new Button(Context);
+                qualityUp.LayoutParameters = ButtonParams;
+                qualityUp.Text = "Up";
+                qualityUp.Click += async (s, e) =>
+                {
+                    QualityUp();
+
+                };
+                if (disable_button == false)
+                    mainLayout.AddView(qualityUp);
+                ///////////////////////////////////////////////////////////////////////////////
+                qualityDown = new Button(Context);
+                qualityDown.LayoutParameters = ButtonParams;
+                qualityDown.Text = "Down";
+                qualityDown.Click += async (s, e) =>
+                {
+                    QualityDown();
+                };
+                if (disable_button == false)
+                    mainLayout.AddView(qualityDown);
+                ///////////////////////////////////////////////////////////////////////////////
+                exitButton = new Button(Context);
+                exitButton.LayoutParameters = ButtonParams;
+                exitButton.Text = "EXIT";
+                exitButton.Click += async (s, e) =>
+                {
+                    MainThread.BeginInvokeOnMainThread(() =>
+                    {
+                        PopupNavigation.Instance.PopAsync();
+                    });
+                };
+                if (disable_button == false)
+                    mainLayout.AddView(exitButton);
+                ////////////////////////////////////////////////////////////DrawLayout///////////////////
+                switchButton = new Button(Context);
+                switchButton.LayoutParameters = ButtonParams;
+                switchButton.Text = "Switch";
+                switchButton.Click += async (s, e) =>
+                {
+                    SiwtchCamera();
+                };
+                if (disable_button == false)
+                    mainLayout.AddView(switchButton);
+
+                ////////////////////////////////////////////////////////////DrawLayout///////////////////
+
+                AddView(mainLayout);
+            }
+            catch(Exception ex)
             {
-                SiwtchCamera();
-            };
-            if (disable_button == false)
-                mainLayout.AddView(switchButton);
-
-            ////////////////////////////////////////////////////////////DrawLayout///////////////////
-
-            AddView(mainLayout);
+                Method_Android.NotificationException(ex);
+            }
         }
 
 
@@ -665,13 +686,19 @@ namespace FullCameraApp.Droid
 
         private void StopCamera()
         {
+            try
+            {
+                camera?.SetPreviewCallbackWithBuffer(null);
+                camera?.StopPreview();
+                camera?.Release();
+                camera = null;
 
-            camera?.SetPreviewCallbackWithBuffer(null);
-            camera?.StopPreview();
-            camera?.Release();
-            camera = null;
-
-            camera_buffer = null;
+                camera_buffer = null;
+            }
+            catch(Exception ex)
+            {
+                Method_Android.NotificationException(ex);
+            }
         }
 
         private void SetDisplayOrientation()
@@ -718,8 +745,9 @@ namespace FullCameraApp.Droid
 
                 //SetDisplayOrientation();
             }
-            catch (Exception e)
-            { 
+            catch (Exception ex)
+            {
+                Method_Android.NotificationException(ex);
             }
         }
 
@@ -729,6 +757,7 @@ namespace FullCameraApp.Droid
         SurfaceTexture _surface;
         public void OnSurfaceTextureAvailable(SurfaceTexture surface, int width, int height)
         {
+            try
             {
                 _surface = surface;
                 {
@@ -890,6 +919,10 @@ namespace FullCameraApp.Droid
 
                 //});
 
+            }
+            catch(Exception ex)
+            {
+                Method_Android.NotificationException(ex);
             }
 
         }

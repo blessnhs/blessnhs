@@ -53,9 +53,10 @@ namespace CCA
                         {
                             if (NetProcess.IsActivate == false) continue;
 
+                            NetProcess.Loop();
+
                             NetProcess.start();
                             NetProcess.client.PacketRecvSync2();
-                            NetProcess.Loop();
                         }
                         catch (Exception e)
                         {
