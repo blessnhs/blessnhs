@@ -7,8 +7,8 @@ namespace GSNetwork	{ namespace GSSocket	{	namespace GSPacket	{
 
 GSPacket::GSPacket(VOID)
 {
-	m_CurrentPacketSize = MAX_BUFFER_LENGTH * 5;
-	m_PacketBuffer = new BYTE[m_CurrentPacketSize];
+	m_Max_Packet_Buffer_Size = MAX_BUFFER_LENGTH * 5;
+	m_PacketBuffer = new BYTE[m_Max_Packet_Buffer_Size];
 
 	memset(m_PacketBuffer, 0, sizeof(m_PacketBuffer));
 

@@ -227,12 +227,14 @@ VOID GSIocp::Close(SOCKET client)
 {
 		//iocp에서 closesocket하면 안된다. 
 
-		OVERLAPPED_EX* ex = new OVERLAPPED_EX;
+	/*	OVERLAPPED_EX* ex = new OVERLAPPED_EX;
 
 		ex->ObjectId = client;
 		ex->IoType = IO_READ;
 
-		PostQueuedCompletionStatus(m_Handle, 0, (ULONG_PTR)ex, (LPOVERLAPPED)ex);
+		PostQueuedCompletionStatus(m_Handle, 0, (ULONG_PTR)ex, (LPOVERLAPPED)ex);*/
+
+		closesocket(client);
 }
 
 

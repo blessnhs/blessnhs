@@ -19,7 +19,7 @@ public:
 	BOOL	WriteToPacket(LPCSTR remoteAddress, USHORT remotePort, WORD MainProtocol, WORD SubProtocol,const BYTE *packet, WORD packetLength);
 	BOOL	WriteComplete(VOID);
 
-	VOID	MakePacket(DWORD dwDataLength,WORD &Mainprotocol, WORD &Subprotocol,DWORD &dataLength);
+	VOID	MakePacket(DWORD dwDataLength);
 	virtual VOID MakeMsg(WORD Mainprotocol, WORD Subprotocol,DWORD dataLength) {};
 
 	BOOL	ResetUdp(VOID);

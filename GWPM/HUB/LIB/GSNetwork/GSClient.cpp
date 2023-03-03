@@ -380,9 +380,6 @@ void GSClient::OnRecv(DWORD Length, boost::shared_ptr<GSClient> client)
 {
 	CThreadSync Sync;
 
-	WORD  MainProtocol = 0,SubProtocol = 0;
-	DWORD dwPacketLength = 0;
-
 	if (client->GetCreateType() == TCP)
 	{
 		GetTCPSocket()->MakePacket(Length);
@@ -391,7 +388,7 @@ void GSClient::OnRecv(DWORD Length, boost::shared_ptr<GSClient> client)
 	}
 	else if (client->GetCreateType() == UDP)
 	{
-		GetUDPSocket()->MakePacket(Length, MainProtocol, SubProtocol, dwPacketLength);
+		GetUDPSocket()->MakePacket(Length);
 
 		//udp의 경우 속도가 중요하고 connectionless이기 때문에 로직 스레드로 던지지 않고 그냥 처리해본다.
 		//TakeMsg(client);

@@ -10,7 +10,7 @@ GSSocket::GSSocket(VOID)
 	m_OLP_REMAIN_COUNT_REC = 0;
 	m_OLP_REMAIN_COUNT_SND = 0;
 
-	memset(m_Buffer, 0, sizeof(m_Buffer));
+	memset(m_ReceiveBuffer, 0, sizeof(m_ReceiveBuffer));
 	m_Socket							= NULL;
 
 	m_bConnected = FALSE;
@@ -20,7 +20,7 @@ GSSocket::GSSocket(VOID)
 
 BYTE *GSSocket::GetBuffer()
 {
-	return m_Buffer;
+	return m_ReceiveBuffer;
 }
 
 GSSocket::~GSSocket(VOID)
@@ -36,7 +36,7 @@ BOOL GSSocket::Initialize(VOID)
 	if (m_Socket)
 		return FALSE;
 
-	memset(m_Buffer, 0, sizeof(m_Buffer));
+	memset(m_ReceiveBuffer, 0, sizeof(m_ReceiveBuffer));
 
 	m_Socket							= NULL;
 	return TRUE;
@@ -194,7 +194,7 @@ BOOL GSSocket::Accept(SOCKET listenSocket)
 
 	if (!AcceptEx(listenSocket, 
 		m_Socket, 
-		m_Buffer, 
+		m_ReceiveBuffer,
 		0, 
 		sizeof(sockaddr_in) + 16, 
 		sizeof(sockaddr_in) + 16, 
@@ -239,7 +239,7 @@ BOOL GSSocket::Accept2(SOCKET listenSocket)
 
 	if (!AcceptEx(listenSocket, 
 		m_Socket, 
-		m_Buffer, 
+		m_ReceiveBuffer,
 		0, 
 		sizeof(sockaddr_in) + 16, 
 		sizeof(sockaddr_in) + 16, 
@@ -305,7 +305,7 @@ BOOL GSSocket::GetLocalIP(std::string& ipaddress, int& port)
 	sockaddr_in* Remote = NULL;
 	INT				RemoteLength = 0;
 
-	GetAcceptExSockaddrs(m_Buffer,
+	GetAcceptExSockaddrs(m_ReceiveBuffer,
 		0,
 		sizeof(sockaddr_in) + 16,
 		sizeof(sockaddr_in) + 16,

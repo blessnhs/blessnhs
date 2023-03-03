@@ -71,7 +71,7 @@ BOOL GSSocketTCP::InitializeReadForIocp(VOID)
 	DWORD	ReadBytes	= 0;
 	DWORD	ReadFlag	= 0;
 
-	WsaBuf.buf			= (CHAR*) m_Buffer;
+	WsaBuf.buf			= (CHAR*)m_ReceiveBuffer;
 	WsaBuf.len			= MAX_BUFFER_LENGTH;
 
 	m_OLP_REMAIN_COUNT_REC.fetch_add(1);
@@ -120,7 +120,7 @@ BOOL			GSSocketTCP::ReadForIocp(BYTE* PacketBuffer, DWORD DataLength,DWORD Remai
 	if(RemainLength + DataLength >= MaxPacketBufferSize)
 		return FALSE;
 
-	memcpy(PacketBuffer + RemainLength, m_Buffer, DataLength);
+	memcpy(PacketBuffer + RemainLength, m_ReceiveBuffer, DataLength);
 
 	return TRUE;
 }
@@ -142,7 +142,7 @@ BOOL			GSSocketTCP::ReadForEventSelect(BYTE *Data, DWORD &DataLength)
 	DWORD	ReadBytes	= 0;
 	DWORD	ReadFlag	= 0;
 
-	WsaBuf.buf			= (CHAR*) m_Buffer;
+	WsaBuf.buf			= (CHAR*)m_ReceiveBuffer;
 	WsaBuf.len			= MAX_BUFFER_LENGTH;
 
 	m_OLP_REMAIN_COUNT_REC.fetch_add(1);
@@ -167,7 +167,7 @@ BOOL			GSSocketTCP::ReadForEventSelect(BYTE *Data, DWORD &DataLength)
 		return FALSE;
 	}
 
-	memcpy(Data, m_Buffer, ReadBytes);
+	memcpy(Data, m_ReceiveBuffer, ReadBytes);
 	DataLength = ReadBytes;
 
 	return TRUE;

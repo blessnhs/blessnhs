@@ -45,21 +45,23 @@ BOOL	GSPacketTCP::ReadPacket(DWORD ReadSize)
 {
 	CThreadSync Sync;
 
-	if (m_CurrentPacketSize <= (ReadSize +m_RemainLength))
+
+	//받아온 패킷등을 저장하는 버퍼가 이번에 온 패킷크기와 남은 패킷 크기보다 모자르면 늘린다. 
+	if (m_Max_Packet_Buffer_Size <= (ReadSize +m_RemainLength))
 	{
-		DWORD Resize = ReadSize + m_RemainLength + m_CurrentPacketSize;
+		DWORD Resize = ReadSize + m_RemainLength + m_Max_Packet_Buffer_Size;
 		BYTE* NewBuff = new BYTE[Resize];
-		memcpy(NewBuff, m_PacketBuffer, m_CurrentPacketSize);
+		memcpy(NewBuff, m_PacketBuffer, m_Max_Packet_Buffer_Size);
 		delete m_PacketBuffer;
 
 		m_PacketBuffer = NewBuff;
 
-		m_CurrentPacketSize = Resize;
+		m_Max_Packet_Buffer_Size = Resize;
 
 		SYSLOG().Write("ReadPacket Resize %d bytes %d kbytes %d mbytes\n", Resize,Resize/1024,Resize/1024/1024);
 	}
 
-	if (!GSSocketTCP::ReadForIocp(m_PacketBuffer, ReadSize, m_RemainLength, m_CurrentPacketSize))
+	if (!GSSocketTCP::ReadForIocp(m_PacketBuffer, ReadSize, m_RemainLength, m_Max_Packet_Buffer_Size))
 	{
 
 		return FALSE;
