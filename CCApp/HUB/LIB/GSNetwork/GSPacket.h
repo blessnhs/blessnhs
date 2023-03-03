@@ -43,8 +43,11 @@ public:
 
 
 protected:
-	DWORD																	m_CurrentPacketSize;
+	//받은 패킷을 저장하는 사이즈					
+	DWORD																	m_Max_Packet_Buffer_Size;
+	//받은 패킷을 저장하는 버퍼 //패킷이 오면 큐에 넣어서꺼내기까지 몇개든지 이 버퍼에 저장					
 	BYTE																	*m_PacketBuffer;
+	//처리하고 남은 사이즈 혹은 다 받지 못한 패킷사이즈
 	DWORD																	m_RemainLength;
 
 	DWORD																	m_CurrentPacketNumber;

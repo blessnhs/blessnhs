@@ -25,7 +25,8 @@ public:
 
 protected:
 	
-	BYTE			m_Buffer[MAX_BUFFER_LENGTH];
+					//wsarecvieve에서 이번에 전송받은 패킷 버퍼
+	BYTE			m_ReceiveBuffer[MAX_BUFFER_LENGTH];
 
 	SOCKET			m_Socket;
 

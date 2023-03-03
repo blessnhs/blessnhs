@@ -158,7 +158,7 @@ BOOL GSSocketUDP::InitializeReadFromForIocp(VOID)
 	DWORD		ReadFlag				= 0;
 	INT			RemoteAddressInfoSize	= sizeof(m_UdpRemoteInfo);
 
-	WsaBuf.buf			= (CHAR*) m_Buffer;
+	WsaBuf.buf			= (CHAR*)m_ReceiveBuffer;
 	WsaBuf.len			= MAX_BUFFER_LENGTH;
 
 	OVERLAPPED_EX* m_Read_OLP = new OVERLAPPED_EX;
@@ -205,7 +205,7 @@ BOOL			GSSocketUDP::ReadFromForEventSelect(LPSTR remoteAddress, USHORT &remotePo
 	DWORD		ReadFlag				= 0;
 	INT			RemoteAddressInfoSize	= sizeof(m_UdpRemoteInfo);
 
-	WsaBuf.buf			= (CHAR*) m_Buffer;
+	WsaBuf.buf			= (CHAR*)m_ReceiveBuffer;
 	WsaBuf.len			= MAX_BUFFER_LENGTH;
 	
 	
@@ -234,7 +234,7 @@ BOOL			GSSocketUDP::ReadFromForEventSelect(LPSTR remoteAddress, USHORT &remotePo
 		return FALSE;
 	}
 
-	memcpy(data, m_Buffer, ReadBytes);
+	memcpy(data, m_ReceiveBuffer, ReadBytes);
 	dataLength	= ReadBytes;
 
 	//memcpy(remoteAddress, inet_ntoa(m_UdpRemoteInfo.sin_addr), 32);
@@ -242,7 +242,7 @@ BOOL			GSSocketUDP::ReadFromForEventSelect(LPSTR remoteAddress, USHORT &remotePo
 	remotePort	= ntohs(m_UdpRemoteInfo.sin_port);
 
 	USHORT Ack = 0;
-	memcpy(&Ack, m_Buffer, sizeof(USHORT));
+	memcpy(&Ack, m_ReceiveBuffer, sizeof(USHORT));
 
 	if (Ack == 9999)
 	{
@@ -278,7 +278,7 @@ BOOL	GSSocketUDP::ReadFromForIocp(LPSTR& remoteAddress, USHORT &remotePort, BYTE
 	if(dataLength >= MAX_BUFFER_LENGTH)
 		return FALSE;
 
-	memcpy(data, m_Buffer, dataLength);
+	memcpy(data, m_ReceiveBuffer, dataLength);
 
 	remoteAddress =  inet_ntoa(m_UdpRemoteInfo.sin_addr);
 	remotePort	= ntohs(m_UdpRemoteInfo.sin_port);
@@ -315,7 +315,7 @@ BOOL GSSocketUDP::GetRemoteAddressAfterAccept(LPTSTR remoteAddress, USHORT &remo
 	sockaddr_in		*Remote			= NULL;
 	INT				RemoteLength	= 0;
 
-	GetAcceptExSockaddrs(m_Buffer, 
+	GetAcceptExSockaddrs(m_ReceiveBuffer,
 		0, 
 		sizeof(sockaddr_in) + 16, 
 		sizeof(sockaddr_in) + 16,
