@@ -515,6 +515,9 @@ VOID HubProcess::ROOM_BITMAP_CHAT(boost::shared_ptr<XDATA> pBuffer, boost::share
 	}
 
 	res.set_var_name(pPlayer->GetMachineName());
+	res.set_var_width(message.var_width());
+	res.set_var_height(message.var_height());
+
 
 	for each (auto msg  in message.var_message())
 	{

@@ -17,6 +17,12 @@ using CCA;
 using rtaNetworking.Streaming;
 using CCA.Droid;
 using DependencyHelper.Droid;
+using FFMediaToolkit;
+using FFMediaToolkit.Encoding;
+using System.IO;
+using FFMediaToolkit.Graphics;
+using System.Drawing;
+
 
 [assembly: Xamarin.Forms.ExportRenderer(typeof(CameraViewer), typeof(CameraViewerRenderer))]
 namespace FullCameraApp.Droid
@@ -95,7 +101,6 @@ namespace FullCameraApp.Droid
 
             imageView.Rotation = 0;
             imageView.LayoutParameters = imageViewParams;
-            imageView.SetScaleType(ImageView.ScaleType.FitXy);
             mainLayout.AddView(imageView);
             ///////////////////////////////////////////////////////////////////////////////
         }
@@ -111,7 +116,7 @@ namespace FullCameraApp.Droid
 
 
                 mainLayout = new RelativeLayout(Context);
-                mainLayout.SetBackgroundColor(Color.Black);
+                mainLayout.SetBackgroundColor(Android.Graphics.Color.Black);
 
                 /////////////////////////////////////////////////////////////////////////////////
                 //중앙 스크린
@@ -226,7 +231,9 @@ namespace FullCameraApp.Droid
             var metrics = Resources.DisplayMetrics;
 
             int screen_width = half_width + half_width;
+            int screen_height = half_height + half_height;
 
+          
             //한줄에 몇개 보여줄지
             int displayLineObjectCount = 4;
 
@@ -265,7 +272,7 @@ namespace FullCameraApp.Droid
             }
             return base.OnKeyDown(keyCode, e);
         }
-
+   
         public void SetUpPlayTask()
         {
             Rotate = 0;
@@ -273,6 +280,8 @@ namespace FullCameraApp.Droid
             //caemra page render
             Task.Run(() =>
             {
+                var fileName = System.IO.Path.Combine(Android.OS.Environment.GetExternalStoragePublicDirectory(Android.OS.Environment.DirectoryDownloads).AbsolutePath, "av.mpeg");
+        
                 NetProcess.JpegStream.Clear();
 
                 DateTime chk = DateTime.Now;
@@ -305,11 +314,15 @@ namespace FullCameraApp.Droid
                                 StreamWrapper cms = ms;
                                 if (cms != null)
                                 {
+  
                                     var bitmap = BitmapFactory.DecodeByteArray(cms?.stream.ToArray(), 0, cms.stream.ToArray().Length);
                                     if (bitmap != null)
                                     {
+
                                         imageView?.SetImageBitmap(bitmap);
                                         imageView.Rotation = Rotate;
+
+                                       // imageView.SetAdjustViewBounds(true);
                                     }
                                 }
 
@@ -357,7 +370,6 @@ namespace FullCameraApp.Droid
             });
 
         }
-
     }
 
 }

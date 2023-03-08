@@ -62,7 +62,6 @@ namespace CCA.Droid
                 isStarted = savedInstanceState.GetBoolean(Constants.SERVICE_STARTED_KEY, false);
             }
 
-
             context = this;
             activity = this;
 
@@ -99,7 +98,7 @@ namespace CCA.Droid
 
             BatteryCheckReg();
 
-//            CreateService();
+            CreateService();
 
             DeviceDisplay.KeepScreenOn = true;
         }
@@ -357,13 +356,13 @@ namespace CCA.Droid
 
                 GoogleSignIn();
                 LoadApplication(new App());
+
             }
         }
+      
 
         private void CreateService()
         {
-
-            OnNewIntent(this.Intent);
 
             startServiceIntent = new Intent(this, typeof(ServiceCamera));
             startServiceIntent.SetAction(Constants.ACTION_START_SERVICE);

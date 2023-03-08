@@ -40,36 +40,6 @@ namespace CCA.Droid
 		Handler handler;
 		Action runnable;
 
-		private void NetworkProcess()
-		{
-			//network
-			{
-
-				//network thread
-				Task.Run(() =>
-				{
-					while (true)
-					{
-						try
-						{
-							if (NetProcess.IsActivate == false)
-								continue;
-
-							NetProcess.start();
-							NetProcess.client.PacketRecvSync();
-							NetProcess.Loop();
-						}
-						catch (Exception e)
-						{
-							//DependencyService.Get<MethodExt>().Notification(e.Message);
-						}
-
-						Thread.Sleep(200);
-					}
-				});
-			}
-		}
-
 		public override void OnCreate()
 		{
 			base.OnCreate();
@@ -101,6 +71,9 @@ namespace CCA.Droid
 						RegisterForegroundService();
 
 						isStarted = true;
+				
+						MainPage.NetworkProcess();
+
 					}
 				}
 				else if (intent.Action.Equals(Constants.ACTION_STOP_SERVICE))
@@ -121,7 +94,7 @@ namespace CCA.Droid
 			}
 
 			// This tells Android not to restart the service if it is killed to reclaim resources.
-			return StartCommandResult.Sticky;
+			return StartCommandResult.NotSticky;
 		}
 
 

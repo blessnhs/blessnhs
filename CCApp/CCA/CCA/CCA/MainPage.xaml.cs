@@ -27,7 +27,7 @@ namespace CCA
         {
             InitializeComponent();
 
-            NetworkProcess();
+//            NetworkProcess();
 
             iIterstitia = DependencyService.Get<iAd_IterstitialView>();
             rewardVideo = DependencyService.Get<iAd_RewardVideoView>();
@@ -39,7 +39,7 @@ namespace CCA
             return true;
         }
 
-        private void NetworkProcess()
+        static public void  NetworkProcess()
         {
             //network
             {
@@ -60,7 +60,7 @@ namespace CCA
                         }
                         catch (Exception e)
                         {
-                        //    DependencyService.Get<MethodExt>().Notification(e.StackTrace.ToString());
+                            DependencyService.Get<MethodExt>().Notification(e.StackTrace.ToString());
                         }
 
                         Thread.Sleep(100);

@@ -392,6 +392,8 @@ namespace CCA
                                 {
                                     StreamWrapper wra = new StreamWrapper();
                                     wra.stream = new MemoryStream(msg.ToByteArray());
+                                    wra.width = res.VarWidth;
+                                    wra.height = res.VarHeight;
                                     JpegStream.Enqueue(wra);
                                 }
                             }
@@ -516,7 +518,7 @@ namespace CCA
             }
         }
 
-        static public void SendRoomBITMAPMessage(ConcurrentQueue<System.IO.MemoryStream> list, int type)
+        static public void SendRoomBITMAPMessage(ConcurrentQueue<System.IO.MemoryStream> list, int type,int width,int height)
         {
 
             if (client == null || client.socket == null || client.socket.Connected == false)
@@ -525,6 +527,8 @@ namespace CCA
                 BITMAP_MESSAGE_REQ message = new BITMAP_MESSAGE_REQ();
                 message.VarRoomNumber = User.CurrentChatViewNumber;
                 message.VarType = type;
+                message.VarWidth = width;
+                message.VarHeight = height;
 
                 foreach (var playerid in TargetPlayerId)
                 {

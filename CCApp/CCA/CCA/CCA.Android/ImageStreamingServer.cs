@@ -102,8 +102,8 @@ namespace rtaNetworking.Streaming
             {
                 try
                 {
-                    _Thread.Join(300);
-                    _Thread.Abort();
+                    _Thread?.Join(300);
+                    _Thread?.Abort();
                 }
                 finally
                 {

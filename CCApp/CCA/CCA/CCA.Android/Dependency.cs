@@ -125,7 +125,10 @@ namespace DependencyHelper.Droid
 
             MainActivity.activity.Finish();
             MainActivity.context.StartActivity(intent);
-            
+
+            NetProcess.IsActivate = false;
+
+
         }
 
         public void Notification(string message)

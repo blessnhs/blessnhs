@@ -11,6 +11,9 @@ namespace CCA
         public MemoryStream stream = new MemoryStream();
         public int pos = 0;
         public int type = 0;
+        
+        public int width;//이미지 크기 가로
+        public int height;//
     }
 
     static class Helper

@@ -281,7 +281,7 @@ namespace CCA
             }
             catch (Exception e)
             {
-                Console.WriteLine(e.ToString());
+                DependencyService.Get<MethodExt>().Notification(e.StackTrace.ToString());
             }
         }
 
@@ -301,9 +301,9 @@ namespace CCA
                 }
                   
             }
-            catch (Exception ee)
+            catch (Exception e)
             {
-                Console.WriteLine(ee.ToString());
+                DependencyService.Get<MethodExt>().Notification(e.StackTrace.ToString());
             }
 
         }
