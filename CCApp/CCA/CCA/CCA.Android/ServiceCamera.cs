@@ -39,6 +39,7 @@ namespace CCA.Droid
 		bool isStarted;
 		Handler handler;
 		Action runnable;
+		const int delay = 1000 * 30;
 
 		public override void OnCreate()
 		{
@@ -48,6 +49,47 @@ namespace CCA.Droid
 			// This Action is only for demonstration purposes.
 			runnable = new Action(() =>
 			{
+
+				Notification notification;
+				var manager = (NotificationManager)AndroidApp.Context.GetSystemService(AndroidApp.NotificationService);
+				if (Build.VERSION.SdkInt >= Android.OS.BuildVersionCodes.O)
+				{
+					var chan1 = new NotificationChannel("DE",
+					 "DE", NotificationImportance.Default);
+					chan1.LockscreenVisibility = NotificationVisibility.Private;
+					manager.CreateNotificationChannel(chan1);
+
+					notification = new Notification.Builder(AndroidApp.Context, "DE")
+						.SetContentTitle(DateTime.Now.ToString() + " Service Check Notify!")
+						.SetContentText("CCA")
+						.SetSmallIcon(CCA.Droid.Resource.Drawable.xamagonBlue)
+						.SetLargeIcon(BitmapFactory.DecodeResource(AndroidApp.Context.Resources, CCA.Droid.Resource.Drawable.xamagonBlue))
+						.SetSmallIcon(CCA.Droid.Resource.Drawable.xamagonBlue)
+						.Build();
+
+					manager.Notify(1, notification);
+				}
+				else
+				{
+					notification = new Notification.Builder(Android.App.Application.Context)
+												 .SetContentTitle(DateTime.Now.ToString() + " Service Check Notify!")
+												 .SetContentText("CCA")
+												 .SetSmallIcon(CCA.Droid.Resource.Drawable.xamagonBlue)
+												 .SetLargeIcon(BitmapFactory.DecodeResource(AndroidApp.Context.Resources, CCA.Droid.Resource.Drawable.xamagonBlue))
+												 .SetSmallIcon(CCA.Droid.Resource.Drawable.xamagonBlue)
+												 .Build();
+
+					manager.Notify(1, notification);
+				}
+
+				notification.Dispose();
+
+				{
+					Intent i = new Intent("ServicesDemo3.Notification.Action");
+					i.PutExtra("broadcast_message", "msg");
+					Android.Support.V4.Content.LocalBroadcastManager.GetInstance(this).SendBroadcast(i);
+					handler.PostDelayed(runnable, delay);
+				}
 			});
 		}
 
@@ -71,9 +113,6 @@ namespace CCA.Droid
 						RegisterForegroundService();
 
 						isStarted = true;
-				
-						MainPage.NetworkProcess();
-
 					}
 				}
 				else if (intent.Action.Equals(Constants.ACTION_STOP_SERVICE))
@@ -87,14 +126,17 @@ namespace CCA.Droid
 				else if (intent.Action.Equals(Constants.ACTION_RESTART_TIMER))
 				{
 				}
+
+				handler.PostDelayed(runnable, delay);
+
 			}
-			catch(Exception ex)
+			catch (Exception ex)
             {
 				Method_Android.NotificationException(ex);
 			}
 
 			// This tells Android not to restart the service if it is killed to reclaim resources.
-			return StartCommandResult.NotSticky;
+			return StartCommandResult.Sticky;
 		}
 
 
@@ -110,6 +152,7 @@ namespace CCA.Droid
 		{
 			isStarted = false;
 			base.OnDestroy();
+			handler.RemoveCallbacks(runnable);
 		}
 
 		/// <summary>

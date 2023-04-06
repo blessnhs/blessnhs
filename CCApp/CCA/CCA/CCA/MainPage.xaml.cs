@@ -12,6 +12,7 @@ using Xamarin.Essentials;
 using CCA.Page;
 using CCA.CustomAdMobView;
 using System.Threading;
+using System.Runtime;
 
 namespace CCA
 {
@@ -27,7 +28,7 @@ namespace CCA
         {
             InitializeComponent();
 
-//            NetworkProcess();
+            NetworkProcess();
 
             iIterstitia = DependencyService.Get<iAd_IterstitialView>();
             rewardVideo = DependencyService.Get<iAd_RewardVideoView>();
@@ -44,26 +45,27 @@ namespace CCA
             //network
             {
 
+
                 //network thread
                 Task.Run(() =>
                 {
-                    while (true)
+                    while(true)
                     {
                         try
                         {
-                            if (NetProcess.IsActivate == false) continue;
-
-                            NetProcess.Loop();
+                            if (NetProcess.IsActivate == false) 
+                                continue;
 
                             NetProcess.start();
-                            NetProcess.client.PacketRecvSync2();
+                            NetProcess.client.PacketRecvSync();
+                            NetProcess.Loop();
                         }
                         catch (Exception e)
                         {
                             DependencyService.Get<MethodExt>().Notification(e.StackTrace.ToString());
                         }
 
-                        Thread.Sleep(100);
+                        Thread.Sleep(500);
                     }
                 });
             }

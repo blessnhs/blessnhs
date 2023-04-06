@@ -50,7 +50,7 @@ namespace CCA
 
                 string ip = GetIPAddress("blessnhs.iptime.org");
 
-                client.StartClient(ip, 20000);
+                client.StartClient3(ip, 20000);
 
                 check_time = DateTime.Now.AddSeconds(15);
             }
@@ -518,6 +518,38 @@ namespace CCA
             }
         }
 
+       
+
+        static public void SendRoomBITMAPMessage(List<System.Net.Sockets.Socket> _Clients,ConcurrentQueue<System.IO.MemoryStream> list, int type, int width, int height)
+        {
+            {
+                BITMAP_MESSAGE_REQ message = new BITMAP_MESSAGE_REQ();
+                message.VarRoomNumber = User.CurrentChatViewNumber;
+                message.VarType = type;
+                message.VarWidth = width;
+                message.VarHeight = height;
+
+                foreach (var playerid in TargetPlayerId)
+                {
+                    message.VarToPlayerId.Add(playerid);
+                };
+
+                foreach (var msg in list)
+                {
+                    message.VarMessage.Add(ByteString.CopyFrom(msg.ToArray()));
+                };
+
+
+                foreach (var client in _Clients)
+                {
+                    if (client == null  || client.Connected == false)
+                        return;
+                    Client.WritePacket(client, (int)PROTOCOL.IdPktBitmapMessageReq, message.ToByteArray(), message.ToByteArray().Length);
+                }
+
+            }
+
+        }
         static public void SendRoomBITMAPMessage(ConcurrentQueue<System.IO.MemoryStream> list, int type,int width,int height)
         {
 

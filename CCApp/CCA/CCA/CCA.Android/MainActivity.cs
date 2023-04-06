@@ -32,8 +32,8 @@ using rtaNetworking.Streaming;
 
 namespace CCA.Droid
 {
-   
-    [Activity(Label = "CCA", Icon = "@mipmap/icon", Theme = "@style/MainTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation | ConfigChanges.UiMode | ConfigChanges.ScreenLayout | ConfigChanges.SmallestScreenSize ,ScreenOrientation = ScreenOrientation.UserPortrait)]
+
+    [Activity(Label = "CCA", Icon = "@mipmap/icon", Theme = "@style/MainTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation | ConfigChanges.UiMode | ConfigChanges.ScreenLayout | ConfigChanges.SmallestScreenSize, ScreenOrientation = ScreenOrientation.UserPortrait)]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {
         static WakeLock lockctl;
@@ -54,53 +54,59 @@ namespace CCA.Droid
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
-            
-            base.OnCreate(savedInstanceState);
-
-            if (savedInstanceState != null)
+            try
             {
-                isStarted = savedInstanceState.GetBoolean(Constants.SERVICE_STARTED_KEY, false);
+                base.OnCreate(savedInstanceState);
+
+                if (savedInstanceState != null)
+                {
+                    isStarted = savedInstanceState.GetBoolean(Constants.SERVICE_STARTED_KEY, false);
+                }
+
+                context = this;
+                activity = this;
+
+                server?.Start(1801);
+
+                Window?.AddFlags(WindowManagerFlags.KeepScreenOn |
+                 WindowManagerFlags.DismissKeyguard |
+                 WindowManagerFlags.ShowWhenLocked |
+                 WindowManagerFlags.TurnScreenOn
+                 );
+
+                if (Build.VERSION.SdkInt >= Android.OS.BuildVersionCodes.OMr1)
+                {
+                    SetShowWhenLocked(true);
+                    SetTurnScreenOn(true);
+                }
+                else
+                {
+                }
+
+                //CrossInAppBilling.Current.InTestingMode = true;
+
+
+                Xamarin.Essentials.Platform.Init(this, savedInstanceState);
+                global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
+
+                Rg.Plugins.Popup.Popup.Init(this);
+
+                MobileAds.Initialize(ApplicationContext, /*"YOUR ANDROID APP ID HERE"*/"ca-app-pub-9541028236702321~7685624496");
+
+                UnlockCPU_WIFI();
+
+                RequestPermissionsManually();
+
+                BatteryCheckReg();
+
+                CreateService();
+
+                DeviceDisplay.KeepScreenOn = true;
             }
-
-            context = this;
-            activity = this;
-
-            server.Start(1801);
-
-            Window.AddFlags(WindowManagerFlags.KeepScreenOn |
-             WindowManagerFlags.DismissKeyguard |
-             WindowManagerFlags.ShowWhenLocked |
-             WindowManagerFlags.TurnScreenOn
-             );
-
-            if (Build.VERSION.SdkInt >= Android.OS.BuildVersionCodes.OMr1)
+            catch (Exception ex)
             {
-                SetShowWhenLocked(true);
-                SetTurnScreenOn(true);
+                Method_Android.NotificationException(ex);
             }
-            else 
-            {
-            }
- 
-            //CrossInAppBilling.Current.InTestingMode = true;
-
-
-            Xamarin.Essentials.Platform.Init(this, savedInstanceState);
-            global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
-
-            Rg.Plugins.Popup.Popup.Init(this);
-
-            MobileAds.Initialize(ApplicationContext, /*"YOUR ANDROID APP ID HERE"*/"ca-app-pub-9541028236702321~7685624496");
-
-            UnlockCPU_WIFI();
-
-            RequestPermissionsManually();
-
-            BatteryCheckReg();
-
-            CreateService();
-
-            DeviceDisplay.KeepScreenOn = true;
         }
 
         private void BatteryCheckReg()
@@ -152,7 +158,7 @@ namespace CCA.Droid
                 GoogleSignIn();
                 LoadApplication(new App());
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Method_Android.NotificationException(ex);
             }
@@ -201,7 +207,7 @@ namespace CCA.Droid
         {
             base.OnActivityReenter(resultCode, data);
         }
-        
+
         public async override void OnBackPressed()
         {
             if (Rg.Plugins.Popup.Popup.SendBackPressed(base.OnBackPressed))
@@ -238,7 +244,7 @@ namespace CCA.Droid
             {
                 GoogleSignInResult signInResult = Auth.GoogleSignInApi.GetSignInResultFromIntent(data);
 
-                if (signInResult == null) return;
+                if (signInResult == null || signInResult.Status == null) return;
 
                 int statusCode = signInResult.Status.StatusCode;
 
@@ -275,13 +281,18 @@ namespace CCA.Droid
             //cpu가 저절전 모드로 들어가지 않게한다.
             lockctl = ((PowerManager)GetSystemService(Android.Content.Context.PowerService)).NewWakeLock(
                WakeLockFlags.Partial, "tag"); //cpu 항상 on 저절전 모드 해제 화면은 꺼짐 키보드 꺼짐
+
+            if (lockctl == null)
+                return;
+
             lockctl.Acquire();
 
             //와이파이가 저절전 모드로 들어가지 않게한다.
             WifiManager wifi = ((WifiManager)GetSystemService(Android.Content.Context.WifiService));
-            lockwifi = wifi.CreateWifiLock(Android.Net.WifiMode.Full, "wifilock");
-            lockwifi.SetReferenceCounted(true);
-            lockwifi.Acquire();
+
+            lockwifi = wifi?.CreateWifiLock(Android.Net.WifiMode.Full, "wifilock");
+            lockwifi?.SetReferenceCounted(true);
+            lockwifi?.Acquire();
         }
 
         List<string> _permission = new List<string>();
@@ -359,17 +370,16 @@ namespace CCA.Droid
 
             }
         }
-      
+
 
         private void CreateService()
         {
-
             startServiceIntent = new Intent(this, typeof(ServiceCamera));
             startServiceIntent.SetAction(Constants.ACTION_START_SERVICE);
 
             stopServiceIntent = new Intent(this, typeof(ServiceCamera));
             stopServiceIntent.SetAction(Constants.ACTION_STOP_SERVICE);
-     
+
             if (Build.VERSION.SdkInt >= Android.OS.BuildVersionCodes.O)
             {
                 StartForegroundService(startServiceIntent);

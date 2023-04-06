@@ -117,26 +117,34 @@ namespace DependencyHelper.Droid
 
         public void RestartApp()
         {
-            var intent = new Intent(MainActivity.activity, typeof(MainActivity));
-            intent.PutExtra("crash", true);
-            intent.AddFlags(ActivityFlags.ClearTop | ActivityFlags.ClearTask | ActivityFlags.NewTask);
+            try
+            {
+                var intent = new Intent(MainActivity.activity, typeof(MainActivity));
+                intent.PutExtra("crash", true);
+                intent.AddFlags(ActivityFlags.ClearTop | ActivityFlags.ClearTask | ActivityFlags.NewTask);
 
-            var pendingIntent = PendingIntent.GetActivity(MainActivity.context, 32514, intent, PendingIntentFlags.OneShot);
+                //  var pendingIntent = PendingIntent.GetActivity(MainActivity.context, 32514, intent, PendingIntentFlags.OneShot);
 
-            MainActivity.activity.Finish();
-            MainActivity.context.StartActivity(intent);
+                MainActivity.activity.Finish();
+                MainActivity.context.StartActivity(intent);
 
-            NetProcess.IsActivate = false;
-
-
+                NetProcess.IsActivate = false;
+            }
+            catch (Exception ex)
+            {
+                NotificationException(ex);
+            }
         }
 
         public void Notification(string message)
         {
             try
             {
-                var fileName = System.IO.Path.Combine(Android.OS.Environment.GetExternalStoragePublicDirectory(Android.OS.Environment.DirectoryDownloads).AbsolutePath, "notification.txt");
+                var fileName = System.IO.Path.Combine(Android.OS.Environment.GetExternalStoragePublicDirectory(Android.OS.Environment.DirectoryDownloads).AbsolutePath, "erro_log.txt");
+                System.IO.File.AppendAllText(fileName, DateTime.Now.ToString());
+                System.IO.File.AppendAllText(fileName, " ");
                 System.IO.File.AppendAllText(fileName, message);
+                System.IO.File.AppendAllText(fileName, "\n");
 
 
                 var manager = (NotificationManager)AndroidApp.Context.GetSystemService(AndroidApp.NotificationService);
@@ -182,8 +190,12 @@ namespace DependencyHelper.Droid
 
             try
             {
-                var fileName = System.IO.Path.Combine(Android.OS.Environment.GetExternalStoragePublicDirectory(Android.OS.Environment.DirectoryDownloads).AbsolutePath, "exception.txt");
+                var fileName = System.IO.Path.Combine(Android.OS.Environment.GetExternalStoragePublicDirectory(Android.OS.Environment.DirectoryDownloads).AbsolutePath, "exception_log.txt");
+                System.IO.File.AppendAllText(fileName, DateTime.Now.ToString());
+                System.IO.File.AppendAllText(fileName, " ");
                 System.IO.File.AppendAllText(fileName, message);
+                System.IO.File.AppendAllText(fileName, "\n");
+
 
             }
             catch (Exception e)

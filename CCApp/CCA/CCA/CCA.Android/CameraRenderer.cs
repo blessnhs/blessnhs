@@ -70,6 +70,11 @@ namespace FullCameraApp.Droid
                     return;
                 }
 
+                //카메라를 너무오래켜두면 그냥 창을 닫아버린다.(5시간 설정)
+                int checkdurationTime = 60 * 60 * 5;
+                int durationTime = (int)(DateTime.Now - renderer.startTime).TotalSeconds;
+
+
                 checktime = checktime.AddMilliseconds(20);
 
                 if (checktimeBattery < DateTime.Now)
@@ -78,17 +83,21 @@ namespace FullCameraApp.Droid
                     NetProcess.SendMachineStatus(MainActivity.BatteryLevel);
                 }
 
-                if (NetProcess.TargetPlayerId.Count == 0 && MainActivity.server._Clients.Count == 0)
+                if ((durationTime > checkdurationTime) || NetProcess.TargetPlayerId.Count == 0 && MainActivity.server._Clients.Count == 0)
                 {
                     MainThread.BeginInvokeOnMainThread(() =>
                     {
                         renderer.isDestroy = true;
 
                         PopupNavigation.Instance.PopAsync();
-                        return;
+                        return; 
                     });
-                   
+
+                    return;
                 }
+
+                int width = camera.GetParameters().PreviewSize.Width;
+                int height = camera.GetParameters().PreviewSize.Height;
 
                 switch (imageformat)
                 {
@@ -97,13 +106,12 @@ namespace FullCameraApp.Droid
                     case ImageFormatType.Yuy2:
                     case ImageFormatType.Yv12:
                         {
-                            int width = camera.GetParameters().PreviewSize.Width;
-                            int height = camera.GetParameters().PreviewSize.Height;
+                           
 
                             using (YuvImage img = new YuvImage(data, camera.GetParameters().PreviewFormat, width, height, null))
                             {
 
-                                System.IO.MemoryStream outStream = new System.IO.MemoryStream();
+                                using (System.IO.MemoryStream outStream = new System.IO.MemoryStream())
                                 {
 
                                     if (img.CompressToJpeg(new Rect(0, 0, width, height), renderer.quality, outStream) == false)
@@ -111,28 +119,27 @@ namespace FullCameraApp.Droid
 
                                     renderer.Frames.Enqueue(outStream);
 
-
-                                    renderer.textViewMain.Text = outStream.Length.ToString();
+                                    renderer.textViewMain.Text = outStream.Length.ToString() + "-" +  MainActivity.server._Clients.Count.ToString();
 
                                     //서버쪽은 임시 주석
-                                    if (MainActivity.server.ImagesSource.Count > 500)
+                                    if (MainActivity.server.ImagesSource.Count > 100)
                                         MainActivity.server.ImagesSource.Clear();
                                     if (MainActivity.server._Clients.Count > 0)
-                                        MainActivity.server.ImagesSource.Enqueue(outStream);
+                                        MainActivity.server.ImagesSource.Enqueue(new System.IO.MemoryStream(outStream.ToArray()));
 
-                                    if (renderer.Frames.Count > 10)
+                                    if (renderer.Frames.Count > 0)
                                     {
-                                       // Task.Run(() =>
-                                      //  {
-                                            total_bytes_sent += outStream.Length;
+                                        // Task.Run(() =>
+                                        //  {
+                                        total_bytes_sent += outStream.Length;
 
-                                            if (NetProcess.TargetPlayerId.Count > 0)
-                                            {
-                                                NetProcess.SendRoomBITMAPMessage(renderer.Frames, 0);
-                                            }
+                                        if (NetProcess.TargetPlayerId.Count > 0)
+                                        {
+                                            NetProcess.SendRoomBITMAPMessage(renderer.Frames, 0, width, height);
+                                        }
 
                                         renderer.Frames.Clear();
-                                      //  });
+                                        //  });
                                     }
                                 }
                             }
@@ -155,7 +162,7 @@ namespace FullCameraApp.Droid
 
                             if (NetProcess.TargetPlayerId.Count > 0)
                             {
-                                NetProcess.SendRoomBITMAPMessage(renderer.Frames, 0);
+                                NetProcess.SendRoomBITMAPMessage(renderer.Frames, 0, width, height);
                             }
 
                             renderer.Frames.Clear();
@@ -182,6 +189,8 @@ namespace FullCameraApp.Droid
 
         public ConcurrentQueue<System.IO.MemoryStream> Frames = new ConcurrentQueue<System.IO.MemoryStream>();
 
+        public DateTime startTime = new DateTime();
+
 
         public CameraPageRenderer(Context context) : base(context)
         {
@@ -189,6 +198,10 @@ namespace FullCameraApp.Droid
 
             NetProcess.JpegStream.Clear();
             NetProcess.AudioStream.Clear();
+
+            MainActivity.server.ImagesSource.Clear();
+
+            startTime = DateTime.Now;
         }
 
         RelativeLayout mainLayout;

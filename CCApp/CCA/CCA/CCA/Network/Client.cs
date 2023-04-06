@@ -18,13 +18,13 @@ namespace CCA
 
     static public class RecvPacketBuffer
     {
-        public static int MTU = 1024 * 1024 * 5;
+        public static int MTU = 1024 * 1024 * 3;
 
         // Receive buffer.
         public static byte[] buffer = new byte[MTU];
     }
 
-   
+
 
     public class Client
     {
@@ -38,7 +38,7 @@ namespace CCA
                 if (host.AddressList[i].AddressFamily == AddressFamily.InterNetwork)
                 {
                     getIP = host.AddressList[i].ToString();
-               //     break;  //볼일끝나면 바로 순환문을 나가게 해야 최적화에 도움이 되요.
+                    //     break;  //볼일끝나면 바로 순환문을 나가게 해야 최적화에 도움이 되요.
                 }
             }
             return getIP;
@@ -76,7 +76,7 @@ namespace CCA
 
                     socket.Close();
                     socket.Dispose();
-                      
+
                     socket = null;
                     socket = new Socket(AddressFamily.InterNetwork,
                                 SocketType.Stream, ProtocolType.Tcp);
@@ -97,8 +97,63 @@ namespace CCA
             }
         }
 
-
         public void StartClient2(string address, int port)
+        {
+            // Connect to a remote device.
+            try
+            {
+
+                var ii = IPCheck();
+
+                IPAddress ip = IPAddress.Parse(address);
+
+                IPEndPoint remoteEP = new IPEndPoint(ip, port);
+
+                if (socket != null)
+                // Create a TCP/IP socket.
+                {
+                    if (socket.Connected == true)
+                    {
+                        //이미 접속은 했는데 로그인 실패면 다시 한다.
+                        if (User.LoginSuccess == true)
+                        {
+                            return;
+                        }
+                    }
+
+                    socket.Close();
+                    socket.Dispose();
+
+                    socket = null;
+                    socket = new Socket(AddressFamily.InterNetwork,
+                                SocketType.Stream, ProtocolType.Tcp);
+
+                }
+                else
+                {
+                    socket = new Socket(AddressFamily.InterNetwork,
+                         SocketType.Stream, ProtocolType.Tcp);
+                }
+
+
+                m_RemainLength = 0;
+
+                var result = socket.BeginConnect(remoteEP, null, null);
+
+                bool success = result.AsyncWaitHandle.WaitOne(1500, true);
+                if (success)
+                {
+                    socket.EndConnect(result);
+                }
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+            }
+        }
+
+        public void StartClient3(string address, int port)
         {
             // Connect to a remote device.
             try
@@ -139,13 +194,23 @@ namespace CCA
                 socket.ReceiveTimeout = 10;
                 socket.SendTimeout = 2000;
 
-             
+
                 var result = socket.BeginConnect(remoteEP, null, null);
 
                 bool success = result.AsyncWaitHandle.WaitOne(500, true);
                 if (success)
                 {
                     socket.EndConnect(result);
+                }
+
+
+                //이미 로그인했다가 풀렸다 이때는 초기화
+                if (User.LoginSuccess == true)
+                    User.Clear();
+
+                if (socket.Connected == true)
+                {
+                    NetProcess.SendVersion();
                 }
             }
             catch (Exception e)
@@ -176,14 +241,14 @@ namespace CCA
                 }
 
 
-               tempSocket.BeginReceive(RecvPacketBuffer.buffer, 0, RecvPacketBuffer.buffer.Length, SocketFlags.None,
-               new AsyncCallback(recieveArgs_Completed), socket);
+                tempSocket.BeginReceive(RecvPacketBuffer.buffer, 0, RecvPacketBuffer.buffer.Length, SocketFlags.None,
+                new AsyncCallback(recieveArgs_Completed), socket);
             }
             catch (SocketException se)
             {
                 if (se.SocketErrorCode == SocketError.NotConnected)
                 {
-                   
+
                 }
             }
         }
@@ -235,7 +300,7 @@ namespace CCA
                 else
                     return false;
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 DependencyService.Get<MethodExt>().Notification(e.StackTrace.ToString());
                 return false;
@@ -262,22 +327,22 @@ namespace CCA
             }
             catch (Exception e)
             {
-               
+
             }
         }
 
 
-        public void PacketRecvSync2()
+        public void PacketRecvAsync()
         {
             try
             {
-                if (socket == null || socket.Connected == false)
+                if (socket == null || socket?.Connected == false)
                     return;
 
-               socket?.BeginReceive(RecvPacketBuffer.buffer, 0, RecvPacketBuffer.buffer.Length, SocketFlags.None,
-               new AsyncCallback(recieveArgs_Completed), socket);
+                socket?.BeginReceive(RecvPacketBuffer.buffer, 0, RecvPacketBuffer.buffer.Length, SocketFlags.None,
+                new AsyncCallback(recieveArgs_Completed), socket);
 
-            
+
             }
             catch (Exception e)
             {
@@ -289,8 +354,8 @@ namespace CCA
         {
             try
             {
-                Socket tempSock = (Socket)IAR.AsyncState;
-                int nReadSize = tempSock.EndReceive(IAR);
+                Socket tempSock = (Socket)IAR?.AsyncState;
+                int nReadSize = tempSock?.EndReceive(IAR) ?? 0;
                 if (nReadSize > 0)
                 {
                     Buffer.BlockCopy(RecvPacketBuffer.buffer, 0, m_PacketBuffer, m_RemainLength, nReadSize);
@@ -298,8 +363,11 @@ namespace CCA
                     m_RemainLength += nReadSize;
 
                     OnRecvPacketProc();
+
+                    NetProcess.Loop();
+
                 }
-                  
+
             }
             catch (Exception e)
             {
@@ -347,19 +415,20 @@ namespace CCA
                     }
                 }
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 DependencyService.Get<MethodExt>().Notification(e.StackTrace.ToString());
             }
         }
 
         private const int CheckCompressSize = 750;
-        private byte mCompressFlag = 0;
 
-        public bool WritePacket(int protocol, byte[] packet, int payloadsize)
+        static public bool WritePacket(Socket socket, int protocol, byte[] packet, int payloadsize)
         {
             if (socket == null || socket.Connected == false)
                 return false;
+
+            byte mCompressFlag = 0;
 
             if (payloadsize > CheckCompressSize)
             {
@@ -438,6 +507,98 @@ namespace CCA
                 }
 
                 TempBuffer = null;
+            }
+
+            packet = null;
+
+            return true;
+        }
+
+        public bool WritePacket(int protocol, byte[] packet, int payloadsize)
+        {
+            if (socket == null || socket.Connected == false)
+                return false;
+
+            byte mCompressFlag = 0;
+
+            if (payloadsize > CheckCompressSize)
+            {
+                var compress = GZip.Compress(packet);
+
+                Int32 PacketLength = sizeof(Int32) +
+                    sizeof(Int16) +
+                    sizeof(Int16) +
+                    sizeof(Int32) +
+                    sizeof(byte) +
+                    sizeof(long) +
+                    compress.Length;
+
+                mCompressFlag = 1;
+
+                byte[] TempBuffer = new byte[PacketLength];
+
+                byte[] byteslegnth = BitConverter.GetBytes((Int32)PacketLength);
+                Buffer.BlockCopy(byteslegnth, 0, TempBuffer, 0, sizeof(Int32));
+
+                byte[] bytesProtocol = BitConverter.GetBytes((Int16)protocol);
+                Buffer.BlockCopy(bytesProtocol, 0, TempBuffer, sizeof(Int32), sizeof(Int16));
+
+                byte[] bytesPacketNumber = BitConverter.GetBytes((byte)mCompressFlag);
+                Buffer.BlockCopy(bytesPacketNumber, 0, TempBuffer, sizeof(Int32) + sizeof(Int16) + sizeof(Int16) + sizeof(Int32), sizeof(byte));
+
+                Buffer.BlockCopy(compress, 0, TempBuffer, sizeof(Int32) + sizeof(Int16) + sizeof(Int16) + sizeof(Int32) + sizeof(byte) + sizeof(long), compress.Length);
+
+                try
+                {
+                    socket.Send(TempBuffer);
+                }
+                catch (SocketException e)
+                {
+                    // 10035 == WSAEWOULDBLOCK
+                    if (!e.NativeErrorCode.Equals(10035))
+                        Console.Write("Disconnected: error code :" + e.NativeErrorCode + "(" + e.Message + ")");
+                }
+
+                TempBuffer = compress = byteslegnth = bytesProtocol = null;
+            }
+            else
+            {
+                Int32 PacketLength = sizeof(Int32) +
+                    sizeof(Int16) +
+                    sizeof(Int16) +
+                    sizeof(Int32) +
+                    sizeof(byte) +
+                    sizeof(long) +
+                   payloadsize;
+
+                mCompressFlag = 0;
+
+                byte[] TempBuffer = new byte[PacketLength];
+
+                byte[] byteslegnth = BitConverter.GetBytes((Int32)PacketLength);
+                Buffer.BlockCopy(byteslegnth, 0, TempBuffer, 0, sizeof(Int32));
+
+                byte[] bytesProtocol = BitConverter.GetBytes((Int16)protocol);
+                Buffer.BlockCopy(bytesProtocol, 0, TempBuffer, sizeof(Int32), sizeof(Int16));
+
+                byte[] bytesPacketNumber = BitConverter.GetBytes((byte)mCompressFlag);
+                Buffer.BlockCopy(bytesPacketNumber, 0, TempBuffer, sizeof(Int32) + sizeof(Int16) + sizeof(Int16) + sizeof(Int32), sizeof(byte));
+
+                Buffer.BlockCopy(packet, 0, TempBuffer, sizeof(Int32) + sizeof(Int16) + sizeof(Int16) + sizeof(Int32) + sizeof(byte) + sizeof(long), payloadsize);
+
+                try
+                {
+                    socket.Send(TempBuffer);
+                }
+                catch (SocketException e)
+                {
+                    // 10035 == WSAEWOULDBLOCK
+                    if (!e.NativeErrorCode.Equals(10035))
+                        Console.Write("Disconnected: error code :" + e.NativeErrorCode + "(" + e.Message + ")");
+                }
+
+                TempBuffer = byteslegnth = bytesProtocol = null;
+
             }
 
             packet = null;

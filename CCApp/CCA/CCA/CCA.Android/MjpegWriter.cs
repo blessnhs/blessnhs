@@ -97,6 +97,20 @@ namespace rtaNetworking.Streaming
             return WritePacket(_Client, (int)PROTOCOL.IdPktBitmapMessageReq, message.ToByteArray(), message.ToByteArray().Length);
         }
 
+        public int Write(ConcurrentQueue<System.IO.MemoryStream> list, System.Net.Sockets.Socket _Client)
+        {
+            BITMAP_MESSAGE_REQ message = new BITMAP_MESSAGE_REQ();
+            message.VarRoomNumber = User.CurrentChatViewNumber;
+            message.VarType = 0;
+
+            foreach (var msg in list)
+            {
+                message.VarMessage.Add(ByteString.CopyFrom(msg.ToArray()));
+            };
+
+            return WritePacket(_Client, (int)PROTOCOL.IdPktBitmapMessageReq, message.ToByteArray(), message.ToByteArray().Length);
+        }
+
         public int WritePacket(System.Net.Sockets.Socket socket,int protocol, byte[] packet, int payloadsize)
         {
             if (socket == null || socket.Connected == false)
@@ -137,6 +151,9 @@ namespace rtaNetworking.Streaming
                     // 10035 == WSAEWOULDBLOCK
                     if (!e.NativeErrorCode.Equals(10035))
                         Console.Write("Disconnected: error code :" + e.NativeErrorCode + "(" + e.Message + ")");
+
+
+                    sendconut = 0;
                 }
 
                 TempBuffer = null;

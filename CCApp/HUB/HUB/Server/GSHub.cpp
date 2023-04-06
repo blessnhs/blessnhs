@@ -90,7 +90,12 @@ BOOL GSHub::Initialize()
 	_arg.m_LogicThreadCnt = dwThreadNum;
 	_arg.m_MaxClient = m_Ini.MaxUser;
 	_arg.m_Naggle = false;
-	_arg.m_AliveTime = m_Ini.AliveSeconds * 1000;
+
+	if (INI.AliveSeconds != -1)
+		_arg.m_AliveTime = INI.AliveSeconds * 1000;
+	else
+		_arg.m_AliveTime = 0;
+
 	_arg.m_UseCompress = true;
 
 	DBPROCESSCONTAINER_CER.Initialize(_arg.m_DBThreadCnt);

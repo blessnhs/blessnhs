@@ -30,9 +30,9 @@ namespace CCA.Page
 
             _client = client;
 
-            if (client != null)
+            if (client != null && client.socket != null)
             {
-                if (client.socket.Connected == true)
+                if (client.socket?.Connected == true)
                     IsP2P = true;
                 //연결 성공
                 Task.Run(() =>
@@ -71,6 +71,11 @@ namespace CCA.Page
         protected override void OnAppearing()
         {
             base.OnAppearing();
+
+            StreamWrapper temp;
+            while (NetProcess.AudioStream.TryDequeue(out temp));
+            while (NetProcess.JpegStream.TryDequeue(out temp)) ;
+            while (NetProcess.Mpeg2Stream.TryDequeue(out temp)) ;
 
         }
 

@@ -217,15 +217,17 @@ namespace rtaNetworking.Streaming
 
                             int count = wr.Write(out_s, socket);
 
-                            if (count == 0)
+                            out_s.Dispose();
+                            out_s = null;
+
+                            if (socket.Connected == false || count == 0)
                             {
+                                ImagesSource.Clear();
                                 socket.Close();
                                 break;
                             }
-
                         }
-
-                        ImagesSource.Clear();
+                      
                     }
                 }
 

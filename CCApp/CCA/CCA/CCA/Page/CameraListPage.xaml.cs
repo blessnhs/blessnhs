@@ -85,8 +85,11 @@ namespace CCA.Page
                         }
                         else
                         {
-                            NetProcess.SendWakeUpCamera(camera.PlayerId, MachinId);
+                            client.socket.Close();
+                            client.socket.Dispose();
+                            client.socket = null;
 
+                            NetProcess.SendWakeUpCamera(camera.PlayerId, MachinId);
                         }
 
                     }
