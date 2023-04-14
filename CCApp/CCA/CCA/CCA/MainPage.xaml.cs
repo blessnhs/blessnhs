@@ -13,6 +13,7 @@ using CCA.Page;
 using CCA.CustomAdMobView;
 using System.Threading;
 using System.Runtime;
+using System.Diagnostics;
 
 namespace CCA
 {
@@ -24,14 +25,39 @@ namespace CCA
         //보상광고
         iAd_RewardVideoView rewardVideo;
 
+        long startMemory = 0;
+
         public MainPage()
         {
             InitializeComponent();
 
             NetworkProcess();
 
+            startMemory = Process.GetCurrentProcess().VirtualMemorySize64;
+
             iIterstitia = DependencyService.Get<iAd_IterstitialView>();
             rewardVideo = DependencyService.Get<iAd_RewardVideoView>();
+
+
+            //memory usage check
+            Device.StartTimer(TimeSpan.FromSeconds(3), () =>
+            {
+                Process pro = Process.GetCurrentProcess(); // 현재 프로세스 사용량
+
+                long memory = 0;
+
+                memory = pro.VirtualMemorySize64;
+
+
+                Device.BeginInvokeOnMainThread(() =>
+                {
+
+                    Noti.Text = (startMemory/1024).ToString() + "_" + (memory / 1024).ToString();
+
+                });
+
+                return true; // return true to repeat counting, false to stop timer
+            });
         }
 
         protected override bool OnBackButtonPressed()
@@ -53,7 +79,7 @@ namespace CCA
                     {
                         try
                         {
-                            if (NetProcess.IsActivate == false) 
+                            if (NetProcess.IsActivate == false)
                                 continue;
 
                             NetProcess.start();

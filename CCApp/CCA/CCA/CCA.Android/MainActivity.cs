@@ -121,6 +121,8 @@ namespace CCA.Droid
 
                 BatteryLevel = (int)System.Math.Floor(level * 100D / scale);
 
+                filter.Dispose();
+
                 return true; // return true to repeat counting, false to stop timer
             });
         }

@@ -60,6 +60,11 @@ GSServer::~GSServer(void)
 	CoUninitialize();
 }
 
+VOID GSServer::AllClose()
+{
+	m_ClientMgr.AllCloseSocket();
+}
+
 bool GSServer::Create(GSArgument arg)
 {
 	m_Arguments = arg;

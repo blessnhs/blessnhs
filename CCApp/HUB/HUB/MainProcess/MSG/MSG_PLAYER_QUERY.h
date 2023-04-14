@@ -414,6 +414,27 @@ class MSG_PLAYER_QUERY<##class_name>:public IMESSAGE	\
 	DECLARE_DB_CLASS_END
 #pragma endregion
 
+#pragma region DelCamera
+	DECLARE_DB_CLASS_BEGIN_2(DelCamera, string,  PlayerPtr)
+	{
+
+		PlayerPtr pPlayerPtr = std::get<1>(Request.m_args);
+		if (pPlayerPtr == NULL)
+		{
+			return;
+		}
+
+		DEL_CAMERA_RES res;
+		res.set_var_machine_id( std::get<0>(Request.m_args));
+
+		auto ret = pProcess->DeleteCamera(pPlayerPtr->GetDBIndex(), std::get<0>(Request.m_args));
+
+		SEND_PROTO_BUFFER(res, pSession, pPlayerPtr->GetFrontSid())
+
+	}
+	DECLARE_DB_CLASS_END
+#pragma endregion
+
 
 #pragma region LoadCamera List
 	DECLARE_DB_CLASS_BEGIN_1(CameraList, PlayerPtr)

@@ -44,6 +44,8 @@ public:
 
 	GSArgument													 &GetArgument();
 
+	VOID														  AllClose();
+
 	template<class U>
 	VOID														  SetHandler()
 	{

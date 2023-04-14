@@ -81,6 +81,11 @@ int		CDBProcessCer::ProcedureUserLogin(const std::string id, const std::string p
 	return m_DB->ProcedureUserLogin(id, pwd, szKey, Score, Index, Level);
 }
 
+int CDBProcessCer::DeleteCamera(int64_t INDEX, std::string machine_id)
+{
+	return m_DB->DeleteCamera(INDEX, machine_id);
+}
+
 int CDBProcessCer::RegisterCamera(int64_t INDEX, std::string machine_id, std::string machine_name)
 {
 	return m_DB->RegisterCamera(INDEX, machine_id, machine_name);

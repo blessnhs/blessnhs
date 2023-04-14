@@ -7,7 +7,8 @@ namespace CCA
    public class RegCam
     {
         public string MachineId;
-        public string MachineModel;
+        public string MachineName;
+        public string Ip;
         public Int64 PlayerId;
     }
 

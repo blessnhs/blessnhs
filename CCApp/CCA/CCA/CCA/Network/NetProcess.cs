@@ -52,7 +52,7 @@ namespace CCA
 
                 client.StartClient3(ip, 20000);
 
-                check_time = DateTime.Now.AddSeconds(15);
+                check_time = DateTime.Now.AddSeconds(5);
             }
 
             if (notice_time < DateTime.Now)
@@ -792,6 +792,24 @@ namespace CCA
                 message.WriteTo(stream);
 
                 client.WritePacket((int)PROTOCOL.IdPktRegCameraReq, stream.ToArray(), stream.ToArray().Length);
+            }
+        }
+
+        static public void SendDelCamera(string machineid)
+        {
+            if (client == null || client.socket == null || client.socket.Connected == false)
+                return;
+
+            DEL_CAMERA_REQ message = new DEL_CAMERA_REQ
+            {
+                VarMachineId = machineid
+
+            };
+            using (MemoryStream stream = new MemoryStream())
+            {
+                message.WriteTo(stream);
+
+                client.WritePacket((int)PROTOCOL.IdPktDelCameraReq, stream.ToArray(), stream.ToArray().Length);
             }
         }
 

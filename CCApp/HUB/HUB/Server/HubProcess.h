@@ -53,6 +53,8 @@ public:
 
 	VOID CAMERA_REGISTER(boost::shared_ptr<XDATA> pBuffer, boost::shared_ptr<GSClient> Client);
 
+	VOID CAMERA_DELETE(boost::shared_ptr<XDATA> pBuffer, boost::shared_ptr<GSClient> Client);
+
 	VOID STOP_STREAM(boost::shared_ptr<XDATA> pBuffer, boost::shared_ptr<GSClient> Client);
 
 	VOID CAMERA_CONTROL(boost::shared_ptr<XDATA> pBuffer, boost::shared_ptr<GSClient> Client);

@@ -20,8 +20,14 @@ BOOL GSFront::Disconnect(GSCLIENT_PTR pSession)
 {
 	if (pSession->GetClientType() == SERVER_CLIENT)
 	{
+		AllClose();
+
+
 		PROXYHUB.Del(pSession);
 		PROXYHUB.Create(1);
+
+
+
 	}
 	else if(pSession->GetClientType() == CLIENT)
 	{

@@ -234,6 +234,12 @@ VOID GSIocp::Close(SOCKET client)
 
 		PostQueuedCompletionStatus(m_Handle, 0, (ULONG_PTR)ex, (LPOVERLAPPED)ex);*/
 
+
+		TCHAR szExeFileName[MAX_PATH];
+		GetModuleFileName(NULL, szExeFileName, MAX_PATH);
+
+		printf("close call %s\n", szExeFileName);
+
 		closesocket(client);
 }
 

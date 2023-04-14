@@ -34,6 +34,7 @@ public:
 	BOOL AddClient(GSCLIENT_PTR client);
 	BOOL BookDelClient(int id);
 	BOOL DelClient(int id);
+	VOID AllCloseSocket();
 
 	concurrency::concurrent_queue<GSCLIENT_PTR>				 m_ReInsert_Queue;
 	concurrency::concurrent_queue<GSCLIENT_PTR>				 m_Remove_Queue;

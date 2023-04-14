@@ -50,46 +50,41 @@ namespace CCA.Droid
 			runnable = new Action(() =>
 			{
 
-				Notification notification;
-				var manager = (NotificationManager)AndroidApp.Context.GetSystemService(AndroidApp.NotificationService);
-				if (Build.VERSION.SdkInt >= Android.OS.BuildVersionCodes.O)
-				{
-					var chan1 = new NotificationChannel("DE",
-					 "DE", NotificationImportance.Default);
-					chan1.LockscreenVisibility = NotificationVisibility.Private;
-					manager.CreateNotificationChannel(chan1);
+				//Notification notification;
+				//var manager = (NotificationManager)AndroidApp.Context.GetSystemService(AndroidApp.NotificationService);
+				//if (Build.VERSION.SdkInt >= Android.OS.BuildVersionCodes.O)
+				//{
+				//	notification = new Notification.Builder(AndroidApp.Context, "DE")
+				//		.SetContentTitle(DateTime.Now.ToString() + " Service Check Notify!")
+				//		.SetContentText("CCA")
+				//		.SetSmallIcon(CCA.Droid.Resource.Drawable.xamagonBlue)
+				//		.SetLargeIcon(BitmapFactory.DecodeResource(AndroidApp.Context.Resources, CCA.Droid.Resource.Drawable.xamagonBlue))
+				//		.SetSmallIcon(CCA.Droid.Resource.Drawable.xamagonBlue)
+				//		.Build();
 
-					notification = new Notification.Builder(AndroidApp.Context, "DE")
-						.SetContentTitle(DateTime.Now.ToString() + " Service Check Notify!")
-						.SetContentText("CCA")
-						.SetSmallIcon(CCA.Droid.Resource.Drawable.xamagonBlue)
-						.SetLargeIcon(BitmapFactory.DecodeResource(AndroidApp.Context.Resources, CCA.Droid.Resource.Drawable.xamagonBlue))
-						.SetSmallIcon(CCA.Droid.Resource.Drawable.xamagonBlue)
-						.Build();
+				//	manager.Notify(1, notification);
+				//}
+				//else
+				//{
+				//	notification = new Notification.Builder(Android.App.Application.Context)
+				//								 .SetContentTitle(DateTime.Now.ToString() + " Service Check Notify!")
+				//								 .SetContentText("CCA")
+				//								 .SetSmallIcon(CCA.Droid.Resource.Drawable.xamagonBlue)
+				//								 .SetLargeIcon(BitmapFactory.DecodeResource(AndroidApp.Context.Resources, CCA.Droid.Resource.Drawable.xamagonBlue))
+				//								 .SetSmallIcon(CCA.Droid.Resource.Drawable.xamagonBlue)
+				//								 .Build();
 
-					manager.Notify(1, notification);
-				}
-				else
-				{
-					notification = new Notification.Builder(Android.App.Application.Context)
-												 .SetContentTitle(DateTime.Now.ToString() + " Service Check Notify!")
-												 .SetContentText("CCA")
-												 .SetSmallIcon(CCA.Droid.Resource.Drawable.xamagonBlue)
-												 .SetLargeIcon(BitmapFactory.DecodeResource(AndroidApp.Context.Resources, CCA.Droid.Resource.Drawable.xamagonBlue))
-												 .SetSmallIcon(CCA.Droid.Resource.Drawable.xamagonBlue)
-												 .Build();
+				//	manager.Notify(1, notification);
+				//}
 
-					manager.Notify(1, notification);
-				}
+				//notification.Dispose();
 
-				notification.Dispose();
-
-				{
-					Intent i = new Intent("ServicesDemo3.Notification.Action");
-					i.PutExtra("broadcast_message", "msg");
-					Android.Support.V4.Content.LocalBroadcastManager.GetInstance(this).SendBroadcast(i);
-					handler.PostDelayed(runnable, delay);
-				}
+				//{
+				//	Intent i = new Intent("ServicesDemo3.Notification.Action");
+				//	i.PutExtra("broadcast_message", "msg");
+				//	Android.Support.V4.Content.LocalBroadcastManager.GetInstance(this).SendBroadcast(i);
+				//	handler.PostDelayed(runnable, delay);
+				//}
 			});
 		}
 

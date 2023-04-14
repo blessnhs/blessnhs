@@ -22,7 +22,22 @@ GSClientMgr::~GSClientMgr(void)
 {
 }
 
+VOID GSClientMgr::AllCloseSocket()
+{
+	GSServer::GSServer* pServer = (GSServer::GSServer*)m_GSServer;
+	for each (auto & client in m_Clients)
+	{
+		if (client.second == NULL)
+		{
+			continue;
+		}
 
+		if (client.second->GetConnected())
+		{
+				pServer->Close(client.second->GetTCPSocket()->GetSocket());
+		}
+	}
+}
 
 
 VOID GSClientMgr::CheckAliveTime()

@@ -39,16 +39,16 @@ namespace CCA.Page
 
             foreach (var cam in recvCamList)
             {
-                string state = cam.VarPlayerId == 0 ? "off line" : "on line";
+                string state = cam.VarPlayerId == 0 ? "Off" : "On";
 
                 list.Add(new Contact { Name = cam.VarMachineName, 
-                    Status = state, 
+                    Status = cam.VarMachineName + " " + state, 
                     MachineId = cam.VarMachineId,
-                    Content = "Name " + cam.VarMachineName + " "+ state,
+                    Content = cam.VarMachineId,
                     Ip = cam.VarIp
                 });
 
-                User.CamDic[cam.VarMachineId] = new RegCam() { MachineId = cam.VarMachineId, MachineModel = cam.VarMachineName,PlayerId = cam.VarPlayerId };
+                User.CamDic[cam.VarMachineId] = new RegCam() { Ip = cam.VarIp,MachineId = cam.VarMachineId, MachineName = cam.VarMachineName,PlayerId = cam.VarPlayerId };
             }
 
             list.Sort((a, b) => a.Status.CompareTo(b.Status));
@@ -66,37 +66,39 @@ namespace CCA.Page
                 RegCam camera;
                 if (User.CamDic.TryGetValue(MachinId, out camera) == true)
                 {
-                    if (camera.PlayerId != 0 && item.Ip != "")
-                    {
+                    //if (camera.PlayerId != 0 && item.Ip != "")
+                    //{
 
-                        //해당 아이피로 접속 시도
-                        IPAddress ip = IPAddress.Parse(item.Ip);
-                        IPEndPoint remoteEP = new IPEndPoint(ip, 1801);
-                
-                        Client client = new Client();
-                        client.StartClient2(item.Ip, 1801);
+                    //    //해당 아이피로 접속 시도
+                    //    IPAddress ip = IPAddress.Parse(item.Ip);
+                    //    IPEndPoint remoteEP = new IPEndPoint(ip, 1801);
 
-                        Thread.Sleep(2000);
+                    //    Client client = new Client();
+                    //    client.StartClient2(item.Ip, 1801);
 
-                        if ( client.socket.Connected)
-                        {
+                    //    Thread.Sleep(2000);
 
-                            PopupNavigation.Instance.PushAsync(new CameraViewer(camera.MachineId, camera.PlayerId, client));
-                        }
-                        else
-                        {
-                            client.socket.Close();
-                            client.socket.Dispose();
-                            client.socket = null;
+                    //    if ( client.socket.Connected)
+                    //    {
 
-                            NetProcess.SendWakeUpCamera(camera.PlayerId, MachinId);
-                        }
+                    //        PopupNavigation.Instance.PushAsync(new CameraViewer(camera.MachineId, camera.PlayerId, client));
+                    //    }
+                    //    else
+                    //    {
+                    //        client.socket.Close();
+                    //        client.socket.Dispose();
+                    //        client.socket = null;
 
-                    }
-                    else
-                    {
-                        NetProcess.SendWakeUpCamera(camera.PlayerId, MachinId);
-                    }
+                    //        NetProcess.SendWakeUpCamera(camera.PlayerId, MachinId);
+                    //    }
+
+                    //}
+                    //else
+                    //{
+                    //    NetProcess.SendWakeUpCamera(camera.PlayerId, MachinId);
+                    //}
+
+                    NetProcess.SendWakeUpCamera(camera.PlayerId, MachinId);
                 }
 
                 listView.SelectedItem = null;
@@ -116,7 +118,38 @@ namespace CCA.Page
         }
         private async void OnDelete(object sender, EventArgs e)
         {
-          
+            Button btn = (Button)sender;
+            if (btn != null)
+            {
+                Grid obj = (Grid)btn.Parent;
+                if(obj != null)
+                {
+                    string machineid = ((Label)obj.Children[0]).Text;
+                    NetProcess.SendDelCamera(machineid);
+
+                    User.CamDic.Remove(machineid);
+
+                    var list = new List<Contact>();
+
+                    foreach (var cam in User.CamDic.Values)
+                    {
+                        string state = cam.PlayerId == 0 ? "Off" : "On";
+
+                        list.Add(new Contact
+                        {
+                            Name = cam.MachineName,
+                            Status = cam.MachineName + " " + state,
+                            MachineId = cam.MachineId,
+                            Content = cam.MachineId,
+                            Ip = cam.Ip
+                        });
+                    }
+
+                    list.Sort((a, b) => a.Status.CompareTo(b.Status));
+
+                    listView.ItemsSource = list;
+                }
+            }                    
         }
 
 

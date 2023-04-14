@@ -40,6 +40,10 @@ HubProcess::HubProcess(void)
 	ADD_NET_FUNC(HubProcess, ID_PKT_MACHINE_STATUS_REQ, MACHINE_STATUS);
 
 	ADD_NET_FUNC(HubProcess, ID_PKT_VERIFY_PURCHASE_REQ, PURCHASE_VERIFY);
+	ADD_NET_FUNC(HubProcess, ID_PKT_DEL_CAMERA_REQ, CAMERA_DELETE);
+
+
+	
 	
 	
 
@@ -92,6 +96,28 @@ VOID HubProcess::Process(boost::shared_ptr<XDATA> pBuffer, boost::shared_ptr<GSC
 	{
 		printf("handle exception %d\n", exception);
 	}
+}
+
+VOID HubProcess::CAMERA_DELETE(boost::shared_ptr<XDATA> pBuffer, boost::shared_ptr<GSClient> Client)
+{
+	DECLARE_RECV_TYPE(DEL_CAMERA_REQ, message)
+
+	PlayerPtr pPlayer = PLAYERMGR.SearchByFrontSid(pBuffer->Reserve2);
+	if (pPlayer == NULL)
+	{
+		return;
+	}
+
+	boost::shared_ptr<Hub::MSG_PLAYER_QUERY<Hub::DelCamera>>		PLAYER_MSG = ALLOCATOR.Create<Hub::MSG_PLAYER_QUERY<Hub::DelCamera>>();
+	PLAYER_MSG->pSession = Client;
+
+	{
+		PLAYER_MSG->Request.m_args = std::tuple<string, PlayerPtr>(message.var_machine_id(), pPlayer);;
+	}
+
+	PLAYER_MSG->Type = Client->GetMyDBTP();
+	PLAYER_MSG->SubType = ONQUERY;
+	MAINPROC.RegisterCommand(PLAYER_MSG);
 }
 
 VOID HubProcess::CHECK_NICKNAME(boost::shared_ptr<XDATA> pBuffer, boost::shared_ptr<GSClient> Client)
