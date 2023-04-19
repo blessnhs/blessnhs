@@ -52,7 +52,7 @@ namespace CCA
 
                 client.StartClient3(ip, 20000);
 
-                check_time = DateTime.Now.AddSeconds(5);
+                check_time = DateTime.Now.AddSeconds(10);
             }
 
             if (notice_time < DateTime.Now)
@@ -122,16 +122,38 @@ namespace CCA
                                 SQLLiteDB.LoadCacheData();
 
 
-                                if (User.Name != null)
+                                //구글 인증 성공하고 게임서버에 한번도 로그인을 하지않으면 로그인시도한다.
+                                if (User.Name != null && User.DBId == 0 )
                                     NetProcess.SendLogin(User.Uid,User.Token);
-                                else
+                                else if(User.DBId == 0)
                                 {
                                     Device.BeginInvokeOnMainThread(() =>
                                     {
                                         DependencyService.Get<MethodExt>().RestartApp();
                                     });
                                 }
-                             
+                                else if (User.DBId != 0)
+                                {
+
+                                    var machineid = DependencyService.Get<MethodExt>().MachineId();
+                                    var machineName = DependencyService.Get<MethodExt>().MachineName();
+
+                                    NetProcess.Recoonect(machineid, machineName, User.Token, User.DBId, User.EMail, User.Name);
+                                }
+                            }
+                            break;
+                        case (int)PROTOCOL.IdPktReconnectRes:
+                            {
+                                RECONNECT_RES res = new RECONNECT_RES();
+                                res = RECONNECT_RES.Parser.ParseFrom(data.Data);
+                                if (res.VarCode == ErrorCode.Success)
+                                {
+                                    TargetPlayerId.Clear();
+                                    JpegStream = new ConcurrentQueue<StreamWrapper>();
+                                    AudioStream = new ConcurrentQueue<StreamWrapper>();
+
+                                    User.LoginSuccess = true;
+                                }
                             }
                             break;
                         case (int)PROTOCOL.IdPktLoginRes:
@@ -155,6 +177,9 @@ namespace CCA
                                     });
 
                                     User.LoginSuccess = true;
+
+                                    User.DBId = res.VarIndex;
+                                    User.EMail = res.VarEmail;
                                     SQLLiteDB.Upsert(res.VarName,"");
 
                                     TargetPlayerId.Clear();
@@ -959,6 +984,33 @@ namespace CCA
                 message.WriteTo(stream);
 
                 client.WritePacket((int)PROTOCOL.IdPktRoomPassThroughReq, stream.ToArray(), stream.ToArray().Length);
+            }
+        }
+
+        static public void Recoonect(string machineId,string machineName,string token,Int64 Index,string email,string name)
+        {
+            if (client == null || client.socket == null || client.socket.Connected == false)
+                return;
+
+            // var bytearray = System.Text.Encoding.GetEncoding(949).GetBytes(msg);
+
+            // var bytearray = System.Text.Encoding.UTF8.GetBytes(msg);
+
+            RECONNECT_REQ message = new RECONNECT_REQ
+            {
+                VarMachineId = machineId,
+                VarMachineName = machineName,
+                VarEmail = email,
+                VarIndex = Index,
+                VarToken = token,
+                VarName = name
+            };
+
+            using (MemoryStream stream = new MemoryStream())
+            {
+                message.WriteTo(stream);
+
+                client.WritePacket((int)PROTOCOL.IdPktReconnectReq, stream.ToArray(), stream.ToArray().Length);
             }
         }
 

@@ -42,6 +42,7 @@ HubProcess::HubProcess(void)
 	ADD_NET_FUNC(HubProcess, ID_PKT_VERIFY_PURCHASE_REQ, PURCHASE_VERIFY);
 	ADD_NET_FUNC(HubProcess, ID_PKT_DEL_CAMERA_REQ, CAMERA_DELETE);
 
+	ADD_NET_FUNC(HubProcess, ID_PKT_RECONNECT_REQ, RECONNECT);
 
 	
 	
@@ -910,3 +911,21 @@ VOID HubProcess::LOGOUT_CLIENT(boost::shared_ptr<XDATA> pBuffer, boost::shared_p
 	}
 
 
+	VOID HubProcess::RECONNECT(boost::shared_ptr<XDATA> pBuffer, boost::shared_ptr<GSClient> Client)
+	{
+		DECLARE_RECV_TYPE(RECONNECT_REQ, message)
+
+	
+
+		boost::shared_ptr<Hub::MSG_PLAYER_QUERY<Hub::Reconnect>>		PLAYER_MSG = ALLOCATOR.Create<Hub::MSG_PLAYER_QUERY<Hub::Reconnect>>();
+		PLAYER_MSG->pSession = Client;
+
+		{
+			PLAYER_MSG->Request.m_args = std::tuple<DWORD, DWORD, string, string, string,INT64,string>
+				(Client->GetId(), pBuffer->Reserve2,message.var_machine_id(), message.var_machine_name(), message.var_token(),message.var_index(), message.var_email());
+		}
+
+		PLAYER_MSG->Type = Client->GetMyDBTP();
+		PLAYER_MSG->SubType = ONQUERY;
+		MAINPROC.RegisterCommand(PLAYER_MSG);
+	}

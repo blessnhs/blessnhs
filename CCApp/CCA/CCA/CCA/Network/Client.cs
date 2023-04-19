@@ -203,10 +203,10 @@ namespace CCA
                     socket.EndConnect(result);
                 }
 
-
                 //이미 로그인했다가 풀렸다 이때는 초기화
                 if (User.LoginSuccess == true)
-                    User.Clear();
+                    User.LoginSuccess = false;
+
 
                 if (socket.Connected == true)
                 {
@@ -231,10 +231,11 @@ namespace CCA
 
                 tempSocket.EndConnect(IAR);
 
-                //이미 로그인했다가 풀렸다 이때는 초기화
+              
+  				//이미 로그인했다가 풀렸다 이때는 초기화
                 if (User.LoginSuccess == true)
-                    User.Clear();
-
+                    User.LoginSuccess = false;
+                
                 if (socket.Connected == true)
                 {
                     NetProcess.SendVersion();

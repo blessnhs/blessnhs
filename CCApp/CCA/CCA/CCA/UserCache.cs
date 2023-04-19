@@ -46,6 +46,7 @@ namespace CCA
         static public string Token;
         static public string Name;
         static public string EMail;
+        static public long DBId;
 
         //내가 등록한 카메라 리스트
         static public Dictionary<string, RegCam> CamDic = new Dictionary<string, RegCam>();

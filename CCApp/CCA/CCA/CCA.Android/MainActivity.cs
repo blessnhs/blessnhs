@@ -185,8 +185,6 @@ namespace CCA.Droid
         {
             NetProcess.client.ClearSocket();
 
-            User.Clear();
-
             FirebaseAuth_.SignOut();
             Auth.GoogleSignInApi.SignOut(GoogleApiClient);
             Intent signInIntent = Auth.GoogleSignInApi.GetSignInIntent(GoogleApiClient);
@@ -255,8 +253,6 @@ namespace CCA.Droid
                     AuthCredential credential = GoogleAuthProvider.GetCredential(signInResult.SignInAccount.IdToken, null);
 
                     User.ProfileUrl = signInResult.SignInAccount.PhotoUrl.ToString();
-
-                    User.Clear();
 
                     User.Uid = signInResult.SignInAccount.Id;
                     User.Token = signInResult.SignInAccount.IdToken;

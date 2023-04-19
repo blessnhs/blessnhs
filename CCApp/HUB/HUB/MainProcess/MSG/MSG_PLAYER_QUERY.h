@@ -156,6 +156,53 @@ class MSG_PLAYER_QUERY<##class_name>:public IMESSAGE	\
 		}\
 
 
+#define DECLARE_DB_CLASS_BEGIN_6(class_name,type1,type2,type3,type4,type5,type6) \
+class class_name:public GSObject \
+{ \
+public:\
+class_name() {}\
+    std::tuple<type1,type2,type3,type4,type5,type6> m_args; \
+};	\
+template<>\
+class MSG_PLAYER_QUERY<##class_name>:public IMESSAGE	\
+{\
+	public:	\
+		MSG_PLAYER_QUERY() {}\
+		~MSG_PLAYER_QUERY() {}\
+	GSCLIENT_PTR pSession; \
+	class_name Request;\
+	void Execute(LPVOID Param)\
+	{\
+		DBPROCESS_CER_PTR pProcess = DBPROCESSCONTAINER_CER.Search(Type); \
+		if (pProcess == NULL || pProcess->m_IsOpen == false)\
+		{\
+			return; \
+		}\
+
+
+#define DECLARE_DB_CLASS_BEGIN_7(class_name,type1,type2,type3,type4,type5,type6,type7) \
+class class_name:public GSObject \
+{ \
+public:\
+class_name() {}\
+    std::tuple<type1,type2,type3,type4,type5,type6,type7> m_args; \
+};	\
+template<>\
+class MSG_PLAYER_QUERY<##class_name>:public IMESSAGE	\
+{\
+	public:	\
+		MSG_PLAYER_QUERY() {}\
+		~MSG_PLAYER_QUERY() {}\
+	GSCLIENT_PTR pSession; \
+	class_name Request;\
+	void Execute(LPVOID Param)\
+	{\
+		DBPROCESS_CER_PTR pProcess = DBPROCESSCONTAINER_CER.Search(Type); \
+		if (pProcess == NULL || pProcess->m_IsOpen == false)\
+		{\
+			return; \
+		}\
+
 #define DECLARE_DB_CLASS_END	\
 	}\
 		void Undo() {}\
@@ -430,6 +477,78 @@ class MSG_PLAYER_QUERY<##class_name>:public IMESSAGE	\
 		auto ret = pProcess->DeleteCamera(pPlayerPtr->GetDBIndex(), std::get<0>(Request.m_args));
 
 		SEND_PROTO_BUFFER(res, pSession, pPlayerPtr->GetFrontSid())
+
+	}
+	DECLARE_DB_CLASS_END
+#pragma endregion
+
+
+#pragma region RECONNECT
+	DECLARE_DB_CLASS_BEGIN_7(Reconnect, DWORD,DWORD,string,string,string,INT64, string)
+	{
+		DWORD ForntId = std::get<0>(Request.m_args);
+		DWORD FrontSid = std::get<1>(Request.m_args);
+
+		std::string MachineId = std::get<2>(Request.m_args);
+		string MachineName = std::get<3>(Request.m_args);
+
+		string Token = std::get<4>(Request.m_args);
+
+
+		INT64 index = std::get<5>(Request.m_args);
+		string email = std::get<6>(Request.m_args);
+
+		//해당 구글계정으로는 중복접속이 허용되지만 머신아이디가 동일한 것은 안된다 이전껏을 내보낸다.
+		auto existClient = PLAYERMGR.SearchByMachineId(MachineId);
+		if (existClient != NULL)
+		{
+			GSCLIENT_PTR pPair = SERVER.GetClient(existClient->GetFront());
+			if (pPair != NULL)
+			{
+				BLOG("2.Login Fail Exist player %s and session close\n", MachineId);
+
+				PLAYERMGR.Disconnect(existClient);
+
+				CLIENT_KICK kick;
+				SEND_PROTO_BUFFER(kick, pPair, FrontSid)
+			}
+		}
+
+
+		PlayerPtr pNewPlayer = PLAYERMGR.Create();
+
+		pNewPlayer->Initialize();
+
+	
+
+		pNewPlayer->SetMachineName(MachineName);
+		pNewPlayer->SetMachineId(MachineId);
+
+		pNewPlayer->SetFront(ForntId);
+		pNewPlayer->SetFrontSid(FrontSid);
+
+		pNewPlayer->SetDBIndex(index);
+
+
+		pNewPlayer->SetPair(ForntId);
+		//	pSession->SetPair(Index);
+
+		pNewPlayer->m_AliveTime = GetTickCount();
+
+		pNewPlayer->m_Email = email;
+		pNewPlayer->m_Token = Token;
+		pNewPlayer->m_Ip = "";
+
+		PLAYERMGR.Add(pNewPlayer);
+
+		RECONNECT_RES res;
+		res.set_var_index(index);
+		res.set_var_code(Success);
+	
+
+		//auto ret = pProcess->DeleteCamera(pPlayerPtr->GetDBIndex(), std::get<0>(Request.m_args));
+
+		SEND_PROTO_BUFFER(res, pSession, FrontSid)
 
 	}
 	DECLARE_DB_CLASS_END
@@ -769,6 +888,10 @@ class MSG_PLAYER_QUERY<##class_name>:public IMESSAGE	\
 				res.set_var_index(Index);
 
 				res.set_var_name(pRequst.token);
+				res.set_var_email(email);
+				res.set_var_machineid(pRequst.MachineId);
+				res.set_var_machinename(pRequst.MachineModel);
+				res.set_var_token(pRequst.token);
 
 				SEND_PROTO_BUFFER(res, pSession, pRequst.FrontSid)
 
