@@ -22,7 +22,7 @@ static constexpr ::PROTOBUF_NAMESPACE_ID::internal::MigrationSchema* schemas = n
 static constexpr ::PROTOBUF_NAMESPACE_ID::Message* const* file_default_instances = nullptr;
 
 const char descriptor_table_protodef_Enum_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
-  "\n\nEnum.proto*\320\014\n\010PROTOCOL\022\026\n\022ID_PKT_VERS"
+  "\n\nEnum.proto*\272\r\n\010PROTOCOL\022\026\n\022ID_PKT_VERS"
   "ION_REQ\020\000\022\026\n\022ID_PKT_VERSION_RES\020\001\022\024\n\020ID_"
   "PKT_LOGIN_REQ\020\002\022\024\n\020ID_PKT_LOGIN_RES\020\003\022\032\n"
   "\026ID_PKT_CREATE_ROOM_REQ\020\004\022\032\n\026ID_PKT_CREA"
@@ -62,13 +62,16 @@ const char descriptor_table_protodef_Enum_2eproto[] PROTOBUF_SECTION_VARIABLE(pr
   "\026ID_PKT_CAMERA_LIST_RES\0205\022\035\n\031ID_PKT_MACH"
   "INE_STATUS_REQ\0206\022\035\n\031ID_PKT_MACHINE_STATU"
   "S_RES\0207\022\036\n\032ID_PKT_VERIFY_PURCHASE_REQ\0208\022"
-  "\036\n\032ID_PKT_VERIFY_PURCHASE_RES\0209*{\n\tError"
-  "Code\022\013\n\007Success\020\000\022\021\n\rDataBaseError\020\001\022\022\n\016"
-  "LoginDuplicate\020\002\022\017\n\013SystemError\020\003\022\017\n\013Log"
-  "inFailed\020\004\022\030\n\024Duplicate_Enter_Room\020\005*g\n\021"
-  "CameraControlType\022\020\n\014SwitchCamera\020\000\022\r\n\tQ"
-  "ualityUp\020\001\022\017\n\013QualityDown\020\002\022\t\n\005Flash\020\003\022\014"
-  "\n\010SaveFile\020\004\022\007\n\003MIC\020\005B\002H\001b\006proto3"
+  "\036\n\032ID_PKT_VERIFY_PURCHASE_RES\0209\022\031\n\025ID_PK"
+  "T_DEL_CAMERA_REQ\020:\022\031\n\025ID_PKT_DEL_CAMERA_"
+  "RES\020;\022\030\n\024ID_PKT_RECONNECT_REQ\020<\022\030\n\024ID_PK"
+  "T_RECONNECT_RES\020=*{\n\tErrorCode\022\013\n\007Succes"
+  "s\020\000\022\021\n\rDataBaseError\020\001\022\022\n\016LoginDuplicate"
+  "\020\002\022\017\n\013SystemError\020\003\022\017\n\013LoginFailed\020\004\022\030\n\024"
+  "Duplicate_Enter_Room\020\005*g\n\021CameraControlT"
+  "ype\022\020\n\014SwitchCamera\020\000\022\r\n\tQualityUp\020\001\022\017\n\013"
+  "QualityDown\020\002\022\t\n\005Flash\020\003\022\014\n\010SaveFile\020\004\022\007"
+  "\n\003MIC\020\005B\002H\001b\006proto3"
   ;
 static const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable*const descriptor_table_Enum_2eproto_deps[1] = {
 };
@@ -77,7 +80,7 @@ static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_Enu
 static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_Enum_2eproto_once;
 static bool descriptor_table_Enum_2eproto_initialized = false;
 const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_Enum_2eproto = {
-  &descriptor_table_Enum_2eproto_initialized, descriptor_table_protodef_Enum_2eproto, "Enum.proto", 1873,
+  &descriptor_table_Enum_2eproto_initialized, descriptor_table_protodef_Enum_2eproto, "Enum.proto", 1979,
   &descriptor_table_Enum_2eproto_once, descriptor_table_Enum_2eproto_sccs, descriptor_table_Enum_2eproto_deps, 0, 0,
   schemas, file_default_instances, TableStruct_Enum_2eproto::offsets,
   file_level_metadata_Enum_2eproto, 0, file_level_enum_descriptors_Enum_2eproto, file_level_service_descriptors_Enum_2eproto,
@@ -149,6 +152,10 @@ bool PROTOCOL_IsValid(int value) {
     case 55:
     case 56:
     case 57:
+    case 58:
+    case 59:
+    case 60:
+    case 61:
       return true;
     default:
       return false;

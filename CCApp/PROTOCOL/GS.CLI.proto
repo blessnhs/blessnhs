@@ -23,6 +23,14 @@ message LOGIN_RES
 
     optional string   var_locale     = 4;
     optional string   var_name       = 5;
+
+
+    optional string   var_machineId       = 6;
+    optional string   var_machineName       = 7;
+
+   optional string   var_email       = 8;
+   optional string   var_token       = 9;
+
 }
 
 message CREATE_ROOM_RES
@@ -89,7 +97,8 @@ message BITMAP_MESSAGE_RES
     optional  ErrorCode    var_code          = 2;
     repeated bytes     var_message          = 3;
     optional bytes     var_name	            = 4;
-
+    optional int32       var_width        = 5;	
+    optional int32       var_height        = 6;
 }
 
 message AUDIO_MESSAGE_RES
@@ -99,6 +108,7 @@ message AUDIO_MESSAGE_RES
     repeated bytes     var_message          = 3;
     optional bytes     var_name	            = 4;
     optional  int32    var_pos		             = 5;
+
 }
 
 message PRAY_MESSAGE_RES
@@ -211,4 +221,18 @@ message VERIFY_PURCHASE_RES
     optional string     var_package_name = 2;
     optional string     var_purchase_id        = 3;	
       optional  ErrorCode    var_code         = 4;
+}
+
+message DEL_CAMERA_RES
+{
+    optional PROTOCOL   id                  = 1 [default = ID_PKT_DEL_CAMERA_RES ];
+    optional  ErrorCode    var_code          = 2;
+    optional string     var_machine_id        = 3;	
+}
+
+message RECONNECT_RES
+{
+    optional PROTOCOL   id                  = 1 [default = ID_PKT_RECONNECT_RES ];
+    optional  ErrorCode    var_code          = 2;
+    optional  int64      var_index         = 3;	
 }

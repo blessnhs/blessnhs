@@ -49,7 +49,7 @@ struct TableStruct_GS_2eCLI_2eproto {
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::PROTOBUF_NAMESPACE_ID::internal::AuxillaryParseTableField aux[]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
-  static const ::PROTOBUF_NAMESPACE_ID::internal::ParseTable schema[26]
+  static const ::PROTOBUF_NAMESPACE_ID::internal::ParseTable schema[28]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::PROTOBUF_NAMESPACE_ID::internal::FieldMetadata field_metadata[];
   static const ::PROTOBUF_NAMESPACE_ID::internal::SerializationTable serialization_table[];
@@ -80,6 +80,9 @@ extern CLIENT_LOGOUT_RESDefaultTypeInternal _CLIENT_LOGOUT_RES_default_instance_
 class CREATE_ROOM_RES;
 class CREATE_ROOM_RESDefaultTypeInternal;
 extern CREATE_ROOM_RESDefaultTypeInternal _CREATE_ROOM_RES_default_instance_;
+class DEL_CAMERA_RES;
+class DEL_CAMERA_RESDefaultTypeInternal;
+extern DEL_CAMERA_RESDefaultTypeInternal _DEL_CAMERA_RES_default_instance_;
 class ENTER_ROOM_RES;
 class ENTER_ROOM_RESDefaultTypeInternal;
 extern ENTER_ROOM_RESDefaultTypeInternal _ENTER_ROOM_RES_default_instance_;
@@ -113,6 +116,9 @@ extern PRAY_MESSAGE_RESDefaultTypeInternal _PRAY_MESSAGE_RES_default_instance_;
 class QNA_RES;
 class QNA_RESDefaultTypeInternal;
 extern QNA_RESDefaultTypeInternal _QNA_RES_default_instance_;
+class RECONNECT_RES;
+class RECONNECT_RESDefaultTypeInternal;
+extern RECONNECT_RESDefaultTypeInternal _RECONNECT_RES_default_instance_;
 class REG_CAMERA_RES;
 class REG_CAMERA_RESDefaultTypeInternal;
 extern REG_CAMERA_RESDefaultTypeInternal _REG_CAMERA_RES_default_instance_;
@@ -143,6 +149,7 @@ template<> ::CAMERA_WAKE_UP_RES* Arena::CreateMaybeMessage<::CAMERA_WAKE_UP_RES>
 template<> ::CLIENT_KICK* Arena::CreateMaybeMessage<::CLIENT_KICK>(Arena*);
 template<> ::CLIENT_LOGOUT_RES* Arena::CreateMaybeMessage<::CLIENT_LOGOUT_RES>(Arena*);
 template<> ::CREATE_ROOM_RES* Arena::CreateMaybeMessage<::CREATE_ROOM_RES>(Arena*);
+template<> ::DEL_CAMERA_RES* Arena::CreateMaybeMessage<::DEL_CAMERA_RES>(Arena*);
 template<> ::ENTER_ROOM_RES* Arena::CreateMaybeMessage<::ENTER_ROOM_RES>(Arena*);
 template<> ::LEAVE_ROOM_RES* Arena::CreateMaybeMessage<::LEAVE_ROOM_RES>(Arena*);
 template<> ::LOGIN_RES* Arena::CreateMaybeMessage<::LOGIN_RES>(Arena*);
@@ -154,6 +161,7 @@ template<> ::NOTICE_RES* Arena::CreateMaybeMessage<::NOTICE_RES>(Arena*);
 template<> ::PRAY_MESSAGE_REG_RES* Arena::CreateMaybeMessage<::PRAY_MESSAGE_REG_RES>(Arena*);
 template<> ::PRAY_MESSAGE_RES* Arena::CreateMaybeMessage<::PRAY_MESSAGE_RES>(Arena*);
 template<> ::QNA_RES* Arena::CreateMaybeMessage<::QNA_RES>(Arena*);
+template<> ::RECONNECT_RES* Arena::CreateMaybeMessage<::RECONNECT_RES>(Arena*);
 template<> ::REG_CAMERA_RES* Arena::CreateMaybeMessage<::REG_CAMERA_RES>(Arena*);
 template<> ::REG_RES* Arena::CreateMaybeMessage<::REG_RES>(Arena*);
 template<> ::ROOM_LIST_RES* Arena::CreateMaybeMessage<::ROOM_LIST_RES>(Arena*);
@@ -450,6 +458,10 @@ class LOGIN_RES :
   enum : int {
     kVarLocaleFieldNumber = 4,
     kVarNameFieldNumber = 5,
+    kVarMachineIdFieldNumber = 6,
+    kVarMachineNameFieldNumber = 7,
+    kVarEmailFieldNumber = 8,
+    kVarTokenFieldNumber = 9,
     kVarIndexFieldNumber = 3,
     kVarCodeFieldNumber = 2,
     kIdFieldNumber = 1,
@@ -492,6 +504,86 @@ class LOGIN_RES :
   const std::string& _internal_var_name() const;
   void _internal_set_var_name(const std::string& value);
   std::string* _internal_mutable_var_name();
+  public:
+
+  // optional string var_machineId = 6;
+  bool has_var_machineid() const;
+  private:
+  bool _internal_has_var_machineid() const;
+  public:
+  void clear_var_machineid();
+  const std::string& var_machineid() const;
+  void set_var_machineid(const std::string& value);
+  void set_var_machineid(std::string&& value);
+  void set_var_machineid(const char* value);
+  void set_var_machineid(const char* value, size_t size);
+  std::string* mutable_var_machineid();
+  std::string* release_var_machineid();
+  void set_allocated_var_machineid(std::string* var_machineid);
+  private:
+  const std::string& _internal_var_machineid() const;
+  void _internal_set_var_machineid(const std::string& value);
+  std::string* _internal_mutable_var_machineid();
+  public:
+
+  // optional string var_machineName = 7;
+  bool has_var_machinename() const;
+  private:
+  bool _internal_has_var_machinename() const;
+  public:
+  void clear_var_machinename();
+  const std::string& var_machinename() const;
+  void set_var_machinename(const std::string& value);
+  void set_var_machinename(std::string&& value);
+  void set_var_machinename(const char* value);
+  void set_var_machinename(const char* value, size_t size);
+  std::string* mutable_var_machinename();
+  std::string* release_var_machinename();
+  void set_allocated_var_machinename(std::string* var_machinename);
+  private:
+  const std::string& _internal_var_machinename() const;
+  void _internal_set_var_machinename(const std::string& value);
+  std::string* _internal_mutable_var_machinename();
+  public:
+
+  // optional string var_email = 8;
+  bool has_var_email() const;
+  private:
+  bool _internal_has_var_email() const;
+  public:
+  void clear_var_email();
+  const std::string& var_email() const;
+  void set_var_email(const std::string& value);
+  void set_var_email(std::string&& value);
+  void set_var_email(const char* value);
+  void set_var_email(const char* value, size_t size);
+  std::string* mutable_var_email();
+  std::string* release_var_email();
+  void set_allocated_var_email(std::string* var_email);
+  private:
+  const std::string& _internal_var_email() const;
+  void _internal_set_var_email(const std::string& value);
+  std::string* _internal_mutable_var_email();
+  public:
+
+  // optional string var_token = 9;
+  bool has_var_token() const;
+  private:
+  bool _internal_has_var_token() const;
+  public:
+  void clear_var_token();
+  const std::string& var_token() const;
+  void set_var_token(const std::string& value);
+  void set_var_token(std::string&& value);
+  void set_var_token(const char* value);
+  void set_var_token(const char* value, size_t size);
+  std::string* mutable_var_token();
+  std::string* release_var_token();
+  void set_allocated_var_token(std::string* var_token);
+  private:
+  const std::string& _internal_var_token() const;
+  void _internal_set_var_token(const std::string& value);
+  std::string* _internal_mutable_var_token();
   public:
 
   // optional int64 var_index = 3;
@@ -542,6 +634,10 @@ class LOGIN_RES :
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr var_locale_;
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr var_name_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr var_machineid_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr var_machinename_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr var_email_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr var_token_;
   ::PROTOBUF_NAMESPACE_ID::int64 var_index_;
   int var_code_;
   int id_;
@@ -1988,6 +2084,8 @@ class BITMAP_MESSAGE_RES :
     kVarMessageFieldNumber = 3,
     kVarNameFieldNumber = 4,
     kVarCodeFieldNumber = 2,
+    kVarWidthFieldNumber = 5,
+    kVarHeightFieldNumber = 6,
     kIdFieldNumber = 1,
   };
   // repeated bytes var_message = 3;
@@ -2047,6 +2145,32 @@ class BITMAP_MESSAGE_RES :
   void _internal_set_var_code(::ErrorCode value);
   public:
 
+  // optional int32 var_width = 5;
+  bool has_var_width() const;
+  private:
+  bool _internal_has_var_width() const;
+  public:
+  void clear_var_width();
+  ::PROTOBUF_NAMESPACE_ID::int32 var_width() const;
+  void set_var_width(::PROTOBUF_NAMESPACE_ID::int32 value);
+  private:
+  ::PROTOBUF_NAMESPACE_ID::int32 _internal_var_width() const;
+  void _internal_set_var_width(::PROTOBUF_NAMESPACE_ID::int32 value);
+  public:
+
+  // optional int32 var_height = 6;
+  bool has_var_height() const;
+  private:
+  bool _internal_has_var_height() const;
+  public:
+  void clear_var_height();
+  ::PROTOBUF_NAMESPACE_ID::int32 var_height() const;
+  void set_var_height(::PROTOBUF_NAMESPACE_ID::int32 value);
+  private:
+  ::PROTOBUF_NAMESPACE_ID::int32 _internal_var_height() const;
+  void _internal_set_var_height(::PROTOBUF_NAMESPACE_ID::int32 value);
+  public:
+
   // optional .PROTOCOL id = 1 [default = ID_PKT_BITMAP_MESSAGE_RES];
   bool has_id() const;
   private:
@@ -2070,6 +2194,8 @@ class BITMAP_MESSAGE_RES :
   ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string> var_message_;
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr var_name_;
   int var_code_;
+  ::PROTOBUF_NAMESPACE_ID::int32 var_width_;
+  ::PROTOBUF_NAMESPACE_ID::int32 var_height_;
   int id_;
   friend struct ::TableStruct_GS_2eCLI_2eproto;
 };
@@ -4998,6 +5124,353 @@ class VERIFY_PURCHASE_RES :
   int id_;
   friend struct ::TableStruct_GS_2eCLI_2eproto;
 };
+// -------------------------------------------------------------------
+
+class DEL_CAMERA_RES :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:DEL_CAMERA_RES) */ {
+ public:
+  DEL_CAMERA_RES();
+  virtual ~DEL_CAMERA_RES();
+
+  DEL_CAMERA_RES(const DEL_CAMERA_RES& from);
+  DEL_CAMERA_RES(DEL_CAMERA_RES&& from) noexcept
+    : DEL_CAMERA_RES() {
+    *this = ::std::move(from);
+  }
+
+  inline DEL_CAMERA_RES& operator=(const DEL_CAMERA_RES& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline DEL_CAMERA_RES& operator=(DEL_CAMERA_RES&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  inline const ::PROTOBUF_NAMESPACE_ID::UnknownFieldSet& unknown_fields() const {
+    return _internal_metadata_.unknown_fields();
+  }
+  inline ::PROTOBUF_NAMESPACE_ID::UnknownFieldSet* mutable_unknown_fields() {
+    return _internal_metadata_.mutable_unknown_fields();
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return GetMetadataStatic().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return GetMetadataStatic().reflection;
+  }
+  static const DEL_CAMERA_RES& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const DEL_CAMERA_RES* internal_default_instance() {
+    return reinterpret_cast<const DEL_CAMERA_RES*>(
+               &_DEL_CAMERA_RES_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    26;
+
+  friend void swap(DEL_CAMERA_RES& a, DEL_CAMERA_RES& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(DEL_CAMERA_RES* other) {
+    if (other == this) return;
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline DEL_CAMERA_RES* New() const final {
+    return CreateMaybeMessage<DEL_CAMERA_RES>(nullptr);
+  }
+
+  DEL_CAMERA_RES* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
+    return CreateMaybeMessage<DEL_CAMERA_RES>(arena);
+  }
+  void CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void CopyFrom(const DEL_CAMERA_RES& from);
+  void MergeFrom(const DEL_CAMERA_RES& from);
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  ::PROTOBUF_NAMESPACE_ID::uint8* _InternalSerialize(
+      ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  inline void SharedCtor();
+  inline void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(DEL_CAMERA_RES* other);
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "DEL_CAMERA_RES";
+  }
+  private:
+  inline ::PROTOBUF_NAMESPACE_ID::Arena* GetArenaNoVirtual() const {
+    return nullptr;
+  }
+  inline void* MaybeArenaPtr() const {
+    return nullptr;
+  }
+  public:
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+  private:
+  static ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadataStatic() {
+    ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&::descriptor_table_GS_2eCLI_2eproto);
+    return ::descriptor_table_GS_2eCLI_2eproto.file_level_metadata[kIndexInFileMessages];
+  }
+
+  public:
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kVarMachineIdFieldNumber = 3,
+    kVarCodeFieldNumber = 2,
+    kIdFieldNumber = 1,
+  };
+  // optional string var_machine_id = 3;
+  bool has_var_machine_id() const;
+  private:
+  bool _internal_has_var_machine_id() const;
+  public:
+  void clear_var_machine_id();
+  const std::string& var_machine_id() const;
+  void set_var_machine_id(const std::string& value);
+  void set_var_machine_id(std::string&& value);
+  void set_var_machine_id(const char* value);
+  void set_var_machine_id(const char* value, size_t size);
+  std::string* mutable_var_machine_id();
+  std::string* release_var_machine_id();
+  void set_allocated_var_machine_id(std::string* var_machine_id);
+  private:
+  const std::string& _internal_var_machine_id() const;
+  void _internal_set_var_machine_id(const std::string& value);
+  std::string* _internal_mutable_var_machine_id();
+  public:
+
+  // optional .ErrorCode var_code = 2;
+  bool has_var_code() const;
+  private:
+  bool _internal_has_var_code() const;
+  public:
+  void clear_var_code();
+  ::ErrorCode var_code() const;
+  void set_var_code(::ErrorCode value);
+  private:
+  ::ErrorCode _internal_var_code() const;
+  void _internal_set_var_code(::ErrorCode value);
+  public:
+
+  // optional .PROTOCOL id = 1 [default = ID_PKT_DEL_CAMERA_RES];
+  bool has_id() const;
+  private:
+  bool _internal_has_id() const;
+  public:
+  void clear_id();
+  ::PROTOCOL id() const;
+  void set_id(::PROTOCOL value);
+  private:
+  ::PROTOCOL _internal_id() const;
+  void _internal_set_id(::PROTOCOL value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:DEL_CAMERA_RES)
+ private:
+  class _Internal;
+
+  ::PROTOBUF_NAMESPACE_ID::internal::InternalMetadataWithArena _internal_metadata_;
+  ::PROTOBUF_NAMESPACE_ID::internal::HasBits<1> _has_bits_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr var_machine_id_;
+  int var_code_;
+  int id_;
+  friend struct ::TableStruct_GS_2eCLI_2eproto;
+};
+// -------------------------------------------------------------------
+
+class RECONNECT_RES :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:RECONNECT_RES) */ {
+ public:
+  RECONNECT_RES();
+  virtual ~RECONNECT_RES();
+
+  RECONNECT_RES(const RECONNECT_RES& from);
+  RECONNECT_RES(RECONNECT_RES&& from) noexcept
+    : RECONNECT_RES() {
+    *this = ::std::move(from);
+  }
+
+  inline RECONNECT_RES& operator=(const RECONNECT_RES& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline RECONNECT_RES& operator=(RECONNECT_RES&& from) noexcept {
+    if (GetArenaNoVirtual() == from.GetArenaNoVirtual()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  inline const ::PROTOBUF_NAMESPACE_ID::UnknownFieldSet& unknown_fields() const {
+    return _internal_metadata_.unknown_fields();
+  }
+  inline ::PROTOBUF_NAMESPACE_ID::UnknownFieldSet* mutable_unknown_fields() {
+    return _internal_metadata_.mutable_unknown_fields();
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return GetMetadataStatic().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return GetMetadataStatic().reflection;
+  }
+  static const RECONNECT_RES& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const RECONNECT_RES* internal_default_instance() {
+    return reinterpret_cast<const RECONNECT_RES*>(
+               &_RECONNECT_RES_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    27;
+
+  friend void swap(RECONNECT_RES& a, RECONNECT_RES& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(RECONNECT_RES* other) {
+    if (other == this) return;
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline RECONNECT_RES* New() const final {
+    return CreateMaybeMessage<RECONNECT_RES>(nullptr);
+  }
+
+  RECONNECT_RES* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
+    return CreateMaybeMessage<RECONNECT_RES>(arena);
+  }
+  void CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void CopyFrom(const RECONNECT_RES& from);
+  void MergeFrom(const RECONNECT_RES& from);
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  ::PROTOBUF_NAMESPACE_ID::uint8* _InternalSerialize(
+      ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  inline void SharedCtor();
+  inline void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(RECONNECT_RES* other);
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "RECONNECT_RES";
+  }
+  private:
+  inline ::PROTOBUF_NAMESPACE_ID::Arena* GetArenaNoVirtual() const {
+    return nullptr;
+  }
+  inline void* MaybeArenaPtr() const {
+    return nullptr;
+  }
+  public:
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+  private:
+  static ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadataStatic() {
+    ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&::descriptor_table_GS_2eCLI_2eproto);
+    return ::descriptor_table_GS_2eCLI_2eproto.file_level_metadata[kIndexInFileMessages];
+  }
+
+  public:
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kVarIndexFieldNumber = 3,
+    kVarCodeFieldNumber = 2,
+    kIdFieldNumber = 1,
+  };
+  // optional int64 var_index = 3;
+  bool has_var_index() const;
+  private:
+  bool _internal_has_var_index() const;
+  public:
+  void clear_var_index();
+  ::PROTOBUF_NAMESPACE_ID::int64 var_index() const;
+  void set_var_index(::PROTOBUF_NAMESPACE_ID::int64 value);
+  private:
+  ::PROTOBUF_NAMESPACE_ID::int64 _internal_var_index() const;
+  void _internal_set_var_index(::PROTOBUF_NAMESPACE_ID::int64 value);
+  public:
+
+  // optional .ErrorCode var_code = 2;
+  bool has_var_code() const;
+  private:
+  bool _internal_has_var_code() const;
+  public:
+  void clear_var_code();
+  ::ErrorCode var_code() const;
+  void set_var_code(::ErrorCode value);
+  private:
+  ::ErrorCode _internal_var_code() const;
+  void _internal_set_var_code(::ErrorCode value);
+  public:
+
+  // optional .PROTOCOL id = 1 [default = ID_PKT_RECONNECT_RES];
+  bool has_id() const;
+  private:
+  bool _internal_has_id() const;
+  public:
+  void clear_id();
+  ::PROTOCOL id() const;
+  void set_id(::PROTOCOL value);
+  private:
+  ::PROTOCOL _internal_id() const;
+  void _internal_set_id(::PROTOCOL value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:RECONNECT_RES)
+ private:
+  class _Internal;
+
+  ::PROTOBUF_NAMESPACE_ID::internal::InternalMetadataWithArena _internal_metadata_;
+  ::PROTOBUF_NAMESPACE_ID::internal::HasBits<1> _has_bits_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  ::PROTOBUF_NAMESPACE_ID::int64 var_index_;
+  int var_code_;
+  int id_;
+  friend struct ::TableStruct_GS_2eCLI_2eproto;
+};
 // ===================================================================
 
 
@@ -5101,7 +5574,7 @@ inline void VERSION_RES::set_var_code(::ErrorCode value) {
 
 // optional .PROTOCOL id = 1 [default = ID_PKT_LOGIN_RES];
 inline bool LOGIN_RES::_internal_has_id() const {
-  bool value = (_has_bits_[0] & 0x00000010u) != 0;
+  bool value = (_has_bits_[0] & 0x00000100u) != 0;
   return value;
 }
 inline bool LOGIN_RES::has_id() const {
@@ -5109,7 +5582,7 @@ inline bool LOGIN_RES::has_id() const {
 }
 inline void LOGIN_RES::clear_id() {
   id_ = 3;
-  _has_bits_[0] &= ~0x00000010u;
+  _has_bits_[0] &= ~0x00000100u;
 }
 inline ::PROTOCOL LOGIN_RES::_internal_id() const {
   return static_cast< ::PROTOCOL >(id_);
@@ -5120,7 +5593,7 @@ inline ::PROTOCOL LOGIN_RES::id() const {
 }
 inline void LOGIN_RES::_internal_set_id(::PROTOCOL value) {
   assert(::PROTOCOL_IsValid(value));
-  _has_bits_[0] |= 0x00000010u;
+  _has_bits_[0] |= 0x00000100u;
   id_ = value;
 }
 inline void LOGIN_RES::set_id(::PROTOCOL value) {
@@ -5130,7 +5603,7 @@ inline void LOGIN_RES::set_id(::PROTOCOL value) {
 
 // optional .ErrorCode var_code = 2;
 inline bool LOGIN_RES::_internal_has_var_code() const {
-  bool value = (_has_bits_[0] & 0x00000008u) != 0;
+  bool value = (_has_bits_[0] & 0x00000080u) != 0;
   return value;
 }
 inline bool LOGIN_RES::has_var_code() const {
@@ -5138,7 +5611,7 @@ inline bool LOGIN_RES::has_var_code() const {
 }
 inline void LOGIN_RES::clear_var_code() {
   var_code_ = 0;
-  _has_bits_[0] &= ~0x00000008u;
+  _has_bits_[0] &= ~0x00000080u;
 }
 inline ::ErrorCode LOGIN_RES::_internal_var_code() const {
   return static_cast< ::ErrorCode >(var_code_);
@@ -5149,7 +5622,7 @@ inline ::ErrorCode LOGIN_RES::var_code() const {
 }
 inline void LOGIN_RES::_internal_set_var_code(::ErrorCode value) {
   assert(::ErrorCode_IsValid(value));
-  _has_bits_[0] |= 0x00000008u;
+  _has_bits_[0] |= 0x00000080u;
   var_code_ = value;
 }
 inline void LOGIN_RES::set_var_code(::ErrorCode value) {
@@ -5159,7 +5632,7 @@ inline void LOGIN_RES::set_var_code(::ErrorCode value) {
 
 // optional int64 var_index = 3;
 inline bool LOGIN_RES::_internal_has_var_index() const {
-  bool value = (_has_bits_[0] & 0x00000004u) != 0;
+  bool value = (_has_bits_[0] & 0x00000040u) != 0;
   return value;
 }
 inline bool LOGIN_RES::has_var_index() const {
@@ -5167,7 +5640,7 @@ inline bool LOGIN_RES::has_var_index() const {
 }
 inline void LOGIN_RES::clear_var_index() {
   var_index_ = PROTOBUF_LONGLONG(0);
-  _has_bits_[0] &= ~0x00000004u;
+  _has_bits_[0] &= ~0x00000040u;
 }
 inline ::PROTOBUF_NAMESPACE_ID::int64 LOGIN_RES::_internal_var_index() const {
   return var_index_;
@@ -5177,7 +5650,7 @@ inline ::PROTOBUF_NAMESPACE_ID::int64 LOGIN_RES::var_index() const {
   return _internal_var_index();
 }
 inline void LOGIN_RES::_internal_set_var_index(::PROTOBUF_NAMESPACE_ID::int64 value) {
-  _has_bits_[0] |= 0x00000004u;
+  _has_bits_[0] |= 0x00000040u;
   var_index_ = value;
 }
 inline void LOGIN_RES::set_var_index(::PROTOBUF_NAMESPACE_ID::int64 value) {
@@ -5325,6 +5798,290 @@ inline void LOGIN_RES::set_allocated_var_name(std::string* var_name) {
   }
   var_name_.SetAllocatedNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), var_name);
   // @@protoc_insertion_point(field_set_allocated:LOGIN_RES.var_name)
+}
+
+// optional string var_machineId = 6;
+inline bool LOGIN_RES::_internal_has_var_machineid() const {
+  bool value = (_has_bits_[0] & 0x00000004u) != 0;
+  return value;
+}
+inline bool LOGIN_RES::has_var_machineid() const {
+  return _internal_has_var_machineid();
+}
+inline void LOGIN_RES::clear_var_machineid() {
+  var_machineid_.ClearToEmptyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline const std::string& LOGIN_RES::var_machineid() const {
+  // @@protoc_insertion_point(field_get:LOGIN_RES.var_machineId)
+  return _internal_var_machineid();
+}
+inline void LOGIN_RES::set_var_machineid(const std::string& value) {
+  _internal_set_var_machineid(value);
+  // @@protoc_insertion_point(field_set:LOGIN_RES.var_machineId)
+}
+inline std::string* LOGIN_RES::mutable_var_machineid() {
+  // @@protoc_insertion_point(field_mutable:LOGIN_RES.var_machineId)
+  return _internal_mutable_var_machineid();
+}
+inline const std::string& LOGIN_RES::_internal_var_machineid() const {
+  return var_machineid_.GetNoArena();
+}
+inline void LOGIN_RES::_internal_set_var_machineid(const std::string& value) {
+  _has_bits_[0] |= 0x00000004u;
+  var_machineid_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), value);
+}
+inline void LOGIN_RES::set_var_machineid(std::string&& value) {
+  _has_bits_[0] |= 0x00000004u;
+  var_machineid_.SetNoArena(
+    &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:LOGIN_RES.var_machineId)
+}
+inline void LOGIN_RES::set_var_machineid(const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  _has_bits_[0] |= 0x00000004u;
+  var_machineid_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:LOGIN_RES.var_machineId)
+}
+inline void LOGIN_RES::set_var_machineid(const char* value, size_t size) {
+  _has_bits_[0] |= 0x00000004u;
+  var_machineid_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:LOGIN_RES.var_machineId)
+}
+inline std::string* LOGIN_RES::_internal_mutable_var_machineid() {
+  _has_bits_[0] |= 0x00000004u;
+  return var_machineid_.MutableNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline std::string* LOGIN_RES::release_var_machineid() {
+  // @@protoc_insertion_point(field_release:LOGIN_RES.var_machineId)
+  if (!_internal_has_var_machineid()) {
+    return nullptr;
+  }
+  _has_bits_[0] &= ~0x00000004u;
+  return var_machineid_.ReleaseNonDefaultNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline void LOGIN_RES::set_allocated_var_machineid(std::string* var_machineid) {
+  if (var_machineid != nullptr) {
+    _has_bits_[0] |= 0x00000004u;
+  } else {
+    _has_bits_[0] &= ~0x00000004u;
+  }
+  var_machineid_.SetAllocatedNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), var_machineid);
+  // @@protoc_insertion_point(field_set_allocated:LOGIN_RES.var_machineId)
+}
+
+// optional string var_machineName = 7;
+inline bool LOGIN_RES::_internal_has_var_machinename() const {
+  bool value = (_has_bits_[0] & 0x00000008u) != 0;
+  return value;
+}
+inline bool LOGIN_RES::has_var_machinename() const {
+  return _internal_has_var_machinename();
+}
+inline void LOGIN_RES::clear_var_machinename() {
+  var_machinename_.ClearToEmptyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  _has_bits_[0] &= ~0x00000008u;
+}
+inline const std::string& LOGIN_RES::var_machinename() const {
+  // @@protoc_insertion_point(field_get:LOGIN_RES.var_machineName)
+  return _internal_var_machinename();
+}
+inline void LOGIN_RES::set_var_machinename(const std::string& value) {
+  _internal_set_var_machinename(value);
+  // @@protoc_insertion_point(field_set:LOGIN_RES.var_machineName)
+}
+inline std::string* LOGIN_RES::mutable_var_machinename() {
+  // @@protoc_insertion_point(field_mutable:LOGIN_RES.var_machineName)
+  return _internal_mutable_var_machinename();
+}
+inline const std::string& LOGIN_RES::_internal_var_machinename() const {
+  return var_machinename_.GetNoArena();
+}
+inline void LOGIN_RES::_internal_set_var_machinename(const std::string& value) {
+  _has_bits_[0] |= 0x00000008u;
+  var_machinename_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), value);
+}
+inline void LOGIN_RES::set_var_machinename(std::string&& value) {
+  _has_bits_[0] |= 0x00000008u;
+  var_machinename_.SetNoArena(
+    &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:LOGIN_RES.var_machineName)
+}
+inline void LOGIN_RES::set_var_machinename(const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  _has_bits_[0] |= 0x00000008u;
+  var_machinename_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:LOGIN_RES.var_machineName)
+}
+inline void LOGIN_RES::set_var_machinename(const char* value, size_t size) {
+  _has_bits_[0] |= 0x00000008u;
+  var_machinename_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:LOGIN_RES.var_machineName)
+}
+inline std::string* LOGIN_RES::_internal_mutable_var_machinename() {
+  _has_bits_[0] |= 0x00000008u;
+  return var_machinename_.MutableNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline std::string* LOGIN_RES::release_var_machinename() {
+  // @@protoc_insertion_point(field_release:LOGIN_RES.var_machineName)
+  if (!_internal_has_var_machinename()) {
+    return nullptr;
+  }
+  _has_bits_[0] &= ~0x00000008u;
+  return var_machinename_.ReleaseNonDefaultNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline void LOGIN_RES::set_allocated_var_machinename(std::string* var_machinename) {
+  if (var_machinename != nullptr) {
+    _has_bits_[0] |= 0x00000008u;
+  } else {
+    _has_bits_[0] &= ~0x00000008u;
+  }
+  var_machinename_.SetAllocatedNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), var_machinename);
+  // @@protoc_insertion_point(field_set_allocated:LOGIN_RES.var_machineName)
+}
+
+// optional string var_email = 8;
+inline bool LOGIN_RES::_internal_has_var_email() const {
+  bool value = (_has_bits_[0] & 0x00000010u) != 0;
+  return value;
+}
+inline bool LOGIN_RES::has_var_email() const {
+  return _internal_has_var_email();
+}
+inline void LOGIN_RES::clear_var_email() {
+  var_email_.ClearToEmptyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  _has_bits_[0] &= ~0x00000010u;
+}
+inline const std::string& LOGIN_RES::var_email() const {
+  // @@protoc_insertion_point(field_get:LOGIN_RES.var_email)
+  return _internal_var_email();
+}
+inline void LOGIN_RES::set_var_email(const std::string& value) {
+  _internal_set_var_email(value);
+  // @@protoc_insertion_point(field_set:LOGIN_RES.var_email)
+}
+inline std::string* LOGIN_RES::mutable_var_email() {
+  // @@protoc_insertion_point(field_mutable:LOGIN_RES.var_email)
+  return _internal_mutable_var_email();
+}
+inline const std::string& LOGIN_RES::_internal_var_email() const {
+  return var_email_.GetNoArena();
+}
+inline void LOGIN_RES::_internal_set_var_email(const std::string& value) {
+  _has_bits_[0] |= 0x00000010u;
+  var_email_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), value);
+}
+inline void LOGIN_RES::set_var_email(std::string&& value) {
+  _has_bits_[0] |= 0x00000010u;
+  var_email_.SetNoArena(
+    &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:LOGIN_RES.var_email)
+}
+inline void LOGIN_RES::set_var_email(const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  _has_bits_[0] |= 0x00000010u;
+  var_email_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:LOGIN_RES.var_email)
+}
+inline void LOGIN_RES::set_var_email(const char* value, size_t size) {
+  _has_bits_[0] |= 0x00000010u;
+  var_email_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:LOGIN_RES.var_email)
+}
+inline std::string* LOGIN_RES::_internal_mutable_var_email() {
+  _has_bits_[0] |= 0x00000010u;
+  return var_email_.MutableNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline std::string* LOGIN_RES::release_var_email() {
+  // @@protoc_insertion_point(field_release:LOGIN_RES.var_email)
+  if (!_internal_has_var_email()) {
+    return nullptr;
+  }
+  _has_bits_[0] &= ~0x00000010u;
+  return var_email_.ReleaseNonDefaultNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline void LOGIN_RES::set_allocated_var_email(std::string* var_email) {
+  if (var_email != nullptr) {
+    _has_bits_[0] |= 0x00000010u;
+  } else {
+    _has_bits_[0] &= ~0x00000010u;
+  }
+  var_email_.SetAllocatedNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), var_email);
+  // @@protoc_insertion_point(field_set_allocated:LOGIN_RES.var_email)
+}
+
+// optional string var_token = 9;
+inline bool LOGIN_RES::_internal_has_var_token() const {
+  bool value = (_has_bits_[0] & 0x00000020u) != 0;
+  return value;
+}
+inline bool LOGIN_RES::has_var_token() const {
+  return _internal_has_var_token();
+}
+inline void LOGIN_RES::clear_var_token() {
+  var_token_.ClearToEmptyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  _has_bits_[0] &= ~0x00000020u;
+}
+inline const std::string& LOGIN_RES::var_token() const {
+  // @@protoc_insertion_point(field_get:LOGIN_RES.var_token)
+  return _internal_var_token();
+}
+inline void LOGIN_RES::set_var_token(const std::string& value) {
+  _internal_set_var_token(value);
+  // @@protoc_insertion_point(field_set:LOGIN_RES.var_token)
+}
+inline std::string* LOGIN_RES::mutable_var_token() {
+  // @@protoc_insertion_point(field_mutable:LOGIN_RES.var_token)
+  return _internal_mutable_var_token();
+}
+inline const std::string& LOGIN_RES::_internal_var_token() const {
+  return var_token_.GetNoArena();
+}
+inline void LOGIN_RES::_internal_set_var_token(const std::string& value) {
+  _has_bits_[0] |= 0x00000020u;
+  var_token_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), value);
+}
+inline void LOGIN_RES::set_var_token(std::string&& value) {
+  _has_bits_[0] |= 0x00000020u;
+  var_token_.SetNoArena(
+    &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:LOGIN_RES.var_token)
+}
+inline void LOGIN_RES::set_var_token(const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  _has_bits_[0] |= 0x00000020u;
+  var_token_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:LOGIN_RES.var_token)
+}
+inline void LOGIN_RES::set_var_token(const char* value, size_t size) {
+  _has_bits_[0] |= 0x00000020u;
+  var_token_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:LOGIN_RES.var_token)
+}
+inline std::string* LOGIN_RES::_internal_mutable_var_token() {
+  _has_bits_[0] |= 0x00000020u;
+  return var_token_.MutableNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline std::string* LOGIN_RES::release_var_token() {
+  // @@protoc_insertion_point(field_release:LOGIN_RES.var_token)
+  if (!_internal_has_var_token()) {
+    return nullptr;
+  }
+  _has_bits_[0] &= ~0x00000020u;
+  return var_token_.ReleaseNonDefaultNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline void LOGIN_RES::set_allocated_var_token(std::string* var_token) {
+  if (var_token != nullptr) {
+    _has_bits_[0] |= 0x00000020u;
+  } else {
+    _has_bits_[0] &= ~0x00000020u;
+  }
+  var_token_.SetAllocatedNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), var_token);
+  // @@protoc_insertion_point(field_set_allocated:LOGIN_RES.var_token)
 }
 
 // -------------------------------------------------------------------
@@ -6319,7 +7076,7 @@ NOTICE_RES::var_list() const {
 
 // optional .PROTOCOL id = 1 [default = ID_PKT_BITMAP_MESSAGE_RES];
 inline bool BITMAP_MESSAGE_RES::_internal_has_id() const {
-  bool value = (_has_bits_[0] & 0x00000004u) != 0;
+  bool value = (_has_bits_[0] & 0x00000010u) != 0;
   return value;
 }
 inline bool BITMAP_MESSAGE_RES::has_id() const {
@@ -6327,7 +7084,7 @@ inline bool BITMAP_MESSAGE_RES::has_id() const {
 }
 inline void BITMAP_MESSAGE_RES::clear_id() {
   id_ = 11;
-  _has_bits_[0] &= ~0x00000004u;
+  _has_bits_[0] &= ~0x00000010u;
 }
 inline ::PROTOCOL BITMAP_MESSAGE_RES::_internal_id() const {
   return static_cast< ::PROTOCOL >(id_);
@@ -6338,7 +7095,7 @@ inline ::PROTOCOL BITMAP_MESSAGE_RES::id() const {
 }
 inline void BITMAP_MESSAGE_RES::_internal_set_id(::PROTOCOL value) {
   assert(::PROTOCOL_IsValid(value));
-  _has_bits_[0] |= 0x00000004u;
+  _has_bits_[0] |= 0x00000010u;
   id_ = value;
 }
 inline void BITMAP_MESSAGE_RES::set_id(::PROTOCOL value) {
@@ -6518,6 +7275,62 @@ inline void BITMAP_MESSAGE_RES::set_allocated_var_name(std::string* var_name) {
   }
   var_name_.SetAllocatedNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), var_name);
   // @@protoc_insertion_point(field_set_allocated:BITMAP_MESSAGE_RES.var_name)
+}
+
+// optional int32 var_width = 5;
+inline bool BITMAP_MESSAGE_RES::_internal_has_var_width() const {
+  bool value = (_has_bits_[0] & 0x00000004u) != 0;
+  return value;
+}
+inline bool BITMAP_MESSAGE_RES::has_var_width() const {
+  return _internal_has_var_width();
+}
+inline void BITMAP_MESSAGE_RES::clear_var_width() {
+  var_width_ = 0;
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 BITMAP_MESSAGE_RES::_internal_var_width() const {
+  return var_width_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 BITMAP_MESSAGE_RES::var_width() const {
+  // @@protoc_insertion_point(field_get:BITMAP_MESSAGE_RES.var_width)
+  return _internal_var_width();
+}
+inline void BITMAP_MESSAGE_RES::_internal_set_var_width(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  _has_bits_[0] |= 0x00000004u;
+  var_width_ = value;
+}
+inline void BITMAP_MESSAGE_RES::set_var_width(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  _internal_set_var_width(value);
+  // @@protoc_insertion_point(field_set:BITMAP_MESSAGE_RES.var_width)
+}
+
+// optional int32 var_height = 6;
+inline bool BITMAP_MESSAGE_RES::_internal_has_var_height() const {
+  bool value = (_has_bits_[0] & 0x00000008u) != 0;
+  return value;
+}
+inline bool BITMAP_MESSAGE_RES::has_var_height() const {
+  return _internal_has_var_height();
+}
+inline void BITMAP_MESSAGE_RES::clear_var_height() {
+  var_height_ = 0;
+  _has_bits_[0] &= ~0x00000008u;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 BITMAP_MESSAGE_RES::_internal_var_height() const {
+  return var_height_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 BITMAP_MESSAGE_RES::var_height() const {
+  // @@protoc_insertion_point(field_get:BITMAP_MESSAGE_RES.var_height)
+  return _internal_var_height();
+}
+inline void BITMAP_MESSAGE_RES::_internal_set_var_height(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  _has_bits_[0] |= 0x00000008u;
+  var_height_ = value;
+}
+inline void BITMAP_MESSAGE_RES::set_var_height(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  _internal_set_var_height(value);
+  // @@protoc_insertion_point(field_set:BITMAP_MESSAGE_RES.var_height)
 }
 
 // -------------------------------------------------------------------
@@ -8658,9 +9471,236 @@ inline void VERIFY_PURCHASE_RES::set_var_code(::ErrorCode value) {
   // @@protoc_insertion_point(field_set:VERIFY_PURCHASE_RES.var_code)
 }
 
+// -------------------------------------------------------------------
+
+// DEL_CAMERA_RES
+
+// optional .PROTOCOL id = 1 [default = ID_PKT_DEL_CAMERA_RES];
+inline bool DEL_CAMERA_RES::_internal_has_id() const {
+  bool value = (_has_bits_[0] & 0x00000004u) != 0;
+  return value;
+}
+inline bool DEL_CAMERA_RES::has_id() const {
+  return _internal_has_id();
+}
+inline void DEL_CAMERA_RES::clear_id() {
+  id_ = 59;
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline ::PROTOCOL DEL_CAMERA_RES::_internal_id() const {
+  return static_cast< ::PROTOCOL >(id_);
+}
+inline ::PROTOCOL DEL_CAMERA_RES::id() const {
+  // @@protoc_insertion_point(field_get:DEL_CAMERA_RES.id)
+  return _internal_id();
+}
+inline void DEL_CAMERA_RES::_internal_set_id(::PROTOCOL value) {
+  assert(::PROTOCOL_IsValid(value));
+  _has_bits_[0] |= 0x00000004u;
+  id_ = value;
+}
+inline void DEL_CAMERA_RES::set_id(::PROTOCOL value) {
+  _internal_set_id(value);
+  // @@protoc_insertion_point(field_set:DEL_CAMERA_RES.id)
+}
+
+// optional .ErrorCode var_code = 2;
+inline bool DEL_CAMERA_RES::_internal_has_var_code() const {
+  bool value = (_has_bits_[0] & 0x00000002u) != 0;
+  return value;
+}
+inline bool DEL_CAMERA_RES::has_var_code() const {
+  return _internal_has_var_code();
+}
+inline void DEL_CAMERA_RES::clear_var_code() {
+  var_code_ = 0;
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline ::ErrorCode DEL_CAMERA_RES::_internal_var_code() const {
+  return static_cast< ::ErrorCode >(var_code_);
+}
+inline ::ErrorCode DEL_CAMERA_RES::var_code() const {
+  // @@protoc_insertion_point(field_get:DEL_CAMERA_RES.var_code)
+  return _internal_var_code();
+}
+inline void DEL_CAMERA_RES::_internal_set_var_code(::ErrorCode value) {
+  assert(::ErrorCode_IsValid(value));
+  _has_bits_[0] |= 0x00000002u;
+  var_code_ = value;
+}
+inline void DEL_CAMERA_RES::set_var_code(::ErrorCode value) {
+  _internal_set_var_code(value);
+  // @@protoc_insertion_point(field_set:DEL_CAMERA_RES.var_code)
+}
+
+// optional string var_machine_id = 3;
+inline bool DEL_CAMERA_RES::_internal_has_var_machine_id() const {
+  bool value = (_has_bits_[0] & 0x00000001u) != 0;
+  return value;
+}
+inline bool DEL_CAMERA_RES::has_var_machine_id() const {
+  return _internal_has_var_machine_id();
+}
+inline void DEL_CAMERA_RES::clear_var_machine_id() {
+  var_machine_id_.ClearToEmptyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline const std::string& DEL_CAMERA_RES::var_machine_id() const {
+  // @@protoc_insertion_point(field_get:DEL_CAMERA_RES.var_machine_id)
+  return _internal_var_machine_id();
+}
+inline void DEL_CAMERA_RES::set_var_machine_id(const std::string& value) {
+  _internal_set_var_machine_id(value);
+  // @@protoc_insertion_point(field_set:DEL_CAMERA_RES.var_machine_id)
+}
+inline std::string* DEL_CAMERA_RES::mutable_var_machine_id() {
+  // @@protoc_insertion_point(field_mutable:DEL_CAMERA_RES.var_machine_id)
+  return _internal_mutable_var_machine_id();
+}
+inline const std::string& DEL_CAMERA_RES::_internal_var_machine_id() const {
+  return var_machine_id_.GetNoArena();
+}
+inline void DEL_CAMERA_RES::_internal_set_var_machine_id(const std::string& value) {
+  _has_bits_[0] |= 0x00000001u;
+  var_machine_id_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), value);
+}
+inline void DEL_CAMERA_RES::set_var_machine_id(std::string&& value) {
+  _has_bits_[0] |= 0x00000001u;
+  var_machine_id_.SetNoArena(
+    &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:DEL_CAMERA_RES.var_machine_id)
+}
+inline void DEL_CAMERA_RES::set_var_machine_id(const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  _has_bits_[0] |= 0x00000001u;
+  var_machine_id_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:DEL_CAMERA_RES.var_machine_id)
+}
+inline void DEL_CAMERA_RES::set_var_machine_id(const char* value, size_t size) {
+  _has_bits_[0] |= 0x00000001u;
+  var_machine_id_.SetNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:DEL_CAMERA_RES.var_machine_id)
+}
+inline std::string* DEL_CAMERA_RES::_internal_mutable_var_machine_id() {
+  _has_bits_[0] |= 0x00000001u;
+  return var_machine_id_.MutableNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline std::string* DEL_CAMERA_RES::release_var_machine_id() {
+  // @@protoc_insertion_point(field_release:DEL_CAMERA_RES.var_machine_id)
+  if (!_internal_has_var_machine_id()) {
+    return nullptr;
+  }
+  _has_bits_[0] &= ~0x00000001u;
+  return var_machine_id_.ReleaseNonDefaultNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+inline void DEL_CAMERA_RES::set_allocated_var_machine_id(std::string* var_machine_id) {
+  if (var_machine_id != nullptr) {
+    _has_bits_[0] |= 0x00000001u;
+  } else {
+    _has_bits_[0] &= ~0x00000001u;
+  }
+  var_machine_id_.SetAllocatedNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), var_machine_id);
+  // @@protoc_insertion_point(field_set_allocated:DEL_CAMERA_RES.var_machine_id)
+}
+
+// -------------------------------------------------------------------
+
+// RECONNECT_RES
+
+// optional .PROTOCOL id = 1 [default = ID_PKT_RECONNECT_RES];
+inline bool RECONNECT_RES::_internal_has_id() const {
+  bool value = (_has_bits_[0] & 0x00000004u) != 0;
+  return value;
+}
+inline bool RECONNECT_RES::has_id() const {
+  return _internal_has_id();
+}
+inline void RECONNECT_RES::clear_id() {
+  id_ = 61;
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline ::PROTOCOL RECONNECT_RES::_internal_id() const {
+  return static_cast< ::PROTOCOL >(id_);
+}
+inline ::PROTOCOL RECONNECT_RES::id() const {
+  // @@protoc_insertion_point(field_get:RECONNECT_RES.id)
+  return _internal_id();
+}
+inline void RECONNECT_RES::_internal_set_id(::PROTOCOL value) {
+  assert(::PROTOCOL_IsValid(value));
+  _has_bits_[0] |= 0x00000004u;
+  id_ = value;
+}
+inline void RECONNECT_RES::set_id(::PROTOCOL value) {
+  _internal_set_id(value);
+  // @@protoc_insertion_point(field_set:RECONNECT_RES.id)
+}
+
+// optional .ErrorCode var_code = 2;
+inline bool RECONNECT_RES::_internal_has_var_code() const {
+  bool value = (_has_bits_[0] & 0x00000002u) != 0;
+  return value;
+}
+inline bool RECONNECT_RES::has_var_code() const {
+  return _internal_has_var_code();
+}
+inline void RECONNECT_RES::clear_var_code() {
+  var_code_ = 0;
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline ::ErrorCode RECONNECT_RES::_internal_var_code() const {
+  return static_cast< ::ErrorCode >(var_code_);
+}
+inline ::ErrorCode RECONNECT_RES::var_code() const {
+  // @@protoc_insertion_point(field_get:RECONNECT_RES.var_code)
+  return _internal_var_code();
+}
+inline void RECONNECT_RES::_internal_set_var_code(::ErrorCode value) {
+  assert(::ErrorCode_IsValid(value));
+  _has_bits_[0] |= 0x00000002u;
+  var_code_ = value;
+}
+inline void RECONNECT_RES::set_var_code(::ErrorCode value) {
+  _internal_set_var_code(value);
+  // @@protoc_insertion_point(field_set:RECONNECT_RES.var_code)
+}
+
+// optional int64 var_index = 3;
+inline bool RECONNECT_RES::_internal_has_var_index() const {
+  bool value = (_has_bits_[0] & 0x00000001u) != 0;
+  return value;
+}
+inline bool RECONNECT_RES::has_var_index() const {
+  return _internal_has_var_index();
+}
+inline void RECONNECT_RES::clear_var_index() {
+  var_index_ = PROTOBUF_LONGLONG(0);
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int64 RECONNECT_RES::_internal_var_index() const {
+  return var_index_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int64 RECONNECT_RES::var_index() const {
+  // @@protoc_insertion_point(field_get:RECONNECT_RES.var_index)
+  return _internal_var_index();
+}
+inline void RECONNECT_RES::_internal_set_var_index(::PROTOBUF_NAMESPACE_ID::int64 value) {
+  _has_bits_[0] |= 0x00000001u;
+  var_index_ = value;
+}
+inline void RECONNECT_RES::set_var_index(::PROTOBUF_NAMESPACE_ID::int64 value) {
+  _internal_set_var_index(value);
+  // @@protoc_insertion_point(field_set:RECONNECT_RES.var_index)
+}
+
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

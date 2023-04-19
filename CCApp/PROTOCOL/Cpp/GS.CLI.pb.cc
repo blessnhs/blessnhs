@@ -125,6 +125,14 @@ class VERIFY_PURCHASE_RESDefaultTypeInternal {
  public:
   ::PROTOBUF_NAMESPACE_ID::internal::ExplicitlyConstructed<VERIFY_PURCHASE_RES> _instance;
 } _VERIFY_PURCHASE_RES_default_instance_;
+class DEL_CAMERA_RESDefaultTypeInternal {
+ public:
+  ::PROTOBUF_NAMESPACE_ID::internal::ExplicitlyConstructed<DEL_CAMERA_RES> _instance;
+} _DEL_CAMERA_RES_default_instance_;
+class RECONNECT_RESDefaultTypeInternal {
+ public:
+  ::PROTOBUF_NAMESPACE_ID::internal::ExplicitlyConstructed<RECONNECT_RES> _instance;
+} _RECONNECT_RES_default_instance_;
 static void InitDefaultsscc_info_AUDIO_MESSAGE_RES_GS_2eCLI_2eproto() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
@@ -237,6 +245,20 @@ static void InitDefaultsscc_info_CREATE_ROOM_RES_GS_2eCLI_2eproto() {
 
 ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_CREATE_ROOM_RES_GS_2eCLI_2eproto =
     {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 0, 0, InitDefaultsscc_info_CREATE_ROOM_RES_GS_2eCLI_2eproto}, {}};
+
+static void InitDefaultsscc_info_DEL_CAMERA_RES_GS_2eCLI_2eproto() {
+  GOOGLE_PROTOBUF_VERIFY_VERSION;
+
+  {
+    void* ptr = &::_DEL_CAMERA_RES_default_instance_;
+    new (ptr) ::DEL_CAMERA_RES();
+    ::PROTOBUF_NAMESPACE_ID::internal::OnShutdownDestroyMessage(ptr);
+  }
+  ::DEL_CAMERA_RES::InitAsDefaultInstance();
+}
+
+::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_DEL_CAMERA_RES_GS_2eCLI_2eproto =
+    {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 0, 0, InitDefaultsscc_info_DEL_CAMERA_RES_GS_2eCLI_2eproto}, {}};
 
 static void InitDefaultsscc_info_ENTER_ROOM_RES_GS_2eCLI_2eproto() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
@@ -397,6 +419,20 @@ static void InitDefaultsscc_info_QNA_RES_GS_2eCLI_2eproto() {
 ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_QNA_RES_GS_2eCLI_2eproto =
     {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 0, 0, InitDefaultsscc_info_QNA_RES_GS_2eCLI_2eproto}, {}};
 
+static void InitDefaultsscc_info_RECONNECT_RES_GS_2eCLI_2eproto() {
+  GOOGLE_PROTOBUF_VERIFY_VERSION;
+
+  {
+    void* ptr = &::_RECONNECT_RES_default_instance_;
+    new (ptr) ::RECONNECT_RES();
+    ::PROTOBUF_NAMESPACE_ID::internal::OnShutdownDestroyMessage(ptr);
+  }
+  ::RECONNECT_RES::InitAsDefaultInstance();
+}
+
+::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_RECONNECT_RES_GS_2eCLI_2eproto =
+    {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 0, 0, InitDefaultsscc_info_RECONNECT_RES_GS_2eCLI_2eproto}, {}};
+
 static void InitDefaultsscc_info_REG_CAMERA_RES_GS_2eCLI_2eproto() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
@@ -497,7 +533,7 @@ static void InitDefaultsscc_info_VERSION_RES_GS_2eCLI_2eproto() {
 ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_VERSION_RES_GS_2eCLI_2eproto =
     {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 0, 0, InitDefaultsscc_info_VERSION_RES_GS_2eCLI_2eproto}, {}};
 
-static ::PROTOBUF_NAMESPACE_ID::Metadata file_level_metadata_GS_2eCLI_2eproto[26];
+static ::PROTOBUF_NAMESPACE_ID::Metadata file_level_metadata_GS_2eCLI_2eproto[28];
 static constexpr ::PROTOBUF_NAMESPACE_ID::EnumDescriptor const** file_level_enum_descriptors_GS_2eCLI_2eproto = nullptr;
 static constexpr ::PROTOBUF_NAMESPACE_ID::ServiceDescriptor const** file_level_service_descriptors_GS_2eCLI_2eproto = nullptr;
 
@@ -523,11 +559,19 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_GS_2eCLI_2eproto::offsets[] PR
   PROTOBUF_FIELD_OFFSET(::LOGIN_RES, var_index_),
   PROTOBUF_FIELD_OFFSET(::LOGIN_RES, var_locale_),
   PROTOBUF_FIELD_OFFSET(::LOGIN_RES, var_name_),
-  4,
-  3,
-  2,
+  PROTOBUF_FIELD_OFFSET(::LOGIN_RES, var_machineid_),
+  PROTOBUF_FIELD_OFFSET(::LOGIN_RES, var_machinename_),
+  PROTOBUF_FIELD_OFFSET(::LOGIN_RES, var_email_),
+  PROTOBUF_FIELD_OFFSET(::LOGIN_RES, var_token_),
+  8,
+  7,
+  6,
   0,
   1,
+  2,
+  3,
+  4,
+  5,
   PROTOBUF_FIELD_OFFSET(::CREATE_ROOM_RES, _has_bits_),
   PROTOBUF_FIELD_OFFSET(::CREATE_ROOM_RES, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -626,10 +670,14 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_GS_2eCLI_2eproto::offsets[] PR
   PROTOBUF_FIELD_OFFSET(::BITMAP_MESSAGE_RES, var_code_),
   PROTOBUF_FIELD_OFFSET(::BITMAP_MESSAGE_RES, var_message_),
   PROTOBUF_FIELD_OFFSET(::BITMAP_MESSAGE_RES, var_name_),
-  2,
+  PROTOBUF_FIELD_OFFSET(::BITMAP_MESSAGE_RES, var_width_),
+  PROTOBUF_FIELD_OFFSET(::BITMAP_MESSAGE_RES, var_height_),
+  4,
   1,
   ~0u,
   0,
+  2,
+  3,
   PROTOBUF_FIELD_OFFSET(::AUDIO_MESSAGE_RES, _has_bits_),
   PROTOBUF_FIELD_OFFSET(::AUDIO_MESSAGE_RES, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -820,34 +868,58 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_GS_2eCLI_2eproto::offsets[] PR
   0,
   1,
   2,
+  PROTOBUF_FIELD_OFFSET(::DEL_CAMERA_RES, _has_bits_),
+  PROTOBUF_FIELD_OFFSET(::DEL_CAMERA_RES, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  PROTOBUF_FIELD_OFFSET(::DEL_CAMERA_RES, id_),
+  PROTOBUF_FIELD_OFFSET(::DEL_CAMERA_RES, var_code_),
+  PROTOBUF_FIELD_OFFSET(::DEL_CAMERA_RES, var_machine_id_),
+  2,
+  1,
+  0,
+  PROTOBUF_FIELD_OFFSET(::RECONNECT_RES, _has_bits_),
+  PROTOBUF_FIELD_OFFSET(::RECONNECT_RES, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  PROTOBUF_FIELD_OFFSET(::RECONNECT_RES, id_),
+  PROTOBUF_FIELD_OFFSET(::RECONNECT_RES, var_code_),
+  PROTOBUF_FIELD_OFFSET(::RECONNECT_RES, var_index_),
+  2,
+  1,
+  0,
 };
 static const ::PROTOBUF_NAMESPACE_ID::internal::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
   { 0, 8, sizeof(::VERSION_RES)},
-  { 11, 21, sizeof(::LOGIN_RES)},
-  { 26, 35, sizeof(::CREATE_ROOM_RES)},
-  { 39, 49, sizeof(::ENTER_ROOM_RES)},
-  { 54, 63, sizeof(::NEW_USER_IN_ROOM_NTY)},
-  { 67, 77, sizeof(::LEAVE_ROOM_RES)},
-  { 82, 90, sizeof(::ROOM_LIST_RES)},
-  { 93, 102, sizeof(::ROOM_PASS_THROUGH_RES)},
-  { 106, 113, sizeof(::NOTICE_RES)},
-  { 115, 124, sizeof(::BITMAP_MESSAGE_RES)},
-  { 128, 138, sizeof(::AUDIO_MESSAGE_RES)},
-  { 143, 151, sizeof(::PRAY_MESSAGE_RES)},
-  { 154, 163, sizeof(::PRAY_MESSAGE_REG_RES)},
-  { 167, 174, sizeof(::QNA_RES)},
-  { 176, 184, sizeof(::MAIL_LIST_RES)},
-  { 187, 194, sizeof(::REG_RES)},
-  { 196, 203, sizeof(::CLIENT_LOGOUT_RES)},
-  { 205, 212, sizeof(::CLIENT_KICK)},
-  { 214, 224, sizeof(::CAMERA_CONTROL_RES)},
-  { 229, 239, sizeof(::CAMERA_WAKE_UP_RES)},
-  { 244, 253, sizeof(::MPEG2TS_MESSAGE_RES)},
-  { 257, 266, sizeof(::REG_CAMERA_RES)},
-  { 270, 278, sizeof(::STOP_STREAM_RES)},
-  { 281, 290, sizeof(::CAMERA_LIST_RES)},
-  { 294, 302, sizeof(::MACHINE_STATUS_RES)},
-  { 305, 314, sizeof(::VERIFY_PURCHASE_RES)},
+  { 11, 25, sizeof(::LOGIN_RES)},
+  { 34, 43, sizeof(::CREATE_ROOM_RES)},
+  { 47, 57, sizeof(::ENTER_ROOM_RES)},
+  { 62, 71, sizeof(::NEW_USER_IN_ROOM_NTY)},
+  { 75, 85, sizeof(::LEAVE_ROOM_RES)},
+  { 90, 98, sizeof(::ROOM_LIST_RES)},
+  { 101, 110, sizeof(::ROOM_PASS_THROUGH_RES)},
+  { 114, 121, sizeof(::NOTICE_RES)},
+  { 123, 134, sizeof(::BITMAP_MESSAGE_RES)},
+  { 140, 150, sizeof(::AUDIO_MESSAGE_RES)},
+  { 155, 163, sizeof(::PRAY_MESSAGE_RES)},
+  { 166, 175, sizeof(::PRAY_MESSAGE_REG_RES)},
+  { 179, 186, sizeof(::QNA_RES)},
+  { 188, 196, sizeof(::MAIL_LIST_RES)},
+  { 199, 206, sizeof(::REG_RES)},
+  { 208, 215, sizeof(::CLIENT_LOGOUT_RES)},
+  { 217, 224, sizeof(::CLIENT_KICK)},
+  { 226, 236, sizeof(::CAMERA_CONTROL_RES)},
+  { 241, 251, sizeof(::CAMERA_WAKE_UP_RES)},
+  { 256, 265, sizeof(::MPEG2TS_MESSAGE_RES)},
+  { 269, 278, sizeof(::REG_CAMERA_RES)},
+  { 282, 290, sizeof(::STOP_STREAM_RES)},
+  { 293, 302, sizeof(::CAMERA_LIST_RES)},
+  { 306, 314, sizeof(::MACHINE_STATUS_RES)},
+  { 317, 326, sizeof(::VERIFY_PURCHASE_RES)},
+  { 330, 338, sizeof(::DEL_CAMERA_RES)},
+  { 341, 349, sizeof(::RECONNECT_RES)},
 };
 
 static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] = {
@@ -877,104 +949,114 @@ static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] =
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::_CAMERA_LIST_RES_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::_MACHINE_STATUS_RES_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::_VERIFY_PURCHASE_RES_default_instance_),
+  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::_DEL_CAMERA_RES_default_instance_),
+  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::_RECONNECT_RES_default_instance_),
 };
 
 const char descriptor_table_protodef_GS_2eCLI_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
   "\n\014GS.CLI.proto\032\nEnum.proto\032\017Structure.pr"
   "oto\"k\n\013VERSION_RES\022)\n\002id\030\001 \001(\0162\t.PROTOCO"
   "L:\022ID_PKT_VERSION_RES\022\023\n\013var_version\030\002 \001"
-  "(\002\022\034\n\010var_code\030\003 \001(\0162\n.ErrorCode\"\213\001\n\tLOG"
+  "(\002\022\034\n\010var_code\030\003 \001(\0162\n.ErrorCode\"\341\001\n\tLOG"
   "IN_RES\022\'\n\002id\030\001 \001(\0162\t.PROTOCOL:\020ID_PKT_LO"
   "GIN_RES\022\034\n\010var_code\030\002 \001(\0162\n.ErrorCode\022\021\n"
   "\tvar_index\030\003 \001(\003\022\022\n\nvar_locale\030\004 \001(\t\022\020\n\010"
-  "var_name\030\005 \001(\t\"\205\001\n\017CREATE_ROOM_RES\022-\n\002id"
-  "\030\001 \001(\0162\t.PROTOCOL:\026ID_PKT_CREATE_ROOM_RE"
-  "S\022\020\n\010var_name\030\002 \001(\t\022\023\n\013var_room_id\030\003 \001(\005"
-  "\022\034\n\010var_code\030\004 \001(\0162\n.ErrorCode\"\247\001\n\016ENTER"
-  "_ROOM_RES\022,\n\002id\030\001 \001(\0162\t.PROTOCOL:\025ID_PKT"
-  "_ENTER_ROOM_RES\022\020\n\010var_name\030\002 \001(\t\022\023\n\013var"
-  "_room_id\030\003 \001(\005\022\034\n\010var_code\030\004 \001(\0162\n.Error"
-  "Code\022\"\n\014var_messages\030\005 \003(\0132\014.RoomMessage"
-  "\"\240\001\n\024NEW_USER_IN_ROOM_NTY\0222\n\002id\030\001 \001(\0162\t."
-  "PROTOCOL:\033ID_PKT_NEW_USER_IN_ROOM_NTY\022$\n"
-  "\rvar_room_user\030\002 \001(\0132\r.RoomUserInfo\022\034\n\010v"
-  "ar_code\030\003 \001(\0162\n.ErrorCode\022\020\n\010var_type\030\004 "
-  "\001(\005\"\232\001\n\016LEAVE_ROOM_RES\022,\n\002id\030\001 \001(\0162\t.PRO"
-  "TOCOL:\025ID_PKT_LEAVE_ROOM_RES\022\020\n\010var_name"
-  "\030\002 \001(\t\022\034\n\010var_code\030\003 \001(\0162\n.ErrorCode\022\021\n\t"
-  "var_index\030\004 \001(\003\022\027\n\017var_room_number\030\005 \001(\005"
-  "\"}\n\rROOM_LIST_RES\022+\n\002id\030\001 \001(\0162\t.PROTOCOL"
-  ":\024ID_PKT_ROOM_LIST_RES\022\034\n\010var_code\030\002 \001(\016"
-  "2\n.ErrorCode\022!\n\rvar_room_list\030\003 \003(\0132\n.Ro"
-  "omInfo2\"\247\001\n\025ROOM_PASS_THROUGH_RES\0223\n\002id\030"
-  "\001 \001(\0162\t.PROTOCOL:\034ID_PKT_ROOM_PASS_THROU"
-  "GH_RES\022\034\n\010var_code\030\002 \001(\0162\n.ErrorCode\022\"\n\014"
-  "var_messages\030\003 \003(\0132\014.RoomMessage\022\027\n\017var_"
-  "room_number\030\004 \001(\005\"U\n\nNOTICE_RES\022(\n\002id\030\001 "
-  "\001(\0162\t.PROTOCOL:\021ID_PKT_NOTICE_RES\022\035\n\010var"
-  "_list\030\002 \003(\0132\013.NotifyInfo\"\213\001\n\022BITMAP_MESS"
-  "AGE_RES\0220\n\002id\030\001 \001(\0162\t.PROTOCOL:\031ID_PKT_B"
-  "ITMAP_MESSAGE_RES\022\034\n\010var_code\030\002 \001(\0162\n.Er"
-  "rorCode\022\023\n\013var_message\030\003 \003(\014\022\020\n\010var_name"
-  "\030\004 \001(\014\"\232\001\n\021AUDIO_MESSAGE_RES\022/\n\002id\030\001 \001(\016"
-  "2\t.PROTOCOL:\030ID_PKT_AUDIO_MESSAGE_RES\022\034\n"
-  "\010var_code\030\002 \001(\0162\n.ErrorCode\022\023\n\013var_messa"
-  "ge\030\003 \003(\014\022\020\n\010var_name\030\004 \001(\014\022\017\n\007var_pos\030\005 "
-  "\001(\005\"}\n\020PRAY_MESSAGE_RES\022.\n\002id\030\001 \001(\0162\t.PR"
-  "OTOCOL:\027ID_PKT_PRAY_MESSAGE_RES\022\034\n\010var_c"
-  "ode\030\002 \001(\0162\n.ErrorCode\022\033\n\010var_list\030\003 \003(\0132"
-  "\t.PrayInfo\"\217\001\n\024PRAY_MESSAGE_REG_RES\0222\n\002i"
-  "d\030\001 \001(\0162\t.PROTOCOL:\033ID_PKT_PRAY_MESSAGE_"
-  "REG_RES\022\034\n\010var_code\030\002 \001(\0162\n.ErrorCode\022\023\n"
-  "\013var_message\030\003 \001(\t\022\020\n\010var_time\030\004 \001(\t\"N\n\007"
-  "QNA_RES\022%\n\002id\030\001 \001(\0162\t.PROTOCOL:\016ID_PKT_Q"
-  "NA_RES\022\034\n\010var_code\030\002 \001(\0162\n.ErrorCode\"w\n\r"
-  "MAIL_LIST_RES\022+\n\002id\030\001 \001(\0162\t.PROTOCOL:\024ID"
-  "_PKT_MAIL_LIST_RES\022\034\n\010var_code\030\002 \001(\0162\n.E"
-  "rrorCode\022\033\n\010var_list\030\003 \003(\0132\t.MailInfo\"N\n"
-  "\007REG_RES\022%\n\002id\030\001 \001(\0162\t.PROTOCOL:\016ID_PKT_"
-  "REG_RES\022\034\n\010var_code\030\002 \001(\0162\n.ErrorCode\"b\n"
-  "\021CLIENT_LOGOUT_RES\022/\n\002id\030\001 \001(\0162\t.PROTOCO"
-  "L:\030ID_PKT_CLIENT_LOGOUT_RES\022\034\n\010var_code\030"
-  "\002 \001(\0162\n.ErrorCode\"E\n\013CLIENT_KICK\022)\n\002id\030\001"
-  " \001(\0162\t.PROTOCOL:\022ID_PKT_CLIENT_KICK\022\013\n\003s"
-  "id\030\002 \001(\005\"\271\001\n\022CAMERA_CONTROL_RES\0220\n\002id\030\001 "
-  "\001(\0162\t.PROTOCOL:\031ID_PKT_CAMERA_CONTROL_RE"
-  "S\022\034\n\010var_code\030\002 \001(\0162\n.ErrorCode\022$\n\010var_t"
-  "ype\030\003 \001(\0162\022.CameraControlType\022\026\n\016var_mac"
-  "hine_id\030\004 \001(\t\022\025\n\rvar_player_id\030\005 \001(\003\"\243\001\n"
-  "\022CAMERA_WAKE_UP_RES\0220\n\002id\030\001 \001(\0162\t.PROTOC"
-  "OL:\031ID_PKT_CAMERA_WAKE_UP_RES\022\020\n\010var_typ"
-  "e\030\002 \001(\005\022\027\n\017var_room_number\030\003 \001(\005\022\030\n\020var_"
-  "to_player_id\030\004 \001(\005\022\026\n\016var_machine_id\030\005 \001"
-  "(\t\"\215\001\n\023MPEG2TS_MESSAGE_RES\0221\n\002id\030\001 \001(\0162\t"
-  ".PROTOCOL:\032ID_PKT_MPEG2TS_MESSAGE_RES\022\034\n"
-  "\010var_code\030\002 \001(\0162\n.ErrorCode\022\023\n\013var_messa"
-  "ge\030\003 \003(\014\022\020\n\010var_type\030\004 \001(\005\"\212\001\n\016REG_CAMER"
-  "A_RES\022,\n\002id\030\001 \001(\0162\t.PROTOCOL:\025ID_PKT_REG"
-  "_CAMERA_RES\022\034\n\010var_code\030\002 \001(\0162\n.ErrorCod"
-  "e\022\024\n\014var_cam_name\030\003 \001(\t\022\026\n\016var_machine_i"
-  "d\030\004 \001(\t\"x\n\017STOP_STREAM_RES\022-\n\002id\030\001 \001(\0162\t"
-  ".PROTOCOL:\026ID_PKT_STOP_STREAM_RES\022\034\n\010var"
-  "_code\030\002 \001(\0162\n.ErrorCode\022\030\n\020var_to_player"
-  "_id\030\003 \001(\003\"\226\001\n\017CAMERA_LIST_RES\022-\n\002id\030\001 \001("
-  "\0162\t.PROTOCOL:\026ID_PKT_CAMERA_LIST_RES\022\034\n\010"
-  "var_code\030\002 \001(\0162\n.ErrorCode\022\037\n\nvar_camera"
-  "\030\003 \003(\0132\013.CameraInfo\022\025\n\rvar_player_id\030\004 \001"
-  "(\003\"y\n\022MACHINE_STATUS_RES\0220\n\002id\030\001 \001(\0162\t.P"
-  "ROTOCOL:\031ID_PKT_MACHINE_STATUS_RES\022\034\n\010va"
-  "r_code\030\002 \001(\0162\n.ErrorCode\022\023\n\013var_battery\030"
-  "\003 \001(\005\"\231\001\n\023VERIFY_PURCHASE_RES\0221\n\002id\030\001 \001("
-  "\0162\t.PROTOCOL:\032ID_PKT_VERIFY_PURCHASE_RES"
-  "\022\030\n\020var_package_name\030\002 \001(\t\022\027\n\017var_purcha"
-  "se_id\030\003 \001(\t\022\034\n\010var_code\030\004 \001(\0162\n.ErrorCod"
-  "eB\002H\001"
+  "var_name\030\005 \001(\t\022\025\n\rvar_machineId\030\006 \001(\t\022\027\n"
+  "\017var_machineName\030\007 \001(\t\022\021\n\tvar_email\030\010 \001("
+  "\t\022\021\n\tvar_token\030\t \001(\t\"\205\001\n\017CREATE_ROOM_RES"
+  "\022-\n\002id\030\001 \001(\0162\t.PROTOCOL:\026ID_PKT_CREATE_R"
+  "OOM_RES\022\020\n\010var_name\030\002 \001(\t\022\023\n\013var_room_id"
+  "\030\003 \001(\005\022\034\n\010var_code\030\004 \001(\0162\n.ErrorCode\"\247\001\n"
+  "\016ENTER_ROOM_RES\022,\n\002id\030\001 \001(\0162\t.PROTOCOL:\025"
+  "ID_PKT_ENTER_ROOM_RES\022\020\n\010var_name\030\002 \001(\t\022"
+  "\023\n\013var_room_id\030\003 \001(\005\022\034\n\010var_code\030\004 \001(\0162\n"
+  ".ErrorCode\022\"\n\014var_messages\030\005 \003(\0132\014.RoomM"
+  "essage\"\240\001\n\024NEW_USER_IN_ROOM_NTY\0222\n\002id\030\001 "
+  "\001(\0162\t.PROTOCOL:\033ID_PKT_NEW_USER_IN_ROOM_"
+  "NTY\022$\n\rvar_room_user\030\002 \001(\0132\r.RoomUserInf"
+  "o\022\034\n\010var_code\030\003 \001(\0162\n.ErrorCode\022\020\n\010var_t"
+  "ype\030\004 \001(\005\"\232\001\n\016LEAVE_ROOM_RES\022,\n\002id\030\001 \001(\016"
+  "2\t.PROTOCOL:\025ID_PKT_LEAVE_ROOM_RES\022\020\n\010va"
+  "r_name\030\002 \001(\t\022\034\n\010var_code\030\003 \001(\0162\n.ErrorCo"
+  "de\022\021\n\tvar_index\030\004 \001(\003\022\027\n\017var_room_number"
+  "\030\005 \001(\005\"}\n\rROOM_LIST_RES\022+\n\002id\030\001 \001(\0162\t.PR"
+  "OTOCOL:\024ID_PKT_ROOM_LIST_RES\022\034\n\010var_code"
+  "\030\002 \001(\0162\n.ErrorCode\022!\n\rvar_room_list\030\003 \003("
+  "\0132\n.RoomInfo2\"\247\001\n\025ROOM_PASS_THROUGH_RES\022"
+  "3\n\002id\030\001 \001(\0162\t.PROTOCOL:\034ID_PKT_ROOM_PASS"
+  "_THROUGH_RES\022\034\n\010var_code\030\002 \001(\0162\n.ErrorCo"
+  "de\022\"\n\014var_messages\030\003 \003(\0132\014.RoomMessage\022\027"
+  "\n\017var_room_number\030\004 \001(\005\"U\n\nNOTICE_RES\022(\n"
+  "\002id\030\001 \001(\0162\t.PROTOCOL:\021ID_PKT_NOTICE_RES\022"
+  "\035\n\010var_list\030\002 \003(\0132\013.NotifyInfo\"\262\001\n\022BITMA"
+  "P_MESSAGE_RES\0220\n\002id\030\001 \001(\0162\t.PROTOCOL:\031ID"
+  "_PKT_BITMAP_MESSAGE_RES\022\034\n\010var_code\030\002 \001("
+  "\0162\n.ErrorCode\022\023\n\013var_message\030\003 \003(\014\022\020\n\010va"
+  "r_name\030\004 \001(\014\022\021\n\tvar_width\030\005 \001(\005\022\022\n\nvar_h"
+  "eight\030\006 \001(\005\"\232\001\n\021AUDIO_MESSAGE_RES\022/\n\002id\030"
+  "\001 \001(\0162\t.PROTOCOL:\030ID_PKT_AUDIO_MESSAGE_R"
+  "ES\022\034\n\010var_code\030\002 \001(\0162\n.ErrorCode\022\023\n\013var_"
+  "message\030\003 \003(\014\022\020\n\010var_name\030\004 \001(\014\022\017\n\007var_p"
+  "os\030\005 \001(\005\"}\n\020PRAY_MESSAGE_RES\022.\n\002id\030\001 \001(\016"
+  "2\t.PROTOCOL:\027ID_PKT_PRAY_MESSAGE_RES\022\034\n\010"
+  "var_code\030\002 \001(\0162\n.ErrorCode\022\033\n\010var_list\030\003"
+  " \003(\0132\t.PrayInfo\"\217\001\n\024PRAY_MESSAGE_REG_RES"
+  "\0222\n\002id\030\001 \001(\0162\t.PROTOCOL:\033ID_PKT_PRAY_MES"
+  "SAGE_REG_RES\022\034\n\010var_code\030\002 \001(\0162\n.ErrorCo"
+  "de\022\023\n\013var_message\030\003 \001(\t\022\020\n\010var_time\030\004 \001("
+  "\t\"N\n\007QNA_RES\022%\n\002id\030\001 \001(\0162\t.PROTOCOL:\016ID_"
+  "PKT_QNA_RES\022\034\n\010var_code\030\002 \001(\0162\n.ErrorCod"
+  "e\"w\n\rMAIL_LIST_RES\022+\n\002id\030\001 \001(\0162\t.PROTOCO"
+  "L:\024ID_PKT_MAIL_LIST_RES\022\034\n\010var_code\030\002 \001("
+  "\0162\n.ErrorCode\022\033\n\010var_list\030\003 \003(\0132\t.MailIn"
+  "fo\"N\n\007REG_RES\022%\n\002id\030\001 \001(\0162\t.PROTOCOL:\016ID"
+  "_PKT_REG_RES\022\034\n\010var_code\030\002 \001(\0162\n.ErrorCo"
+  "de\"b\n\021CLIENT_LOGOUT_RES\022/\n\002id\030\001 \001(\0162\t.PR"
+  "OTOCOL:\030ID_PKT_CLIENT_LOGOUT_RES\022\034\n\010var_"
+  "code\030\002 \001(\0162\n.ErrorCode\"E\n\013CLIENT_KICK\022)\n"
+  "\002id\030\001 \001(\0162\t.PROTOCOL:\022ID_PKT_CLIENT_KICK"
+  "\022\013\n\003sid\030\002 \001(\005\"\271\001\n\022CAMERA_CONTROL_RES\0220\n\002"
+  "id\030\001 \001(\0162\t.PROTOCOL:\031ID_PKT_CAMERA_CONTR"
+  "OL_RES\022\034\n\010var_code\030\002 \001(\0162\n.ErrorCode\022$\n\010"
+  "var_type\030\003 \001(\0162\022.CameraControlType\022\026\n\016va"
+  "r_machine_id\030\004 \001(\t\022\025\n\rvar_player_id\030\005 \001("
+  "\003\"\243\001\n\022CAMERA_WAKE_UP_RES\0220\n\002id\030\001 \001(\0162\t.P"
+  "ROTOCOL:\031ID_PKT_CAMERA_WAKE_UP_RES\022\020\n\010va"
+  "r_type\030\002 \001(\005\022\027\n\017var_room_number\030\003 \001(\005\022\030\n"
+  "\020var_to_player_id\030\004 \001(\005\022\026\n\016var_machine_i"
+  "d\030\005 \001(\t\"\215\001\n\023MPEG2TS_MESSAGE_RES\0221\n\002id\030\001 "
+  "\001(\0162\t.PROTOCOL:\032ID_PKT_MPEG2TS_MESSAGE_R"
+  "ES\022\034\n\010var_code\030\002 \001(\0162\n.ErrorCode\022\023\n\013var_"
+  "message\030\003 \003(\014\022\020\n\010var_type\030\004 \001(\005\"\212\001\n\016REG_"
+  "CAMERA_RES\022,\n\002id\030\001 \001(\0162\t.PROTOCOL:\025ID_PK"
+  "T_REG_CAMERA_RES\022\034\n\010var_code\030\002 \001(\0162\n.Err"
+  "orCode\022\024\n\014var_cam_name\030\003 \001(\t\022\026\n\016var_mach"
+  "ine_id\030\004 \001(\t\"x\n\017STOP_STREAM_RES\022-\n\002id\030\001 "
+  "\001(\0162\t.PROTOCOL:\026ID_PKT_STOP_STREAM_RES\022\034"
+  "\n\010var_code\030\002 \001(\0162\n.ErrorCode\022\030\n\020var_to_p"
+  "layer_id\030\003 \001(\003\"\226\001\n\017CAMERA_LIST_RES\022-\n\002id"
+  "\030\001 \001(\0162\t.PROTOCOL:\026ID_PKT_CAMERA_LIST_RE"
+  "S\022\034\n\010var_code\030\002 \001(\0162\n.ErrorCode\022\037\n\nvar_c"
+  "amera\030\003 \003(\0132\013.CameraInfo\022\025\n\rvar_player_i"
+  "d\030\004 \001(\003\"y\n\022MACHINE_STATUS_RES\0220\n\002id\030\001 \001("
+  "\0162\t.PROTOCOL:\031ID_PKT_MACHINE_STATUS_RES\022"
+  "\034\n\010var_code\030\002 \001(\0162\n.ErrorCode\022\023\n\013var_bat"
+  "tery\030\003 \001(\005\"\231\001\n\023VERIFY_PURCHASE_RES\0221\n\002id"
+  "\030\001 \001(\0162\t.PROTOCOL:\032ID_PKT_VERIFY_PURCHAS"
+  "E_RES\022\030\n\020var_package_name\030\002 \001(\t\022\027\n\017var_p"
+  "urchase_id\030\003 \001(\t\022\034\n\010var_code\030\004 \001(\0162\n.Err"
+  "orCode\"t\n\016DEL_CAMERA_RES\022,\n\002id\030\001 \001(\0162\t.P"
+  "ROTOCOL:\025ID_PKT_DEL_CAMERA_RES\022\034\n\010var_co"
+  "de\030\002 \001(\0162\n.ErrorCode\022\026\n\016var_machine_id\030\003"
+  " \001(\t\"m\n\rRECONNECT_RES\022+\n\002id\030\001 \001(\0162\t.PROT"
+  "OCOL:\024ID_PKT_RECONNECT_RES\022\034\n\010var_code\030\002"
+  " \001(\0162\n.ErrorCode\022\021\n\tvar_index\030\003 \001(\003B\002H\001"
   ;
 static const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable*const descriptor_table_GS_2eCLI_2eproto_deps[2] = {
   &::descriptor_table_Enum_2eproto,
   &::descriptor_table_Structure_2eproto,
 };
-static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_GS_2eCLI_2eproto_sccs[26] = {
+static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_GS_2eCLI_2eproto_sccs[28] = {
   &scc_info_AUDIO_MESSAGE_RES_GS_2eCLI_2eproto.base,
   &scc_info_BITMAP_MESSAGE_RES_GS_2eCLI_2eproto.base,
   &scc_info_CAMERA_CONTROL_RES_GS_2eCLI_2eproto.base,
@@ -983,6 +1065,7 @@ static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_GS_
   &scc_info_CLIENT_KICK_GS_2eCLI_2eproto.base,
   &scc_info_CLIENT_LOGOUT_RES_GS_2eCLI_2eproto.base,
   &scc_info_CREATE_ROOM_RES_GS_2eCLI_2eproto.base,
+  &scc_info_DEL_CAMERA_RES_GS_2eCLI_2eproto.base,
   &scc_info_ENTER_ROOM_RES_GS_2eCLI_2eproto.base,
   &scc_info_LEAVE_ROOM_RES_GS_2eCLI_2eproto.base,
   &scc_info_LOGIN_RES_GS_2eCLI_2eproto.base,
@@ -994,6 +1077,7 @@ static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_GS_
   &scc_info_PRAY_MESSAGE_REG_RES_GS_2eCLI_2eproto.base,
   &scc_info_PRAY_MESSAGE_RES_GS_2eCLI_2eproto.base,
   &scc_info_QNA_RES_GS_2eCLI_2eproto.base,
+  &scc_info_RECONNECT_RES_GS_2eCLI_2eproto.base,
   &scc_info_REG_CAMERA_RES_GS_2eCLI_2eproto.base,
   &scc_info_REG_RES_GS_2eCLI_2eproto.base,
   &scc_info_ROOM_LIST_RES_GS_2eCLI_2eproto.base,
@@ -1005,10 +1089,10 @@ static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_GS_
 static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_GS_2eCLI_2eproto_once;
 static bool descriptor_table_GS_2eCLI_2eproto_initialized = false;
 const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_GS_2eCLI_2eproto = {
-  &descriptor_table_GS_2eCLI_2eproto_initialized, descriptor_table_protodef_GS_2eCLI_2eproto, "GS.CLI.proto", 3525,
-  &descriptor_table_GS_2eCLI_2eproto_once, descriptor_table_GS_2eCLI_2eproto_sccs, descriptor_table_GS_2eCLI_2eproto_deps, 26, 2,
+  &descriptor_table_GS_2eCLI_2eproto_initialized, descriptor_table_protodef_GS_2eCLI_2eproto, "GS.CLI.proto", 3879,
+  &descriptor_table_GS_2eCLI_2eproto_once, descriptor_table_GS_2eCLI_2eproto_sccs, descriptor_table_GS_2eCLI_2eproto_deps, 28, 2,
   schemas, file_default_instances, TableStruct_GS_2eCLI_2eproto::offsets,
-  file_level_metadata_GS_2eCLI_2eproto, 26, file_level_enum_descriptors_GS_2eCLI_2eproto, file_level_service_descriptors_GS_2eCLI_2eproto,
+  file_level_metadata_GS_2eCLI_2eproto, 28, file_level_enum_descriptors_GS_2eCLI_2eproto, file_level_service_descriptors_GS_2eCLI_2eproto,
 };
 
 // Force running AddDescriptors() at dynamic initialization time.
@@ -1299,19 +1383,31 @@ class LOGIN_RES::_Internal {
  public:
   using HasBits = decltype(std::declval<LOGIN_RES>()._has_bits_);
   static void set_has_id(HasBits* has_bits) {
-    (*has_bits)[0] |= 16u;
+    (*has_bits)[0] |= 256u;
   }
   static void set_has_var_code(HasBits* has_bits) {
-    (*has_bits)[0] |= 8u;
+    (*has_bits)[0] |= 128u;
   }
   static void set_has_var_index(HasBits* has_bits) {
-    (*has_bits)[0] |= 4u;
+    (*has_bits)[0] |= 64u;
   }
   static void set_has_var_locale(HasBits* has_bits) {
     (*has_bits)[0] |= 1u;
   }
   static void set_has_var_name(HasBits* has_bits) {
     (*has_bits)[0] |= 2u;
+  }
+  static void set_has_var_machineid(HasBits* has_bits) {
+    (*has_bits)[0] |= 4u;
+  }
+  static void set_has_var_machinename(HasBits* has_bits) {
+    (*has_bits)[0] |= 8u;
+  }
+  static void set_has_var_email(HasBits* has_bits) {
+    (*has_bits)[0] |= 16u;
+  }
+  static void set_has_var_token(HasBits* has_bits) {
+    (*has_bits)[0] |= 32u;
   }
 };
 
@@ -1333,6 +1429,22 @@ LOGIN_RES::LOGIN_RES(const LOGIN_RES& from)
   if (from._internal_has_var_name()) {
     var_name_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.var_name_);
   }
+  var_machineid_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  if (from._internal_has_var_machineid()) {
+    var_machineid_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.var_machineid_);
+  }
+  var_machinename_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  if (from._internal_has_var_machinename()) {
+    var_machinename_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.var_machinename_);
+  }
+  var_email_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  if (from._internal_has_var_email()) {
+    var_email_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.var_email_);
+  }
+  var_token_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  if (from._internal_has_var_token()) {
+    var_token_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.var_token_);
+  }
   ::memcpy(&var_index_, &from.var_index_,
     static_cast<size_t>(reinterpret_cast<char*>(&id_) -
     reinterpret_cast<char*>(&var_index_)) + sizeof(id_));
@@ -1343,6 +1455,10 @@ void LOGIN_RES::SharedCtor() {
   ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&scc_info_LOGIN_RES_GS_2eCLI_2eproto.base);
   var_locale_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
   var_name_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  var_machineid_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  var_machinename_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  var_email_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  var_token_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
   ::memset(&var_index_, 0, static_cast<size_t>(
       reinterpret_cast<char*>(&var_code_) -
       reinterpret_cast<char*>(&var_index_)) + sizeof(var_code_));
@@ -1357,6 +1473,10 @@ LOGIN_RES::~LOGIN_RES() {
 void LOGIN_RES::SharedDtor() {
   var_locale_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
   var_name_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  var_machineid_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  var_machinename_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  var_email_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  var_token_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
 }
 
 void LOGIN_RES::SetCachedSize(int size) const {
@@ -1375,20 +1495,32 @@ void LOGIN_RES::Clear() {
   (void) cached_has_bits;
 
   cached_has_bits = _has_bits_[0];
-  if (cached_has_bits & 0x00000003u) {
+  if (cached_has_bits & 0x0000003fu) {
     if (cached_has_bits & 0x00000001u) {
       var_locale_.ClearNonDefaultToEmptyNoArena();
     }
     if (cached_has_bits & 0x00000002u) {
       var_name_.ClearNonDefaultToEmptyNoArena();
     }
+    if (cached_has_bits & 0x00000004u) {
+      var_machineid_.ClearNonDefaultToEmptyNoArena();
+    }
+    if (cached_has_bits & 0x00000008u) {
+      var_machinename_.ClearNonDefaultToEmptyNoArena();
+    }
+    if (cached_has_bits & 0x00000010u) {
+      var_email_.ClearNonDefaultToEmptyNoArena();
+    }
+    if (cached_has_bits & 0x00000020u) {
+      var_token_.ClearNonDefaultToEmptyNoArena();
+    }
   }
-  if (cached_has_bits & 0x0000001cu) {
+  if (cached_has_bits & 0x000000c0u) {
     ::memset(&var_index_, 0, static_cast<size_t>(
         reinterpret_cast<char*>(&var_code_) -
         reinterpret_cast<char*>(&var_index_)) + sizeof(var_code_));
-    id_ = 3;
   }
+  id_ = 3;
   _has_bits_.Clear();
   _internal_metadata_.Clear();
 }
@@ -1455,6 +1587,50 @@ const char* LOGIN_RES::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
+      // optional string var_machineId = 6;
+      case 6:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 50)) {
+          auto str = _internal_mutable_var_machineid();
+          ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
+          #ifndef NDEBUG
+          ::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "LOGIN_RES.var_machineId");
+          #endif  // !NDEBUG
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // optional string var_machineName = 7;
+      case 7:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 58)) {
+          auto str = _internal_mutable_var_machinename();
+          ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
+          #ifndef NDEBUG
+          ::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "LOGIN_RES.var_machineName");
+          #endif  // !NDEBUG
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // optional string var_email = 8;
+      case 8:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 66)) {
+          auto str = _internal_mutable_var_email();
+          ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
+          #ifndef NDEBUG
+          ::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "LOGIN_RES.var_email");
+          #endif  // !NDEBUG
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // optional string var_token = 9;
+      case 9:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 74)) {
+          auto str = _internal_mutable_var_token();
+          ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
+          #ifndef NDEBUG
+          ::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "LOGIN_RES.var_token");
+          #endif  // !NDEBUG
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
       default: {
       handle_unusual:
         if ((tag & 7) == 4 || tag == 0) {
@@ -1484,21 +1660,21 @@ failure:
 
   cached_has_bits = _has_bits_[0];
   // optional .PROTOCOL id = 1 [default = ID_PKT_LOGIN_RES];
-  if (cached_has_bits & 0x00000010u) {
+  if (cached_has_bits & 0x00000100u) {
     target = stream->EnsureSpace(target);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteEnumToArray(
       1, this->_internal_id(), target);
   }
 
   // optional .ErrorCode var_code = 2;
-  if (cached_has_bits & 0x00000008u) {
+  if (cached_has_bits & 0x00000080u) {
     target = stream->EnsureSpace(target);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteEnumToArray(
       2, this->_internal_var_code(), target);
   }
 
   // optional int64 var_index = 3;
-  if (cached_has_bits & 0x00000004u) {
+  if (cached_has_bits & 0x00000040u) {
     target = stream->EnsureSpace(target);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt64ToArray(3, this->_internal_var_index(), target);
   }
@@ -1523,6 +1699,46 @@ failure:
         5, this->_internal_var_name(), target);
   }
 
+  // optional string var_machineId = 6;
+  if (cached_has_bits & 0x00000004u) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->_internal_var_machineid().data(), static_cast<int>(this->_internal_var_machineid().length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SERIALIZE,
+      "LOGIN_RES.var_machineId");
+    target = stream->WriteStringMaybeAliased(
+        6, this->_internal_var_machineid(), target);
+  }
+
+  // optional string var_machineName = 7;
+  if (cached_has_bits & 0x00000008u) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->_internal_var_machinename().data(), static_cast<int>(this->_internal_var_machinename().length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SERIALIZE,
+      "LOGIN_RES.var_machineName");
+    target = stream->WriteStringMaybeAliased(
+        7, this->_internal_var_machinename(), target);
+  }
+
+  // optional string var_email = 8;
+  if (cached_has_bits & 0x00000010u) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->_internal_var_email().data(), static_cast<int>(this->_internal_var_email().length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SERIALIZE,
+      "LOGIN_RES.var_email");
+    target = stream->WriteStringMaybeAliased(
+        8, this->_internal_var_email(), target);
+  }
+
+  // optional string var_token = 9;
+  if (cached_has_bits & 0x00000020u) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->_internal_var_token().data(), static_cast<int>(this->_internal_var_token().length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SERIALIZE,
+      "LOGIN_RES.var_token");
+    target = stream->WriteStringMaybeAliased(
+        9, this->_internal_var_token(), target);
+  }
+
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields(), target, stream);
@@ -1540,7 +1756,7 @@ size_t LOGIN_RES::ByteSizeLong() const {
   (void) cached_has_bits;
 
   cached_has_bits = _has_bits_[0];
-  if (cached_has_bits & 0x0000001fu) {
+  if (cached_has_bits & 0x000000ffu) {
     // optional string var_locale = 4;
     if (cached_has_bits & 0x00000001u) {
       total_size += 1 +
@@ -1555,26 +1771,54 @@ size_t LOGIN_RES::ByteSizeLong() const {
           this->_internal_var_name());
     }
 
-    // optional int64 var_index = 3;
+    // optional string var_machineId = 6;
     if (cached_has_bits & 0x00000004u) {
+      total_size += 1 +
+        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+          this->_internal_var_machineid());
+    }
+
+    // optional string var_machineName = 7;
+    if (cached_has_bits & 0x00000008u) {
+      total_size += 1 +
+        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+          this->_internal_var_machinename());
+    }
+
+    // optional string var_email = 8;
+    if (cached_has_bits & 0x00000010u) {
+      total_size += 1 +
+        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+          this->_internal_var_email());
+    }
+
+    // optional string var_token = 9;
+    if (cached_has_bits & 0x00000020u) {
+      total_size += 1 +
+        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+          this->_internal_var_token());
+    }
+
+    // optional int64 var_index = 3;
+    if (cached_has_bits & 0x00000040u) {
       total_size += 1 +
         ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int64Size(
           this->_internal_var_index());
     }
 
     // optional .ErrorCode var_code = 2;
-    if (cached_has_bits & 0x00000008u) {
+    if (cached_has_bits & 0x00000080u) {
       total_size += 1 +
         ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::EnumSize(this->_internal_var_code());
     }
 
-    // optional .PROTOCOL id = 1 [default = ID_PKT_LOGIN_RES];
-    if (cached_has_bits & 0x00000010u) {
-      total_size += 1 +
-        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::EnumSize(this->_internal_id());
-    }
-
   }
+  // optional .PROTOCOL id = 1 [default = ID_PKT_LOGIN_RES];
+  if (cached_has_bits & 0x00000100u) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::EnumSize(this->_internal_id());
+  }
+
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
     return ::PROTOBUF_NAMESPACE_ID::internal::ComputeUnknownFieldsSize(
         _internal_metadata_, total_size, &_cached_size_);
@@ -1607,7 +1851,7 @@ void LOGIN_RES::MergeFrom(const LOGIN_RES& from) {
   (void) cached_has_bits;
 
   cached_has_bits = from._has_bits_[0];
-  if (cached_has_bits & 0x0000001fu) {
+  if (cached_has_bits & 0x000000ffu) {
     if (cached_has_bits & 0x00000001u) {
       _has_bits_[0] |= 0x00000001u;
       var_locale_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.var_locale_);
@@ -1617,15 +1861,31 @@ void LOGIN_RES::MergeFrom(const LOGIN_RES& from) {
       var_name_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.var_name_);
     }
     if (cached_has_bits & 0x00000004u) {
-      var_index_ = from.var_index_;
+      _has_bits_[0] |= 0x00000004u;
+      var_machineid_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.var_machineid_);
     }
     if (cached_has_bits & 0x00000008u) {
-      var_code_ = from.var_code_;
+      _has_bits_[0] |= 0x00000008u;
+      var_machinename_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.var_machinename_);
     }
     if (cached_has_bits & 0x00000010u) {
-      id_ = from.id_;
+      _has_bits_[0] |= 0x00000010u;
+      var_email_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.var_email_);
+    }
+    if (cached_has_bits & 0x00000020u) {
+      _has_bits_[0] |= 0x00000020u;
+      var_token_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.var_token_);
+    }
+    if (cached_has_bits & 0x00000040u) {
+      var_index_ = from.var_index_;
+    }
+    if (cached_has_bits & 0x00000080u) {
+      var_code_ = from.var_code_;
     }
     _has_bits_[0] |= cached_has_bits;
+  }
+  if (cached_has_bits & 0x00000100u) {
+    _internal_set_id(from._internal_id());
   }
 }
 
@@ -1654,6 +1914,14 @@ void LOGIN_RES::InternalSwap(LOGIN_RES* other) {
   var_locale_.Swap(&other->var_locale_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
     GetArenaNoVirtual());
   var_name_.Swap(&other->var_name_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+    GetArenaNoVirtual());
+  var_machineid_.Swap(&other->var_machineid_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+    GetArenaNoVirtual());
+  var_machinename_.Swap(&other->var_machinename_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+    GetArenaNoVirtual());
+  var_email_.Swap(&other->var_email_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+    GetArenaNoVirtual());
+  var_token_.Swap(&other->var_token_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
     GetArenaNoVirtual());
   swap(var_index_, other->var_index_);
   swap(var_code_, other->var_code_);
@@ -3876,13 +4144,19 @@ class BITMAP_MESSAGE_RES::_Internal {
  public:
   using HasBits = decltype(std::declval<BITMAP_MESSAGE_RES>()._has_bits_);
   static void set_has_id(HasBits* has_bits) {
-    (*has_bits)[0] |= 4u;
+    (*has_bits)[0] |= 16u;
   }
   static void set_has_var_code(HasBits* has_bits) {
     (*has_bits)[0] |= 2u;
   }
   static void set_has_var_name(HasBits* has_bits) {
     (*has_bits)[0] |= 1u;
+  }
+  static void set_has_var_width(HasBits* has_bits) {
+    (*has_bits)[0] |= 4u;
+  }
+  static void set_has_var_height(HasBits* has_bits) {
+    (*has_bits)[0] |= 8u;
   }
 };
 
@@ -3910,7 +4184,9 @@ BITMAP_MESSAGE_RES::BITMAP_MESSAGE_RES(const BITMAP_MESSAGE_RES& from)
 void BITMAP_MESSAGE_RES::SharedCtor() {
   ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&scc_info_BITMAP_MESSAGE_RES_GS_2eCLI_2eproto.base);
   var_name_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
-  var_code_ = 0;
+  ::memset(&var_code_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&var_height_) -
+      reinterpret_cast<char*>(&var_code_)) + sizeof(var_height_));
   id_ = 11;
 }
 
@@ -3943,8 +4219,10 @@ void BITMAP_MESSAGE_RES::Clear() {
   if (cached_has_bits & 0x00000001u) {
     var_name_.ClearNonDefaultToEmptyNoArena();
   }
-  if (cached_has_bits & 0x00000006u) {
-    var_code_ = 0;
+  if (cached_has_bits & 0x0000001eu) {
+    ::memset(&var_code_, 0, static_cast<size_t>(
+        reinterpret_cast<char*>(&var_height_) -
+        reinterpret_cast<char*>(&var_code_)) + sizeof(var_height_));
     id_ = 11;
   }
   _has_bits_.Clear();
@@ -4004,6 +4282,22 @@ const char* BITMAP_MESSAGE_RES::_InternalParse(const char* ptr, ::PROTOBUF_NAMES
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
+      // optional int32 var_width = 5;
+      case 5:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 40)) {
+          _Internal::set_has_var_width(&has_bits);
+          var_width_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // optional int32 var_height = 6;
+      case 6:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 48)) {
+          _Internal::set_has_var_height(&has_bits);
+          var_height_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
       default: {
       handle_unusual:
         if ((tag & 7) == 4 || tag == 0) {
@@ -4033,7 +4327,7 @@ failure:
 
   cached_has_bits = _has_bits_[0];
   // optional .PROTOCOL id = 1 [default = ID_PKT_BITMAP_MESSAGE_RES];
-  if (cached_has_bits & 0x00000004u) {
+  if (cached_has_bits & 0x00000010u) {
     target = stream->EnsureSpace(target);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteEnumToArray(
       1, this->_internal_id(), target);
@@ -4056,6 +4350,18 @@ failure:
   if (cached_has_bits & 0x00000001u) {
     target = stream->WriteBytesMaybeAliased(
         4, this->_internal_var_name(), target);
+  }
+
+  // optional int32 var_width = 5;
+  if (cached_has_bits & 0x00000004u) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32ToArray(5, this->_internal_var_width(), target);
+  }
+
+  // optional int32 var_height = 6;
+  if (cached_has_bits & 0x00000008u) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32ToArray(6, this->_internal_var_height(), target);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
@@ -4083,7 +4389,7 @@ size_t BITMAP_MESSAGE_RES::ByteSizeLong() const {
   }
 
   cached_has_bits = _has_bits_[0];
-  if (cached_has_bits & 0x00000007u) {
+  if (cached_has_bits & 0x0000001fu) {
     // optional bytes var_name = 4;
     if (cached_has_bits & 0x00000001u) {
       total_size += 1 +
@@ -4097,8 +4403,22 @@ size_t BITMAP_MESSAGE_RES::ByteSizeLong() const {
         ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::EnumSize(this->_internal_var_code());
     }
 
-    // optional .PROTOCOL id = 1 [default = ID_PKT_BITMAP_MESSAGE_RES];
+    // optional int32 var_width = 5;
     if (cached_has_bits & 0x00000004u) {
+      total_size += 1 +
+        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32Size(
+          this->_internal_var_width());
+    }
+
+    // optional int32 var_height = 6;
+    if (cached_has_bits & 0x00000008u) {
+      total_size += 1 +
+        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32Size(
+          this->_internal_var_height());
+    }
+
+    // optional .PROTOCOL id = 1 [default = ID_PKT_BITMAP_MESSAGE_RES];
+    if (cached_has_bits & 0x00000010u) {
       total_size += 1 +
         ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::EnumSize(this->_internal_id());
     }
@@ -4137,7 +4457,7 @@ void BITMAP_MESSAGE_RES::MergeFrom(const BITMAP_MESSAGE_RES& from) {
 
   var_message_.MergeFrom(from.var_message_);
   cached_has_bits = from._has_bits_[0];
-  if (cached_has_bits & 0x00000007u) {
+  if (cached_has_bits & 0x0000001fu) {
     if (cached_has_bits & 0x00000001u) {
       _has_bits_[0] |= 0x00000001u;
       var_name_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.var_name_);
@@ -4146,6 +4466,12 @@ void BITMAP_MESSAGE_RES::MergeFrom(const BITMAP_MESSAGE_RES& from) {
       var_code_ = from.var_code_;
     }
     if (cached_has_bits & 0x00000004u) {
+      var_width_ = from.var_width_;
+    }
+    if (cached_has_bits & 0x00000008u) {
+      var_height_ = from.var_height_;
+    }
+    if (cached_has_bits & 0x00000010u) {
       id_ = from.id_;
     }
     _has_bits_[0] |= cached_has_bits;
@@ -4178,6 +4504,8 @@ void BITMAP_MESSAGE_RES::InternalSwap(BITMAP_MESSAGE_RES* other) {
   var_name_.Swap(&other->var_name_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
     GetArenaNoVirtual());
   swap(var_code_, other->var_code_);
+  swap(var_width_, other->var_width_);
+  swap(var_height_, other->var_height_);
   swap(id_, other->id_);
 }
 
@@ -9001,6 +9329,579 @@ void VERIFY_PURCHASE_RES::InternalSwap(VERIFY_PURCHASE_RES* other) {
 }
 
 
+// ===================================================================
+
+void DEL_CAMERA_RES::InitAsDefaultInstance() {
+}
+class DEL_CAMERA_RES::_Internal {
+ public:
+  using HasBits = decltype(std::declval<DEL_CAMERA_RES>()._has_bits_);
+  static void set_has_id(HasBits* has_bits) {
+    (*has_bits)[0] |= 4u;
+  }
+  static void set_has_var_code(HasBits* has_bits) {
+    (*has_bits)[0] |= 2u;
+  }
+  static void set_has_var_machine_id(HasBits* has_bits) {
+    (*has_bits)[0] |= 1u;
+  }
+};
+
+DEL_CAMERA_RES::DEL_CAMERA_RES()
+  : ::PROTOBUF_NAMESPACE_ID::Message(), _internal_metadata_(nullptr) {
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:DEL_CAMERA_RES)
+}
+DEL_CAMERA_RES::DEL_CAMERA_RES(const DEL_CAMERA_RES& from)
+  : ::PROTOBUF_NAMESPACE_ID::Message(),
+      _internal_metadata_(nullptr),
+      _has_bits_(from._has_bits_) {
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  var_machine_id_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  if (from._internal_has_var_machine_id()) {
+    var_machine_id_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.var_machine_id_);
+  }
+  ::memcpy(&var_code_, &from.var_code_,
+    static_cast<size_t>(reinterpret_cast<char*>(&id_) -
+    reinterpret_cast<char*>(&var_code_)) + sizeof(id_));
+  // @@protoc_insertion_point(copy_constructor:DEL_CAMERA_RES)
+}
+
+void DEL_CAMERA_RES::SharedCtor() {
+  ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&scc_info_DEL_CAMERA_RES_GS_2eCLI_2eproto.base);
+  var_machine_id_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  var_code_ = 0;
+  id_ = 59;
+}
+
+DEL_CAMERA_RES::~DEL_CAMERA_RES() {
+  // @@protoc_insertion_point(destructor:DEL_CAMERA_RES)
+  SharedDtor();
+}
+
+void DEL_CAMERA_RES::SharedDtor() {
+  var_machine_id_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+
+void DEL_CAMERA_RES::SetCachedSize(int size) const {
+  _cached_size_.Set(size);
+}
+const DEL_CAMERA_RES& DEL_CAMERA_RES::default_instance() {
+  ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&::scc_info_DEL_CAMERA_RES_GS_2eCLI_2eproto.base);
+  return *internal_default_instance();
+}
+
+
+void DEL_CAMERA_RES::Clear() {
+// @@protoc_insertion_point(message_clear_start:DEL_CAMERA_RES)
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  cached_has_bits = _has_bits_[0];
+  if (cached_has_bits & 0x00000001u) {
+    var_machine_id_.ClearNonDefaultToEmptyNoArena();
+  }
+  if (cached_has_bits & 0x00000006u) {
+    var_code_ = 0;
+    id_ = 59;
+  }
+  _has_bits_.Clear();
+  _internal_metadata_.Clear();
+}
+
+const char* DEL_CAMERA_RES::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
+#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  _Internal::HasBits has_bits{};
+  while (!ctx->Done(&ptr)) {
+    ::PROTOBUF_NAMESPACE_ID::uint32 tag;
+    ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
+    CHK_(ptr);
+    switch (tag >> 3) {
+      // optional .PROTOCOL id = 1 [default = ID_PKT_DEL_CAMERA_RES];
+      case 1:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 8)) {
+          ::PROTOBUF_NAMESPACE_ID::uint64 val = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
+          CHK_(ptr);
+          if (PROTOBUF_PREDICT_TRUE(::PROTOCOL_IsValid(val))) {
+            _internal_set_id(static_cast<::PROTOCOL>(val));
+          } else {
+            ::PROTOBUF_NAMESPACE_ID::internal::WriteVarint(1, val, mutable_unknown_fields());
+          }
+        } else goto handle_unusual;
+        continue;
+      // optional .ErrorCode var_code = 2;
+      case 2:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 16)) {
+          ::PROTOBUF_NAMESPACE_ID::uint64 val = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
+          CHK_(ptr);
+          if (PROTOBUF_PREDICT_TRUE(::ErrorCode_IsValid(val))) {
+            _internal_set_var_code(static_cast<::ErrorCode>(val));
+          } else {
+            ::PROTOBUF_NAMESPACE_ID::internal::WriteVarint(2, val, mutable_unknown_fields());
+          }
+        } else goto handle_unusual;
+        continue;
+      // optional string var_machine_id = 3;
+      case 3:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 26)) {
+          auto str = _internal_mutable_var_machine_id();
+          ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
+          #ifndef NDEBUG
+          ::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "DEL_CAMERA_RES.var_machine_id");
+          #endif  // !NDEBUG
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      default: {
+      handle_unusual:
+        if ((tag & 7) == 4 || tag == 0) {
+          ctx->SetLastTag(tag);
+          goto success;
+        }
+        ptr = UnknownFieldParse(tag, &_internal_metadata_, ptr, ctx);
+        CHK_(ptr != nullptr);
+        continue;
+      }
+    }  // switch
+  }  // while
+success:
+  _has_bits_.Or(has_bits);
+  return ptr;
+failure:
+  ptr = nullptr;
+  goto success;
+#undef CHK_
+}
+
+::PROTOBUF_NAMESPACE_ID::uint8* DEL_CAMERA_RES::_InternalSerialize(
+    ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:DEL_CAMERA_RES)
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  cached_has_bits = _has_bits_[0];
+  // optional .PROTOCOL id = 1 [default = ID_PKT_DEL_CAMERA_RES];
+  if (cached_has_bits & 0x00000004u) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteEnumToArray(
+      1, this->_internal_id(), target);
+  }
+
+  // optional .ErrorCode var_code = 2;
+  if (cached_has_bits & 0x00000002u) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteEnumToArray(
+      2, this->_internal_var_code(), target);
+  }
+
+  // optional string var_machine_id = 3;
+  if (cached_has_bits & 0x00000001u) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->_internal_var_machine_id().data(), static_cast<int>(this->_internal_var_machine_id().length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SERIALIZE,
+      "DEL_CAMERA_RES.var_machine_id");
+    target = stream->WriteStringMaybeAliased(
+        3, this->_internal_var_machine_id(), target);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields(), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:DEL_CAMERA_RES)
+  return target;
+}
+
+size_t DEL_CAMERA_RES::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:DEL_CAMERA_RES)
+  size_t total_size = 0;
+
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  cached_has_bits = _has_bits_[0];
+  if (cached_has_bits & 0x00000007u) {
+    // optional string var_machine_id = 3;
+    if (cached_has_bits & 0x00000001u) {
+      total_size += 1 +
+        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+          this->_internal_var_machine_id());
+    }
+
+    // optional .ErrorCode var_code = 2;
+    if (cached_has_bits & 0x00000002u) {
+      total_size += 1 +
+        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::EnumSize(this->_internal_var_code());
+    }
+
+    // optional .PROTOCOL id = 1 [default = ID_PKT_DEL_CAMERA_RES];
+    if (cached_has_bits & 0x00000004u) {
+      total_size += 1 +
+        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::EnumSize(this->_internal_id());
+    }
+
+  }
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    return ::PROTOBUF_NAMESPACE_ID::internal::ComputeUnknownFieldsSize(
+        _internal_metadata_, total_size, &_cached_size_);
+  }
+  int cached_size = ::PROTOBUF_NAMESPACE_ID::internal::ToCachedSize(total_size);
+  SetCachedSize(cached_size);
+  return total_size;
+}
+
+void DEL_CAMERA_RES::MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:DEL_CAMERA_RES)
+  GOOGLE_DCHECK_NE(&from, this);
+  const DEL_CAMERA_RES* source =
+      ::PROTOBUF_NAMESPACE_ID::DynamicCastToGenerated<DEL_CAMERA_RES>(
+          &from);
+  if (source == nullptr) {
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:DEL_CAMERA_RES)
+    ::PROTOBUF_NAMESPACE_ID::internal::ReflectionOps::Merge(from, this);
+  } else {
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:DEL_CAMERA_RES)
+    MergeFrom(*source);
+  }
+}
+
+void DEL_CAMERA_RES::MergeFrom(const DEL_CAMERA_RES& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:DEL_CAMERA_RES)
+  GOOGLE_DCHECK_NE(&from, this);
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  cached_has_bits = from._has_bits_[0];
+  if (cached_has_bits & 0x00000007u) {
+    if (cached_has_bits & 0x00000001u) {
+      _has_bits_[0] |= 0x00000001u;
+      var_machine_id_.AssignWithDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from.var_machine_id_);
+    }
+    if (cached_has_bits & 0x00000002u) {
+      var_code_ = from.var_code_;
+    }
+    if (cached_has_bits & 0x00000004u) {
+      id_ = from.id_;
+    }
+    _has_bits_[0] |= cached_has_bits;
+  }
+}
+
+void DEL_CAMERA_RES::CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:DEL_CAMERA_RES)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void DEL_CAMERA_RES::CopyFrom(const DEL_CAMERA_RES& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:DEL_CAMERA_RES)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool DEL_CAMERA_RES::IsInitialized() const {
+  return true;
+}
+
+void DEL_CAMERA_RES::InternalSwap(DEL_CAMERA_RES* other) {
+  using std::swap;
+  _internal_metadata_.Swap(&other->_internal_metadata_);
+  swap(_has_bits_[0], other->_has_bits_[0]);
+  var_machine_id_.Swap(&other->var_machine_id_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+    GetArenaNoVirtual());
+  swap(var_code_, other->var_code_);
+  swap(id_, other->id_);
+}
+
+::PROTOBUF_NAMESPACE_ID::Metadata DEL_CAMERA_RES::GetMetadata() const {
+  return GetMetadataStatic();
+}
+
+
+// ===================================================================
+
+void RECONNECT_RES::InitAsDefaultInstance() {
+}
+class RECONNECT_RES::_Internal {
+ public:
+  using HasBits = decltype(std::declval<RECONNECT_RES>()._has_bits_);
+  static void set_has_id(HasBits* has_bits) {
+    (*has_bits)[0] |= 4u;
+  }
+  static void set_has_var_code(HasBits* has_bits) {
+    (*has_bits)[0] |= 2u;
+  }
+  static void set_has_var_index(HasBits* has_bits) {
+    (*has_bits)[0] |= 1u;
+  }
+};
+
+RECONNECT_RES::RECONNECT_RES()
+  : ::PROTOBUF_NAMESPACE_ID::Message(), _internal_metadata_(nullptr) {
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:RECONNECT_RES)
+}
+RECONNECT_RES::RECONNECT_RES(const RECONNECT_RES& from)
+  : ::PROTOBUF_NAMESPACE_ID::Message(),
+      _internal_metadata_(nullptr),
+      _has_bits_(from._has_bits_) {
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  ::memcpy(&var_index_, &from.var_index_,
+    static_cast<size_t>(reinterpret_cast<char*>(&id_) -
+    reinterpret_cast<char*>(&var_index_)) + sizeof(id_));
+  // @@protoc_insertion_point(copy_constructor:RECONNECT_RES)
+}
+
+void RECONNECT_RES::SharedCtor() {
+  ::memset(&var_index_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&var_code_) -
+      reinterpret_cast<char*>(&var_index_)) + sizeof(var_code_));
+  id_ = 61;
+}
+
+RECONNECT_RES::~RECONNECT_RES() {
+  // @@protoc_insertion_point(destructor:RECONNECT_RES)
+  SharedDtor();
+}
+
+void RECONNECT_RES::SharedDtor() {
+}
+
+void RECONNECT_RES::SetCachedSize(int size) const {
+  _cached_size_.Set(size);
+}
+const RECONNECT_RES& RECONNECT_RES::default_instance() {
+  ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&::scc_info_RECONNECT_RES_GS_2eCLI_2eproto.base);
+  return *internal_default_instance();
+}
+
+
+void RECONNECT_RES::Clear() {
+// @@protoc_insertion_point(message_clear_start:RECONNECT_RES)
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  cached_has_bits = _has_bits_[0];
+  if (cached_has_bits & 0x00000007u) {
+    ::memset(&var_index_, 0, static_cast<size_t>(
+        reinterpret_cast<char*>(&var_code_) -
+        reinterpret_cast<char*>(&var_index_)) + sizeof(var_code_));
+    id_ = 61;
+  }
+  _has_bits_.Clear();
+  _internal_metadata_.Clear();
+}
+
+const char* RECONNECT_RES::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
+#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  _Internal::HasBits has_bits{};
+  while (!ctx->Done(&ptr)) {
+    ::PROTOBUF_NAMESPACE_ID::uint32 tag;
+    ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
+    CHK_(ptr);
+    switch (tag >> 3) {
+      // optional .PROTOCOL id = 1 [default = ID_PKT_RECONNECT_RES];
+      case 1:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 8)) {
+          ::PROTOBUF_NAMESPACE_ID::uint64 val = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
+          CHK_(ptr);
+          if (PROTOBUF_PREDICT_TRUE(::PROTOCOL_IsValid(val))) {
+            _internal_set_id(static_cast<::PROTOCOL>(val));
+          } else {
+            ::PROTOBUF_NAMESPACE_ID::internal::WriteVarint(1, val, mutable_unknown_fields());
+          }
+        } else goto handle_unusual;
+        continue;
+      // optional .ErrorCode var_code = 2;
+      case 2:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 16)) {
+          ::PROTOBUF_NAMESPACE_ID::uint64 val = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
+          CHK_(ptr);
+          if (PROTOBUF_PREDICT_TRUE(::ErrorCode_IsValid(val))) {
+            _internal_set_var_code(static_cast<::ErrorCode>(val));
+          } else {
+            ::PROTOBUF_NAMESPACE_ID::internal::WriteVarint(2, val, mutable_unknown_fields());
+          }
+        } else goto handle_unusual;
+        continue;
+      // optional int64 var_index = 3;
+      case 3:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 24)) {
+          _Internal::set_has_var_index(&has_bits);
+          var_index_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint(&ptr);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      default: {
+      handle_unusual:
+        if ((tag & 7) == 4 || tag == 0) {
+          ctx->SetLastTag(tag);
+          goto success;
+        }
+        ptr = UnknownFieldParse(tag, &_internal_metadata_, ptr, ctx);
+        CHK_(ptr != nullptr);
+        continue;
+      }
+    }  // switch
+  }  // while
+success:
+  _has_bits_.Or(has_bits);
+  return ptr;
+failure:
+  ptr = nullptr;
+  goto success;
+#undef CHK_
+}
+
+::PROTOBUF_NAMESPACE_ID::uint8* RECONNECT_RES::_InternalSerialize(
+    ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:RECONNECT_RES)
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  cached_has_bits = _has_bits_[0];
+  // optional .PROTOCOL id = 1 [default = ID_PKT_RECONNECT_RES];
+  if (cached_has_bits & 0x00000004u) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteEnumToArray(
+      1, this->_internal_id(), target);
+  }
+
+  // optional .ErrorCode var_code = 2;
+  if (cached_has_bits & 0x00000002u) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteEnumToArray(
+      2, this->_internal_var_code(), target);
+  }
+
+  // optional int64 var_index = 3;
+  if (cached_has_bits & 0x00000001u) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt64ToArray(3, this->_internal_var_index(), target);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields(), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:RECONNECT_RES)
+  return target;
+}
+
+size_t RECONNECT_RES::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:RECONNECT_RES)
+  size_t total_size = 0;
+
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  cached_has_bits = _has_bits_[0];
+  if (cached_has_bits & 0x00000007u) {
+    // optional int64 var_index = 3;
+    if (cached_has_bits & 0x00000001u) {
+      total_size += 1 +
+        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int64Size(
+          this->_internal_var_index());
+    }
+
+    // optional .ErrorCode var_code = 2;
+    if (cached_has_bits & 0x00000002u) {
+      total_size += 1 +
+        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::EnumSize(this->_internal_var_code());
+    }
+
+    // optional .PROTOCOL id = 1 [default = ID_PKT_RECONNECT_RES];
+    if (cached_has_bits & 0x00000004u) {
+      total_size += 1 +
+        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::EnumSize(this->_internal_id());
+    }
+
+  }
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    return ::PROTOBUF_NAMESPACE_ID::internal::ComputeUnknownFieldsSize(
+        _internal_metadata_, total_size, &_cached_size_);
+  }
+  int cached_size = ::PROTOBUF_NAMESPACE_ID::internal::ToCachedSize(total_size);
+  SetCachedSize(cached_size);
+  return total_size;
+}
+
+void RECONNECT_RES::MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:RECONNECT_RES)
+  GOOGLE_DCHECK_NE(&from, this);
+  const RECONNECT_RES* source =
+      ::PROTOBUF_NAMESPACE_ID::DynamicCastToGenerated<RECONNECT_RES>(
+          &from);
+  if (source == nullptr) {
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:RECONNECT_RES)
+    ::PROTOBUF_NAMESPACE_ID::internal::ReflectionOps::Merge(from, this);
+  } else {
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:RECONNECT_RES)
+    MergeFrom(*source);
+  }
+}
+
+void RECONNECT_RES::MergeFrom(const RECONNECT_RES& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:RECONNECT_RES)
+  GOOGLE_DCHECK_NE(&from, this);
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  cached_has_bits = from._has_bits_[0];
+  if (cached_has_bits & 0x00000007u) {
+    if (cached_has_bits & 0x00000001u) {
+      var_index_ = from.var_index_;
+    }
+    if (cached_has_bits & 0x00000002u) {
+      var_code_ = from.var_code_;
+    }
+    if (cached_has_bits & 0x00000004u) {
+      id_ = from.id_;
+    }
+    _has_bits_[0] |= cached_has_bits;
+  }
+}
+
+void RECONNECT_RES::CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:RECONNECT_RES)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void RECONNECT_RES::CopyFrom(const RECONNECT_RES& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:RECONNECT_RES)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool RECONNECT_RES::IsInitialized() const {
+  return true;
+}
+
+void RECONNECT_RES::InternalSwap(RECONNECT_RES* other) {
+  using std::swap;
+  _internal_metadata_.Swap(&other->_internal_metadata_);
+  swap(_has_bits_[0], other->_has_bits_[0]);
+  swap(var_index_, other->var_index_);
+  swap(var_code_, other->var_code_);
+  swap(id_, other->id_);
+}
+
+::PROTOBUF_NAMESPACE_ID::Metadata RECONNECT_RES::GetMetadata() const {
+  return GetMetadataStatic();
+}
+
+
 // @@protoc_insertion_point(namespace_scope)
 PROTOBUF_NAMESPACE_OPEN
 template<> PROTOBUF_NOINLINE ::VERSION_RES* Arena::CreateMaybeMessage< ::VERSION_RES >(Arena* arena) {
@@ -9080,6 +9981,12 @@ template<> PROTOBUF_NOINLINE ::MACHINE_STATUS_RES* Arena::CreateMaybeMessage< ::
 }
 template<> PROTOBUF_NOINLINE ::VERIFY_PURCHASE_RES* Arena::CreateMaybeMessage< ::VERIFY_PURCHASE_RES >(Arena* arena) {
   return Arena::CreateInternal< ::VERIFY_PURCHASE_RES >(arena);
+}
+template<> PROTOBUF_NOINLINE ::DEL_CAMERA_RES* Arena::CreateMaybeMessage< ::DEL_CAMERA_RES >(Arena* arena) {
+  return Arena::CreateInternal< ::DEL_CAMERA_RES >(arena);
+}
+template<> PROTOBUF_NOINLINE ::RECONNECT_RES* Arena::CreateMaybeMessage< ::RECONNECT_RES >(Arena* arena) {
+  return Arena::CreateInternal< ::RECONNECT_RES >(arena);
 }
 PROTOBUF_NAMESPACE_CLOSE
 
