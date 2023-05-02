@@ -79,6 +79,10 @@ namespace DependencyHelper.Droid
         public void Logout()
         {
             MainActivity.activity.GoolgeLogout();
+
+            User.DBId = 0;
+
+            User.isSwitching = true;
         }
 
         public async void Purchase(string purchaseid)

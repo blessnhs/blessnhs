@@ -122,6 +122,10 @@ namespace CCA
                                 SQLLiteDB.LoadCacheData();
 
 
+                                //계정 변환중이면 처리안한다.
+                                if (User.isSwitching == true)
+                                    return;
+
                                 //구글 인증 성공하고 게임서버에 한번도 로그인을 하지않으면 로그인시도한다.
                                 if (User.Name != null && User.DBId == 0 )
                                     NetProcess.SendLogin(User.Uid,User.Token);

@@ -42,19 +42,19 @@ namespace CCA
             //memory usage check
             Device.StartTimer(TimeSpan.FromSeconds(3), () =>
             {
-                Process pro = Process.GetCurrentProcess(); // 현재 프로세스 사용량
+                //Process pro = Process.GetCurrentProcess(); // 현재 프로세스 사용량
 
-                long memory = 0;
+                //long memory = 0;
 
-                memory = pro.VirtualMemorySize64;
+                //memory = pro.VirtualMemorySize64;
 
 
-                Device.BeginInvokeOnMainThread(() =>
-                {
+                //Device.BeginInvokeOnMainThread(() =>
+                //{
 
-                    Noti.Text = (startMemory/1024).ToString() + "_" + (memory / 1024).ToString();
+                //    Noti.Text = (startMemory/1024).ToString() + "_" + (memory / 1024).ToString();
 
-                });
+                //});
 
                 return true; // return true to repeat counting, false to stop timer
             });

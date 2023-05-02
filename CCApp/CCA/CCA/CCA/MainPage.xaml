@@ -16,8 +16,8 @@
         </Grid.ColumnDefinitions>
 
 
-        <Frame BorderColor="Gray" Grid.Column="0" Grid.Row="0"  Grid.ColumnSpan="2" Padding="0,5,5,0">
-            <AdFire:CtBannerView eBannerSize="Standardbanner"   BackgroundColor="White" x:Name="banner"/>
+        <Frame BorderColor="Gray" Grid.Column="0" Grid.Row="0"  Grid.ColumnSpan="2" Padding="0,5,5,0" BackgroundColor="Black">
+            <!--<AdFire:CtBannerView eBannerSize="Standardbanner"   BackgroundColor="White" x:Name="banner"/>-->
         </Frame>
 
         <Frame BorderColor="Gray" Grid.Row="1" Grid.Column="0" BackgroundColor="#D77186">
@@ -81,8 +81,8 @@
             </StackLayout>
         </Frame>
 
-        <Frame BorderColor="Gray" Grid.Column="0" Grid.Row="4"  Grid.ColumnSpan="2" Padding="0,5,5,0">
-            <AdFire:CtBannerView eBannerSize="Standardbanner"   BackgroundColor="White" x:Name="banner2"/>
+        <Frame BorderColor="Gray" Grid.Column="0" Grid.Row="4"  Grid.ColumnSpan="2" Padding="0,5,5,0" BackgroundColor="Black">
+            <!--<AdFire:CtBannerView eBannerSize="Standardbanner"   BackgroundColor="White" x:Name="banner2"/>-->
         </Frame>
     </Grid>
 </ContentPage>

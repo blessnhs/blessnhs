@@ -260,6 +260,7 @@ namespace CCA.Droid
                     User.EMail = signInResult.SignInAccount.Email;
 
                     NetProcess.IsActivate = true;
+                    User.isSwitching = false;
 
                     IAuthResult authResult = await FirebaseAuth_.SignInWithCredentialAsync(credential);
                     FirebaseUser user = authResult.User;

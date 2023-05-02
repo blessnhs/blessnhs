@@ -28,7 +28,9 @@ namespace CCA
             EMail = null;
         }
 
-       static public UserCacheData CacheData = new UserCacheData();
+        static public bool isSwitching = false;
+
+        static public UserCacheData CacheData = new UserCacheData();
 
         static public bool LoginSuccess = false;
 
