@@ -568,7 +568,11 @@ class MSG_PLAYER_QUERY<##class_name>:public IMESSAGE	\
 		CAMERA_LIST_RES res;
 		res.set_var_code(Success);
 
-		auto camList = pProcess->RegCameraList(pPlayerPtr->GetDBIndex());
+		int count = 5;
+		if (pPlayerPtr->m_PurchaseList.size() > 0)
+			count = 999;
+
+		auto camList = pProcess->RegCameraList(pPlayerPtr->GetDBIndex(), count);
 
 		for each (auto & cam  in camList)
 		{
@@ -854,6 +858,8 @@ class MSG_PLAYER_QUERY<##class_name>:public IMESSAGE	\
 
 				int nRet = pProcess->ProcedureUserLogin(flatformid, "", authentickey, score, Index, level);
 
+				std::list<std::string> purchaselist = pProcess->GetPurchaseList(Index);
+
 				PlayerPtr pNewPlayer = PLAYERMGR.Create();
 
 				pNewPlayer->Initialize();
@@ -879,6 +885,7 @@ class MSG_PLAYER_QUERY<##class_name>:public IMESSAGE	\
 				pNewPlayer->m_Email = email;
 				pNewPlayer->m_Token = pRequst.token;
 				pNewPlayer->m_Ip = pRequst.Ip;
+				pNewPlayer->m_PurchaseList = purchaselist;
 
 				PLAYERMGR.Add(pNewPlayer);
 
@@ -1040,6 +1047,9 @@ class MSG_PLAYER_QUERY<##class_name>:public IMESSAGE	\
 					SEND_PROTO_BUFFER(res, pSession, pRequst.FrontSid)
 						return;
 				}
+
+				int nRet = pProcess->InsertPurchase(pRequst.pPlayer->GetDBIndex(),pRequst.PurchaseId);
+
 
 				auto result = GetGoogleVerifyPurchase(pRequst.token, pRequst.PacketId,pRequst.PurchaseId);
 

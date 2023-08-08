@@ -104,6 +104,9 @@ public:
 	std::string			m_Token;
 	std::string			m_Ip;
 
+
+	std::list<std::string> m_PurchaseList;
+
 };
 
 typedef boost::shared_ptr<Player> PlayerPtr;

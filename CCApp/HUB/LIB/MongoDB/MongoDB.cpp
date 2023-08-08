@@ -167,7 +167,7 @@ std::list<tuple<__int64, string, string>> MongoDB::NoticeInfoInfo()
 	}
 }
 
-std::list<tuple<INT64, string, string>> MongoDB::RegCameraList(int64_t INDEX)
+std::list<tuple<INT64, string, string>> MongoDB::RegCameraList(int64_t INDEX,int count)
 {
 
 	try
@@ -184,7 +184,7 @@ std::list<tuple<INT64, string, string>> MongoDB::RegCameraList(int64_t INDEX)
 
 		auto opts = mongocxx::options::find{ };
 		opts.sort(order.view());
-		opts.limit(10);
+		opts.limit(count);
 
 		auto cursor = collection.find({ document{} << "INDEX" << INDEX << finalize }, opts);
 
@@ -206,6 +206,118 @@ std::list<tuple<INT64, string, string>> MongoDB::RegCameraList(int64_t INDEX)
 
 		printf("exception NoticeInfoInfo \n");
 		return std::list<tuple<__int64, string, string>>();
+	}
+}
+
+int MongoDB::DeleteCamera(int64_t INDEX, std::string machine_id)
+{
+	try
+	{
+		auto _client = pool.acquire();
+		mongocxx::client& client = *_client;
+
+		auto db = client[default_db_name];
+
+		mongocxx::collection collection = db["CAMERA"];
+		collection.delete_many(document{} << "INDEX" << INDEX << "MachineId" << machine_id << finalize);
+
+		return 0;
+	}
+	catch (...)
+	{
+		printf("exception DeleteAllConcurrentUser \n");
+		return 0;
+	}
+}
+
+std::list<string> MongoDB::GetPurchaseList(int64_t INDEX)
+{
+	try
+	{
+		auto _client = pool.acquire();
+		mongocxx::client& client = *_client;
+
+		auto db = client[default_db_name];
+
+		std::list<string> list;
+		auto collection = db["PURCHASE"];
+
+		auto order = bsoncxx::builder::stream::document{} << "reg-time" << -1 << bsoncxx::builder::stream::finalize;
+
+		auto opts = mongocxx::options::find{};
+		opts.sort(order.view());
+		opts.limit(100);
+
+		auto cursor = collection.find({ document{} << "INDEX" << INDEX << finalize }, opts);
+
+		int irank = 1;
+
+		for (auto doc : cursor)
+		{
+			auto content = doc["PurchaseId"].get_utf8().value;
+
+			list.push_back((std::string)content);
+		}
+
+		return list;
+	}
+	catch (...)
+	{
+
+		printf("exception NoticeInfoInfo \n");
+		return std::list<string>();
+	}
+}
+
+int MongoDB::InsertPurchase(int64_t INDEX, std::string purchase_id)
+{
+	try
+	{
+		auto _client = pool.acquire();
+		mongocxx::client& client = *_client;
+
+		auto db = client[default_db_name];
+
+		mongocxx::collection collection = db["PURCHASE"];
+		bsoncxx::stdx::optional<bsoncxx::document::value> maybe_result =
+			collection.find_one(document{} << "INDEX" << INDEX << "PurchaseId" << purchase_id << finalize);
+		if (maybe_result) // 이미 존재한다.
+		{
+			return 0;
+		}
+		else
+		{
+			///////////////////////////////////////////////////////////
+			///////insert 
+			{
+				auto builder = bsoncxx::builder::stream::document{};
+				bsoncxx::document::value doc_value = builder
+					<< "INDEX" << INDEX
+					<< "PurchaseId" << purchase_id
+					<< "RegTime" << bsoncxx::types::b_date(std::chrono::system_clock::now())
+					<< bsoncxx::builder::stream::finalize;
+
+				bsoncxx::document::view view = doc_value.view();
+
+				bsoncxx::stdx::optional<mongocxx::result::insert_one> result =
+					collection.insert_one(view);
+
+				// 생성 실패
+				if (!result)
+				{
+					printf("fail insert Index %I64d query failed \n", INDEX);
+
+					return -1;
+				}
+
+			}
+		}
+		return 0;
+	}
+	catch (...)
+	{
+		printf("exception ProcedureUserLogin \n");
+		return 0;
 	}
 }
 

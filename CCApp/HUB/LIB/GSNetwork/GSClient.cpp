@@ -27,6 +27,7 @@ GSClient::GSClient(void)
 	m_GSServer				= NULL;
 	m_DeleteTime			= 0;
 	m_Socket = 0;
+	m_TryCloseCount = 0;
 
 	DebugCount.fetch_add(1);
 }

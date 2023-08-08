@@ -144,6 +144,8 @@ public:
 
 	ClientType										m_ClientType;
 
+	int												m_TryCloseCount;
+
 public:
 	SOCKET											m_Socket;
 

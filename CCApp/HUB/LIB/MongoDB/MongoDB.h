@@ -30,8 +30,13 @@ public:
 	int UpdaetQNS(int64_t Index, std::string contents);
 
 	int RegisterCamera(int64_t INDEX, std::string machine_id, std::string machine_name);
+	int DeleteCamera(int64_t INDEX, std::string machine_id);
 
-	std::list<tuple<INT64, string, string>> RegCameraList(int64_t INDEX);
+
+	int InsertPurchase(int64_t INDEX, std::string purchase_id);
+	std::list<string> GetPurchaseList(int64_t INDEX);
+
+	std::list<tuple<INT64, string, string>> RegCameraList(int64_t INDEX,int count = 5);
 
 	std::list<tuple<string, string, string>> PrayList(int count = 100);
 

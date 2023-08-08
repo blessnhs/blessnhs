@@ -64,7 +64,19 @@ VOID GSClientMgr::CheckAliveTime()
 
 			if (server_check_time != 0 && client_time != 0 && (client_time + server_check_time) <= system_tick)
 			{
-				pServer->Close(client.second->GetTCPSocket()->GetSocket());
+				if (client.second->GetClientType() != ClientType::SERVER_CLIENT)
+				{
+					client.second->m_TryCloseCount++;
+
+					if (client.second->m_TryCloseCount == 1)
+					{
+						pServer->Close(client.second->GetTCPSocket()->GetSocket());
+					}
+					else //가끔 가다가 위에서 종료를 시켜도 안되는 애들은 여기서 그냥 보낸다. 아마도 종료되고 accept되거나 소켓풀이 부족했을때 후에 들어온 녀석들일 것이다. (accpt->close->close)
+					{
+						client.second->OnDisconnect(client.second, true);
+					}
+				}
 			}
 
 			connection_cnt++;
@@ -115,11 +127,11 @@ VOID GSClientMgr::CheckAliveTime()
 	if ((m_MaxClients - connection_cnt) < 50)
 		NewClient(false);
 
-	//SYSTEMTIME		sysTime;
-	//::GetLocalTime(&sysTime);
+//	SYSTEMTIME		sysTime;
+//	::GetLocalTime(&sysTime);
 
-	//SYSLOG().Write("[ %04d-%02d-%02d %02d:%02d:%02d ] Current User Count %d connectable count %d Debug Count %d\n",
-	//	sysTime.wYear, sysTime.wMonth, sysTime.wDay, sysTime.wHour, sysTime.wMinute, sysTime.wSecond, pServer->CurrentPlayerCount(), ConnectableSocketCount(), DebugCount.fetch_add(0));
+//	SYSLOG().Write("[ %04d-%02d-%02d %02d:%02d:%02d ] Current User Count %d connectable count %d Debug Count %d\n",
+//		sysTime.wYear, sysTime.wMonth, sysTime.wDay, sysTime.wHour, sysTime.wMinute, sysTime.wSecond, pServer->CurrentPlayerCount(), ConnectableSocketCount(), DebugCount.fetch_add(0));
 
 //	SYSLOG().Write("\nre m_insert_queue queue %d\n", m_ReInsert_Queue.unsafe_size());
 //	SYSLOG().Write("re m_remove_queue queue %d\n", m_Remove_Queue.unsafe_size());
@@ -136,7 +148,7 @@ VOID GSClientMgr::CheckAliveTime()
 			connection_cnt, DebugCount.fetch_add(0), m_Remove_Queue.unsafe_size(), ConnectCount.fetch_add(0), NewConnectount.fetch_add(0), DisConnectCount.fetch_add(0), debug_null_cnt);
 		//	pServer->TotalRecvBytes.fetch_add(0)/1024/1024,pServer->TotalSendBytes.fetch_add(0) / 1024 / 1024);
 
-	//	ConsoleHelper::DebugConsoleString(0, msg);
+		ConsoleHelper::DebugConsoleString(0, msg);
 
 	}
 }

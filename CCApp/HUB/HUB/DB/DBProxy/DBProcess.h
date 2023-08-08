@@ -34,10 +34,12 @@ public:
 	std::list<tuple<int, string, string>> LoadRooms(int count = 100);
 	int RegisterCamera(int64_t INDEX, std::string machine_id, std::string machine_name);
 	int DeleteCamera(int64_t INDEX, std::string machine_id);
+	int InsertPurchase(int64_t INDEX, std::string purchase_id);
+	std::list<string> GetPurchaseList(int64_t INDEX);
 
 
 
-	std::list<tuple<INT64, string, string>> RegCameraList(int64_t INDEX);
+	std::list<tuple<INT64, string, string>> RegCameraList(int64_t INDEX, int count = 5);
 
 
 	bool				m_IsOpen;

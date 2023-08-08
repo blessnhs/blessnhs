@@ -81,6 +81,18 @@ int		CDBProcessCer::ProcedureUserLogin(const std::string id, const std::string p
 	return m_DB->ProcedureUserLogin(id, pwd, szKey, Score, Index, Level);
 }
 
+
+int CDBProcessCer::InsertPurchase(int64_t INDEX, std::string purchase_id)
+{
+	return m_DB->InsertPurchase(INDEX, purchase_id);
+}
+
+std::list<string> CDBProcessCer::GetPurchaseList(int64_t INDEX)
+{
+	return m_DB->GetPurchaseList(INDEX);
+}
+
+
 int CDBProcessCer::DeleteCamera(int64_t INDEX, std::string machine_id)
 {
 	return m_DB->DeleteCamera(INDEX, machine_id);
@@ -91,9 +103,9 @@ int CDBProcessCer::RegisterCamera(int64_t INDEX, std::string machine_id, std::st
 	return m_DB->RegisterCamera(INDEX, machine_id, machine_name);
 }
 
-std::list<tuple<INT64, string, string>> CDBProcessCer::RegCameraList(int64_t INDEX)
+std::list<tuple<INT64, string, string>> CDBProcessCer::RegCameraList(int64_t INDEX, int count)
 {
-	return m_DB->RegCameraList(INDEX);
+	return m_DB->RegCameraList(INDEX, count);
 }
 
 
