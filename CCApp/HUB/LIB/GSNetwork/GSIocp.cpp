@@ -238,7 +238,7 @@ VOID GSIocp::Close(SOCKET client)
 		TCHAR szExeFileName[MAX_PATH];
 		GetModuleFileName(NULL, szExeFileName, MAX_PATH);
 
-		printf("close call %s\n", szExeFileName);
+//		printf("close call %s\n", szExeFileName);
 
 		closesocket(client);
 }

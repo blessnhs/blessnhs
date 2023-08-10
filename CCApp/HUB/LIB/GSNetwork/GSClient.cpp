@@ -51,14 +51,20 @@ GSClient::~GSClient(void)
 		{
 			SYSLOG().Write("GetId() %d alert remain overlap event count acc %d recv %d send %d\n", GetId(), GetTCPSocket()->m_OLP_REMAIN_COUNT_ACC.fetch_add(0), GetTCPSocket()->m_OLP_REMAIN_COUNT_REC.fetch_add(0), GetTCPSocket()->m_OLP_REMAIN_COUNT_SND.fetch_add(0));
 		}
+		
 	}
-
 
 	DebugCount.fetch_sub(1);
 
 	GSServer::GSServer* pServer = (GSServer::GSServer*)m_GSServer;
 
 	pServer->GetClientMgr().InsertRecycleId(GetId());
+
+	if (m_TCPSocket != NULL)
+		m_TCPSocket->Termination();
+
+	if (m_UDPSocket != NULL)
+		m_UDPSocket->Termination();
 }
 
 BOOL  GSClient::Create(BYTE Type,ClientType type)
@@ -243,7 +249,7 @@ void GSClient::OnEvt(IMessagePtr Arg)
 }
 VOID GSClient::Close()
 {
-	shutdown(GetTCPSocket()->GetSocket(),2);
+	closesocket(GetTCPSocket()->GetSocket());
 }
 
 
@@ -462,7 +468,7 @@ void GSClient::OnConnect(boost::shared_ptr<GSClient> pClient)
 	pClient->GetTCPSocket()->GetLocalIP(ip, port);
 
 #ifdef _DEBUG
-	printf("connected ip %s port %d\n",ip.c_str(),port);
+//	printf("connected ip %s port %d\n",ip.c_str(),port);
 #endif
 
 	/*

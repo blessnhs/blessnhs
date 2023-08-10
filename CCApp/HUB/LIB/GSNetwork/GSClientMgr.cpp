@@ -68,13 +68,14 @@ VOID GSClientMgr::CheckAliveTime()
 				{
 					client.second->m_TryCloseCount++;
 
-					if (client.second->m_TryCloseCount == 1)
-					{
-						pServer->Close(client.second->GetTCPSocket()->GetSocket());
-					}
-					else //가끔 가다가 위에서 종료를 시켜도 안되는 애들은 여기서 그냥 보낸다. 아마도 종료되고 accept되거나 소켓풀이 부족했을때 후에 들어온 녀석들일 것이다. (accpt->close->close)
+					
+					if(client.second->m_TryCloseCount > 1)//가끔 가다가 위에서 종료를 시켜도 안되는 애들은 여기서 그냥 보낸다. alive time을 너무 길게 잡아서 그런거 같다 하지만 보험으로 하나 들어온다 밑에 코드는 들어온적은 없다.
 					{
 						client.second->OnDisconnect(client.second, true);
+					}
+					else if(client.second->m_TryCloseCount == 1)
+					{
+						pServer->Close(client.second->GetTCPSocket()->GetSocket());
 					}
 				}
 			}
@@ -123,7 +124,7 @@ VOID GSClientMgr::CheckAliveTime()
 		}
 	}
 
-	//접속가능한 세션이 50명 이하면 다시 100개 할당한다. 
+	////접속가능한 세션이 50명 이하면 다시 100개 할당한다. 
 	if ((m_MaxClients - connection_cnt) < 50)
 		NewClient(false);
 

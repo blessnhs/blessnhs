@@ -40,6 +40,7 @@ public:
 	BOOL			Accept(SOCKET listenSocket);
 	BOOL			Accept2(SOCKET listenSocket);
 
+	BOOL			SetSocketOption(int socket_id,int keep_alive = 40, int keep_idle = 600, int keep_count  = 10, int keep_intvl = 8);
 
 
 	BOOL			GetLocalIP(std::string& ipaddress,int &port);

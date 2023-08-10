@@ -136,7 +136,7 @@ VOID GSServer::OnWrote(int client_id, DWORD dataLength)
 	boost::shared_ptr<GSClient> pClient = GetClient(client_id);
 	if (pClient == NULL)
 	{
-		SYSLOG().Write("!!!alert cant find onconnect client id\n");
+		SYSLOG().Write("!!!wrote alert cant find onconnect client id\n");
 		return;
 	}
 
@@ -154,7 +154,7 @@ VOID GSServer::OnConnected(int client_id)
 	boost::shared_ptr<GSClient> pClient = GetClient(client_id);
 	if (pClient == NULL)
 	{
-		SYSLOG().Write("!!!alert cant find onconnect client id\n");
+		SYSLOG().Write("!!!connect alert cant find onconnect client id\n");
 		return;
 	}
 
@@ -169,7 +169,7 @@ VOID GSServer::OnConnected(int client_id)
 		SYSLOG().Write("Connected exception ...1\n");
 		//이코드에서 그냥 close하면 gsclient는 서버에 접속도 못하는 미아 객체가 됨
 		OnDisconnected(client_id, true);
-		//pClient->Close();
+
 		return;
 	}
 
@@ -178,8 +178,8 @@ VOID GSServer::OnConnected(int client_id)
 	{ 
 		SYSLOG().Write("Connected exception ...2\n");
 		//이코드에서 그냥 close하면 gsclient는 서버에 접속도 못하는 미아 객체가 됨
+
 		OnDisconnected(client_id,true);
-		//pClient->Close();
 		return; 
 	}
 

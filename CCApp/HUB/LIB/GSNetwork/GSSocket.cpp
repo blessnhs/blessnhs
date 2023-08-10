@@ -1,6 +1,7 @@
 #include "StdAfx.h"
 #include "GSSocket.h"
 #include <WinSock2.h>
+#include <mstcpip.h>
 
 namespace GSNetwork	{ namespace GSSocket	{
 
@@ -164,6 +165,51 @@ SOCKET GSSocket::Connect2(LPSTR address, USHORT port)
 	return m_Socket;
 }
 
+BOOL GSSocket::SetSocketOption(int socket_id, int keep_alive, int keep_idle, int keep_count, int keep_intvl)
+{
+	DWORD dwRet;
+	tcp_keepalive tcpkl;
+	tcpkl.onoff = 1;
+	tcpkl.keepalivetime = 5000; //5초마다 신호를 보냄
+	tcpkl.keepaliveinterval = 1000;	// keep alive 신호를 받고 응답이 없으면 1초마다 재전송
+
+	WSAIoctl(socket_id, SIO_KEEPALIVE_VALS, &tcpkl, sizeof(tcp_keepalive), 0, 0, &dwRet, NULL, NULL);
+
+
+
+	//onoff = 1, l_longer = 0 closesocket시 강제 종료 남은 데이터 버림 TIME_WAIT남지 않음
+	//onoff = 1, l_long != 0 blocking방식 종료처리 (graceful shutdown)
+	//onoff = 0 //정상적 종료처리 종료처리 시점을 알수가 없다
+
+	//LINGER ling;
+	//ling.l_onoff = 1;
+	//ling.l_linger = 0;
+
+	//int ret = setsockopt(socket_id, SOL_SOCKET, SO_LINGER, (const char FAR*) & ling, sizeof(ling));
+	//if (ret == -1)
+	//	printf("fail keep alive socket opt\n");
+
+	//서버입장에서는 2분의 time_wait지속 시간을 갖는 리소스 낭비이며 장애 발생 원인이 된다. 따라서 time_wait이 없는 abortive shutdonw으로 longer를 사용해야한다.
+
+	/*int ret = setsockopt(socket_id, SOL_SOCKET, SO_KEEPALIVE, (const char FAR*) & keep_alive, sizeof(keep_alive));
+	if (ret == -1)
+		printf("fail keep alive socket opt\n");
+
+	ret = setsockopt(socket_id, IPPROTO_TCP, TCP_KEEPIDLE, (const char FAR*) & keep_idle, sizeof(keep_idle));
+	if (ret == -1)
+		printf("fail keep_idle socket opt\n");
+
+	ret = setsockopt(socket_id, IPPROTO_TCP, TCP_KEEPCNT, (const char FAR*) & keep_count, sizeof(keep_count));
+	if (ret == -1)
+		printf("fail keep_count socket opt\n");
+
+	ret = setsockopt(socket_id, IPPROTO_TCP, TCP_KEEPINTVL, (const char FAR*) & keep_intvl, sizeof(keep_intvl));
+	if (ret == -1)
+		printf("fail keep_intvl socket opt\n");*/
+
+	return TRUE;
+}
+
 BOOL GSSocket::Accept(SOCKET listenSocket)
 {
 	CThreadSync Sync;
@@ -189,8 +235,7 @@ BOOL GSSocket::Accept(SOCKET listenSocket)
 	m_Accept_OLP->IoType = IO_ACCEPT;
 	m_Accept_OLP->ObjectId = m_ClientId;
 
-	//BOOL NoDelay = TRUE;
-	//setsockopt(m_Socket, IPPROTO_TCP, TCP_NODELAY, (const char FAR *)&NoDelay, sizeof(NoDelay));
+	SetSocketOption(m_Socket);
 
 	if (!AcceptEx(listenSocket, 
 		m_Socket, 
@@ -234,8 +279,7 @@ BOOL GSSocket::Accept2(SOCKET listenSocket)
 	m_Accept_OLP->IoType = IO_ACCEPT;
 	m_Accept_OLP->ObjectId = m_ClientId;
 
-	//BOOL NoDelay = TRUE;
-	//setsockopt(m_Socket, IPPROTO_TCP, TCP_NODELAY, (const char FAR *)&NoDelay, sizeof(NoDelay));
+	SetSocketOption(m_Socket);
 
 	if (!AcceptEx(listenSocket, 
 		m_Socket, 
