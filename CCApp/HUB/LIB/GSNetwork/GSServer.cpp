@@ -231,6 +231,9 @@ VOID GSServer::OnDisconnected2(int client_id, int type)
 		}
 
 		OnDisconnected(client_id);
+
+		GetClientMgr().NewClient();
+
 	}
 }
 

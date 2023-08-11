@@ -69,13 +69,17 @@ VOID GSClientMgr::CheckAliveTime()
 					client.second->m_TryCloseCount++;
 
 					
-					if(client.second->m_TryCloseCount > 1)//가끔 가다가 위에서 종료를 시켜도 안되는 애들은 여기서 그냥 보낸다. alive time을 너무 길게 잡아서 그런거 같다 하지만 보험으로 하나 들어온다 밑에 코드는 들어온적은 없다.
+					if(client.second->m_TryCloseCount > 1)
 					{
-						client.second->OnDisconnect(client.second, true);
+						//이 코드는 사실상 들오면 안된다.
+						//client.second->OnDisconnect(client.second, true);
 					}
 					else if(client.second->m_TryCloseCount == 1)
 					{
-						pServer->Close(client.second->GetTCPSocket()->GetSocket());
+						//여기서 서버에서 그냥 close하면 무한 무프 ondisconnect-> close 반복이라 이런식으로 iocp에서 감지하겠끔 해준다.
+						byte data[2];
+						client.second->GetTCPSocket()->Write(data, 1);
+//						pServer->Close(client.second->GetTCPSocket()->GetSocket());
 					}
 				}
 			}
@@ -123,10 +127,6 @@ VOID GSClientMgr::CheckAliveTime()
 			m_Remove_Queue.push(client);
 		}
 	}
-
-	////접속가능한 세션이 50명 이하면 다시 100개 할당한다. 
-	if ((m_MaxClients - connection_cnt) < 50)
-		NewClient(false);
 
 //	SYSTEMTIME		sysTime;
 //	::GetLocalTime(&sysTime);
@@ -252,7 +252,13 @@ void GSClientMgr::InsertRecycleId(int _id)
 	m_Reycle_Id_Queue.push(_id);
 }
 
-BOOL GSClientMgr::NewClient(bool disalloc)
+
+//모든 문제의 발단
+//listen(backlog)수만큼 접속가능하고 거기서 감소 (iocp에서 떨어지는disconnect만큼 acceptex를 해주면딘다.)
+//임의로 콜한 disconnect에서 잘못해줬다가는 time_wait close_wait같은 tcp 4hand shake상에서 close_wait이 남게된다.)
+//접속 및 종료는 딱딱 맞춰줘야 한다.
+
+BOOL GSClientMgr::NewClient()
 {
 	GSServer::GSServer *pServer = (GSServer::GSServer *)m_GSServer;
 	SOCKET ListenSocket = pServer->GetTcpListen()->GetSocket();
@@ -266,19 +272,7 @@ BOOL GSClientMgr::NewClient(bool disalloc)
 	CThreadSync Sync;
 
 	int NewClient = 1;
-	//임시 주석
-	if ((m_MaxClients - std::abs(ConnectCount - DisConnectCount)) < 50)
-	{
-		if(disalloc == true)
-			NewClient = 101;
-		else
-			NewClient = 100;
-
-		SYSLOG().Write("Resize Client  %d \n", NewClient);
-
-		m_MaxClients += NewClient;
-	}
-	
+		
 	NewConnectount.fetch_add(NewClient);
 
 

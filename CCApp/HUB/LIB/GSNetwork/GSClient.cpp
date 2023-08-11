@@ -353,7 +353,6 @@ VOID GSClient::ProcDisconnect(boost::shared_ptr<GSClient> pClient,bool isForce)
 
 	pServer->GetClientMgr().DelClient(pClient->GetId());
 
-	pServer->GetClientMgr().NewClient();
 
 }
 
