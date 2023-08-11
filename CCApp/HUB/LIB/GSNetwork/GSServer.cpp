@@ -197,6 +197,9 @@ VOID GSServer::OnDisconnected(int client_id, bool isForce)
 		return;
 	}
 
+	GetClientMgr().NewClient();
+
+
 	pClient->OnDisconnect(pClient, isForce);
 
 }
@@ -206,6 +209,7 @@ VOID GSServer::OnDisconnected2(int client_id, int type)
 //이락은 필수
 
 	CThreadSync Sync;
+
 
 	boost::shared_ptr<GSClient> pClient = GetClient(client_id);
 	if (pClient == NULL)
@@ -232,7 +236,6 @@ VOID GSServer::OnDisconnected2(int client_id, int type)
 
 		OnDisconnected(client_id);
 
-		GetClientMgr().NewClient();
 
 	}
 }
