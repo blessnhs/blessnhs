@@ -294,7 +294,7 @@ BOOL GSServer::BeginTCP()
 		return FALSE;
 	}
 
-	if (!m_pTCPListen->GetTCPSocket()->Listen((WORD)m_Arguments.m_BindPort, m_Arguments.m_MaxClient))
+	if (!m_pTCPListen->GetTCPSocket()->Listen((WORD)m_Arguments.m_BindPort, /*m_Arguments.m_MaxClient*/SOMAXCONN))
 	{
 		GSServer::End();
 
@@ -308,7 +308,7 @@ BOOL GSServer::BeginTCP()
 		return FALSE;
 	}
 
-	if (!m_ClientMgr.Begin(m_pTCPListen->GetSocket(),m_Arguments.m_MaxClient,this))
+	if (!m_ClientMgr.Begin(m_pTCPListen->GetSocket(), m_Arguments.m_MaxClient, this))
 	{
 		GSServer::End();
 

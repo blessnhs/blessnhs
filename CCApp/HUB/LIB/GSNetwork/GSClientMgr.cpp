@@ -258,7 +258,7 @@ void GSClientMgr::InsertRecycleId(int _id)
 //임의로 콜한 disconnect에서 잘못해줬다가는 time_wait close_wait같은 tcp 4hand shake상에서 close_wait이 남게된다.)
 //접속 및 종료는 딱딱 맞춰줘야 한다.
 
-BOOL GSClientMgr::NewClient()
+BOOL GSClientMgr::NewClient(int NewClient)
 {
 	GSServer::GSServer *pServer = (GSServer::GSServer *)m_GSServer;
 	SOCKET ListenSocket = pServer->GetTcpListen()->GetSocket();
@@ -270,9 +270,7 @@ BOOL GSClientMgr::NewClient()
 	}
 
 	CThreadSync Sync;
-
-	int NewClient = 1;
-		
+			
 	NewConnectount.fetch_add(NewClient);
 
 
